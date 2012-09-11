@@ -1,3 +1,3 @@
 
-exports.Matrix4 = undefined;
+exports.Matrix = require('./lib/matrix.js').Matrix;
 

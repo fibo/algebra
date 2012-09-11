@@ -1,0 +1,24 @@
+{
+  "name": "algebra",
+  "version": "0.0.0",
+  "description": "Vectors, Matrices and more",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fibo/algebra.git"
+  },
+  "keywords": [
+    "algebra",
+    "matrix",
+    "vector",
+    "math"
+  ],
+  "author": "fibo",
+  "license": "BSD",
+  "devDependencies": {
+    "mocha": "*"
+  }
+}

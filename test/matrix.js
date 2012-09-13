@@ -25,13 +25,13 @@ describe('Matrix', function () {
     it('accepts one integer as dimension parameter', function () {
 
       var dim = 3;
-      var m2 = new Matrix(dim);
-      assert.equal(dim, m2.dim);
+      var matrix = new Matrix(dim);
+      assert.equal(dim, matrix.dim);
 
       it('which defaults to 4', function () {
 
-        var m1 = new Matrix();
-        assert.equal(4, m1.dim);
+        var matrix = new Matrix();
+        assert.equal(4, matrix.dim);
 
       });
     });

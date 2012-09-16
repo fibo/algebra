@@ -1,4 +1,7 @@
 
-exports.Vector = require('./lib/Vector.js');
-exports.Matrix = require('./lib/Matrix.js');
+var Real = {};
+
+Real.VectorSpace = require('./lib/Real/VectorSpace.js');
+
+exports.Real = Real;
 

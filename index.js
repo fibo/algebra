@@ -1,5 +1,4 @@
 
-exports.Matrix = require('./lib/matrix.js').Matrix;
-
-exports.Vector = require('./lib/vector.js').Vector;
+exports.Vector = require('./lib/Vector.js');
+exports.Matrix = require('./lib/Matrix.js');
 

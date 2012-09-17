@@ -1,10 +1,10 @@
 {
   "name": "algebra",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Vectors, Matrices and more",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,6 @@
   "author": "fibo",
   "license": "BSD",
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "1.4.2"
   }
 }

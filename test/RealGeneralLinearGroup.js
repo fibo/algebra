@@ -1,6 +1,9 @@
 
 var assert = require('assert');
-var GLRn = require('../index.js').Real.GeneralLinearGroup;
+var algebra = require('../index.js');
+var GLRn = algebra.Real.GeneralLinearGroup;
+var RealField = require('../index.js').Real.Field;
+var SquareMatrix = require('../index.js').SquareMatrix;
 
 var GLR2 = new GLRn(2);
 
@@ -10,16 +13,22 @@ var elements =
 
 //var m1 = GL2.Matrix(elements);
 var field = GLR2.getField();
-console.log(field);
-//var m1 = GLR2.Identity();
+//var id = GLR2.Identity();
+var id = new GLR2.Identity;
 
-describe('RealVector', function () {
-  it('has an accessor to get a single element', function() {
-    assert.equal(1,1);
+describe('RealGeneralLinearGroup', function () {
+  it('uses the Real field', function() {
+    assert.ok(field instanceof RealField);
   });
-  it('has the same dim as its vector space', function() {
- //   assert.equal(m1.getOrder(),GL2.getOrder());
+  it('has as an order', function() {
+    assert.equal(GLR2.getOrder(), 2);
+  });
+  it('has as dim = order * order', function() {
+    assert.equal(GLR2.getDim(), 4);
+  });
+  describe('Identity matrix', function () {
+    assert.equal(id.getOrder(), 2);
+    assert.deepEqual(id.getElements(), [1, 0, 0, 1]);
   });
 });
-
 

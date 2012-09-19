@@ -9,9 +9,20 @@ describe('RealField', function () {
     assert.equal(R.getZero(),0);
     assert.equal(R.getOne(),1);
   });
-  it('has dim = 1', function() {
-    //assert.equal(v1.getDim(),R2.getDim());
+  it('defines + * - / operations', function() {
+    var a = -1, b = 4, c;
+
+    c = R.addition(a, b);
+    assert.equal(c, a + b);
+
+    c = R.multiplication(a, b);
+    assert.equal(c, a * b);
+
+    c = R.subtraction(a, b);
+    assert.equal(c, a - b);
+
+    c = R.division(a, b);
+    assert.equal(c, a / b);
   });
 });
-
 

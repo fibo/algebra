@@ -1,4 +1,12 @@
 
+var Matrix             = require('./lib/Matrix.js');
+var VectorSpace        = require('./lib/VectorSpace.js');
+var GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
+
+exports.Matrix             = Matrix;
+exports.VectorSpace        = VectorSpace;
+exports.GeneralLinearGroup = GeneralLinearGroup;
+
 var Real = {};
 
 Real.Field              = require('./lib/Real/Field.js');

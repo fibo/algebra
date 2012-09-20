@@ -12,16 +12,16 @@ describe('RealField', function () {
   it('defines + * - / operations', function() {
     var a = -1, b = 4, c;
 
-    c = R.addition(a, b);
+    c = R.add(a, b);
     assert.equal(c, a + b);
 
-    c = R.multiplication(a, b);
+    c = R.mul(a, b);
     assert.equal(c, a * b);
 
-    c = R.subtraction(a, b);
+    c = R.sub(a, b);
     assert.equal(c, a - b);
 
-    c = R.division(a, b);
+    c = R.div(a, b);
     assert.equal(c, a / b);
   });
 });

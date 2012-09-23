@@ -11,15 +11,15 @@ console.log(one);
 
 var a = -1, b = 4, c;
 
-c = R.addition(a, b);
+c = R.add(a, b);
 console.log(c);
 
-c = R.subtraction(a, b);
+c = R.sub(a, b);
 console.log(c);
 
-c = R.multiplication(a, b);
+c = R.mul(a, b);
 console.log(c);
 
-c = R.division(a, b);
+c = R.div(a, b);
 console.log(c);
 

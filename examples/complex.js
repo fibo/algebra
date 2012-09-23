@@ -4,25 +4,31 @@ var ComplexField = require('../index.js').Complex.Field;
 
 var C = new ComplexField();
 
-var zero = new Complex();
-console.log(zero);
+var zero = C.getZero();
+console.log(zero.toString());
 
 var one = C.getOne();
-console.log(one);
+console.log(one.toString());
 
 var a = new Complex(-1, 2);
 var b = new Complex(4, 1);
 var c;
 
-c = C.addition(a, b);
-console.log(c);
+c = C.add(a, b);
+console.log(c.toString());
 
-c = C.subtraction(a, b);
-console.log(c);
+c = C.sub(a, b);
+console.log(c.toString());
 
-c = C.multiplication(a, b);
-console.log(c);
+c = C.mul(a, b);
+console.log(c.toString());
 
-c = C.division(a, b);
-console.log(c);
+c = C.div(a, b);
+console.log(c.toString());
+
+c = C.neg(a, b);
+console.log(c.toString());
+
+c.conj().add(one).inv();
+console.log(c.toString());
 

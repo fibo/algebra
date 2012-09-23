@@ -10,11 +10,11 @@ describe('ComplexElement', function () {
   });
   it('can conjugate', function() {
     var z = new Complex(1, 2);
-    z.conjugate();
+    z.conj();
     assert.equal(z.im(), -2);
 
     // Operator conjugate returns a reference to the complex number object.
-    assert.ok(z.conjugate() instanceof Complex);
+    assert.ok(z.conj() instanceof Complex);
   });
 });
 

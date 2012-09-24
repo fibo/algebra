@@ -7,7 +7,7 @@ Vectors, Matrices and more
 This is alpha software.
 
 I'm planning to implement matrices and vectors on few algebra fields
-(Reals, Rationals, Quaternions, etc.) following Micheal Artin's "Algebra",
+(Reals, Complexes etc.) following Micheal Artin's "Algebra",
 which was my book at Universita' Degli Studi di Genova.
 
 My goal is to provide users with the feature of creating their own algebra field and building vector spaces and matrices on it.

@@ -6,6 +6,9 @@ Vectors, Matrices and more
 # Disclaimer
 This is alpha software.
 
+There is no documentation by now ... let me implement some features: see
+the examples folder if you want a preview.
+
 I'm planning to implement matrices and vectors on few algebra fields
 (Reals, Complexes etc.) following Micheal Artin's "Algebra",
 which was my book at Universita' Degli Studi di Genova.

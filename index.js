@@ -22,3 +22,10 @@ Complex.Field   = require('./lib/Complex/Field.js');
 
 exports.Complex = Complex;
 
+var Quaternion = {};
+
+Quaternion.Element = require('./lib/Quaternion/Element.js');
+Quaternion.Ring   = require('./lib/Quaternion/Ring.js');
+
+exports.Quaternion = Quaternion;
+

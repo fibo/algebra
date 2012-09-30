@@ -1,14 +1,28 @@
 
 var assert = require('assert');
-var RealField = require('../index.js').Real.Field;
+var algebra = require('../index.js');
+
+var RealField = algebra.Real.Field;
 
 var R = new RealField();
 
 describe('RealField', function () {
-  it('has a zero and a one element', function() {
-    assert.equal(R.getZero(),0);
-    assert.equal(R.getOne(),1);
+  describe('constructor', function () {
+    it('requires: ..., ...', function() {
+      //assert.ok(... instanceof ...);
+    });
   });
+
+  describe('inherits', function () {
+    it('from ...', function() {
+    });
+  });
+
+  it('has a zero and a one element', function() {
+    assert.equal(R.getZero(), 0);
+    assert.equal(R.getOne(), 1);
+  });
+
   it('defines + * - / operations', function() {
     var a = -1, b = 4, c;
 

@@ -1,6 +1,6 @@
 {
   "name": "algebra",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Vectors, Matrices and more",
   "main": "index.js",
   "scripts": {

@@ -8,16 +8,16 @@ var ComplexField = algebra.Complex.Field;
 var C = new ComplexField();
 
 describe('ComplexField', function () {
-  describe('constructor', function () {
-    it('requires: ..., ...', function() {
-      //assert.ok(... instanceof ...);
-    });
-  });
+  //describe('constructor', function () {
+  //  it('requires: ..., ...', function() {
+  //    //assert.ok(... instanceof ...);
+  //  });
+  //});
 
-  describe('inherits', function () {
-    it('from ...', function() {
-    });
-  });
+  //describe('inherits', function () {
+  //  it('from ...', function() {
+  //  });
+  //});
 
   describe('getZero()', function () {
     it('returns the 0 element', function() {
@@ -60,7 +60,6 @@ describe('ComplexField', function () {
 
     it('is the -1 square root', function() {
       var i = C.getI();
-      // TODO non funziona var minusOne = C.mul(i, i);
       var minusOne = i.mul(i);
       assert.ok(minusOne.eq(C.getMinusOne()));
     });

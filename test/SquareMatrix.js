@@ -20,7 +20,7 @@ describe('SquareMatrix', function () {
     it('from Matrix', function() {
       var C = new ComplexField();
       var m = new SquareMatrix({order: 2, field: C});
-      //assert.ok(m instanceof Matrix);
+      assert.ok(m instanceof Matrix);
     });
   });
 });

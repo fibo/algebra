@@ -22,5 +22,10 @@ describe('GeneralLinearGroup', function () {
       //assert.ok(GLR2 instanceof MatrixRing);
     });
   });
+
+  describe('...()', function () {
+    it('...', function() {
+    });
+  });
 });
 

@@ -128,6 +128,11 @@ describe('Matrix', function () {
       assert.equal(m1.getNumRows(), 2);
     });
   });
+
+  describe('...()', function () {
+    it('...', function() {
+    });
+  });
 });
 
 

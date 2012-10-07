@@ -59,6 +59,15 @@ describe('ComplexElement', function () {
     });
   });
 
+  describe('clone()', function () {
+    it('returns a copy of the object', function() {
+      var z = new Complex(-1, 5);
+      var w = z.clone();
+      assert.ok(w instanceof Complex);
+      assert.ok(z.eq(w));
+    });
+  });
+
   describe('...()', function () {
     it('...', function() {
     });

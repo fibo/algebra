@@ -129,6 +129,11 @@ describe('Matrix', function () {
     });
   });
 
+  describe('r4c(<Matrix|Vector>)', function () {
+    it('implements rows for columns right multiplication by a matrix or a vector', function() {
+    });
+  });
+
   describe('...()', function () {
     it('...', function() {
     });

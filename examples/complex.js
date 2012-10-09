@@ -1,6 +1,8 @@
 
-var Complex = require('../index.js').Complex.Element;
-var ComplexField = require('../index.js').Complex.Field;
+var algebra = require('../index.js');
+
+var Complex = algebra.Complex.Element;
+var ComplexField = algebra.Complex.Field;
 
 var C = new ComplexField();
 

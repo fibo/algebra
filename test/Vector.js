@@ -5,6 +5,7 @@ var algebra = require('../index.js');
 var VectorSpace       = algebra.VectorSpace;
 var RealField    = algebra.Real.Field;
 var ComplexField = algebra.Complex.Field;
+var Matrix = algebra.Matrix;
 
 var C = new ComplexField();
 var R = new RealField();

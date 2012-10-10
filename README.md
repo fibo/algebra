@@ -3,6 +3,10 @@ algebra
 
 Vectors, Matrices and more
 
+# Installation
+
+    npm install algebra
+
 # Disclaimer
 This is alpha software.
 

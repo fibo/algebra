@@ -7,7 +7,7 @@ Vectors, Matrices and more
 This is alpha software.
 
 There is no documentation by now ... let me implement some features: see
-the examples folder if you want a preview.
+the [examples] (https://github.com/fibo/algebra/wiki/Examples) folder if you want a preview.
 
 I'm planning to implement matrices and vectors on few algebra fields
 (Reals, Complexes etc.) following Micheal Artin's "Algebra",

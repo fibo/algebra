@@ -1,12 +1,14 @@
 
 var Matrix             = require('./lib/Matrix.js');
 var SquareMatrix       = require('./lib/SquareMatrix.js');
+var Vector             = require('./lib/Vector.js');
 var VectorSpace        = require('./lib/VectorSpace.js');
 var GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
 
 exports.Matrix             = Matrix;
 exports.SquareMatrix       = SquareMatrix;
 exports.VectorSpace        = VectorSpace;
+exports.Vector             = Vector;
 exports.GeneralLinearGroup = GeneralLinearGroup;
 
 var Real = {};

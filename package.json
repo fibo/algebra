@@ -1,7 +1,7 @@
 {
   "name": "algebra",
-  "version": "0.0.4",
-  "description": "Vectors, Matrices and more",
+  "version": "0.0.5",
+  "description": "Vectors, Matrices and ... ",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha"

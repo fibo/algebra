@@ -32,3 +32,8 @@ v1.add(v1);
 
 var zero = R3.getZero();
 
+//You can see that adding or subtracting zero does not change v1 coordinates.
+
+    v1.add(zero);
+    v1.sub(zero);
+

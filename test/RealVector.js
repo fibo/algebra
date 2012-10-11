@@ -39,12 +39,33 @@ describe('RealVector', function () {
   });
 
   describe('scalar(<Real>)', function () {
-    it('implements the per scalar multiplication', function() {
+    it('implements multiplication by a scalar', function() {
       var v = new R3.Vector(1, 1, 1);
 
       v.scalar(2);
 
       assert.deepEqual(v.getElements(), [2, 2, 2]);
+    });
+  });
+
+  describe('dot(<Vector>)', function () {
+    it('implements dot product operator', function() {
+
+    });
+  });
+
+  describe('R3 Vector', function () {
+    describe('cross(<Vector>)', function () {
+      it('implements cross product operator', function() {
+        var v1 = new R3.Vector(0, 0, 1);
+        var v2 = new R3.Vector(0, 1, 0);
+
+        var v3 = v1.cross(v2);
+
+        assert.equal(v3.x(0), 1);
+        assert.equal(v3.x(1), 0);
+        assert.equal(v3.x(2), 0);
+      });
     });
   });
 });

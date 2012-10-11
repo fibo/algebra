@@ -9,7 +9,7 @@ var R3 = new Rn(3);
 
 describe('RealVector', function () {
   describe('constructor', function () {
-    it('requires: ', function() {
+    it('requires: space, elements', function() {
       var v = new R3.Vector();
       //assert.ok(v instanceof RealVector);
     });
@@ -19,6 +19,12 @@ describe('RealVector', function () {
     it('from Vector', function() {
       var v = new R3.Vector();
       //assert.ok(v instanceof Vector);
+    });
+  });
+
+  // TODO uniforma tutti i test che controllano la funzione clone().
+  describe('clone()', function () {
+    it('...', function() {
     });
   });
 
@@ -60,11 +66,11 @@ describe('RealVector', function () {
         var v1 = new R3.Vector(0, 0, 1);
         var v2 = new R3.Vector(0, 1, 0);
 
-        var v3 = v1.cross(v2);
+        v1.cross(v2);
 
-        assert.equal(v3.x(0), 1);
-        assert.equal(v3.x(1), 0);
-        assert.equal(v3.x(2), 0);
+        assert.equal(v1.x(0), -1);
+        assert.equal(v1.x(1), 0);
+        assert.equal(v1.x(2), 0);
       });
     });
   });

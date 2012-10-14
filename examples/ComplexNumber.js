@@ -7,7 +7,7 @@ var Complex = algebra.Complex.Element;
 
 var z = new Complex(1, 2);
 
-//As a complex number, z as a real and an imaginary part.
+//As a complex number, z has a real and an imaginary part.
 
     console.log(z.re());
     console.log(z.im());

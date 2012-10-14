@@ -13,6 +13,7 @@ exports.GeneralLinearGroup = GeneralLinearGroup;
 
 var Real = {};
 
+Real.Element            = require('./lib/Real/Element.js');
 Real.Field              = require('./lib/Real/Field.js');
 Real.VectorSpace        = require('./lib/Real/VectorSpace.js');
 Real.GeneralLinearGroup = require('./lib/Real/GeneralLinearGroup.js');

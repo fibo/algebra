@@ -77,7 +77,8 @@ describe('ComplexElement', function () {
     });
   });
 
-  describe('add()', function () {
+  //TODO describe('add(<Complex|Real>)', function () {
+  describe('add(<Complex>)', function () {
     it('implements the addition operator', function() {
       var one = new Complex(1);
       var i = new Complex(0, 1);

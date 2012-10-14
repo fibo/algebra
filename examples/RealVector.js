@@ -19,7 +19,7 @@ console.log(v1.getElements());
 
 v1.scalar(2);
 
-//Now the elements of v1 are [2, 0, 0].
+//Now the elements of v1 are [2, 0, 2].
 
 console.log(v1.getElements());
 
@@ -36,4 +36,20 @@ var zero = R3.getZero();
 
     v1.add(zero);
     v1.sub(zero);
+
+//Create another vector, to play with binary operators.
+
+var v2 = new R3.Vector(0, 1, 0);
+
+//It is defined a dot product in every Rn. It returns a real number: when this 
+//number is zero, it means that the vectors are orthogonal.
+
+if(v1.dot(v2) == 0) {
+  console.log('v1 and v2 are othogonal');
+}
+
+//Since we are in R3, it is also defined a cross product. It is an (n-1)-ary operator,
+//so in R3 it is binary.
+
+v1.cross(v2);
 

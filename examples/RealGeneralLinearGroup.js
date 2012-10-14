@@ -1,9 +1,9 @@
 
 //Start with GLR2 that is the group of all 2x2 invertible real matrices.
 
-var albegra = require('../index.js');
+var albegra = require('algebra');
 
-var GLRn = require('../index.js').Real.GeneralLinearGroup;
+var GLRn = algebra.Real.GeneralLinearGroup;
 //var GLRn = algebra.Real.GeneralLinearGroup;
 
 var GLR2 = new GLRn(2);

@@ -1,9 +1,9 @@
 
 //First of all we need a space, for instance R3.
 
-var algebra = require('../index.js');
+var algebra = require('algebra');
 
-var Rn = require('../index.js').Real.VectorSpace;
+var Rn = algebra.Real.VectorSpace;
 
 var R3 = new Rn(3);
 

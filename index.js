@@ -1,15 +1,13 @@
 
-var Matrix             = require('./lib/Matrix.js');
-var SquareMatrix       = require('./lib/SquareMatrix.js');
-var Vector             = require('./lib/Vector.js');
-var VectorSpace        = require('./lib/VectorSpace.js');
-var GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
+exports.Matrix             = require('./lib/Matrix.js');
+exports.SquareMatrix       = require('./lib/SquareMatrix.js');
+exports.Vector             = require('./lib/Vector.js');
+exports.VectorSpace        = require('./lib/VectorSpace.js');
+exports.GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
+exports.GroupElement       = require('./lib/GroupElement.js');
+exports.FieldElement       = require('./lib/FieldElement.js');
+exports.RingElement        = require('./lib/RingElement.js');
 
-exports.Matrix             = Matrix;
-exports.SquareMatrix       = SquareMatrix;
-exports.VectorSpace        = VectorSpace;
-exports.Vector             = Vector;
-exports.GeneralLinearGroup = GeneralLinearGroup;
 
 var Real = {};
 

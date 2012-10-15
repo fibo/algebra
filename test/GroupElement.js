@@ -16,7 +16,6 @@ describe('GroupElement', function () {
     it('returns a copy of the object', function() {
 // TODO se riesco ad implementare clone a livello di GroupElement
 // potrei anche togliere i test dalle classi figlie?
-    it('is an abstract function', function() {
     });
   });
 

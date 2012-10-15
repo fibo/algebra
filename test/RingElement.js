@@ -15,12 +15,22 @@ describe('RingElement', function () {
     });
   });
 
-  describe('mul()', function () {
+  describe('lmul()', function () {
     it('is an abstract function', function() {
     });
   });
 
-  describe('inv()', function () {
+  describe('rmul()', function () {
+    it('is an abstract function', function() {
+    });
+  });
+
+  describe('rinv()', function () {
+    it('is an abstract function', function() {
+    });
+  });
+
+  describe('linv()', function () {
     it('is an abstract function', function() {
     });
   });

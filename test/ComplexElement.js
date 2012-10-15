@@ -6,7 +6,7 @@ var Complex = algebra.Complex.Element;
 
 
 describe('ComplexElement', function () {
-  describe('constructor', function () {
+  describe('constructor:', function () {
     it('accepts 0 arguments', function() {
       var z = new Complex();
       assert.ok(z instanceof Complex);
@@ -23,8 +23,8 @@ describe('ComplexElement', function () {
     });
   });
 
-  describe('inherits', function () {
-    it('from ...', function() {
+  describe('inheritance:', function () {
+    it('is a FieldElement', function() {
     });
   });
 

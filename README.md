@@ -22,3 +22,13 @@ My goal is to provide users with the feature of creating their own algebra field
 Suppose for example the set of strings with the concatenation operator,
 it could be extended to a group and maybe to a field and build "matrices of strings".
 
+# Testing
+
+Install mocha, which is in dev dependencies list.
+
+    npm install
+
+Please use the nyan cat for testing.
+
+    node_modules/.bin/mocha --recursive --reporter nyan
+

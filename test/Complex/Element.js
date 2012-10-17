@@ -1,6 +1,6 @@
 
 var assert = require('assert');
-var algebra = require('../index.js');
+var algebra = require('../../index.js');
 
 var Complex = algebra.Complex.Element;
 
@@ -161,4 +161,5 @@ describe('ComplexElement', function () {
     });
   });
 });
+
 

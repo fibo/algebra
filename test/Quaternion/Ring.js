@@ -1,6 +1,6 @@
 
 var assert = require('assert');
-var algebra = require('../index.js');
+var algebra = require('../../index.js');
 
 var Quaternion      = algebra.Quaternion.Element;
 var QuaternionRing = algebra.Quaternion.Ring;
@@ -117,5 +117,6 @@ describe('QuaternionRing', function () {
     });
   });
 });
+
 
 

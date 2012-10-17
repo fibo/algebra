@@ -1,6 +1,6 @@
 
 var assert = require('assert');
-var algebra = require('../index.js');
+var algebra = require('../../index.js');
 
 var RealField = algebra.Real.Field;
 
@@ -39,4 +39,5 @@ describe('RealField', function () {
     assert.equal(c, a / b);
   });
 });
+
 

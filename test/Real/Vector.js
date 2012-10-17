@@ -1,6 +1,6 @@
 
 var assert = require('assert');
-var algebra = require('../index.js');
+var algebra = require('../../index.js');
 
 var Vector = algebra.Vector;
 var Rn = algebra.Real.VectorSpace;
@@ -75,4 +75,5 @@ describe('RealVector', function () {
     });
   });
 });
+
 

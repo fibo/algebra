@@ -1,7 +1,7 @@
 
 // TODO confronta Real e Complex, a livello di test, metodi ecc
 var assert = require('assert');
-var algebra = require('../index.js');
+var algebra = require('../../index.js');
 
 var Real         = algebra.Real.Element;
 var FieldElement = algebra.FieldElement;
@@ -95,4 +95,5 @@ describe('RealElement', function () {
     });
   });
 });
+
 

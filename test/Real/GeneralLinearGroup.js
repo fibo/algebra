@@ -1,6 +1,6 @@
 
 var assert = require('assert');
-var algebra = require('../index.js');
+var algebra = require('../../index.js');
 
 var GeneralLinearGroup = algebra.GeneralLinearGroup;
 var GLRn               = algebra.Real.GeneralLinearGroup;
@@ -27,4 +27,5 @@ describe('RealGeneralLinearGroup', function () {
     assert.ok(field instanceof RealField);
   });
 });
+
 

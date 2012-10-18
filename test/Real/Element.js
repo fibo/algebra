@@ -21,23 +21,19 @@ describe('RealElement', function () {
 
   describe('clone()', function () {
     it('returns a copy of the object', function() {
-/*
       var x = new Real(-15);
       var y = x.clone();
       assert.ok(y instanceof Real);
       assert.ok(x.eq(y));
-*/
     });
   });
 
   describe('eq(<Real>)', function () {
     it('returns true if two elements are equal', function() {
-/*
       var x = new Real(-1);
       var y = new Real(-1);
       assert.ok(x.eq(y));
       assert.ok(y.eq(x));
-*/
     });
   });
 

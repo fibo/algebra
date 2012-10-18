@@ -30,5 +30,5 @@ Install mocha, which is in dev dependencies list.
 
 Please use the nyan cat for testing.
 
-    node_modules/.bin/mocha --recursive --reporter nyan
+    node_modules/.bin/mocha --recursive --bail --reporter nyan
 

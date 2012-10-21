@@ -127,6 +127,9 @@ describe('RealElement', function () {
 
     it('TODO div by 0', function() {
     });
+
+    it('TODO division by 0', function() {
+    });
   });
 
   describe('neg(<Real>)', function () {

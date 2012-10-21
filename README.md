@@ -24,11 +24,13 @@ it could be extended to a group and maybe to a field and build "matrices of stri
 
 # Testing
 
-Install mocha, which is in dev dependencies list.
+Install mocha globally
 
-    npm install
+    npm install -g
 
-Please use the nyan cat for testing.
+Then run tests
 
-    node_modules/.bin/mocha --recursive --bail --reporter nyan
+    npm test
+
+( and say hello to the nyan cat :)
 

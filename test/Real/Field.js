@@ -8,8 +8,8 @@ var R = new RealField();
 
 describe('RealField', function () {
   describe('constructor', function () {
-    it('requires: ..., ...', function() {
-      //assert.ok(... instanceof ...);
+    it('requires no argument', function() {
+      assert.ok(R instanceof RealField);
     });
   });
 

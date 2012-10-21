@@ -39,20 +39,16 @@ describe('RealElement', function () {
 
   describe('add(<Real>)', function () {
     it('implements the addition operator', function() {
-/*
       var x = new Real(2);
       var y = new Real(3);
       x.add(y);
-      assert.equals(x.getData(), 5);
-*/
+      assert.equal(x.num(), 5);
     });
 
     it('coerces number data type', function() {
-/*
       var x = new Real(2);
       x.add(3);
-      assert.equals(x.getData(), 5);
-*/
+      assert.equal(x.num(), 5);
     });
   });
 
@@ -68,6 +64,9 @@ describe('RealElement', function () {
 
   describe('div(<Real>)', function () {
     it('implements the division operator', function() {
+    });
+
+    it('TODO division by 0', function() {
     });
   });
 

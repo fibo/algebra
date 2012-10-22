@@ -26,7 +26,7 @@ it could be extended to a group and maybe to a field and build "matrices of stri
 
 Install mocha globally
 
-    npm install -g
+    npm install mocha -g
 
 Then run tests
 

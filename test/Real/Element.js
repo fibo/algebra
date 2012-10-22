@@ -125,15 +125,21 @@ describe('RealElement', function () {
       assert.equal(x.num(), 1);
     });
 
-    it('TODO div by 0', function() {
-    });
-
     it('TODO division by 0', function() {
     });
   });
 
   describe('neg(<Real>)', function () {
-    it('...', function() {
+    it('implements inversion respect addition', function() {
+      var x = new Real(4);
+      x.neg();
+      assert.equal(x.num(), -4);
+    });
+
+    it('can be chained', function() {
+      var x = new Real(-1);
+      x.neg().neg();
+      assert.equal(x.num(), -1);
     });
   });
 

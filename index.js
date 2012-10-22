@@ -1,12 +1,14 @@
 
+exports.Field              = require('./lib/Field.js');
+exports.FieldElement       = require('./lib/FieldElement.js');
 exports.Matrix             = require('./lib/Matrix.js');
 exports.SquareMatrix       = require('./lib/SquareMatrix.js');
+exports.GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
+exports.Group              = require('./lib/Group.js');
+exports.GroupElement       = require('./lib/GroupElement.js');
+exports.RingElement        = require('./lib/RingElement.js');
 exports.Vector             = require('./lib/Vector.js');
 exports.VectorSpace        = require('./lib/VectorSpace.js');
-exports.GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
-exports.GroupElement       = require('./lib/GroupElement.js');
-exports.FieldElement       = require('./lib/FieldElement.js');
-exports.RingElement        = require('./lib/RingElement.js');
 
 
 var Real = {};
@@ -27,8 +29,8 @@ exports.Complex = Complex;
 
 var Quaternion = {};
 
-Quaternion.Element = require('./lib/Quaternion/Element.js');
-Quaternion.Ring   = require('./lib/Quaternion/Ring.js');
+//Quaternion.Element = require('./lib/Quaternion/Element.js');
+//Quaternion.Ring   = require('./lib/Quaternion/Ring.js');
 
 exports.Quaternion = Quaternion;
 

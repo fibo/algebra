@@ -2,6 +2,8 @@
 var assert = require('assert');
 var algebra = require('../../index.js');
 
+var Field     = algebra.Field;
+var Real      = algebra.Real.Element;
 var RealField = algebra.Real.Field;
 
 var R = new RealField();
@@ -14,29 +16,53 @@ describe('RealField', function () {
   });
 
   describe('inherits', function () {
-    it('from ...', function() {
+    it('from Field', function() {
+      assert.ok(R instanceof Field);
     });
   });
 
-  it('has a zero and a one element', function() {
-    assert.equal(R.getZero(), 0);
-    assert.equal(R.getOne(), 1);
+  describe('getZero()', function() {
+    it('returns zero', function() {
+      assert.equal(R.getZero().num(), 0);
+    });
   });
 
-  it('defines + * - / operations', function() {
-    var a = -1, b = 4, c;
+  describe('getOne()', function() {
+    it('returns one', function() {
+      assert.equal(R.getOne().num(), 1);
+    });
+  });
 
-    c = R.add(a, b);
-    assert.equal(c, a + b);
+  describe('eq(<number|Real>,<number|Real>)', function() {
+  });
 
-    c = R.mul(a, b);
-    assert.equal(c, a * b);
+  describe('neg()', function() {
+  });
 
-    c = R.sub(a, b);
-    assert.equal(c, a - b);
+  describe('add(<number|Real>,<number|Real>)', function() {
+  });
 
-    c = R.div(a, b);
-    assert.equal(c, a / b);
+  describe('sub(<number|Real>,<number|Real>)', function() {
+  });
+
+  describe('mul(<number|Real>,<number|Real>)', function() {
+    it('implements the multiplication operator', function() {
+      var x1 = new Real(2);
+      var x2 = new Real(5);
+      var x = R.mul(x1, x2);
+      assert.equal(x.num(), 10);
+    });
+
+    it('coerces number type', function() {
+      //var x = R.mul(2, 5);
+      //assert.equal(x.num(), 10);
+    });
+  });
+
+  describe('div(<number|Real>,<number|Real>)', function() {
+  });
+
+  describe('inv(<number|Real>)', function() {
   });
 });
 

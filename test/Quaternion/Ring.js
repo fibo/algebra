@@ -2,10 +2,10 @@
 var assert = require('assert');
 var algebra = require('../../index.js');
 
-var Quaternion      = algebra.Quaternion.Element;
-var QuaternionRing = algebra.Quaternion.Ring;
+//var Quaternion      = algebra.Quaternion.Element;
+//var QuaternionRing = algebra.Quaternion.Ring;
 
-var H = new QuaternionRing();
+//var H = new QuaternionRing();
 
 describe('QuaternionRing', function () {
   //describe('constructor', function () {

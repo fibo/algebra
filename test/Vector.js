@@ -2,10 +2,10 @@
 var assert = require('assert');
 var algebra = require('../index.js');
 
-var VectorSpace       = algebra.VectorSpace;
-var RealField    = algebra.Real.Field;
 var ComplexField = algebra.Complex.Field;
-var Matrix = algebra.Matrix;
+var Matrix       = algebra.Matrix;
+var RealField    = algebra.Real.Field;
+var VectorSpace  = algebra.VectorSpace;
 
 var C = new ComplexField();
 var R = new RealField();
@@ -19,7 +19,7 @@ var m1 = new Matrix({
 });
 
 describe('Vector', function () {
-  describe('constructor', function () {
+  describe('constructor:', function () {
     it('requires: space', function() {
       //assert.ok(v instanceof Vector);
     });
@@ -29,13 +29,13 @@ describe('Vector', function () {
   });
 
   // TODO togli i test inherit dalle funzioni che non ereditano
-  describe('inherits', function () {
+  describe('inheritance:', function () {
     it('', function() {
     });
   });
 
   describe('cross(<Vector>)', function () {
-    it('implements the cross production operation', function() {
+    it('implements the cross product operation', function() {
     });
   });
 
@@ -45,12 +45,14 @@ describe('Vector', function () {
   });
 
   describe('scalar(<Element>)', function () {
-    it('implements per scalar multiplication', function() {
+    it('implements multiplication by scalar', function() {
     });
   });
 
   describe('getLength()', function () {
     it('returns the norm of the vector', function() {
+	    // TODO da spostare nei soli vettori reali
+	    // in quelli complessi ci dovrebbe essere l' hermitiana
     });
   });
 
@@ -69,6 +71,4 @@ describe('Vector', function () {
     });
   });
 });
-
-
 

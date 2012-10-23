@@ -165,6 +165,14 @@ describe('RealVector', function () {
       assert.equal(vector1.x(2), -5);
     });
   });
+
+  describe('getCoordinates()', function () {
+    it('returns an array of numbers', function() {
+      var vector = new R3.Vector(1, 2, 3);
+
+      assert.deepEqual(vector.getCoordinates(), [1, 2, 3]);
+    });
+  });
 });
 
 

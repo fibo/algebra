@@ -1,12 +1,9 @@
 
 exports.Field              = require('./lib/Field.js');
-exports.FieldElement       = require('./lib/FieldElement.js');
 exports.Matrix             = require('./lib/Matrix.js');
 exports.SquareMatrix       = require('./lib/SquareMatrix.js');
 exports.GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
 exports.Group              = require('./lib/Group.js');
-exports.GroupElement       = require('./lib/GroupElement.js');
-exports.RingElement        = require('./lib/RingElement.js');
 exports.Vector             = require('./lib/Vector.js');
 exports.VectorSpace        = require('./lib/VectorSpace.js');
 

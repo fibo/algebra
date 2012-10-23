@@ -22,7 +22,17 @@ My goal is to provide users with the feature of creating their own algebra field
 Suppose for example the set of strings with the concatenation operator,
 it could be extended to a group and maybe to a field and build "matrices of strings".
 
-# Testing
+# Development
+
+## Branches
+
+The git repository has the following remote branches:
+
+  * real
+  * complex
+  * quaternion
+
+## Testing
 
 Install mocha globally
 

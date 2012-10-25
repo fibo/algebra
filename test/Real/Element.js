@@ -1,10 +1,11 @@
 
-// TODO confronta Real e Complex, a livello di test, metodi ecc
 var assert = require('assert');
 var algebra = require('../../index.js');
 
-var Real         = algebra.Real.Element;
-var FieldElement = algebra.FieldElement;
+var Real      = algebra.Real.Element;
+var RealField = algebra.Real.Field;
+
+var R = new RealField();
 
 describe('RealElement', function () {
   describe('constructor:', function () {
@@ -47,17 +48,16 @@ describe('RealElement', function () {
     });
   });
 
-  describe('neg(<Real>)', function () {
+  describe('neg()', function () {
     it('implements inversion by addition operator', function() {
       var x = new Real(4);
-      x.neg();
-      assert.equal(x.num(), -4);
+      var y = x.clone().neg();
+      assert.ok(x.add(y).eq(R.getZero()));
     });
 
     it('can be chained', function() {
-      var x = new Real(-1);
-      x.neg().neg();
-      assert.equal(x.num(), -1);
+      var x = new Real(-1, 0);
+      assert.ok(x.neg().neg() instanceof Real);
     });
   });
 

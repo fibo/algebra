@@ -8,10 +8,13 @@ var Rn = algebra.Real.VectorSpace;
 var R3 = new Rn(3);
 
 //Then we can ask the R3 space to give us a vector.
+//The constructor arguments are the elements of the vector.
+//Since we are using R3, i.e. the three dimensional euclidean space,
+//the elements are real numbers.
 
 var v1 = new R3.Vector(1, 0, 1);
 
-//Let see the coordinates of our brand new vector v1.
+//You can see the coordinates of our brand new vector v1.
 
 console.log(v1.getCoordinates());
 
@@ -44,12 +47,19 @@ var v2 = new R3.Vector(0, 1, 0);
 //It is defined a dot product in every Rn. It returns a real number: when this 
 //number is zero, it means that the vectors are orthogonal.
 
-if(v1.dot(v2).eq(0)) {
+if (v1.dot(v2).eq(0)) {
   console.log('v1 and v2 are orthogonal');
 }
+
+//There is also a shortcut to check orthogonality, the "ortho" method, see below.
 
 //Since we are in R3, it is also defined a cross product.
 //The cross product is an (dim-1)-ary operator, so in R3 it is binary.
 
 var v3 = v1.cross(v2);
 
+//Now we have three vectors v1, v2, v3 that are orthogonal and spans R3: they form a basis.
+
+if (v1.ortho(v2) && v1.ortho(v3) && v2.ortho(v3)) {
+  console.log('<v1, v2, v3> is a basis of R3');
+}

@@ -10,13 +10,13 @@ var Rn = algebra.Real.VectorSpace;
 var R3 = new Rn(3);
 
 describe('RealVector', function () {
-  describe('constructor', function () {
-    it('', function() {
+  describe('constructor:', function () {
+    it('works', function () {
     });
   });
 
-  describe('inherits', function () {
-    it('from Vector', function() {
+  describe('inheritance:', function () {
+    it('from Vector', function () {
       //var v = new R3.Vector();
       //assert.ok(v instanceof Vector);
     });
@@ -24,21 +24,17 @@ describe('RealVector', function () {
 
   // TODO uniforma tutti i test che controllano la funzione clone().
   describe('clone()', function () {
-    it('...', function() {
+    it('...', function () {
     });
   });
 
-  describe('x(<Integer>', function () {
-    it('returns the i-esim coordinate', function() {
-      var vector = new R3.Vector(1, 2, 3);
-      assert.equal(vector.x(0), 1);
-      assert.equal(vector.x(1), 2);
-      assert.equal(vector.x(2), 3);
+  describe('eq(<Vector>)', function () {
+    it('...', function () {
     });
   });
 
   describe('getElements()', function () {
-    it('returns the vector elements', function() {
+    it('returns the vector elements', function () {
       var zero = new Real(0);
       var vector = new R3.Vector(zero, 1, 2);
       var elements = vector.getElements();
@@ -49,7 +45,7 @@ describe('RealVector', function () {
   });
 
   describe('getElement()', function () {
-    it('returns the vector elements', function() {
+    it('returns the vector elements', function () {
       var zero = new Real(0);
       var vector = new R3.Vector(zero, 1, 2);
       var element = vector.getElement(0);
@@ -58,7 +54,7 @@ describe('RealVector', function () {
   });
 
   describe('scalar(<number|Real>)', function () {
-    it('implements multiplication by a scalar', function() {
+    it('implements multiplication by a scalar', function () {
       var vector = new R3.Vector(1, 1, 1);
 
       var two = new Real(2);
@@ -69,7 +65,7 @@ describe('RealVector', function () {
       assert.equal(vector.x(2), 2);
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var vector = new R3.Vector(1, 1, 1);
 
       vector.scalar(2);
@@ -79,7 +75,7 @@ describe('RealVector', function () {
       assert.equal(vector.x(2), 2);
     });
 
-    it('can be chained', function() {
+    it('can be chained', function () {
       var vector = new R3.Vector(1, 1, 1);
 
       vector.scalar(2).scalar(4);
@@ -91,7 +87,7 @@ describe('RealVector', function () {
   });
 
   describe('dot(<Vector>)', function () {
-    it('implements dot product operator', function() {
+    it('implements dot product operator', function () {
         var v1 = new R3.Vector(0, 0, 1);
         var v2 = new R3.Vector(0, 1, 0);
 
@@ -103,7 +99,7 @@ describe('RealVector', function () {
 
   describe('R3 Vector', function () {
     describe('cross(<Vector>)', function () {
-      it('implements cross product operator', function() {
+      it('implements cross product operator', function () {
         var v1 = new R3.Vector(0, 0, 1);
         var v2 = new R3.Vector(0, 1, 0);
 
@@ -117,7 +113,7 @@ describe('RealVector', function () {
   });
 
   describe('add(<Vector>)', function () {
-    it('implements vector addition operation', function() {
+    it('implements vector addition operation', function () {
       var vector1 = new R3.Vector(1, 2, 3);
       var vector2 = new R3.Vector(1, -1, 1);
 
@@ -128,7 +124,7 @@ describe('RealVector', function () {
       assert.equal(vector1.x(2), 4);
     });
 
-    it('can be chained', function() {
+    it('can be chained', function () {
       var vector1 = new R3.Vector(1, 1, 1);
       var vector2 = new R3.Vector(2, 2, 2);
       var vector3 = new R3.Vector(4, 4, 4);
@@ -142,7 +138,7 @@ describe('RealVector', function () {
   });
 
   describe('sub(<Vector>)', function () {
-    it('implements vector subtraction operation', function() {
+    it('implements vector subtraction operation', function () {
       var vector1 = new R3.Vector(1, 2, 3);
       var vector2 = new R3.Vector(1, -1, 1);
 
@@ -153,7 +149,7 @@ describe('RealVector', function () {
       assert.equal(vector1.x(2), 2);
     });
 
-    it('can be chained', function() {
+    it('can be chained', function () {
       var vector1 = new R3.Vector(1, 1, 1);
       var vector2 = new R3.Vector(2, 2, 2);
       var vector3 = new R3.Vector(4, 4, 4);
@@ -166,13 +162,37 @@ describe('RealVector', function () {
     });
   });
 
+  describe('ortho(<Vector>)', function () {
+    it('returns true if two vectors are orthogonal', function () {
+      var vector1 = new R3.Vector(1, 0, 1);
+      var vector2 = new R3.Vector(0, 1, 0);
+
+      assert.ok(vector1.ortho(vector2));
+    });
+  });
+
+  describe('r4c(<Matrix>)', function () {
+    it('implements right multiplication by matrix', function () {
+    });
+  });
+
   describe('getCoordinates()', function () {
-    it('returns an array of numbers', function() {
+    it('returns an array of numbers', function () {
       var vector = new R3.Vector(1, 2, 3);
 
       assert.deepEqual(vector.getCoordinates(), [1, 2, 3]);
     });
   });
+
+  describe('x(<Integer>', function () {
+    it('returns the i-esim coordinate', function () {
+      var vector = new R3.Vector(1, 2, 3);
+      assert.equal(vector.x(0), 1);
+      assert.equal(vector.x(1), 2);
+      assert.equal(vector.x(2), 3);
+    });
+  });
+
 });
 
 

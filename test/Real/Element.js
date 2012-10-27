@@ -33,6 +33,13 @@ describe('RealElement', function () {
     });
   });
 
+  describe('number()', function () {
+    it('returns the raw number', function () {
+      var x = new Real(2.71);
+      assert.equal(x.num(), 2.71);
+    });
+  });
+
   describe('eq(<number|Real>)', function () {
     it('returns true if two elements are equal', function () {
       var x = new Real(-1);
@@ -50,6 +57,20 @@ describe('RealElement', function () {
     it('has reflection property', function () {
       var x = new Real(2.7);
       assert.ok(x.eq(x));
+    });
+  });
+
+  describe('isZero()', function () {
+    it('returns true if element is xero', function () {
+      var x = new Real(0);
+      //assert.ok(x.isZero());
+    });
+  });
+
+  describe('isOne()', function () {
+    it('returns true if element is one', function () {
+      var x = new Real(1);
+      //assert.ok(x.isOne());
     });
   });
 

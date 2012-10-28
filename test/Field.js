@@ -2,17 +2,19 @@
 var assert = require('assert');
 var algebra = require('../index.js');
 
+var Group = algebra.Group;
 var Field = algebra.Field;
 
 describe('Field', function () {
-  describe('constructor', function () {
+  describe('constructor:', function () {
     it('requires', function() {
     });
   });
 
-  describe('inherits', function () {
-    it('from Group', function() {
-      //assert.ok(R instanceof Field);
+  describe('inheritance:', function () {
+    it('is a Group', function() {
+      var field = new Field();
+      assert.ok(field instanceof Group);
     });
   });
 

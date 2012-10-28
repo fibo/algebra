@@ -114,7 +114,7 @@ describe('RealField', function () {
     });
   });
 
-  describe('mul(<number|Real>,<number|Real>)', function() {
+  describe('mul(<number|Real>, <number|Real>)', function() {
     it('implements the multiplication operator', function() {
       var x = new Real(2);
       var y = new Real(5);
@@ -128,7 +128,7 @@ describe('RealField', function () {
     });
   });
 
-  describe('div(<number|Real>,<number|Real>)', function() {
+  describe('div(<number|Real>, <number|Real>)', function() {
     it('implements the division operator', function() {
       var x = new Real(20);
       var y = new Real(4);
@@ -150,5 +150,4 @@ describe('RealField', function () {
 
   });
 });
-
 

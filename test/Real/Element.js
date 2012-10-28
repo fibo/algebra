@@ -33,9 +33,10 @@ describe('RealElement', function () {
     });
   });
 
-  describe('number()', function () {
-    it('returns the raw number', function () {
+  describe('num()', function () {
+    it('returns the real number', function () {
       var x = new Real(2.71);
+
       assert.equal(x.num(), 2.71);
     });
   });
@@ -61,24 +62,27 @@ describe('RealElement', function () {
   });
 
   describe('isZero()', function () {
-    it('returns true if element is xero', function () {
+    it('returns true if element is zero', function () {
       var x = new Real(0);
-      //assert.ok(x.isZero());
+      assert.ok(x.isZero());
     });
   });
 
   describe('isOne()', function () {
     it('returns true if element is one', function () {
       var x = new Real(1);
-      //assert.ok(x.isOne());
+      assert.ok(x.isOne());
     });
   });
 
   describe('neg()', function () {
     it('implements inversion by addition operator', function () {
       var x = new Real(4);
-      var y = x.clone().neg();
-      assert.ok(x.add(y).eq(R.getZero()));
+      var y = x.clone();
+      
+      y.neg();
+
+      assert.ok(x.add(y).isZero());
     });
 
     it('can be chained', function () {
@@ -91,13 +95,17 @@ describe('RealElement', function () {
     it('implements the addition operator', function () {
       var x = new Real(2);
       var y = new Real(3);
+
       x.add(y);
+
       assert.equal(x.num(), 5);
     });
 
     it('coerces number type', function () {
       var x = new Real(2);
+
       x.add(3);
+
       assert.equal(x.num(), 5);
     });
 
@@ -119,7 +127,9 @@ describe('RealElement', function () {
 
     it('coerces number type', function () {
       var x = new Real(20);
+
       x.sub(3);
+
       assert.equal(x.num(), 17);
     });
 
@@ -130,10 +140,13 @@ describe('RealElement', function () {
   });
 
   describe('inv()', function () {
-    it('inverts the element', function () {
+    it('implements inversion by multiplication operator', function () {
       var x = new Real(-2);
-      x.inv();
-      assert.equal(x.num(), -0.5);
+      var y = x.clone();
+      
+      y.inv();
+
+      assert.ok(x.mul(y).isOne());
     });
 
     it('can be chained', function () {
@@ -146,13 +159,17 @@ describe('RealElement', function () {
     it('implements the multiplication operator', function () {
       var x = new Real(2);
       var y = new Real(3);
+
       x.mul(y);
+
       assert.equal(x.num(), 6);
     });
 
     it('coerces number type', function () {
       var x = new Real(2);
+
       x.mul(3);
+
       assert.equal(x.num(), 6);
     });
 
@@ -166,19 +183,25 @@ describe('RealElement', function () {
     it('implements the division operator', function () {
       var x = new Real(20);
       var y = new Real(4);
+
       x.div(y);
+
       assert.equal(x.num(), 5);
     });
 
     it('coerces number type', function () {
       var x = new Real(15);
+
       x.div(3);
+
       assert.equal(x.num(), 5);
     });
 
     it('can be chained', function () {
       var x = new Real(8);
+
       x.div(2).div(4);
+
       assert.equal(x.num(), 1);
     });
 

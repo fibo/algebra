@@ -12,6 +12,19 @@ var R3 = new Rn(3);
 describe('RealVector', function () {
   describe('constructor:', function () {
     it('works', function () {
+      var arg = {};
+      arg.elements = [];
+      arg.space = R3;
+
+      for (var i = 0; i < R3.getDim(); i++) {
+        var num = i * i + 1; // elements are 1, 2, 5.
+        var element = new Real(num);
+        arg.elements.push(element);
+      }
+
+      var vector = new RealVector(arg); // Real 3d vector (1, 2, 5).
+
+      assert.ok(vector instanceof RealVector);
     });
   });
 

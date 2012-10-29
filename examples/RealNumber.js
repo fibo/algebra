@@ -58,7 +58,7 @@ y.mul(10).sub(8).div(2).neg().add(2).inv();
 
 //You can check if two numbers are equal.
 
-if( one.eq(y) ) {
+if (one.eq(y)) {
   console.log('y = 1');
 }
 

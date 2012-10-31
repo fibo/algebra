@@ -6,7 +6,9 @@ var Group = algebra.Group;
 
 describe('Group', function () {
   describe('constructor', function () {
-    it('requires', function() {
+    it('works', function() {
+      var group = new Group();
+      assert.ok(group instanceof Group);
     });
   });
 

@@ -7,7 +7,9 @@ var Field = algebra.Field;
 
 describe('Field', function () {
   describe('constructor:', function () {
-    it('requires', function() {
+    it('works', function() {
+      var field = new Field();
+      assert.ok(field instanceof Field);
     });
   });
 

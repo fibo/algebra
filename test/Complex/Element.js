@@ -30,11 +30,6 @@ describe('ComplexElement', function () {
     });
   });
 
-  describe('inheritance:', function () {
-    it('is a ...', function () {
-    });
-  });
-
   describe('clone()', function () {
     it('returns a copy of the object', function () {
       var z = new Complex(-15, 2);
@@ -65,21 +60,14 @@ describe('ComplexElement', function () {
   describe('isZero()', function () {
     it('returns true if element is zero', function () {
       var z = new Complex(0, 0);
-      //assert.ok(z.isZero());
+      assert.ok(z.isZero());
     });
   });
 
   describe('isOne()', function () {
     it('returns true if element is one', function () {
       var z = new Complex(1, 0);
-      //assert.ok(z.isOne());
-    });
-  });
-
-  describe('isI()', function () {
-    it('returns true if element is i', function () {
-      var z = new Complex(0, 1);
-      //assert.ok(z.isI());
+      assert.ok(z.isOne());
     });
   });
 
@@ -121,7 +109,7 @@ describe('ComplexElement', function () {
     it('implements inversion by addition operator', function () {
       var z = new Complex(4, 1);
       var w = z.clone().neg();
-      //assert.ok(z.add(w).eq(C.getZero()));
+      assert.ok(z.add(w).eq(C.getZero()));
     });
 
     it('can be chained', function () {

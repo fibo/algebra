@@ -28,12 +28,6 @@ describe('Vector', function () {
     });
   });
 
-  // TODO togli i test inherit dalle funzioni che non ereditano
-  describe('inheritance:', function () {
-    it('', function() {
-    });
-  });
-
   describe('cross(<Vector>)', function () {
     it('implements the cross product operation', function() {
     });
@@ -51,8 +45,6 @@ describe('Vector', function () {
 
   describe('getLength()', function () {
     it('returns the norm of the vector', function() {
-	    // TODO da spostare nei soli vettori reali
-	    // in quelli complessi ci dovrebbe essere l' hermitiana
     });
   });
 
@@ -63,11 +55,6 @@ describe('Vector', function () {
 
   describe('r4c(<Matrix>)', function () {
     it('implements rows for columns right multiplication by a matrix', function() {
-    });
-  });
-
-  describe('...()', function () {
-    it('...', function() {
     });
   });
 });

@@ -19,7 +19,7 @@ describe('ComplexField', function () {
     it('is a Field', function() {
       assert.ok(C instanceof Field);
     });
-  );
+  });
 
   describe('getZero()', function () {
     it('returns the 0 element', function() {

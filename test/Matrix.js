@@ -40,12 +40,7 @@ describe('Matrix', function () {
     });
   });
 
-  describe('inherits', function () {
-    it('', function() {
-    });
-  });
-
-  describe('ij()', function () {
+  describe('ij(number, number)', function () {
     it('returns the i,j-elem', function() {
       assert.equal(m1.ij(0, 0), elements1[0]);
       assert.equal(m1.ij(0, 1), elements1[1]);
@@ -73,6 +68,7 @@ describe('Matrix', function () {
 
   describe('getElements()', function () {
     it('returns the elements', function() {
+      assert.deepEqual(m1.getElements(), elements1);
     });
 
     it('has an elems() alias', function() {
@@ -107,7 +103,7 @@ describe('Matrix', function () {
       // ...
     });
 
-    it('swaps the i,j-th element with the i,j-th one', function() {
+    it('swaps the number of rows with the number of columns', function() {
       assert.equal(m1.getNumCols(), m2.getNumRows());
       assert.equal(m1.getNumRows(), m2.getNumCols());
     });
@@ -131,11 +127,6 @@ describe('Matrix', function () {
 
   describe('r4c(<Matrix|Vector>)', function () {
     it('implements rows for columns right multiplication by a matrix or a vector', function() {
-    });
-  });
-
-  describe('...()', function () {
-    it('...', function() {
     });
   });
 });

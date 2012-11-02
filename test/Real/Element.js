@@ -1,5 +1,5 @@
 
-var assert = require('assert');
+var assert  = require('assert');
 var algebra = require('../../index.js');
 
 var Real      = algebra.Real.Element;
@@ -12,11 +12,6 @@ describe('RealElement', function () {
     it('accepts a number as single argument', function () {
       var ten = new Real(10);
       assert.ok(ten instanceof Real);
-    });
-  });
-
-  describe('inheritance:', function () {
-    it('is a ...', function () {
     });
   });
 

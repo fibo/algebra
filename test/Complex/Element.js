@@ -7,11 +7,11 @@ var ComplexField = algebra.Complex.Field;
 
 var C = new ComplexField();
 
-
 describe('ComplexElement', function () {
   describe('constructor:', function () {
-    it('accepts 0 arguments', function () {
-      var z = new Complex();
+    it('accepts 2 arguments', function () {
+      var z = new Complex(1, 2);
+
       assert.ok(z instanceof Complex);
     });
 
@@ -23,10 +23,13 @@ describe('ComplexElement', function () {
       assert.equal(z.im(), 0);
     });
 
-    it('accepts 2 arguments', function () {
-      var z = new Complex(1, 2);
+    it('Defaults to (0, 0) if no argument is provided', function () {
+      var z = new Complex();
 
       assert.ok(z instanceof Complex);
+
+      assert.equal(z.re(), 0);
+      assert.equal(z.im(), 0);
     });
   });
 
@@ -54,6 +57,13 @@ describe('ComplexElement', function () {
     it('returns the imaginary part', function () {
       var z = new Complex(1, 2);
       assert.equal(z.im(), 2);
+    });
+  });
+
+  describe('xy()', function () {
+    it('returns the real and imaginary part', function () {
+      var z = new Complex(1, 2);
+      assert.deepEqual(z.xy(), [1, 2]);
     });
   });
 

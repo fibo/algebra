@@ -11,12 +11,12 @@ var R = new RealField();
 describe('VectorSpace', function () {
   describe('constructor:', function () {
     it('works', function() {
-    var euclideanPlan = new VectorSpace({
+      var euclideanPlane = new VectorSpace({
         dim: 2,
         field: R
       });
 
-    assert.ok(euclideanPlan instanceof VectorSpace);
+      assert.ok(euclideanPlane instanceof VectorSpace);
     });
 
     it('requires field', function() {

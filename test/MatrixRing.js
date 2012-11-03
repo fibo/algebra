@@ -9,5 +9,15 @@ describe('MatrixRing', function () {
     it('', function () {
     });
   });
+
+  describe('getField()', function () {
+    it('', function () {
+    });
+  });
+
+  describe('getOrder()', function () {
+    it('', function () {
+    });
+  });
 });
 

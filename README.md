@@ -7,6 +7,24 @@ Vectors, Matrices and more
 
     npm install algebra
 
+# Quick start
+
+    var algebra = require('algebra');
+
+    var Complex = algebra.Complex.Element;
+    var MnR = algebra.Real.MatrixRing;
+    var Rn = algebra.Real.VectorSpace;
+
+    var R2 = new Rn(2);
+    var M2R = new MnR(2);
+
+    var z1 = new Complex(1, 2);
+    var z2 = new Complex(3, 4);
+
+    z1.mul(z2); // (1 + 2i) * (3 + 4i)
+
+    console.log(z1.xy()); // [-5, 10]
+
 # Description
 
 I'm implementing matrices and vectors on few algebra fields

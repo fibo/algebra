@@ -19,5 +19,15 @@ describe('MatrixRing', function () {
     it('', function () {
     });
   });
+
+  describe('getOne()', function () {
+    it('returns the identity matrix', function () {
+    });
+  });
+
+  describe('getZero()', function () {
+    it('returns the zero matrix', function () {
+    });
+  });
 });
 

@@ -1,4 +1,3 @@
-
 var assert = require('assert');
 var algebra = require('../../index.js');
 
@@ -27,13 +26,13 @@ describe('RealField', function () {
   });
 
   describe('getZero()', function() {
-    it('returns zero', function() {
+    it('returns the zero element', function() {
       assert.equal(R.getZero().num(), 0);
     });
   });
 
   describe('getOne()', function() {
-    it('returns one', function() {
+    it('returns the one element', function() {
       assert.equal(R.getOne().num(), 1);
     });
   });

@@ -28,9 +28,14 @@ describe('Quick start:', function () {
   });
 
   it('has a working Matrices example', function () {
-    //var MnR = algebra.Real.MatrixRing;
-    //var M2R = new MnR(2);
+    var MnR = algebra.Real.MatrixRing;
+    var M2R = new MnR(2);
 
-    //var m1 = new M2R.Matrix(1, 2, 3, 4);
+    var m1 = new M2R.Matrix(1, 2, 3, 4);
+    var m2 = new M2R.Id(-1, 0, 0, 1);
+
+    //m1.mul(m2);
+
+console.log(m1.toString());
   });
 });

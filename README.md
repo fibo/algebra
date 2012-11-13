@@ -84,7 +84,7 @@ The git repository has the following remote branches:
   * real
   * complex
   * quaternion
-  * octonions
+  * octonions *TODO*
 
 which are the four normed division algebras over reals.
 

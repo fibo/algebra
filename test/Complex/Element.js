@@ -81,6 +81,19 @@ describe('ComplexElement', function () {
     });
   });
 
+  describe('norm()', function () {
+    it('returns the euclidean norm', function () {
+      var z1 = new Complex(1, 2);
+      assert.equal(z1.norm(), 5);
+
+      var z2 = new Complex(5, -2);
+      assert.equal(z2.norm(), 29);
+
+      // The norm of the product is the product of the norm.
+      assert.equal(z1.mul(z2).norm(), 5 * 29);
+    });
+  });
+
   describe('conj()', function () {
     var z = new Complex(1, 2);
 

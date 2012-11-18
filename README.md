@@ -77,6 +77,10 @@ See the [Wiki] (https://github.com/fibo/algebra/wiki).
 
 # Development
 
+## Coding style
+
+See [Felix's Node.js Style Guide] (http://nodeguide.com/style.html).
+
 ## Branches
 
 The git repository has the following remote branches:

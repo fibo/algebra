@@ -1,4 +1,3 @@
-
 var assert = require('assert');
 var algebra = require('../index.js');
 
@@ -52,14 +51,14 @@ describe('Matrix', function () {
   });
 
   describe('row()', function () {
-    it('returns the i-th row', function() {
+    it('returns the i-th row', function () {
       assert.deepEqual(m1.row(0), [1, 0, 2]);
       assert.deepEqual(m1.row(1), [-5, -1, 6]);
     });
   });
 
   describe('col()', function () {
-    it('returns the j-th column', function() {
+    it('returns the j-th column', function () {
       assert.deepEqual(m1.col(0), [1, -5]);
       assert.deepEqual(m1.col(1), [0, -1]);
       assert.deepEqual(m1.col(2), [2, 6]);
@@ -71,7 +70,7 @@ describe('Matrix', function () {
       assert.deepEqual(m1.getElements(), elements1);
     });
 
-    it('has an elems() alias', function() {
+    it('has an elems() alias', function () {
       assert.ok(m1.getElements === m1.elems);
     });
   });
@@ -95,7 +94,7 @@ describe('Matrix', function () {
       assert.deepEqual(m1.tr().tr().elems(), elements1);
     });
 
-    it('swaps the i,j-th element with the i,j-th one', function() {
+    it('swaps the i,j-th element with the i,j-th one', function () {
       //assert.equal(m1.ij(0, 1), m2.ij(1, 0));
       //assert.equal(m1.ij(0, 2), m2.ij(3, 0));
       //assert.equal(m1.ij(0, 3), m2.ij(4, 0));
@@ -103,12 +102,12 @@ describe('Matrix', function () {
       // ...
     });
 
-    it('swaps the number of rows with the number of columns', function() {
+    it('swaps the number of rows with the number of columns', function () {
       assert.equal(m1.getNumCols(), m2.getNumRows());
       assert.equal(m1.getNumRows(), m2.getNumCols());
     });
 
-    it('has a tr() alias', function() {
+    it('has a tr() alias', function () {
       assert.ok(m1.transpose === m1.tr);
     });
   });

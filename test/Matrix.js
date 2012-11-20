@@ -18,7 +18,7 @@ var m1 = new Matrix({
 
 describe('Matrix', function () {
   describe('constructor', function () {
-    it('requires: numRows, numCols, order', function() {
+    it('requires: numRows, numCols, order', function () {
       var m = new Matrix({
         numRows: 2,
         numCols: 3,
@@ -27,7 +27,7 @@ describe('Matrix', function () {
       assert.ok(m instanceof Matrix);
     });
 
-    it('elements arg defaults to field.getZero()', function() {
+    it('elements arg defaults to field.getZero()', function () {
       /*
       var m = new Matrix({
         numCols: 2,

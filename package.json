@@ -20,5 +20,8 @@
   "license": "BSD",
   "devDependencies": {
     "mocha": "1.4.2"
+  },
+  "engines": {
+    "node": ">=0.8"
   }
 }

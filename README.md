@@ -69,7 +69,7 @@ which was my book at Universita' Degli Studi di Genova.
 My goal is to provide users with the feature of creating their own algebra field and building vector spaces and matrices on it.
 
 Suppose for example the set of strings with the concatenation operator,
-it could be extended to a group and maybe to a field and build "matrices of strings".
+it could be extended to a group and maybe to a field and build "matrices of strings" or probably in the future ... "string of mastrices".
 
 # Documentation
 

@@ -9,7 +9,7 @@ Vectors, Matrices and more
 
 # Quick start
 
-This is a 60 seconds tutorial to get your hands dirty with algebra.
+This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
 ## Complex numbers
 

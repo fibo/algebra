@@ -6,30 +6,30 @@ var Group = algebra.Group;
 
 describe('Group', function () {
   describe('constructor', function () {
-    it('works', function() {
+    it('works', function () {
       var group = new Group();
       assert.ok(group instanceof Group);
     });
   });
 
   describe('inherits', function () {
-    it('from ...', function() {
+    it('from ...', function () {
     });
   });
 
-  describe('getZero()', function() {
+  describe('getZero()', function () {
   });
 
-  describe('eq()', function() {
+  describe('eq()', function () {
   });
 
-  describe('neg()', function() {
+  describe('neg()', function () {
   });
 
-  describe('add()', function() {
+  describe('add()', function () {
   });
 
-  describe('sub()', function() {
+  describe('sub()', function () {
   });
 });
 

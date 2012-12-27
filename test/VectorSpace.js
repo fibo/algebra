@@ -10,7 +10,7 @@ var R = new RealField();
 
 describe('VectorSpace', function () {
   describe('constructor:', function () {
-    it('works', function() {
+    it('works', function () {
       var euclideanPlane = new VectorSpace({
         dim: 2,
         field: R
@@ -19,21 +19,20 @@ describe('VectorSpace', function () {
       assert.ok(euclideanPlane instanceof VectorSpace);
     });
 
-    it('requires field', function() {
+    it('requires field', function () {
     });
 
-    it('requires dim', function() {
+    it('requires dim', function () {
     });
   });
 
   describe('getDim()', function () {
-    it('returns space dimension', function() {
+    it('returns space dimension', function () {
     });
   });
 
   describe('getZero()', function () {
-    it('returns the zero vector', function() {
-
+    it('returns the zero vector', function () {
       var dim = 4;
       var field = R;
       var zeroElement = R.getZero();

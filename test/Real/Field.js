@@ -9,36 +9,36 @@ var R = new RealField();
 
 describe('RealField', function () {
   describe('constructor:', function () {
-    it('requires no argument', function() {
+    it('requires no argument', function () {
       assert.ok(R instanceof RealField);
     });
   });
 
   describe('inheritance:', function () {
-    it('is a Field', function() {
+    it('is a Field', function () {
       assert.ok(R instanceof Field);
     });
 
-    it('implements coerceToElement()', function() {
+    it('implements coerceToElement()', function () {
       var x = R.coerceToElement(1);
       assert.ok(x instanceof Real);
     });
   });
 
-  describe('getZero()', function() {
-    it('returns the zero element', function() {
+  describe('getZero()', function () {
+    it('returns the zero element', function () {
       assert.equal(R.getZero().num(), 0);
     });
   });
 
-  describe('getOne()', function() {
-    it('returns the one element', function() {
+  describe('getOne()', function () {
+    it('returns the one element', function () {
       assert.equal(R.getOne().num(), 1);
     });
   });
 
-  describe('eq(<number|Real>,<number|Real>)', function() {
-    it('returns true if two elements are equal', function() {
+  describe('eq(<number|Real>,<number|Real>)', function () {
+    it('returns true if two elements are equal', function () {
       var x = new Real(-1);
       var y = new Real(-1);
 
@@ -46,7 +46,7 @@ describe('RealField', function () {
       assert.ok(R.eq(y, x));
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var x = new Real(-1);
       assert.ok(R.eq(x, -1));
       assert.ok(R.eq(-1, x));
@@ -54,22 +54,22 @@ describe('RealField', function () {
     });
   });
 
-  describe('neg(<number|Real>)', function() {
-    it('returns the inverse by addition', function() {
+  describe('neg(<number|Real>)', function () {
+    it('returns the inverse by addition', function () {
       var x = new Real(2);
       var y = R.neg(x)
       assert.equal(y.num(), -2);
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var x = 5;
       var y = R.neg(x);
       assert.equal(y.num(), -5);
     });
   });
 
-  describe('add(<number|Real>,<number|Real>)', function() {
-    it('returns the result of addition', function() {
+  describe('add(<number|Real>,<number|Real>)', function () {
+    it('returns the result of addition', function () {
       var x = new Real(1);
       var y = new Real(-2);
 
@@ -78,14 +78,14 @@ describe('RealField', function () {
       assert.equal(z.num(), -1);
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var x = R.add(2, 5);
       assert.equal(x.num(), 7);
     });
   });
 
-  describe('sub(<number|Real>,<number|Real>)', function() {
-    it('returns the result of subtraction', function() {
+  describe('sub(<number|Real>,<number|Real>)', function () {
+    it('returns the result of subtraction', function () {
       var x = new Real(1);
       var y = new Real(2);
 
@@ -94,41 +94,41 @@ describe('RealField', function () {
       assert.equal(z.num(), -1);
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var x = R.sub(2, 5);
       assert.equal(x.num(), -3);
     });
   });
 
-  describe('inv(<number|Real>)', function() {
-    it('returns the inverse by multiplication', function() {
+  describe('inv(<number|Real>)', function () {
+    it('returns the inverse by multiplication', function () {
       var x = new Real(-2);
       var y = R.inv(x);
       assert.equal(y.num(), -0.5);
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var x = R.inv(4);
       assert.equal(x.num(), 0.25);
     });
   });
 
-  describe('mul(<number|Real>, <number|Real>)', function() {
-    it('implements the multiplication operator', function() {
+  describe('mul(<number|Real>, <number|Real>)', function () {
+    it('implements the multiplication operator', function () {
       var x = new Real(2);
       var y = new Real(5);
       var z = R.mul(x, y);
       assert.equal(z.num(), 10);
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var x = R.mul(2, 5);
       assert.equal(x.num(), 10);
     });
   });
 
-  describe('div(<number|Real>, <number|Real>)', function() {
-    it('implements the division operator', function() {
+  describe('div(<number|Real>, <number|Real>)', function () {
+    it('implements the division operator', function () {
       var x = new Real(20);
       var y = new Real(4);
 
@@ -137,7 +137,7 @@ describe('RealField', function () {
       assert.equal(z.num(), 5);
     });
 
-    it('coerces number type', function() {
+    it('coerces number type', function () {
       var x = new Real(15);
 
       var y = R.div(x, 3);

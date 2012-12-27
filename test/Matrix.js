@@ -40,7 +40,7 @@ describe('Matrix', function () {
   });
 
   describe('ij(number, number)', function () {
-    it('returns the i,j-elem', function() {
+    it('returns the i,j-elem', function () {
       assert.equal(m1.ij(0, 0), elements1[0]);
       assert.equal(m1.ij(0, 1), elements1[1]);
       assert.equal(m1.ij(0, 2), elements1[2]);
@@ -90,7 +90,7 @@ describe('Matrix', function () {
     // TODO si dice involutive in inglese?
     // voglio dire che e' un involuzione cioe che se la applico due
     // volte torno all' elemento di partenza.
-    it('is involutive', function() {
+    it('is involutive', function () {
       assert.deepEqual(m1.tr().tr().elems(), elements1);
     });
 

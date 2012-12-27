@@ -37,7 +37,7 @@ describe('RealMatrixRing', function () {
     it('returns a SquareMatrix constructor', function () {
       var matrix = new M2R.Matrix(1,2,3,4);
       assert.ok(typeof matrix == 'object');
-      console.log(matrix.ij(0,0));
+      //console.log(matrix.ij(0,0));
     });
   });
 });

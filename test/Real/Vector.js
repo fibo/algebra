@@ -208,4 +208,3 @@ describe('RealVector', function () {
 
 });
 
-

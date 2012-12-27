@@ -36,6 +36,6 @@ describe('Quick start:', function () {
 
     //m1.mul(m2);
 
-console.log(m1.toString());
+    //console.log(m1.toString());
   });
 });

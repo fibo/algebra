@@ -263,7 +263,7 @@ describe('ComplexElement', function () {
   });
 
   describe('abs()', function () {
-    it('return the absolute value', function () {
+    it('returns the absolute value', function () {
       var z1 = new Complex(2);
       assert.equal(z1.abs(), 2);
 
@@ -273,7 +273,13 @@ describe('ComplexElement', function () {
   });
 
   describe('arg()', function () {
-    it('...', function () {
+    it('returns the argument', function () {
+      // TODO come faccio a testare NaN === NaN ??
+      //var z0 = new Complex(0);
+      //assert.equal(z1.arg(), NaN);
+
+      var z = new Complex(3, 2);
+      assert.equal(z.arg(), Math.atan2(2, 3));
     });
   });
 

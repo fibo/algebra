@@ -277,6 +277,26 @@ describe('ComplexElement', function () {
     });
   });
 
+  describe('exp()', function () {
+    it('implements Complex exponentiation', function () {
+      var z1 = new Complex(0, Math.PI);
+      var eZ1 = z1.exp();
+      assert.equal(eZ1.re(), -1);
+      // N.B. Math.sin(Math.PI) is not -1
+      // assert.equal(eZ1.im(), 0); // TODO not zero, just a number close to zero.
+
+      var z2 = new Complex(1);
+      var eZ2 = z2.exp();
+      assert.equal(eZ2.re(), Math.E);
+      assert.equal(eZ2.im(), 0);
+    });
+
+    it('can be chained', function () {
+      var z = new Complex(2, 1);
+      assert.ok(z.exp() instanceof Complex);
+    });
+  });
+
   describe('toString()', function () {
     it('...', function () {
     });

@@ -81,17 +81,6 @@ See the [Wiki] (https://github.com/fibo/algebra/wiki).
 
 See [Felix's Node.js Style Guide] (http://nodeguide.com/style.html).
 
-## Branches
-
-The git repository has the following remote branches:
-
-  * real
-  * complex
-  * quaternion
-  * octonions *TODO*
-
-which are the four normed division algebras over reals.
-
 ## Testing
 
 Install mocha globally

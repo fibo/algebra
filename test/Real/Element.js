@@ -199,18 +199,35 @@ describe('RealElement', function () {
 
       assert.equal(x.num(), 1);
     });
+  });
 
-    it('TODO division by 0 (in realta 1/0 fa Infinity)', function () {
-// TODO siccome poi lo zero c'è in tutti i campi e non ci sono zero divisori (credo) nei campi, ci possono essere solo negli anelli, allora se faccio diviso zero deve lanciare un' eccezione
-//
-// Anche se ho Infinity, ma in algebra non va bene
-//
-// se voglio anche infinity devo usare una classe diversa , tipo R*, o la posso chaimare RealFieldPlus o RealFieldPlusInfinity
+  describe('exp()', function () {
+    it('implements the exponential function', function () {
+      var x = new Real(0);
+
+      x.exp();
+
+      assert.equal(x.num(), 1);
+    });
+
+    it('can be chained', function () {
+      var x = new Real(2);
+      assert.ok(x.exp() instanceof Real);
     });
   });
 
-  describe('toString()', function () {
-    it('...', function () {
+  describe('log()', function () {
+    it('implements the real logarithm', function () {
+      var x = new Real(1);
+
+      x.log();
+
+      assert.equal(x.num(), 0);
+    });
+
+    it('can be chained', function () {
+      var x1 = new Real(2);
+      assert.ok(x1.log() instanceof Real);
     });
   });
 });

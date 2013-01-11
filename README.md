@@ -93,3 +93,15 @@ Then run tests
 
 ( and say hello to the nyan cat :)
 
+## Browserify
+
+Install browserify globally
+
+    npm install browserify -g
+
+Build algebra client lib
+
+    browserify index.js algebra.js
+
+*TODO* grunt build task, browserify + uglify
+

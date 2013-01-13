@@ -28,11 +28,10 @@ describe('Quick start:', function () {
   });
 
   it('has a working Matrices example', function () {
-    var MnR = algebra.Real.MatrixRing;
-    var M2R = new MnR(2);
+    var GLnR = algebra.Real.GeneralLinearGroup;
+    var GL2R = new GLnR(2);
 
-    var m1 = new M2R.Matrix(1, 2, 3, 4);
-    var m2 = new M2R.Id(-1, 0, 0, 1);
+    var m1 = new GL2R.Matrix(1, 2, 3, 4);
 
     //m1.mul(m2);
 

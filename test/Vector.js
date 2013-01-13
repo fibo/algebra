@@ -3,20 +3,11 @@ var assert = require('assert');
 var algebra = require('../index.js');
 
 var ComplexField = algebra.Complex.Field;
-var Matrix       = algebra.Matrix;
 var RealField    = algebra.Real.Field;
 var VectorSpace  = algebra.VectorSpace;
 
 var C = new ComplexField();
 var R = new RealField();
-
-var elements1 = [1, 0, 2, -5, -1, 6];
-var m1 = new Matrix({
-  numRows: 2,
-  numCols: 3,
-  field: R,
-  elements: elements1
-});
 
 describe('Vector', function () {
   describe('constructor:', function () {

@@ -1,8 +1,5 @@
 
 exports.Field        = require('./lib/Field.js');
-exports.Matrix       = require('./lib/Matrix.js');
-exports.MatrixRing   = require('./lib/MatrixRing.js');
-exports.SquareMatrix = require('./lib/SquareMatrix.js');
 exports.Group        = require('./lib/Group.js');
 exports.Vector       = require('./lib/Vector.js');
 exports.VectorSpace  = require('./lib/VectorSpace.js');
@@ -10,11 +7,12 @@ exports.VectorSpace  = require('./lib/VectorSpace.js');
 
 var Real = {};
 
-Real.Element     = require('./lib/Real/Element.js');
-Real.Field       = require('./lib/Real/Field.js');
-Real.Vector      = require('./lib/Real/Vector.js');
-Real.VectorSpace = require('./lib/Real/VectorSpace.js');
-Real.MatrixRing  = require('./lib/Real/MatrixRing.js');
+Real.Element            = require('./lib/Real/Element.js');
+Real.Field              = require('./lib/Real/Field.js');
+Real.GeneralLinearGroup = require('./lib/Real/GeneralLinearGroup.js');
+Real.InvertibleMatrix   = require('./lib/Real/InvertibleMatrix.js');
+Real.Vector             = require('./lib/Real/Vector.js');
+Real.VectorSpace        = require('./lib/Real/VectorSpace.js');
 
 exports.Real = Real;
 
@@ -24,7 +22,6 @@ Complex.Element = require('./lib/Complex/Element.js');
 Complex.Field   = require('./lib/Complex/Field.js');
 //Complex.Vector      = require('./lib/Complex/Vector.js');
 //Complex.VectorSpace = require('./lib/Complex/VectorSpace.js');
-//Complex.MatrixRing  = require('./lib/Complex/MatrixRing.js');
 
 exports.Complex = Complex;
 

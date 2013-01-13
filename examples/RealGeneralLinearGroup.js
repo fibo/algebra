@@ -4,7 +4,6 @@
 var albegra = require('algebra');
 
 var GLRn = algebra.Real.GeneralLinearGroup;
-//var GLRn = algebra.Real.GeneralLinearGroup;
 
 var GLR2 = new GLRn(2);
 

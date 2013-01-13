@@ -53,12 +53,14 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
     var algebra = require('algebra');
 
-    var MnR = algebra.Real.MatrixRing;
-    var M2R = new MnR(2);
+    // GLnR is the Real General Linear Group of invertible matrices of order n.
+    var GLnR = algebra.Real.GeneralLinearGroup;
 
-    var m1 = new M2R.Matrix(1, 2, 3, 4);
+    // Create a 2x2 invertible matrix.
+    var GL2R = new GLnR(2);
 
-    // coming soon :P
+    var m1 = new GL2R.Matrix(1, 2, 3, 4);
+
 
 # Description
 

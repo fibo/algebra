@@ -310,6 +310,7 @@ describe('ComplexElement', function () {
 
   describe('toMatrix()', function () {
     it('...', function () {
+     // TODO caso C = 0 ritorna matrice nulla, altrimenti e' una RealInvertibleMatrix
     });
   });
 });

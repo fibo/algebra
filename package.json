@@ -23,5 +23,6 @@
   },
   "engines": {
     "node": ">=0.8"
-  }
+  },
+  "readmeFilename": "README.md"
 }

@@ -18,5 +18,3 @@ describe('RealSquareMatrix', function () {
   });
 });
 
-
-

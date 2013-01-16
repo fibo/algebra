@@ -17,11 +17,17 @@ describe('RealInvertibleMatrix', function () {
       assert.ok(matrix instanceof RealInvertibleMatrix);
     });
 
-    it('defaults to Identity', function () {
+    it('defaults to Indentity', function () {
       var arg = {};
-      arg.order = 4;
+      arg.order = 2;
+
       var matrix = new RealInvertibleMatrix(arg);
-      //TODO
+
+      var elements = matrix.getElements();
+      assert.ok(elements[0].eq(1));
+      assert.ok(elements[1].eq(0));
+      assert.ok(elements[2].eq(0));
+      assert.ok(elements[3].eq(1));
     });
   });
 
@@ -32,5 +38,4 @@ describe('RealInvertibleMatrix', function () {
     });
   });
 });
-
 

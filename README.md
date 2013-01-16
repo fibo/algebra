@@ -59,8 +59,14 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     // Create a 2x2 invertible matrix.
     var GL2R = new GLnR(2);
 
-    var m1 = new GL2R.Matrix(1, 2, 3, 4);
+    var m1 = new GL2R.Matrix(1, 2, 
+                             3, 4);
+    var m2 = new GL2R.Matrix(-1, 0, 
+                              0, 1);
 
+    m1.mul(m2);
+
+    console.log(m1.toString());
 
 # Description
 

@@ -16,5 +16,35 @@ describe('RealSquareMatrix', function () {
       assert.ok(matrix instanceof RealSquareMatrix);
     });
   });
+
+  describe('getElements()', function () {
+    it('', function () {
+    });
+  });
+
+  describe('rightMultiplication()', function () {
+    it('', function () {
+    });
+  });
+
+  describe('leftMultiplication()', function () {
+    it('', function () {
+    });
+  });
+
+  describe('mul()', function () {
+    it('', function () {
+    });
+  });
+
+  describe('lmul()', function () {
+    it('', function () {
+    });
+  });
+
+  describe('rmul()', function () {
+    it('', function () {
+    });
+  });
 });
 

@@ -87,19 +87,13 @@ See the [Wiki] (https://github.com/fibo/algebra/wiki).
 
 ## Coding style
 
-See [Felix's Node.js Style Guide] (http://nodeguide.com/style.html).
+This project coding style refers to [Felix's Node.js Style Guide] (http://nodeguide.com/style.html).
 
 ## Testing
 
-Install mocha globally
-
-    npm install mocha -g
-
-Then run tests
+Say hello to the nyan cat :)
 
     npm test
-
-( and say hello to the nyan cat :)
 
 ## Browserify
 
@@ -109,7 +103,5 @@ Install browserify globally
 
 Build algebra client lib
 
-    browserify index.js algebra.js
-
-*TODO* grunt build task, browserify + uglify
+    browserify index.js -o algebra.js
 

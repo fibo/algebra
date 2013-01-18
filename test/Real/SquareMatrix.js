@@ -17,12 +17,32 @@ describe('RealSquareMatrix', function () {
     });
   });
 
+  describe('row(<number>)', function () {
+    it('is an alias of getRowByIndex(<number>)', function () {
+    });
+  });
+
+  describe('col(<number>)', function () {
+    it('', function () {
+    });
+  });
+
+  describe('getColumnByIndex(<number>)', function () {
+    it('', function () {
+    });
+  });
+
+  describe('getRowByIndex(<number>)', function () {
+    it('', function () {
+    });
+  });
+
   describe('getElements()', function () {
     it('', function () {
     });
   });
 
-  describe('rightMultiplication()', function () {
+  describe('rightMultiplication(<Matrix>)', function () {
     it('implements row by column multiplication at right side', function () {
       var arg = {};
       arg.order = 2;
@@ -37,6 +57,10 @@ describe('RealSquareMatrix', function () {
       matrix1.rightMultiplication(matrix2);
 
       elements = matrix1.getElements();
+      console.log(elements[0].num());
+      console.log(elements[1].num());
+      console.log(elements[2].num());
+      console.log(elements[3].num());
       assert.ok(elements[0].eq(-2));
       assert.ok(elements[1].eq(0));
       assert.ok(elements[2].eq(0));

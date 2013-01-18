@@ -4,7 +4,7 @@
   "description": "Vectors, Matrices and ... ",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --bail --recursive --reporter nyan",
+    "test": "mocha --bail --recursive --reporter nyan"
   },
   "repository": {
     "type": "git",

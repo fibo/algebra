@@ -1,7 +1,7 @@
 {
   "name": "algebra",
   "version": "0.1.2",
-  "description": "Vectors, Matrices and ... ",
+  "description": "Vectors, Matrices, Tensors ...",
   "main": "index.js",
   "scripts": {
     "test": "mocha --bail --recursive --reporter nyan"

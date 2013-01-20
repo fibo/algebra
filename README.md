@@ -1,11 +1,24 @@
 algebra
 =======
 
-Vectors, Matrices and more
+Vectors, Matrices, Tensors.
+
+DISCLAIMER: this is a developer release, Tensors are not implemented yet. Every feedback is welcome!
 
 # Installation
 
     npm install algebra
+
+# Description
+
+I'm implementing matrices and vectors on few algebra fields
+(Reals, Complexes etc.) following Micheal Artin's "Algebra",
+which was my book at [Universita' Degli Studi di Genova] (http://www.dima.unige.it).
+
+My goal is to provide users with the feature of creating their own algebra field and building vector spaces and matrices on it.
+
+Suppose for example the set of strings with the concatenation operator,
+it could be extended to a group and maybe to a field and build "matrices of strings" or probably in the future ... "strings of matrices" (I had an intuition about a composition law for UTF-8 chars).
 
 # Quick start
 
@@ -56,32 +69,43 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     // GLnR is the Real General Linear Group of invertible matrices of order n.
     var GLnR = algebra.Real.GeneralLinearGroup;
 
-    // Create a 2x2 invertible matrix.
+    // Create the group of 2x2 invertible matrices.
     var GL2R = new GLnR(2);
 
+    // Create two invertible matrices:
+    //
+    //       | 1 2 |         | -1 0 |
+    //       | 3 4 |   and   |  0 1 |
+    //
     var m1 = new GL2R.Matrix(1, 2, 
                              3, 4);
+
     var m2 = new GL2R.Matrix(-1, 0, 
                               0, 1);
 
+    // Multiply m1 by m2 at right side.
     m1.mul(m2);
 
-    console.log(m1.toString());
+    console.log(m1.toString()); //  | -1 2 |
+                                //  | -3 4 |
 
-# Description
+    // Check out m1 determinant, should be 6 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
+    console.log(m1.determinant().num()); // 6
 
-I'm implementing matrices and vectors on few algebra fields
-(Reals, Complexes etc.) following Micheal Artin's "Algebra",
-which was my book at [Universita' Degli Studi di Genova] (http://www.dima.unige.it).
-
-My goal is to provide users with the feature of creating their own algebra field and building vector spaces and matrices on it.
-
-Suppose for example the set of strings with the concatenation operator,
-it could be extended to a group and maybe to a field and build "matrices of strings" or probably in the future ... "strings of matrices" (I'd an intuition about a composition law for UTF-8 chars).
 
 # Documentation
 
 See the [Wiki] (https://github.com/fibo/algebra/wiki).
+
+# Support
+
+## Issues
+
+Please use [algebra's bug tracker](https://github.com/fibo/algebra/issues) on github: patches welcome.
+
+## Human contact
+
+My skype and gtalk is casati.gianluca, contact me if you can give me some advice about coding this lib or if you have passion for math. I'm located in Milan and Genoa, it could be possible to have a pizza or a beer :)
 
 # Development
 

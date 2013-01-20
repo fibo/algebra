@@ -37,6 +37,23 @@ describe('RealSquareMatrix', function () {
     });
   });
 
+  describe('det()', function () {
+    it('is an alias of determinant()', function () {
+      assert.ok(matrix.det === matrix.determinant);
+    });
+  });
+
+  describe('determinant()', function () {
+    it('Computes the determinant of the matrix', function () {
+      var arg = {};
+      arg.order = 2;
+      arg.elements = [1, 2, 2, 1];
+
+      var matrix1 = new RealSquareMatrix(arg);
+      assert.equal(matrix1.determinant().num(), -3);
+    });
+  });
+
   describe('getColumnByIndex(<number>)', function () {
     it('', function () {
       var col = matrix.getColumnByIndex(0);
@@ -107,26 +124,20 @@ describe('RealSquareMatrix', function () {
       matrix1.rightMultiplication(matrix2);
 
       elements = matrix1.getElements();
-      console.log(elements[0].num());
-      console.log(elements[1].num());
-      console.log(elements[2].num());
-      console.log(elements[3].num());
       assert.ok(elements[0].eq(-2));
       assert.ok(elements[1].eq(0));
       assert.ok(elements[2].eq(0));
-      //assert.ok(elements[3].eq(-2));
+      assert.ok(elements[3].eq(-2));
 
       arg.elements = [-0.5, 0, 0, -0.5];
       var matrix3 = new RealSquareMatrix(arg);
 
+      matrix3.mul(matrix1);
       elements = matrix3.getElements();
-/*
-TODO
       assert.ok(elements[0].eq(1));
       assert.ok(elements[1].eq(0));
       assert.ok(elements[2].eq(0));
       assert.ok(elements[3].eq(1));
-*/
     });
   });
 
@@ -161,6 +172,7 @@ TODO
       assert.ok(matrix.ij(3,3).eq(6));
     });
   });
+
   describe('mul()', function () {
     it('is an alias of rightMultiplication', function () {
       assert.ok(matrix.mul === matrix.rightMultiplication);

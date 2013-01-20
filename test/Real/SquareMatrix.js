@@ -23,6 +23,25 @@ describe('RealSquareMatrix', function () {
 
       assert.ok(matrix1 instanceof RealSquareMatrix);
     });
+
+    it('defaults to Indentity', function () {
+      var arg = {};
+      arg.order = 2;
+
+      var matrix1 = new RealSquareMatrix(arg);
+
+      var elements1 = matrix1.getElements();
+      assert.ok(elements1[0].eq(1));
+      assert.ok(elements1[1].eq(0));
+      assert.ok(elements1[2].eq(0));
+      assert.ok(elements1[3].eq(1));
+    });
+  });
+
+  describe('getOrder()', function () {
+    it('returns the order of the matrix', function () {
+      assert.equal(matrix.getOrder(), 4);
+    });
   });
 
   describe('row(<number>)', function () {

@@ -2,25 +2,27 @@
 var assert  = require('assert');
 var algebra = require('../../index.js');
 
-var Real      = algebra.Real.Element;
+var RealElement      = algebra.Real.Element;
 var RealField = algebra.Real.Field;
 
 var R = new RealField();
 
+var n = new RealElement(5);
+
 describe('RealElement', function () {
   describe('constructor:', function () {
     it('accepts a number as single argument', function () {
-      var ten = new Real(10);
-      assert.ok(ten instanceof Real);
+      var ten = new RealElement(10);
+      assert.ok(ten instanceof RealElement);
     });
   });
 
   describe('clone()', function () {
     it('returns a copy of the object', function () {
-      var x = new Real(-15);
+      var x = new RealElement(-15);
       var y = x.clone();
 
-      assert.ok(y instanceof Real);
+      assert.ok(y instanceof RealElement);
 
       assert.ok(x.eq(y));
 
@@ -30,49 +32,89 @@ describe('RealElement', function () {
 
   describe('num()', function () {
     it('returns the real number', function () {
-      var x = new Real(2.71);
+      var x = new RealElement(2.71);
 
       assert.equal(x.num(), 2.71);
     });
   });
 
-  describe('eq(<number|Real>)', function () {
+  describe('equals(<number|RealElement>)', function () {
     it('returns true if two elements are equal', function () {
-      var x = new Real(-1);
-      var y = new Real(-1);
+      var x = new RealElement(-1);
+      var y = new RealElement(-1);
 
       assert.ok(x.eq(y));
       assert.ok(y.eq(x));
     });
 
     it('corces number type', function () {
-      var x = new Real(-1);
+      var x = new RealElement(-1);
       assert.ok(x.eq(-1));
     });
 
     it('has reflection property', function () {
-      var x = new Real(2.7);
+      var x = new RealElement(2.7);
       assert.ok(x.eq(x));
+    });
+  });
+
+  describe('eq(<number|RealElement>)', function () {
+    it('is an alias of equals(<number|RealElement>', function () {
+      assert.ok(n.eq === n.equals);
+    });
+  });
+
+  describe('notEquals(<number|RealElement>)', function () {
+    it('returns true if two elements are not equal', function () {
+      var x = new RealElement(-1);
+      var y = new RealElement(-2);
+
+      assert.ok(x.notEquals(y));
+      assert.ok(y.notEquals(x));
+
+      y.add(1);
+      assert.equal(x.notEquals(y), false);
+    });
+
+    it('corces number type', function () {
+      var x = new RealElement(-1);
+      assert.ok(x.notEquals(-2));
+    });
+  });
+
+  describe('ne(<number|RealElement>)', function () {
+    it('is an alias of notEquals(<number|RealElement>', function () {
+      assert.ok(n.eq === n.equals);
     });
   });
 
   describe('isZero()', function () {
     it('returns true if element is zero', function () {
-      var x = new Real(0);
+      var x = new RealElement(0);
       assert.ok(x.isZero());
     });
   });
 
   describe('isOne()', function () {
     it('returns true if element is one', function () {
-      var x = new Real(1);
+      var x = new RealElement(1);
       assert.ok(x.isOne());
+    });
+  });
+
+  describe('isNotZero()', function () {
+    it('returns true if element is not zero', function () {
+      var x = new RealElement(10);
+      assert.ok(x.isNotZero());
+
+      x.mul(0);
+      assert.equal(x.isNotZero(), false);
     });
   });
 
   describe('neg()', function () {
     it('implements inversion by addition operator', function () {
-      var x = new Real(4);
+      var x = new RealElement(4);
       var y = x.clone();
       
       y.neg();
@@ -81,15 +123,15 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x = new Real(-1);
-      assert.ok(x.neg().neg() instanceof Real);
+      var x = new RealElement(-1);
+      assert.ok(x.neg().neg() instanceof RealElement);
     });
   });
 
-  describe('add(<number|Real>)', function () {
+  describe('add(<number|RealElement>)', function () {
     it('implements the addition operator', function () {
-      var x = new Real(2);
-      var y = new Real(3);
+      var x = new RealElement(2);
+      var y = new RealElement(3);
 
       x.add(y);
 
@@ -97,7 +139,7 @@ describe('RealElement', function () {
     });
 
     it('coerces number type', function () {
-      var x = new Real(2);
+      var x = new RealElement(2);
 
       x.add(3);
 
@@ -105,15 +147,15 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x = new Real(-1);
-      assert.ok(x.add(2).add(x) instanceof Real);
+      var x = new RealElement(-1);
+      assert.ok(x.add(2).add(x) instanceof RealElement);
     });
   });
 
-  describe('sub(<number|Real>)', function () {
+  describe('sub(<number|RealElement>)', function () {
     it('implements the subtraction operator', function () {
-      var x = new Real(2);
-      var y = new Real(3);
+      var x = new RealElement(2);
+      var y = new RealElement(3);
 
       x.sub(y);
 
@@ -121,7 +163,7 @@ describe('RealElement', function () {
     });
 
     it('coerces number type', function () {
-      var x = new Real(20);
+      var x = new RealElement(20);
 
       x.sub(3);
 
@@ -129,14 +171,14 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x = new Real(-1);
-      assert.ok(x.sub(2).sub(x) instanceof Real);
+      var x = new RealElement(-1);
+      assert.ok(x.sub(2).sub(x) instanceof RealElement);
     });
   });
 
   describe('inv()', function () {
     it('implements inversion by multiplication operator', function () {
-      var x = new Real(-2);
+      var x = new RealElement(-2);
       var y = x.clone();
       
       y.inv();
@@ -145,15 +187,15 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x = new Real(4);
-      assert.ok(x.inv().inv() instanceof Real);
+      var x = new RealElement(4);
+      assert.ok(x.inv().inv() instanceof RealElement);
     });
   });
 
-  describe('mul(<number|Real>)', function () {
+  describe('mul(<number|RealElement>)', function () {
     it('implements the multiplication operator', function () {
-      var x = new Real(2);
-      var y = new Real(3);
+      var x = new RealElement(2);
+      var y = new RealElement(3);
 
       x.mul(y);
 
@@ -161,7 +203,7 @@ describe('RealElement', function () {
     });
 
     it('coerces number type', function () {
-      var x = new Real(2);
+      var x = new RealElement(2);
 
       x.mul(3);
 
@@ -169,15 +211,15 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x = new Real(2);
-      assert.ok(x.mul(2).mul(4) instanceof Real);
+      var x = new RealElement(2);
+      assert.ok(x.mul(2).mul(4) instanceof RealElement);
     });
   });
 
-  describe('div(<number|Real>)', function () {
+  describe('div(<number|RealElement>)', function () {
     it('implements the division operator', function () {
-      var x = new Real(20);
-      var y = new Real(4);
+      var x = new RealElement(20);
+      var y = new RealElement(4);
 
       x.div(y);
 
@@ -185,7 +227,7 @@ describe('RealElement', function () {
     });
 
     it('coerces number type', function () {
-      var x = new Real(15);
+      var x = new RealElement(15);
 
       x.div(3);
 
@@ -193,7 +235,7 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x = new Real(8);
+      var x = new RealElement(8);
 
       x.div(2).div(4);
 
@@ -203,7 +245,7 @@ describe('RealElement', function () {
 
   describe('exp()', function () {
     it('implements the exponential function', function () {
-      var x = new Real(0);
+      var x = new RealElement(0);
 
       x.exp();
 
@@ -211,14 +253,14 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x = new Real(2);
-      assert.ok(x.exp() instanceof Real);
+      var x = new RealElement(2);
+      assert.ok(x.exp() instanceof RealElement);
     });
   });
 
   describe('log()', function () {
     it('implements the real logarithm', function () {
-      var x = new Real(1);
+      var x = new RealElement(1);
 
       x.log();
 
@@ -226,8 +268,8 @@ describe('RealElement', function () {
     });
 
     it('can be chained', function () {
-      var x1 = new Real(2);
-      assert.ok(x1.log() instanceof Real);
+      var x1 = new RealElement(2);
+      assert.ok(x1.log() instanceof RealElement);
     });
   });
 });

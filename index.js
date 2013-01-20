@@ -10,7 +10,6 @@ var Real = {};
 Real.Element            = require('./lib/Real/Element.js');
 Real.Field              = require('./lib/Real/Field.js');
 Real.GeneralLinearGroup = require('./lib/Real/GeneralLinearGroup.js');
-Real.InvertibleMatrix   = require('./lib/Real/InvertibleMatrix.js');
 Real.SquareMatrix       = require('./lib/Real/SquareMatrix.js');
 Real.Vector             = require('./lib/Real/Vector.js');
 Real.VectorSpace        = require('./lib/Real/VectorSpace.js');
@@ -39,4 +38,11 @@ var Octonion = {};
 //Octonion.Ring   = require('./lib/Octonion/Ring.js');
 
 exports.Octonion = Octonion;
+
+var util = {};
+
+util.coerce = require('./lib/util/coerce.js');
+util.is     = require('./lib/util/is.js');
+
+exports.util = util;
 

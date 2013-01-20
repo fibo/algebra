@@ -89,8 +89,8 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     console.log(m1.toString()); //  | -1 2 |
                                 //  | -3 4 |
 
-    // Check out m1 determinant, should be 6 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
-    console.log(m1.determinant().num()); // 6
+    // Check out m1 determinant, should be 2 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
+    console.log(m1.determinant().num()); // 2
 
 
 # Documentation

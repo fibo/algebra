@@ -36,10 +36,11 @@ describe('Quick start:', function () {
 
     var m2 = new GL2R.Matrix(-1, 0, 
                               0, 1);
-    //m1.mul(m2);
 
-    //assert.equal(m1.toString(),'| -1  2 |\n| -3  4 |\n');
+    m1.mul(m2);
 
-    //assert.equal(m1.det().num(), 2);
+    assert.equal(m1.toString(),'| -1  2 |\n| -3  4 |\n');
+
+    assert.equal(m1.det().num(), 2);
   });
 });

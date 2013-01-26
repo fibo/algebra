@@ -41,8 +41,9 @@ exports.Octonion = Octonion;
 
 var util = {};
 
-util.coerce = require('./lib/util/coerce.js');
-util.is     = require('./lib/util/is.js');
+util.algorithm = require('./lib/util/algorithm.js');
+util.coerce    = require('./lib/util/coerce.js');
+util.is        = require('./lib/util/is.js');
 
 exports.util = util;
 

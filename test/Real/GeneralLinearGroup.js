@@ -24,6 +24,19 @@ describe('RealGeneralLinearGroup', function () {
     it('throws Error', function () {
       assert.throws(function () { new GL2.Matrix(1, 1, 2, 2); }, Error);
     });
+
+    it('defaults to Indentity', function () {
+      var arg = {};
+      arg.order = 2;
+
+      var identity = new GL2.Matrix();
+
+      var elements = identity.getElements();
+      assert.ok(elements[0].isOne());
+      assert.ok(elements[1].isZero();
+      assert.ok(elements[2].isZero());
+      assert.ok(elements[3].isOne());
+    });
   });
 });
 

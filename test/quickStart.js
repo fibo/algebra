@@ -44,3 +44,4 @@ describe('Quick start:', function () {
     assert.equal(m1.det().num(), 2);
   });
 });
+

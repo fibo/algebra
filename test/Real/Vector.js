@@ -8,6 +8,9 @@ var Real = algebra.Real.Element;
 var Rn = algebra.Real.VectorSpace;
 
 var R3 = new Rn(3);
+var R4 = new Rn(4);
+
+var v = new R4.Vector();
 
 describe('RealVector', function () {
   describe('constructor:', function () {
@@ -197,14 +200,19 @@ describe('RealVector', function () {
     });
   });
 
-  describe('x(<Integer>', function () {
+  describe('getCoordinate(<Integer>)', function () {
     it('returns the i-esim coordinate', function () {
       var vector = new R3.Vector(1, 2, 3);
-      assert.equal(vector.x(0), 1);
-      assert.equal(vector.x(1), 2);
-      assert.equal(vector.x(2), 3);
+      assert.equal(vector.getCoordinate(0), 1);
+      assert.equal(vector.getCoordinate(1), 2);
+      assert.equal(vector.getCoordinate(2), 3);
     });
   });
 
+  describe('x(<Integer>)', function () {
+    it('is an alias of getCoordinate(<Integer>)', function () {
+      assert.ok(v.x === v.getCoordinate);
+    });
+  });
 });
 

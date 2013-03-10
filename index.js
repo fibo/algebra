@@ -1,6 +1,8 @@
 
 //-----------------------------------------------------------------------------
 
+exports.Collection  = require('./lib/Collection.js');
+exports.Element     = require('./lib/Element.js');
 exports.Field       = require('./lib/Field.js');
 exports.Group       = require('./lib/Group.js');
 exports.Ring        = require('./lib/Ring.js');

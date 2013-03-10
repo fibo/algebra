@@ -2,7 +2,10 @@
 var assert = require('assert');
 var algebra = require('../index.js');
 
+var Element     = algebra.Element;
 var RingElement = algebra.RingElement;
+
+var element = new RingElement();
 
 describe('RingElement', function () {
   describe('constructor:', function () {
@@ -11,7 +14,8 @@ describe('RingElement', function () {
   });
 
   describe('inheritance:', function () {
-    it('is a FieldElement', function () {
+    it('is an Element', function () {
+      assert.ok(element instanceof Element);
     });
   });
 

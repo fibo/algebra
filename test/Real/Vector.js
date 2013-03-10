@@ -10,7 +10,15 @@ var Rn = algebra.Real.VectorSpace;
 var R3 = new Rn(3);
 var R4 = new Rn(4);
 
-var v = new R4.Vector();
+var x = new Real(4);
+var y = new Real(3);
+var z = new Real(2);
+var w = new Real(1);
+
+var v = new RealVector({
+  space: R4,
+  elements: [x, y, x, w]
+});
 
 describe('RealVector', function () {
   describe('constructor:', function () {
@@ -33,8 +41,7 @@ describe('RealVector', function () {
 
   describe('inheritance:', function () {
     it('from Vector', function () {
-      //var v = new R3.Vector();
-      //assert.ok(v instanceof Vector);
+      assert.ok(v instanceof Vector);
     });
   });
 

@@ -2,8 +2,9 @@
 var assert  = require('assert');
 var algebra = require('../../index.js');
 
-var RealElement      = algebra.Real.Element;
-var RealField = algebra.Real.Field;
+var RealElement = algebra.Real.Element;
+var RealField   = algebra.Real.Field;
+var RingElement = algebra.RingElement;
 
 var R = new RealField();
 
@@ -14,6 +15,12 @@ describe('RealElement', function () {
     it('accepts a number as single argument', function () {
       var ten = new RealElement(10);
       assert.ok(ten instanceof RealElement);
+    });
+  });
+
+  describe('inheritance:', function () {
+    it('from RingElement', function () {
+      assert.ok(n instanceof RingElement);
     });
   });
 

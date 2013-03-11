@@ -5,7 +5,7 @@ Vectors, Matrices, Tensors.
 
 **DISCLAIMER** : this is a developer release, Tensors are not implemented yet. Every feedback is welcome!
 
-![on-quaternions-and-octonions!](https://raw.github.com/fibo/algebra/master/images/Cover-OnQuaternionsAndOctonions.png]
+![on-quaternions-and-octonions!](https://raw.github.com/fibo/algebra/master/images/Cover-OnQuaternionsAndOctonions.png)
  
 # Installation
 

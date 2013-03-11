@@ -9,7 +9,8 @@ var element = new RingElement();
 
 describe('RingElement', function () {
   describe('constructor:', function () {
-    it('', function () {
+    it('works', function () {
+      assert.ok(element instanceof RingElement);
     });
   });
 
@@ -19,22 +20,42 @@ describe('RingElement', function () {
     });
   });
 
-  describe('lmul()', function () {
+  describe('negation()', function () {
     it('is an abstract function', function () {
     });
   });
 
-  describe('rmul()', function () {
+  describe('addition()', function () {
     it('is an abstract function', function () {
     });
   });
 
-  describe('rinv()', function () {
+  describe('subtraction()', function () {
     it('is an abstract function', function () {
     });
   });
 
-  describe('linv()', function () {
+  describe('leftMultiplication()', function () {
+    it('is an abstract function', function () {
+    });
+  });
+
+  describe('rightMultiplication()', function () {
+    it('is an abstract function', function () {
+    });
+  });
+
+  describe('inversion()', function () {
+    it('is an abstract function', function () {
+    });
+  });
+
+  describe('leftDivision()', function () {
+    it('is an abstract function', function () {
+    });
+  });
+
+  describe('rightDivision()', function () {
     it('is an abstract function', function () {
     });
   });

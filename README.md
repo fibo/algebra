@@ -3,8 +3,10 @@ algebra
 
 Vectors, Matrices, Tensors.
 
-DISCLAIMER: this is a developer release, Tensors are not implemented yet. Every feedback is welcome!
+**DISCLAIMER** : this is a developer release, Tensors are not implemented yet. Every feedback is welcome!
 
+[Cover-OnQuaternionsAndOctonions](https://raw.github.com/fibo/algebra/master/images/Cover-OnQuaternionsAndOctonions.png]
+ 
 # Installation
 
     npm install algebra
@@ -13,7 +15,7 @@ DISCLAIMER: this is a developer release, Tensors are not implemented yet. Every 
 
 I'm implementing matrices and vectors on few algebra fields
 (Reals, Complexes etc.) following Micheal Artin's "Algebra",
-which was my book at [Universita' Degli Studi di Genova] (http://www.dima.unige.it).
+which was my book at [Universita' Degli Studi di Genova](http://www.dima.unige.it).
 
 My goal is to provide users with the feature of creating their own algebra field and building vector spaces and matrices on it.
 

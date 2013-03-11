@@ -2,10 +2,10 @@
 var assert = require('assert');
 var algebra = require('../../index.js');
 
-var Vector = algebra.Vector;
 var RealVector = algebra.Real.Vector;
-var Real = algebra.Real.Element;
-var Rn = algebra.Real.VectorSpace;
+var Real       = algebra.Real.Element;
+var Rn         = algebra.Real.VectorSpace;
+var Vector     = algebra.Vector;
 
 var R3 = new Rn(3);
 var R4 = new Rn(4);

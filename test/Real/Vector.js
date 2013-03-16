@@ -2,18 +2,20 @@
 var assert = require('assert');
 var algebra = require('../../index.js');
 
-var RealVector = algebra.Real.Vector;
-var Real       = algebra.Real.Element;
-var Rn         = algebra.Real.VectorSpace;
-var Vector     = algebra.Vector;
+var RealVector  = algebra.Real.Vector;
+var RealElement = algebra.Real.Element;
+var Rn          = algebra.Real.VectorSpace;
+var Vector      = algebra.Vector;
 
 var R3 = new Rn(3);
 var R4 = new Rn(4);
 
-var x = new Real(4);
-var y = new Real(3);
-var z = new Real(2);
-var w = new Real(1);
+var x = new RealElement(4);
+var y = new RealElement(3);
+var z = new RealElement(2);
+var w = new RealElement(1);
+
+var zero = new RealElement(0);
 
 var v = new RealVector({
   space: R4,
@@ -29,11 +31,22 @@ describe('RealVector', function () {
 
       for (var i = 0; i < R3.getDim(); i++) {
         var num = i * i + 1; // elements are 1, 2, 5.
-        var element = new Real(num);
+        var element = new RealElement(num);
         arg.elements.push(element);
       }
 
       var vector = new RealVector(arg); // Real 3d vector (1, 2, 5).
+
+      assert.ok(vector instanceof RealVector);
+    });
+
+    it('coerces elements', function () {
+      var arg = {};
+      var element0 = new RealElement(5);
+      arg.elements = [element0, 1, 4];
+      arg.space = R3;
+
+      var vector = new RealVector(arg);
 
       assert.ok(vector instanceof RealVector);
     });
@@ -58,7 +71,6 @@ describe('RealVector', function () {
 
   describe('getElements()', function () {
     it('returns the vector elements', function () {
-      var zero = new Real(0);
       var vector = new R3.Vector(zero, 1, 2);
       var elements = vector.getElements();
       assert.equal(elements[0].num(), 0);
@@ -69,7 +81,6 @@ describe('RealVector', function () {
 
   describe('getElement()', function () {
     it('returns the vector elements', function () {
-      var zero = new Real(0);
       var vector = new R3.Vector(zero, 1, 2);
       var element = vector.getElement(0);
       assert.equal(element.num(), 0);
@@ -80,7 +91,7 @@ describe('RealVector', function () {
     it('implements multiplication by a scalar', function () {
       var vector = new R3.Vector(1, 1, 1);
 
-      var two = new Real(2);
+      var two = new RealElement(2);
       vector.scalar(two);
 
       assert.equal(vector.x(0), 2);

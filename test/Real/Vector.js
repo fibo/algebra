@@ -64,11 +64,6 @@ describe('RealVector', function () {
     });
   });
 
-  describe('eq(<Vector>)', function () {
-    it('...', function () {
-    });
-  });
-
   describe('getElements()', function () {
     it('returns the vector elements', function () {
       var vector = new R3.Vector(zero, 1, 2);

@@ -4,32 +4,33 @@ var algebra = require('../index.js');
 
 var Group = algebra.Group;
 
+var abstractMethod = algebra.util.abstractMethod;
+
+var group = new Group();
+
 describe('Group', function () {
-  describe('constructor', function () {
+  describe('constructor:', function () {
     it('works', function () {
-      var group = new Group();
       assert.ok(group instanceof Group);
     });
   });
 
-  describe('inherits', function () {
-    it('from ...', function () {
+  describe('getZero()', function () {
+    it('is an abstract method', function () {
+      assert.ok(group.getZero === abstractMethod);
     });
   });
 
-  describe('getZero()', function () {
+  describe('equals(Element)', function () {
   });
 
-  describe('eq()', function () {
+  describe('negation()', function () {
   });
 
-  describe('neg()', function () {
+  describe('addition()', function () {
   });
 
-  describe('add()', function () {
-  });
-
-  describe('sub()', function () {
+  describe('subtraction()', function () {
   });
 });
 

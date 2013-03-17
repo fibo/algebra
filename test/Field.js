@@ -2,36 +2,22 @@
 var assert = require('assert');
 var algebra = require('../index.js');
 
-var Group = algebra.Group;
+var Ring  = algebra.Ring;
 var Field = algebra.Field;
+
+var field = new Field();
 
 describe('Field', function () {
   describe('constructor:', function () {
     it('works', function () {
-      var field = new Field();
       assert.ok(field instanceof Field);
     });
   });
 
   describe('inheritance:', function () {
-    it('is a Group', function () {
-      var field = new Field();
-      assert.ok(field instanceof Group);
+    it('is a Ring', function () {
+      assert.ok(field instanceof Ring);
     });
   });
-
-  describe('getOne()', function () {
-  });
-
-  describe('inv()', function () {
-  });
-
-  describe('mul()', function () {
-  });
-
-  describe('div()', function () {
-  });
 });
-
-
 

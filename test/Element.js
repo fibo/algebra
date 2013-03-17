@@ -6,17 +6,19 @@ var Element = algebra.Element;
 
 describe('Element', function () {
   describe('constructor:', function () {
-    it('', function () {
+    it('accepts any argument', function () {
+      var element = new Element(5);
+      assert.ok(element instanceof Element);
+      // TODO metti gli altri tipi di dato, incluso undefined che dovrebbe restituire il vuoto (emptyness)
     });
   });
 
-  describe('getData()', function () {
-    it('is an abstract function', function () {
-    });
-  });
+  describe('data', function () {
+    it('is an attribute', function () {
+      var data = 5;
+      var element = new Element(data);
 
-  describe('setData()', function () {
-    it('is an abstract function', function () {
+      assert.ok(element.data === data);
     });
   });
 });

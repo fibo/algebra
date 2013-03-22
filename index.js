@@ -1,14 +1,16 @@
 
 //-----------------------------------------------------------------------------
 
-exports.Collection  = require('./lib/Collection.js');
-exports.Element     = require('./lib/Element.js');
-exports.Field       = require('./lib/Field.js');
-exports.Group       = require('./lib/Group.js');
-exports.Ring        = require('./lib/Ring.js');
-exports.RingElement = require('./lib/RingElement.js');
-exports.Vector      = require('./lib/Vector.js');
-exports.VectorSpace = require('./lib/VectorSpace.js');
+exports.Collection         = require('./lib/Collection.js');
+exports.Element            = require('./lib/Element.js');
+exports.Field              = require('./lib/Field.js');
+exports.Group              = require('./lib/Group.js');
+exports.GeneralLinearGroup = require('./lib/GeneralLinearGroup.js');
+exports.Matrix             = require('./lib/Matrix.js');
+exports.Ring               = require('./lib/Ring.js');
+exports.RingElement        = require('./lib/RingElement.js');
+exports.Vector             = require('./lib/Vector.js');
+exports.VectorSpace        = require('./lib/VectorSpace.js');
 
 //-----------------------------------------------------------------------------
 
@@ -17,6 +19,7 @@ var Real = {};
 Real.Element            = require('./lib/Real/Element.js');
 Real.Field              = require('./lib/Real/Field.js');
 Real.GeneralLinearGroup = require('./lib/Real/GeneralLinearGroup.js');
+Real.Matrix             = require('./lib/Real/Matrix.js');
 Real.SquareMatrix       = require('./lib/Real/SquareMatrix.js');
 Real.Vector             = require('./lib/Real/Vector.js');
 Real.VectorSpace        = require('./lib/Real/VectorSpace.js');

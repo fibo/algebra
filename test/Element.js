@@ -4,6 +4,10 @@ var algebra = require('../index.js');
 
 var Element = algebra.Element;
 
+var abstractMethod = algebra.util.abstractMethod;
+
+var element = new Element();
+
 describe('Element', function () {
   describe('constructor:', function () {
     it('accepts any argument', function () {
@@ -13,8 +17,15 @@ describe('Element', function () {
     });
   });
 
+  describe('clone()', function () {
+    it('is an abstract method', function () {
+      assert.ok(element.clone === abstractMethod);
+    });
+  });
+
   describe('data', function () {
     it('is an attribute', function () {
+      // TODO fai getData, ho fatto le prove ed ha senso.
       var data = 5;
       var element = new Element(data);
 

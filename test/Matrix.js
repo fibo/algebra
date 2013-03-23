@@ -8,7 +8,7 @@ var abstractMethod = algebra.util.abstractMethod;
 
 var matrix = new Matrix();
 
-describe('FooBar', function () {
+describe('Matrix', function () {
     describe('constructor:', function () {
       it('works', function () {
       });

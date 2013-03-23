@@ -10,31 +10,35 @@ var abstractMethod = algebra.util.abstractMethod;
 var ring = new Ring();
 
 describe('Ring', function () {
-  describe('constructor:', function () {
+  describe('constructor', function () {
     it('works', function () {
+      var ring = new Ring();
       assert.ok(ring instanceof Ring);
     });
   });
 
-  describe('inheritance:', function () {
+  describe('inheritance', function () {
     it('is a Group', function () {
       assert.ok(ring instanceof Group);
     });
   });
 
-  describe('getOne()', function () {
-    it('is an abstract method', function () {
-      assert.ok(ring.getZero === abstractMethod);
+  describe('methods', function () {
+    describe('getOne()', function () {
+      it('is an abstract method', function () {
+        assert.ok(ring.getOne === abstractMethod);
+      });
+    });
+   
+    describe('inversion()', function () {
+    });
+   
+    describe('multiplication()', function () {
+    });
+
+    describe('division()', function () {
     });
   });
 
-  describe('inversion()', function () {
-  });
-
-  describe('multiplication()', function () {
-  });
-
-  describe('division()', function () {
-  });
 });
 

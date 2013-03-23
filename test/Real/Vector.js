@@ -24,7 +24,9 @@ var v = new RealVector({
 
 describe('RealVector', function () {
   describe('constructor:', function () {
+
     it('works', function () {
+      // Create an R3 vector.
       var arg = {};
       arg.elements = [];
       arg.space = R3;
@@ -38,9 +40,11 @@ describe('RealVector', function () {
       var vector = new RealVector(arg); // Real 3d vector (1, 2, 5).
 
       assert.ok(vector instanceof RealVector);
+
     });
 
     it('coerces elements', function () {
+
       var arg = {};
       var element0 = new RealElement(5);
       arg.elements = [element0, 1, 4];
@@ -49,6 +53,7 @@ describe('RealVector', function () {
       var vector = new RealVector(arg);
 
       assert.ok(vector instanceof RealVector);
+
     });
   });
 

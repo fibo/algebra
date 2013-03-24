@@ -9,27 +9,29 @@ var abstractMethod = algebra.util.abstractMethod;
 var element = new Element();
 
 describe('Element', function () {
-  describe('constructor:', function () {
-    it('accepts any argument', function () {
+  describe('Constructor', function () {
+    it('accepts a number', function () {
       var element = new Element(5);
       assert.ok(element instanceof Element);
-      // TODO metti gli altri tipi di dato, incluso undefined che dovrebbe restituire il vuoto (emptyness)
     });
+
+    it('accepts an array of numbers')
   });
 
-  describe('clone()', function () {
-    it('is an abstract method', function () {
-      assert.ok(element.clone === abstractMethod);
+  describe('Methods', function () {
+
+    describe('clone()', function () {
+      it('is an abstract method', function () {
+        assert.ok(element.clone === abstractMethod);
+      });
     });
-  });
-
-  describe('data', function () {
-    it('is an attribute', function () {
-      // TODO fai getData, ho fatto le prove ed ha senso.
-      var data = 5;
-      var element = new Element(data);
-
-      assert.ok(element.data === data);
+   
+    describe('getData()', function () {
+      it('returns data', function () {
+        var data = 5;
+        var element = new Element(data);
+        assert.equal(element.getData(), data);
+      });
     });
   });
 });

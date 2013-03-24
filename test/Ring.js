@@ -10,20 +10,20 @@ var abstractMethod = algebra.util.abstractMethod;
 var ring = new Ring();
 
 describe('Ring', function () {
-  describe('constructor', function () {
-    it('works', function () {
+  describe('Constructor', function () {
+    it('requires no argument', function () {
       var ring = new Ring();
       assert.ok(ring instanceof Ring);
     });
   });
 
-  describe('inheritance', function () {
+  describe('Inheritance', function () {
     it('is a Group', function () {
       assert.ok(ring instanceof Group);
     });
   });
 
-  describe('methods', function () {
+  describe('Methods', function () {
     describe('getOne()', function () {
       it('is an abstract method', function () {
         assert.ok(ring.getOne === abstractMethod);

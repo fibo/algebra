@@ -9,28 +9,10 @@ var abstractMethod = algebra.util.abstractMethod;
 var matrix = new Matrix();
 
 describe('Matrix', function () {
-    describe('constructor:', function () {
-      it('works', function () {
-      });
+    describe('Constructor', function () {
     });
 
-    describe('inheritance:', function () {
-      it('', function () {
-      });
-    });
-
-    describe('methods:', function () {
-        describe('someAbstractMethod()', function () {
-          it('is abstract', function () {
-            //assert.ok(foo.someAbstractMethod === abstractMethod);
-          });
-        });
-
-        describe('method1()', function () {
-          it('does something', function () {
-       
-          });
-        });
+    describe('Methods', function () {
     });
 });
 

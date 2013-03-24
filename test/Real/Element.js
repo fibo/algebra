@@ -11,15 +11,15 @@ var R = new RealField();
 var n = new RealElement(5);
 
 describe('RealElement', function () {
-  describe('constructor:', function () {
+  describe('Constructor', function () {
     it('accepts a number as single argument', function () {
       var ten = new RealElement(10);
       assert.ok(ten instanceof RealElement);
     });
   });
 
-  describe('inheritance:', function () {
-    it('from RingElement', function () {
+  describe('Inheritance', function () {
+    it('is a RingElement', function () {
       assert.ok(n instanceof RingElement);
     });
   });
@@ -90,7 +90,7 @@ describe('RealElement', function () {
   });
 
   describe('ne(<number|RealElement>)', function () {
-    it('is an alias of notEquals(<number|RealElement>', function () {
+    it('is an alias of notEquals()', function () {
       assert.ok(n.eq === n.equals);
     });
   });

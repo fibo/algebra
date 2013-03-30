@@ -63,12 +63,6 @@ describe('RealVector', function () {
     });
   });
 
-  // TODO uniforma tutti i test che controllano la funzione clone().
-  describe('clone()', function () {
-    it('...', function () {
-    });
-  });
-
   describe('getElements()', function () {
     it('returns the vector elements', function () {
       var vector = new R3.Vector(zero, 1, 2);

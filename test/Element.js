@@ -23,6 +23,12 @@ describe('Element', function () {
       });
     });
    
+    describe('equals()', function () {
+      it('is an abstract method', function () {
+        assert.ok(element.equals === abstractMethod);
+      });
+    });
+
     describe('getData()', function () {
       it('is an abstract method', function () {
         assert.ok(element.getData === abstractMethod);
@@ -44,6 +50,12 @@ describe('Element', function () {
     describe('isOne()', function () {
       it('is an abstract method', function () {
         assert.ok(element.isOne === abstractMethod);
+      });
+    });
+
+    describe('notEquals()', function () {
+      it('is an abstract method', function () {
+        assert.ok(element.notEquals === abstractMethod);
       });
     });
   });

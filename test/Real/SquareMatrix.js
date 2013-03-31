@@ -3,6 +3,7 @@ var assert = require('assert');
 var algebra = require('../../index.js');
 
 var RealSquareMatrix = algebra.Real.SquareMatrix;
+var RealMatrix       = algebra.Real.Matrix;
 
 var matrix = new RealSquareMatrix({
   order:4,
@@ -13,7 +14,7 @@ var matrix = new RealSquareMatrix({
 });
 
 describe('RealSquareMatrix', function () {
-  describe('constructor:', function () {
+  describe('Constructor', function () {
     it('works', function () {
       var arg = {};
       arg.order = 2;
@@ -22,6 +23,12 @@ describe('RealSquareMatrix', function () {
       var matrix1 = new RealSquareMatrix(arg);
 
       assert.ok(matrix1 instanceof RealSquareMatrix);
+    });
+  });
+
+  describe('Inheritance', function () {
+    it('is a SquareMatrix', function () {
+      assert.ok(matrix instanceof RealMatrix);
     });
   });
 

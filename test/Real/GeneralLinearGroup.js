@@ -2,16 +2,22 @@
 var assert = require('assert');
 var algebra = require('../../index.js');
 
-var GLnR             = algebra.Real.GeneralLinearGroup;
-var RealSquareMatrix = algebra.Real.SquareMatrix;
+var GeneralLinearGroup = algebra.GeneralLinearGroup;
+var GLnR               = algebra.Real.GeneralLinearGroup;
+var RealSquareMatrix   = algebra.Real.SquareMatrix;
 
 var GL2 = new GLnR(2);
 
 describe('RealGeneralLinearGroup', function () {
-  describe('constructor:', function () {
-    it('', function () {
+  describe('Constructor', function () {
+    it('works', function () {
     });
+  });
 
+  describe('Inheritance', function () {
+    it('is a GeneralLinearGroup', function () {
+      assert.ok(GL2 instanceof GeneralLinearGroup);
+    });
   });
 
   describe('Matrix', function () {

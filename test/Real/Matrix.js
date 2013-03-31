@@ -8,23 +8,15 @@ var RealMatrix = algebra.Real.Matrix;
 var matrix = new RealMatrix();
 
 describe('RealMatrix', function () {
-    describe('constructor:', function () {
-      it('works', function () {
-      });
+  describe('Constructor', function () {
+    it('works', function () {
     });
+  });
 
-    describe('inheritance:', function () {
-      it('from Matrix', function () {
-        assert.ok(matrix instanceof Matrix);
-      });
+  describe('Inheritance', function () {
+    it('is a Matrix', function () {
+      assert.ok(matrix instanceof Matrix);
     });
-
-    describe('methods:', function () {
-        describe('method1()', function () {
-          it('does something', function () {
-       
-          });
-        });
-    });
+  });
 });
 

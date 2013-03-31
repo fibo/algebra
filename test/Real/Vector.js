@@ -23,7 +23,7 @@ var v = new RealVector({
 });
 
 describe('RealVector', function () {
-  describe('constructor:', function () {
+  describe('Constructor', function () {
 
     it('works', function () {
       // Create an R3 vector.
@@ -57,8 +57,8 @@ describe('RealVector', function () {
     });
   });
 
-  describe('inheritance:', function () {
-    it('from Vector', function () {
+  describe('Inheritance', function () {
+    it('is a Vector', function () {
       assert.ok(v instanceof Vector);
     });
   });
@@ -81,7 +81,7 @@ describe('RealVector', function () {
     });
   });
 
-  describe('scalar(<number|Real>)', function () {
+  describe('scalar()', function () {
     it('implements multiplication by a scalar', function () {
       var vector = new R3.Vector(1, 1, 1);
 
@@ -114,7 +114,7 @@ describe('RealVector', function () {
     });
   });
 
-  describe('dot(<Vector>)', function () {
+  describe('dot()', function () {
     it('implements dot product operator', function () {
         var v1 = new R3.Vector(0, 0, 1);
         var v2 = new R3.Vector(0, 1, 0);
@@ -126,7 +126,7 @@ describe('RealVector', function () {
   });
 
   describe('R3 Vector', function () {
-    describe('cross(<Vector>)', function () {
+    describe('cross()', function () {
       it('implements cross product operator', function () {
         var v1 = new R3.Vector(0, 0, 1);
         var v2 = new R3.Vector(0, 1, 0);
@@ -140,7 +140,7 @@ describe('RealVector', function () {
     });
   });
 
-  describe('add(<Vector>)', function () {
+  describe('add()', function () {
     it('implements vector addition operation', function () {
       var vector1 = new R3.Vector(1, 2, 3);
       var vector2 = new R3.Vector(1, -1, 1);
@@ -165,7 +165,7 @@ describe('RealVector', function () {
     });
   });
 
-  describe('sub(<Vector>)', function () {
+  describe('sub()', function () {
     it('implements vector subtraction operation', function () {
       var vector1 = new R3.Vector(1, 2, 3);
       var vector2 = new R3.Vector(1, -1, 1);
@@ -190,7 +190,7 @@ describe('RealVector', function () {
     });
   });
 
-  describe('ortho(<Vector>)', function () {
+  describe('ortho()', function () {
     it('returns true if two vectors are orthogonal', function () {
       var vector1 = new R3.Vector(1, 0, 1);
       var vector2 = new R3.Vector(0, 1, 0);
@@ -199,7 +199,7 @@ describe('RealVector', function () {
     });
   });
 
-  describe('r4c(<Matrix>)', function () {
+  describe('r4c()', function () {
     it('implements right multiplication by matrix', function () {
     });
   });
@@ -212,7 +212,7 @@ describe('RealVector', function () {
     });
   });
 
-  describe('getCoordinate(<Integer>)', function () {
+  describe('getCoordinate()', function () {
     it('returns the i-esim coordinate', function () {
       var vector = new R3.Vector(1, 2, 3);
       assert.equal(vector.getCoordinate(0), 1);
@@ -221,8 +221,8 @@ describe('RealVector', function () {
     });
   });
 
-  describe('x(<Integer>)', function () {
-    it('is an alias of getCoordinate(<Integer>)', function () {
+  describe('x()', function () {
+    it('is an alias of getCoordinate()', function () {
       assert.ok(v.x === v.getCoordinate);
     });
   });

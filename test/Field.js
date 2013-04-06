@@ -2,22 +2,17 @@
 var assert = require('assert');
 var algebra = require('../index.js');
 
-var Ring  = algebra.Ring;
 var Field = algebra.Field;
 
 var field = new Field();
 
 describe('Field', function () {
-  describe('constructor:', function () {
+  describe('Constructor', function () {
     it('works', function () {
+      var field = new Field();
       assert.ok(field instanceof Field);
     });
   });
-
-  describe('inheritance:', function () {
-    it('is a Ring', function () {
-      assert.ok(field instanceof Ring);
-    });
-  });
+// TODO aggiungi tutti i metodi astratti
 });
 

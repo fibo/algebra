@@ -2,7 +2,6 @@
 var assert = require('assert');
 var algebra = require('../../index.js');
 
-var GeneralLinearGroup = algebra.GeneralLinearGroup;
 var GLnR               = algebra.Real.GeneralLinearGroup;
 var RealSquareMatrix   = algebra.Real.SquareMatrix;
 
@@ -11,12 +10,7 @@ var GL2 = new GLnR(2);
 describe('RealGeneralLinearGroup', function () {
   describe('Constructor', function () {
     it('works', function () {
-    });
-  });
-
-  describe('Inheritance', function () {
-    it('is a GeneralLinearGroup', function () {
-      assert.ok(GL2 instanceof GeneralLinearGroup);
+      assert.ok(GL2 instanceof GLnR);
     });
   });
 

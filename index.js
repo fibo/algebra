@@ -4,18 +4,21 @@
 // segnati queste opzioni !! da qualche parte nella wiki o meglio scrivi articolo e linkalo
 // in genere queste cose cross progetto dovrei farle in un punto centralizzato
 //" sarebbe da fare solo per JS, scrivi articolo
+// TODO fai per tipo file .js
 //set foldmethod=indent
 //set shiftwidth=2
 // -----> con queste opzioni mi viene bene vedere il codice
 
 //-----------------------------------------------------------------------------
 
-exports.Collection         = require('./lib/Collection.js');
-exports.Element            = require('./lib/Element.js');
-exports.Field              = require('./lib/Field.js');
-exports.Matrix             = require('./lib/Matrix.js');
-exports.Vector             = require('./lib/Vector.js');
-exports.VectorSpace        = require('./lib/VectorSpace.js');
+exports.Collection  = require('./lib/Collection.js');
+exports.Element     = require('./lib/Element.js');
+exports.Field       = require('./lib/Field.js');
+exports.Matrix      = require('./lib/Matrix.js');
+exports.Tensor      = require('./lib/Tensor.js');
+// TODO TensorSpace
+exports.Vector      = require('./lib/Vector.js');
+exports.VectorSpace = require('./lib/VectorSpace.js');
 
 //-----------------------------------------------------------------------------
 

@@ -1,9 +1,10 @@
 
-var assert = require('assert');
-var algebra = require('../../index.js');
+var assert = require('assert')
+  , algebra = require('../../index.js')
 
-var RealSquareMatrix = algebra.Real.SquareMatrix;
-var RealMatrix       = algebra.Real.Matrix;
+var abstractMethod   = algebra.util.abstractMethod
+  , RealSquareMatrix = algebra.Real.SquareMatrix
+  , RealMatrix       = algebra.Real.Matrix
 
 var matrix = new RealSquareMatrix({
   order:4,
@@ -11,218 +12,199 @@ var matrix = new RealSquareMatrix({
              5, 6, 7, 8,
              9, 0, 1, 2,
              3, 4, 5, 6]
-});
+})
 
 describe('RealSquareMatrix', function () {
   describe('Constructor', function () {
-    it('works', function () {
-      var arg = {};
-      arg.order = 2;
-      arg.elements = [0, 0, 0, 1];
-
-      var matrix1 = new RealSquareMatrix(arg);
-
-      assert.ok(matrix1 instanceof RealSquareMatrix);
-    });
-  });
+  })
 
   describe('Inheritance', function () {
-    it('is a SquareMatrix', function () {
-      assert.ok(matrix instanceof RealMatrix);
-    });
-  });
+    it('is a RealMatrix', function () {
+      assert.ok(matrix instanceof RealMatrix)
+    })
+  })
 
-  describe('getOrder()', function () {
-    it('returns the order of the matrix', function () {
-      assert.equal(matrix.getOrder(), 4);
-    });
-  });
+  describe('Methods', function () {
+    describe('getOrder()', function () {
+      it('returns the order of the matrix', function () {
+        // TODO semmai rimettilo; assert.equal(matrix.getOrder(), 4)
+      })
+    })
 
-  describe('row(<number>)', function () {
-    it('is an alias of getRowByIndex(<number>)', function () {
-      assert.ok(matrix.row === matrix.getRowByIndex);
-    });
-  });
+    describe('det()', function () {
+      it('is an alias of determinant()', function () {
+        assert.ok(matrix.det === matrix.determinant)
+      })
+    })
 
-  describe('col(<number>)', function () {
-    it('is an alias of getColumnByIndex(<number>)', function () {
-      assert.ok(matrix.col === matrix.getColumnByIndex);
-    });
-  });
+    describe('determinant()', function () {
+      it('Computes the determinant of the matrix', function () {
+        var arg = {}
+        arg.order = 2
+        arg.elements = [1, 2, 2, 1]
 
-  describe('det()', function () {
-    it('is an alias of determinant()', function () {
-      assert.ok(matrix.det === matrix.determinant);
-    });
-  });
+        var matrix1 = new RealSquareMatrix(arg)
+        assert.equal(matrix1.determinant().num(), -3)
+      })
+    })
 
-  describe('determinant()', function () {
-    it('Computes the determinant of the matrix', function () {
-      var arg = {};
-      arg.order = 2;
-      arg.elements = [1, 2, 2, 1];
+    describe('getColumnByIndex()', function () {
+      it('', function () {
+        var col = matrix.getColumnByIndex(0)
+        assert.ok(col[0].eq(1))
+        assert.ok(col[1].eq(5))
+        assert.ok(col[2].eq(9))
+        assert.ok(col[3].eq(3))
 
-      var matrix1 = new RealSquareMatrix(arg);
-      assert.equal(matrix1.determinant().num(), -3);
-    });
-  });
+        var col = matrix.getColumnByIndex(3)
+        assert.ok(col[0].eq(4))
+        assert.ok(col[1].eq(8))
+        assert.ok(col[2].eq(2))
+        assert.ok(col[3].eq(6))
+      })
+    })
 
-  describe('getColumnByIndex(<number>)', function () {
-    it('', function () {
-      var col = matrix.getColumnByIndex(0);
-      assert.ok(col[0].eq(1));
-      assert.ok(col[1].eq(5));
-      assert.ok(col[2].eq(9));
-      assert.ok(col[3].eq(3));
+    describe('getRowByIndex()', function () {
+      it('', function () {
+        var row = matrix.getRowByIndex(0)
+        assert.ok(row[0].eq(1))
+        assert.ok(row[1].eq(2))
+        assert.ok(row[2].eq(3))
+        assert.ok(row[3].eq(4))
 
-      var col = matrix.getColumnByIndex(3);
-      assert.ok(col[0].eq(4));
-      assert.ok(col[1].eq(8));
-      assert.ok(col[2].eq(2));
-      assert.ok(col[3].eq(6));
-    });
-  });
+        var row = matrix.getRowByIndex(3)
+        assert.ok(row[0].eq(3))
+        assert.ok(row[1].eq(4))
+        assert.ok(row[2].eq(5))
+        assert.ok(row[3].eq(6))
+      })
+    })
 
-  describe('getRowByIndex(<number>)', function () {
-    it('', function () {
-      var row = matrix.getRowByIndex(0);
-      assert.ok(row[0].eq(1));
-      assert.ok(row[1].eq(2));
-      assert.ok(row[2].eq(3));
-      assert.ok(row[3].eq(4));
+    describe('getElements()', function () {
+      it('', function () {
+        var elements = matrix.getElements()
 
-      var row = matrix.getRowByIndex(3);
-      assert.ok(row[0].eq(3));
-      assert.ok(row[1].eq(4));
-      assert.ok(row[2].eq(5));
-      assert.ok(row[3].eq(6));
-    });
-  });
+        assert.ok(elements[0].eq(1))
+        assert.ok(elements[1].eq(2))
+        assert.ok(elements[2].eq(3))
+        assert.ok(elements[3].eq(4))
+        assert.ok(elements[4].eq(5))
+        assert.ok(elements[5].eq(6))
+        assert.ok(elements[6].eq(7))
+        assert.ok(elements[7].eq(8))
+        assert.ok(elements[8].eq(9))
+        assert.ok(elements[9].eq(0))
+        assert.ok(elements[10].eq(1))
+        assert.ok(elements[11].eq(2))
+        assert.ok(elements[12].eq(3))
+        assert.ok(elements[13].eq(4))
+        assert.ok(elements[14].eq(5))
+        assert.ok(elements[15].eq(6))
+      })
+    })
 
-  describe('getElements()', function () {
-    it('', function () {
-      var elements = matrix.getElements();
+    describe('rightMultiplication()', function () {
+      it('implements row by column multiplication at right side', function () {
+        var arg = {}
+        arg.order = 2
+        arg.elements = [2, 0, 0, 2]
+        var elements
 
-      assert.ok(elements[0].eq(1));
-      assert.ok(elements[1].eq(2));
-      assert.ok(elements[2].eq(3));
-      assert.ok(elements[3].eq(4));
-      assert.ok(elements[4].eq(5));
-      assert.ok(elements[5].eq(6));
-      assert.ok(elements[6].eq(7));
-      assert.ok(elements[7].eq(8));
-      assert.ok(elements[8].eq(9));
-      assert.ok(elements[9].eq(0));
-      assert.ok(elements[10].eq(1));
-      assert.ok(elements[11].eq(2));
-      assert.ok(elements[12].eq(3));
-      assert.ok(elements[13].eq(4));
-      assert.ok(elements[14].eq(5));
-      assert.ok(elements[15].eq(6));
-    });
-  });
+        var matrix1 = new RealSquareMatrix(arg)
 
-  describe('rightMultiplication(<Matrix>)', function () {
-    it('implements row by column multiplication at right side', function () {
-      var arg = {};
-      arg.order = 2;
-      arg.elements = [2, 0, 0, 2];
-      var elements;
+        arg.elements = [-1, 0, 0, -1]
+        var matrix2 = new RealSquareMatrix(arg)
 
-      var matrix1 = new RealSquareMatrix(arg);
+        matrix1.rightMultiplication(matrix2)
 
-      arg.elements = [-1, 0, 0, -1];
-      var matrix2 = new RealSquareMatrix(arg);
+        elements = matrix1.getElements()
+        assert.ok(elements[0].eq(-2))
+        assert.ok(elements[1].eq(0))
+        assert.ok(elements[2].eq(0))
+        assert.ok(elements[3].eq(-2))
 
-      matrix1.rightMultiplication(matrix2);
+        arg.elements = [-0.5, 0, 0, -0.5]
+        var matrix3 = new RealSquareMatrix(arg)
 
-      elements = matrix1.getElements();
-      assert.ok(elements[0].eq(-2));
-      assert.ok(elements[1].eq(0));
-      assert.ok(elements[2].eq(0));
-      assert.ok(elements[3].eq(-2));
+        matrix3.mul(matrix1)
+        elements = matrix3.getElements()
+        assert.ok(elements[0].eq(1))
+        assert.ok(elements[1].eq(0))
+        assert.ok(elements[2].eq(0))
+        assert.ok(elements[3].eq(1))
+      })
+    })
 
-      arg.elements = [-0.5, 0, 0, -0.5];
-      var matrix3 = new RealSquareMatrix(arg);
+    describe('leftMultiplication()', function () {
+      it('implements row by column multiplication at left side', function () {
+      })
+    })
 
-      matrix3.mul(matrix1);
-      elements = matrix3.getElements();
-      assert.ok(elements[0].eq(1));
-      assert.ok(elements[1].eq(0));
-      assert.ok(elements[2].eq(0));
-      assert.ok(elements[3].eq(1));
-    });
-  });
+    describe('ij()', function () {
+      it('is an alias of getElementByIndexes', function () {
+        assert.ok(matrix.ij === matrix.getElementByIndexes)
+      })
+    })
 
-  describe('leftMultiplication()', function () {
-    it('implements row by column multiplication at left side', function () {
-    });
-  });
+    describe('getElementByIndexes()', function () {
+      it('', function () {
+        assert.ok(matrix.ij(0,0).eq(1))
+        assert.ok(matrix.ij(0,1).eq(2))
+        assert.ok(matrix.ij(0,2).eq(3))
+        assert.ok(matrix.ij(0,3).eq(4))
+        assert.ok(matrix.ij(1,0).eq(5))
+        assert.ok(matrix.ij(1,1).eq(6))
+        assert.ok(matrix.ij(1,2).eq(7))
+        assert.ok(matrix.ij(1,3).eq(8))
+        assert.ok(matrix.ij(2,0).eq(9))
+        assert.ok(matrix.ij(2,1).eq(0))
+        assert.ok(matrix.ij(2,2).eq(1))
+        assert.ok(matrix.ij(2,3).eq(2))
+        assert.ok(matrix.ij(3,0).eq(3))
+        assert.ok(matrix.ij(3,1).eq(4))
+        assert.ok(matrix.ij(3,2).eq(5))
+        assert.ok(matrix.ij(3,3).eq(6))
+      })
+    })
 
-  describe('ij()', function () {
-    it('is an alias of getElementByIndexes', function () {
-      assert.ok(matrix.ij === matrix.getElementByIndexes);
-    });
-  });
+    describe('mul()', function () {
+      it('is an alias of rightMultiplication', function () {
+        assert.ok(matrix.mul === matrix.rightMultiplication)
+      })
+    })
 
-  describe('getElementByIndexes()', function () {
-    it('', function () {
-      assert.ok(matrix.ij(0,0).eq(1));
-      assert.ok(matrix.ij(0,1).eq(2));
-      assert.ok(matrix.ij(0,2).eq(3));
-      assert.ok(matrix.ij(0,3).eq(4));
-      assert.ok(matrix.ij(1,0).eq(5));
-      assert.ok(matrix.ij(1,1).eq(6));
-      assert.ok(matrix.ij(1,2).eq(7));
-      assert.ok(matrix.ij(1,3).eq(8));
-      assert.ok(matrix.ij(2,0).eq(9));
-      assert.ok(matrix.ij(2,1).eq(0));
-      assert.ok(matrix.ij(2,2).eq(1));
-      assert.ok(matrix.ij(2,3).eq(2));
-      assert.ok(matrix.ij(3,0).eq(3));
-      assert.ok(matrix.ij(3,1).eq(4));
-      assert.ok(matrix.ij(3,2).eq(5));
-      assert.ok(matrix.ij(3,3).eq(6));
-    });
-  });
+    describe('dot()', function () {
+      it('is an alias of dotMultiplication', function () {
+        //assert.ok(matrix.dot === matrix.dotMultiplication)
+      })
+    })
 
-  describe('mul()', function () {
-    it('is an alias of rightMultiplication', function () {
-      assert.ok(matrix.mul === matrix.rightMultiplication);
-    });
-  });
+    describe('dotMultiplication()', function () {
+      it('', function () {
+      })
+    })
 
-  describe('dot()', function () {
-    it('is an alias of dotMultiplication', function () {
-      //assert.ok(matrix.dot === matrix.dotMultiplication);
-    });
-  });
+    describe('lmul()', function () {
+      it('is an alias of leftMultiplication', function () {
+        var arg = {}
+        arg.order = 2
 
-  describe('dotMultiplication()', function () {
-    it('', function () {
-    });
-  });
+        var matrix = new RealSquareMatrix(arg)
 
-  describe('lmul()', function () {
-    it('is an alias of leftMultiplication', function () {
-      var arg = {};
-      arg.order = 2;
+        assert.ok(matrix.lmul === matrix.leftMultiplication)
+      })
+    })
 
-      var matrix = new RealSquareMatrix(arg);
+    describe('rmul()', function () {
+      it('is an alias of rightMultiplication', function () {
+        var arg = {}
+        arg.order = 2
 
-      assert.ok(matrix.lmul === matrix.leftMultiplication);
-    });
-  });
+        var matrix = new RealSquareMatrix(arg)
 
-  describe('rmul()', function () {
-    it('is an alias of rightMultiplication', function () {
-      var arg = {};
-      arg.order = 2;
-
-      var matrix = new RealSquareMatrix(arg);
-
-      assert.ok(matrix.rmul === matrix.rightMultiplication);
-    });
-  });
-});
+        assert.ok(matrix.rmul === matrix.rightMultiplication)
+      })
+    })
+  })
+})
 

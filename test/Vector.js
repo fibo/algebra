@@ -2,7 +2,9 @@
 var assert  = require('assert')
   , algebra = require('../index.js')
 
-var Vector = algebra.Vector
+var abstractMethod = algebra.util.abstractMethod
+  , Tensor = algebra.Tensor
+  , Vector = algebra.Vector
 
 var vector = new Vector()
 

@@ -111,10 +111,6 @@ My skype and gtalk is casati.gianluca, contact me if you can give me some advice
 
 # Development
 
-## Coding style
-
-This project coding style refers to [Felix's Node.js Style Guide] (http://nodeguide.com/style.html).
-
 ## Testing
 
 Say hello to the nyan cat :)

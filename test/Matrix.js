@@ -1,18 +1,25 @@
 
-var assert  = require('assert');
-var algebra = require('../index.js');
+var assert  = require('assert')
+  , algebra = require('../index.js')
 
-var Matrix = algebra.Matrix;
+var abstractMethod = algebra.util.abstractMethod
+  , Matrix         = algebra.Matrix
+  , Tensor         = algebra.Tensor
+  
 
-var abstractMethod = algebra.util.abstractMethod;
-
-var matrix = new Matrix();
+var matrix = new Matrix()
 
 describe('Matrix', function () {
-    describe('Constructor', function () {
-    });
+  describe('Constructor', function () {
+  });
 
-    describe('Methods', function () {
-    });
+  describe('Inheritance', function () {
+    it('is a Tensor', function () {
+      assert.ok(matrix instanceof Tensor)
+    })
+  })
+
+  describe('Methods', function () {
+  });
 });
 

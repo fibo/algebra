@@ -284,7 +284,6 @@ describe('RealElement', function () {
         assert.equal(x.isNotZero(), false);
       });
     });
-   
   });
 });
 

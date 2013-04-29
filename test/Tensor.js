@@ -42,6 +42,10 @@ describe('Tensor', function () {
       })
     })
 
+    describe('getData()', function () {
+      it('returns an array of elements data')
+    })
+
     describe('getElementConstructor()', function () {
       it('returns elementConstructor', function () {
         var tensor = new Tensor({

@@ -53,6 +53,18 @@ describe('Matrix', function () {
       })
     })
 
+    describe('getRowByIndex()', function () {
+      it('returns row given by index', function () {
+        var row
+
+        row = matrix.getRowByIndex(0)
+        assert.deepEqual(row, [elements[0], elements[1]])
+
+        row = matrix.getRowByIndex(1)
+        assert.deepEqual(row, [elements[2], elements[3]])
+      })
+    })
+
     describe('ij()', function () {
       it('is an alias of getElementByIndexes', function () {
         assert.ok(matrix.ij === matrix.getElementByIndexes)
@@ -76,7 +88,7 @@ describe('Matrix', function () {
     })
 
     describe('rightMultiplication()', function () {
-      it('implements row by column multiplication at right side'/*, function () {
+      it('implements row by column multiplication at right side', function () {
         var elements1 = [two, zero, zero, two]
           , elements2 = [minusOne, zero, zero, minusOne]
           , elements3 = [minusZeroDotFive, zero, zero, minusZeroDotFive]
@@ -97,18 +109,12 @@ describe('Matrix', function () {
             numberOfRows    : 2
           })
 
-var e
-e = matrix1.getElements();
-//for (var i in e) console.log(e[i].getData());
-
         matrix1.rightMultiplication(matrix2)
-//e = matrix1.getElements();
-//for (var i in e) console.log(e[i].getData());
-        assert.deepEqual(matrix1.getElements(), [minusTwo, zero, zero, minusTwo])
+        assert.deepEqual(matrix1.getData(), [-2, 0, 0, -2])
 
         matrix3.rightMultiplication(matrix1)
-        //assert.deepEqual(matrix3.getElements(), [one, zero, zero, one])
-      }*/)
+        // TODO assert.deepEqual(matrix3.getElements(), [one, zero, zero, one])
+      })
     })
 
     describe('row()', function () {
@@ -117,15 +123,13 @@ e = matrix1.getElements();
       })
     })
 
-    describe('getRowByIndex()', function () {
-      it('returns row given by index', function () {
-        var row
+    describe('setElements()', function () {
+      it('sets elements', function () {
+//TODO faccio il test per debuggare
 
-        row = matrix.getRowByIndex(0)
-        assert.deepEqual(row, [elements[0], elements[1]])
-
-        row = matrix.getRowByIndex(1)
-        assert.deepEqual(row, [elements[2], elements[3]])
+        var elements = [two, zero, zero, two]
+        matrix.setElements(elements)
+        assert.deepEqual(matrix.getElements(), elements)
       })
     })
   })

@@ -37,19 +37,7 @@ describe('RealElement', function () {
         assert.ok(x !== y)
       })
     })
-   
-    describe('num()', function () {
-      it('returns the real number', function () {
-        var x = new RealElement(2.71)
-   
-        assert.equal(x.num(), 2.71)
-      })
 
-      it('is an alias of getData()', function () {
-        assert.ok(n.num === n.getData) 
-      })
-    })
-   
     describe('equals()', function () {
       it('returns true if two elements are equal', function () {
         var x = new RealElement(-1)
@@ -76,6 +64,14 @@ describe('RealElement', function () {
       })
     })
    
+    describe('getData()', function () {
+      it('returns the real number', function () {
+        var x = new RealElement(2.71)
+   
+        assert.equal(x.getData(), 2.71)
+      })
+    })
+
     describe('notEquals()', function () {
       it('returns true if two elements are not equal', function () {
         var x = new RealElement(-1)
@@ -113,6 +109,12 @@ describe('RealElement', function () {
       it('can be chained', function () {
         var x = new RealElement(-1)
         assert.ok(x.neg().neg() instanceof RealElement)
+      })
+    })
+   
+    describe('num()', function () {
+      it('is an alias of getData()', function () {
+        assert.ok(n.num === n.getData) 
       })
     })
    

@@ -95,7 +95,7 @@ describe('RealElement', function () {
 
     describe('div()', function () {
       it('is an alias of division()', function () {
-        assert.ok(element.div === element.division) 
+        assert.ok(n.div === n.division) 
       })
     })
    

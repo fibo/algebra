@@ -37,7 +37,10 @@ describe('Element', function () {
     })
 
     describe('getData()', function () {
-      it('returns element data')
+      it('returns element data', function () {
+        var element = new Element({data:'data'})
+        assert.equal(element.getData(), 'data')
+      })
     })
 
     describe('inversion()', function () {
@@ -83,7 +86,11 @@ describe('Element', function () {
     })
 
     describe('setData()', function () {
-      it('set element data')
+      it('set element data', function () {
+        var element = new Element()
+        element.setData(12)
+        assert.equal(element.getData(), 12)
+      })
     })
 
     describe('subtraction()', function () {

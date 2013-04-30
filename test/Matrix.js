@@ -122,15 +122,5 @@ describe('Matrix', function () {
         assert.ok(matrix.row === matrix.getRowByIndex)
       })
     })
-
-    describe('setElements()', function () {
-      it('sets elements', function () {
-//TODO faccio il test per debuggare
-
-        var elements = [two, zero, zero, two]
-        matrix.setElements(elements)
-        assert.deepEqual(matrix.getElements(), elements)
-      })
-    })
   })
 })

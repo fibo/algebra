@@ -36,8 +36,13 @@ describe('Tensor', function () {
 
   describe('Methods', function () {
     describe('addition()', function () {
-      it('is an abstract method', function () {
-        assert.ok(tensor.addition === abstractMethod)
+      it('implements the addition operator')
+      it('checks indices are the same')
+    })
+
+    describe('add()', function () {
+      it('is an alias of addition()', function () {
+        assert.ok(tensor.add === tensor.addition) 
       })
     })
 
@@ -47,18 +52,14 @@ describe('Tensor', function () {
           indices: [2, 2],
           elements: [one, zero, one, zero]
         })
-
-        var tensor2 = tensor1.clone()
+          , tensor2 = tensor1.clone()
 
         assert.ok(tensor2 instanceof Tensor)
-
         assert.ok(tensor1.equal(tensor1))
-
         assert.ok(tensor1 !== tensor2)
       })
     })
    
-    // TODO notEqual
     describe('equal()', function () {
       it('returns true if two tensors are equal, false otherwise', function () {
         var tensor1 = new Tensor({
@@ -72,9 +73,19 @@ describe('Tensor', function () {
 
         assert.ok(tensor1.equal(tensor2))
         assert.ok(tensor2.equal(tensor1))
+
+        assert.equal(tensor1.equal(tensor), false)
       })
 
-      it('has reflection property')
+      it('has reflection property', function () {
+        assert.ok(tensor.equal(tensor)) 
+      })
+    })
+
+    describe('eq()', function () {
+      it('is an alias of equal()', function () {
+        assert.ok(tensor.eq === tensor.equal) 
+      })
     })
 
     describe('getData()', function () {
@@ -83,12 +94,10 @@ describe('Tensor', function () {
 
     describe('getElementConstructor()', function () {
       it('returns elementConstructor', function () {
-        var tensor = new Tensor({
-          elementConstructor: RealElement
-        })
-
         assert.ok(tensor.getElementConstructor() === RealElement)
       })
+
+      it('is the constructor of the first element')
     })
 
     describe('getElements()', function () {
@@ -99,8 +108,11 @@ describe('Tensor', function () {
 
     describe('getIndices()', function () {
       it('returns tensor indices', function () {
-        var indices = [1, 4, 6]
-        var tensor = new Tensor({indices: indices})
+        var indices = [1, 2]
+        var tensor = new Tensor({
+          elements: [one, zero, one],
+          indices : indices
+        })
         assert.deepEqual(tensor.getIndices(), indices)
       })
     })
@@ -117,10 +129,15 @@ describe('Tensor', function () {
       })
     })
 
-    describe('notEquals()', function () {
-      it('is an abstract method', function () {
-        assert.ok(tensor.notEquals === abstractMethod)
+    describe('ne()', function () {
+      it('is an alias of notEqual()', function () {
+        assert.ok(tensor.ne === tensor.notEqual) 
       })
+    })
+
+    describe('notEqual()', function () {
+      it('returns true if two tensors are not equal, false otherwise'/*, function () {
+      }*/)
     })
 
     describe('setElements()', function () {
@@ -128,8 +145,13 @@ describe('Tensor', function () {
     })
 
     describe('subtraction()', function () {
-      it('is an abstract method', function () {
-        assert.ok(tensor.subtraction === abstractMethod)
+      it('implements subtraction operator')
+      it('checks indices are the same')
+    })
+
+    describe('sub()', function () {
+      it('is an alias of subtraction()', function () {
+        assert.ok(tensor.sub === tensor.subtraction) 
       })
     })
   })

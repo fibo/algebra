@@ -18,7 +18,6 @@ var elements = [one, two,
                 two, one]
 
 var matrix = new Matrix({
-  elementConstructor : RealElement,
   elements           : elements,
   numberOfColumns    : 2,
   numberOfRows       : 2
@@ -35,6 +34,21 @@ describe('Matrix', function () {
   })
 
   describe('Methods', function () {
+    describe('clone()', function () {
+      it('returns a copy of the object', function () {
+        var matrix1 = new Matrix({
+          elements           : elements,
+          numberOfColumns    : 2,
+          numberOfRows       : 2
+        })
+          , matrix2 = matrix1.clone()
+   
+        assert.ok(matrix2 instanceof Matrix)
+        assert.ok(matrix1.equal(matrix2))
+        assert.ok(matrix1 !== matrix2)
+      })
+    })
+
     describe('col()', function () {
       it('is an alias of getColumnByIndex()', function () {
         assert.ok(matrix.col === matrix.getColumnByIndex)

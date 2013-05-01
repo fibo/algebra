@@ -59,9 +59,7 @@ describe('RealElement', function () {
           , y = x.clone()
    
         assert.ok(y instanceof RealElement)
-   
-        assert.ok(x.equal(y))
-   
+        assert.ok(x.eq(y))
         assert.ok(x !== y)
       })
     })
@@ -102,7 +100,7 @@ describe('RealElement', function () {
     describe('equal()', function () {
       it('returns true if two elements are equal', function () {
         var x = new RealElement(-1)
-        var y = new RealElement(-1)
+          , y = new RealElement(-1)
    
         assert.ok(x.equal(y))
         assert.ok(y.equal(x))

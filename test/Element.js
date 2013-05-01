@@ -30,9 +30,9 @@ describe('Element', function () {
       })
     })
 
-    describe('equals()', function () {
+    describe('equal()', function () {
       it('is an abstract method', function () {
-        assert.ok(element.equals === abstractMethod)
+        assert.ok(element.equal === abstractMethod)
       })
     })
 

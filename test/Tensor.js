@@ -10,6 +10,7 @@ var one  = new RealElement(1)
   , zero = new RealElement(0)
 
 var tensor = new Tensor({
+  indices : [0],
   elements: [one]
 })
 
@@ -102,7 +103,8 @@ describe('Tensor', function () {
 
     describe('getElements()', function () {
       it('returns the elements', function () {
-        assert.deepEqual(tensor.getElements(), [one])
+        var elements = tensor.getElements()
+        assert.ok(elements[0].eq(one))
       })
     })
 

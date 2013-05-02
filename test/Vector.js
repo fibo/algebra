@@ -40,10 +40,16 @@ describe('Vector', function () {
       })
     })
 
-    describe('cross()', function () {
+    describe('crossProduct()', function () {
       it('implements the cross product operation')
+
+      it('is implemented only when dim = 3')
     })
    
+    describe('cross()', function () {
+      it('is an alias of crossProduct()')
+    })
+
     describe('dim()', function () {
       it('is an alias of getDimension()', function () {
         assert.ok(vector.dim === vector.getDimension) 
@@ -55,9 +61,9 @@ describe('Vector', function () {
         var vector1 = new Vector({elements: [zero, zero, one]})
         var vector2 = new Vector({elements: [zero, one, zero]})
    
-        var zero = vector1.dotProduct(vector2)
+        var result = vector1.dotProduct(vector2)
    
-        assert.ok(zero.eq(0))
+        assert.ok(result.eq(0))
       })
     })
 
@@ -67,9 +73,25 @@ describe('Vector', function () {
       })
     })
    
+    describe('element()', function () {
+      it('is an alias of getElement()', function () {
+        assert.ok(vector.element === vector.getElement) 
+      })
+    })
+
+    describe('elem()', function () {
+      it('is an alias of getElement()', function () {
+        assert.ok(vector.elem === vector.getElement) 
+      })
+    })
+
     describe('getDimension()', function () {
       it('returns vector dimension', function () {
+        var vector1 = new Vector({elements: [one, zero]})
         assert.ok(vector.getDimension(), 2)
+
+        var vector2 = new Vector({elements: [one, zero, two]})
+        assert.ok(vector.getDimension(), 3)
       })
     })
    
@@ -97,7 +119,7 @@ describe('Vector', function () {
         var vector3 = new Vector({elements: [one, one, one]})
    
         assert.ok(vector1.orthogonal(vector2))
-        assert.equal(vector1.orthogonal(vector3), false)
+       // assert.equal(vector1.orthogonal(vector3), false)
       })
     })
 

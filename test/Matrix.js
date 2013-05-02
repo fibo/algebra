@@ -60,10 +60,12 @@ describe('Matrix', function () {
         var col
 
         col = matrix.getColumnByIndex(0)
-        assert.deepEqual(col, [elements[0], elements[2]])
+        assert.ok(col[0].eq(elements[0]))
+        assert.ok(col[1].eq(elements[2]))
 
         col = matrix.getColumnByIndex(1)
-        assert.deepEqual(col, [elements[1], elements[3]])
+        assert.ok(col[0].eq(elements[1]))
+        assert.ok(col[1].eq(elements[3]))
       })
     })
 
@@ -72,10 +74,12 @@ describe('Matrix', function () {
         var row
 
         row = matrix.getRowByIndex(0)
-        assert.deepEqual(row, [elements[0], elements[1]])
+        assert.ok(row[0].eq(elements[0]))
+        assert.ok(row[1].eq(elements[1]))
 
         row = matrix.getRowByIndex(1)
-        assert.deepEqual(row, [elements[2], elements[3]])
+        assert.ok(row[0].eq(elements[2]))
+        assert.ok(row[1].eq(elements[3]))
       })
     })
 

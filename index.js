@@ -11,6 +11,8 @@
 
 //-----------------------------------------------------------------------------
 
+// TODO classe Scalar che è un Tensor con un solo Element
+
 exports.Element     = require('./lib/Element.js')
 exports.Field       = require('./lib/Field.js')
 exports.Matrix      = require('./lib/Matrix.js')

@@ -2,7 +2,6 @@
 var algebra = require('../index.js')
   , assert  = require('assert')
 
-
 describe('Quick start:', function () {
   it('has a working Complex numbers example', function () {
     var Complex = algebra.Complex.Element

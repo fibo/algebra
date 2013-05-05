@@ -59,6 +59,15 @@ describe('util.is', function () {
     })
   })
 
+  describe('notArray', function () {
+    it('return true if argument is not a array, false otherwise', function () {
+      assert.ok(is.notArray(2))
+      assert.ok(is.notArray({foo: "bar"}))
+
+      assert.equal(is.notArray([4, 5]), false)
+    })
+  })
+
   describe('notInteger', function () {
     it('return true if argument is not an integer, false otherwise', function () {
       assert.ok(is.notInteger(4.2))

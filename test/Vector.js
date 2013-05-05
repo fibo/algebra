@@ -11,7 +11,7 @@ var one  = new RealElement(1)
   , two  = new RealElement(2)
   , zero = new RealElement(0)
 
-var vector = new Vector({elements: [one, zero]})
+var vector = new Vector([one, zero])
 
 describe('Vector', function () {
   describe('Constructor', function () {

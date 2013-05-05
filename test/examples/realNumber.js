@@ -21,7 +21,7 @@ describe('example', function () {
     
     x.sub(5) // x -> x - 5
     
-    assert.equal(x.num(), 7) // 7
+    assert.equal(x.num(), 8) // 8
     
     // You can use chaining but remember that operator precedence may not be what you expect.
     
@@ -39,7 +39,7 @@ describe('example', function () {
     
     ten.neg()
     
-    assert.equal(ten.num(), 10) // -10
+    assert.equal(ten.num(), -10) // -10
     
     ten.inv()
     
@@ -62,7 +62,7 @@ describe('example', function () {
     
     // You can check if two numbers are equal.
     
-    assert.ok(on.eq(y))
+    assert.ok(one.eq(y))
   })
 })
 

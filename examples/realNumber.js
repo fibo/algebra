@@ -17,7 +17,7 @@ x.div(2); // x -> x / 2
 
 x.sub(5); // x -> x - 5
 
-console.log(x.num()); // 7
+console.log(x.num()); // 8
 
 // You can use chaining but remember that operator precedence may not be what you expect.
 

@@ -22,7 +22,6 @@ var vector = new RealVector({
 
 describe('RealVector', function () {
   describe('Constructor', function () {
-
     it('works', function () {
       // Create an R3 vector.
       var arg = {}

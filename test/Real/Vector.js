@@ -41,7 +41,6 @@ describe('RealVector', function () {
     })
 
     it('coerces numbers to real elements', function () {
-
       var arg = {}
       var element0 = new RealElement(5)
       arg.elements = [element0, 1, 4]

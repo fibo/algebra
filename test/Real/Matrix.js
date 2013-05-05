@@ -17,6 +17,20 @@ var matrix = new RealMatrix({
 
 describe('RealMatrix', function () {
   describe('Constructor', function () {
+    it('coerces numbers to real elements', function () {
+      var matrix = new RealMatrix({
+        numberOfColumns : 2,
+        numberOfRows    : 2,
+        elements        : [1, 2,
+                           3, 4]
+      })
+
+      var elements = matrix.getElements()
+      assert.ok(elements[0].num(), 1)
+      assert.ok(elements[1].num(), 2)
+      assert.ok(elements[2].num(), 3)
+      assert.ok(elements[3].num(), 4)
+    })
   })
 
   describe('Inheritance', function () {

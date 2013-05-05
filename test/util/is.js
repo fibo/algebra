@@ -35,9 +35,39 @@ describe('util.is', function () {
     })
   })
 
+  describe('integer', function () {
+    it('return true if argument is an integer, false otherwise', function () {
+      assert.ok(is.integer(4))
+      assert.ok(is.integer(0))
+      assert.ok(is.integer(-1))
+
+      assert.equal(is.integer(1.7), false)
+      assert.equal(is.integer(-10.5), false)
+      assert.equal(is.integer('xx'), false)
+    })
+  })
+
   describe('number', function () {
     it('return true if argument is a number', function () {
       assert.ok(is.number(4))
+      assert.ok(is.number(0.1))
+      assert.ok(is.number(1.8))
+
+      assert.equal(is.integer(1.7), false)
+      assert.equal(is.integer(-10.5), false)
+      assert.equal(is.integer('xx'), false)
+    })
+  })
+
+  describe('notInteger', function () {
+    it('return true if argument is not an integer, false otherwise', function () {
+      assert.ok(is.notInteger(4.2))
+      assert.ok(is.notInteger(0.1))
+      assert.ok(is.notInteger(-1.8))
+
+      assert.equal(is.notInteger(1), false)
+      assert.equal(is.notInteger(-10), false)
+      assert.equal(is.notInteger(0), false)
     })
   })
 
@@ -45,6 +75,30 @@ describe('util.is', function () {
     it('return true if argument is a not number', function () {
       assert.ok(is.notNumber({}))
       assert.ok(is.notNumber([4]))
+    })
+  })
+
+  describe('notPositiveInteger', function () {
+    it('return true if argument is a positive integer, false otherwise', function () {
+      assert.ok(is.notPositiveInteger(-4))
+      assert.ok(is.notPositiveInteger(-1))
+      assert.ok(is.notPositiveInteger(1.1))
+
+      assert.equal(is.notPositiveInteger(1), false)
+      assert.equal(is.notPositiveInteger(10), false)
+      assert.equal(is.notPositiveInteger(5), false)
+    })
+  })
+
+  describe('positiveInteger', function () {
+    it('return true if argument is a positive integer, false otherwise', function () {
+      assert.ok(is.positiveInteger(4))
+      assert.ok(is.positiveInteger(1))
+      assert.ok(is.positiveInteger(100))
+
+      assert.equal(is.positiveInteger(1.7), false)
+      assert.equal(is.positiveInteger(-10), false)
+      assert.equal(is.positiveInteger(-5), false)
     })
   })
 

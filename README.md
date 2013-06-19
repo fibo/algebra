@@ -1,7 +1,7 @@
 algebra
 =======
 
-Vectors, Matrices, Tensors.
+Vectors, Matrices, Tensors for Node.js
 
 **DISCLAIMER** : this is a developer release, Tensors are not implemented yet. Every feedback is welcome!
 

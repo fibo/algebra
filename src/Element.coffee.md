@@ -1,7 +1,0 @@
-Element
-=======
-
-    class Element
-
-    @data
-

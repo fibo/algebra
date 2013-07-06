@@ -1,7 +1,7 @@
 Real Tensor
 ===========
 
-    require 'AlgebraTensor'
+    AlgebraTensor = require 'AlgebraTensor'
 
     class RealTensor extends AlgebraTensor
       constructor: (indices, elements)

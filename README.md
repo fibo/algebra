@@ -107,7 +107,7 @@ Please use [algebra's bug tracker](https://github.com/fibo/algebra/issues) on gi
 
 ## Human contact
 
-My skype and gtalk is casati.gianluca, contact me if you can give me some advice about coding this lib or if you have passion for math. I'm located in Milan and Genoa, it could be possible to have a pizza or a beer :)
+My skype and gtalk is `casati.gianluca`, contact me if you can give me some advice about coding this lib or if you have passion for math. I'm located in Milan and Genoa, it could be possible to have a pizza or a beer :)
 
 # Development
 

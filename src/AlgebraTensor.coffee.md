@@ -1,7 +1,7 @@
 Algebra Tensor
 ==============
 
-    require 'AlgebraElement'
+    AlgebraElement = require 'AlgebraElement'
 
     class AlgebraTensor
       constructor: (indices = [0], elements)

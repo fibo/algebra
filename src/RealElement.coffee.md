@@ -1,7 +1,7 @@
 Real Element
 ============
 
-     require 'AlgebraElement'
+     AlgebraElement = require 'AlgebraElement'
 
      class RealElement extends AlgebraElement
        constructor: (num = 0) ->

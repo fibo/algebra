@@ -1,14 +1,4 @@
 
-// TODO 
-// ho fatto :split $MYVIMRC e ha funzionato qui sul netbook
-// segnati queste opzioni !! da qualche parte nella wiki o meglio scrivi articolo e linkalo
-// in genere queste cose cross progetto dovrei farle in un punto centralizzato
-//" sarebbe da fare solo per JS, scrivi articolo
-// TODO fai per tipo file .js
-//set foldmethod=indent
-//set shiftwidth=2
-// -----> con queste opzioni mi viene bene vedere il codice
-
 //-----------------------------------------------------------------------------
 
 // TODO classe Scalar che è un Tensor con un solo Element

@@ -111,6 +111,14 @@ My skype and gtalk is `casati.gianluca`, contact me if you can give me some advi
 
 # Development
 
+## Repository
+
+How to clone
+
+    git clone https://github.com/fibo/algebra.git
+    git submodule init
+    npm install
+
 ## Testing
 
 Say hello to the nyan cat :)
@@ -126,4 +134,14 @@ Install browserify globally
 Build algebra client lib
 
     browserify index.js -o algebra.js
+
+## Wiki
+
+How I added wiki submodule 
+
+    git submodule add https://github.com/fibo/algebra.wiki.git wiki
+
+Generate one wiki page from tests
+
+    node_modules/.bin/mocha -R markdown test/Element.js > wiki/Element-class.md
 

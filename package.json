@@ -1,17 +1,17 @@
 {
-  "name"       : "algebra",
-  "author"     : "fibo",
-  "version"    : "0.1.6",
+  "name": "algebra",
+  "author": "fibo",
+  "version": "0.1.6",
   "description": "Vectors, Matrices, Tensors",
-  "main"       : "index.js",
-  "scripts"    : {
-         "test": "mocha --bail --recursive --reporter nyan"
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --bail --recursive --reporter nyan"
   },
-  "repository" : {
-    "type"     : "git",
-    "url"      : "git://github.com/fibo/algebra.git"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fibo/algebra.git"
   },
-  "keywords"   : [
+  "keywords": [
     "algebra",
     "matrix",
     "vector",
@@ -20,8 +20,9 @@
   "license": "BSD",
   "devDependencies": {
     "browserify": "*",
-    "mocha"     : "*",
-    "should"    : "*"
+    "mocha": "*",
+    "should": "*",
+    "typescript": "~0.9.0-1"
   },
   "engines": {
     "node": ">=0.8"

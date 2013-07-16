@@ -22,8 +22,9 @@
     "browserify": "*",
     "mocha": "*",
     "should": "*",
-    "typescript": "~0.9.0-1",
-    "grunt-typescript": "~0.2.1"
+    "grunt": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-watch": "*"
   },
   "engines": {
     "node": ">=0.8"

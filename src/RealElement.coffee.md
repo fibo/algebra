@@ -7,6 +7,8 @@ Real Element
        constructor: (num = 0) ->
          super.data num
 
+       @add: ->
+       @addition = @add
        
      exports = RealElement
 

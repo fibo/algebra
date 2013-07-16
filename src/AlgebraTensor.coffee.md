@@ -4,7 +4,7 @@ Algebra Tensor
     AlgebraElement = require 'AlgebraElement'
 
     class AlgebraTensor
-      constructor: (indices = [0], elements)
+      constructor: () ->
 
     exports = AlgebraTensor
 

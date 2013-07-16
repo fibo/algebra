@@ -113,11 +113,31 @@ My skype and gtalk is `casati.gianluca`, contact me if you can give me some advi
 
 ## Repository
 
-How to clone
+Clone the repository
 
     git clone https://github.com/fibo/algebra.git
-    git submodule init
+    cd algebra
+
+Install deps
+
     npm install
+
+Install grunt-cli
+
+    npm uninstall -g grunt-cli
+    npm install -g grunt-cli
+
+Pull the wiki
+
+    git submodule init
+
+## Iterative development
+
+Start watching files
+
+    grunt watch
+
+Modified `src/*.coffee.md` files will be compiled under lib/
 
 ## Testing
 

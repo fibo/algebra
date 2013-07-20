@@ -1,11 +1,11 @@
 Real Element
 ============
 
-     AlgebraElement = require 'AlgebraElement'
+     AlgebraElement = require './AlgebraElement'
 
      class RealElement extends AlgebraElement
-       constructor: (num = 0) ->
-         super.data num
+       constructor: (num = 1) ->
+         super
 
        @add: ->
        @addition = @add

@@ -1,7 +1,7 @@
 {
   "name": "algebra",
   "author": "fibo",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,8 @@
     "should": "*",
     "grunt": "*",
     "grunt-contrib-coffee": "*",
-    "grunt-contrib-watch": "*"
+    "grunt-contrib-watch": "*",
+    "grunt-mocha-cli": "*"
   },
   "engines": {
     "node": ">=0.8"

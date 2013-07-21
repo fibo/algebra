@@ -4,7 +4,6 @@ var algebra = require('../index.js')
 
 describe("README's Quick start section", function () {
   it('has a working Complex numbers example', function () {
-  /*
     var Complex = algebra.ComplexElement
 
     var z1 = new Complex(1, 2)
@@ -12,8 +11,7 @@ describe("README's Quick start section", function () {
 
     z1.mul(z2)
 
-    assert.deepEqual(z1.xy(), [-5, 10])
-  */
+    z1.data.should.eql([-5, 10])
   })
 
   it('has a working Vectors example', function () {
@@ -26,7 +24,7 @@ describe("README's Quick start section", function () {
 
     v1.add(v2)
 
-    assert.deepEqual(v1.getCoordinates(), [3, 5])
+    v1.data.should.eql([3, 5])
   */
   })
 
@@ -43,9 +41,9 @@ describe("README's Quick start section", function () {
 
     m1.mul(m2)
 
-    assert.equal(m1.toString(),'| -1  2 |\n| -3  4 |\n')
+    m1.data.should.eql([1, 2, 3, 4])
 
-    assert.equal(m1.det().num(), 2)
+    m1.determinant.data.should.eql(2)
   */
   })
 })

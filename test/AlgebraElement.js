@@ -12,9 +12,19 @@ describe('AlgebraElement', function() {
       return element.addition.should.throwError();
     });
   });
-  return describe('#subtraction()', function() {
+  describe('#subtraction()', function() {
     return it('is abstract', function() {
       return element.subtraction.should.throwError();
+    });
+  });
+  describe('#multiplication()', function() {
+    return it('is abstract', function() {
+      return element.multiplication.should.throwError();
+    });
+  });
+  return describe('#division()', function() {
+    return it('is abstract', function() {
+      return element.division.should.throwError();
     });
   });
 });

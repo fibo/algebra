@@ -11,7 +11,7 @@ complex = new ComplexField();
 describe('ComplexField', function() {
   describe('inheritance', function() {
     return it('is an AlgebraField', function() {
-      return complex.should.be["instanceof"](AlgebraField);
+      return complex.should.be.instanceOf(AlgebraField);
     });
   });
   describe('attributes', function() {
@@ -42,10 +42,16 @@ describe('ComplexField', function() {
         return complex.addition([1, 4], [-1, 1]).should.eql([0, 5]);
       });
     });
-    return describe('#subtraction()', function() {
+    describe('#subtraction()', function() {
       return it('implements -', function() {
         return complex.subtraction([2, 3], [2, -5]).should.eql([0, 8]);
       });
+    });
+    describe('#multiplication()', function() {
+      return it('implements *', function() {});
+    });
+    return describe('#division()', function() {
+      return it('implements /', function() {});
     });
   });
 });

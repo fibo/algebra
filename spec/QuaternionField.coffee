@@ -6,7 +6,7 @@ QuaternionField = algebra.QuaternionField
 
 quaternion = new QuaternionField()
 
-describe 'QuaterionField', ->
+describe 'QuaternionField', ->
   describe 'inheritance', ->
     it 'is an AlgebraField', ->
       quaternion.should.be.instanceof AlgebraField
@@ -14,28 +14,36 @@ describe 'QuaterionField', ->
   describe 'attributes', ->
     describe '#one', ->
       it 'should be [1, 0, 0, 0]', ->
-        # complex.one.should.deepEqual [1, 0, 0, 0]
+        quaternion.one.should.eql [1, 0, 0, 0]
 
       it 'cannot be overridden', ->
-        # (() ->
-        #   complex.one = 5
-        # ).should.throwError()
+        (() ->
+          quaternion.one = [1, 1, 1, 1]
+        ).should.throwError()
 
     describe '#zero', ->
-      it 'should be 0', ->
-        # complex.zero.should.equal 0
+      it 'should be [0, 0, 0, 0]', ->
+        quaternion.zero.should.eql [0, 0, 0, 0]
 
       it 'cannot be overridden', ->
-        # (() ->
-        #   complex.zero = 5
-        # ).should.throwError()
+        (() ->
+          quaternion.zero = [1, 1, 1, 1] 
+        ).should.throwError()
 
   describe 'methods', ->
     describe '#addition()', ->
       it 'implements +', ->
-        # complex.addition(4, 3).should.equal 7
+        quaternion.addition([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [2, 3, 4, 5]
 
     describe '#subtraction()', ->
       it 'implements -', ->
-        # complex.subtraction(4, 3).should.equal 1
+        quaternion.subtraction([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [0, 1, 2, 3]
+
+    describe '#multiplication()', ->
+      it 'implements *', ->
+        # quaternion.multiplication([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [2, 3, 4, 5]
+
+    describe '#division()', ->
+      it 'implements /', ->
+        # quaternion.division([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [2, 3, 4, 5]
 

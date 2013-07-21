@@ -14,3 +14,11 @@ describe 'AlgebraElement', ->
     it 'is abstract', ->
       element.subtraction.should.throwError()
 
+  describe '#multiplication()', ->
+    it 'is abstract', ->
+      element.multiplication.should.throwError()
+
+  describe '#division()', ->
+    it 'is abstract', ->
+      element.division.should.throwError()
+

@@ -1,46 +1,48 @@
-var AlgebraElement, RealElement, RealField, algebra, element, real, x, y;
+var AlgebraElement, ComplexElement, ComplexField, algebra, complex, element, w, z;
 
 algebra = require('../index.js');
 
 AlgebraElement = algebra.AlgebraElement;
 
-RealElement = algebra.RealElement;
+ComplexElement = algebra.ComplexElement;
 
-RealField = algebra.RealField;
+ComplexField = algebra.ComplexField;
 
-element = new RealElement();
+element = new ComplexElement();
 
-real = new RealField();
+complex = new ComplexField();
 
-x = new RealElement(2);
+z = new ComplexElement([2, 1]);
 
-y = new RealElement(-10);
+w = new ComplexElement(2, 1);
 
-describe('RealElement', function() {
+describe('ComplexElement', function() {
   describe('inheritance', function() {
     return it('is an AlgebraElement', function() {
       return element.should.be.instanceOf(AlgebraElement);
     });
   });
   describe('constructor', function() {
-    it('data should default to one', function() {
-      return element.data.should.eql(real.one);
+    it('data should default to [1, 0]', function() {
+      return element.data.should.eql(complex.one);
     });
-    return it('has signature (number)', function() {
-      x.data.should.eql(2);
-      return y.data.should.eql(-10);
+    it('has signature ([number, number])', function() {
+      return z.data.should.eql([2, 1]);
+    });
+    return it('has signature (number, number)', function() {
+      return w.data.should.eql([2, 1]);
     });
   });
   return describe('methods', function() {
     describe('#addition()', function() {
       it('implements +', function() {
-        x.data = 2;
-        y.data = -10;
-        x.addition(y);
-        return x.data.should.equal(-8);
+        z.data = [2, 1];
+        w.data = [-1, 4];
+        z.addition(w);
+        return z.data.should.eql([1, 5]);
       });
       return it('can be chained', function() {
-        return x.addition(y).should.be.instanceOf(RealElement);
+        return z.addition(w).should.be.instanceOf(ComplexElement);
       });
     });
     describe('#add()', function() {
@@ -49,14 +51,9 @@ describe('RealElement', function() {
       });
     });
     describe('#subtraction()', function() {
-      it('implements -', function() {
-        x.data = 8;
-        y.data = 4;
-        y.subtraction(x);
-        return y.data.should.equal(-4);
-      });
+      it('implements -', function() {});
       return it('can be chained', function() {
-        return x.subtraction(y).should.be.instanceOf(RealElement);
+        return z.subtraction(w).should.be.instanceOf(ComplexElement);
       });
     });
     describe('#sub()', function() {
@@ -66,13 +63,13 @@ describe('RealElement', function() {
     });
     describe('#multiplication()', function() {
       it('implements *', function() {
-        x.data = 2;
-        y.data = -10;
-        x.multiplication(y);
-        return x.data.should.eql(-20);
+        z.data = [2, 1];
+        w.data = [-1, 0];
+        z.multiplication(w);
+        return z.data.should.eql([-2, -1]);
       });
       return it('can be chained', function() {
-        return x.multiplication(y).should.be.instanceOf(RealElement);
+        return z.multiplication(w).should.be.instanceOf(ComplexElement);
       });
     });
     describe('#mul()', function() {
@@ -82,13 +79,13 @@ describe('RealElement', function() {
     });
     describe('#division()', function() {
       it('implements /', function() {
-        x.data = 10;
-        y.data = 20;
-        x.division(y);
-        return x.data.should.eql(0.5);
+        z.data = [-2, -1];
+        w.data = [-1, 0];
+        z.division(w);
+        return z.data.should.eql([2, 1]);
       });
       return it('can be chained', function() {
-        return x.division(y).should.be.instanceOf(RealElement);
+        return z.division(w).should.be.instanceOf(ComplexElement);
       });
     });
     return describe('#div()', function() {

@@ -39,16 +39,16 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     // Multiply z1 by z2.
     z1.mul(z2); // (1 + 2i) * (3 + 4i) = -5 + 10i
 
-    console.log(z1.xy()); // [-5, 10]
+    console.log(z1.data); // [-5, 10]
 
 ## Vectors
 
     var algebra = require('algebra');
 
-    // Rn is a class representing a real vector space of dimension = n.
+    // Rn is a class representing a real vector space of dimension = n
     var Rn = algebra.Real.VectorSpace;
 
-    // Create a real vector space with dimension = 2, a.k.a. the cartesian plane.
+    // Create a real vector space with dimension = 2, a.k.a. the cartesian plane
     var R2 = new Rn(2);
 
     // Create two vectors
@@ -57,7 +57,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     var v1 = new R2.Vector(1, 1);
     var v2 = new R2.Vector(2, 4);
 
-    // Add v2 to v1.
+    // Add v2 to v1
     v1.add(v2); // (1, 1) + (2, 4) = (3, 5)
 
     console.log(v1.getCoordinates()); // [3, 5]
@@ -66,10 +66,10 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
     var algebra = require('algebra');
 
-    // GLnR is the Real General Linear Group of invertible matrices of order n.
+    // GLnR is the Real General Linear Group of invertible matrices of order n
     var GLnR = algebra.Real.GeneralLinearGroup;
 
-    // Create the group of 2x2 invertible matrices.
+    // Create the group of 2x2 invertible matrices
     var GL2R = new GLnR(2);
 
     // Create two invertible matrices:
@@ -83,14 +83,15 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     var m2 = new GL2R.Matrix(-1, 0, 
                               0, 1);
 
-    // Multiply m1 by m2 at right side.
+    // Multiply m1 by m2 at right side
+    //       | 1 2 | * | -1 0 | = | -1 2 |
+    //       | 3 4 |   |  0 1 |   | -3 4 |
     m1.mul(m2);
 
-    console.log(m1.toString()); //  | -1 2 |
-                                //  | -3 4 |
+    console.log(m1.data); // [1, 2, 3, 4]
 
     // Check out m1 determinant, should be 2 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
-    console.log(m1.determinant().num()); // 2
+    console.log(m1.determinant.data); // 2
 
 
 # Documentation

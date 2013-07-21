@@ -7,7 +7,9 @@ exports.RealElement = require('./lib/RealElement')
 exports.RealField   = require('./lib/RealField')
 exports.RealTensor  = require('./lib/RealTensor')
 
+exports.ComplexElement = require('./lib/ComplexElement')
 exports.ComplexField   = require('./lib/ComplexField')
 
+exports.QuaternionElement = require('./lib/QuaternionElement')
 exports.QuaternionField   = require('./lib/QuaternionField')
 

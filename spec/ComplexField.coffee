@@ -9,7 +9,7 @@ complex = new ComplexField()
 describe 'ComplexField', ->
   describe 'inheritance', ->
     it 'is an AlgebraField', ->
-      complex.should.be.instanceof AlgebraField
+      complex.should.be.instanceOf AlgebraField
 
   describe 'attributes', ->
     describe '#one', ->
@@ -38,4 +38,12 @@ describe 'ComplexField', ->
     describe '#subtraction()', ->
       it 'implements -', ->
         complex.subtraction([2, 3], [2, -5]).should.eql [0, 8]
+
+    describe '#multiplication()', ->
+      it 'implements *', ->
+        # complex.multiplication([2, 1], [2, 0]).should.eql [4, 1]
+
+    describe '#division()', ->
+      it 'implements /', ->
+        # complex.division([5, 0], [2, 1]).should.eql [2, -1]
 

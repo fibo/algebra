@@ -1,37 +1,37 @@
-var AlgebraField, RealField, algebra, real;
+var AlgebraField, ComplexField, algebra, complex;
 
 algebra = require('../index.js');
 
 AlgebraField = algebra.AlgebraField;
 
-RealField = algebra.RealField;
+ComplexField = algebra.ComplexField;
 
-real = new RealField();
+complex = new ComplexField();
 
-describe('RealField', function() {
+describe('ComplexField', function() {
   describe('inheritance', function() {
     return it('is an AlgebraField', function() {
-      return real.should.be["instanceof"](AlgebraField);
+      return complex.should.be["instanceof"](AlgebraField);
     });
   });
   describe('attributes', function() {
     describe('#one', function() {
-      it('should be 1', function() {
-        return real.one.should.equal(1);
+      it('should be [1, 0]', function() {
+        return complex.one.should.eql([1, 0]);
       });
       return it('cannot be overridden', function() {
         return (function() {
-          return real.one = 5;
+          return complex.one = [1, 1];
         }).should.throwError();
       });
     });
     return describe('#zero', function() {
-      it('should be 0', function() {
-        return real.zero.should.equal(0);
+      it('should be [0, 0]', function() {
+        return complex.zero.should.eql([0, 0]);
       });
       return it('cannot be overridden', function() {
         return (function() {
-          return real.zero = 5;
+          return complex.zero = [1, 1];
         }).should.throwError();
       });
     });
@@ -39,12 +39,12 @@ describe('RealField', function() {
   return describe('methods', function() {
     describe('#addition()', function() {
       return it('implements +', function() {
-        return real.addition(4, 3).should.equal(7);
+        return complex.addition([1, 4], [-1, 1]).should.eql([0, 5]);
       });
     });
     return describe('#subtraction()', function() {
       return it('implements -', function() {
-        return real.subtraction(4, 3).should.equal(1);
+        return complex.subtraction([2, 3], [2, -5]).should.eql([0, 8]);
       });
     });
   });

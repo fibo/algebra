@@ -3,8 +3,6 @@ algebra
 
 Vectors, Matrices, Tensors for Node.js
 
-**DISCLAIMER** : this is a developer release, Tensors are not implemented yet. Every feedback is welcome!
-
 ![on-quaternions-and-octonions!](https://raw.github.com/fibo/algebra/master/images/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](https://raw.github.com/fibo/algebra/master/images/Cover-Algebra.png)
  
 # Installation

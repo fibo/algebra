@@ -1,4 +1,4 @@
-var AlgebraElement, Real, RealElement, RealField, algebra, element, x, y;
+var AlgebraElement, RealElement, RealField, algebra, element, real, x, y;
 
 algebra = require('../index.js');
 
@@ -8,9 +8,9 @@ RealElement = algebra.RealElement;
 
 RealField = algebra.RealField;
 
-Real = new RealField();
-
 element = new RealElement();
+
+real = new RealField();
 
 x = new RealElement(2);
 
@@ -24,7 +24,7 @@ describe('RealElement', function() {
   });
   describe('constructor', function() {
     it('data should default to 1', function() {
-      return element.data.should.equal(Real.one);
+      return element.data.should.equal(real.one);
     });
     return it('accepts one argument', function() {
       x.data.should.equal(2);
@@ -34,6 +34,8 @@ describe('RealElement', function() {
   return describe('methods', function() {
     describe('#addition()', function() {
       it('implements +', function() {
+        x.data = 2;
+        y.data = -10;
         x.addition(y);
         return x.data.should.equal(-8);
       });
@@ -41,8 +43,10 @@ describe('RealElement', function() {
     });
     return describe('#subtraction()', function() {
       it('implements -', function() {
+        x.data = 8;
+        y.data = 4;
         y.subtraction(x);
-        return y.data.should.equal(10);
+        return y.data.should.equal(-4);
       });
       return it('can be chained', function() {});
     });

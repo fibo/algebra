@@ -2,40 +2,40 @@
 algebra = require '../index.js'
 
 AlgebraField = algebra.AlgebraField
-RealField    = algebra.RealField
+ComplexField = algebra.ComplexField
 
-real = new RealField()
+complex = new ComplexField()
 
-describe 'RealField', ->
+describe 'ComplexField', ->
   describe 'inheritance', ->
     it 'is an AlgebraField', ->
-      real.should.be.instanceof AlgebraField
+      complex.should.be.instanceof AlgebraField
 
   describe 'attributes', ->
     describe '#one', ->
-      it 'should be 1', ->
-        real.one.should.equal 1
+      it 'should be [1, 0]', ->
+        complex.one.should.eql [1, 0]
 
       it 'cannot be overridden', ->
         (() ->
-          real.one = 5
+           complex.one = [1, 1]
         ).should.throwError()
 
     describe '#zero', ->
-      it 'should be 0', ->
-        real.zero.should.equal 0
+      it 'should be [0, 0]', ->
+        complex.zero.should.eql [0, 0]
 
       it 'cannot be overridden', ->
         (() ->
-          real.zero = 5
+          complex.zero = [1, 1] 
         ).should.throwError()
 
   describe 'methods', ->
     describe '#addition()', ->
       it 'implements +', ->
-        real.addition(4, 3).should.equal 7
+        complex.addition([1, 4], [-1, 1]).should.eql [0, 5]
 
     describe '#subtraction()', ->
       it 'implements -', ->
-        real.subtraction(4, 3).should.equal 1
+        complex.subtraction([2, 3], [2, -5]).should.eql [0, 8]
 

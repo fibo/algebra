@@ -5,9 +5,8 @@ AlgebraElement = algebra.AlgebraElement
 RealElement    = algebra.RealElement
 RealField      = algebra.RealField
 
-Real = new RealField()
-
 element = new RealElement()
+real    = new RealField()
 
 x = new RealElement(2)
 y = new RealElement(-10)
@@ -19,7 +18,7 @@ describe 'RealElement', ->
 
   describe 'constructor', ->
     it 'data should default to 1', ->
-      element.data.should.equal Real.one
+      element.data.should.equal real.one
 
     it 'accepts one argument', ->
       x.data.should.equal 2
@@ -28,7 +27,11 @@ describe 'RealElement', ->
   describe 'methods', ->
     describe '#addition()', ->
       it 'implements +', ->
-        // x -> x + y = 2 + (-10) = -8
+        # x = 2
+        # y = -10
+        # x -> x + y = 2 + (-10) = -8
+        x.data = 2
+        y.data = -10
         x.addition(y)
         x.data.should.equal -8
 
@@ -36,9 +39,13 @@ describe 'RealElement', ->
 
     describe '#subtraction()', ->
       it 'implements -', ->
-        // y -> y - x = 2 - (-8) = 10
+        # x = 8
+        # y = 4
+        # y -> y - x = 4 - 8 = -4
+        x.data = 8
+        y.data = 4
         y.subtraction(x)
-        y.data.should.equal 10
+        y.data.should.equal -4
 
       it 'can be chained', ->
 

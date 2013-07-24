@@ -6,6 +6,9 @@ AlgebraElement = algebra.AlgebraElement
 element = new AlgebraElement()
 
 describe 'AlgebraElement', ->
+  describe 'constructor', ->
+    it 'has signature ()', ->
+
   describe 'methods', ->
     describe '#addition()', ->
       it 'is abstract', ->

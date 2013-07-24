@@ -17,7 +17,7 @@ describe 'RealVector', ->
   describe 'attributes', ->
     describe '#field', ->
       it 'is a RealField', ->
-        vector.field.shoud.be.instanceOf RealField
+        vector.field.should.be.instanceOf RealField
 
   describe 'methods', ->
     describe '#addition()', ->

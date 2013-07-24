@@ -7,6 +7,9 @@ AlgebraElement = algebra.AlgebraElement;
 element = new AlgebraElement();
 
 describe('AlgebraElement', function() {
+  describe('constructor', function() {
+    return it('has signature ()', function() {});
+  });
   return describe('methods', function() {
     describe('#addition()', function() {
       return it('is abstract', function() {

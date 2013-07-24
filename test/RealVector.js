@@ -21,7 +21,7 @@ describe('RealVector', function() {
   describe('attributes', function() {
     return describe('#field', function() {
       return it('is a RealField', function() {
-        return vector.field.shoud.be.instanceOf(RealField);
+        return vector.field.should.be.instanceOf(RealField);
       });
     });
   });

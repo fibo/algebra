@@ -1,6 +1,8 @@
 algebra
 =======
 
+[![Build Status](https://travis-ci.org/fibo/algebra.png)](https://travis-ci.org/fibo/algebra)
+
 Vectors, Matrices, Tensors for Node.js
 
 ![on-quaternions-and-octonions!](https://raw.github.com/fibo/algebra/master/images/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](https://raw.github.com/fibo/algebra/master/images/Cover-Algebra.png)

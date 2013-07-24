@@ -5,7 +5,7 @@
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --bail --recursive --reporter nyan"
+    "test": "mocha --bail --require should --reporter nyan"
   },
   "repository": {
     "type": "git",

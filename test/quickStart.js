@@ -12,6 +12,11 @@ describe("README's Quick start section", function () {
     z1.mul(z2)
 
     z1.data.should.eql([-5, 10])
+
+    // Many chainable operators are available.
+    z1.div(z2).add(1).mul(2).conj();
+
+    z1.data.should.eql([-4, 4])
   })
 
   it('has a working Vectors example', function () {

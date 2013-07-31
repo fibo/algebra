@@ -26,7 +26,8 @@
     "grunt": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-watch": "*",
-    "grunt-mocha-cli": "*"
+    "grunt-mocha-cli": "*",
+    "grunt-docco": "~0.2.0"
   },
   "engines": {
     "node": ">=0.8"

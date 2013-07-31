@@ -16,14 +16,20 @@ module.exports = (grunt) ->
         src: ['*.coffee']
         dest: 'test'
         ext: '.js'
+    docco:
+      lib:
+        src: ['lib/*.js']
+        options:
+          output: 'subtree/gh-pages/docs'
     mochacli:
       options:
         require: ['should']
         reporter: 'spec'
         bail: true
       all: ['test/*.js']
-        
+
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-docco'
   grunt.loadNpmTasks 'grunt-mocha-cli'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 

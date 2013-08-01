@@ -124,6 +124,10 @@ Clone the repository
     git clone https://github.com/fibo/algebra.git
     cd algebra
 
+Switch to develop branch
+
+    git checkout -b develop origin/develop
+
 Install deps
 
     npm install
@@ -133,17 +137,14 @@ Install grunt-cli
     npm uninstall -g grunt-cli
     npm install -g grunt-cli
 
-Pull the wiki
-
-    git submodule init
-
 ## Iterative development
 
 Start watching files
 
     grunt watch
 
-Modified `src/*.coffee.md` files will be compiled under lib/
+Modified `spec/*.coffee` files will be compiled to `test/*.js`.
+Modified `lib/*.js` will trigger tests.
 
 ## Testing
 

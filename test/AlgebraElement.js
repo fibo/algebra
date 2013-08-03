@@ -8,7 +8,10 @@ element = new AlgebraElement();
 
 describe('AlgebraElement', function() {
   describe('constructor', function() {
-    return it('has signature ()', function() {});
+    return it('has signature ()', function() {
+      element = new AlgebraElement();
+      return element.should.be.instanceOf(AlgebraElement);
+    });
   });
   return describe('methods', function() {
     describe('#addition()', function() {

@@ -8,6 +8,8 @@ element = new AlgebraElement()
 describe 'AlgebraElement', ->
   describe 'constructor', ->
     it 'has signature ()', ->
+      element = new AlgebraElement()
+      element.should.be.instanceOf AlgebraElement
 
   describe 'methods', ->
     describe '#addition()', ->

@@ -1,10 +1,8 @@
 
-var algebra = require('../index.js')
-  , assert  = require('assert')
+var algebra = require('../index')
 
 describe("README's Quick start section", function () {
   it('has a working Complex numbers example', function () {
-    /*
     var Complex = algebra.ComplexElement
 
     var z1 = new Complex(1, 2)
@@ -14,11 +12,12 @@ describe("README's Quick start section", function () {
 
     z1.data.should.eql([-5, 10])
 
+/*
     // Many chainable operators are available.
-    z1.div(z2).add(1).mul(2).conj();
+    z1.conj().mul([2, 0]);
 
-    z1.data.should.eql([-4, 4])
-    */
+    z1.data.should.eql([-10, -20])
+*/
   })
 
   it('has a working Vectors example', function () {

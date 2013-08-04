@@ -1,4 +1,4 @@
-Tensor
+
 algebra = require '../index.js'
 
 AlgebraVectorSpace = algebra.AlgebraVectorSpace

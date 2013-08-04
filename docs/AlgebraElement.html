@@ -129,10 +129,17 @@
             <div class="content"><div class='highlight'><pre>
 <span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraElement</span><span class="params">(data, field)</span> {</span>
-  <span class="keyword">this</span>.data = data
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraElement</span><span class="params">(field, data)</span> {</span>
+
+  <span class="keyword">if</span> (! (field <span class="keyword">instanceof</span> AlgebraField))
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
 
   <span class="keyword">this</span>.__defineGetter__(<span class="string">'field'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> field })
+
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> data === <span class="string">'undefined'</span>)
+    data = field.one
+
+  <span class="keyword">this</span>.data = data
 }
 
 <span class="function"><span class="keyword">function</span> <span class="title">addition</span><span class="params">(element)</span> {</span>

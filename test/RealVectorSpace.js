@@ -1,4 +1,3 @@
-Tensor;
 var AlgebraVectorSpace, RealField, RealVectorSpace, algebra, space;
 
 algebra = require('../index.js');

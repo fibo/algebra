@@ -145,8 +145,16 @@
   <span class="keyword">if</span> (arguments.length === <span class="number">2</span>)
     data = [arguments[<span class="number">0</span>], arguments[<span class="number">1</span>]]
 
-  AlgebraElement.call(<span class="keyword">this</span>, data, field)
+  AlgebraElement.call(<span class="keyword">this</span>, field, data)
 }
+
+<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(element)</span> {</span>
+  <span class="keyword">this</span>.data = <span class="keyword">this</span>.field.conjugation(<span class="keyword">this</span>.data)
+console.log(<span class="keyword">this</span>)
+  <span class="keyword">return</span> <span class="keyword">this</span>
+}
+ComplexElement.prototype.conjugation = conjugation
+ComplexElement.prototype.conj        = conjugation
 
 util.inherits(ComplexElement, AlgebraElement)
 

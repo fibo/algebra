@@ -13,7 +13,6 @@ exports.RealTensor      = require('./lib/RealTensor')
 exports.RealVector      = require('./lib/RealVector')
 
 exports.RealVectorSpace = require('./lib/RealVectorSpace')
-exports.RealTensorSpace = require('./lib/RealTensorSpace')
 
 exports.ComplexElement = require('./lib/ComplexElement')
 exports.ComplexField   = require('./lib/ComplexField')

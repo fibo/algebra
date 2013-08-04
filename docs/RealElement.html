@@ -141,7 +141,7 @@
   <span class="keyword">if</span> (arguments.length === <span class="number">1</span>) 
     data = arguments[<span class="number">0</span>]
 
-  AlgebraElement.call(<span class="keyword">this</span>, data, field)
+  AlgebraElement.call(<span class="keyword">this</span>, field, data)
 }
 
 util.inherits(RealElement, AlgebraElement)

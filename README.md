@@ -44,9 +44,9 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     console.log(z1.data); // [-5, 10]
 
     // Many chainable operators are available.
-    z1.div(z2).add(1).mul(2).conj();
+    z1.conj().mul([2, 0]);
 
-    console.log(z1.data); // [-4, 4]
+    console.log(z1.data); // [-10, 20]
 
 ## Vectors
 

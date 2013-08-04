@@ -166,6 +166,27 @@ QuaternionField.prototype.add      = addition
 QuaternionField.prototype.subtraction = subtraction
 QuaternionField.prototype.sub         = subtraction
 
+<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(q)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>z~ = (q0 + i q1 + j q2 + k q3)~
+   = q0 - i q1 - j q2 - k q3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> [q[<span class="number">0</span>], - q[<span class="number">1</span>], - q[<span class="number">2</span>], - q[<span class="number">3</span>]]
+}
+QuaternionField.prototype.conjugation = conjugation
+QuaternionField.prototype.conj        = conjugation
+
 <span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(a, b)</span> {</span>
   <span class="keyword">return</span> 
     a[<span class="number">0</span>] === b[<span class="number">0</span>] &amp;&amp; 

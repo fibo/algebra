@@ -145,7 +145,7 @@
   <span class="keyword">if</span> (arguments.length === <span class="number">3</span>) 
     data = [<span class="number">0</span>, arguments[<span class="number">0</span>], arguments[<span class="number">1</span>], arguments[<span class="number">2</span>]]
 
-  AlgebraElement.call(<span class="keyword">this</span>, data, field)
+  AlgebraElement.call(<span class="keyword">this</span>, field, data)
 }
 
 util.inherits(QuaternionElement, AlgebraElement)

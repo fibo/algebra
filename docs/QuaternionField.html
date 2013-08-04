@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>AlgebraVector.js</title>
+  <title>QuaternionField.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -111,7 +111,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>AlgebraVector.js</h1>
+                  <h1>QuaternionField.js</h1>
               </div>
           </li>
         
@@ -127,19 +127,66 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraTensor = require(<span class="string">'./AlgebraTensor'</span>)
-  , util          = require(<span class="string">'util'</span>)
+<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
+  , util         = require(<span class="string">'util'</span>)
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraVector</span><span class="params">(field, elements)</span> {</span>
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> elements === <span class="string">'undefined'</span>)
-    elements = [real.zero]
-
-  AlgebraTensor.call(<span class="keyword">this</span>, field, [elements.length], elements)
+<span class="function"><span class="keyword">function</span> <span class="title">QuaternionField</span><span class="params">()</span> {</span>
+  AlgebraField.call(<span class="keyword">this</span>, {
+    zero: [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],
+    one: [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],
+    constants: {
+      i: [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],
+      j: [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],
+      k: [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]
+    }
+  })
 }
 
-util.inherits(AlgebraVector, AlgebraTensor)
+util.inherits(QuaternionField, AlgebraField)
 
-module.exports = AlgebraVector</pre></div></div>
+<span class="function"><span class="keyword">function</span> <span class="title">addition</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> [
+    a[<span class="number">0</span>] + b[<span class="number">0</span>],
+    a[<span class="number">1</span>] + b[<span class="number">1</span>],
+    a[<span class="number">2</span>] + b[<span class="number">2</span>],
+    a[<span class="number">3</span>] + b[<span class="number">3</span>]
+  ]
+}
+QuaternionField.prototype.addition = addition
+QuaternionField.prototype.add      = addition
+
+<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> [
+    a[<span class="number">0</span>] - b[<span class="number">0</span>],
+    a[<span class="number">1</span>] - b[<span class="number">1</span>],
+    a[<span class="number">2</span>] - b[<span class="number">2</span>],
+    a[<span class="number">3</span>] - b[<span class="number">3</span>]
+  ]
+}
+QuaternionField.prototype.subtraction = subtraction
+QuaternionField.prototype.sub         = subtraction
+
+<span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> 
+    a[<span class="number">0</span>] === b[<span class="number">0</span>] &amp;&amp; 
+    a[<span class="number">1</span>] === b[<span class="number">1</span>] &amp;&amp;
+    a[<span class="number">2</span>] === b[<span class="number">2</span>] &amp;&amp;
+    a[<span class="number">3</span>] === b[<span class="number">3</span>]
+}
+QuaternionField.prototype.equal = equal
+QuaternionField.prototype.eq    = equal
+
+<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> 
+    a[<span class="number">0</span>] !== b[<span class="number">0</span>] || 
+    a[<span class="number">1</span>] !== b[<span class="number">1</span>] ||
+    a[<span class="number">2</span>] !== b[<span class="number">2</span>] ||
+    a[<span class="number">3</span>] !== b[<span class="number">3</span>]
+}
+QuaternionField.prototype.notEqual = notEqual
+QuaternionField.prototype.ne    = notEqual
+
+module.exports = QuaternionField</pre></div></div>
             
         </li>
         

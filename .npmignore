@@ -1,0 +1,12 @@
+.git/
+docs/
+images/
+node_modules/
+spec/
+subtree/
+wiki/
+.gitignore
+.gitmodules
+.travis.yml
+Gruntfile.coffee
+README.md

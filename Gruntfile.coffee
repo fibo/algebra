@@ -4,6 +4,9 @@ module.exports = (grunt) ->
       coffee:
         files: ['spec/*.coffee']
         tasks: 'coffee'
+      docco:
+        files: ['index.js', 'lib/*.js']
+        tasks: 'docco'
       mochacli:
         files: ['test/*.js', 'lib/*.js']
         tasks: 'mochacli'

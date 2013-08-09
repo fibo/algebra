@@ -5,7 +5,7 @@ module.exports = (grunt) ->
         files: ['spec/*.coffee']
         tasks: 'coffee'
       docco:
-        files: ['index.js', 'lib/*.js']
+        files: ['examples/*.js']
         tasks: 'docco'
       example:
         files: ['examples/*.js']
@@ -23,8 +23,8 @@ module.exports = (grunt) ->
         dest: 'test'
         ext: '.js'
     docco:
-      lib:
-        src: ['index.js', 'lib/*.js']
+      examples:
+        src: ['examples/*.js']
         options:
           template: 'docs/docco.jst'
           output: 'docs'

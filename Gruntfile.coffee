@@ -9,7 +9,7 @@ module.exports = (grunt) ->
         tasks: 'docco'
       example:
         files: ['examples/*.js']
-        tasks: ['mochacli', 'docco']
+        tasks: ['mochacli:examples', 'docco']
       mochacli:
         files: ['index.js', 'test/*.js', 'lib/*.js']
         tasks: 'mochacli'
@@ -35,6 +35,7 @@ module.exports = (grunt) ->
         reporter: 'spec'
         bail: true
       all: ['test/*.js']
+      examples: ['test/examples.js']
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-docco-multi'

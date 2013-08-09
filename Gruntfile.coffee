@@ -7,6 +7,9 @@ module.exports = (grunt) ->
       docco:
         files: ['index.js', 'lib/*.js']
         tasks: 'docco'
+      example:
+        files: ['examples/*.js']
+        tasks: ['mochacli', 'docco']
       mochacli:
         files: ['index.js', 'test/*.js', 'lib/*.js']
         tasks: 'mochacli'

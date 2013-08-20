@@ -1,6 +1,8 @@
-var AlgebraTensorSpace, AlgebraVectorSpace, RealField, algebra, real;
+var AlgebraField, AlgebraTensorSpace, AlgebraVectorSpace, RealField, algebra, real;
 
 algebra = require('../index');
+
+AlgebraField = algebra.AlgebraField;
 
 AlgebraVectorSpace = algebra.AlgebraVectorSpace;
 

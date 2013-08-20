@@ -6,8 +6,19 @@ RealField     = algebra.RealField
 
 real = new RealField()
 
-vector = new AlgebraVector(real, [1, 2])
-
 describe 'AlgebraVector', ->
-  describe 'constructor', ->
-    it 'has signature (field, elements)' 
+  describe 'Constructor', ->
+    it 'has signature (field, elements)', ->
+      field = real
+      elements = [1, 2]
+      vector = new AlgebraVector(field, elements)
+      vector.should.be.instanceOf AlgebraVector
+
+  describe 'Accessor', ->
+    describe 'dimension', ->
+      it 'returns vector dimension, that is the number of elements', ->
+        field = real
+        elements = [1, 0, -1]
+        vector = new AlgebraVector(field, elements)
+        vector.dimension.should.be.eql 3
+

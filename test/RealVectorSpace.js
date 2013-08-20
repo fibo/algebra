@@ -8,17 +8,19 @@ RealField = algebra.RealField;
 
 RealVectorSpace = algebra.RealVectorSpace;
 
-space = new RealVectorSpace();
+space = new RealVectorSpace(2);
 
 describe('RealVectorSpace', function() {
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraVectorSpace', function() {
       return space.should.be.instanceOf(AlgebraVectorSpace);
     });
   });
   describe('attributes', function() {
     describe('#dimension', function() {
-      return it('is a number', function() {});
+      return it('is a number', function() {
+        return space.dimension.should.be.a.number;
+      });
     });
     return describe('#field', function() {
       return it('is a real field', function() {

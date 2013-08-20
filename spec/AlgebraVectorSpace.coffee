@@ -1,6 +1,7 @@
 
 algebra = require '../index'
 
+AlgebraField       = algebra.AlgebraField
 AlgebraVectorSpace = algebra.AlgebraVectorSpace
 AlgebraTensorSpace = algebra.AlgebraTensorSpace
 RealField          = algebra.RealField

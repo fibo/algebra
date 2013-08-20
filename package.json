@@ -33,5 +33,7 @@
     "node": ">=0.8"
   },
   "readmeFilename": "README.md",
-  "dependencies": {}
+  "dependencies": {
+    "underscore": "~1.5.1"
+  }
 }

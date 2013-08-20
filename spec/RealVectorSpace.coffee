@@ -6,17 +6,17 @@ AlgebraVectorSpace = algebra.AlgebraVectorSpace
 RealField       = algebra.RealField
 RealVectorSpace = algebra.RealVectorSpace
 
-space = new RealVectorSpace()
+space = new RealVectorSpace(2)
 
 describe 'RealVectorSpace', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an AlgebraVectorSpace', ->
       space.should.be.instanceOf AlgebraVectorSpace
 
   describe 'attributes', ->
     describe '#dimension', ->
       it 'is a number', ->
-        # space.dimension.should.be.a.number
+        space.dimension.should.be.a.number
 
     describe '#field', ->
       it 'is a real field', ->

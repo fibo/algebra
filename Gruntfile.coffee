@@ -29,6 +29,9 @@ module.exports = (grunt) ->
           template: 'docs/docco.jst'
           output: 'docs'
           css: 'docco.css'
+    jshint:
+      files:
+        src: ['index.js', 'lib/*js']
     mochacli:
       options:
         require: ['should']
@@ -38,9 +41,10 @@ module.exports = (grunt) ->
       examples: ['test/examples.js']
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-jshint'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-docco-multi'
   grunt.loadNpmTasks 'grunt-mocha-cli'
-  grunt.loadNpmTasks 'grunt-contrib-watch'
 
-  grunt.registerTask 'default', ['coffee', 'mochacli']
+  grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli']
 

@@ -8,8 +8,9 @@ module.exports = function () {
   // import ComplexElement class: it represents a complex number
   var ComplexElement = algebra.ComplexElement;
 
-  // a complex number is composed by a real and an imaginary part
-  // lets build two complex numbers
+  // # Constructor
+  // A complex number is composed by a real and an imaginary part
+  // lets build some complex numbers
   //
   //     z1 = 1 + 2i
   //     z2 = 3i
@@ -19,6 +20,10 @@ module.exports = function () {
   var z2 = new ComplexElement(0, 3);
   var z3 = new ComplexElement(-4);
 
+  // it is also possible to pass an array
+  //
+  //     z4 = 1 - 2i
+  var z4 = new ComplexElement([1, -2]);
 };
 
 

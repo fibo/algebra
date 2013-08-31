@@ -10,11 +10,11 @@ RealVector = algebra.RealVector
 vector = new RealVector(0, 0, 1)
 
 describe 'RealVector', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an AlgebraVector', ->
       vector.should.be.instanceOf AlgebraVector
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature (v1, v2, ... vn)', ->
       vector = new RealVector(0, 1)
       vector.should.be.instanceOf RealVector
@@ -28,7 +28,12 @@ describe 'RealVector', ->
       it 'is a RealField', ->
         vector.field.should.be.instanceOf RealField
 
-  describe 'methods', ->
+    describe '#dimension', ->
+
+  describe 'Methods', ->
     describe '#addition()', ->
       it 'implements +', ->
+        # vector1 = new RealVector([2, -1])
+        # vector2 = new RealVector([0, -1])
+        # vector1.addition(vector2)
 

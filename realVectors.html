@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>complexNumbers.js</title>
+  <title>realVectors.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -46,7 +46,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>complexNumbers.js</h1>
+                  <h1>realVectors.js</h1>
               </div>
           </li>
         
@@ -89,11 +89,11 @@ module.exports = <span class="function"><span class="keyword">function</span> <s
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>import ComplexElement class: it represents a complex number</p>
+              <p>import RealVector, a class that represents a vector over reals</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> ComplexElement = algebra.ComplexElement;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> RealVector = algebra.RealVector;</pre></div></div>
             
         </li>
         
@@ -105,33 +105,16 @@ module.exports = <span class="function"><span class="keyword">function</span> <s
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <h1>Constructor</h1>
-<p>A complex number is composed by a real and an imaginary part
-lets build some complex numbers</p>
-<pre><code>z1 = 1 + 2i
-z2 = 3i
-z3 = -4</code></pre>
+<p>A real vector is an array of numbers</p>
+<pre><code>v1 = [2, 2]
+v2 = [1, 1, 2]
+v3 = [0, 1] </code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> z1 = <span class="keyword">new</span> ComplexElement(<span class="number">1</span>, <span class="number">2</span>);
-  <span class="keyword">var</span> z2 = <span class="keyword">new</span> ComplexElement(<span class="number">0</span>, <span class="number">3</span>);
-  <span class="keyword">var</span> z3 = <span class="keyword">new</span> ComplexElement(-<span class="number">4</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>it is also possible to pass an array</p>
-<pre><code>z4 = 1 - 2i</code></pre>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> z4 = <span class="keyword">new</span> ComplexElement([<span class="number">1</span>, -<span class="number">2</span>]);
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> v1 = <span class="keyword">new</span> RealVector([<span class="number">2</span>, <span class="number">2</span>]);
+  <span class="keyword">var</span> v2 = <span class="keyword">new</span> RealVector([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>]);
+  <span class="keyword">var</span> v3 = <span class="keyword">new</span> RealVector([<span class="number">0</span>, <span class="number">1</span>]);
 };</pre></div></div>
             
         </li>

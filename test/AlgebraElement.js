@@ -1,6 +1,6 @@
 var AlgebraElement, AlgebraField, RealField, algebra, element, field;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraElement = algebra.AlgebraElement;
 
@@ -13,7 +13,7 @@ field = new AlgebraField();
 element = new AlgebraElement(field);
 
 describe('AlgebraElement', function() {
-  describe('constructor', function() {
+  describe('Constructor', function() {
     it('has signature (field, data)', function() {
       var data;
       field = new AlgebraField();
@@ -31,9 +31,10 @@ describe('AlgebraElement', function() {
         return element = new AlgebraElement('not a field');
       }).should.throwError();
     });
-    return it('defaults #data to field.one)', function() {});
+    return it('defaults #data to field.one)');
   });
-  return describe('methods', function() {
+  describe('Attributes', function() {});
+  return describe('Methods', function() {
     describe('#addition()', function() {
       return it('is abstract', function() {
         return element.addition.should.throwError();

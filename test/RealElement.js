@@ -1,6 +1,6 @@
 var AlgebraElement, RealElement, RealField, algebra, element, real, x, y;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraElement = algebra.AlgebraElement;
 
@@ -17,12 +17,12 @@ x = new RealElement(2);
 y = new RealElement(-10);
 
 describe('RealElement', function() {
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraElement', function() {
       return element.should.be.instanceOf(AlgebraElement);
     });
   });
-  describe('constructor', function() {
+  describe('Constructor', function() {
     it('data should default to one', function() {
       return element.data.should.eql(real.one);
     });
@@ -31,7 +31,8 @@ describe('RealElement', function() {
       return y.data.should.eql(-10);
     });
   });
-  return describe('methods', function() {
+  describe('Attributes', function() {});
+  return describe('Methods', function() {
     describe('#addition()', function() {
       it('implements +', function() {
         x.data = 2;

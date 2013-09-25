@@ -1,6 +1,6 @@
 var AlgebraElement, QuaternionElement, QuaternionField, algebra, element, quaternion, w, z;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraElement = algebra.AlgebraElement;
 
@@ -17,38 +17,39 @@ z = new QuaternionElement([2, 1]);
 w = new QuaternionElement(2, 1);
 
 describe('QuaternionElement', function() {
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraElement', function() {
       return element.should.be.instanceOf(AlgebraElement);
     });
   });
-  describe('constructor', function() {
+  describe('Constructor', function() {
     it('data should default to [1, 0, 0, 0]', function() {
       return element.data.should.eql([1, 0, 0, 0]);
     });
     it('has signature ([number, number])', function() {});
     return it('has signature (number, number)', function() {});
   });
-  return describe('methods', function() {
+  describe('Attributes', function() {});
+  return describe('Methods', function() {
     describe('#addition()', function() {
-      it('implements +', function() {});
-      return it('can be chained', function() {});
+      it('implements +');
+      return it('can be chained');
     });
     describe('#add()', function() {
-      return it('is an alias of #addition()', function() {});
-    });
-    describe('#subtraction()', function() {
-      it('implements -', function() {});
-      return it('can be chained', function() {});
-    });
-    describe('#sub()', function() {
-      return it('is an alias of #subtraction()', function() {
-        return element.sub.should.eql(element.subtraction);
+      return it('is an alias of #addition()', function() {
+        return element.add.should.eql(element.addition);
       });
     });
+    describe('#subtraction()', function() {
+      it('implements -');
+      return it('can be chained');
+    });
+    describe('#sub()', function() {
+      return it('is an alias of #subtraction()');
+    });
     describe('#multiplication()', function() {
-      it('implements *', function() {});
-      return it('can be chained', function() {});
+      it('implements *');
+      return it('can be chained');
     });
     describe('#mul()', function() {
       return it('is an alias of #multiplication()', function() {

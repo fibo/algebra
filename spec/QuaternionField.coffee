@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraField    = algebra.AlgebraField
 QuaternionField = algebra.QuaternionField
@@ -7,11 +7,13 @@ QuaternionField = algebra.QuaternionField
 quaternion = new QuaternionField()
 
 describe 'QuaternionField', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an AlgebraField', ->
       quaternion.should.be.instanceof AlgebraField
 
-  describe 'attributes', ->
+  describe 'Constructor', ->
+
+  describe 'Attributes', ->
     describe '#one', ->
       it 'should be [1, 0, 0, 0]', ->
         quaternion.one.should.eql [1, 0, 0, 0]
@@ -30,7 +32,7 @@ describe 'QuaternionField', ->
           quaternion.zero = [1, 1, 1, 1] 
         ).should.throwError()
 
-  describe 'methods', ->
+  describe 'Methods', ->
     describe '#addition()', ->
       it 'implements +', ->
         quaternion.addition([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [2, 3, 4, 5]
@@ -40,10 +42,12 @@ describe 'QuaternionField', ->
         quaternion.subtraction([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [0, 1, 2, 3]
 
     describe '#multiplication()', ->
-      it 'implements *', ->
+      it 'implements *' # , ->
         # quaternion.multiplication([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [2, 3, 4, 5]
 
     describe '#division()', ->
-      it 'implements /', ->
+      it 'implements /' # , ->
         # quaternion.division([1, 2, 3, 4], [1, 1, 1, 1]).should.eql [2, 3, 4, 5]
+
+  describe 'Methods', ->
 

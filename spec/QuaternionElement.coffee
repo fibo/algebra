@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraElement    = algebra.AlgebraElement
 QuaternionElement = algebra.QuaternionElement
@@ -12,11 +12,11 @@ z = new QuaternionElement([2, 1])
 w = new QuaternionElement(2, 1)
 
 describe 'QuaternionElement', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an AlgebraElement', ->
       element.should.be.instanceOf AlgebraElement
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'data should default to [1, 0, 0, 0]', ->
       element.data.should.eql [1, 0, 0, 0]
 
@@ -26,9 +26,11 @@ describe 'QuaternionElement', ->
     it 'has signature (number, number)', ->
       # w.data.should.eql [2, 1]
 
-  describe 'methods', ->
+  describe 'Attributes', ->
+
+  describe 'Methods', ->
     describe '#addition()', ->
-      it 'implements +', ->
+      it 'implements +' # , ->
         # z = [2, 1]
         # w = [-1, 4]
         # z -> z + w = [2, 1] + [-1, 4] = [1, 5] 
@@ -37,14 +39,14 @@ describe 'QuaternionElement', ->
         # z.addition(w)
         # z.data.should.eql [1, 5]
 
-      it 'can be chained', ->
+      it 'can be chained' # , ->
 
     describe '#add()', ->
       it 'is an alias of #addition()', ->
-        # element.add.should.eql element.addition
+        element.add.should.eql element.addition
 
     describe '#subtraction()', ->
-      it 'implements -', ->
+      it 'implements -' #, ->
         # z = 8
         # w = 4
         # y -> y - x = 4 - 8 = -4
@@ -53,14 +55,14 @@ describe 'QuaternionElement', ->
         #y.subtraction(x)
         #y.data.should.eql -4
 
-      it 'can be chained', ->
+      it 'can be chained' # , ->
 
     describe '#sub()', ->
-      it 'is an alias of #subtraction()', ->
-        element.sub.should.eql element.subtraction
+      it 'is an alias of #subtraction()' # , ->
+        # element.sub.should.eql element.subtraction
 
     describe '#multiplication()', ->
-      it 'implements *', ->
+      it 'implements *' # , ->
         # z = [2, 1]
         # w = [-1, 0]
         # z -> z * w = [2, 1] * [-1, 0] = [-2, -1]
@@ -69,7 +71,7 @@ describe 'QuaternionElement', ->
         # z.multiplication(w)
         # z.data.should.eql [-2, -1]
 
-      it 'can be chained', ->
+      it 'can be chained' # , ->
 
     describe '#mul()', ->
       it 'is an alias of #multiplication()', ->

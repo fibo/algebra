@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraTensor = algebra.AlgebraTensor
 
@@ -17,7 +17,7 @@ z = new ComplexElement(1, 2)
 w = new ComplexElement(5, -1)
 
 describe 'AlgebraTensor', ->
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature (field, indices, elements)', ->
       elements = [ z, w, z, w, z, w,
                    z, z, z, w, w, w,
@@ -77,8 +77,10 @@ describe 'AlgebraTensor', ->
       elements = [x, y]
       tensor = new AlgebraTensor(field, indices, elements)
 
-  describe 'attributes', ->
+  describe 'Attributes', ->
     describe '#indices', ->
 
     describe '#elements', ->
+
+  describe 'Methods', ->
 

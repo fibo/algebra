@@ -1,6 +1,6 @@
 var AlgebraVector, RealField, algebra, real;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraVector = algebra.AlgebraVector;
 
@@ -18,8 +18,8 @@ describe('AlgebraVector', function() {
       return vector.should.be.instanceOf(AlgebraVector);
     });
   });
-  return describe('Accessor', function() {
-    return describe('dimension', function() {
+  return describe('Attributes', function() {
+    return describe('#dimension', function() {
       return it('returns vector dimension, that is the number of elements', function() {
         var elements, field, vector;
         field = real;

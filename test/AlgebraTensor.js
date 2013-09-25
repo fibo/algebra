@@ -1,6 +1,6 @@
 var AlgebraTensor, ComplexElement, ComplexField, RealElement, RealField, algebra, complex, real, w, z;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraTensor = algebra.AlgebraTensor;
 
@@ -21,7 +21,7 @@ z = new ComplexElement(1, 2);
 w = new ComplexElement(5, -1);
 
 describe('AlgebraTensor', function() {
-  describe('constructor', function() {
+  describe('Constructor', function() {
     it('has signature (field, indices, elements)', function() {
       var elements, indices, tensor;
       elements = [z, w, z, w, z, w, z, z, z, w, w, w, z, z, z, z, z, z, z, z, z, z, z, z];
@@ -80,8 +80,9 @@ describe('AlgebraTensor', function() {
       return tensor = new AlgebraTensor(field, indices, elements);
     });
   });
-  return describe('attributes', function() {
+  describe('Attributes', function() {
     describe('#indices', function() {});
     return describe('#elements', function() {});
   });
+  return describe('Methods', function() {});
 });

@@ -1,13 +1,13 @@
 var AlgebraTensor, RealTensor, algebra;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraTensor = algebra.AlgebraTensor;
 
 RealTensor = algebra.RealTensor;
 
 describe('RealTensor', function() {
-  return describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraTensor', function() {
       var elements, indices, tensor;
       indices = [1, 2];
@@ -16,4 +16,7 @@ describe('RealTensor', function() {
       return tensor.should.be.instanceOf(AlgebraTensor);
     });
   });
+  describe('Constructor', function() {});
+  describe('Attributes', function() {});
+  return describe('Methods', function() {});
 });

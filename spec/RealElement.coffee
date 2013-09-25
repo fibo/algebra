@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraElement = algebra.AlgebraElement
 RealElement    = algebra.RealElement
@@ -12,11 +12,11 @@ x = new RealElement(2)
 y = new RealElement(-10)
 
 describe 'RealElement', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an AlgebraElement', ->
       element.should.be.instanceOf AlgebraElement
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'data should default to one', ->
       element.data.should.eql real.one
 
@@ -24,7 +24,9 @@ describe 'RealElement', ->
       x.data.should.eql 2
       y.data.should.eql -10
 
-  describe 'methods', ->
+  describe 'Attributes', ->
+
+  describe 'Methods', ->
     describe '#addition()', ->
       it 'implements +', ->
         # x = 2

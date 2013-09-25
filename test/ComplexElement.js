@@ -1,6 +1,6 @@
 var AlgebraElement, ComplexElement, ComplexField, algebra, complex, element, w, z;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraElement = algebra.AlgebraElement;
 
@@ -17,12 +17,12 @@ z = new ComplexElement([2, 1]);
 w = new ComplexElement(2, 1);
 
 describe('ComplexElement', function() {
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraElement', function() {
       return element.should.be.instanceOf(AlgebraElement);
     });
   });
-  describe('constructor', function() {
+  describe('Constructor', function() {
     it('data should default to [1, 0]', function() {
       return element.data.should.eql(complex.one);
     });
@@ -33,7 +33,7 @@ describe('ComplexElement', function() {
       return w.data.should.eql([2, 1]);
     });
   });
-  return describe('methods', function() {
+  return describe('Methods', function() {
     describe('#addition()', function() {
       it('implements +', function() {
         z.data = [2, 1];
@@ -51,7 +51,7 @@ describe('ComplexElement', function() {
       });
     });
     describe('#subtraction()', function() {
-      it('implements -', function() {});
+      it('implements -');
       return it('can be chained', function() {
         return z.subtraction(w).should.be.instanceOf(ComplexElement);
       });

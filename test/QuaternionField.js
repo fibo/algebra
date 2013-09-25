@@ -1,6 +1,6 @@
 var AlgebraField, QuaternionField, algebra, quaternion;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraField = algebra.AlgebraField;
 
@@ -9,12 +9,13 @@ QuaternionField = algebra.QuaternionField;
 quaternion = new QuaternionField();
 
 describe('QuaternionField', function() {
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraField', function() {
       return quaternion.should.be["instanceof"](AlgebraField);
     });
   });
-  describe('attributes', function() {
+  describe('Constructor', function() {});
+  describe('Attributes', function() {
     describe('#one', function() {
       it('should be [1, 0, 0, 0]', function() {
         return quaternion.one.should.eql([1, 0, 0, 0]);
@@ -36,7 +37,7 @@ describe('QuaternionField', function() {
       });
     });
   });
-  return describe('methods', function() {
+  describe('Methods', function() {
     describe('#addition()', function() {
       return it('implements +', function() {
         return quaternion.addition([1, 2, 3, 4], [1, 1, 1, 1]).should.eql([2, 3, 4, 5]);
@@ -48,10 +49,11 @@ describe('QuaternionField', function() {
       });
     });
     describe('#multiplication()', function() {
-      return it('implements *', function() {});
+      return it('implements *');
     });
     return describe('#division()', function() {
-      return it('implements /', function() {});
+      return it('implements /');
     });
   });
+  return describe('Methods', function() {});
 });

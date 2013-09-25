@@ -13,16 +13,7 @@ RealField = algebra.RealField;
 real = new RealField();
 
 describe('AlgebraVectorSpace', function() {
-  describe('constructor', function() {
-    return it('has signature (field, dimension)', function() {
-      var dimension, field, space;
-      field = real;
-      dimension = 2;
-      space = new AlgebraVectorSpace(field, dimension);
-      return space.should.be.instanceOf(AlgebraVectorSpace);
-    });
-  });
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraTensorSpace', function() {
       var dimension, field, space;
       field = real;
@@ -31,7 +22,16 @@ describe('AlgebraVectorSpace', function() {
       return space.should.be.instanceOf(AlgebraTensorSpace);
     });
   });
-  return describe('attributes', function() {
+  describe('Constructor', function() {
+    return it('has signature (field, dimension)', function() {
+      var dimension, field, space;
+      field = real;
+      dimension = 2;
+      space = new AlgebraVectorSpace(field, dimension);
+      return space.should.be.instanceOf(AlgebraVectorSpace);
+    });
+  });
+  describe('Attributes', function() {
     var dimension, field, space;
     field = real;
     dimension = 2;
@@ -43,6 +43,14 @@ describe('AlgebraVectorSpace', function() {
       return it('is a real field', function() {
         return space.field.should.be.instanceOf(AlgebraField);
       });
+    });
+  });
+  return describe('Methods', function() {
+    describe('#Vector()', function() {
+      return it('is a constructor');
+    });
+    return describe('#containsVector()', function() {
+      return it('checks that the given vector belongs to this vector space');
     });
   });
 });

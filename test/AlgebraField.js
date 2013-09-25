@@ -1,17 +1,18 @@
 var AlgebraField, algebra, element;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraField = algebra.AlgebraField;
 
 element = new AlgebraField();
 
 describe('AlgebraField', function() {
-  describe('attributes', function() {
+  describe('Constructor', function() {});
+  describe('Attributes', function() {
     describe('#one()', function() {});
     return describe('#zero()', function() {});
   });
-  return describe('methods', function() {
+  return describe('Methods', function() {
     describe('#addition()', function() {
       return it('is abstract', function() {
         return element.addition.should.throwError();

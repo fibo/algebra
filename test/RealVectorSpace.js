@@ -1,6 +1,6 @@
-var AlgebraVectorSpace, RealField, RealVectorSpace, algebra, space;
+var AlgebraVectorSpace, RealField, RealVectorSpace, abstractSpace, algebra, dimension, real, space;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraVectorSpace = algebra.AlgebraVectorSpace;
 
@@ -8,7 +8,13 @@ RealField = algebra.RealField;
 
 RealVectorSpace = algebra.RealVectorSpace;
 
-space = new RealVectorSpace(2);
+dimension = 2;
+
+real = new RealField();
+
+space = new RealVectorSpace(dimension);
+
+abstractSpace = new AlgebraVectorSpace(real, dimension);
 
 describe('RealVectorSpace', function() {
   describe('Inheritance', function() {
@@ -16,7 +22,8 @@ describe('RealVectorSpace', function() {
       return space.should.be.instanceOf(AlgebraVectorSpace);
     });
   });
-  describe('attributes', function() {
+  describe('Constructor', function() {});
+  describe('Attributes', function() {
     describe('#dimension', function() {
       return it('is a number', function() {
         return space.dimension.should.be.a.number;
@@ -28,9 +35,14 @@ describe('RealVectorSpace', function() {
       });
     });
   });
-  return describe('methods', function() {
-    return describe('#Vector()', function() {
-      return it('is a constructor', function() {});
+  return describe('Methods', function() {
+    describe('#Vector()', function() {
+      return it('is inherited by AlgebraVectorSpace', function() {
+        return space.dimension.should.be.eql(abstractSpace.dimension);
+      });
+    });
+    return describe('#containsVector()', function() {
+      return it('is inherited by AlgebraVectorSpace');
     });
   });
 });

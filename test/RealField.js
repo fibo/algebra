@@ -1,6 +1,6 @@
 var AlgebraField, RealField, algebra, real;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraField = algebra.AlgebraField;
 
@@ -9,12 +9,13 @@ RealField = algebra.RealField;
 real = new RealField();
 
 describe('RealField', function() {
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraField', function() {
       return real.should.be.instanceOf(AlgebraField);
     });
   });
-  describe('attributes', function() {
+  describe('Constructor', function() {});
+  describe('Attributes', function() {
     describe('#one', function() {
       it('should be 1', function() {
         return real.one.should.eql(1);
@@ -36,7 +37,7 @@ describe('RealField', function() {
       });
     });
   });
-  return describe('methods', function() {
+  return describe('Methods', function() {
     describe('#addition()', function() {
       return it('implements +', function() {
         return real.addition(4, 3).should.eql(7);

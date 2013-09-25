@@ -1,6 +1,6 @@
 var AlgebraField, ComplexField, algebra, complex;
 
-algebra = require('../index.js');
+algebra = require('../index');
 
 AlgebraField = algebra.AlgebraField;
 
@@ -9,12 +9,13 @@ ComplexField = algebra.ComplexField;
 complex = new ComplexField();
 
 describe('ComplexField', function() {
-  describe('inheritance', function() {
+  describe('Inheritance', function() {
     return it('is an AlgebraField', function() {
       return complex.should.be.instanceOf(AlgebraField);
     });
   });
-  describe('attributes', function() {
+  describe('Constructor', function() {});
+  describe('Attributes', function() {
     describe('#one', function() {
       it('should be [1, 0]', function() {
         return complex.one.should.eql([1, 0]);
@@ -36,7 +37,7 @@ describe('ComplexField', function() {
       });
     });
   });
-  return describe('methods', function() {
+  return describe('Methods', function() {
     describe('#addition()', function() {
       return it('implements +', function() {
         return complex.addition([1, 4], [-1, 1]).should.eql([0, 5]);
@@ -48,10 +49,10 @@ describe('ComplexField', function() {
       });
     });
     describe('#multiplication()', function() {
-      return it('implements *', function() {});
+      return it('implements *');
     });
     return describe('#division()', function() {
-      return it('implements /', function() {});
+      return it('implements /');
     });
   });
 });

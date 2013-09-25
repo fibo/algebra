@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraField = algebra.AlgebraField
 RealField    = algebra.RealField
@@ -7,11 +7,13 @@ RealField    = algebra.RealField
 real = new RealField()
 
 describe 'RealField', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an AlgebraField', ->
       real.should.be.instanceOf AlgebraField
 
-  describe 'attributes', ->
+  describe 'Constructor', ->
+
+  describe 'Attributes', ->
     describe '#one', ->
       it 'should be 1', ->
         real.one.should.eql 1
@@ -30,7 +32,7 @@ describe 'RealField', ->
           real.zero = 5
         ).should.throwError()
 
-  describe 'methods', ->
+  describe 'Methods', ->
     describe '#addition()', ->
       it 'implements +', ->
         real.addition(4, 3).should.eql 7

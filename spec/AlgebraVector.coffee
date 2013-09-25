@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraVector = algebra.AlgebraVector
 RealField     = algebra.RealField
@@ -14,8 +14,8 @@ describe 'AlgebraVector', ->
       vector = new AlgebraVector(field, elements)
       vector.should.be.instanceOf AlgebraVector
 
-  describe 'Accessor', ->
-    describe 'dimension', ->
+  describe 'Attributes', ->
+    describe '#dimension', ->
       it 'returns vector dimension, that is the number of elements', ->
         field = real
         elements = [1, 0, -1]

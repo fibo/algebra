@@ -1,17 +1,19 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraField = algebra.AlgebraField
 
 element = new AlgebraField()
 
 describe 'AlgebraField', ->
-  describe 'attributes', ->
+  describe 'Constructor', ->
+
+  describe 'Attributes', ->
     describe '#one()', ->
 
     describe '#zero()', ->
 
-  describe 'methods', ->
+  describe 'Methods', ->
     describe '#addition()', ->
       it 'is abstract', ->
         element.addition.should.throwError()

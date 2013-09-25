@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraElement = algebra.AlgebraElement
 ComplexElement = algebra.ComplexElement
@@ -12,11 +12,11 @@ z = new ComplexElement([2, 1])
 w = new ComplexElement(2, 1)
 
 describe 'ComplexElement', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an AlgebraElement', ->
       element.should.be.instanceOf AlgebraElement
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'data should default to [1, 0]', ->
       element.data.should.eql complex.one
 
@@ -26,7 +26,7 @@ describe 'ComplexElement', ->
     it 'has signature (number, number)', ->
       w.data.should.eql [2, 1]
 
-  describe 'methods', ->
+  describe 'Methods', ->
     describe '#addition()', ->
       it 'implements +', ->
         # z = [2, 1]
@@ -45,7 +45,7 @@ describe 'ComplexElement', ->
         element.add.should.eql element.addition
 
     describe '#subtraction()', ->
-      it 'implements -', ->
+      it 'implements -' # , ->
         # z = 8
         # w = 4
         # y -> y - x = 4 - 8 = -4

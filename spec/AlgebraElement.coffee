@@ -1,5 +1,5 @@
 
-algebra = require '../index.js'
+algebra = require '../index'
 
 AlgebraElement = algebra.AlgebraElement
 AlgebraField   = algebra.AlgebraField
@@ -9,7 +9,7 @@ field   = new AlgebraField()
 element = new AlgebraElement(field)
 
 describe 'AlgebraElement', ->
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature (field, data)', ->
       field   = new AlgebraField()
       data    = 1
@@ -28,17 +28,19 @@ describe 'AlgebraElement', ->
           element = new AlgebraElement('not a field')
       ).should.throwError()
 
-    it 'defaults #data to field.one)', ->
+    it 'defaults #data to field.one)' # , ->
       # field   = new RealField()
       # element = new AlgebraElement(field, data)
 
       # element.data.should.eql field.one
 
-  describe 'methods', ->
+  describe 'Attributes', ->
+
+  describe 'Methods', ->
     describe '#addition()', ->
       it 'is abstract', ->
         element.addition.should.throwError()
-   
+
     describe '#add()', ->
       it 'is abstract', ->
         element.add.should.throwError()
@@ -46,15 +48,15 @@ describe 'AlgebraElement', ->
     describe '#subtraction()', ->
       it 'is abstract', ->
         element.subtraction.should.throwError()
-   
+
     describe '#sub()', ->
       it 'is abstract', ->
         element.sub.should.throwError()
-   
+
     describe '#multiplication()', ->
       it 'is abstract', ->
         element.multiplication.should.throwError()
-   
+
     describe '#mul()', ->
       it 'is abstract', ->
         element.mul.should.throwError()

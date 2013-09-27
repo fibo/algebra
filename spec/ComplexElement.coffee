@@ -45,14 +45,14 @@ describe 'ComplexElement', ->
         element.add.should.eql element.addition
 
     describe '#subtraction()', ->
-      it 'implements -' # , ->
-        # z = 8
-        # w = 4
-        # y -> y - x = 4 - 8 = -4
-        #x.data = 8
-        #y.data = 4
-        #y.subtraction(x)
-        #y.data.should.eql -4
+      it 'implements -' , ->
+        # z = [8, 1]
+        # w = [4, 2]
+        # z -> z - w = [8, 1] - [4, 2] = [4, -1]
+        z.data = [8, 1]
+        w.data = [4, 2]
+        z.subtraction(w)
+        z.data.should.eql [4, -1]
 
       it 'can be chained', ->
         z.subtraction(w).should.be.instanceOf ComplexElement

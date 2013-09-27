@@ -51,7 +51,12 @@ describe('ComplexElement', function() {
       });
     });
     describe('#subtraction()', function() {
-      it('implements -');
+      it('implements -', function() {
+        z.data = [8, 1];
+        w.data = [4, 2];
+        z.subtraction(w);
+        return z.data.should.eql([4, -1]);
+      });
       return it('can be chained', function() {
         return z.subtraction(w).should.be.instanceOf(ComplexElement);
       });

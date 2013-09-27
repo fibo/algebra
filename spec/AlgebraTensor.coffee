@@ -13,11 +13,15 @@ RealElement = algebra.RealElement
 complex = new ComplexField()
 real = new RealField()
 
+x = new RealElement(2)
+y = new RealElement(-1)
+
+z = new ComplexElement(1, 2)
+w = new ComplexElement(5, -1)
+
 describe 'AlgebraTensor', ->
   describe 'Constructor', ->
     it 'has signature (field, indices, elements)', ->
-      z = new ComplexElement(1, 2)
-      w = new ComplexElement(5, -1)
 
       elements = [ z, w, z, w, z, w,
                    z, z, z, w, w, w,
@@ -55,36 +59,49 @@ describe 'AlgebraTensor', ->
          tensor = new AlgebraTensor('not a field')
       ).should.throwError()
 
-    it 'coerces #elements from AlgebraElement', ->
-      x = new RealElement(2)
-      y = new RealElement(4)
+    it 'coerces data to elements', ->
       field = real
       indices = [3]
-      elements = [x, y, 8]
+      data = [2, 4, 8]
+      elements = (new RealElement(num) for num in data)
       tensor = new AlgebraTensor(field, indices, elements)
 
       tensor.should.be.instanceOf AlgebraTensor
 
-      tensor.elements[0].should.eql x.data
-      tensor.elements[1].should.eql y.data
-      tensor.elements[2].should.eql 8
+      tensor.elements.should.eql elements
 
-    it 'requires #elements are valid' #, ->
+    it 'requires #elements belongs to field' #, ->
       # x = new RealElement(2)
       # y = 'foo'
       # field = real
       # indices = [2]
       # elements = [x, y]
       # tensor = new AlgebraTensor(field, indices, elements)
+      #(() ->
+      #   tensor = new AlgebraTensor(field, indices, elements)
+      #).should.throwError()
 
   describe 'Attributes', ->
     describe '#indices', ->
       it 'returns tensor indices'
 
     describe '#data', ->
-      it 'returns elements data'
+      it 'returns tensor elements data', ->
+        field = real
+        indices = [2, 2]
+        elements = [x, y, y, x]
+        tensor = new AlgebraTensor(field, indices, elements)
+
+        data = []
+        data = (element.data for element in elements)
+
+        tensor.data.should.eql data
+
+    describe '#field', ->
+      it 'returns tensor field'
 
     describe '#elements', ->
+      it 'returns tensor elements'
 
   describe 'Methods', ->
     describe '#addition()', ->

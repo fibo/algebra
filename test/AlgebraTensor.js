@@ -1,4 +1,4 @@
-var AlgebraTensor, ComplexElement, ComplexField, RealElement, RealField, algebra, complex, real;
+var AlgebraTensor, ComplexElement, ComplexField, RealElement, RealField, algebra, complex, real, w, x, y, z;
 
 algebra = require('../index');
 
@@ -16,12 +16,18 @@ complex = new ComplexField();
 
 real = new RealField();
 
+x = new RealElement(2);
+
+y = new RealElement(-1);
+
+z = new ComplexElement(1, 2);
+
+w = new ComplexElement(5, -1);
+
 describe('AlgebraTensor', function() {
   describe('Constructor', function() {
     it('has signature (field, indices, elements)', function() {
-      var elements, indices, tensor, w, z;
-      z = new ComplexElement(1, 2);
-      w = new ComplexElement(5, -1);
+      var elements, indices, tensor;
       elements = [z, w, z, w, z, w, z, z, z, w, w, w, z, z, z, z, z, z, z, z, z, z, z, z];
       indices = [2, 4, 3];
       tensor = new AlgebraTensor(complex, indices, elements);
@@ -55,29 +61,56 @@ describe('AlgebraTensor', function() {
         return tensor = new AlgebraTensor('not a field');
       }).should.throwError();
     });
-    it('coerces #elements from AlgebraElement', function() {
-      var elements, field, indices, tensor, x, y;
-      x = new RealElement(2);
-      y = new RealElement(4);
+    it('coerces data to elements', function() {
+      var data, elements, field, indices, num, tensor;
       field = real;
       indices = [3];
-      elements = [x, y, 8];
+      data = [2, 4, 8];
+      elements = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          num = data[_i];
+          _results.push(new RealElement(num));
+        }
+        return _results;
+      })();
       tensor = new AlgebraTensor(field, indices, elements);
       tensor.should.be.instanceOf(AlgebraTensor);
-      tensor.elements[0].should.eql(x.data);
-      tensor.elements[1].should.eql(y.data);
-      return tensor.elements[2].should.eql(8);
+      return tensor.elements.should.eql(elements);
     });
-    return it('requires #elements are valid');
+    return it('requires #elements belongs to field');
   });
   describe('Attributes', function() {
     describe('#indices', function() {
       return it('returns tensor indices');
     });
     describe('#data', function() {
-      return it('returns elements data');
+      return it('returns tensor elements data', function() {
+        var data, element, elements, field, indices, tensor;
+        field = real;
+        indices = [2, 2];
+        elements = [x, y, y, x];
+        tensor = new AlgebraTensor(field, indices, elements);
+        data = [];
+        data = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = elements.length; _i < _len; _i++) {
+            element = elements[_i];
+            _results.push(element.data);
+          }
+          return _results;
+        })();
+        return tensor.data.should.eql(data);
+      });
     });
-    return describe('#elements', function() {});
+    describe('#field', function() {
+      return it('returns tensor field');
+    });
+    return describe('#elements', function() {
+      return it('returns tensor elements');
+    });
   });
   return describe('Methods', function() {
     return describe('#addition()', function() {

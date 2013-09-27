@@ -33,7 +33,14 @@ describe('AlgebraElement', function() {
     });
     return it('defaults #data to field.one)');
   });
-  describe('Attributes', function() {});
+  describe('Attributes', function() {
+    describe('#data', function() {
+      return it('returns element data');
+    });
+    return describe('#field', function() {
+      return it('returns element field');
+    });
+  });
   return describe('Methods', function() {
     describe('#addition()', function() {
       return it('is abstract', function() {

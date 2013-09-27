@@ -35,6 +35,11 @@ describe 'AlgebraElement', ->
       # element.data.should.eql field.one
 
   describe 'Attributes', ->
+    describe '#data', ->
+      it 'returns element data'
+
+    describe '#field', ->
+      it 'returns element field'
 
   describe 'Methods', ->
     describe '#addition()', ->

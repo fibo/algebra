@@ -1,4 +1,4 @@
-var AlgebraTensor, ComplexElement, ComplexField, RealElement, RealField, algebra, complex, real, w, z;
+var AlgebraTensor, ComplexElement, ComplexField, RealElement, RealField, algebra, complex, real;
 
 algebra = require('../index');
 
@@ -16,14 +16,12 @@ complex = new ComplexField();
 
 real = new RealField();
 
-z = new ComplexElement(1, 2);
-
-w = new ComplexElement(5, -1);
-
 describe('AlgebraTensor', function() {
   describe('Constructor', function() {
     it('has signature (field, indices, elements)', function() {
-      var elements, indices, tensor;
+      var elements, indices, tensor, w, z;
+      z = new ComplexElement(1, 2);
+      w = new ComplexElement(5, -1);
       elements = [z, w, z, w, z, w, z, z, z, w, w, w, z, z, z, z, z, z, z, z, z, z, z, z];
       indices = [2, 4, 3];
       tensor = new AlgebraTensor(complex, indices, elements);
@@ -70,19 +68,21 @@ describe('AlgebraTensor', function() {
       tensor.elements[1].should.eql(y.data);
       return tensor.elements[2].should.eql(8);
     });
-    return it('requires #elements are valid', function() {
-      var elements, field, indices, tensor, x, y;
-      x = new RealElement(2);
-      y = 'foo';
-      field = real;
-      indices = [2];
-      elements = [x, y];
-      return tensor = new AlgebraTensor(field, indices, elements);
-    });
+    return it('requires #elements are valid');
   });
   describe('Attributes', function() {
-    describe('#indices', function() {});
+    describe('#indices', function() {
+      return it('returns tensor indices');
+    });
+    describe('#data', function() {
+      return it('returns elements data');
+    });
     return describe('#elements', function() {});
   });
-  return describe('Methods', function() {});
+  return describe('Methods', function() {
+    return describe('#addition()', function() {
+      it('implements +');
+      return it('can be chained');
+    });
+  });
 });

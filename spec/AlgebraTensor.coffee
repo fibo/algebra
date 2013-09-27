@@ -13,16 +13,16 @@ RealElement = algebra.RealElement
 complex = new ComplexField()
 real = new RealField()
 
-z = new ComplexElement(1, 2)
-w = new ComplexElement(5, -1)
-
 describe 'AlgebraTensor', ->
   describe 'Constructor', ->
     it 'has signature (field, indices, elements)', ->
+      z = new ComplexElement(1, 2)
+      w = new ComplexElement(5, -1)
+
       elements = [ z, w, z, w, z, w,
                    z, z, z, w, w, w,
                    z, z, z, z, z, z,
-                   z, z, z, z, z, z]
+                   z, z, z, z, z, z ]
 
       indices = [2, 4, 3]
 
@@ -69,18 +69,35 @@ describe 'AlgebraTensor', ->
       tensor.elements[1].should.eql y.data
       tensor.elements[2].should.eql 8
 
-    it 'requires #elements are valid', ->
-      x = new RealElement(2)
-      y = 'foo'
-      field = real
-      indices = [2]
-      elements = [x, y]
-      tensor = new AlgebraTensor(field, indices, elements)
+    it 'requires #elements are valid' #, ->
+      # x = new RealElement(2)
+      # y = 'foo'
+      # field = real
+      # indices = [2]
+      # elements = [x, y]
+      # tensor = new AlgebraTensor(field, indices, elements)
 
   describe 'Attributes', ->
     describe '#indices', ->
+      it 'returns tensor indices'
+
+    describe '#data', ->
+      it 'returns elements data'
 
     describe '#elements', ->
 
   describe 'Methods', ->
+    describe '#addition()', ->
+      it 'implements +' #, ->
+        # t = [0, 1, 2]
+        # u = [1, 1, 1]
+        # t -> t + u = [0, 1, 2] + [1, 1, 1] = [1, 2, 3]
+        #indices = [3]
+        #t = new AlgebraTensor(real, indices, [0, 1, 2])
+        #u = new AlgebraTensor(real, indices, [1, 1, 1])
+        #t.addition(u)
+        #t.data.should.equal [1, 2, 3]
+
+      it 'can be chained'#, ->
+        #t.addition(u).should.be.instanceOf RealElement
 

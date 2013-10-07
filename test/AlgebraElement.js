@@ -1,4 +1,4 @@
-var AlgebraElement, AlgebraField, RealField, algebra, element, field;
+var AlgebraElement, AlgebraField, RealField, algebra, element, field, real;
 
 algebra = require('../index');
 
@@ -11,6 +11,8 @@ RealField = algebra.RealField;
 field = new AlgebraField();
 
 element = new AlgebraElement(field);
+
+real = new RealField();
 
 describe('AlgebraElement', function() {
   describe('Constructor', function() {
@@ -31,14 +33,30 @@ describe('AlgebraElement', function() {
         return element = new AlgebraElement('not a field');
       }).should.throwError();
     });
-    return it('defaults #data to field.one)');
+    return it('defaults #data to field.one)', function() {
+      field = real;
+      element = new AlgebraElement(field);
+      return element.data.should.eql(field.one);
+    });
   });
   describe('Attributes', function() {
     describe('#data', function() {
-      return it('returns element data');
+      return it('returns element data', function() {
+        var data;
+        field = real;
+        data = 5;
+        element = new AlgebraElement(field, data);
+        return element.data.should.eql(data);
+      });
     });
     return describe('#field', function() {
-      return it('returns element field');
+      return it('returns element field', function() {
+        var data;
+        field = real;
+        data = 5;
+        element = new AlgebraElement(field, data);
+        return element.field.should.eql(field);
+      });
     });
   });
   return describe('Methods', function() {

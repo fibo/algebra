@@ -34,7 +34,9 @@ describe 'RealElement', ->
         # x -> x + y = 2 + (-10) = -8
         x.data = 2
         y.data = -10
+
         x.addition(y)
+
         x.data.should.equal -8
 
       it 'can be chained', ->
@@ -51,7 +53,9 @@ describe 'RealElement', ->
         # y -> y - x = 4 - 8 = -4
         x.data = 8
         y.data = 4
+
         y.subtraction(x)
+
         y.data.should.equal -4
 
       it 'can be chained', ->
@@ -68,7 +72,9 @@ describe 'RealElement', ->
         # x -> x * y = 2 * (-10) = -20
         x.data = 2
         y.data = -10
+
         x.multiplication(y)
+
         x.data.should.eql -20
 
       it 'can be chained', ->
@@ -85,7 +91,9 @@ describe 'RealElement', ->
         # x -> x / y = 10 / 20 = 0.5
         x.data = 10
         y.data = 20
+
         x.division(y)
+
         x.data.should.eql 0.5
 
       it 'can be chained', ->

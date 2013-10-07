@@ -8,6 +8,8 @@ RealField      = algebra.RealField
 field   = new AlgebraField()
 element = new AlgebraElement(field)
 
+real = new RealField()
+
 describe 'AlgebraElement', ->
   describe 'Constructor', ->
     it 'has signature (field, data)', ->
@@ -28,18 +30,28 @@ describe 'AlgebraElement', ->
           element = new AlgebraElement('not a field')
       ).should.throwError()
 
-    it 'defaults #data to field.one)' # , ->
-      # field   = new RealField()
-      # element = new AlgebraElement(field, data)
+    it 'defaults #data to field.one)', ->
+      field = real
+      element = new AlgebraElement(field)
 
-      # element.data.should.eql field.one
+      element.data.should.eql field.one
 
   describe 'Attributes', ->
     describe '#data', ->
-      it 'returns element data'
+      it 'returns element data', ->
+        field = real
+        data = 5
+        element = new AlgebraElement(field, data)
+
+        element.data.should.eql data
 
     describe '#field', ->
-      it 'returns element field'
+      it 'returns element field', ->
+        field = real
+        data = 5
+        element = new AlgebraElement(field, data)
+
+        element.field.should.eql field
 
   describe 'Methods', ->
     describe '#addition()', ->

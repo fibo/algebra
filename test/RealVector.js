@@ -1,8 +1,10 @@
-var AlgebraVector, RealField, RealTensor, RealVector, abstractVector, algebra, real, vector;
+var AlgebraVector, RealElement, RealField, RealTensor, RealVector, algebra, one, two, vector;
 
 algebra = require('../index');
 
 AlgebraVector = algebra.AlgebraVector;
+
+RealElement = algebra.RealElement;
 
 RealField = algebra.RealField;
 
@@ -10,11 +12,11 @@ RealTensor = algebra.RealTensor;
 
 RealVector = algebra.RealVector;
 
-real = new RealField();
-
 vector = new RealVector(0, 0, 1);
 
-abstractVector = new AlgebraVector(real, [0, 0, 1]);
+one = new RealElement(1);
+
+two = new RealElement(2);
 
 describe('RealVector', function() {
   describe('Inheritance', function() {
@@ -44,17 +46,51 @@ describe('RealVector', function() {
         return vector.field.should.be.instanceOf(RealField);
       });
     });
+    describe('#data', function() {
+      return it('returns vector data', function() {
+        var data, element, elements;
+        elements = [one, two];
+        vector = new RealVector(elements);
+        data = [];
+        data = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = elements.length; _i < _len; _i++) {
+            element = elements[_i];
+            _results.push(element.data);
+          }
+          return _results;
+        })();
+        return vector.data.should.eql(data);
+      });
+    });
     return describe('#dimension', function() {
       return it('returns vector dimension, that is the number of elements', function() {
         vector = new RealVector(0, 1);
         vector.dimension.should.be.eql(2);
-        return vector = new RealVector([1, 0, -1]);
+        vector = new RealVector([1, 0, -1]);
+        return vector.dimension.should.be.eql(3);
       });
     });
   });
   return describe('Methods', function() {
-    return describe('#addition()', function() {
-      return it('implements +');
+    describe('#addition()', function() {
+      return it('implements +', function() {
+        var vector1, vector2;
+        vector1 = new RealVector([2, -1]);
+        vector2 = new RealVector([0, -1]);
+        vector1.addition(vector2);
+        return vector1.data.should.be.eql([2, -2]);
+      });
+    });
+    return describe('#subtraction()', function() {
+      return it('implements +', function() {
+        var vector1, vector2;
+        vector1 = new RealVector([5, 6]);
+        vector2 = new RealVector([2, 3]);
+        vector1.subtraction(vector2);
+        return vector1.data.should.be.eql([3, 3]);
+      });
     });
   });
 });

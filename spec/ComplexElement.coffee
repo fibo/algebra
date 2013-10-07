@@ -34,7 +34,9 @@ describe 'ComplexElement', ->
         # z -> z + w = [2, 1] + [-1, 4] = [1, 5] 
         z.data = [2, 1]
         w.data = [-1, 4]
+
         z.addition(w)
+
         z.data.should.eql [1, 5]
 
       it 'can be chained', ->
@@ -51,7 +53,9 @@ describe 'ComplexElement', ->
         # z -> z - w = [8, 1] - [4, 2] = [4, -1]
         z.data = [8, 1]
         w.data = [4, 2]
+
         z.subtraction(w)
+
         z.data.should.eql [4, -1]
 
       it 'can be chained', ->
@@ -68,7 +72,9 @@ describe 'ComplexElement', ->
         # z -> z * w = [2, 1] * [-1, 0] = [-2, -1]
         z.data = [2, 1]
         w.data = [-1, 0]
+
         z.multiplication(w)
+
         z.data.should.eql [-2, -1]
 
       it 'can be chained', ->
@@ -85,7 +91,9 @@ describe 'ComplexElement', ->
         # z -> z / w = [-2, -1] / [-1, 0] = [2, 1]
         z.data = [-2, -1]
         w.data = [-1, 0]
+
         z.division(w)
+
         z.data.should.eql [2, 1]
 
       it 'can be chained', ->

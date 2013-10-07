@@ -1,4 +1,4 @@
-var AlgebraTensor, ComplexElement, ComplexField, RealElement, RealField, algebra, complex, real, w, x, y, z;
+var AlgebraTensor, ComplexElement, ComplexField, RealElement, RealField, algebra, real, w, x, y, z;
 
 algebra = require('../index');
 
@@ -12,8 +12,6 @@ RealField = algebra.RealField;
 
 RealElement = algebra.RealElement;
 
-complex = new ComplexField();
-
 real = new RealField();
 
 x = new RealElement(2);
@@ -26,28 +24,31 @@ w = new ComplexElement(5, -1);
 
 describe('AlgebraTensor', function() {
   describe('Constructor', function() {
-    it('has signature (field, indices, elements)', function() {
-      var elements, indices, tensor;
-      elements = [z, w, z, w, z, w, z, z, z, w, w, w, z, z, z, z, z, z, z, z, z, z, z, z];
+    it('has signature (Element, indices, elements)', function() {
+      var Element, elements, indices, tensor;
+      Element = ComplexElement;
       indices = [2, 4, 3];
-      tensor = new AlgebraTensor(complex, indices, elements);
+      elements = [z, w, z, w, z, w, z, z, z, w, w, w, z, z, z, z, z, z, z, z, z, z, z, z];
+      tensor = new AlgebraTensor(Element, indices, elements);
       return tensor.should.be.instanceOf(AlgebraTensor);
     });
-    it('has signature (field, indices)', function() {
-      var indices, tensor;
+    it('has signature (Element, indices)', function() {
+      var Element, indices, tensor;
+      Element = ComplexElement;
       indices = [2, 4];
-      tensor = new AlgebraTensor(complex, indices);
+      tensor = new AlgebraTensor(Element, indices);
       return tensor.should.be.instanceOf(AlgebraTensor);
     });
-    it('defaults #elements to Ricci tensor elements', function() {});
-    it('has signature (field)', function() {
-      var tensor;
-      tensor = new AlgebraTensor(complex);
+    it('defaults #elements to Ricci tensor elements');
+    it('has signature (Element)', function() {
+      var Element, tensor;
+      Element = ComplexElement;
+      tensor = new AlgebraTensor(Element);
       return tensor.should.be.instanceOf(AlgebraTensor);
     });
     it('has default indices [0]', function() {
       var tensor;
-      tensor = new AlgebraTensor(complex);
+      tensor = new AlgebraTensor(ComplexElement);
       return tensor.indices.should.eql([0]);
     });
     it('checks signature', function() {
@@ -55,31 +56,14 @@ describe('AlgebraTensor', function() {
         return new AlgebraTensor();
       }).should.throwError();
     });
-    it('requires #field is instance of AlgebraField', function() {
+    it('requires #Element is an AlgebraElement class', function() {
       return (function() {
         var tensor;
-        return tensor = new AlgebraTensor('not a field');
+        return tensor = new AlgebraTensor('not an AlgebraElement class');
       }).should.throwError();
     });
-    it('coerces data to elements', function() {
-      var data, elements, field, indices, num, tensor;
-      field = real;
-      indices = [3];
-      data = [2, 4, 8];
-      elements = (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          num = data[_i];
-          _results.push(new RealElement(num));
-        }
-        return _results;
-      })();
-      tensor = new AlgebraTensor(field, indices, elements);
-      tensor.should.be.instanceOf(AlgebraTensor);
-      return tensor.elements.should.eql(elements);
-    });
-    return it('requires #elements belongs to field');
+    it('coerces data to elements');
+    return it('requires #elements belongs to #Element field');
   });
   describe('Attributes', function() {
     describe('#indices', function() {
@@ -87,11 +71,11 @@ describe('AlgebraTensor', function() {
     });
     describe('#data', function() {
       return it('returns tensor elements data', function() {
-        var data, element, elements, field, indices, tensor;
-        field = real;
+        var Element, data, element, elements, indices, tensor;
+        Element = RealElement;
         indices = [2, 2];
         elements = [x, y, y, x];
-        tensor = new AlgebraTensor(field, indices, elements);
+        tensor = new AlgebraTensor(Element, indices, elements);
         data = [];
         data = (function() {
           var _i, _len, _results;
@@ -109,13 +93,35 @@ describe('AlgebraTensor', function() {
       return it('returns tensor field');
     });
     return describe('#elements', function() {
-      return it('returns tensor elements');
+      return it('returns tensor elements', function() {
+        var Element, elements, indices, tensor;
+        Element = RealElement;
+        indices = [2, 2];
+        elements = [x, y, y, x];
+        tensor = new AlgebraTensor(Element, indices, elements);
+        return tensor.elements.should.eql(elements);
+      });
     });
   });
   return describe('Methods', function() {
     return describe('#addition()', function() {
-      it('implements +');
-      return it('can be chained');
+      it('implements +', function() {
+        var Element, indices, t, u;
+        Element = RealElement;
+        indices = [3];
+        t = new AlgebraTensor(Element, indices, [0, 1, 2]);
+        u = new AlgebraTensor(Element, indices, [1, 1, 1]);
+        t.addition(u);
+        return t.data.should.eql([1, 2, 3]);
+      });
+      return it('can be chained', function() {
+        var Element, indices, t, u;
+        Element = RealElement;
+        indices = [2];
+        t = new AlgebraTensor(Element, indices, [0, 1]);
+        u = new AlgebraTensor(Element, indices, [1, 1]);
+        return t.addition(u).should.be.instanceOf(AlgebraTensor);
+      });
     });
   });
 });

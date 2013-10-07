@@ -3,14 +3,15 @@ algebra = require '../index'
 
 AlgebraVector = algebra.AlgebraVector
 
-RealField  = algebra.RealField
-RealTensor = algebra.RealTensor
-RealVector = algebra.RealVector
-
-real = new RealField()
+RealElement = algebra.RealElement
+RealField   = algebra.RealField
+RealTensor  = algebra.RealTensor
+RealVector  = algebra.RealVector
 
 vector = new RealVector(0, 0, 1)
-abstractVector = new AlgebraVector(real, [0, 0, 1])
+
+one = new RealElement(1)
+two = new RealElement(2)
 
 describe 'RealVector', ->
   describe 'Inheritance', ->
@@ -40,20 +41,38 @@ describe 'RealVector', ->
       it 'is a RealField', ->
         vector.field.should.be.instanceOf RealField
 
+    describe '#data', ->
+      it 'returns vector data', ->
+        elements = [one, two]
+        vector = new RealVector(elements)
+
+        data = []
+        data = (element.data for element in elements)
+
+        vector.data.should.eql data
+
     describe '#dimension', ->
       it 'returns vector dimension, that is the number of elements', ->
         vector = new RealVector(0, 1)
         vector.dimension.should.be.eql 2
 
         vector = new RealVector([1, 0, -1])
-        # vector.dimension.should.be.eql 3
+        vector.dimension.should.be.eql 3
 
   describe 'Methods', ->
     describe '#addition()', ->
-      it 'implements +' # , ->
-        # vector1 = new RealVector([2, -1])
-        # vector2 = new RealVector([0, -1])
+      it 'implements +', ->
+        vector1 = new RealVector([2, -1])
+        vector2 = new RealVector([0, -1])
 
-        # vector1.addition(vector2)
-        # vector1.data.should.be.eql [2, -2]
+        vector1.addition(vector2)
+        vector1.data.should.be.eql [2, -2]
+
+    describe '#subtraction()', ->
+      it 'implements +', ->
+        vector1 = new RealVector([5, 6])
+        vector2 = new RealVector([2, 3])
+
+        vector1.subtraction(vector2)
+        vector1.data.should.be.eql [3, 3]
 

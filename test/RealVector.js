@@ -1,4 +1,4 @@
-var AlgebraVector, RealElement, RealField, RealTensor, RealVector, algebra, one, two, vector;
+var AlgebraVector, RealElement, RealField, RealTensor, RealVector, algebra, minusOne, one, three, two, vector, zero;
 
 algebra = require('../index');
 
@@ -14,9 +14,15 @@ RealVector = algebra.RealVector;
 
 vector = new RealVector(0, 0, 1);
 
+minusOne = new RealElement(-1);
+
+zero = new RealElement(0);
+
 one = new RealElement(1);
 
 two = new RealElement(2);
+
+three = new RealElement(3);
 
 describe('RealVector', function() {
   describe('Inheritance', function() {
@@ -26,15 +32,21 @@ describe('RealVector', function() {
   });
   describe('Constructor', function() {
     it('has signature (v1, v2, ... vn)', function() {
-      vector = new RealVector(0, 1);
+      vector = new RealVector(zero, one);
       vector.should.be.instanceOf(RealVector);
-      vector = new RealVector(0, 1, 2);
+      vector = new RealVector(zero, one, two);
       vector.should.be.instanceOf(RealVector);
-      vector = new RealVector(0, 1, 2, 3);
+      vector = new RealVector(zero, one, two, three);
       return vector.should.be.instanceOf(RealVector);
     });
-    return it('has signature ([v1, v2, ... vn])', function() {
-      vector = new RealVector([1, -1]);
+    it('has signature ([v1, v2, ... vn])', function() {
+      vector = new RealVector([one, minusOne]);
+      vector.should.be.instanceOf(RealVector);
+      vector = new RealVector([one, zero, minusOne]);
+      return vector.should.be.instanceOf(RealVector);
+    });
+    return it('coerces numbers to elements', function() {
+      vector = new RealVector(0, 1);
       vector.should.be.instanceOf(RealVector);
       vector = new RealVector([1, 0, -1]);
       return vector.should.be.instanceOf(RealVector);

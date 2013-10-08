@@ -10,8 +10,11 @@ RealVector  = algebra.RealVector
 
 vector = new RealVector(0, 0, 1)
 
-one = new RealElement(1)
-two = new RealElement(2)
+minusOne = new RealElement(-1)
+zero     = new RealElement(0)
+one      = new RealElement(1)
+two      = new RealElement(2)
+three    = new RealElement(3)
 
 describe 'RealVector', ->
   describe 'Inheritance', ->
@@ -20,17 +23,24 @@ describe 'RealVector', ->
 
   describe 'Constructor', ->
     it 'has signature (v1, v2, ... vn)', ->
-      vector = new RealVector(0, 1)
+      vector = new RealVector(zero, one)
       vector.should.be.instanceOf RealVector
 
-      vector = new RealVector(0, 1, 2)
+      vector = new RealVector(zero, one, two)
       vector.should.be.instanceOf RealVector
 
-      vector = new RealVector(0, 1, 2, 3)
+      vector = new RealVector(zero, one, two, three)
       vector.should.be.instanceOf RealVector
 
     it 'has signature ([v1, v2, ... vn])', ->
-      vector = new RealVector([1, -1])
+      vector = new RealVector([one, minusOne])
+      vector.should.be.instanceOf RealVector
+
+      vector = new RealVector([one, zero, minusOne])
+      vector.should.be.instanceOf RealVector
+
+    it 'coerces numbers to elements', ->
+      vector = new RealVector(0, 1)
       vector.should.be.instanceOf RealVector
 
       vector = new RealVector([1, 0, -1])

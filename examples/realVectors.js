@@ -18,9 +18,11 @@ module.exports = function () {
   //     v1 = [2, 2]
   //     v2 = [1, 1]
   var one = new RealElement(1);
-  var two = new RealElement(2);
-  var v1 = new RealVector([two, two]);
+  //var two = new RealElement(2);
+  //var v1 = new RealVector([two, two]);
   var v2 = new RealVector(one, one);
+  var v1 = new RealVector([2, 2]);
+  //var v2 = new RealVector(1, 1);
 
   // Numbers are coerced to RealElement.
   //
@@ -53,7 +55,7 @@ module.exports = function () {
   // # Methods
 
   // ## addition
-  //     [1, 1] + [2, 2] = [3, 3]
+  //     [2, 2] + [1, 1] = [3, 3]
   v1.addition(v2);
   v1.data.should.eql([3, 3]);
 

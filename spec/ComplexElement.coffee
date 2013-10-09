@@ -27,11 +27,24 @@ describe 'ComplexElement', ->
       w.data.should.eql [2, 1]
 
   describe 'Methods', ->
+    describe '#conjugation()', ->
+      it 'implements conjugation', ->
+        # z = [2, 1]
+        # z -> z~ = [2, -1]
+        z.data = [2, 1]
+
+        z.conjugation()
+
+        z.data.should.eql [2, -1]
+
+      it 'can be chained', ->
+        z.conjugation().should.be.instanceOf ComplexElement
+
     describe '#addition()', ->
       it 'implements +', ->
         # z = [2, 1]
         # w = [-1, 4]
-        # z -> z + w = [2, 1] + [-1, 4] = [1, 5] 
+        # z -> z + w = [2, 1] + [-1, 4] = [1, 5]
         z.data = [2, 1]
         w.data = [-1, 4]
 

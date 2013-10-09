@@ -34,6 +34,16 @@ describe('ComplexElement', function() {
     });
   });
   return describe('Methods', function() {
+    describe('#conjugation()', function() {
+      it('implements conjugation', function() {
+        z.data = [2, 1];
+        z.conjugation();
+        return z.data.should.eql([2, -1]);
+      });
+      return it('can be chained', function() {
+        return z.conjugation().should.be.instanceOf(ComplexElement);
+      });
+    });
     describe('#addition()', function() {
       it('implements +', function() {
         z.data = [2, 1];

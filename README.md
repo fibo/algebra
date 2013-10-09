@@ -84,10 +84,10 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     //       | 1 2 |         | -1 0 |
     //       | 3 4 |   and   |  0 1 |
     //
-    var m1 = new GL2R.Matrix(1, 2, 
+    var m1 = new GL2R.Matrix(1, 2,
                              3, 4);
 
-    var m2 = new GL2R.Matrix(-1, 0, 
+    var m2 = new GL2R.Matrix(-1, 0,
                               0, 1);
 
     // Multiply m1 by m2 at right side

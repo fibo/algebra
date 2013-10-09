@@ -12,19 +12,19 @@ describe("README's Quick start section", function () {
 
     z1.data.should.eql([-5, 10])
 
-/*
     // Many chainable operators are available.
-    z1.conj().mul([2, 0]);
+    //z1.conjugation().mul([2, 0]);
 
+/*
     z1.data.should.eql([-10, -20])
 */
   })
 
   it('has a working Vectors example', function () {
-  /*
     var Rn = algebra.RealVectorSpace
     var R2 = new Rn(2)
 
+  /*
     var v1 = new R2.Vector(1, 1)
     var v2 = new R2.Vector(2, 4)
 

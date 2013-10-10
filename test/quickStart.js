@@ -13,11 +13,9 @@ describe("README's Quick start section", function () {
     z1.data.should.eql([-5, 10])
 
     // Many chainable operators are available.
-    //z1.conjugation().mul([2, 0]);
+    z1.conj().mul([2, 0]);
 
-/*
     z1.data.should.eql([-10, -20])
-*/
   })
 
   it('has a working Vectors example', function () {
@@ -35,14 +33,14 @@ describe("README's Quick start section", function () {
   })
 
   it('has a working Matrices example', function () {
-  /*
     var GLnR = algebra.RealGeneralLinearGroup
     var GL2R = new GLnR(2)
 
-    var m1 = new GL2R.Matrix(1, 2, 
+  /*
+    var m1 = new GL2R.Matrix(1, 2,
                              3, 4)
 
-    var m2 = new GL2R.Matrix(-1, 0, 
+    var m2 = new GL2R.Matrix(-1, 0,
                               0, 1)
 
     m1.mul(m2)

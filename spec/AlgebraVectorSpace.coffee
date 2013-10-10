@@ -44,5 +44,5 @@ describe 'AlgebraVectorSpace', ->
         # vector = new space.Vector()
 
     describe '#containsVector()', ->
-      it 'checks that the given vector belongs to this vector space' # , ->
+      it 'checks that the given vector belongs to this vector space'
 

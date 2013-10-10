@@ -5,7 +5,11 @@ exports.AlgebraTensor  = require('./lib/AlgebraTensor')
 exports.AlgebraVector  = require('./lib/AlgebraVector')
 
 exports.AlgebraVectorSpace = require('./lib/AlgebraVectorSpace')
+exports.AlgebraMatrixSpace = require('./lib/AlgebraMatrixSpace')
 exports.AlgebraTensorSpace = require('./lib/AlgebraTensorSpace')
+
+exports.GeneralLinearGroup     = require('./lib/GeneralLinearGroup')
+exports.RealGeneralLinearGroup = require('./lib/RealGeneralLinearGroup')
 
 exports.RealElement     = require('./lib/RealElement')
 exports.RealField       = require('./lib/RealField')

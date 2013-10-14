@@ -1,20 +1,18 @@
-var AlgebraVectorSpace, RealField, RealVectorSpace, abstractSpace, algebra, dimension, real, space;
+var AlgebraVectorSpace, RealElement, RealVectorSpace, abstractSpace, algebra, dimension, space;
 
 algebra = require('../index');
 
 AlgebraVectorSpace = algebra.AlgebraVectorSpace;
 
-RealField = algebra.RealField;
+RealElement = algebra.RealElement;
 
 RealVectorSpace = algebra.RealVectorSpace;
 
 dimension = 2;
 
-real = new RealField();
-
 space = new RealVectorSpace(dimension);
 
-abstractSpace = new AlgebraVectorSpace(real, dimension);
+abstractSpace = new AlgebraVectorSpace(RealElement, dimension);
 
 describe('RealVectorSpace', function() {
   describe('Inheritance', function() {
@@ -24,14 +22,9 @@ describe('RealVectorSpace', function() {
   });
   describe('Constructor', function() {});
   describe('Attributes', function() {
-    describe('#dimension', function() {
+    return describe('#dimension', function() {
       return it('is a number', function() {
         return space.dimension.should.be.a.number;
-      });
-    });
-    return describe('#field', function() {
-      return it('is a real field', function() {
-        return space.field.should.be.instanceOf(RealField);
       });
     });
   });

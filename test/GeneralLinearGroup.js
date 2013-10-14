@@ -1,46 +1,40 @@
-var AlgebraField, AlgebraMatrixSpace, ComplexField, GeneralLinearGroup, RealField, algebra, complex, real;
+var AlgebraMatrixSpace, ComplexElement, GeneralLinearGroup, RealElement, algebra;
 
 algebra = require('../index');
 
-AlgebraField = algebra.AlgebraField;
-
 AlgebraMatrixSpace = algebra.AlgebraMatrixSpace;
 
-ComplexField = algebra.ComplexField;
+ComplexElement = algebra.ComplexElement;
 
 GeneralLinearGroup = algebra.GeneralLinearGroup;
 
-RealField = algebra.RealField;
-
-complex = new ComplexField();
-
-real = new RealField();
+RealElement = algebra.RealElement;
 
 describe('GeneralLinearGroup', function() {
   describe('Inheritance', function() {
     return it('is an AlgebraMatrixSpace', function() {
-      var degree, field, gl;
-      field = real;
+      var Element, degree, gl;
+      Element = RealElement;
       degree = 2;
-      gl = new GeneralLinearGroup(field, degree);
+      gl = new GeneralLinearGroup(Element, degree);
       return gl.should.be.instanceOf(AlgebraMatrixSpace);
     });
   });
   describe('Constructor', function() {
     return it('has signature (field, degree)', function() {
-      var degree, field, gl;
-      field = real;
+      var Element, degree, gl;
+      Element = RealElement;
       degree = 2;
-      gl = new AlgebraMatrixSpace(field, degree);
+      gl = new GeneralLinearGroup(Element, degree);
       return gl.should.be.instanceOf(AlgebraMatrixSpace);
     });
   });
   describe('Attributes', function() {
-    var degree, field, gl;
-    field = complex;
+    var Element, degree, gl;
+    Element = ComplexElement;
     degree = 3;
-    gl = new AlgebraMatrixSpace(field, degree);
-    describe('#dimension', function() {
+    gl = new AlgebraMatrixSpace(Element, degree);
+    return describe('#dimension', function() {
       it('is a number', function() {
         return gl.dimension.should.be.a.number;
       });
@@ -48,11 +42,6 @@ describe('GeneralLinearGroup', function() {
         var dimension;
         dimension = degree * degree;
         return gl.dimension.should.be.eql(dimension);
-      });
-    });
-    return describe('#field', function() {
-      return it('returns the field', function() {
-        return gl.field.should.be.eql(field);
       });
     });
   });

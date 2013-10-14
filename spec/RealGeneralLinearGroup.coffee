@@ -4,7 +4,6 @@ algebra = require '../index'
 AlgebraField           = algebra.AlgebraField
 GeneralLinearGroup     = algebra.GeneralLinearGroup
 RealGeneralLinearGroup = algebra.RealGeneralLinearGroup
-RealField              = algebra.RealField
 
 describe 'RealGeneralLinearGroup', ->
   describe 'Inheritance', ->
@@ -32,10 +31,6 @@ describe 'RealGeneralLinearGroup', ->
       it 'is the square of degree', ->
         dimension = degree * degree
         gl.dimension.should.be.eql dimension
-
-    describe '#field', ->
-      it 'returns the real field', ->
-        gl.field.should.be.instanceOf RealField
 
   describe 'Methods', ->
     describe '#Matrix()', ->

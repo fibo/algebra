@@ -3,14 +3,12 @@ algebra = require '../index'
 
 AlgebraVectorSpace = algebra.AlgebraVectorSpace
 
-RealField       = algebra.RealField
+RealElement     = algebra.RealElement
 RealVectorSpace = algebra.RealVectorSpace
 
-dimension = 2
-real = new RealField()
-
-space = new RealVectorSpace(dimension)
-abstractSpace = new AlgebraVectorSpace(real, dimension)
+dimension     = 2
+space         = new RealVectorSpace(dimension)
+abstractSpace = new AlgebraVectorSpace(RealElement, dimension)
 
 describe 'RealVectorSpace', ->
   describe 'Inheritance', ->
@@ -23,10 +21,6 @@ describe 'RealVectorSpace', ->
     describe '#dimension', ->
       it 'is a number', ->
         space.dimension.should.be.a.number
-
-    describe '#field', ->
-      it 'is a real field', ->
-        space.field.should.be.instanceOf RealField
 
   describe 'Methods', ->
     describe '#Vector()', ->

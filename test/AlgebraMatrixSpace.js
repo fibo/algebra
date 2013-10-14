@@ -35,7 +35,7 @@ describe('AlgebraMatrixSpace', function() {
     Element = RealElement;
     mXn = [2, 3];
     space = new AlgebraMatrixSpace(Element, mXn);
-    describe('#dimension', function() {
+    return describe('#dimension', function() {
       it('is a number', function() {
         return space.dimension.should.be.a.number;
       });
@@ -43,11 +43,6 @@ describe('AlgebraMatrixSpace', function() {
         var dimension;
         dimension = mXn[0] * mXn[1];
         return space.dimension.should.be.eql(dimension);
-      });
-    });
-    return describe('#field', function() {
-      return it('is a real field', function() {
-        return space.field.should.be.instanceOf(AlgebraField);
       });
     });
   });

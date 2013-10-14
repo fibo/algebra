@@ -1,4 +1,4 @@
-var AlgebraField, GeneralLinearGroup, RealField, RealGeneralLinearGroup, algebra;
+var AlgebraField, GeneralLinearGroup, RealGeneralLinearGroup, algebra;
 
 algebra = require('../index');
 
@@ -7,8 +7,6 @@ AlgebraField = algebra.AlgebraField;
 GeneralLinearGroup = algebra.GeneralLinearGroup;
 
 RealGeneralLinearGroup = algebra.RealGeneralLinearGroup;
-
-RealField = algebra.RealField;
 
 describe('RealGeneralLinearGroup', function() {
   describe('Inheritance', function() {
@@ -31,7 +29,7 @@ describe('RealGeneralLinearGroup', function() {
     var degree, gl;
     degree = 4;
     gl = new RealGeneralLinearGroup(degree);
-    describe('#dimension', function() {
+    return describe('#dimension', function() {
       it('is a number', function() {
         return gl.dimension.should.be.a.number;
       });
@@ -39,11 +37,6 @@ describe('RealGeneralLinearGroup', function() {
         var dimension;
         dimension = degree * degree;
         return gl.dimension.should.be.eql(dimension);
-      });
-    });
-    return describe('#field', function() {
-      return it('returns the real field', function() {
-        return gl.field.should.be.instanceOf(RealField);
       });
     });
   });

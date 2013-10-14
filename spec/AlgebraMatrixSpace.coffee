@@ -40,10 +40,6 @@ describe 'AlgebraMatrixSpace', ->
         dimension = mXn[0] * mXn[1]
         space.dimension.should.be.eql dimension
 
-    describe '#field', ->
-      it 'is a real field', ->
-        space.field.should.be.instanceOf AlgebraField
-
   describe 'Methods', ->
     describe '#Matrix()', ->
       it 'is a constructor' # , ->

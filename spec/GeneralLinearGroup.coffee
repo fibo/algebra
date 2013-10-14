@@ -1,36 +1,32 @@
 
 algebra = require '../index'
 
-AlgebraField       = algebra.AlgebraField
 AlgebraMatrixSpace = algebra.AlgebraMatrixSpace
-ComplexField       = algebra.ComplexField
+ComplexElement     = algebra.ComplexElement
 GeneralLinearGroup = algebra.GeneralLinearGroup
-RealField          = algebra.RealField
-
-complex = new ComplexField()
-real    = new RealField()
+RealElement        = algebra.RealElement
 
 describe 'GeneralLinearGroup', ->
   describe 'Inheritance', ->
     it 'is an AlgebraMatrixSpace', ->
-      field  = real
-      degree = 2
-      gl  = new GeneralLinearGroup(field, degree)
+      Element = RealElement
+      degree  = 2
+      gl      = new GeneralLinearGroup(Element, degree)
 
       gl.should.be.instanceOf AlgebraMatrixSpace
 
   describe 'Constructor', ->
     it 'has signature (field, degree)', ->
-      field  = real
+      Element = RealElement
       degree = 2
-      gl  = new AlgebraMatrixSpace(field, degree)
+      gl      = new GeneralLinearGroup(Element, degree)
 
       gl.should.be.instanceOf AlgebraMatrixSpace
 
   describe 'Attributes', ->
-    field  = complex
-    degree = 3
-    gl  = new AlgebraMatrixSpace(field, degree)
+    Element = ComplexElement
+    degree  = 3
+    gl      = new AlgebraMatrixSpace(Element, degree)
 
     describe '#dimension', ->
       it 'is a number', ->
@@ -39,10 +35,6 @@ describe 'GeneralLinearGroup', ->
       it 'is the square of degree', ->
         dimension = degree * degree
         gl.dimension.should.be.eql dimension
-
-    describe '#field', ->
-      it 'returns the field', ->
-        gl.field.should.be.eql field
 
   describe 'Methods', ->
     describe '#Matrix()', ->

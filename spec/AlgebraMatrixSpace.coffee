@@ -4,38 +4,33 @@ algebra = require '../index'
 AlgebraField       = algebra.AlgebraField
 AlgebraMatrixSpace = algebra.AlgebraMatrixSpace
 AlgebraTensorSpace = algebra.AlgebraTensorSpace
-RealField          = algebra.RealField
-
-real = new RealField()
+RealElement        = algebra.RealElement
 
 describe 'AlgebraMatrixSpace', ->
   describe 'Inheritance', ->
     it 'is an AlgebraTensorSpace', ->
-      field     = real
-      dimension = 2
-      space     = new AlgebraMatrixSpace(field, dimension)
+      Element = RealElement
+      degree  = 2
+      space   = new AlgebraMatrixSpace(Element, degree)
 
       space.should.be.instanceOf AlgebraTensorSpace
 
   describe 'Constructor', ->
-    it 'has signature (field, degree)', ->
-      field     = real
-      degree    = 2
-      space     = new AlgebraMatrixSpace(field, degree)
+    it 'has signature (Element, degree)', ->
 
-      space.should.be.instanceOf AlgebraMatrixSpace
+      #space.should.be.instanceOf AlgebraMatrixSpace
 
-    it 'has signature (field, [numRows, numColumns])', ->
-      field     = real
-      mXn       = [2, 3]
-      space     = new AlgebraMatrixSpace(field, mXn)
+    it 'has signature (Element, [numRows, numColumns])', ->
+      Element = RealElement
+      mXn     = [2, 3]
+      space   = new AlgebraMatrixSpace(Element, mXn)
 
       space.should.be.instanceOf AlgebraMatrixSpace
 
   describe 'Attributes', ->
-    field     = real
-    mXn       = [2, 3]
-    space     = new AlgebraMatrixSpace(field, mXn)
+    Element = RealElement
+    mXn     = [2, 3]
+    space   = new AlgebraMatrixSpace(Element, mXn)
 
     describe '#dimension', ->
       it 'is a number', ->

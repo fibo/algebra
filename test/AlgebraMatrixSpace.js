@@ -1,4 +1,4 @@
-var AlgebraField, AlgebraMatrixSpace, AlgebraTensorSpace, RealField, algebra, real;
+var AlgebraField, AlgebraMatrixSpace, AlgebraTensorSpace, RealElement, algebra;
 
 algebra = require('../index');
 
@@ -8,41 +8,33 @@ AlgebraMatrixSpace = algebra.AlgebraMatrixSpace;
 
 AlgebraTensorSpace = algebra.AlgebraTensorSpace;
 
-RealField = algebra.RealField;
-
-real = new RealField();
+RealElement = algebra.RealElement;
 
 describe('AlgebraMatrixSpace', function() {
   describe('Inheritance', function() {
     return it('is an AlgebraTensorSpace', function() {
-      var dimension, field, space;
-      field = real;
-      dimension = 2;
-      space = new AlgebraMatrixSpace(field, dimension);
+      var Element, degree, space;
+      Element = RealElement;
+      degree = 2;
+      space = new AlgebraMatrixSpace(Element, degree);
       return space.should.be.instanceOf(AlgebraTensorSpace);
     });
   });
   describe('Constructor', function() {
-    it('has signature (field, degree)', function() {
-      var degree, field, space;
-      field = real;
-      degree = 2;
-      space = new AlgebraMatrixSpace(field, degree);
-      return space.should.be.instanceOf(AlgebraMatrixSpace);
-    });
-    return it('has signature (field, [numRows, numColumns])', function() {
-      var field, mXn, space;
-      field = real;
+    it('has signature (Element, degree)', function() {});
+    return it('has signature (Element, [numRows, numColumns])', function() {
+      var Element, mXn, space;
+      Element = RealElement;
       mXn = [2, 3];
-      space = new AlgebraMatrixSpace(field, mXn);
+      space = new AlgebraMatrixSpace(Element, mXn);
       return space.should.be.instanceOf(AlgebraMatrixSpace);
     });
   });
   describe('Attributes', function() {
-    var field, mXn, space;
-    field = real;
+    var Element, mXn, space;
+    Element = RealElement;
     mXn = [2, 3];
-    space = new AlgebraMatrixSpace(field, mXn);
+    space = new AlgebraMatrixSpace(Element, mXn);
     describe('#dimension', function() {
       it('is a number', function() {
         return space.dimension.should.be.a.number;

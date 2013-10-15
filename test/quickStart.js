@@ -34,7 +34,6 @@ describe("README's Quick start section", function () {
     var GLnR = algebra.RealGeneralLinearGroup
     var GL2R = new GLnR(2)
 
-  /*
     var m1 = new GL2R.Matrix(1, 2,
                              3, 4)
 
@@ -43,10 +42,10 @@ describe("README's Quick start section", function () {
 
     m1.mul(m2)
 
-    m1.data.should.eql([1, 2, 3, 4])
+    m1.data.should.eql([-1, 2,
+                        -3, 4])
 
     m1.determinant.data.should.eql(2)
-  */
   })
 })
 

@@ -22,14 +22,12 @@ describe("README's Quick start section", function () {
     var Rn = algebra.RealVectorSpace
     var R2 = new Rn(2)
 
-  /*
     var v1 = new R2.Vector(1, 1)
     var v2 = new R2.Vector(2, 4)
 
     v1.add(v2)
 
     v1.data.should.eql([3, 5])
-  */
   })
 
   it('has a working Matrices example', function () {

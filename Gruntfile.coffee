@@ -30,8 +30,14 @@ module.exports = (grunt) ->
           output: 'docs'
           css: 'docco.css'
     jshint:
-      files:
+      options: grunt.file.readJSON('.jshintrc')
+      lib:
+        options:
+          # W033:  Missing semicolon
+          '-W033': true
         src: ['index.js', 'lib/*js']
+      examples:
+        src: ['examples/*js']
     mochacli:
       options:
         require: ['should']

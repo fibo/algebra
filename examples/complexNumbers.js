@@ -24,6 +24,15 @@ module.exports = function () {
   //
   //     z4 = 1 - 2i
   var z4 = new ComplexElement([1, -2]);
+
+
+  // operators
+  //
+
+  // z1 + z2 = [1, 2] + [0, 3] = [1, 5]
+  z1.add(z2);
+  z1.data.should.be.eql([1, 5]);
+
 };
 
 

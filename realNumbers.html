@@ -114,7 +114,71 @@ x3 = 0.7 </code></pre>
             
             <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> x1 = <span class="keyword">new</span> RealElement(<span class="number">4</span>);
   <span class="keyword">var</span> x2 = <span class="keyword">new</span> RealElement(-<span class="number">1</span>);
-  <span class="keyword">var</span> x3 = <span class="keyword">new</span> RealElement(<span class="number">0.7</span>);
+  <span class="keyword">var</span> x3 = <span class="keyword">new</span> RealElement(<span class="number">0.7</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>operators</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>x1 + x2 = 4 + (-1) = 3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  x1.add(x2);
+  x1.data.should.be.eql(<span class="number">3</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>x1 - x2 = 3 - (-1) = 4</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  x1.sub(x2);
+  x1.data.should.be.eql(<span class="number">4</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>x3 <em> 10 = 0.7 </em> 10 = 7</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  x3.mul(<span class="number">10</span>);
+  x3.data.should.be.eql(<span class="number">7</span>);
+
+
+
 };</pre></div></div>
             
         </li>

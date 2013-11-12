@@ -103,7 +103,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
 # Documentation
 
-See [examples] (https://fibo/github.io/algebra).
+See [examples] (https://fibo.github.io/algebra).
 
 # Support
 

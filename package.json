@@ -1,7 +1,7 @@
 {
   "name": "algebra",
   "author": "fibo",
-  "version": "0.1.7",
+  "version": "0.1.71",
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,11 @@
     "vector",
     "math"
   ],
-  "license": "BSD",
+  "license": [ {
+    "type": "MIT",
+    "url": "http://fibo.mit-license.org/"
+  }
+  ],
   "devDependencies": {
     "browserify": "*",
     "coffee-script": "*",

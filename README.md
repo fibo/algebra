@@ -67,7 +67,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     // Add v2 to v1
     v1.add(v2); // (1, 1) + (2, 4) = (3, 5)
 
-    console.log(v1.getCoordinates()); // [3, 5]
+    console.log(v1.data); // [3, 5]
 
 ## Matrices
 

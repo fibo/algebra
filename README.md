@@ -17,7 +17,7 @@ I'm implementing matrices and vectors on few algebra fields
 (Reals, Complexes etc.) following Micheal Artin's "Algebra",
 which was my book at [Universita' Degli Studi di Genova](http://www.dima.unige.it).
 
-My goal is to provide users with the feature of creating their own algebra field and building vector spaces and matrices on it.
+My goal is to provide users with the feature of creating their own algebra field and building vector spaces, matrices and tensors on it.
 
 Suppose for example the set of strings with the concatenation operator,
 it could be extended to a group and maybe to a field and build "matrices of strings" or probably in the future ... "strings of matrices" (I had an intuition about a composition law for UTF-8 chars).
@@ -100,6 +100,34 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     // Check out m1 determinant, should be 2 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
     console.log(m1.determinant.data); // 2
 
+## Algebra over any field
+
+Let's create an algebra over the boolean field.
+
+    var algebra  = require('algebra')
+      , inherits = require('inherits');
+
+    var AlgebraField = algebra.AlgebraField;
+
+    function BooleanField () {
+      var zero = false;
+
+      var one = true;
+
+      function validate (data) {
+        return typeof data === 'boolean'
+      }
+
+      AlgebraField.call(
+        this,
+        zero, one,
+        validate,
+        addition, multiplication,
+        negation, inversion
+      );
+    }
+
+    inherits(BooleanField, AlgebraField);
 
 # Documentation
 

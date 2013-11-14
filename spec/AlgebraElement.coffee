@@ -40,7 +40,7 @@ describe 'AlgebraElement', ->
     describe '#data', ->
       it 'returns element data', ->
         field = real
-        data = 5
+        data = 6
         element = new AlgebraElement(field, data)
 
         element.data.should.eql data

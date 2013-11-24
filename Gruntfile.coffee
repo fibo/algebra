@@ -240,12 +240,13 @@ module.exports = (grunt) ->
       RealVectorSpace: ['test/RealVectorSpace.js']
 
     markdown:
-      all:
+      index:
         files: [
           expand: true
-          src: '*.md'
+          rename: (dest, src) ->
+            return dest + '/index.html'
+          src: 'README.md'
           dest: 'docs'
-          ext: '.html'
         ]
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'

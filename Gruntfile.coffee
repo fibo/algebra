@@ -195,13 +195,13 @@ module.exports = (grunt) ->
         src: ['examples/*.js']
         options:
           template: 'docs/docco.jst'
-          output: 'docs'
-          css: 'docco.css'
+          output: 'docs/examples'
+          css: 'css/docco.css'
       sources:
         src: ['lib/*.js']
         options:
           template: 'docs/docco.jst'
-          output: 'gh-pages/sources'
+          output: 'docs/sources'
           css: 'css/docco.css'
 
     jshint:
@@ -239,10 +239,20 @@ module.exports = (grunt) ->
       RealVector: ['test/RealVector.js']
       RealVectorSpace: ['test/RealVectorSpace.js']
 
+    markdown:
+      all:
+        files: [
+          expand: true
+          src: '*.md'
+          dest: 'docs'
+          ext: '.html'
+        ]
+
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-docco-multi'
+  grunt.loadNpmTasks 'grunt-markdown'
   grunt.loadNpmTasks 'grunt-mocha-cli'
 
   grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli']

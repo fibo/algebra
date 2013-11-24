@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>AlgebraField.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="AlgebraElement.html">
+                AlgebraElement.js
+              </a>
+            
+              
+              <a class="source" href="AlgebraField.html">
+                AlgebraField.js
+              </a>
+            
+              
+              <a class="source" href="AlgebraMatrix.html">
+                AlgebraMatrix.js
+              </a>
+            
+              
+              <a class="source" href="AlgebraMatrixSpace.html">
+                AlgebraMatrixSpace.js
+              </a>
+            
+              
+              <a class="source" href="AlgebraTensor.html">
+                AlgebraTensor.js
+              </a>
+            
+              
+              <a class="source" href="AlgebraTensorSpace.html">
+                AlgebraTensorSpace.js
+              </a>
+            
+              
+              <a class="source" href="AlgebraVector.html">
+                AlgebraVector.js
+              </a>
+            
+              
+              <a class="source" href="AlgebraVectorSpace.html">
+                AlgebraVectorSpace.js
+              </a>
+            
+              
+              <a class="source" href="ComplexElement.html">
+                ComplexElement.js
+              </a>
+            
+              
+              <a class="source" href="ComplexField.html">
+                ComplexField.js
+              </a>
+            
+              
+              <a class="source" href="GeneralLinearGroup.html">
+                GeneralLinearGroup.js
+              </a>
+            
+              
+              <a class="source" href="QuaternionElement.html">
+                QuaternionElement.js
+              </a>
+            
+              
+              <a class="source" href="QuaternionField.html">
+                QuaternionField.js
+              </a>
+            
+              
+              <a class="source" href="RealElement.html">
+                RealElement.js
+              </a>
+            
+              
+              <a class="source" href="RealField.html">
+                RealField.js
+              </a>
+            
+              
+              <a class="source" href="RealGeneralLinearGroup.html">
+                RealGeneralLinearGroup.js
+              </a>
+            
+              
+              <a class="source" href="RealTensor.html">
+                RealTensor.js
+              </a>
+            
+              
+              <a class="source" href="RealVector.html">
+                RealVector.js
+              </a>
+            
+              
+              <a class="source" href="RealVectorSpace.html">
+                RealVectorSpace.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>AlgebraField.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="function"><span class="keyword">function</span> <span class="title">abstractOperator</span><span class="params">()</span> {</span>
+  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'unimplemented abstract operator'</span>)
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">overrideConstantError</span><span class="params">()</span> {</span>
+  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'Cannot override a constant'</span>)
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> arg = arguments[<span class="number">0</span>] || {}
+  <span class="keyword">var</span> self = <span class="keyword">this</span>
+
+  <span class="function"><span class="keyword">function</span> <span class="title">addConstant</span><span class="params">(name, data)</span> {</span>
+    self.__defineGetter__(name, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> data
+    })
+    self.__defineSetter__(name, overrideConstantError)
+  }
+  
+  addConstant(<span class="string">'zero'</span>, arg.zero)
+  addConstant(<span class="string">'one'</span>, arg.one)
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> c <span class="keyword">in</span> arg.constants)
+    addConstant(c, arg.constants[c])
+}
+
+AlgebraField.prototype = {
+  addition       : abstractOperator,
+  add            : abstractOperator,
+  subtraction    : abstractOperator,
+  sub            : abstractOperator,
+  multiplication : abstractOperator,
+  mul            : abstractOperator,
+  division       : abstractOperator,
+  div            : abstractOperator,
+  equal          : abstractOperator,
+  eq             : abstractOperator,
+  notEqual       : abstractOperator,
+  ne             : abstractOperator,
+  inversion      : abstractOperator,
+  inv            : abstractOperator,
+  negation       : abstractOperator,
+  neg            : abstractOperator
+}
+
+module.exports = AlgebraField</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ algebra = require '../index'
 
 AlgebraElement = algebra.AlgebraElement
 AlgebraField   = algebra.AlgebraField
+RealElement    = algebra.RealElement
 RealField      = algebra.RealField
 
 field   = new AlgebraField()
@@ -54,6 +55,15 @@ describe 'AlgebraElement', ->
         element.field.should.eql field
 
   describe 'Methods', ->
+    describe '#clone()', ->
+      it 'returns an element with the same data', ->
+        data = 10
+        element1 = new RealElement(data)
+        element2 = element1.clone()
+
+        element2.should.be.instanceOf RealElement
+        element1.data.should.be.eql element2.data
+
     describe '#addition()', ->
       it 'is abstract', ->
         element.addition.should.throwError()

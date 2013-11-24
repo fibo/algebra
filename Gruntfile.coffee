@@ -5,9 +5,13 @@ module.exports = (grunt) ->
         files: ['Gruntfile.coffee']
         tasks: 'watch'
 
-      docco:
+      doccoExamples:
         files: ['examples/*.js']
-        tasks: 'docco'
+        tasks: 'docco:examples'
+
+      doccoSources:
+        files: ['lib/*.js']
+        tasks: 'docco:sources'
 
       examples:
         files: ['examples/*.js']
@@ -193,6 +197,12 @@ module.exports = (grunt) ->
           template: 'docs/docco.jst'
           output: 'docs'
           css: 'docco.css'
+      sources:
+        src: ['lib/*.js']
+        options:
+          template: 'docs/docco.jst'
+          output: 'gh-pages/sources'
+          css: 'css/docco.css'
 
     jshint:
       options: grunt.file.readJSON('.jshintrc')

@@ -3,7 +3,7 @@
   "author": "fibo",
   "version": "0.1.71",
   "description": "Vectors, Matrices, Tensors",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha --bail --require should --reporter nyan"
   },

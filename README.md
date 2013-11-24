@@ -5,7 +5,7 @@ Vectors, Matrices, Tensors for Node.js
 
 [![Build Status](https://travis-ci.org/fibo/algebra.png?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![NPM version](https://badge.fury.io/js/algebra.png)](http://badge.fury.io/js/algebra)
 
-![on-quaternions-and-octonions!](https://raw.github.com/fibo/algebra/master/images/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](https://raw.github.com/fibo/algebra/master/images/Cover-Algebra.png)
+![on-quaternions-and-octonions!](http://www.g14n.info/algebra/img/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](http://www.g14n.info/algebra/img/Cover-Algebra.png)
  
 # Installation
 
@@ -131,7 +131,7 @@ Let's create an algebra over the boolean field.
 
 # Documentation
 
-See [examples] (https://fibo.github.io/algebra).
+See [online documentation] (http://www.g14n.info/algebra/).
 
 # Support
 

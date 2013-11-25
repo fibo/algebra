@@ -30,6 +30,9 @@ module.exports = (grunt) ->
       testAlgebraMatrix:
         files: ['test/AlgebraMatrix.js', 'lib/AlgebraMatrix.js']
         tasks: 'mochacli:AlgebraMatrix'
+      testAlgebraInvertibleMatrix:
+        files: ['test/AlgebraInvertibleMatrix.js', 'lib/AlgebraInvertibleMatrix.js']
+        tasks: 'mochacli:AlgebraInvertibleMatrix'
       testAlgebraMatrixSpace:
         files: ['test/AlgebraMatrixSpace.js', 'lib/AlgebraMatrixSpace.js']
         tasks: 'mochacli:AlgebraMatrixSpace'
@@ -51,6 +54,9 @@ module.exports = (grunt) ->
       testComplexField:
         files: ['test/ComplexField.js', 'lib/ComplexField.js']
         tasks: 'mochacli:ComplexField'
+      testGeneralLinearGroup:
+        files: ['test/GeneralLinearGroup.js', 'lib/GeneralLinearGroup.js']
+        tasks: 'mochacli:GeneralLinearGroup'
       testQuaternionElement:
         files: ['test/QuaternionElement.js', 'lib/QuaternionElement.js']
         tasks: 'mochacli:QuaternionElement'
@@ -85,6 +91,9 @@ module.exports = (grunt) ->
       specAlgebraMatrix:
         files: ['spec/AlgebraMatrix.coffee']
         tasks: 'coffee:AlgebraMatrix'
+      specAlgebraInvertibleMatrix:
+        files: ['spec/AlgebraInvertibleMatrix.coffee']
+        tasks: 'coffee:AlgebraInvertibleMatrix'
       specAlgebraMatrixSpace:
         files: ['spec/AlgebraMatrixSpace.coffee']
         tasks: 'coffee:AlgebraMatrixSpace'
@@ -141,6 +150,9 @@ module.exports = (grunt) ->
       AlgebraMatrix:
         files:
           'test/AlgebraMatrix.js': 'spec/AlgebraMatrix.coffee'
+      AlgebraInvertibleMatrix:
+        files:
+          'test/AlgebraInvertibleMatrix.js': 'spec/AlgebraInvertibleMatrix.coffee'
       AlgebraMatrixSpace:
         files:
           'test/AlgebraMatrixSpace.js': 'spec/AlgebraMatrixSpace.coffee'
@@ -224,11 +236,12 @@ module.exports = (grunt) ->
       AlgebraElement: ['test/AlgebraElement.js']
       AlgebraField: ['test/AlgebraField.js']
       AlgebraMatrix: ['test/AlgebraMatrix.js']
+      AlgebraInvertibleMatrix: ['test/AlgebraInvertibleMatrix.js']
       AlgebraMatrixSpace: ['test/AlgebraMatrixSpace.js']
       AlgebraTensor: ['test/AlgebraTensor.js']
       AlgebraTensorSpace: ['test/AlgebraTensorSpace.js']
-      AgebraVector: ['test/AlgebraVector.js']
-      AgebraVectorSpace: ['test/AlgebraVectorSpace.js']
+      AlgebraVector: ['test/AlgebraVector.js']
+      AlgebraVectorSpace: ['test/AlgebraVectorSpace.js']
       ComplexElement: ['test/ComplexElement.js']
       ComplexField: ['test/ComplexField.js']
       GeneralLinearGroup: ['test/GeneralLinearGroup.js']

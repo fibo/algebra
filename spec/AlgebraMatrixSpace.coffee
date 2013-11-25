@@ -2,8 +2,10 @@
 algebra = require '../index'
 
 AlgebraField       = algebra.AlgebraField
+AlgebraMatrix      = algebra.AlgebraMatrix
 AlgebraMatrixSpace = algebra.AlgebraMatrixSpace
 AlgebraTensorSpace = algebra.AlgebraTensorSpace
+ComplexElement     = algebra.ComplexElement
 RealElement        = algebra.RealElement
 
 describe 'AlgebraMatrixSpace', ->
@@ -16,10 +18,6 @@ describe 'AlgebraMatrixSpace', ->
       space.should.be.instanceOf AlgebraTensorSpace
 
   describe 'Constructor', ->
-    it 'has signature (Element, degree)', ->
-
-      #space.should.be.instanceOf AlgebraMatrixSpace
-
     it 'has signature (Element, [numRows, numColumns])', ->
       Element = RealElement
       mXn     = [2, 3]
@@ -42,8 +40,14 @@ describe 'AlgebraMatrixSpace', ->
 
   describe 'Methods', ->
     describe '#Matrix()', ->
-      it 'is a constructor' # , ->
-        # vector = new space.Matrix()
+      it 'is a constructor' , ->
+        Element = ComplexElement
+        mXn     = [2, 3]
+        space   = new AlgebraMatrixSpace(Element, mXn)
+
+        matrix = new space.Matrix()
+
+        matrix.should.be.instanceOf AlgebraMatrix
 
     describe '#containsMatrix()', ->
       it 'checks that the given matrix belongs to this matrix space'

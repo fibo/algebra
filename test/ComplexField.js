@@ -50,10 +50,40 @@
         });
       });
       describe('#multiplication()', function() {
-        return it('implements *');
+        return it('implements *', function() {
+          complex.multiplication([2, 1], [2, 0]).should.eql([4, 2]);
+          return complex.multiplication([2, 1], [2, -1]).should.eql([5, 0]);
+        });
       });
-      return describe('#division()', function() {
-        return it('implements /');
+      describe('#inversion()', function() {
+        return it('implements ^-1', function() {
+          return complex.inversion([2, 0]).should.eql([.5, 0]);
+        });
+      });
+      describe('#division()', function() {
+        return it('implements /', function() {
+          return complex.division([5, 0], [2, 1]).should.eql([2, -1]);
+        });
+      });
+      describe('#conjugation()', function() {
+        return it('returns the conjugation of a complex number', function() {
+          return complex.conjugation([2, 1]).should.eql([2, -1]);
+        });
+      });
+      describe('#norm()', function() {
+        return it('returns the norm of a complex number', function() {
+          return complex.norm([2, 1]).should.eql(5);
+        });
+      });
+      describe('#equal()', function() {
+        return it('returns true if two complexes are equal', function() {
+          return complex.equal([0, 1], [0, 1]).should.be["true"];
+        });
+      });
+      return describe('#notEqual()', function() {
+        return it('returns true if two complexes are not equal', function() {
+          return complex.notEqual([0, 1], [1, 1]).should.be["true"];
+        });
       });
     });
   });

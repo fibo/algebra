@@ -1,5 +1,5 @@
 (function() {
-  var AlgebraElement, AlgebraField, RealElement, RealField, algebra, element, field, real;
+  var AlgebraElement, AlgebraField, ComplexField, RealElement, RealField, algebra, complex, element, field, real;
 
   algebra = require('../index');
 
@@ -11,11 +11,15 @@
 
   RealField = algebra.RealField;
 
+  ComplexField = algebra.ComplexField;
+
   field = new AlgebraField();
 
   element = new AlgebraElement(field);
 
   real = new RealField();
+
+  complex = new ComplexField();
 
   describe('AlgebraElement', function() {
     describe('Constructor', function() {
@@ -31,13 +35,16 @@
         element = new AlgebraElement(field);
         return element.should.be.instanceOf(AlgebraElement);
       });
-      it('checks #field is an AlgebraField)', function() {
+      it('checks *field* is an AlgebraField', function() {
         return (function() {
           return element = new AlgebraElement('not a field');
         }).should.throwError();
       });
-      return it('defaults #data to field.one)', function() {
+      return it('defaults *data* to field.one', function() {
         field = real;
+        element = new AlgebraElement(field);
+        element.data.should.eql(field.one);
+        field = complex;
         element = new AlgebraElement(field);
         return element.data.should.eql(field.one);
       });

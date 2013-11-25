@@ -63,8 +63,34 @@
           return tensor = new AlgebraTensor('not an AlgebraElement class');
         }).should.throwError();
       });
-      it('coerces data to elements');
-      return it('requires #elements belongs to #Element field');
+      it('coerces data to elements', function() {
+        var Element, data, elements, indices, num, tensor;
+        Element = RealElement;
+        indices = [3];
+        data = [2, 4, 8];
+        elements = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = data.length; _i < _len; _i++) {
+            num = data[_i];
+            _results.push(new RealElement(num));
+          }
+          return _results;
+        })();
+        tensor = new AlgebraTensor(Element, indices, data);
+        tensor.should.be.instanceOf(AlgebraTensor);
+        return tensor.elements.should.eql(elements);
+      });
+      return it('requires #elements belongs to #Element field', function() {
+        var Element, elements, indices;
+        Element = RealElement;
+        indices = [2];
+        elements = [x, 'not a real element'];
+        return (function() {
+          var tensor;
+          return tensor = new AlgebraTensor(Element, indices, elements);
+        }).should.throwError();
+      });
     });
     describe('Attributes', function() {
       describe('#indices', function() {
@@ -91,7 +117,14 @@
         });
       });
       describe('#field', function() {
-        return it('returns tensor field');
+        return it('returns tensor field', function() {
+          var Element, elements, indices, tensor;
+          Element = RealElement;
+          indices = [1];
+          elements = [x];
+          tensor = new AlgebraTensor(Element, indices, elements);
+          return tensor.field.should.be.eql(x.field);
+        });
       });
       return describe('#elements', function() {
         return it('returns tensor elements', function() {

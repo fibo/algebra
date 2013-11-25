@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>ComplexField.js</title>
+  <title>AlgebraInvertibleMatrix.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -131,7 +131,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>ComplexField.js</h1>
+                  <h1>AlgebraInvertibleMatrix.js</h1>
               </div>
           </li>
         
@@ -147,22 +147,9 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
-  , inherits     = require(<span class="string">'inherits'</span>)
-
-<span class="function"><span class="keyword">function</span> <span class="title">ComplexField</span><span class="params">()</span> {</span>
-  AlgebraField.call(<span class="keyword">this</span>, {
-    zero: [<span class="number">0</span>, <span class="number">0</span>],
-    one: [<span class="number">1</span>, <span class="number">0</span>],
-    constants: {
-      i: [<span class="number">0</span>, <span class="number">1</span>]
-    }
-  })
-}
-
-inherits(ComplexField, AlgebraField)
-
-<span class="function"><span class="keyword">function</span> <span class="title">addition</span><span class="params">(z, w)</span> {</span></pre></div></div>
+<span class="keyword">var</span> AlgebraMatrix = require(<span class="string">'./AlgebraMatrix'</span>)
+  , inherits      = require(<span class="string">'inherits'</span>)
+  , _             = require(<span class="string">'underscore'</span>)</pre></div></div>
             
         </li>
         
@@ -173,17 +160,18 @@ inherits(ComplexField, AlgebraField)
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>z + w = (z0 + i z1) + (w0 + i w1)
-      = (z0 + w0) + i (z1 + w1)</p>
+              <p>TODO questo è anche in AlgebraMatrix
+la figata sarebbe generalizzarlo ai tensori</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] + w[<span class="number">0</span>], z[<span class="number">1</span>] + w[<span class="number">1</span>]]
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="keyword">function</span> <span class="title">matrixToArrayIndex</span> <span class="params">(i, j, numberOfColumns)</span> {</span>
+  <span class="keyword">return</span> i * numberOfColumns + j
 }
-ComplexField.prototype.addition = addition
-ComplexField.prototype.add      = addition
 
-<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span><span class="params">(z, w)</span> {</span></pre></div></div>
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraInvertibleMatrix</span> <span class="params">(Element, order, elements)</span> {</span>
+
+  <span class="keyword">var</span> self = <span class="keyword">this</span></pre></div></div>
             
         </li>
         
@@ -194,17 +182,27 @@ ComplexField.prototype.add      = addition
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>z - w = (z0 + i z1) - (w0 + i w1)
-      = (z0 - w0) + i (z1 - w1)</p>
+              <p>inheritance</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] - w[<span class="number">0</span>], z[<span class="number">1</span>] - w[<span class="number">1</span>]]
-}
-ComplexField.prototype.subtraction = subtraction
-ComplexField.prototype.sub         = subtraction
+            <div class="content"><div class='highlight'><pre>
+  AlgebraTensor.call(<span class="keyword">this</span>, Element, dimensionArray, elements)
 
-<span class="function"><span class="keyword">function</span> <span class="title">multiplication</span><span class="params">(z, w)</span> {</span></pre></div></div>
+  <span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
+    <span class="keyword">var</span> order = getNumberOfRows()
+
+    <span class="keyword">return</span> computeDeterminant(order, Element, self.elements)
+  }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
+}
+
+inherits(AlgebraInvertibleMatrix, AlgebraMatrix)
+
+<span class="function"><span class="keyword">function</span> <span class="title">computeDeterminant</span> <span class="params">(order, Element, elements)</span> {</span>
+
+  <span class="keyword">var</span> det = <span class="keyword">new</span> Element(<span class="number">0</span>)</pre></div></div>
             
         </li>
         
@@ -215,18 +213,18 @@ ComplexField.prototype.sub         = subtraction
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>z <em> w = (z0 + i z1) </em> (w0 + i w1)
-      = z0 <em> w0 + z0 </em> i w1 + i z1 <em> w0 + i z1 </em> i w1
-      = (z0 <em> w0 - z1 </em> w1) + i (z0 <em> w1 + z1 </em> w0)</p>
+              <p>TODO clono gli elementi</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] * w[<span class="number">0</span>] - z[<span class="number">1</span>] * w[<span class="number">1</span>], z[<span class="number">0</span>] * w[<span class="number">1</span>] + z[<span class="number">1</span>] * w[<span class="number">0</span>]]
-}
-ComplexField.prototype.multiplication = multiplication
-ComplexField.prototype.mul            = multiplication
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> _elements = []
+    , element
 
-<span class="function"><span class="keyword">function</span> <span class="title">division</span><span class="params">(z, w)</span> {</span></pre></div></div>
+  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements) {
+    element = <span class="keyword">new</span> Element(elements[i].data)
+
+    _elements.push(element)
+  }</pre></div></div>
             
         </li>
         
@@ -237,16 +235,17 @@ ComplexField.prototype.mul            = multiplication
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>z / w = z * w^-1</p>
+              <p>TODO caso degenere, aggiusta</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> multiplication(z, inversion(w))
-}
-ComplexField.prototype.division = division
-ComplexField.prototype.div      = division
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
+    <span class="keyword">return</span> _elements[<span class="number">0</span>]
 
-<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(z)</span> {</span></pre></div></div>
+  <span class="keyword">if</span> (order === <span class="number">2</span>) {
+    det.add(_elements[<span class="number">0</span>].mul(_elements[<span class="number">3</span>])).sub(_elements[<span class="number">2</span>].mul(_elements[<span class="number">1</span>]))
+    <span class="keyword">return</span> det
+  }</pre></div></div>
             
         </li>
         
@@ -257,17 +256,35 @@ ComplexField.prototype.div      = division
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>z~ = (z0 + i z1)~
-   = z0 - i z1</p>
+              <p>TODO per ora scelgo sempre la prima riga.
+TODO classe Collection con metodo countZeros o numberOfZeros()</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>], - z[<span class="number">1</span>]]
-}
-ComplexField.prototype.conjugation = conjugation
-ComplexField.prototype.conj        = conjugation
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
 
-<span class="function"><span class="keyword">function</span> <span class="title">norm</span><span class="params">(z)</span> {</span></pre></div></div>
+  <span class="keyword">for</span> (<span class="keyword">var</span> columnIndex = <span class="number">0</span>; columnIndex &lt; order; columnIndex++) {
+    <span class="keyword">var</span> adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, _elements)
+
+    <span class="keyword">var</span> adjointDeterminant = computeDeterminant(order - <span class="number">1</span>, adjointElements);
+
+    element = _elements[matrixToArrayIndex(rowIndex, columnIndex, order)];
+
+    <span class="keyword">if</span> (columnIndex % <span class="number">2</span> === <span class="number">0</span>) {
+      det.add(element)
+    }
+    <span class="keyword">else</span> {
+      det.sub(element)
+    }
+
+    det.mul(adjointDeterminant)
+  }
+
+  <span class="keyword">return</span> det
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">getAdjointElements</span><span class="params">(rowIndex, columnIndex, numRows, numCols, elements)</span> {</span>
+  <span class="keyword">var</span> adjointElements = []</pre></div></div>
             
         </li>
         
@@ -278,48 +295,22 @@ ComplexField.prototype.conj        = conjugation
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>|z| = |z0 + i z1|
-    = z0 <em> z0 + z1 </em> z1</p>
+              <p>TODO anche qua dovrei clonare in teoria ?</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> z[<span class="number">0</span>] * z[<span class="number">0</span>] + z[<span class="number">1</span>] * z[<span class="number">1</span>]
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numRows; i++) {
+      <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; numCols; j++) {
+        <span class="keyword">if</span> (i != rowIndex &amp;&amp; j != columnIndex) {
+          adjointElements.push(elements[matrixToArrayIndex(i, j, numCols)])
+        }
+      }
+    }
+
+  <span class="keyword">return</span> adjointElements
 }
-ComplexField.prototype.norm = norm
 
-<span class="function"><span class="keyword">function</span> <span class="title">inversion</span><span class="params">(z)</span> {</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>z^-1 = z~ * 1 / |z|</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> multiplication(conjugation(z), [<span class="number">1</span> / norm(z), <span class="number">0</span>])
-}
-ComplexField.prototype.inversion = inversion
-ComplexField.prototype.inv       = inversion
-
-<span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(z, w)</span> {</span>
-  <span class="keyword">return</span> z[<span class="number">0</span>] === w[<span class="number">0</span>] &amp;&amp; z[<span class="number">1</span>] === w[<span class="number">1</span>]
-}
-ComplexField.prototype.equal = equal
-ComplexField.prototype.eq    = equal
-
-<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span><span class="params">(z, w)</span> {</span>
-  <span class="keyword">return</span> z[<span class="number">0</span>] !== w[<span class="number">0</span>] || z[<span class="number">1</span>] !== w[<span class="number">1</span>]
-}
-ComplexField.prototype.notEqual = notEqual
-ComplexField.prototype.ne       = notEqual
-
-module.exports = ComplexField</pre></div></div>
+module.exports = AlgebraInvertibleMatrix</pre></div></div>
             
         </li>
         

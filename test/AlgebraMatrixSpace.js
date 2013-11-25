@@ -1,13 +1,17 @@
 (function() {
-  var AlgebraField, AlgebraMatrixSpace, AlgebraTensorSpace, RealElement, algebra;
+  var AlgebraField, AlgebraMatrix, AlgebraMatrixSpace, AlgebraTensorSpace, ComplexElement, RealElement, algebra;
 
   algebra = require('../index');
 
   AlgebraField = algebra.AlgebraField;
 
+  AlgebraMatrix = algebra.AlgebraMatrix;
+
   AlgebraMatrixSpace = algebra.AlgebraMatrixSpace;
 
   AlgebraTensorSpace = algebra.AlgebraTensorSpace;
+
+  ComplexElement = algebra.ComplexElement;
 
   RealElement = algebra.RealElement;
 
@@ -22,7 +26,6 @@
       });
     });
     describe('Constructor', function() {
-      it('has signature (Element, degree)', function() {});
       return it('has signature (Element, [numRows, numColumns])', function() {
         var Element, mXn, space;
         Element = RealElement;
@@ -49,7 +52,14 @@
     });
     return describe('Methods', function() {
       describe('#Matrix()', function() {
-        return it('is a constructor');
+        return it('is a constructor', function() {
+          var Element, mXn, matrix, space;
+          Element = ComplexElement;
+          mXn = [2, 3];
+          space = new AlgebraMatrixSpace(Element, mXn);
+          matrix = new space.Matrix();
+          return matrix.should.be.instanceOf(AlgebraMatrix);
+        });
       });
       return describe('#containsMatrix()', function() {
         return it('checks that the given matrix belongs to this matrix space');

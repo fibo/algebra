@@ -5,11 +5,13 @@ AlgebraElement = algebra.AlgebraElement
 AlgebraField   = algebra.AlgebraField
 RealElement    = algebra.RealElement
 RealField      = algebra.RealField
+ComplexField   = algebra.ComplexField
 
 field   = new AlgebraField()
 element = new AlgebraElement(field)
 
-real = new RealField()
+real    = new RealField()
+complex = new ComplexField()
 
 describe 'AlgebraElement', ->
   describe 'Constructor', ->
@@ -26,13 +28,18 @@ describe 'AlgebraElement', ->
 
       element.should.be.instanceOf AlgebraElement
 
-    it 'checks #field is an AlgebraField)', ->
+    it 'checks *field* is an AlgebraField', ->
       ( () ->
           element = new AlgebraElement('not a field')
       ).should.throwError()
 
-    it 'defaults #data to field.one)', ->
+    it 'defaults *data* to field.one', ->
       field = real
+      element = new AlgebraElement(field)
+
+      element.data.should.eql field.one
+
+      field = complex 
       element = new AlgebraElement(field)
 
       element.data.should.eql field.one

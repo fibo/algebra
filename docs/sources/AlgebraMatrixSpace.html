@@ -29,6 +29,11 @@
               </a>
             
               
+              <a class="source" href="AlgebraInvertibleMatrix.html">
+                AlgebraInvertibleMatrix.js
+              </a>
+            
+              
               <a class="source" href="AlgebraMatrix.html">
                 AlgebraMatrix.js
               </a>
@@ -145,12 +150,31 @@
 <span class="keyword">var</span> AlgebraTensorSpace = require(<span class="string">'./AlgebraTensorSpace'</span>)
   , AlgebraMatrix      = require(<span class="string">'./AlgebraMatrix'</span>)
   , inherits           = require(<span class="string">'inherits'</span>)
-  , _                  = require(<span class="string">'underscore'</span>)
+  , _                  = require(<span class="string">'underscore'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>TODO non mi convince molto che AlgebraMatrixSpace erediti da AlgebraTensorSpace
+al limite da AlgebraVectorSpace</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
 <span class="function"><span class="keyword">function</span> <span class="title">AlgebraMatrixSpace</span><span class="params">(Element)</span> {</span>
 
-  <span class="keyword">var</span> arg1 = arguments[<span class="number">1</span>]
+  <span class="keyword">var</span> arg  = arguments
+    , arg0 = arg[<span class="number">0</span>]
+    , arg1 = arg[<span class="number">1</span>]
     , dimensionArray = []
+
+  <span class="keyword">var</span> Element = arg0
 
   <span class="keyword">if</span> (! (_.isNumber(arg1) || (_.isArray(arg1) &amp;&amp; arg1.length === <span class="number">2</span>)))
     <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
@@ -164,11 +188,11 @@
         </li>
         
         
-        <li id="section-2">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>dimension</p>
 
@@ -182,11 +206,11 @@
         </li>
         
         
-        <li id="section-3">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Matrix</p>
 
@@ -215,11 +239,11 @@
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>inheritance</p>
 

@@ -1,9 +1,11 @@
 (function() {
-  var AlgebraMatrixSpace, ComplexElement, GeneralLinearGroup, RealElement, algebra;
+  var AlgebraInvertibleMatrix, AlgebraMatrixSpace, ComplexElement, GeneralLinearGroup, RealElement, algebra;
 
   algebra = require('../index');
 
   AlgebraMatrixSpace = algebra.AlgebraMatrixSpace;
+
+  AlgebraInvertibleMatrix = algebra.AlgebraInvertibleMatrix;
 
   ComplexElement = algebra.ComplexElement;
 
@@ -47,6 +49,10 @@
       });
     });
     return describe('Methods', function() {
+      var Element, degree, gl;
+      Element = RealElement;
+      degree = 2;
+      gl = new AlgebraMatrixSpace(Element, degree);
       describe('#Matrix()', function() {
         return it('is a constructor');
       });

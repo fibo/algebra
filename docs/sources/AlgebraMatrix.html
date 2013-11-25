@@ -29,6 +29,11 @@
               </a>
             
               
+              <a class="source" href="AlgebraInvertibleMatrix.html">
+                AlgebraInvertibleMatrix.js
+              </a>
+            
+              
               <a class="source" href="AlgebraMatrix.html">
                 AlgebraMatrix.js
               </a>
@@ -228,11 +233,11 @@
   AlgebraTensor.call(<span class="keyword">this</span>, Element, dimensionArray, elements)
 
 
-<span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
-  <span class="keyword">var</span> order = getNumberOfRows()
+  <span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
+    <span class="keyword">var</span> order = getNumberOfRows()
 
-  <span class="keyword">return</span> computeDeterminant(order, Element, self.elements)
-}
+    <span class="keyword">return</span> computeDeterminant(order, Element, self.elements)
+  }
 
   Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
 }

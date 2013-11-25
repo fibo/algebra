@@ -1,7 +1,9 @@
 (function() {
-  var AlgebraVector, RealElement, RealField, algebra, minusOne, one, two, zero;
+  var AlgebraTensor, AlgebraVector, RealElement, RealField, algebra, minusOne, one, two, zero;
 
   algebra = require('../index');
+
+  AlgebraTensor = algebra.AlgebraTensor;
 
   AlgebraVector = algebra.AlgebraVector;
 
@@ -18,6 +20,15 @@
   minusOne = new RealElement(-1);
 
   describe('AlgebraVector', function() {
+    describe('Inheritance', function() {
+      return it('is an AlgebraTensor', function() {
+        var Element, elements, vector;
+        Element = RealElement;
+        elements = [one, two];
+        vector = new AlgebraVector(Element, elements);
+        return vector.should.be.instanceOf(AlgebraTensor);
+      });
+    });
     describe('Constructor', function() {
       return it('has signature (field, elements)', function() {
         var Element, elements, vector;

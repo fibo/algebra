@@ -29,6 +29,11 @@
               </a>
             
               
+              <a class="source" href="AlgebraInvertibleMatrix.html">
+                AlgebraInvertibleMatrix.js
+              </a>
+            
+              
               <a class="source" href="AlgebraMatrix.html">
                 AlgebraMatrix.js
               </a>
@@ -155,11 +160,31 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraMatrixSpace = require(<span class="string">'./AlgebraMatrixSpace'</span>)
-  , inherits           = require(<span class="string">'inherits'</span>)
+<span class="keyword">var</span> AlgebraMatrixSpace      = require(<span class="string">'./AlgebraMatrixSpace'</span>)
+<span class="keyword">var</span> AlgebraInvertibleMatrix = require(<span class="string">'./AlgebraInvertibleMatrix'</span>)
+  , inherits                = require(<span class="string">'inherits'</span>)
 
 <span class="function"><span class="keyword">function</span> <span class="title">GeneralLinearGroup</span><span class="params">(Element, degree)</span> {</span>
   AlgebraMatrixSpace.call(<span class="keyword">this</span>, Element, [degree, degree])
+
+  <span class="function"><span class="keyword">function</span> <span class="title">Matrix</span> <span class="params">()</span> {</span>
+    <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
+      , numArgs = arguments.length
+      , elements = []
+
+    <span class="keyword">if</span> ((numArgs === <span class="number">1</span>) &amp;&amp; (_.isArray(arg0)))
+      elements = arg0
+
+    <span class="keyword">if</span> (numArgs &gt; <span class="number">1</span>)
+      <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arguments)
+        elements.push(arguments[i])
+
+    AlgebraInvertibleMatrix.call(<span class="keyword">this</span>, Element, degree, elements)
+  }
+
+  inherits(Matrix, AlgebraInvertibleMatrix)
+
+  <span class="keyword">this</span>.Matrix = Matrix
 }
 
 inherits(GeneralLinearGroup, AlgebraMatrixSpace)

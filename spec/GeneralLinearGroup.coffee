@@ -1,10 +1,11 @@
 
 algebra = require '../index'
 
-AlgebraMatrixSpace = algebra.AlgebraMatrixSpace
-ComplexElement     = algebra.ComplexElement
-GeneralLinearGroup = algebra.GeneralLinearGroup
-RealElement        = algebra.RealElement
+AlgebraMatrixSpace      = algebra.AlgebraMatrixSpace
+AlgebraInvertibleMatrix = algebra.AlgebraInvertibleMatrix
+ComplexElement          = algebra.ComplexElement
+GeneralLinearGroup      = algebra.GeneralLinearGroup
+RealElement             = algebra.RealElement
 
 describe 'GeneralLinearGroup', ->
   describe 'Inheritance', ->
@@ -37,9 +38,15 @@ describe 'GeneralLinearGroup', ->
         gl.dimension.should.be.eql dimension
 
   describe 'Methods', ->
+    Element = RealElement
+    degree  = 2
+    gl      = new AlgebraMatrixSpace(Element, degree)
+
     describe '#Matrix()', ->
       it 'is a constructor' # , ->
-        # matrix = new gl.Matrix()
+        # matrix = new gl.Matrix([1 ,  2
+        #                        0 , -1])
+        # matrix.should.be.instanceOf AlgebraInvertibleMatrix
 
     describe '#containsMatrix()', ->
       it 'checks that the given matrix belongs to this matrix gl'

@@ -6,6 +6,8 @@ ComplexField = algebra.ComplexField
 
 complex = new ComplexField()
 
+# TODO aggiungi gli alias dei metodi
+
 describe 'ComplexField', ->
   describe 'Inheritance', ->
     it 'is an AlgebraField', ->
@@ -42,10 +44,32 @@ describe 'ComplexField', ->
         complex.subtraction([2, 3], [2, -5]).should.eql [0, 8]
 
     describe '#multiplication()', ->
-      it 'implements *', # ->
-        # complex.multiplication([2, 1], [2, 0]).should.eql [4, 1]
+      it 'implements *', ->
+        complex.multiplication([2, 1], [2, 0]).should.eql [4, 2]
+
+        complex.multiplication([2, 1], [2, -1]).should.eql [5, 0]
+
+    describe '#inversion()', ->
+      it 'implements ^-1', ->
+        complex.inversion([2, 0]).should.eql [.5, 0]
 
     describe '#division()', ->
-      it 'implements /', #->
-        # complex.division([5, 0], [2, 1]).should.eql [2, -1]
+      it 'implements /', ->
+        complex.division([5, 0], [2, 1]).should.eql [2, -1]
+
+    describe '#conjugation()', ->
+      it 'returns the conjugation of a complex number', ->
+        complex.conjugation([2, 1]).should.eql [2, -1]
+
+    describe '#norm()', ->
+      it 'returns the norm of a complex number', ->
+        complex.norm([2, 1]).should.eql 5
+
+    describe '#equal()', ->
+      it 'returns true if two complexes are equal', ->
+        complex.equal([0, 1], [0, 1]).should.be.true
+
+    describe '#notEqual()', ->
+      it 'returns true if two complexes are not equal', ->
+        complex.notEqual([0, 1], [1, 1]).should.be.true
 

@@ -1,5 +1,5 @@
 (function() {
-  var AlgebraField, GeneralLinearGroup, RealGeneralLinearGroup, algebra;
+  var AlgebraField, AlgebraInvertibleMatrix, GeneralLinearGroup, RealGeneralLinearGroup, algebra, degree, gl;
 
   algebra = require('../index');
 
@@ -9,27 +9,26 @@
 
   RealGeneralLinearGroup = algebra.RealGeneralLinearGroup;
 
+  AlgebraInvertibleMatrix = algebra.AlgebraInvertibleMatrix;
+
+  degree = 4;
+
+  gl = new RealGeneralLinearGroup(degree);
+
   describe('RealGeneralLinearGroup', function() {
     describe('Inheritance', function() {
       return it('is a GeneralLinearGroup', function() {
-        var degree, gl;
-        degree = 2;
-        gl = new RealGeneralLinearGroup(degree);
         return gl.should.be.instanceOf(GeneralLinearGroup);
       });
     });
     describe('Constructor', function() {
       return it('has signature (degree)', function() {
-        var degree, gl;
         degree = 2;
         gl = new RealGeneralLinearGroup(degree);
         return gl.should.be.instanceOf(RealGeneralLinearGroup);
       });
     });
     describe('Attributes', function() {
-      var degree, gl;
-      degree = 4;
-      gl = new RealGeneralLinearGroup(degree);
       return describe('#dimension', function() {
         it('is a number', function() {
           return gl.dimension.should.be.a.number;
@@ -43,7 +42,11 @@
     });
     return describe('Methods', function() {
       describe('#Matrix()', function() {
-        return it('is a constructor');
+        return it('is a constructor that returns an invertible matrix', function() {
+          var matrix;
+          matrix = new gl.Matrix();
+          return matrix.should.be.instanceOf(AlgebraInvertibleMatrix);
+        });
       });
       return describe('#containsMatrix()', function() {
         return it('checks that the given matrix belongs to this matrix space');

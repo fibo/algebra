@@ -34,7 +34,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
     var algebra = require('algebra');
 
-    var Complex = algebra.Complex.Element;
+    var Complex = algebra.ComplexElement;
 
     // Create two complex numbers
     // z1 = 1 + 2i
@@ -57,7 +57,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     var algebra = require('algebra');
 
     // Rn is a class representing a real vector space of dimension = n
-    var Rn = algebra.Real.VectorSpace;
+    var Rn = algebra.RealVectorSpace;
 
     // Create a real vector space with dimension = 2, a.k.a. the cartesian plane
     var R2 = new Rn(2);
@@ -78,7 +78,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     var algebra = require('algebra');
 
     // GLnR is the Real General Linear Group of invertible matrices of order n
-    var GLnR = algebra.Real.GeneralLinearGroup;
+    var GLnR = algebra.RealGeneralLinearGroup;
 
     // Create the group of 2x2 invertible matrices
     var GL2R = new GLnR(2);

@@ -5,20 +5,24 @@ AlgebraMatrix           = algebra.AlgebraMatrix
 AlgebraInvertibleMatrix = algebra.AlgebraInvertibleMatrix
 RealElement             = algebra.RealElement
 
-x = new RealElement(2)
-y = new RealElement(3)
+data1 = 2
+data2 = 3
 
-describe 'AlgebraMatrix', ->
+x = new RealElement(data1)
+y = new RealElement(data2)
+
+Element = RealElement
+elements = [x, y
+            y, x]
+order = 2
+
+matrix = new AlgebraInvertibleMatrix(Element, order, elements)
+
+
+describe 'AlgebraInvertibleMatrix', ->
   describe 'Inheritance', ->
-    it 'is an AlgebraInvertibleMatrix', ->
-      Element = RealElement
-      elements = [x, y
-                  y, x]
-      order = 2
-
-      matrix = new AlgebraInvertibleMatrix(Element, order, elements)
-
-      matrix.should.be.instanceOf AlgebraInvertibleMatrix
+    it 'is an AlgebraMatrix', ->
+      matrix.should.be.instanceOf AlgebraMatrix
 
   describe 'Constructor', ->
     it 'has signature (Element, order)'
@@ -27,9 +31,14 @@ describe 'AlgebraMatrix', ->
 
   describe 'Attributes', ->
     describe '#order', ->
+      it 'returns the order of the matrix', ->
+        matrix.order.should.eql order
 
     describe '#determinant', ->
-      it 'computes the determinant'
+      it 'computes the determinant' #, ->
+        # det = data1 * data1 - data2 * data2
+
+        # matrix.determinant.should.eql det
 
   describe 'Methods', ->
     describe '#inverse()', ->

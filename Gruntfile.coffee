@@ -5,21 +5,9 @@ module.exports = (grunt) ->
         files: ['Gruntfile.coffee']
         tasks: 'watch'
 
-      doccoExamples:
-        files: ['examples/*.js']
-        tasks: 'docco:examples'
-
-      doccoSources:
-        files: ['lib/*.js']
-        tasks: 'docco:sources'
-
       examples:
         files: ['examples/*.js']
-        tasks: ['mochacli:examples', 'docco']
-
-      index:
-        files: ['index.js']
-        tasks: 'mochacli'
+        tasks: ['mochacli:examples']
 
       testAlgebraElement:
         files: ['test/AlgebraElement.js', 'lib/AlgebraElement.js']
@@ -270,4 +258,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-mocha-cli'
 
   grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli']
+  grunt.registerTask 'docs', ['docco']
 

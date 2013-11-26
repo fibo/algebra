@@ -28,7 +28,7 @@ describe 'ComplexElement', ->
 
   describe 'Methods', ->
     describe '#conjugation()', ->
-      it 'implements conjugation', ->
+      it 'applies conjugation', ->
         # z = [2, 1]
         # z -> z~ = [2, -1]
         z.data = [2, 1]
@@ -39,6 +39,10 @@ describe 'ComplexElement', ->
 
       it 'can be chained', ->
         z.conjugation().should.be.instanceOf ComplexElement
+
+    describe '#conj()', ->
+      it 'is an alias of #conjugation()', ->
+        complex.conj.should.eql complex.conjugation
 
     describe '#addition()', ->
       it 'implements +', ->

@@ -1,5 +1,5 @@
 (function() {
-  var AlgebraInvertibleMatrix, AlgebraMatrix, RealElement, algebra, x, y;
+  var AlgebraInvertibleMatrix, AlgebraMatrix, Element, RealElement, algebra, data1, data2, elements, matrix, order, x, y;
 
   algebra = require('../index');
 
@@ -9,19 +9,26 @@
 
   RealElement = algebra.RealElement;
 
-  x = new RealElement(2);
+  data1 = 2;
 
-  y = new RealElement(3);
+  data2 = 3;
 
-  describe('AlgebraMatrix', function() {
+  x = new RealElement(data1);
+
+  y = new RealElement(data2);
+
+  Element = RealElement;
+
+  elements = [x, y, y, x];
+
+  order = 2;
+
+  matrix = new AlgebraInvertibleMatrix(Element, order, elements);
+
+  describe('AlgebraInvertibleMatrix', function() {
     describe('Inheritance', function() {
-      return it('is an AlgebraInvertibleMatrix', function() {
-        var Element, elements, matrix, order;
-        Element = RealElement;
-        elements = [x, y, y, x];
-        order = 2;
-        matrix = new AlgebraInvertibleMatrix(Element, order, elements);
-        return matrix.should.be.instanceOf(AlgebraInvertibleMatrix);
+      return it('is an AlgebraMatrix', function() {
+        return matrix.should.be.instanceOf(AlgebraMatrix);
       });
     });
     describe('Constructor', function() {
@@ -29,7 +36,11 @@
       return it('has signature (Element, order, elements)');
     });
     describe('Attributes', function() {
-      describe('#order', function() {});
+      describe('#order', function() {
+        return it('returns the order of the matrix', function() {
+          return matrix.order.should.eql(order);
+        });
+      });
       return describe('#determinant', function() {
         return it('computes the determinant');
       });

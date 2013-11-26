@@ -36,13 +36,18 @@
     });
     return describe('Methods', function() {
       describe('#conjugation()', function() {
-        it('implements conjugation', function() {
+        it('applies conjugation', function() {
           z.data = [2, 1];
           z.conjugation();
           return z.data.should.eql([2, -1]);
         });
         return it('can be chained', function() {
           return z.conjugation().should.be.instanceOf(ComplexElement);
+        });
+      });
+      describe('#conj()', function() {
+        return it('is an alias of #conjugation()', function() {
+          return complex.conj.should.eql(complex.conjugation);
         });
       });
       describe('#addition()', function() {

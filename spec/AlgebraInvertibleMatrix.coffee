@@ -18,6 +18,8 @@ order = 2
 
 matrix = new AlgebraInvertibleMatrix(Element, order, elements)
 
+# TODO identity = new AlgebraInvertibleMatrix(Element, order)
+# prima lo devo fare nei tensori, che di default fa il tensore di ricci
 
 describe 'AlgebraInvertibleMatrix', ->
   describe 'Inheritance', ->
@@ -35,12 +37,12 @@ describe 'AlgebraInvertibleMatrix', ->
         matrix.order.should.eql order
 
     describe '#determinant', ->
-      it 'computes the determinant' #, ->
-        # det = data1 * data1 - data2 * data2
+      it 'computes the determinant', ->
+        det = data1 * data1 - data2 * data2
 
-        # matrix.determinant.should.eql det
+        matrix.determinant.data.should.eql det
 
   describe 'Methods', ->
     describe '#inverse()', ->
-      it 'returns the inverse of the matrix'
+      it 'returns the inverse matrix'
 

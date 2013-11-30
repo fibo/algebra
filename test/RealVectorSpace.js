@@ -21,7 +21,9 @@
         return space.should.be.instanceOf(AlgebraVectorSpace);
       });
     });
-    describe('Constructor', function() {});
+    describe('Constructor', function() {
+      return it('has signature (dimension)');
+    });
     describe('Attributes', function() {
       return describe('#dimension', function() {
         return it('is a number', function() {

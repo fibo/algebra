@@ -16,6 +16,7 @@ describe 'RealVectorSpace', ->
       space.should.be.instanceOf AlgebraVectorSpace
 
   describe 'Constructor', ->
+    it 'has signature (dimension)'
 
   describe 'Attributes', ->
     describe '#dimension', ->

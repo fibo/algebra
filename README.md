@@ -172,3 +172,7 @@ Generate one wiki page from tests
 
     node_modules/.bin/mocha -R markdown test/Element.js > wiki/Element-class.md
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fibo/algebra/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

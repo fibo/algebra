@@ -1,28 +1,49 @@
-var AlgebraTensor, RealElement, RealTensor, algebra, one, zero;
+(function() {
+  var AlgebraTensor, RealElement, RealField, RealTensor, algebra, elements, indices, one, tensor, zero;
 
-algebra = require('../index');
+  algebra = require('../index');
 
-AlgebraTensor = algebra.AlgebraTensor;
+  AlgebraTensor = algebra.AlgebraTensor;
 
-RealElement = algebra.RealElement;
+  RealField = algebra.RealField;
 
-RealTensor = algebra.RealTensor;
+  RealElement = algebra.RealElement;
 
-zero = new RealElement(0);
+  RealTensor = algebra.RealTensor;
 
-one = new RealElement(1);
+  zero = new RealElement(0);
 
-describe('RealTensor', function() {
-  describe('Inheritance', function() {
-    return it('is an AlgebraTensor', function() {
-      var elements, indices, tensor;
-      indices = [1, 2];
-      elements = [zero, one];
-      tensor = new RealTensor(indices, elements);
-      return tensor.should.be.instanceOf(AlgebraTensor);
+  one = new RealElement(1);
+
+  indices = [1, 2];
+
+  elements = [zero, one];
+
+  tensor = new RealTensor(indices, elements);
+
+  describe('RealTensor', function() {
+    describe('Inheritance', function() {
+      return it('is an AlgebraTensor', function() {
+        return tensor.should.be.instanceOf(AlgebraTensor);
+      });
+    });
+    describe('Constructor', function() {
+      it('has signature (indices, elements)', function() {
+        tensor = new RealTensor(indices, elements);
+        return tensor.should.be.instanceOf(RealTensor);
+      });
+      return it('has signature (indices)', function() {
+        tensor = new RealTensor(indices);
+        return tensor.should.be.instanceOf(RealTensor);
+      });
+    });
+    return describe('Attributes', function() {
+      return describe('#field', function() {
+        return it('is the real field', function() {
+          return tensor.field.should.be.instanceOf(RealField);
+        });
+      });
     });
   });
-  describe('Constructor', function() {});
-  describe('Attributes', function() {});
-  return describe('Methods', function() {});
-});
+
+}).call(this);

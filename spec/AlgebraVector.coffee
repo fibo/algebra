@@ -1,6 +1,7 @@
 
 algebra = require '../index'
 
+AlgebraTensor = algebra.AlgebraTensor
 AlgebraVector = algebra.AlgebraVector
 RealElement   = algebra.RealElement
 RealField     = algebra.RealField
@@ -11,6 +12,15 @@ zero     = new RealElement(0)
 minusOne = new RealElement(-1)
 
 describe 'AlgebraVector', ->
+  describe 'Inheritance', ->
+    it 'is an AlgebraTensor', ->
+      Element = RealElement
+      elements = [one, two]
+
+      vector = new AlgebraVector(Element, elements)
+
+      vector.should.be.instanceOf AlgebraTensor
+
   describe 'Constructor', ->
     it 'has signature (field, elements)', ->
       Element = RealElement

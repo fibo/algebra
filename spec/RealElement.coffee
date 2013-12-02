@@ -17,14 +17,20 @@ describe 'RealElement', ->
       element.should.be.instanceOf AlgebraElement
 
   describe 'Constructor', ->
-    it 'data should default to one', ->
-      element.data.should.eql real.one
-
     it 'has signature (number)', ->
       x.data.should.eql 2
       y.data.should.eql -10
 
+    it '*number* defaults to 1', ->
+      element.data.should.eql 1
+
+    it 'requires *number* is a number', ->
+      (() ->
+         element = new RealElement('not a number')
+      ).should.throwError()
+
   describe 'Attributes', ->
+    it 'has no attribute', ->
 
   describe 'Methods', ->
     describe '#addition()', ->

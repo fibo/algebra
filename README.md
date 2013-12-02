@@ -5,7 +5,7 @@ Vectors, Matrices, Tensors for Node.js
 
 [![Build Status](https://travis-ci.org/fibo/algebra.png?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![NPM version](https://badge.fury.io/js/algebra.png)](http://badge.fury.io/js/algebra)
 
-![on-quaternions-and-octonions!](https://raw.github.com/fibo/algebra/master/images/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](https://raw.github.com/fibo/algebra/master/images/Cover-Algebra.png)
+![on-quaternions-and-octonions!](http://www.g14n.info/algebra/img/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](http://www.g14n.info/algebra/img/Cover-Algebra.png)
  
 # Installation
 
@@ -17,12 +17,16 @@ I'm implementing matrices and vectors on few algebra fields
 (Reals, Complexes etc.) following Micheal Artin's "Algebra",
 which was my book at [Universita' Degli Studi di Genova](http://www.dima.unige.it).
 
-My goal is to provide users with the feature of creating their own algebra field and building vector spaces and matrices on it.
+My goal is to provide users with the feature of creating their own algebra field and building vector spaces, matrices and tensors on it.
 
 Suppose for example the set of strings with the concatenation operator,
 it could be extended to a group and maybe to a field and build "matrices of strings" or probably in the future ... "strings of matrices" (I had an intuition about a composition law for UTF-8 chars).
 
-# Quick start
+# Documentation
+
+See [online documentation] (http://www.g14n.info/algebra/): it will be complete on version 0.2, when *algebra* will go **beta**.
+
+## Quick start
 
 This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
@@ -30,7 +34,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
     var algebra = require('algebra');
 
-    var Complex = algebra.Complex.Element;
+    var Complex = algebra.ComplexElement;
 
     // Create two complex numbers
     // z1 = 1 + 2i
@@ -53,7 +57,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     var algebra = require('algebra');
 
     // Rn is a class representing a real vector space of dimension = n
-    var Rn = algebra.Real.VectorSpace;
+    var Rn = algebra.RealVectorSpace;
 
     // Create a real vector space with dimension = 2, a.k.a. the cartesian plane
     var R2 = new Rn(2);
@@ -74,7 +78,7 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
     var algebra = require('algebra');
 
     // GLnR is the Real General Linear Group of invertible matrices of order n
-    var GLnR = algebra.Real.GeneralLinearGroup;
+    var GLnR = algebra.RealGeneralLinearGroup;
 
     // Create the group of 2x2 invertible matrices
     var GL2R = new GLnR(2);
@@ -99,11 +103,6 @@ This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
     // Check out m1 determinant, should be 2 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
     console.log(m1.determinant.data); // 2
-
-
-# Documentation
-
-See [examples] (https://fibo.github.io/algebra).
 
 # Support
 

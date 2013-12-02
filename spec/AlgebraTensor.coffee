@@ -59,27 +59,27 @@ describe 'AlgebraTensor', ->
          tensor = new AlgebraTensor('not an AlgebraElement class')
       ).should.throwError()
 
-    it 'coerces data to elements' # , ->
-      # field = real
-      # indices = [3]
-      # data = [2, 4, 8]
-      # elements = (new RealElement(num) for num in data)
-      # tensor = new AlgebraTensor(field, indices, data)
+    it 'coerces data to elements', ->
+      Element = RealElement
+      indices = [3]
+      data = [2, 4, 8]
 
-      # tensor.should.be.instanceOf AlgebraTensor
+      elements = (new RealElement(num) for num in data)
 
-      # tensor.elements.should.eql elements
+      tensor = new AlgebraTensor(Element, indices, data)
 
-    it 'requires #elements belongs to #Element field' # , ->
-      # x = new RealElement(2)
-      # y = 'foo'
-      # Element = RealElement
-      # indices = [2]
-      # elements = [x, y]
+      tensor.should.be.instanceOf AlgebraTensor
 
-      # (() ->
-      #    tensor = new AlgebraTensor(Element, indices, elements)
-      # ).should.throwError()
+      tensor.elements.should.eql elements
+
+    it 'requires #elements belongs to #Element field', ->
+      Element = RealElement
+      indices = [2]
+      elements = [x, 'not a real element']
+
+      (() ->
+         tensor = new AlgebraTensor(Element, indices, elements)
+      ).should.throwError()
 
   describe 'Attributes', ->
     describe '#indices', ->
@@ -98,7 +98,17 @@ describe 'AlgebraTensor', ->
         tensor.data.should.eql data
 
     describe '#field', ->
-      it 'returns tensor field'
+      it 'returns tensor field', ->
+        Element = RealElement
+        indices = [1]
+        elements = [x]
+
+        tensor = new AlgebraTensor(Element, indices, elements)
+
+        # TODO vorrei fare così, cioè avere field come attributo statico di Element
+        # tensor.field.should.be.eql Element.field
+        # soprattutto avere field come singleton, giusto?
+        tensor.field.should.be.eql x.field
 
     describe '#elements', ->
       it 'returns tensor elements', ->

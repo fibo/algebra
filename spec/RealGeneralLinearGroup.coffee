@@ -1,15 +1,17 @@
 
 algebra = require '../index'
 
-AlgebraField           = algebra.AlgebraField
-GeneralLinearGroup     = algebra.GeneralLinearGroup
-RealGeneralLinearGroup = algebra.RealGeneralLinearGroup
+AlgebraField            = algebra.AlgebraField
+GeneralLinearGroup      = algebra.GeneralLinearGroup
+RealGeneralLinearGroup  = algebra.RealGeneralLinearGroup
+AlgebraInvertibleMatrix = algebra.AlgebraInvertibleMatrix
+
+degree = 4
+gl = new RealGeneralLinearGroup(degree)
 
 describe 'RealGeneralLinearGroup', ->
   describe 'Inheritance', ->
     it 'is a GeneralLinearGroup', ->
-      degree = 2
-      gl = new RealGeneralLinearGroup(degree)
 
       gl.should.be.instanceOf GeneralLinearGroup
 
@@ -21,9 +23,6 @@ describe 'RealGeneralLinearGroup', ->
       gl.should.be.instanceOf RealGeneralLinearGroup
 
   describe 'Attributes', ->
-    degree = 4
-    gl = new RealGeneralLinearGroup(degree)
-
     describe '#dimension', ->
       it 'is a number', ->
         gl.dimension.should.be.a.number
@@ -34,8 +33,9 @@ describe 'RealGeneralLinearGroup', ->
 
   describe 'Methods', ->
     describe '#Matrix()', ->
-      it 'is a constructor' # , ->
-        # matrix = new space.Matrix()
+      it 'is a constructor that returns an invertible matrix' , ->
+        matrix = new gl.Matrix()
+        matrix.should.be.instanceOf AlgebraInvertibleMatrix
 
     describe '#containsMatrix()', ->
       it 'checks that the given matrix belongs to this matrix space'

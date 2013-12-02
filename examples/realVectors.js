@@ -50,7 +50,7 @@ module.exports = function () {
 
   // ## data
   // returns vector elements data
-  v2.data.should.be.eql([1, 1])
+  v2.data.should.be.eql([1, 1]);
 
   // # Methods
 

@@ -3,12 +3,15 @@ algebra = require '../index'
 
 AlgebraElement = algebra.AlgebraElement
 AlgebraField   = algebra.AlgebraField
+RealElement    = algebra.RealElement
 RealField      = algebra.RealField
+ComplexField   = algebra.ComplexField
 
 field   = new AlgebraField()
 element = new AlgebraElement(field)
 
-real = new RealField()
+real    = new RealField()
+complex = new ComplexField()
 
 describe 'AlgebraElement', ->
   describe 'Constructor', ->
@@ -25,13 +28,18 @@ describe 'AlgebraElement', ->
 
       element.should.be.instanceOf AlgebraElement
 
-    it 'checks #field is an AlgebraField)', ->
+    it 'checks *field* is an AlgebraField', ->
       ( () ->
           element = new AlgebraElement('not a field')
       ).should.throwError()
 
-    it 'defaults #data to field.one)', ->
+    it 'defaults *data* to field.one', ->
       field = real
+      element = new AlgebraElement(field)
+
+      element.data.should.eql field.one
+
+      field = complex 
       element = new AlgebraElement(field)
 
       element.data.should.eql field.one
@@ -40,7 +48,7 @@ describe 'AlgebraElement', ->
     describe '#data', ->
       it 'returns element data', ->
         field = real
-        data = 5
+        data = 6
         element = new AlgebraElement(field, data)
 
         element.data.should.eql data
@@ -54,6 +62,15 @@ describe 'AlgebraElement', ->
         element.field.should.eql field
 
   describe 'Methods', ->
+    describe '#clone()', ->
+      it 'returns an element with the same data', ->
+        data = 10
+        element1 = new RealElement(data)
+        element2 = element1.clone()
+
+        element2.should.be.instanceOf RealElement
+        element1.data.should.be.eql element2.data
+
     describe '#addition()', ->
       it 'is abstract', ->
         element.addition.should.throwError()

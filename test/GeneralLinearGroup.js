@@ -1,9 +1,7 @@
 (function() {
-  var AlgebraInvertibleMatrix, AlgebraMatrixSpace, ComplexElement, GeneralLinearGroup, RealElement, algebra;
+  var AlgebraInvertibleMatrix, ComplexElement, GeneralLinearGroup, RealElement, algebra;
 
   algebra = require('../index');
-
-  AlgebraMatrixSpace = algebra.AlgebraMatrixSpace;
 
   AlgebraInvertibleMatrix = algebra.AlgebraInvertibleMatrix;
 
@@ -14,50 +12,35 @@
   RealElement = algebra.RealElement;
 
   describe('GeneralLinearGroup', function() {
-    describe('Inheritance', function() {
-      return it('is an AlgebraMatrixSpace', function() {
-        var Element, degree, gl;
-        Element = RealElement;
-        degree = 2;
-        gl = new GeneralLinearGroup(Element, degree);
-        return gl.should.be.instanceOf(AlgebraMatrixSpace);
-      });
-    });
     describe('Constructor', function() {
-      return it('has signature (field, degree)', function() {
-        var Element, degree, gl;
+      return it('has signature (Element, degree)', function() {
+        var Element, Gl, degree;
         Element = RealElement;
         degree = 2;
-        gl = new GeneralLinearGroup(Element, degree);
-        return gl.should.be.instanceOf(AlgebraMatrixSpace);
+        Gl = new GeneralLinearGroup(Element, degree);
+        return Gl.should.be.instanceOf(GeneralLinearGroup);
       });
     });
     describe('Attributes', function() {
-      var Element, degree, gl;
+      var Element, Gl, degree;
       Element = ComplexElement;
       degree = 3;
-      gl = new AlgebraMatrixSpace(Element, degree);
+      Gl = new GeneralLinearGroup(Element, degree);
       return describe('#dimension', function() {
-        it('is a number', function() {
-          return gl.dimension.should.be.a.number;
-        });
-        return it('is the square of degree', function() {
-          var dimension;
-          dimension = degree * degree;
-          return gl.dimension.should.be.eql(dimension);
-        });
+        it('is a number');
+        return it('is the square of degree');
       });
     });
     return describe('Methods', function() {
-      var Element, degree, gl;
+      var Element, Gl, degree;
       Element = RealElement;
       degree = 2;
-      gl = new AlgebraMatrixSpace(Element, degree);
+      Gl = new GeneralLinearGroup(Element, degree);
       describe('#Matrix()', function() {
         return it('is a constructor');
       });
       return describe('#containsMatrix()', function() {
-        return it('checks that the given matrix belongs to this matrix gl');
+        return it('checks that the given matrix belongs to this matrix Gl');
       });
     });
   });

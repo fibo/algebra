@@ -30,14 +30,8 @@
     });
     describe('Attributes', function() {
       return describe('#dimension', function() {
-        it('is a number', function() {
-          return gl.dimension.should.be.a.number;
-        });
-        return it('is the square of degree', function() {
-          var dimension;
-          dimension = degree * degree;
-          return gl.dimension.should.be.eql(dimension);
-        });
+        it('is a number');
+        return it('is the square of degree');
       });
     });
     return describe('Methods', function() {

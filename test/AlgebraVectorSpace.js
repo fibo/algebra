@@ -12,9 +12,6 @@
   AlgebraTensorSpace = algebra.AlgebraTensorSpace;
 
   describe('AlgebraVectorSpace', function() {
-    describe('Inheritance', function() {
-      return it('is an AlgebraTensorSpace');
-    });
     describe('Constructor', function() {
       it('has signature (Vector)', function() {});
       return it('has signature (Element, dimension)', function() {});

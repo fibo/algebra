@@ -24,12 +24,12 @@ describe 'RealGeneralLinearGroup', ->
 
   describe 'Attributes', ->
     describe '#dimension', ->
-      it 'is a number', ->
-        gl.dimension.should.be.a.number
+      it 'is a number' #, ->
+        #gl.dimension.should.be.a.number
 
-      it 'is the square of degree', ->
-        dimension = degree * degree
-        gl.dimension.should.be.eql dimension
+      it 'is the square of degree' #, ->
+        #dimension = degree * degree
+        #gl.dimension.should.be.eql dimension
 
   describe 'Methods', ->
     describe '#Matrix()', ->

@@ -39,18 +39,8 @@
               </a>
             
               
-              <a class="source" href="AlgebraMatrixSpace.html">
-                AlgebraMatrixSpace.js
-              </a>
-            
-              
               <a class="source" href="AlgebraTensor.html">
                 AlgebraTensor.js
-              </a>
-            
-              
-              <a class="source" href="AlgebraTensorSpace.html">
-                AlgebraTensorSpace.js
               </a>
             
               
@@ -160,12 +150,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraMatrixSpace      = require(<span class="string">'./AlgebraMatrixSpace'</span>)
 <span class="keyword">var</span> AlgebraInvertibleMatrix = require(<span class="string">'./AlgebraInvertibleMatrix'</span>)
   , inherits                = require(<span class="string">'inherits'</span>)
 
 <span class="function"><span class="keyword">function</span> <span class="title">GeneralLinearGroup</span><span class="params">(Element, degree)</span> {</span>
-  AlgebraMatrixSpace.call(<span class="keyword">this</span>, Element, [degree, degree])
 
   <span class="function"><span class="keyword">function</span> <span class="title">Matrix</span> <span class="params">()</span> {</span>
     <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
@@ -186,8 +174,6 @@
 
   <span class="keyword">this</span>.Matrix = Matrix
 }
-
-inherits(GeneralLinearGroup, AlgebraMatrixSpace)
 
 module.exports = GeneralLinearGroup</pre></div></div>
             

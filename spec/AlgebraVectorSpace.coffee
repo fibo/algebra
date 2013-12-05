@@ -7,9 +7,6 @@ AlgebraVectorSpace = algebra.AlgebraVectorSpace
 AlgebraTensorSpace = algebra.AlgebraTensorSpace
 
 describe 'AlgebraVectorSpace', ->
-  describe 'Inheritance', ->
-    it 'is an AlgebraTensorSpace'#, ->
-
   describe 'Constructor', ->
     it 'has signature (Vector)', ->
 

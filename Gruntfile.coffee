@@ -1,3 +1,6 @@
+
+livereloadPort = 35729
+
 module.exports = (grunt) ->
   grunt.initConfig
     watch:
@@ -260,13 +263,27 @@ module.exports = (grunt) ->
           dest: 'docs'
         ]
 
+    connect:
+      server:
+        options:
+          port: 3000
+          livereload: livereloadPort
+          base: 'docs'
+
+    open:
+      index:
+        path: 'http://localhost:3000'
+        app: 'chrome'
+
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-docco-multi'
   grunt.loadNpmTasks 'grunt-markdown'
   grunt.loadNpmTasks 'grunt-mocha-cli'
+  grunt.loadNpmTasks 'grunt-open'
 
   grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli', 'docs']
-  grunt.registerTask 'docs', ['docco', 'markdown']
+  grunt.registerTask 'docs', ['docco', 'markdown', 'connect', 'open', 'watch']
 

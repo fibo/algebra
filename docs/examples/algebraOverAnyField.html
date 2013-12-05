@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>index.js</title>
+  <title>algebraOverAnyField.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -51,7 +51,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>index.js</h1>
+                  <h1>algebraOverAnyField.js</h1>
               </div>
           </li>
         
@@ -66,6 +66,10 @@
               
             </div>
             
+            <div class="content"><div class='highlight'><pre>
+
+module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div></div>
+            
         </li>
         
         
@@ -75,11 +79,20 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>basics on real numbers</p>
+              <p>Let&#39;s create an algebra over the boolean field.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.realNumbers = require(<span class="string">'./realNumbers.js'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+    <span class="keyword">var</span> algebra  = require(<span class="string">'algebra'</span>)
+      , inherits = require(<span class="string">'inherits'</span>);
+
+    <span class="keyword">var</span> AlgebraField = algebra.AlgebraField;
+
+    <span class="function"><span class="keyword">function</span> <span class="title">BooleanField</span> <span class="params">()</span> {</span>
+      <span class="keyword">var</span> zero = <span class="literal">false</span>;
+
+      <span class="keyword">var</span> one = <span class="literal">true</span>;</pre></div></div>
             
         </li>
         
@@ -90,11 +103,17 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>basics on complex numbers</p>
+              <p>function validate (data) {
+ return typeof data === &#39;boolean&#39;
+}</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.complexNumbers = require(<span class="string">'./complexNumbers.js'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+      AlgebraField.call( <span class="keyword">this</span>, zero, one);
+    }
+
+    inherits(BooleanField, AlgebraField);</pre></div></div>
             
         </li>
         
@@ -105,13 +124,40 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>basics on real vectors</p>
+              <p>TODO devo definire le operazioni</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.realVectors = require(<span class="string">'./realVectors.js'</span>);
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>TODO fai anche vettori, tensori, ecc sui booleani, tanto non devo aggiungere altre funzioni
+in raltà dovrei fare anche i complessi sui booleani</p>
 
-exports.algebraOverAnyField = require(<span class="string">'./algebraOverAnyField.js'</span>);</pre></div></div>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Create an instance of boolean field</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> bool = <span class="keyword">new</span> BooleanField();
+
+};</pre></div></div>
             
         </li>
         

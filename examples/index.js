@@ -8,3 +8,5 @@ exports.complexNumbers = require('./complexNumbers.js');
 // basics on real vectors
 exports.realVectors = require('./realVectors.js');
 
+exports.algebraOverAnyField = require('./algebraOverAnyField.js');
+

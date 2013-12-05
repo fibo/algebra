@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="algebraOverAnyField.html">
+                algebraOverAnyField.js
+              </a>
+            
+              
               <a class="source" href="complexNumbers.html">
                 complexNumbers.js
               </a>
@@ -108,13 +113,15 @@ module.exports = <span class="function"><span class="keyword">function</span> <s
 <p>A real number is just a common number</p>
 <pre><code>x1 = 4
 x2 = -1
-x3 = 0.7 </code></pre>
+x3 = 0.7
+x4 = 2</code></pre>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> x1 = <span class="keyword">new</span> RealElement(<span class="number">4</span>);
   <span class="keyword">var</span> x2 = <span class="keyword">new</span> RealElement(-<span class="number">1</span>);
-  <span class="keyword">var</span> x3 = <span class="keyword">new</span> RealElement(<span class="number">0.7</span>);</pre></div></div>
+  <span class="keyword">var</span> x3 = <span class="keyword">new</span> RealElement(<span class="number">0.7</span>);
+  <span class="keyword">var</span> x4 = <span class="keyword">new</span> RealElement(<span class="number">2</span>);</pre></div></div>
             
         </li>
         
@@ -125,7 +132,7 @@ x3 = 0.7 </code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>operators</p>
+              <p>arithmetic operators are implemented</p>
 
             </div>
             
@@ -175,11 +182,59 @@ x3 = 0.7 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>  x3.mul(<span class="number">10</span>);
-  x3.data.should.be.eql(<span class="number">7</span>);
+  x3.data.should.be.eql(<span class="number">7</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>x4 / 4  = 2 / 4 = 0.5</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  x4.div(<span class="number">4</span>);
+  x4.data.should.be.eql(<span class="number">0.5</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>operators can be chained
+((( x1 + 2 ) <em> 3 ) - 6) / 4 =
+((( 4 + 2 ) </em> 3 ) - 6) / 4 =
+((6 * 3) - 6) / 4 =
+(18 - 6) / 4 =
+12 / 4 = 3</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  x1.add(<span class="number">2</span>).mul(<span class="number">3</span>).sub(<span class="number">6</span>).div(<span class="number">4</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>x1.data.should.be(3);</p>
 
-};</pre></div></div>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>};</pre></div></div>
             
         </li>
         

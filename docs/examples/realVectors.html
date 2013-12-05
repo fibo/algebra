@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="algebraOverAnyField.html">
+                algebraOverAnyField.js
+              </a>
+            
+              
               <a class="source" href="complexNumbers.html">
                 complexNumbers.js
               </a>
@@ -108,14 +113,20 @@ module.exports = <span class="function"><span class="keyword">function</span> <s
               </div>
               <h1 id="constructor">Constructor</h1>
 <p>A real vector is an array of numbers. You can pass to the constructor
-a reference to an array of elements, or an element in every argument.</p>
+a reference to an array of elements, or an element in every argument.
+Raw numbers are coerced to RealElement.</p>
 <p>Create two dimensional vectors v1 and v2.
-    v1 = [2, 2]
+    v1 = [2, 1]
     v2 = [1, 1]</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> one = <span class="keyword">new</span> RealElement(<span class="number">1</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> one = <span class="keyword">new</span> RealElement(<span class="number">1</span>);
+  <span class="keyword">var</span> two = <span class="keyword">new</span> RealElement(<span class="number">2</span>);
+  <span class="keyword">var</span> v1 = <span class="keyword">new</span> RealVector([two, <span class="number">1</span>]);
+  <span class="keyword">var</span> v2 = <span class="keyword">new</span> RealVector(<span class="number">2</span>, one);
+
+  v1.data.should.eql(v2.data);</pre></div></div>
             
         </li>
         
@@ -126,38 +137,7 @@ a reference to an array of elements, or an element in every argument.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>var two = new RealElement(2);
-var v1 = new RealVector([two, two]);</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> v2 = <span class="keyword">new</span> RealVector(one, one);
-  <span class="keyword">var</span> v1 = <span class="keyword">new</span> RealVector([<span class="number">2</span>, <span class="number">2</span>]);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>var v2 = new RealVector(1, 1);</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>Numbers are coerced to RealElement.</p>
-<p>Create three dimensional vectors v3 and v4.
+              <p>Create three dimensional vectors v3 and v4.
     v3 = [0, 1, 2]
     v4 = [-1, -1, -1]</p>
 
@@ -170,11 +150,11 @@ var v1 = new RealVector([two, two]);</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h1 id="attributes">Attributes</h1>
 
@@ -183,11 +163,11 @@ var v1 = new RealVector([two, two]);</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <h2 id="dimension">dimension</h2>
 <p>strictly speaking returns the number of elements of the vector.</p>
@@ -200,11 +180,11 @@ var v1 = new RealVector([two, two]);</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <h2 id="elements">elements</h2>
 <p>returns the elements of the vector, that are instances of RealElement class.</p>
@@ -220,18 +200,48 @@ var v1 = new RealVector([two, two]);</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <h2 id="data">data</h2>
 <p>returns vector elements data</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  v2.data.should.be.eql([<span class="number">1</span>, <span class="number">1</span>]);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  v2.data.should.be.eql([<span class="number">2</span>, <span class="number">1</span>]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h1 id="methods">Methods</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <h2 id="addition">addition</h2>
+<pre><code>[2, 1] + [2, 1] = [4, 2]</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  v1.addition(v2);
+  v1.data.should.eql([<span class="number">4</span>, <span class="number">2</span>]);</pre></div></div>
             
         </li>
         
@@ -242,7 +252,7 @@ var v1 = new RealVector([two, two]);</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <h1 id="methods">Methods</h1>
+              <h2 id="subtraction">subtraction</h2>
 
             </div>
             
@@ -254,36 +264,6 @@ var v1 = new RealVector([two, two]);</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
-              </div>
-              <h2 id="addition">addition</h2>
-<pre><code>[2, 2] + [1, 1] = [3, 3]</code></pre>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  v1.addition(v2);
-  v1.data.should.eql([<span class="number">3</span>, <span class="number">3</span>]);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-14">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
-              </div>
-              <h2 id="subtraction">subtraction</h2>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-15">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <pre><code>[0, 1, 2] - [-1, -1, -1] = [1, 2, 3]</code></pre>
 

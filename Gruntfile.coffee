@@ -24,15 +24,9 @@ module.exports = (grunt) ->
       testAlgebraInvertibleMatrix:
         files: ['test/AlgebraInvertibleMatrix.js', 'lib/AlgebraInvertibleMatrix.js']
         tasks: 'mochacli:AlgebraInvertibleMatrix'
-      testAlgebraMatrixSpace:
-        files: ['test/AlgebraMatrixSpace.js', 'lib/AlgebraMatrixSpace.js']
-        tasks: 'mochacli:AlgebraMatrixSpace'
       testAlgebraTensor:
         files: ['test/AlgebraTensor.js', 'lib/AlgebraTensor.js']
         tasks: 'mochacli:AlgebraTensor'
-      testAlgebraTensorSpace:
-        files: ['test/AlgebraTensorSpace.js', 'lib/AlgebraTensorSpace.js']
-        tasks: 'mochacli:AlgebraTensorSpace'
       testAlgebraVector:
         files: ['test/AlgebraVector.js', 'lib/AlgebraVector.js']
         tasks: 'mochacli:AlgebraVector'
@@ -85,15 +79,9 @@ module.exports = (grunt) ->
       specAlgebraInvertibleMatrix:
         files: ['spec/AlgebraInvertibleMatrix.coffee']
         tasks: 'coffee:AlgebraInvertibleMatrix'
-      specAlgebraMatrixSpace:
-        files: ['spec/AlgebraMatrixSpace.coffee']
-        tasks: 'coffee:AlgebraMatrixSpace'
       specAlgebraTensor:
         files: ['spec/AlgebraTensor.coffee']
         tasks: 'coffee:AlgebraTensor'
-      specAlgebraTensorSpace:
-        files: ['spec/AlgebraTensorSpace.coffee']
-        tasks: 'coffee:AlgebraTensorSpace'
       specAlgebraVector:
         files: ['spec/AlgebraVector.coffee']
         tasks: 'coffee:AlgebraVector'
@@ -144,15 +132,9 @@ module.exports = (grunt) ->
       AlgebraInvertibleMatrix:
         files:
           'test/AlgebraInvertibleMatrix.js': 'spec/AlgebraInvertibleMatrix.coffee'
-      AlgebraMatrixSpace:
-        files:
-          'test/AlgebraMatrixSpace.js': 'spec/AlgebraMatrixSpace.coffee'
       AlgebraTensor:
         files:
           'test/AlgebraTensor.js': 'spec/AlgebraTensor.coffee'
-      AlgebraTensorSpace:
-        files:
-          'test/AlgebraTensorSpace.js': 'spec/AlgebraTensorSpace.coffee'
       AlgebraVector:
         files:
           'test/AlgebraVector.js': 'spec/AlgebraVector.coffee'
@@ -199,13 +181,11 @@ module.exports = (grunt) ->
         options:
           template: 'docs/docco.jst'
           output: 'docs/examples'
-          css: 'css/docco.css'
       sources:
         src: ['lib/*.js']
         options:
           template: 'docs/docco.jst'
           output: 'docs/sources'
-          css: 'css/docco.css'
 
     jshint:
       options: grunt.file.readJSON('.jshintrc')
@@ -224,26 +204,24 @@ module.exports = (grunt) ->
         bail: true
       all: ['test/*.js']
       examples: ['test/examples.js']
-      AlgebraElement: ['test/AlgebraElement.js']
-      AlgebraField: ['test/AlgebraField.js']
-      AlgebraMatrix: ['test/AlgebraMatrix.js']
+      AlgebraElement:          ['test/AlgebraElement.js']
+      AlgebraField:            ['test/AlgebraField.js']
+      AlgebraMatrix:           ['test/AlgebraMatrix.js']
       AlgebraInvertibleMatrix: ['test/AlgebraInvertibleMatrix.js']
-      AlgebraMatrixSpace: ['test/AlgebraMatrixSpace.js']
-      AlgebraTensor: ['test/AlgebraTensor.js']
-      AlgebraTensorSpace: ['test/AlgebraTensorSpace.js']
-      AlgebraVector: ['test/AlgebraVector.js']
-      AlgebraVectorSpace: ['test/AlgebraVectorSpace.js']
-      ComplexElement: ['test/ComplexElement.js']
-      ComplexField: ['test/ComplexField.js']
-      GeneralLinearGroup: ['test/GeneralLinearGroup.js']
-      QuaternionElement: ['test/QuaternionElement.js']
-      QuaternionField: ['test/QuaternionField.js']
-      RealElement: ['test/RealElement.js']
-      RealField: ['test/RealField.js']
-      RealGeneralLinearGroup: ['test/RealGeneralLinearGroup.js']
-      RealTensor: ['test/RealTensor.js']
-      RealVector: ['test/RealVector.js']
-      RealVectorSpace: ['test/RealVectorSpace.js']
+      AlgebraTensor:           ['test/AlgebraTensor.js']
+      AlgebraVector:           ['test/AlgebraVector.js']
+      AlgebraVectorSpace:      ['test/AlgebraVectorSpace.js']
+      ComplexElement:          ['test/ComplexElement.js']
+      ComplexField:            ['test/ComplexField.js']
+      GeneralLinearGroup:      ['test/GeneralLinearGroup.js']
+      QuaternionElement:       ['test/QuaternionElement.js']
+      QuaternionField:         ['test/QuaternionField.js']
+      RealElement:             ['test/RealElement.js']
+      RealField:               ['test/RealField.js']
+      RealGeneralLinearGroup:  ['test/RealGeneralLinearGroup.js']
+      RealTensor:              ['test/RealTensor.js']
+      RealVector:              ['test/RealVector.js']
+      RealVectorSpace:         ['test/RealVectorSpace.js']
 
     markdown:
       index:

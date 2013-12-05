@@ -22,13 +22,18 @@ My goal is to provide users with the feature of creating their own algebra field
 Suppose for example the set of strings with the concatenation operator,
 it could be extended to a group and maybe to a field and build "matrices of strings" or probably in the future ... "strings of matrices" (I had an intuition about a composition law for UTF-8 chars).
 
-# Documentation
+## Features
 
-See [online documentation] (http://www.g14n.info/algebra/): it will be complete on version 0.2, when *algebra* will go **beta**.
+* Algebra over Real and Complex fields
+* Vectors and vector spaces
+* Invertible Matrices and the General Linear Group
+* Tensors
+* Algebra over custom fields
 
 ## Quick start
 
 This is a 60 seconds tutorial to get your hands dirty with `algebra`.
+See also [online examples] (http://www.g14n.info/algebra/examples).
 
 ## Complex numbers
 

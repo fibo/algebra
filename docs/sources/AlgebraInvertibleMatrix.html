@@ -149,7 +149,11 @@
             <div class="content"><div class='highlight'><pre>
 <span class="keyword">var</span> AlgebraMatrix = require(<span class="string">'./AlgebraMatrix'</span>)
   , inherits      = require(<span class="string">'inherits'</span>)
-  , _             = require(<span class="string">'underscore'</span>)</pre></div></div>
+  , _             = require(<span class="string">'underscore'</span>)
+
+
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraInvertibleMatrix</span> <span class="params">(Element, order, elements)</span> {</span>
+  <span class="keyword">var</span> self = <span class="keyword">this</span></pre></div></div>
             
         </li>
         
@@ -160,18 +164,16 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>TODO questo è anche in AlgebraMatrix
-la figata sarebbe generalizzarlo ai tensori</p>
+              <p>order</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="function"><span class="keyword">function</span> <span class="title">matrixToArrayIndex</span> <span class="params">(i, j, numberOfColumns)</span> {</span>
-  <span class="keyword">return</span> i * numberOfColumns + j
-}
+            <div class="content"><div class='highlight'><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">getOrder</span> <span class="params">()</span> {</span>
+    <span class="keyword">return</span> order
+  }
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraInvertibleMatrix</span> <span class="params">(Element, order, elements)</span> {</span>
-
-  <span class="keyword">var</span> self = <span class="keyword">this</span></pre></div></div>
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'order'</span>, {get: getOrder})</pre></div></div>
             
         </li>
         
@@ -187,15 +189,27 @@ la figata sarebbe generalizzarlo ai tensori</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  AlgebraTensor.call(<span class="keyword">this</span>, Element, dimensionArray, elements)
+  AlgebraMatrix.call(<span class="keyword">this</span>, Element, [order, order], elements)
 
   <span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
-    <span class="keyword">var</span> order = getNumberOfRows()
+    <span class="keyword">return</span> <span class="keyword">this</span>.computeDeterminant(order, Element, self.elements)
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>TODO se il determinante è zero throw new Error()</p>
 
-    <span class="keyword">return</span> computeDeterminant(order, Element, self.elements)
-  }
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
 
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
 }
 
 inherits(AlgebraInvertibleMatrix, AlgebraMatrix)
@@ -207,45 +221,18 @@ inherits(AlgebraInvertibleMatrix, AlgebraMatrix)
         </li>
         
         
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>TODO clono gli elementi</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> _elements = []
-    , element
-
-  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements) {
-    element = <span class="keyword">new</span> Element(elements[i].data)
-
-    _elements.push(element)
-  }</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>TODO caso degenere, aggiusta</p>
+              <p>cloning elements</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
-    <span class="keyword">return</span> _elements[<span class="number">0</span>]
-
-  <span class="keyword">if</span> (order === <span class="number">2</span>) {
-    det.add(_elements[<span class="number">0</span>].mul(_elements[<span class="number">3</span>])).sub(_elements[<span class="number">2</span>].mul(_elements[<span class="number">1</span>]))
-    <span class="keyword">return</span> det
-  }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements)
+    elements[i] = elements[i].clone()</pre></div></div>
             
         </li>
         
@@ -256,35 +243,17 @@ inherits(AlgebraInvertibleMatrix, AlgebraMatrix)
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>TODO per ora scelgo sempre la prima riga.
-TODO classe Collection con metodo countZeros o numberOfZeros()</p>
+              <p>TODO caso degenere, aggiusta</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
+    <span class="keyword">return</span> elements[<span class="number">0</span>]
 
-  <span class="keyword">for</span> (<span class="keyword">var</span> columnIndex = <span class="number">0</span>; columnIndex &lt; order; columnIndex++) {
-    <span class="keyword">var</span> adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, _elements)
-
-    <span class="keyword">var</span> adjointDeterminant = computeDeterminant(order - <span class="number">1</span>, adjointElements);
-
-    element = _elements[matrixToArrayIndex(rowIndex, columnIndex, order)];
-
-    <span class="keyword">if</span> (columnIndex % <span class="number">2</span> === <span class="number">0</span>) {
-      det.add(element)
-    }
-    <span class="keyword">else</span> {
-      det.sub(element)
-    }
-
-    det.mul(adjointDeterminant)
-  }
-
-  <span class="keyword">return</span> det
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">getAdjointElements</span><span class="params">(rowIndex, columnIndex, numRows, numCols, elements)</span> {</span>
-  <span class="keyword">var</span> adjointElements = []</pre></div></div>
+  <span class="keyword">if</span> (order === <span class="number">2</span>) {
+    det.add(elements[<span class="number">0</span>].mul(elements[<span class="number">3</span>])).sub(elements[<span class="number">2</span>].mul(elements[<span class="number">1</span>]))
+    <span class="keyword">return</span> det
+  }</pre></div></div>
             
         </li>
         
@@ -295,6 +264,45 @@ TODO classe Collection con metodo countZeros o numberOfZeros()</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
+              <p>TODO per ora scelgo sempre la prima riga.
+TODO classe Collection con metodo countZeros o numberOfZeros()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> columnIndex = <span class="number">0</span>; columnIndex &lt; order; columnIndex++) {
+    <span class="keyword">var</span> adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, elements)
+
+    <span class="keyword">var</span> adjointDeterminant = <span class="keyword">this</span>.computeDeterminant(order - <span class="number">1</span>, adjointElements);
+
+    element = elements[<span class="keyword">this</span>.computeIndex([rowIndex, columnIndex])];
+
+    <span class="keyword">if</span> (columnIndex % <span class="number">2</span> === <span class="number">0</span>)
+      det.add(element)
+    <span class="keyword">else</span>
+      det.sub(element)
+
+    det.mul(adjointDeterminant)
+  }
+
+  <span class="keyword">return</span> det
+}
+
+AlgebraInvertibleMatrix.prototype.computeDeterminant = computeDeterminant
+
+<span class="function"><span class="keyword">function</span> <span class="title">getAdjointElements</span><span class="params">(rowIndex, columnIndex, numRows, numCols, elements)</span> {</span>
+  <span class="keyword">var</span> adjointElements = []</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
               <p>TODO anche qua dovrei clonare in teoria ?</p>
 
             </div>
@@ -302,7 +310,7 @@ TODO classe Collection con metodo countZeros o numberOfZeros()</p>
             <div class="content"><div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numRows; i++) {
       <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; numCols; j++) {
         <span class="keyword">if</span> (i != rowIndex &amp;&amp; j != columnIndex) {
-          adjointElements.push(elements[matrixToArrayIndex(i, j, numCols)])
+          adjointElements.push(elements[<span class="keyword">this</span>.computeIndex([i, j])])
         }
       }
     }

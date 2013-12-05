@@ -150,14 +150,8 @@
 <span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
   , inherits     = require(<span class="string">'inherits'</span>)
 
-<span class="function"><span class="keyword">function</span> <span class="title">ComplexField</span><span class="params">()</span> {</span>
-  AlgebraField.call(<span class="keyword">this</span>, {
-    zero: [<span class="number">0</span>, <span class="number">0</span>],
-    one: [<span class="number">1</span>, <span class="number">0</span>],
-    constants: {
-      i: [<span class="number">0</span>, <span class="number">1</span>]
-    }
-  })
+<span class="function"><span class="keyword">function</span> <span class="title">ComplexField</span> <span class="params">()</span> {</span>
+  AlgebraField.call(<span class="keyword">this</span>, [<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>])
 }
 
 inherits(ComplexField, AlgebraField)

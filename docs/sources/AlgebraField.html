@@ -151,26 +151,41 @@
   <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'unimplemented abstract operator'</span>)
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">overrideConstantError</span><span class="params">()</span> {</span>
-  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'Cannot override a constant'</span>)
-}
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span><span class="params">(zero, one)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>zero</p>
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span><span class="params">()</span> {</span>
-  <span class="keyword">var</span> arg = arguments[<span class="number">0</span>] || {}
-  <span class="keyword">var</span> self = <span class="keyword">this</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">getZero</span><span class="params">()</span> {</span> <span class="keyword">return</span> zero }
 
-  <span class="function"><span class="keyword">function</span> <span class="title">addConstant</span><span class="params">(name, data)</span> {</span>
-    self.__defineGetter__(name, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-      <span class="keyword">return</span> data
-    })
-    self.__defineSetter__(name, overrideConstantError)
-  }
-  
-  addConstant(<span class="string">'zero'</span>, arg.zero)
-  addConstant(<span class="string">'one'</span>, arg.one)
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'zero'</span>, {get: getZero})</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>one</p>
 
-  <span class="keyword">for</span> (<span class="keyword">var</span> c <span class="keyword">in</span> arg.constants)
-    addConstant(c, arg.constants[c])
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">getOne</span><span class="params">()</span> {</span> <span class="keyword">return</span> one }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'one'</span>, {get: getOne})
 }
 
 AlgebraField.prototype = {

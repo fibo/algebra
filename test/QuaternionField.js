@@ -15,27 +15,23 @@
         return quaternion.should.be["instanceof"](AlgebraField);
       });
     });
-    describe('Constructor', function() {});
+    describe('Constructor', function() {
+      return it('has signature ()', function() {
+        return quaternion.should.be.instanceOf(AlgebraField);
+      });
+    });
     describe('Attributes', function() {
       describe('#one', function() {
         it('should be [1, 0, 0, 0]', function() {
           return quaternion.one.should.eql([1, 0, 0, 0]);
         });
-        return it('cannot be overridden', function() {
-          return (function() {
-            return quaternion.one = [1, 1, 1, 1];
-          }).should.throwError();
-        });
+        return it('cannot be overridden');
       });
       return describe('#zero', function() {
         it('should be [0, 0, 0, 0]', function() {
           return quaternion.zero.should.eql([0, 0, 0, 0]);
         });
-        return it('cannot be overridden', function() {
-          return (function() {
-            return quaternion.zero = [1, 1, 1, 1];
-          }).should.throwError();
-        });
+        return it('cannot be overridden');
       });
     });
     describe('Methods', function() {

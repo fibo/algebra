@@ -231,142 +231,9 @@
             
             <div class="content"><div class='highlight'><pre>
   AlgebraTensor.call(<span class="keyword">this</span>, Element, dimensionArray, elements)
-
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
-    <span class="keyword">var</span> order = getNumberOfRows()
-
-    <span class="keyword">return</span> computeDeterminant(order, Element, self.elements)
-  }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
 }
 
-inherits(AlgebraMatrix, AlgebraTensor)</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>TODO deve andare in AlgebraInvertibleMatrix</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-<span class="function"><span class="keyword">function</span> <span class="title">computeDeterminant</span> <span class="params">(order, Element, elements)</span> {</span>
-
-  <span class="keyword">var</span> det = <span class="keyword">new</span> Element(<span class="number">0</span>)</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>TODO clono gli elementi</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> _elements = []
-    , element
-
-  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements) {
-    element = <span class="keyword">new</span> Element(elements[i].data)
-
-    _elements.push(element)
-  }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>TODO caso degenere, aggiusta</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
-    <span class="keyword">return</span> _elements[<span class="number">0</span>]
-
-  <span class="keyword">if</span> (order === <span class="number">2</span>) {
-    det.add(_elements[<span class="number">0</span>].mul(_elements[<span class="number">3</span>])).sub(_elements[<span class="number">2</span>].mul(_elements[<span class="number">1</span>]))
-    <span class="keyword">return</span> det
-  }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p>TODO per ora scelgo sempre la prima riga.
-TODO classe Collection con metodo countZeros o numberOfZeros()</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
-
-  <span class="keyword">for</span> (<span class="keyword">var</span> columnIndex = <span class="number">0</span>; columnIndex &lt; order; columnIndex++) {
-    <span class="keyword">var</span> adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, _elements)
-
-    <span class="keyword">var</span> adjointDeterminant = computeDeterminant(order - <span class="number">1</span>, adjointElements);
-
-    element = _elements[matrixToArrayIndex(rowIndex, columnIndex, order)];
-
-    <span class="keyword">if</span> (columnIndex % <span class="number">2</span> === <span class="number">0</span>) {
-      det.add(element)
-    }
-    <span class="keyword">else</span> {
-      det.sub(element)
-    }
-
-    det.mul(adjointDeterminant)
-  }
-
-  <span class="keyword">return</span> det
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">getAdjointElements</span><span class="params">(rowIndex, columnIndex, numRows, numCols, elements)</span> {</span>
-  <span class="keyword">var</span> adjointElements = []</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>TODO anche qua dovrei clonare in teoria ?</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numRows; i++) {
-      <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; numCols; j++) {
-        <span class="keyword">if</span> (i != rowIndex &amp;&amp; j != columnIndex) {
-          adjointElements.push(elements[matrixToArrayIndex(i, j, numCols)])
-        }
-      }
-    }
-
-  <span class="keyword">return</span> adjointElements
-}
+inherits(AlgebraMatrix, AlgebraTensor)
 
 <span class="function"><span class="keyword">function</span> <span class="title">rowByColumnMultiplication</span> <span class="params">(leftMatrix, rightMatrix)</span> {</span>
 
@@ -390,11 +257,11 @@ TODO classe Collection con metodo countZeros o numberOfZeros()</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>TODO funzione generica di somma sugli indici, tipo notazione di Einstein.
 var rightElement = leftMatrix.ij(i, k);

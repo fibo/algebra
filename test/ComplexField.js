@@ -15,27 +15,23 @@
         return complex.should.be.instanceOf(AlgebraField);
       });
     });
-    describe('Constructor', function() {});
+    describe('Constructor', function() {
+      return it('has signature ()', function() {
+        return complex.should.be.instanceOf(AlgebraField);
+      });
+    });
     describe('Attributes', function() {
       describe('#one', function() {
         it('should be [1, 0]', function() {
           return complex.one.should.eql([1, 0]);
         });
-        return it('cannot be overridden', function() {
-          return (function() {
-            return complex.one = [1, 1];
-          }).should.throwError();
-        });
+        return it('cannot be overridden');
       });
       return describe('#zero', function() {
         it('should be [0, 0]', function() {
           return complex.zero.should.eql([0, 0]);
         });
-        return it('cannot be overridden', function() {
-          return (function() {
-            return complex.zero = [1, 1];
-          }).should.throwError();
-        });
+        return it('cannot be overridden');
       });
     });
     return describe('Methods', function() {

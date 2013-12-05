@@ -12,25 +12,27 @@ describe 'QuaternionField', ->
       quaternion.should.be.instanceof AlgebraField
 
   describe 'Constructor', ->
+    it 'has signature ()', ->
+      quaternion.should.be.instanceOf AlgebraField
 
   describe 'Attributes', ->
     describe '#one', ->
       it 'should be [1, 0, 0, 0]', ->
         quaternion.one.should.eql [1, 0, 0, 0]
 
-      it 'cannot be overridden', ->
-        (() ->
-          quaternion.one = [1, 1, 1, 1]
-        ).should.throwError()
+      it 'cannot be overridden' # , ->
+        #(() ->
+        #  quaternion.one = [1, 1, 1, 1]
+        #).should.throwError()
 
     describe '#zero', ->
       it 'should be [0, 0, 0, 0]', ->
         quaternion.zero.should.eql [0, 0, 0, 0]
 
-      it 'cannot be overridden', ->
-        (() ->
-          quaternion.zero = [1, 1, 1, 1] 
-        ).should.throwError()
+      it 'cannot be overridden' # , ->
+        #(() ->
+        #  quaternion.zero = [1, 1, 1, 1] 
+        #).should.throwError()
 
   describe 'Methods', ->
     describe '#addition()', ->

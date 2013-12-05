@@ -154,15 +154,15 @@
 <span class="keyword">var</span> data
   , field = <span class="keyword">new</span> Field()
 
-<span class="function"><span class="keyword">function</span> <span class="title">QuaternionElement</span><span class="params">()</span> {</span>
+<span class="function"><span class="keyword">function</span> <span class="title">QuaternionElement</span> <span class="params">()</span> {</span>
 
-  <span class="keyword">if</span> (arguments.length === <span class="number">0</span>) 
+  <span class="keyword">if</span> (arguments.length === <span class="number">0</span>)
     data = [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]
 
-  <span class="keyword">if</span> (arguments.length === <span class="number">1</span>) 
+  <span class="keyword">if</span> (arguments.length === <span class="number">1</span>)
     data = arguments[<span class="number">0</span>]
 
-  <span class="keyword">if</span> (arguments.length === <span class="number">3</span>) 
+  <span class="keyword">if</span> (arguments.length === <span class="number">3</span>)
     data = [<span class="number">0</span>, arguments[<span class="number">0</span>], arguments[<span class="number">1</span>], arguments[<span class="number">2</span>]]
 
   AlgebraElement.call(<span class="keyword">this</span>, field, data)

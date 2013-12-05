@@ -125,12 +125,14 @@ which was my book at <a href="http://www.dima.unige.it">Universita&#39; Degli St
 <p>My goal is to provide users with the feature of creating their own algebra field and building vector spaces, matrices and tensors on it.</p>
 <p>Suppose for example the set of strings with the concatenation operator,
 it could be extended to a group and maybe to a field and build &quot;matrices of strings&quot; or probably in the future ... &quot;strings of matrices&quot; (I had an intuition about a composition law for UTF-8 chars).</p>
-<h1 id="quick-start">Quick start</h1>
+<h1 id="documentation">Documentation</h1>
+<p>See [online documentation] (<a href="http://www.g14n.info/algebra/">http://www.g14n.info/algebra/</a>): it will be complete on version 0.2, when <em>algebra</em> will go <strong>beta</strong>.</p>
+<h2 id="quick-start">Quick start</h2>
 <p>This is a 60 seconds tutorial to get your hands dirty with <code>algebra</code>.</p>
 <h2 id="complex-numbers">Complex numbers</h2>
 <pre><code>var algebra = require(&#39;algebra&#39;);
 
-var Complex = algebra.Complex.Element;
+var Complex = algebra.ComplexElement;
 
 // Create two complex numbers
 // z1 = 1 + 2i
@@ -151,7 +153,7 @@ console.log(z1.data); // [-10, 20]</code></pre>
 <pre><code>var algebra = require(&#39;algebra&#39;);
 
 // Rn is a class representing a real vector space of dimension = n
-var Rn = algebra.Real.VectorSpace;
+var Rn = algebra.RealVectorSpace;
 
 // Create a real vector space with dimension = 2, a.k.a. the cartesian plane
 var R2 = new Rn(2);
@@ -170,7 +172,7 @@ console.log(v1.data); // [3, 5]</code></pre>
 <pre><code>var algebra = require(&#39;algebra&#39;);
 
 // GLnR is the Real General Linear Group of invertible matrices of order n
-var GLnR = algebra.Real.GeneralLinearGroup;
+var GLnR = algebra.RealGeneralLinearGroup;
 
 // Create the group of 2x2 invertible matrices
 var GL2R = new GLnR(2);
@@ -195,34 +197,6 @@ console.log(m1.data); // [1, 2, 3, 4]
 
 // Check out m1 determinant, should be 2 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
 console.log(m1.determinant.data); // 2</code></pre>
-<h2 id="algebra-over-any-field">Algebra over any field</h2>
-<p>Let&#39;s create an algebra over the boolean field.</p>
-<pre><code>var algebra  = require(&#39;algebra&#39;)
-  , inherits = require(&#39;inherits&#39;);
-
-var AlgebraField = algebra.AlgebraField;
-
-function BooleanField () {
-  var zero = false;
-
-  var one = true;
-
-  function validate (data) {
-    return typeof data === &#39;boolean&#39;
-  }
-
-  AlgebraField.call(
-    this,
-    zero, one,
-    validate,
-    addition, multiplication,
-    negation, inversion
-  );
-}
-
-inherits(BooleanField, AlgebraField);</code></pre>
-<h1 id="documentation">Documentation</h1>
-<p>See [online documentation] (<a href="http://www.g14n.info/algebra/">http://www.g14n.info/algebra/</a>).</p>
 <h1 id="support">Support</h1>
 <h2 id="issues">Issues</h2>
 <p>Please use <a href="https://github.com/fibo/algebra/issues">algebra&#39;s bug tracker</a> on github: patches welcome.</p>

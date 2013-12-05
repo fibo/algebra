@@ -233,6 +233,8 @@ module.exports = (grunt) ->
       ComplexElement: ['test/ComplexElement.js']
       ComplexField: ['test/ComplexField.js']
       GeneralLinearGroup: ['test/GeneralLinearGroup.js']
+      QuaternionElement: ['test/QuaternionElement.js']
+      QuaternionField: ['test/QuaternionField.js']
       RealElement: ['test/RealElement.js']
       RealField: ['test/RealField.js']
       RealGeneralLinearGroup: ['test/RealGeneralLinearGroup.js']
@@ -249,6 +251,14 @@ module.exports = (grunt) ->
           src: 'README.md'
           dest: 'docs'
         ]
+      classes:
+        files: [
+          expand: true
+          rename: (dest, src) ->
+            return dest + '/classes.html'
+          src: 'Classes.md'
+          dest: 'docs'
+        ]
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
@@ -257,6 +267,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-markdown'
   grunt.loadNpmTasks 'grunt-mocha-cli'
 
-  grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli']
-  grunt.registerTask 'docs', ['docco']
+  grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli', 'docs']
+  grunt.registerTask 'docs', ['docco', 'markdown']
 

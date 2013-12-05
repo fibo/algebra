@@ -33,9 +33,9 @@ Represents an abstract algebra field.
 
 ## Attributes
 
-### one
-
 ### zero
+
+### one
 
 ## Methods
 
@@ -109,6 +109,10 @@ It inherits from AlgebraElement.
 
 ## Attributes
 
+### zero
+
+### one
+
 ## Methods
 
 # GeneralLinearGroup
@@ -129,6 +133,10 @@ It inherits from AlgebraElement.
 
 ## Attributes
 
+### zero
+
+### one
+
 ## Methods
 
 # RealElement
@@ -144,6 +152,10 @@ It inherits from AlgebraElement.
 It inherits from AlgebraField.
 
 ## Attributes
+
+### zero
+
+### one
 
 ## Methods
 
@@ -165,9 +177,15 @@ It inherits from AlgebraTensor.
 
 # RealVector
 
+Represents a vector over the real field.
+
 ## Attributes
 
 ## Methods
+
+## Examples
+
+http://www.g14n.info/algebra/examples/realVectors.html
 
 # RealVectorSpace
 

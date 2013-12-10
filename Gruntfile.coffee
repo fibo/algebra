@@ -1,4 +1,8 @@
 
+
+templates =
+  index: '../fibo.github.io/templates/index.jst'
+
 livereloadPort = 35729
 
 module.exports = (grunt) ->
@@ -232,6 +236,8 @@ module.exports = (grunt) ->
           src: 'README.md'
           dest: 'docs'
         ]
+        options:
+          template: templates.index
       classes:
         files: [
           expand: true

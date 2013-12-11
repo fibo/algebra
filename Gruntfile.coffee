@@ -3,6 +3,9 @@
 templates =
   index: '../fibo.github.io/templates/index.jst'
 
+assets =
+  css: '../fibo.github.io/css/*'
+
 livereloadPort = 35729
 
 module.exports = (grunt) ->
@@ -11,6 +14,10 @@ module.exports = (grunt) ->
       Gruntfile:
         files: ['Gruntfile.coffee']
         tasks: 'watch'
+
+      assets:
+        files: [assets.css]
+        tasks: 'copy'
 
       templates:
         files: [templates.index]
@@ -241,7 +248,7 @@ module.exports = (grunt) ->
           dest: 'docs'
         ]
         options:
-          template: '../fibo.github.io/templates/index.jst'
+          template: templates.index
           templateContext:
             title: 'algebra'
 
@@ -266,7 +273,16 @@ module.exports = (grunt) ->
         path: 'http://localhost:3000'
         app: 'chrome'
 
+    copy:
+      css:
+        expand: true
+        src: assets.css
+        dest: 'docs/css'
+        flatten: true
+        filter: 'isFile'
+
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-contrib-watch'
@@ -276,5 +292,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-open'
 
   grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli', 'docs']
-  grunt.registerTask 'docs', ['docco', 'markdown', 'connect', 'open', 'watch']
+  grunt.registerTask 'docs', ['copy', 'docco', 'markdown', 'connect', 'open', 'watch']
 

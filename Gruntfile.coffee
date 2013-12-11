@@ -12,6 +12,10 @@ module.exports = (grunt) ->
         files: ['Gruntfile.coffee']
         tasks: 'watch'
 
+      templates:
+        files: [templates.index]
+        tasks: 'docs'
+
       examples:
         files: ['examples/*.js']
         tasks: ['mochacli:examples']
@@ -237,7 +241,10 @@ module.exports = (grunt) ->
           dest: 'docs'
         ]
         options:
-          template: templates.index
+          template: '../fibo.github.io/templates/index.jst'
+          templateContext:
+            title: 'algebra'
+
       classes:
         files: [
           expand: true

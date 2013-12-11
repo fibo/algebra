@@ -1,7 +1,7 @@
 {
   "name": "algebra",
   "author": "fibo",
-  "version": "0.1.71",
+  "version": "0.1.8",
   "description": "Vectors, Matrices, Tensors",
   "main": "lib/index.js",
   "scripts": {

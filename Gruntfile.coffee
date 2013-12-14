@@ -2,6 +2,8 @@
 
 templates =
   index: '../fibo.github.io/templates/index.jst'
+  class: '../fibo.github.io/templates/class.jst'
+  example: '../fibo.github.io/templates/example.jst'
 
 assets =
   css: '../fibo.github.io/css/*'
@@ -251,15 +253,6 @@ module.exports = (grunt) ->
           template: templates.index
           templateContext:
             title: 'algebra'
-
-      classes:
-        files: [
-          expand: true
-          rename: (dest, src) ->
-            return dest + '/classes.html'
-          src: 'Classes.md'
-          dest: 'docs'
-        ]
 
     connect:
       server:

@@ -1,9 +1,8 @@
 
-
 templates =
   index: '../fibo.github.io/templates/index.jst'
-  class: '../fibo.github.io/templates/class.jst'
-  example: '../fibo.github.io/templates/example.jst'
+  sources: '../fibo.github.io/templates/docco.jst'
+  examples: '../fibo.github.io/templates/docco.jst'
 
 assets =
   css: '../fibo.github.io/css/*'
@@ -22,12 +21,12 @@ module.exports = (grunt) ->
         tasks: 'copy'
 
       templates:
-        files: [templates.index]
-        tasks: 'docs'
+        files: [templates.examples, templates.index, templates.sources]
+        tasks: 'docco'
 
       examples:
         files: ['examples/*.js']
-        tasks: ['mochacli:examples']
+        tasks: ['mochacli:examples', 'docco']
 
       testAlgebraElement:
         files: ['test/AlgebraElement.js', 'lib/AlgebraElement.js']
@@ -196,12 +195,12 @@ module.exports = (grunt) ->
       examples:
         src: ['examples/*.js']
         options:
-          template: 'docs/docco.jst'
+          template: templates.examples
           output: 'docs/examples'
       sources:
         src: ['lib/*.js']
         options:
-          template: 'docs/docco.jst'
+          template: templates.sources
           output: 'docs/sources'
 
     jshint:

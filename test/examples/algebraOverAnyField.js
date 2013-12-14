@@ -1,4 +1,4 @@
-
+module.exports = function () {
 // Let's create an algebra over the boolean field.
 
 var algebra  = require('algebra')
@@ -30,3 +30,4 @@ in raltà dovrei fare anche i complessi sui booleani
 
 var bool = new BooleanField();
 
+}

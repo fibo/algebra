@@ -1,4 +1,4 @@
-
+module.exports = function () {
 //
 // # Imports
 //
@@ -52,3 +52,4 @@ x4.data.should.be.eql(0.5);
 x1.add(2).mul(3).sub(6).div(4);
 //x1.data.should.be(3);
 
+}

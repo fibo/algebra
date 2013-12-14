@@ -14,128 +14,165 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 </head>
-<body>
+<body style>
+
+  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">algebra</span>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="http://www.g14n.info/algebra">Home</a></li>
+          <li><a href="/sources">Api</a></li>
+          <li><a href="/examples">Examples</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li -->
+          <li><a href="http://g14n.info">Site</a></li>
+          <!-- li class="active"><a href="./">Static top</a></li -->
+        </ul>
+      </div>
+    </div> <!-- div class="container" -->
+
+  </div> <!-- div class="navbar" -->
+
   <div class="container">
-     <div class="row">
-       <!-- div class="header">
-         
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>index.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="algebraOverAnyField.html">
+ 
+            algebraOverAnyField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="complexNumbers.html">
+ 
+            complexNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realNumbers.html">
+ 
+            realNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realVectors.html">
+ 
+            realVectors
+ 
+          </a>
+        </li>
+ 
+        
+ 
+      </ul>
+    </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
 
-         <h1>index.js</h1>
-
-         
-
-       </div -->
-
-       <div class="col-md-3">
-         <h3>Table of Contents</h3>
-         <ol>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="algebraOverAnyField.html">
-
-               algebraOverAnyField
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="complexNumbers.html">
-
-               complexNumbers
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="realNumbers.html">
-
-               realNumbers
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="realVectors.html">
-
-               realVectors
-
-             </a>
-           </li>
-
-           
-
-         </ol>
-       </div>
-
-
-       <div class="col-md-9">
-
-         
-           
-           
-           
-             <div class='highlight'><pre>
+      
+        
+        
+        
+          <div class='highlight'><pre>
 exports.realNumbers         = require(<span class="string">'./realNumbers.js'</span>);
 exports.complexNumbers      = require(<span class="string">'./complexNumbers.js'</span>);
 exports.realVectors         = require(<span class="string">'./realVectors.js'</span>);
 exports.algebraOverAnyField = require(<span class="string">'./algebraOverAnyField.js'</span>);</pre></div>
-           
-         
+        
+      
+ 
+    </div>
+  </div>
+  </div>
 
-       </div>
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <script src="https://code.jquery.com/jquery.js"></script>
+ <!-- Latest compiled and minified JavaScript -->
+ <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-     </div> <!-- div class="row" -->
+ <!-- Start of Google Analytics tracking code -->
+ <script type="text/javascript">
 
-  </div> <!-- div class="container" -->
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-12635045-12']);
+   _gaq.push(['_trackPageview']);
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
 
-  <!-- Start of Google Analytics tracking code -->
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-12635045-12']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-  <!-- End of Google Analytics tracking code -->
+ </script>
+ <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

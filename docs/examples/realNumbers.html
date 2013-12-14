@@ -14,212 +14,240 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 </head>
-<body>
+<body style>
+
+  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">algebra</span>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="http://www.g14n.info/algebra">Home</a></li>
+          <li><a href="/sources">Api</a></li>
+          <li><a href="/examples">Examples</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li -->
+          <li><a href="http://g14n.info">Site</a></li>
+          <!-- li class="active"><a href="./">Static top</a></li -->
+        </ul>
+      </div>
+    </div> <!-- div class="container" -->
+
+  </div> <!-- div class="navbar" -->
+
   <div class="container">
-     <div class="row">
-       <!-- div class="header">
-         
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>realNumbers.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="algebraOverAnyField.html">
+ 
+            algebraOverAnyField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="complexNumbers.html">
+ 
+            complexNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realNumbers.html">
+ 
+            realNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realVectors.html">
+ 
+            realVectors
+ 
+          </a>
+        </li>
+ 
+        
+ 
+      </ul>
+    </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
 
-         <h1>realNumbers.js</h1>
+      
+        
+        
+        
+      
+        
+        <h1 id="imports">Imports</h1>
 
-         
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> algebra = require(<span class="string">'algebra'</span>);
 
-       </div -->
-
-       <div class="col-md-3">
-         <h3>Table of Contents</h3>
-         <ol>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="algebraOverAnyField.html">
-
-               algebraOverAnyField
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="complexNumbers.html">
-
-               complexNumbers
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="realNumbers.html">
-
-               realNumbers
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="realVectors.html">
-
-               realVectors
-
-             </a>
-           </li>
-
-           
-
-         </ol>
-       </div>
-
-
-       <div class="col-md-9">
-
-         
-           
-           
-           
-             <div class='highlight'><pre>
-module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div>
-           
-         
-           
-           <p>import algebra</p>
-
-           
-             <div class='highlight'><pre>
-  <span class="keyword">var</span> algebra = require(<span class="string">'algebra'</span>);</pre></div>
-           
-         
-           
-           <p>import RealElement, a class that represents a real number</p>
-
-           
-             <div class='highlight'><pre>  <span class="keyword">var</span> RealElement = algebra.RealElement;</pre></div>
-           
-         
-           
-           <h1 id="constructor">Constructor</h1>
+<span class="keyword">var</span> RealElement = algebra.RealElement;</pre></div>
+        
+      
+        
+        <h1 id="constructor">Constructor</h1>
 <p>A real number is just a common number</p>
-<pre><code>x1 = 4
+<p>x1 = 4
 x2 = -1
 x3 = 0.7
-x4 = 2</code></pre>
+x4 = 2</p>
 
-           
-             <div class='highlight'><pre>  <span class="keyword">var</span> x1 = <span class="keyword">new</span> RealElement(<span class="number">4</span>);
-  <span class="keyword">var</span> x2 = <span class="keyword">new</span> RealElement(-<span class="number">1</span>);
-  <span class="keyword">var</span> x3 = <span class="keyword">new</span> RealElement(<span class="number">0.7</span>);
-  <span class="keyword">var</span> x4 = <span class="keyword">new</span> RealElement(<span class="number">2</span>);</pre></div>
-           
-         
-           
-           <p>arithmetic operators are implemented</p>
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> x1 = <span class="keyword">new</span> RealElement(<span class="number">4</span>);
+<span class="keyword">var</span> x2 = <span class="keyword">new</span> RealElement(-<span class="number">1</span>);
+<span class="keyword">var</span> x3 = <span class="keyword">new</span> RealElement(<span class="number">0.7</span>);
+<span class="keyword">var</span> x4 = <span class="keyword">new</span> RealElement(<span class="number">2</span>);</pre></div>
+        
+      
+        
+        <p>arithmetic operators are implemented</p>
 
-           
-         
-           
-           <p>x1 + x2 = 4 + (-1) = 3</p>
+        
+      
+        
+        <p>x1 + x2 = 4 + (-1) = 3</p>
 
-           
-             <div class='highlight'><pre>  x1.add(x2);
-  x1.data.should.be.eql(<span class="number">3</span>);</pre></div>
-           
-         
-           
-           <p>x1 - x2 = 3 - (-1) = 4</p>
+        
+          <div class='highlight'><pre>x1.add(x2);
+x1.data.should.be.eql(<span class="number">3</span>);</pre></div>
+        
+      
+        
+        <p>x1 - x2 = 3 - (-1) = 4</p>
 
-           
-             <div class='highlight'><pre>  x1.sub(x2);
-  x1.data.should.be.eql(<span class="number">4</span>);</pre></div>
-           
-         
-           
-           <p>x3 <em> 10 = 0.7 </em> 10 = 7</p>
+        
+          <div class='highlight'><pre>x1.sub(x2);
+x1.data.should.be.eql(<span class="number">4</span>);</pre></div>
+        
+      
+        
+        <p>x3 <em> 10 = 0.7 </em> 10 = 7</p>
 
-           
-             <div class='highlight'><pre>  x3.mul(<span class="number">10</span>);
-  x3.data.should.be.eql(<span class="number">7</span>);</pre></div>
-           
-         
-           
-           <p>x4 / 4  = 2 / 4 = 0.5</p>
+        
+          <div class='highlight'><pre>x3.mul(<span class="number">10</span>);
+x3.data.should.be.eql(<span class="number">7</span>);</pre></div>
+        
+      
+        
+        <p>x4 / 4  = 2 / 4 = 0.5</p>
 
-           
-             <div class='highlight'><pre>  x4.div(<span class="number">4</span>);
-  x4.data.should.be.eql(<span class="number">0.5</span>);</pre></div>
-           
-         
-           
-           <p>operators can be chained
+        
+          <div class='highlight'><pre>x4.div(<span class="number">4</span>);
+x4.data.should.be.eql(<span class="number">0.5</span>);</pre></div>
+        
+      
+        
+        <p>operators can be chained
 ((( x1 + 2 ) <em> 3 ) - 6) / 4 =
 ((( 4 + 2 ) </em> 3 ) - 6) / 4 =
 ((6 * 3) - 6) / 4 =
 (18 - 6) / 4 =
 12 / 4 = 3</p>
 
-           
-             <div class='highlight'><pre>
-  x1.add(<span class="number">2</span>).mul(<span class="number">3</span>).sub(<span class="number">6</span>).div(<span class="number">4</span>);</pre></div>
-           
-         
-           
-           <p>x1.data.should.be(3);</p>
+        
+          <div class='highlight'><pre>
+x1.add(<span class="number">2</span>).mul(<span class="number">3</span>).sub(<span class="number">6</span>).div(<span class="number">4</span>);</pre></div>
+        
+      
+        
+        <p>x1.data.should.be(3);</p>
 
-           
-             <div class='highlight'><pre>};</pre></div>
-           
-         
+        
+      
+ 
+    </div>
+  </div>
+  </div>
 
-       </div>
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <script src="https://code.jquery.com/jquery.js"></script>
+ <!-- Latest compiled and minified JavaScript -->
+ <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-     </div> <!-- div class="row" -->
+ <!-- Start of Google Analytics tracking code -->
+ <script type="text/javascript">
 
-  </div> <!-- div class="container" -->
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-12635045-12']);
+   _gaq.push(['_trackPageview']);
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
 
-  <!-- Start of Google Analytics tracking code -->
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-12635045-12']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-  <!-- End of Google Analytics tracking code -->
+ </script>
+ <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

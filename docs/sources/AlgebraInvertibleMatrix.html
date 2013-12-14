@@ -14,291 +14,330 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 </head>
-<body>
+<body style>
+
+  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">algebra</span>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="http://www.g14n.info/algebra">Home</a></li>
+          <li><a href="/sources">Api</a></li>
+          <li><a href="/examples">Examples</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li -->
+          <li><a href="http://g14n.info">Site</a></li>
+          <!-- li class="active"><a href="./">Static top</a></li -->
+        </ul>
+      </div>
+    </div> <!-- div class="container" -->
+
+  </div> <!-- div class="navbar" -->
+
   <div class="container">
-     <div class="row">
-       <!-- div class="header">
-         
-
-         <h1>AlgebraInvertibleMatrix.js</h1>
-
-         
-
-       </div -->
-
-       <div class="col-md-3">
-         <h3>Table of Contents</h3>
-         <ol>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="AlgebraElement.html">
-
-               AlgebraElement
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="AlgebraField.html">
-
-               AlgebraField
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="AlgebraInvertibleMatrix.html">
-
-               AlgebraInvertibleMatrix
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="AlgebraMatrix.html">
-
-               AlgebraMatrix
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="AlgebraTensor.html">
-
-               AlgebraTensor
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="AlgebraVector.html">
-
-               AlgebraVector
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="AlgebraVectorSpace.html">
-
-               AlgebraVectorSpace
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="ComplexElement.html">
-
-               ComplexElement
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="ComplexField.html">
-
-               ComplexField
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="GeneralLinearGroup.html">
-
-               GeneralLinearGroup
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="QuaternionElement.html">
-
-               QuaternionElement
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="QuaternionField.html">
-
-               QuaternionField
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="RealElement.html">
-
-               RealElement
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="RealField.html">
-
-               RealField
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="RealGeneralLinearGroup.html">
-
-               RealGeneralLinearGroup
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="RealTensor.html">
-
-               RealTensor
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="RealVector.html">
-
-               RealVector
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="RealVectorSpace.html">
-
-               RealVectorSpace
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-         </ol>
-       </div>
-
-
-       <div class="col-md-9">
-
-         
-           
-           
-           
-             <div class='highlight'><pre>
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>AlgebraInvertibleMatrix.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="AlgebraElement.html">
+ 
+            AlgebraElement
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="AlgebraField.html">
+ 
+            AlgebraField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="AlgebraInvertibleMatrix.html">
+ 
+            AlgebraInvertibleMatrix
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="AlgebraMatrix.html">
+ 
+            AlgebraMatrix
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="AlgebraTensor.html">
+ 
+            AlgebraTensor
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="AlgebraVector.html">
+ 
+            AlgebraVector
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="AlgebraVectorSpace.html">
+ 
+            AlgebraVectorSpace
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="ComplexElement.html">
+ 
+            ComplexElement
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="ComplexField.html">
+ 
+            ComplexField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="GeneralLinearGroup.html">
+ 
+            GeneralLinearGroup
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="QuaternionElement.html">
+ 
+            QuaternionElement
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="QuaternionField.html">
+ 
+            QuaternionField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="RealElement.html">
+ 
+            RealElement
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="RealField.html">
+ 
+            RealField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="RealGeneralLinearGroup.html">
+ 
+            RealGeneralLinearGroup
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="RealTensor.html">
+ 
+            RealTensor
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="RealVector.html">
+ 
+            RealVector
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="RealVectorSpace.html">
+ 
+            RealVectorSpace
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+      </ul>
+    </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>
 <span class="keyword">var</span> AlgebraMatrix = require(<span class="string">'./AlgebraMatrix'</span>)
   , inherits      = require(<span class="string">'inherits'</span>)
   , _             = require(<span class="string">'underscore'</span>)
@@ -306,37 +345,37 @@
 
 <span class="function"><span class="keyword">function</span> <span class="title">AlgebraInvertibleMatrix</span> <span class="params">(Element, order, elements)</span> {</span>
   <span class="keyword">var</span> self = <span class="keyword">this</span></pre></div>
-           
-         
-           
-           <p>order</p>
+        
+      
+        
+        <p>order</p>
 
-           
-             <div class='highlight'><pre>
+        
+          <div class='highlight'><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">getOrder</span> <span class="params">()</span> {</span>
     <span class="keyword">return</span> order
   }
 
   Object.defineProperty(<span class="keyword">this</span>, <span class="string">'order'</span>, {get: getOrder})</pre></div>
-           
-         
-           
-           <p>inheritance</p>
+        
+      
+        
+        <p>inheritance</p>
 
-           
-             <div class='highlight'><pre>
+        
+          <div class='highlight'><pre>
   AlgebraMatrix.call(<span class="keyword">this</span>, Element, [order, order], elements)
 
   <span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
     <span class="keyword">return</span> <span class="keyword">this</span>.computeDeterminant(order, Element, self.elements)
   }</pre></div>
-           
-         
-           
-           <p>TODO se il determinante è zero throw new Error()</p>
+        
+      
+        
+        <p>TODO se il determinante è zero throw new Error()</p>
 
-           
-             <div class='highlight'><pre>  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
+        
+          <div class='highlight'><pre>  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
 
 }
 
@@ -345,35 +384,35 @@ inherits(AlgebraInvertibleMatrix, AlgebraMatrix)
 <span class="function"><span class="keyword">function</span> <span class="title">computeDeterminant</span> <span class="params">(order, Element, elements)</span> {</span>
 
   <span class="keyword">var</span> det = <span class="keyword">new</span> Element(<span class="number">0</span>)</pre></div>
-           
-         
-           
-           <p>cloning elements</p>
+        
+      
+        
+        <p>cloning elements</p>
 
-           
-             <div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements)
+        
+          <div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements)
     elements[i] = elements[i].clone()</pre></div>
-           
-         
-           
-           <p>TODO caso degenere, aggiusta</p>
+        
+      
+        
+        <p>TODO caso degenere, aggiusta</p>
 
-           
-             <div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
+        
+          <div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
     <span class="keyword">return</span> elements[<span class="number">0</span>]
 
   <span class="keyword">if</span> (order === <span class="number">2</span>) {
     det.add(elements[<span class="number">0</span>].mul(elements[<span class="number">3</span>])).sub(elements[<span class="number">2</span>].mul(elements[<span class="number">1</span>]))
     <span class="keyword">return</span> det
   }</pre></div>
-           
-         
-           
-           <p>TODO per ora scelgo sempre la prima riga.
+        
+      
+        
+        <p>TODO per ora scelgo sempre la prima riga.
 TODO classe Collection con metodo countZeros o numberOfZeros()</p>
 
-           
-             <div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
 
   <span class="keyword">for</span> (<span class="keyword">var</span> columnIndex = <span class="number">0</span>; columnIndex &lt; order; columnIndex++) {
     <span class="keyword">var</span> adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, elements)
@@ -397,13 +436,13 @@ AlgebraInvertibleMatrix.prototype.computeDeterminant = computeDeterminant
 
 <span class="function"><span class="keyword">function</span> <span class="title">getAdjointElements</span><span class="params">(rowIndex, columnIndex, numRows, numCols, elements)</span> {</span>
   <span class="keyword">var</span> adjointElements = []</pre></div>
-           
-         
-           
-           <p>TODO anche qua dovrei clonare in teoria ?</p>
+        
+      
+        
+        <p>TODO anche qua dovrei clonare in teoria ?</p>
 
-           
-             <div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numRows; i++) {
+        
+          <div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numRows; i++) {
       <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; numCols; j++) {
         <span class="keyword">if</span> (i != rowIndex &amp;&amp; j != columnIndex) {
           adjointElements.push(elements[<span class="keyword">this</span>.computeIndex([i, j])])
@@ -415,35 +454,33 @@ AlgebraInvertibleMatrix.prototype.computeDeterminant = computeDeterminant
 }
 
 module.exports = AlgebraInvertibleMatrix</pre></div>
-           
-         
+        
+      
+ 
+    </div>
+  </div>
+  </div>
 
-       </div>
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <script src="https://code.jquery.com/jquery.js"></script>
+ <!-- Latest compiled and minified JavaScript -->
+ <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-     </div> <!-- div class="row" -->
+ <!-- Start of Google Analytics tracking code -->
+ <script type="text/javascript">
 
-  </div> <!-- div class="container" -->
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-12635045-12']);
+   _gaq.push(['_trackPageview']);
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
 
-  <!-- Start of Google Analytics tracking code -->
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-12635045-12']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-  <!-- End of Google Analytics tracking code -->
+ </script>
+ <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

@@ -25,7 +25,7 @@ module.exports = (grunt) ->
         tasks: 'docco'
 
       examples:
-        files: ['examples/*.js']
+        files: ['test/examples/*.js']
         tasks: ['mochacli:examples', 'docco']
 
       testAlgebraElement:
@@ -273,9 +273,22 @@ module.exports = (grunt) ->
         flatten: true
         filter: 'isFile'
 
+    concat:
+      examples:
+        options:
+          banner: 'module.exports = function () {'
+          footer: '}'
+        files:
+          'test/examples/algebraOverAnyField.js': ['examples/algebraOverAnyField.js']
+          'test/examples/complexNumbers.js': ['examples/complexNumbers.js']
+          'test/examples/realNumbers.js': ['examples/realNumbers.js']
+          'test/examples/realVectors.js': ['examples/realVectors.js']
+
+  #require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
   grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-contrib-concat'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-docco-multi'
@@ -283,6 +296,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-mocha-cli'
   grunt.loadNpmTasks 'grunt-open'
 
-  grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli', 'docs']
+  grunt.registerTask 'default', ['concat', 'jshint', 'coffee', 'mochacli', 'docs']
   grunt.registerTask 'docs', ['copy', 'docco', 'markdown', 'connect', 'open', 'watch']
 

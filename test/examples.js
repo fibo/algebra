@@ -1,5 +1,5 @@
 
-var test = require('../examples')
+var test = require('./examples')
 
 for (var example in test)
   describe(example, function () {

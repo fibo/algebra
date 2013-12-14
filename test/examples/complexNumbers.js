@@ -1,4 +1,4 @@
-
+module.exports = function () {
 // # Imports
 
 var algebra = require('algebra');
@@ -30,3 +30,4 @@ var z4 = new ComplexElement([1, -2]);
 z1.add(z2);
 z1.data.should.be.eql([1, 5]);
 
+}

@@ -14,117 +14,150 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 </head>
-<body>
+<body style>
+
+  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">algebra</span>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="http://www.g14n.info/algebra">Home</a></li>
+          <li><a href="/sources">Api</a></li>
+          <li><a href="/examples">Examples</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li -->
+          <li><a href="http://g14n.info">Site</a></li>
+          <!-- li class="active"><a href="./">Static top</a></li -->
+        </ul>
+      </div>
+    </div> <!-- div class="container" -->
+
+  </div> <!-- div class="navbar" -->
+
   <div class="container">
-     <div class="row">
-       <!-- div class="header">
-         
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>realVectors.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="algebraOverAnyField.html">
+ 
+            algebraOverAnyField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="complexNumbers.html">
+ 
+            complexNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realNumbers.html">
+ 
+            realNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realVectors.html">
+ 
+            realVectors
+ 
+          </a>
+        </li>
+ 
+        
+ 
+      </ul>
+    </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
 
-         <h1>realVectors.js</h1>
-
-         
-
-       </div -->
-
-       <div class="col-md-3">
-         <h3>Table of Contents</h3>
-         <ol>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="algebraOverAnyField.html">
-
-               algebraOverAnyField
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="complexNumbers.html">
-
-               complexNumbers
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="realNumbers.html">
-
-               realNumbers
-
-             </a>
-           </li>
-
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="realVectors.html">
-
-               realVectors
-
-             </a>
-           </li>
-
-           
-
-         </ol>
-       </div>
-
-
-       <div class="col-md-9">
-
-         
-           
-           
-           
-             <div class='highlight'><pre>
+      
+        
+        
+        
+          <div class='highlight'><pre>
 module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div>
-           
-         
-           
-           <p>import algebra</p>
+        
+      
+        
+        <h1 id="imports">Imports</h1>
 
-           
-             <div class='highlight'><pre>
-  <span class="keyword">var</span> algebra = require(<span class="string">'algebra'</span>);</pre></div>
-           
-         
-           
-           <p>import RealVector, a class that represents a vector over reals</p>
+        
+          <div class='highlight'><pre>
+  <span class="keyword">var</span> algebra = require(<span class="string">'algebra'</span>);
 
-           
-             <div class='highlight'><pre>  <span class="keyword">var</span> RealVector = algebra.RealVector;
-
+  <span class="keyword">var</span> RealVector  = algebra.RealVector;
   <span class="keyword">var</span> RealElement = algebra.RealElement;</pre></div>
-           
-         
-           
-           <h1 id="constructor">Constructor</h1>
+        
+      
+        
+        <h1 id="constructor">Constructor</h1>
 <p>A real vector is an array of numbers. You can pass to the constructor
 a reference to an array of elements, or an element in every argument.
 Raw numbers are coerced to RealElement.</p>
@@ -132,115 +165,114 @@ Raw numbers are coerced to RealElement.</p>
     v1 = [2, 1]
     v2 = [1, 1]</p>
 
-           
-             <div class='highlight'><pre>  <span class="keyword">var</span> one = <span class="keyword">new</span> RealElement(<span class="number">1</span>);
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> one = <span class="keyword">new</span> RealElement(<span class="number">1</span>);
   <span class="keyword">var</span> two = <span class="keyword">new</span> RealElement(<span class="number">2</span>);
   <span class="keyword">var</span> v1 = <span class="keyword">new</span> RealVector([two, <span class="number">1</span>]);
   <span class="keyword">var</span> v2 = <span class="keyword">new</span> RealVector(<span class="number">2</span>, one);
 
   v1.data.should.eql(v2.data);</pre></div>
-           
-         
-           
-           <p>Create three dimensional vectors v3 and v4.
+        
+      
+        
+        <p>Create three dimensional vectors v3 and v4.
     v3 = [0, 1, 2]
     v4 = [-1, -1, -1]</p>
 
-           
-             <div class='highlight'><pre>
+        
+          <div class='highlight'><pre>
   <span class="keyword">var</span> v3 = <span class="keyword">new</span> RealVector([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]);
   <span class="keyword">var</span> v4 = <span class="keyword">new</span> RealVector(-<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>);</pre></div>
-           
-         
-           
-           <h1 id="attributes">Attributes</h1>
+        
+      
+        
+        <h1 id="attributes">Attributes</h1>
 
-           
-         
-           
-           <h2 id="dimension">dimension</h2>
+        
+      
+        
+        <h2 id="dimension">dimension</h2>
 <p>strictly speaking returns the number of elements of the vector.</p>
 
-           
-             <div class='highlight'><pre>  v1.dimension.should.eql(<span class="number">2</span>);
+        
+          <div class='highlight'><pre>  v1.dimension.should.eql(<span class="number">2</span>);
   v4.dimension.should.eql(<span class="number">3</span>);</pre></div>
-           
-         
-           
-           <h2 id="elements">elements</h2>
+        
+      
+        
+        <h2 id="elements">elements</h2>
 <p>returns the elements of the vector, that are instances of RealElement class.</p>
 
-           
-             <div class='highlight'><pre>  v4.elements[<span class="number">0</span>].should.be.instanceOf(RealElement);
+        
+          <div class='highlight'><pre>  v4.elements[<span class="number">0</span>].should.be.instanceOf(RealElement);
   <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> v4.elements) {
     <span class="keyword">var</span> element = v4.elements[i];
     element.data.should.be.eql(-<span class="number">1</span>);
   }</pre></div>
-           
-         
-           
-           <h2 id="data">data</h2>
+        
+      
+        
+        <h2 id="data">data</h2>
 <p>returns vector elements data</p>
 
-           
-             <div class='highlight'><pre>  v2.data.should.be.eql([<span class="number">2</span>, <span class="number">1</span>]);</pre></div>
-           
-         
-           
-           <h1 id="methods">Methods</h1>
+        
+          <div class='highlight'><pre>  v2.data.should.be.eql([<span class="number">2</span>, <span class="number">1</span>]);</pre></div>
+        
+      
+        
+        <h1 id="methods">Methods</h1>
 
-           
-         
-           
-           <h2 id="addition">addition</h2>
+        
+      
+        
+        <h2 id="addition">addition</h2>
 <pre><code>[2, 1] + [2, 1] = [4, 2]</code></pre>
 
-           
-             <div class='highlight'><pre>  v1.addition(v2);
+        
+          <div class='highlight'><pre>  v1.addition(v2);
   v1.data.should.eql([<span class="number">4</span>, <span class="number">2</span>]);</pre></div>
-           
-         
-           
-           <h2 id="subtraction">subtraction</h2>
+        
+      
+        
+        <h2 id="subtraction">subtraction</h2>
 
-           
-         
-           
-           <pre><code>[0, 1, 2] - [-1, -1, -1] = [1, 2, 3]</code></pre>
+        
+      
+        
+        <pre><code>[0, 1, 2] - [-1, -1, -1] = [1, 2, 3]</code></pre>
 
-           
-             <div class='highlight'><pre>  v3.subtraction(v4);
+        
+          <div class='highlight'><pre>  v3.subtraction(v4);
   v3.data.should.eql([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
+
 };</pre></div>
-           
-         
+        
+      
+ 
+    </div>
+  </div>
+  </div>
 
-       </div>
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <script src="https://code.jquery.com/jquery.js"></script>
+ <!-- Latest compiled and minified JavaScript -->
+ <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-     </div> <!-- div class="row" -->
+ <!-- Start of Google Analytics tracking code -->
+ <script type="text/javascript">
 
-  </div> <!-- div class="container" -->
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-12635045-12']);
+   _gaq.push(['_trackPageview']);
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
 
-  <!-- Start of Google Analytics tracking code -->
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-12635045-12']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-  <!-- End of Google Analytics tracking code -->
+ </script>
+ <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

@@ -14,175 +14,194 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 </head>
-<body>
+<body style>
+
+  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">algebra</span>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="http://www.g14n.info/algebra">Home</a></li>
+          <li><a href="/sources">Api</a></li>
+          <li><a href="/examples">Examples</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li -->
+          <li><a href="http://g14n.info">Site</a></li>
+          <!-- li class="active"><a href="./">Static top</a></li -->
+        </ul>
+      </div>
+    </div> <!-- div class="container" -->
+
+  </div> <!-- div class="navbar" -->
+
   <div class="container">
-     <div class="row">
-       <!-- div class="header">
-         
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>algebraOverAnyField.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="algebraOverAnyField.html">
+ 
+            algebraOverAnyField
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="complexNumbers.html">
+ 
+            complexNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realNumbers.html">
+ 
+            realNumbers
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="realVectors.html">
+ 
+            realVectors
+ 
+          </a>
+        </li>
+ 
+        
+ 
+      </ul>
+    </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
 
-         <h1>algebraOverAnyField.js</h1>
+      
+        
+        
+        
+      
+        
+        <p>Let&#39;s create an algebra over the boolean field.</p>
 
-         
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> algebra  = require(<span class="string">'algebra'</span>)
+  , inherits = require(<span class="string">'inherits'</span>);
 
-       </div -->
+<span class="keyword">var</span> AlgebraField = algebra.AlgebraField;
 
-       <div class="col-md-3">
-         <h3>Table of Contents</h3>
-         <ol>
+<span class="function"><span class="keyword">function</span> <span class="title">BooleanField</span> <span class="params">()</span> {</span>
+  <span class="keyword">var</span> zero = <span class="literal">false</span>;
 
-           
-             
-             
-             
-             
+  <span class="keyword">var</span> one = <span class="literal">true</span>;
 
-           <li>
-             <a class="source" href="algebraOverAnyField.html">
+  <span class="comment">/*function validate (data) {
+    return typeof data === 'boolean'
+  }*/</span>
 
-               algebraOverAnyField
+  AlgebraField.call( <span class="keyword">this</span>, zero, one);
+}
 
-             </a>
-           </li>
+inherits(BooleanField, AlgebraField);
 
-           
-             
-             
-             
-             
+<span class="comment">/* TODO devo definire le operazioni
 
-           <li>
-             <a class="source" href="complexNumbers.html">
+ TODO fai anche vettori, tensori, ecc sui booleani, tanto non devo aggiungere altre funzioni
+in raltà dovrei fare anche i complessi sui booleani
 
-               complexNumbers
+ Create an instance of boolean field
+ */</span>
 
-             </a>
-           </li>
+<span class="keyword">var</span> bool = <span class="keyword">new</span> BooleanField();</pre></div>
+        
+      
+ 
+    </div>
+  </div>
+  </div>
 
-           
-             
-             
-             
-             
-             
-             
-             
-             
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <script src="https://code.jquery.com/jquery.js"></script>
+ <!-- Latest compiled and minified JavaScript -->
+ <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-           <li>
-             <a class="source" href="realNumbers.html">
+ <!-- Start of Google Analytics tracking code -->
+ <script type="text/javascript">
 
-               realNumbers
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-12635045-12']);
+   _gaq.push(['_trackPageview']);
 
-             </a>
-           </li>
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
 
-           
-             
-             
-             
-             
-
-           <li>
-             <a class="source" href="realVectors.html">
-
-               realVectors
-
-             </a>
-           </li>
-
-           
-
-         </ol>
-       </div>
-
-
-       <div class="col-md-9">
-
-         
-           
-           
-           
-             <div class='highlight'><pre>
-
-module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div>
-           
-         
-           
-           <p>Let&#39;s create an algebra over the boolean field.</p>
-
-           
-             <div class='highlight'><pre>
-    <span class="keyword">var</span> algebra  = require(<span class="string">'algebra'</span>)
-      , inherits = require(<span class="string">'inherits'</span>);
-
-    <span class="keyword">var</span> AlgebraField = algebra.AlgebraField;
-
-    <span class="function"><span class="keyword">function</span> <span class="title">BooleanField</span> <span class="params">()</span> {</span>
-      <span class="keyword">var</span> zero = <span class="literal">false</span>;
-
-      <span class="keyword">var</span> one = <span class="literal">true</span>;</pre></div>
-           
-         
-           
-           <p>function validate (data) {
- return typeof data === &#39;boolean&#39;
-}</p>
-
-           
-             <div class='highlight'><pre>
-      AlgebraField.call( <span class="keyword">this</span>, zero, one);
-    }
-
-    inherits(BooleanField, AlgebraField);</pre></div>
-           
-         
-           
-           <p>TODO devo definire le operazioni</p>
-
-           
-         
-           
-           <p>TODO fai anche vettori, tensori, ecc sui booleani, tanto non devo aggiungere altre funzioni
-in raltà dovrei fare anche i complessi sui booleani</p>
-
-           
-         
-           
-           <p>Create an instance of boolean field</p>
-
-           
-             <div class='highlight'><pre>    <span class="keyword">var</span> bool = <span class="keyword">new</span> BooleanField();
-
-};</pre></div>
-           
-         
-
-       </div>
-
-     </div> <!-- div class="row" -->
-
-  </div> <!-- div class="container" -->
-
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
-  <!-- Start of Google Analytics tracking code -->
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-12635045-12']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-  <!-- End of Google Analytics tracking code -->
+ </script>
+ <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

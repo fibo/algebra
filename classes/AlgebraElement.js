@@ -2,7 +2,7 @@
 //
 // # AlgebraElement
 //
-// It is an abstract algebra element.
+// Abstract algebra element.
 //
 
 var AlgebraField = require('./AlgebraField')
@@ -45,6 +45,8 @@ function AlgebraElement(field, data) {
 
 /* this.constructor refers to some AlgebraElement subclass,
  since it should be aware of it field, I only pass the element data.
+
+ TODO per ora lo lascio private, non lo documento
  */
 function clone () {
   return new this.constructor(this.data)
@@ -63,6 +65,19 @@ function coerceToData () {
   return data
 }
 
+//
+// ## Methods
+//
+// Methods of AlgebraElement are operators wrapping the homonym AlgebraField
+// operator.
+//
+
+/* TODO manca invert */
+
+//
+// ### addition
+//
+
 function addition () {
   var data = coerceToData(arguments[0])
 
@@ -70,7 +85,12 @@ function addition () {
   return this
 }
 AlgebraElement.prototype.addition = addition
+/* TODO per i docs, fai qualche label tipo Alias: add */
 AlgebraElement.prototype.add      = addition
+
+//
+// ### subtraction
+//
 
 function subtraction () {
   var data = coerceToData(arguments[0])
@@ -81,6 +101,10 @@ function subtraction () {
 AlgebraElement.prototype.subtraction = subtraction
 AlgebraElement.prototype.sub         = subtraction
 
+//
+// ### multiplication
+//
+
 function multiplication() {
   var data = coerceToData(arguments[0])
 
@@ -89,6 +113,10 @@ function multiplication() {
 }
 AlgebraElement.prototype.multiplication = multiplication
 AlgebraElement.prototype.mul            = multiplication
+
+//
+// ### division
+//
 
 function division () {
   var data = coerceToData(arguments[0])
@@ -100,6 +128,10 @@ function division () {
 AlgebraElement.prototype.division = division
 AlgebraElement.prototype.div      = division
 
+//
+// ### equal
+//
+
 function equal () {
   var data = coerceToData(arguments[0])
 
@@ -107,6 +139,11 @@ function equal () {
 }
 AlgebraElement.prototype.equal = equal
 AlgebraElement.prototype.eq    = equal
+
+
+//
+// ### notEqual
+//
 
 function notEqual () {
   var data = coerceToData(arguments[0])

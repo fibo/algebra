@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AlgebraVVectorSpace</title>
+  <title>AlgebraVectorSpace.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -16,59 +16,53 @@
 </head>
 <body style>
 
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand">algebra</span>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="../">Home</a></li>
-          <li><a href="../classes">Classes</a></li>
-          <li><a href="../examples">Examples</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <!-- li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li -->
-          <li><a href="http://g14n.info">Site</a></li>
-          <!-- li class="active"><a href="./">Static top</a></li -->
-        </ul>
-      </div>
-    </div> <!-- div class="container" -->
 
-  </div> <!-- div class="navbar" -->
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">algebra</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
 
   <div class="container">
   <div class="row">
     <!-- div class="header">
       
-      
-      <h1 id="algebravvectorspace">AlgebraVVectorSpace</h1>
-
-      
-      <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraVector      = require(<span class="string">'./AlgebraVector'</span>)
-  , inherits           = require(<span class="string">'inherits'</span>)
-  , _                  = require(<span class="string">'underscore'</span>)
-
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraVectorSpace</span><span class="params">(Element, dimension)</span> {</span></pre></div>
-      
+ 
+      <h1>AlgebraVectorSpace.js</h1>
+ 
       
  
     </div -->
@@ -343,62 +337,44 @@
 
       
         
-        <p>dimension</p>
-
-        
-          <div class='highlight'><pre>
-  <span class="keyword">if</span> (! (_.isNumber(dimension)))
-    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getDimension</span> <span class="params">()</span> {</span> <span class="keyword">return</span> dimension }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'dimension'</span>, {get: getDimension})</pre></div>
         
       
         
-        <p>Vector</p>
+        <h1 id="algebravectorspace">AlgebraVectorSpace</h1>
 
+      
         
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">Vector</span> <span class="params">()</span> {</span>
-    <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
-      , numArgs = arguments.length
-      , elements = []
+        <h2 id="attributes">Attributes</h2>
 
-    <span class="keyword">if</span> ((numArgs === <span class="number">1</span>) &amp;&amp; (_.isArray(arg0)))
-      elements = arg0
-
-    <span class="keyword">if</span> (numArgs &gt; <span class="number">1</span>)
-      <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arguments)
-        elements.push(arguments[i])
-
-    AlgebraVector.call(<span class="keyword">this</span>, Element, elements)
-  }
-
-  inherits(Vector, AlgebraVector)
-
-  <span class="keyword">this</span>.Vector = Vector
-}
-
-module.exports = AlgebraVectorSpace</pre></div>
+      
         
+        <h3 id="dimension">dimension</h3>
+
+      
+        
+        <h3 id="vector">Vector</h3>
+<p>It is an AlgebraVector constructor</p>
+<pre><code>var vector = new space.Vector();</code></pre>
+
       
  
     </div>
   </div>
   </div>
 
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://code.jquery.com/jquery.js"></script>
- <!-- Latest compiled and minified JavaScript -->
- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
- <!-- Start of Google Analytics tracking code -->
- <script type="text/javascript">
 
-   var _gaq = _gaq || [];
-   _gaq.push(['_setAccount', 'UA-12635045-12']);
-   _gaq.push(['_trackPageview']);
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
 
    (function() {
      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -406,8 +382,8 @@ module.exports = AlgebraVectorSpace</pre></div>
      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
    })();
 
- </script>
- <!-- End of Google Analytics tracking code -->
+  </script>
+  <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

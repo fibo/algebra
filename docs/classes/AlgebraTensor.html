@@ -16,43 +16,45 @@
 </head>
 <body style>
 
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand">algebra</span>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="../">Home</a></li>
-          <li><a href="../classes">Classes</a></li>
-          <li><a href="../examples">Examples</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <!-- li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li -->
-          <li><a href="http://g14n.info">Site</a></li>
-          <!-- li class="active"><a href="./">Static top</a></li -->
-        </ul>
-      </div>
-    </div> <!-- div class="container" -->
 
-  </div> <!-- div class="navbar" -->
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">algebra</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
 
   <div class="container">
   <div class="row">
@@ -336,186 +338,60 @@
       
         
         
-        
       
         
         <h1 id="algebratensor">AlgebraTensor</h1>
-<p>It is an abstract algebra tensor.</p>
+<p>Abstract algebra tensor.</p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Tensor">Tensor</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Tensor_product">Tensor product</a></li>
+</ul>
 
-        
-          <div class='highlight'><pre>
-<span class="keyword">var</span> _ = require(<span class="string">'underscore'</span>)
-
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraTensor</span><span class="params">(Element, indices, elements)</span> {</span>
-  <span class="keyword">if</span> (arguments.length === <span class="number">0</span>)
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
-
-  <span class="keyword">var</span> zero
-    , one
-    , field</pre></div>
-        
       
         
-        <h1 id="attributes">Attributes</h1>
-<h2 id="element">Element</h2>
+        <h2 id="attributes">Attributes</h2>
 
-        
-          <div class='highlight'><pre>
-  <span class="keyword">try</span> {
-    zero = <span class="keyword">new</span> Element(<span class="number">0</span>)
-    one  = <span class="keyword">new</span> Element(<span class="number">1</span>)
-  }
-  <span class="keyword">catch</span> (ignore) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
-  }
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getElement</span> <span class="params">()</span> {</span> <span class="keyword">return</span> Element }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'Element'</span>, {get: getElement})</pre></div>
-        
       
         
-        <h2 id="field">field</h2>
+        <h3 id="element">Element</h3>
+
+      
+        
+        <h3 id="field">field</h3>
 <p>it is an instance of algebrafield</p>
-<p>field</p>
 
-        
-          <div class='highlight'><pre>
-  field = one.field
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getField</span><span class="params">()</span> {</span> <span class="keyword">return</span> field }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'field'</span>, {get: getField})</pre></div>
-        
       
         
-        <p>elements</p>
+        <h3 id="elements">elements</h3>
 
-        
-          <div class='highlight'><pre>
-  <span class="keyword">if</span> ((_.isUndefined(elements)))
-    elements = []
-
-  <span class="keyword">if</span> (! (_.isArray(elements)))
-    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
-
-  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements) {
-    <span class="keyword">var</span> element = elements[i]
-
-    <span class="keyword">if</span> (element <span class="keyword">instanceof</span> Element) {</pre></div>
-        
       
         
-        <p>it is mandatory to clone elements, so every element refer to its own 
-object instance, otherwise can lead to weird behaviourswhen applying operators.</p>
+        <h3 id="data">data</h3>
 
-        
-          <div class='highlight'><pre>      elements[i] = element.clone()
-    }
-    <span class="keyword">else</span> {
-      <span class="keyword">try</span> {</pre></div>
-        
       
         
-        <p>I suppose <em>element</em> is raw data</p>
+        <h3 id="indices">indices</h3>
 
-        
-          <div class='highlight'><pre>        elements[i] = <span class="keyword">new</span> Element(element)
-      }
-      <span class="keyword">catch</span> (err) { <span class="keyword">throw</span> err }
-    }
-  }
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getElements</span> <span class="params">()</span> {</span> <span class="keyword">return</span> elements }
-
-  <span class="comment">/* TODO; non mi piace molto, ma, mi serve per AlgebraMatrix per l momento
-   magari dovrei solo abbellirla
-   */</span>
-
-  <span class="function"><span class="keyword">function</span> <span class="title">setElements</span> <span class="params">(newElements)</span> {</span> elements = newElements }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'elements'</span>, {get: getElements, set: setElements})</pre></div>
-        
-      
-        
-        <h1 id="data">data</h1>
-
-        
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getData</span> <span class="params">()</span> {</span>
-    <span class="keyword">var</span> data = []
-
-    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements) {
-      data.push(elements[i].data)
-    }
-
-    <span class="keyword">return</span> data
-  }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'data'</span>, {get: getData})</pre></div>
-        
-      
-        
-        <p>indices</p>
-
-        
-          <div class='highlight'><pre>
-  <span class="keyword">if</span> (_.isUndefined(indices))
-    indices = [<span class="number">0</span>]
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getIndices</span> <span class="params">()</span> {</span> <span class="keyword">return</span> indices }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'indices'</span>, {get: getIndices})
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">addition</span> <span class="params">(tensor)</span> {</span>
-  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.elements)
-    <span class="keyword">this</span>.elements[i].addition(tensor.elements[i])
-
-  <span class="keyword">return</span> <span class="keyword">this</span>
-}
-AlgebraTensor.prototype.addition = addition
-AlgebraTensor.prototype.add      = addition
-
-<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span> <span class="params">(tensor)</span> {</span>
-  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.elements)
-    <span class="keyword">this</span>.elements[i].subtraction(tensor.elements[i])
-
-  <span class="keyword">return</span> <span class="keyword">this</span>
-}
-AlgebraTensor.prototype.subtraction = subtraction
-AlgebraTensor.prototype.sub         = subtraction
-
-<span class="function"><span class="keyword">function</span> <span class="title">computeIndex</span> <span class="params">(positions)</span> {</span>
-  <span class="keyword">var</span> index = positions[<span class="number">0</span>]
-
-  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; indices.length - <span class="number">1</span>; i++)
-    index = index * indices[i] + positions[i + <span class="number">1</span>]
-
-  <span class="keyword">return</span> index
-}
-
-AlgebraTensor.prototype.computeIndex = computeIndex
-
-module.exports = AlgebraTensor</pre></div>
-        
       
  
     </div>
   </div>
   </div>
 
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://code.jquery.com/jquery.js"></script>
- <!-- Latest compiled and minified JavaScript -->
- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
- <!-- Start of Google Analytics tracking code -->
- <script type="text/javascript">
 
-   var _gaq = _gaq || [];
-   _gaq.push(['_setAccount', 'UA-12635045-12']);
-   _gaq.push(['_trackPageview']);
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
 
    (function() {
      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -523,8 +399,8 @@ module.exports = AlgebraTensor</pre></div>
      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
    })();
 
- </script>
- <!-- End of Google Analytics tracking code -->
+  </script>
+  <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

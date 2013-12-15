@@ -1,5 +1,6 @@
+
 //
-// # AlgebraVVectorSpace
+// # AlgebraVectorSpace
 //
 
 var AlgebraVector      = require('./AlgebraVector')
@@ -8,7 +9,13 @@ var AlgebraVector      = require('./AlgebraVector')
 
 function AlgebraVectorSpace(Element, dimension) {
 
-  // dimension
+  //
+  // ## Attributes
+  //
+
+  //
+  // ### dimension
+  //
 
   if (! (_.isNumber(dimension)))
     throw new TypeError()
@@ -17,7 +24,21 @@ function AlgebraVectorSpace(Element, dimension) {
 
   Object.defineProperty(this, 'dimension', {get: getDimension})
 
-  // Vector
+  //
+  // ### Vector
+  //
+  // It is an AlgebraVector constructor
+  //
+  // ```
+  // var vector = new space.Vector();
+  // ```
+
+    /* TODO metti link ad un esempio*/
+
+    /* TODO sarebbe da mettere in Object.defineProperty in modo da renderlo readonly ?
+     * Da notare infatti che + un attributo che ha come valore una funzione
+     * quindi anche se è una funzione, non è un metodo
+     */
 
   function Vector () {
     var arg0 = arguments[0]

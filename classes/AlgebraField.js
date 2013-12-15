@@ -2,7 +2,7 @@
 //
 // # AlgebraField
 //
-// It is an abstract algebra field.
+// Abstract algebra field.
 //
 // ## Examples
 //

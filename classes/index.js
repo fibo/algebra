@@ -1,4 +1,19 @@
 
+//
+// ## Inheritance hierarchy
+//
+// * AlgebraElement
+//   * RealElement
+//   * ComplexElement
+//   * QuaternionElement
+// * AlgebraField
+//   * RealField
+//   * ComplexField
+// * AlgebraTensor
+//   * AlgebraMatrix
+//     * AlgebraInvertibleMatrix
+//
+
 exports.AlgebraElement          = require('./AlgebraElement')
 exports.AlgebraField            = require('./AlgebraField')
 exports.AlgebraInvertibleMatrix = require('./AlgebraInvertibleMatrix')

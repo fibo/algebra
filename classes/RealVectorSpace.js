@@ -1,5 +1,7 @@
 
-// RealVectorSpace
+//
+// # RealVectorSpace
+//
 
 var AlgebraVectorSpace = require('./AlgebraVectorSpace')
   , RealElement        = require('./RealElement')

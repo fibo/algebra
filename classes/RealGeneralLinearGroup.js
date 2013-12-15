@@ -1,5 +1,7 @@
 
-// RealGeneralLinearGroup
+//
+// # RealGeneralLinearGroup
+//
 
 var GeneralLinearGroup = require('./GeneralLinearGroup')
   , RealElement        = require('./RealElement')

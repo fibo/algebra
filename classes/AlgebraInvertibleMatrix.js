@@ -1,4 +1,11 @@
 
+//
+// # AlgebraInvertibleMatrix
+//
+// Abstract invertible matrix.
+// It is a square matrix with determinant not equal to zero.
+//
+
 var AlgebraMatrix = require('./AlgebraMatrix')
   , inherits      = require('inherits')
   , _             = require('underscore')
@@ -7,7 +14,13 @@ var AlgebraMatrix = require('./AlgebraMatrix')
 function AlgebraInvertibleMatrix (Element, order, elements) {
   var self = this
 
-  // order
+  //
+  // ## Attributes
+  //
+
+  //
+  // ### order
+  //
 
   function getOrder () {
     return order
@@ -15,15 +28,17 @@ function AlgebraInvertibleMatrix (Element, order, elements) {
 
   Object.defineProperty(this, 'order', {get: getOrder})
 
-  // inheritance
-
   AlgebraMatrix.call(this, Element, [order, order], elements)
+
+  //
+  // ### determinant
+  //
 
   function getDeterminant () {
     return this.computeDeterminant(order, Element, self.elements)
   }
 
-  // TODO se il determinante è zero throw new Error()
+  /* TODO se il determinante è zero throw new Error() */
   Object.defineProperty(this, 'determinant', {get: getDeterminant})
 
 }
@@ -34,11 +49,11 @@ function computeDeterminant (order, Element, elements) {
 
   var det = new Element(0)
 
-  // cloning elements
+  /* cloning elements */
   for (var i in elements)
     elements[i] = elements[i].clone()
 
-  // TODO caso degenere, aggiusta
+  /* TODO caso degenere, aggiusta */
   if (order === 1)
     return elements[0]
 
@@ -47,8 +62,9 @@ function computeDeterminant (order, Element, elements) {
     return det
   }
 
-  // TODO per ora scelgo sempre la prima riga.
-  // TODO classe Collection con metodo countZeros o numberOfZeros()
+  /* TODO per ora scelgo sempre la prima riga.
+   TODO classe Collection con metodo countZeros o numberOfZeros()
+   */
   var rowIndex = 0
 
   for (var columnIndex = 0; columnIndex < order; columnIndex++) {
@@ -74,7 +90,7 @@ AlgebraInvertibleMatrix.prototype.computeDeterminant = computeDeterminant
 function getAdjointElements(rowIndex, columnIndex, numRows, numCols, elements) {
   var adjointElements = []
 
-  // TODO anche qua dovrei clonare in teoria ?
+  /* TODO anche qua dovrei clonare in teoria ? */
     for (var i = 0; i < numRows; i++) {
       for (var j = 0; j < numCols; j++) {
         if (i != rowIndex && j != columnIndex) {

@@ -2,6 +2,8 @@
 //
 // # RealTensor
 //
+// Tensor over the real field.
+//
 
 var AlgebraTensor = require('./AlgebraTensor')
   , RealElement   = require('./RealElement')

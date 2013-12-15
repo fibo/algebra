@@ -1,4 +1,14 @@
 
+//
+// # ComplexElement
+//
+// Element of the complex field.
+//
+// ## Examples
+//
+// * [complexNumbers](../examples/complexNumbers.html)
+//
+
 var AlgebraElement = require('./AlgebraElement')
   , Field          = require('./ComplexField')
   , inherits       = require('inherits')
@@ -21,6 +31,14 @@ function ComplexElement() {
 }
 
 inherits(ComplexElement, AlgebraElement)
+
+//
+// ## Methods
+//
+
+//
+// ### conjugation
+//
 
 function conjugation(element) {
   this.data = this.field.conjugation(this.data)

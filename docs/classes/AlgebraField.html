@@ -16,43 +16,45 @@
 </head>
 <body style>
 
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand">algebra</span>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="../">Home</a></li>
-          <li><a href="../classes">Classes</a></li>
-          <li><a href="../examples">Examples</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <!-- li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li -->
-          <li><a href="http://g14n.info">Site</a></li>
-          <!-- li class="active"><a href="./">Static top</a></li -->
-        </ul>
-      </div>
-    </div> <!-- div class="container" -->
 
-  </div> <!-- div class="navbar" -->
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">algebra</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
 
   <div class="container">
   <div class="row">
@@ -336,88 +338,46 @@
       
         
         
-        
       
         
         <h1 id="algebrafield">AlgebraField</h1>
-<p>It is an abstract algebra field.</p>
+<p>Abstract algebra field.</p>
 <h2 id="examples">Examples</h2>
 <ul>
-<li><a href="examples/algebraOverAnyField.html">Algebra over any field</a></li>
+<li><a href="../examples/algebraOverAnyField.html">Algebra over any field</a></li>
 </ul>
 
-        
-          <div class='highlight'><pre>
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span> <span class="params">(zero, one)</span> {</span></pre></div>
-        
       
         
         <h2 id="attributes">Attributes</h2>
 
-        
       
         
         <h3 id="zero">zero</h3>
 
-        
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getZero</span><span class="params">()</span> {</span> <span class="keyword">return</span> zero }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'zero'</span>, {get: getZero})</pre></div>
-        
       
         
         <h3 id="one">one</h3>
 
-        
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getOne</span><span class="params">()</span> {</span> <span class="keyword">return</span> one }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'one'</span>, {get: getOne})
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">abstractOperator</span><span class="params">()</span> {</span>
-  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'unimplemented abstract operator'</span>)
-}
-
-AlgebraField.prototype = {
-  addition       : abstractOperator,
-  add            : abstractOperator,
-  subtraction    : abstractOperator,
-  sub            : abstractOperator,
-  multiplication : abstractOperator,
-  mul            : abstractOperator,
-  division       : abstractOperator,
-  div            : abstractOperator,
-  equal          : abstractOperator,
-  eq             : abstractOperator,
-  notEqual       : abstractOperator,
-  ne             : abstractOperator,
-  inversion      : abstractOperator,
-  inv            : abstractOperator,
-  negation       : abstractOperator,
-  neg            : abstractOperator
-}
-
-module.exports = AlgebraField</pre></div>
-        
       
  
     </div>
   </div>
   </div>
 
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://code.jquery.com/jquery.js"></script>
- <!-- Latest compiled and minified JavaScript -->
- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
- <!-- Start of Google Analytics tracking code -->
- <script type="text/javascript">
 
-   var _gaq = _gaq || [];
-   _gaq.push(['_setAccount', 'UA-12635045-12']);
-   _gaq.push(['_trackPageview']);
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
 
    (function() {
      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -425,8 +385,8 @@ module.exports = AlgebraField</pre></div>
      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
    })();
 
- </script>
- <!-- End of Google Analytics tracking code -->
+  </script>
+  <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

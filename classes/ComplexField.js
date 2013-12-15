@@ -1,4 +1,10 @@
 
+//
+// # ComplexField
+//
+// The field of complex numbers.
+//
+
 var AlgebraField = require('./AlgebraField')
   , inherits     = require('inherits')
 

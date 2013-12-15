@@ -16,43 +16,45 @@
 </head>
 <body style>
 
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand">algebra</span>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="../">Home</a></li>
-          <li><a href="../classes">Classes</a></li>
-          <li><a href="../examples">Examples</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <!-- li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li -->
-          <li><a href="http://g14n.info">Site</a></li>
-          <!-- li class="active"><a href="./">Static top</a></li -->
-        </ul>
-      </div>
-    </div> <!-- div class="container" -->
 
-  </div> <!-- div class="navbar" -->
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">algebra</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
 
   <div class="container">
   <div class="row">
@@ -336,89 +338,58 @@
       
         
         
-        
       
         
-        <p>RealField</p>
+        <h1 id="realfield">RealField</h1>
+<p>The field of real numbers.</p>
 
-        
-          <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
-  , inherits     = require(<span class="string">'inherits'</span>)
-  , _            = require(<span class="string">'underscore'</span>)</pre></div>
-        
       
         
-        <p>constructor</p>
+        <h2 id="methods">Methods</h2>
 
-        
-          <div class='highlight'><pre>
-<span class="function"><span class="keyword">function</span> <span class="title">RealField</span><span class="params">()</span> {</span>
-  AlgebraField.call(<span class="keyword">this</span>, <span class="number">0</span>, <span class="number">1</span>)
-}
-
-inherits(RealField, AlgebraField)</pre></div>
-        
       
         
-        <p>addition</p>
+        <h3 id="addition">addition</h3>
 
+      
         
-          <div class='highlight'><pre><span class="function"><span class="keyword">function</span> <span class="title">addition</span> <span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> a + b
-}
-RealField.prototype.addition = addition
-RealField.prototype.add      = addition
+        <h3 id="subtraction">subtraction</h3>
 
-<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span> <span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> a - b
-}
-RealField.prototype.subtraction = subtraction
-RealField.prototype.sub         = subtraction
-
-<span class="function"><span class="keyword">function</span> <span class="title">multiplication</span> <span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> a * b
-}
-RealField.prototype.multiplication = multiplication
-RealField.prototype.mul      = multiplication
-
-<span class="function"><span class="keyword">function</span> <span class="title">division</span><span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> a / b
-}
-RealField.prototype.division = division
-RealField.prototype.div      = division
-
-<span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> a === b
-}
-RealField.prototype.equal = equal
-RealField.prototype.eq    = equal
-
-<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span><span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> a !== b
-}
-RealField.prototype.notEqual = notEqual
-RealField.prototype.ne       = notEqual
-
-module.exports = RealField</pre></div>
+      
         
+        <h3 id="multiplication">multiplication</h3>
+
+      
+        
+        <h3 id="division">division</h3>
+
+      
+        
+        <h3 id="equal">equal</h3>
+
+      
+        
+        <h3 id="notequal">notEqual</h3>
+
       
  
     </div>
   </div>
   </div>
 
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://code.jquery.com/jquery.js"></script>
- <!-- Latest compiled and minified JavaScript -->
- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
- <!-- Start of Google Analytics tracking code -->
- <script type="text/javascript">
 
-   var _gaq = _gaq || [];
-   _gaq.push(['_setAccount', 'UA-12635045-12']);
-   _gaq.push(['_trackPageview']);
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
 
    (function() {
      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -426,8 +397,8 @@ module.exports = RealField</pre></div>
      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
    })();
 
- </script>
- <!-- End of Google Analytics tracking code -->
+  </script>
+  <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

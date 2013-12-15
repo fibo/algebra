@@ -1,7 +1,12 @@
 
 // # AlgebraTensor
 //
-// It is an abstract algebra tensor.
+// Abstract algebra tensor.
+//
+// ## See also
+//
+// * [Tensor](http://en.wikipedia.org/wiki/Tensor)
+// * [Tensor product](http://en.wikipedia.org/wiki/Tensor_product)
 //
 
 var _ = require('underscore')
@@ -14,9 +19,11 @@ function AlgebraTensor(Element, indices, elements) {
     , one
     , field
 
-  // # Attributes
   //
-  // ## Element
+  // ## Attributes
+  //
+
+  // ### Element
 
   try {
     zero = new Element(0)
@@ -31,11 +38,11 @@ function AlgebraTensor(Element, indices, elements) {
   Object.defineProperty(this, 'Element', {get: getElement})
 
 
-  // ## field
+  //
+  // ### field
   //
   // it is an instance of algebrafield
   //
-  // field
 
   field = one.field
 
@@ -43,7 +50,9 @@ function AlgebraTensor(Element, indices, elements) {
 
   Object.defineProperty(this, 'field', {get: getField})
 
-  // elements
+  //
+  // ### elements
+  //
 
   if ((_.isUndefined(elements)))
     elements = []
@@ -55,13 +64,14 @@ function AlgebraTensor(Element, indices, elements) {
     var element = elements[i]
 
     if (element instanceof Element) {
-      // it is mandatory to clone elements, so every element refer to its own 
-      // object instance, otherwise can lead to weird behaviourswhen applying operators.
+      /* it is mandatory to clone elements, so every element refer to its own 
+       object instance, otherwise can lead to weird behaviourswhen applying operators.
+       */
       elements[i] = element.clone()
     }
     else {
       try {
-        // I suppose *element* is raw data
+        /* I suppose *element* is raw data */
         elements[i] = new Element(element)
       }
       catch (err) { throw err }
@@ -78,8 +88,9 @@ function AlgebraTensor(Element, indices, elements) {
 
   Object.defineProperty(this, 'elements', {get: getElements, set: setElements})
 
-
-  // # data
+  //
+  // ### data
+  //
 
   function getData () {
     var data = []
@@ -93,7 +104,9 @@ function AlgebraTensor(Element, indices, elements) {
 
   Object.defineProperty(this, 'data', {get: getData})
 
-  // indices
+  //
+  // ### indices
+  //
 
   if (_.isUndefined(indices))
     indices = [0]

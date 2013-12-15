@@ -1,4 +1,8 @@
 
+//
+// # QuaternionElement
+//
+
 var AlgebraElement = require('./AlgebraElement')
   , Field          = require('./QuaternionField')
   , inherits       = require('inherits')
@@ -23,5 +27,4 @@ function QuaternionElement () {
 inherits(QuaternionElement, AlgebraElement)
 
 module.exports = QuaternionElement
-
 

@@ -1,4 +1,8 @@
 
+//
+// # AlgebraMatrix
+//
+
 var AlgebraTensor = require('./AlgebraTensor')
   , inherits      = require('inherits')
   , _             = require('underscore')
@@ -11,12 +15,20 @@ function AlgebraMatrix (Element, dimensionArray, elements) {
 
   var self = this
 
-  // elements
+  //
+  // ## Attributes
+  //
+
+  //
+  // ### elements
+  //
 
   if (! (_.isArray(elements)))
     throw new TypeError()
 
-  // numberOfColumns
+  //
+  // ### numberOfColumns
+  //
 
   function getNumberOfColumns () {
     return dimensionArray[0]
@@ -24,7 +36,9 @@ function AlgebraMatrix (Element, dimensionArray, elements) {
 
   Object.defineProperty(this, 'numberOfColumns', {get: getNumberOfColumns})
 
-  // numberOfRows
+  //
+  // ### numberOfRows
+  //
 
   function getNumberOfRows () {
     return dimensionArray[1]
@@ -32,12 +46,14 @@ function AlgebraMatrix (Element, dimensionArray, elements) {
 
   Object.defineProperty(this, 'numberOfRows', {get: getNumberOfRows})
 
-  // inheritance
-
   AlgebraTensor.call(this, Element, dimensionArray, elements)
 }
 
 inherits(AlgebraMatrix, AlgebraTensor)
+
+//
+// ## Methods
+//
 
 function rowByColumnMultiplication (leftMatrix, rightMatrix) {
 
@@ -57,9 +73,10 @@ function rowByColumnMultiplication (leftMatrix, rightMatrix) {
       var element = new Element(0)
 
       for (var k = 0; k < lNumCols; k++) {
-        // TODO funzione generica di somma sugli indici, tipo notazione di Einstein.
-        //var rightElement = leftMatrix.ij(i, k);
-        //var leftElement = rightMatrix.ij(k, j);
+        /* TODO funzione generica di somma sugli indici, tipo notazione di Einstein.
+        var rightElement = leftMatrix.ij(i, k);
+        var leftElement = rightMatrix.ij(k, j);
+        */
         var rightElementData = leftMatrix.data[matrixToArrayIndex(i, k, rightMatrix.numberOfColumns)]
           , leftElementData = rightMatrix.data[matrixToArrayIndex(k, j, lNumCols)]
 
@@ -72,6 +89,10 @@ function rowByColumnMultiplication (leftMatrix, rightMatrix) {
 
   return elements
 }
+
+//
+// ### multiplication
+//
 
 function multiplication (matrix) {
   var newElements = rowByColumnMultiplication(this, matrix)

@@ -16,43 +16,45 @@
 </head>
 <body style>
 
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand">algebra</span>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="../">Home</a></li>
-          <li><a href="../classes">Classes</a></li>
-          <li><a href="../examples">Examples</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <!-- li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li -->
-          <li><a href="http://g14n.info">Site</a></li>
-          <!-- li class="active"><a href="./">Static top</a></li -->
-        </ul>
-      </div>
-    </div> <!-- div class="container" -->
 
-  </div> <!-- div class="navbar" -->
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">algebra</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
 
   <div class="container">
   <div class="row">
@@ -336,137 +338,64 @@
       
         
         
+      
         
-          <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
-  , inherits     = require(<span class="string">'inherits'</span>)
+        <h1 id="complexfield">ComplexField</h1>
+<p>The field of complex numbers.</p>
 
-<span class="function"><span class="keyword">function</span> <span class="title">ComplexField</span> <span class="params">()</span> {</span>
-  AlgebraField.call(<span class="keyword">this</span>, [<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>])
-}
-
-inherits(ComplexField, AlgebraField)
-
-<span class="function"><span class="keyword">function</span> <span class="title">addition</span><span class="params">(z, w)</span> {</span></pre></div>
-        
       
         
         <p>z + w = (z0 + i z1) + (w0 + i w1)
       = (z0 + w0) + i (z1 + w1)</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] + w[<span class="number">0</span>], z[<span class="number">1</span>] + w[<span class="number">1</span>]]
-}
-ComplexField.prototype.addition = addition
-ComplexField.prototype.add      = addition
-
-<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span><span class="params">(z, w)</span> {</span></pre></div>
-        
       
         
         <p>z - w = (z0 + i z1) - (w0 + i w1)
       = (z0 - w0) + i (z1 - w1)</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] - w[<span class="number">0</span>], z[<span class="number">1</span>] - w[<span class="number">1</span>]]
-}
-ComplexField.prototype.subtraction = subtraction
-ComplexField.prototype.sub         = subtraction
-
-<span class="function"><span class="keyword">function</span> <span class="title">multiplication</span><span class="params">(z, w)</span> {</span></pre></div>
-        
       
         
         <p>z <em> w = (z0 + i z1) </em> (w0 + i w1)
       = z0 <em> w0 + z0 </em> i w1 + i z1 <em> w0 + i z1 </em> i w1
       = (z0 <em> w0 - z1 </em> w1) + i (z0 <em> w1 + z1 </em> w0)</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] * w[<span class="number">0</span>] - z[<span class="number">1</span>] * w[<span class="number">1</span>], z[<span class="number">0</span>] * w[<span class="number">1</span>] + z[<span class="number">1</span>] * w[<span class="number">0</span>]]
-}
-ComplexField.prototype.multiplication = multiplication
-ComplexField.prototype.mul            = multiplication
-
-<span class="function"><span class="keyword">function</span> <span class="title">division</span><span class="params">(z, w)</span> {</span></pre></div>
-        
       
         
         <p>z / w = z * w^-1</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> multiplication(z, inversion(w))
-}
-ComplexField.prototype.division = division
-ComplexField.prototype.div      = division
-
-<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(z)</span> {</span></pre></div>
-        
       
         
         <p>z~ = (z0 + i z1)~
    = z0 - i z1</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>], - z[<span class="number">1</span>]]
-}
-ComplexField.prototype.conjugation = conjugation
-ComplexField.prototype.conj        = conjugation
-
-<span class="function"><span class="keyword">function</span> <span class="title">norm</span><span class="params">(z)</span> {</span></pre></div>
-        
       
         
         <p>|z| = |z0 + i z1|
     = z0 <em> z0 + z1 </em> z1</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> z[<span class="number">0</span>] * z[<span class="number">0</span>] + z[<span class="number">1</span>] * z[<span class="number">1</span>]
-}
-ComplexField.prototype.norm = norm
-
-<span class="function"><span class="keyword">function</span> <span class="title">inversion</span><span class="params">(z)</span> {</span></pre></div>
-        
       
         
         <p>z^-1 = z~ * 1 / |z|</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> multiplication(conjugation(z), [<span class="number">1</span> / norm(z), <span class="number">0</span>])
-}
-ComplexField.prototype.inversion = inversion
-ComplexField.prototype.inv       = inversion
-
-<span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(z, w)</span> {</span>
-  <span class="keyword">return</span> z[<span class="number">0</span>] === w[<span class="number">0</span>] &amp;&amp; z[<span class="number">1</span>] === w[<span class="number">1</span>]
-}
-ComplexField.prototype.equal = equal
-ComplexField.prototype.eq    = equal
-
-<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span><span class="params">(z, w)</span> {</span>
-  <span class="keyword">return</span> z[<span class="number">0</span>] !== w[<span class="number">0</span>] || z[<span class="number">1</span>] !== w[<span class="number">1</span>]
-}
-ComplexField.prototype.notEqual = notEqual
-ComplexField.prototype.ne       = notEqual
-
-module.exports = ComplexField</pre></div>
-        
       
  
     </div>
   </div>
   </div>
 
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://code.jquery.com/jquery.js"></script>
- <!-- Latest compiled and minified JavaScript -->
- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
- <!-- Start of Google Analytics tracking code -->
- <script type="text/javascript">
 
-   var _gaq = _gaq || [];
-   _gaq.push(['_setAccount', 'UA-12635045-12']);
-   _gaq.push(['_trackPageview']);
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
 
    (function() {
      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -474,8 +403,8 @@ module.exports = ComplexField</pre></div>
      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
    })();
 
- </script>
- <!-- End of Google Analytics tracking code -->
+  </script>
+  <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

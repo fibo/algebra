@@ -1,4 +1,8 @@
 
+//
+// # QuaternionField
+//
+
 var AlgebraField = require('./AlgebraField')
   , inherits     = require('inherits')
 

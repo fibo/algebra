@@ -1,8 +1,8 @@
 
 templates =
   index: '../fibo.github.io/templates/index.jst'
-  classes: '../fibo.github.io/templates/docco.jst'
-  examples: '../fibo.github.io/templates/docco.jst'
+  classes: '../fibo.github.io/templates/classes.jst'
+  examples: '../fibo.github.io/templates/examples.jst'
 
 assets =
   css: '../fibo.github.io/css/*'

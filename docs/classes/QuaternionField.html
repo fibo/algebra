@@ -16,43 +16,45 @@
 </head>
 <body style>
 
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand">algebra</span>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="../">Home</a></li>
-          <li><a href="../classes">Classes</a></li>
-          <li><a href="../examples">Examples</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <!-- li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li -->
-          <li><a href="http://g14n.info">Site</a></li>
-          <!-- li class="active"><a href="./">Static top</a></li -->
-        </ul>
-      </div>
-    </div> <!-- div class="container" -->
 
-  </div> <!-- div class="navbar" -->
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">algebra</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
 
   <div class="container">
   <div class="row">
@@ -336,93 +338,34 @@
       
         
         
+      
         
-          <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
-  , inherits     = require(<span class="string">'inherits'</span>)
+        <h1 id="quaternionfield">QuaternionField</h1>
 
-<span class="function"><span class="keyword">function</span> <span class="title">QuaternionField</span> <span class="params">()</span> {</span>
-  AlgebraField.call(<span class="keyword">this</span>, [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>])
-}
-
-inherits(QuaternionField, AlgebraField)
-
-<span class="function"><span class="keyword">function</span> <span class="title">addition</span><span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> [
-    a[<span class="number">0</span>] + b[<span class="number">0</span>],
-    a[<span class="number">1</span>] + b[<span class="number">1</span>],
-    a[<span class="number">2</span>] + b[<span class="number">2</span>],
-    a[<span class="number">3</span>] + b[<span class="number">3</span>]
-  ]
-}
-QuaternionField.prototype.addition = addition
-QuaternionField.prototype.add      = addition
-
-<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span><span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> [
-    a[<span class="number">0</span>] - b[<span class="number">0</span>],
-    a[<span class="number">1</span>] - b[<span class="number">1</span>],
-    a[<span class="number">2</span>] - b[<span class="number">2</span>],
-    a[<span class="number">3</span>] - b[<span class="number">3</span>]
-  ]
-}
-QuaternionField.prototype.subtraction = subtraction
-QuaternionField.prototype.sub         = subtraction
-
-<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(q)</span> {</span></pre></div>
-        
       
         
         <p>z~ = (q0 + i q1 + j q2 + k q3)~
    = q0 - i q1 - j q2 - k q3</p>
 
-        
-          <div class='highlight'><pre>  <span class="keyword">return</span> [q[<span class="number">0</span>], - q[<span class="number">1</span>], - q[<span class="number">2</span>], - q[<span class="number">3</span>]]
-}
-QuaternionField.prototype.conjugation = conjugation
-QuaternionField.prototype.conj        = conjugation
-
-<span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> (
-    a[<span class="number">0</span>] === b[<span class="number">0</span>] &amp;&amp;
-    a[<span class="number">1</span>] === b[<span class="number">1</span>] &amp;&amp;
-    a[<span class="number">2</span>] === b[<span class="number">2</span>] &amp;&amp;
-    a[<span class="number">3</span>] === b[<span class="number">3</span>]
-  )
-}
-QuaternionField.prototype.equal = equal
-QuaternionField.prototype.eq    = equal
-
-<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span><span class="params">(a, b)</span> {</span>
-  <span class="keyword">return</span> (
-    a[<span class="number">0</span>] !== b[<span class="number">0</span>] ||
-    a[<span class="number">1</span>] !== b[<span class="number">1</span>] ||
-    a[<span class="number">2</span>] !== b[<span class="number">2</span>] ||
-    a[<span class="number">3</span>] !== b[<span class="number">3</span>]
-  )
-}
-QuaternionField.prototype.notEqual = notEqual
-QuaternionField.prototype.ne    = notEqual
-
-module.exports = QuaternionField</pre></div>
-        
       
  
     </div>
   </div>
   </div>
 
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://code.jquery.com/jquery.js"></script>
- <!-- Latest compiled and minified JavaScript -->
- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
- <!-- Start of Google Analytics tracking code -->
- <script type="text/javascript">
 
-   var _gaq = _gaq || [];
-   _gaq.push(['_setAccount', 'UA-12635045-12']);
-   _gaq.push(['_trackPageview']);
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
 
    (function() {
      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -430,8 +373,8 @@ module.exports = QuaternionField</pre></div>
      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
    })();
 
- </script>
- <!-- End of Google Analytics tracking code -->
+  </script>
+  <!-- End of Google Analytics tracking code -->
 
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>RealVector.js</title>
+  <title>AlgebraField.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>RealVector.js</h1>
+      <h1>AlgebraField.js</h1>
  
       
  
@@ -339,33 +339,59 @@
         
       
         
-        <p>RealVector</p>
+        <h1 id="algebrafield">AlgebraField</h1>
+<p>It is an abstract algebra field.</p>
 
         
           <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraVector = require(<span class="string">'./AlgebraVector'</span>)
-  , RealElement   = require(<span class="string">'./RealElement'</span>)
-  , inherits      = require(<span class="string">'inherits'</span>)
-  , _             = require(<span class="string">'underscore'</span>)
-
-<span class="function"><span class="keyword">function</span> <span class="title">RealVector</span><span class="params">()</span> {</span>
-  <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
-    , numArgs = arguments.length
-    , elements = []
-
-  <span class="keyword">if</span> ((numArgs === <span class="number">1</span>) &amp;&amp; (_.isArray(arg0)))
-    elements = arg0
-
-  <span class="keyword">if</span> (numArgs &gt; <span class="number">1</span>)
-    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arguments)
-      elements.push(arguments[i])
-
-  AlgebraVector.call(<span class="keyword">this</span>, RealElement, elements)
+<span class="function"><span class="keyword">function</span> <span class="title">abstractOperator</span><span class="params">()</span> {</span>
+  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'unimplemented abstract operator'</span>)
 }
 
-inherits(RealVector, AlgebraVector)
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span><span class="params">(zero, one)</span> {</span></pre></div>
+        
+      
+        
+        <h1 id="attributes">Attributes</h1>
+<h2 id="zero">zero</h2>
 
-module.exports = RealVector</pre></div>
+        
+          <div class='highlight'><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">getZero</span><span class="params">()</span> {</span> <span class="keyword">return</span> zero }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'zero'</span>, {get: getZero})</pre></div>
+        
+      
+        
+        <h2 id="one">one</h2>
+
+        
+          <div class='highlight'><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">getOne</span><span class="params">()</span> {</span> <span class="keyword">return</span> one }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'one'</span>, {get: getOne})
+}
+
+AlgebraField.prototype = {
+  addition       : abstractOperator,
+  add            : abstractOperator,
+  subtraction    : abstractOperator,
+  sub            : abstractOperator,
+  multiplication : abstractOperator,
+  mul            : abstractOperator,
+  division       : abstractOperator,
+  div            : abstractOperator,
+  equal          : abstractOperator,
+  eq             : abstractOperator,
+  notEqual       : abstractOperator,
+  ne             : abstractOperator,
+  inversion      : abstractOperator,
+  inv            : abstractOperator,
+  negation       : abstractOperator,
+  neg            : abstractOperator
+}
+
+module.exports = AlgebraField</pre></div>
         
       
  

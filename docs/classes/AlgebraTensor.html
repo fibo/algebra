@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AlgebraVVectorSpace</title>
+  <title>AlgebraTensor.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -58,17 +58,9 @@
   <div class="row">
     <!-- div class="header">
       
-      
-      <h1 id="algebravvectorspace">AlgebraVVectorSpace</h1>
-
-      
-      <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraVector      = require(<span class="string">'./AlgebraVector'</span>)
-  , inherits           = require(<span class="string">'inherits'</span>)
-  , _                  = require(<span class="string">'underscore'</span>)
-
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraVectorSpace</span><span class="params">(Element, dimension)</span> {</span></pre></div>
-      
+ 
+      <h1>AlgebraTensor.js</h1>
+ 
       
  
     </div -->
@@ -343,44 +335,169 @@
 
       
         
-        <p>dimension</p>
-
         
-          <div class='highlight'><pre>
-  <span class="keyword">if</span> (! (_.isNumber(dimension)))
-    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getDimension</span> <span class="params">()</span> {</span> <span class="keyword">return</span> dimension }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'dimension'</span>, {get: getDimension})</pre></div>
         
       
         
-        <p>Vector</p>
+        <h1 id="algebratensor">AlgebraTensor</h1>
+<p>It is an abstract algebra tensor.</p>
 
         
           <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">Vector</span> <span class="params">()</span> {</span>
-    <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
-      , numArgs = arguments.length
-      , elements = []
+<span class="keyword">var</span> _ = require(<span class="string">'underscore'</span>)
 
-    <span class="keyword">if</span> ((numArgs === <span class="number">1</span>) &amp;&amp; (_.isArray(arg0)))
-      elements = arg0
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraTensor</span><span class="params">(Element, indices, elements)</span> {</span>
+  <span class="keyword">if</span> (arguments.length === <span class="number">0</span>)
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
 
-    <span class="keyword">if</span> (numArgs &gt; <span class="number">1</span>)
-      <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arguments)
-        elements.push(arguments[i])
+  <span class="keyword">var</span> zero
+    , one
+    , field</pre></div>
+        
+      
+        
+        <h1 id="attributes">Attributes</h1>
+<h2 id="element">Element</h2>
 
-    AlgebraVector.call(<span class="keyword">this</span>, Element, elements)
+        
+          <div class='highlight'><pre>
+  <span class="keyword">try</span> {
+    zero = <span class="keyword">new</span> Element(<span class="number">0</span>)
+    one  = <span class="keyword">new</span> Element(<span class="number">1</span>)
+  }
+  <span class="keyword">catch</span> (ignore) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
   }
 
-  inherits(Vector, AlgebraVector)
+  <span class="function"><span class="keyword">function</span> <span class="title">getElement</span> <span class="params">()</span> {</span> <span class="keyword">return</span> Element }
 
-  <span class="keyword">this</span>.Vector = Vector
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'Element'</span>, {get: getElement})</pre></div>
+        
+      
+        
+        <h2 id="field">field</h2>
+<p>it is an instance of algebrafield</p>
+<p>field</p>
+
+        
+          <div class='highlight'><pre>
+  field = one.field
+
+  <span class="function"><span class="keyword">function</span> <span class="title">getField</span><span class="params">()</span> {</span> <span class="keyword">return</span> field }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'field'</span>, {get: getField})</pre></div>
+        
+      
+        
+        <p>elements</p>
+
+        
+          <div class='highlight'><pre>
+  <span class="keyword">if</span> ((_.isUndefined(elements)))
+    elements = []
+
+  <span class="keyword">if</span> (! (_.isArray(elements)))
+    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements) {
+    <span class="keyword">var</span> element = elements[i]
+
+    <span class="keyword">if</span> (element <span class="keyword">instanceof</span> Element) {</pre></div>
+        
+      
+        
+        <p>it is mandatory to clone elements, so every element refer to its own 
+object instance, otherwise can lead to weird behaviourswhen applying operators.</p>
+
+        
+          <div class='highlight'><pre>      elements[i] = element.clone()
+    }
+    <span class="keyword">else</span> {
+      <span class="keyword">try</span> {</pre></div>
+        
+      
+        
+        <p>I suppose <em>element</em> is raw data</p>
+
+        
+          <div class='highlight'><pre>        elements[i] = <span class="keyword">new</span> Element(element)
+      }
+      <span class="keyword">catch</span> (err) { <span class="keyword">throw</span> err }
+    }
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">getElements</span> <span class="params">()</span> {</span> <span class="keyword">return</span> elements }
+
+  <span class="comment">/* TODO; non mi piace molto, ma, mi serve per AlgebraMatrix per l momento
+   magari dovrei solo abbellirla
+   */</span>
+
+  <span class="function"><span class="keyword">function</span> <span class="title">setElements</span> <span class="params">(newElements)</span> {</span> elements = newElements }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'elements'</span>, {get: getElements, set: setElements})</pre></div>
+        
+      
+        
+        <h1 id="data">data</h1>
+
+        
+          <div class='highlight'><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">getData</span> <span class="params">()</span> {</span>
+    <span class="keyword">var</span> data = []
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements) {
+      data.push(elements[i].data)
+    }
+
+    <span class="keyword">return</span> data
+  }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'data'</span>, {get: getData})</pre></div>
+        
+      
+        
+        <p>indices</p>
+
+        
+          <div class='highlight'><pre>
+  <span class="keyword">if</span> (_.isUndefined(indices))
+    indices = [<span class="number">0</span>]
+
+  <span class="function"><span class="keyword">function</span> <span class="title">getIndices</span> <span class="params">()</span> {</span> <span class="keyword">return</span> indices }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'indices'</span>, {get: getIndices})
 }
 
-module.exports = AlgebraVectorSpace</pre></div>
+<span class="function"><span class="keyword">function</span> <span class="title">addition</span> <span class="params">(tensor)</span> {</span>
+  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.elements)
+    <span class="keyword">this</span>.elements[i].addition(tensor.elements[i])
+
+  <span class="keyword">return</span> <span class="keyword">this</span>
+}
+AlgebraTensor.prototype.addition = addition
+AlgebraTensor.prototype.add      = addition
+
+<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span> <span class="params">(tensor)</span> {</span>
+  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.elements)
+    <span class="keyword">this</span>.elements[i].subtraction(tensor.elements[i])
+
+  <span class="keyword">return</span> <span class="keyword">this</span>
+}
+AlgebraTensor.prototype.subtraction = subtraction
+AlgebraTensor.prototype.sub         = subtraction
+
+<span class="function"><span class="keyword">function</span> <span class="title">computeIndex</span> <span class="params">(positions)</span> {</span>
+  <span class="keyword">var</span> index = positions[<span class="number">0</span>]
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; indices.length - <span class="number">1</span>; i++)
+    index = index * indices[i] + positions[i + <span class="number">1</span>]
+
+  <span class="keyword">return</span> index
+}
+
+AlgebraTensor.prototype.computeIndex = computeIndex
+
+module.exports = AlgebraTensor</pre></div>
         
       
  

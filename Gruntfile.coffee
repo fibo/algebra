@@ -1,7 +1,7 @@
 
 templates =
   index: '../fibo.github.io/templates/index.jst'
-  sources: '../fibo.github.io/templates/docco.jst'
+  classes: '../fibo.github.io/templates/docco.jst'
   examples: '../fibo.github.io/templates/docco.jst'
 
 assets =
@@ -21,7 +21,7 @@ module.exports = (grunt) ->
         tasks: 'copy'
 
       templates:
-        files: [templates.examples, templates.index, templates.sources]
+        files: [templates.examples, templates.index, templates.classes]
         tasks: 'docco'
 
       examples:
@@ -197,11 +197,11 @@ module.exports = (grunt) ->
         options:
           template: templates.examples
           output: 'docs/examples'
-      sources:
+      classes:
         src: ['lib/*.js']
         options:
-          template: templates.sources
-          output: 'docs/sources'
+          template: templates.classes
+          output: 'docs/classes'
 
     jshint:
       options: grunt.file.readJSON('.jshintrc')

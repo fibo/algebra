@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>GeneralLinearGroup.js</title>
+  <title>RealVectorSpace.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>GeneralLinearGroup.js</h1>
+      <h1>RealVectorSpace.js</h1>
  
       
  
@@ -339,36 +339,21 @@
         
       
         
-        <p>GeneralLinearGroup</p>
+        <p>RealVectorSpace</p>
 
         
           <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraInvertibleMatrix = require(<span class="string">'./AlgebraInvertibleMatrix'</span>)
-  , inherits                = require(<span class="string">'inherits'</span>)
+<span class="keyword">var</span> AlgebraVectorSpace = require(<span class="string">'./AlgebraVectorSpace'</span>)
+  , RealElement        = require(<span class="string">'./RealElement'</span>)
+  , inherits           = require(<span class="string">'inherits'</span>)
 
-<span class="function"><span class="keyword">function</span> <span class="title">GeneralLinearGroup</span><span class="params">(Element, degree)</span> {</span>
-
-  <span class="function"><span class="keyword">function</span> <span class="title">Matrix</span> <span class="params">()</span> {</span>
-    <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
-      , numArgs = arguments.length
-      , elements = []
-
-    <span class="keyword">if</span> ((numArgs === <span class="number">1</span>) &amp;&amp; (_.isArray(arg0)))
-      elements = arg0
-
-    <span class="keyword">if</span> (numArgs &gt; <span class="number">1</span>)
-      <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arguments)
-        elements.push(arguments[i])
-
-    AlgebraInvertibleMatrix.call(<span class="keyword">this</span>, Element, degree, elements)
-  }
-
-  inherits(Matrix, AlgebraInvertibleMatrix)
-
-  <span class="keyword">this</span>.Matrix = Matrix
+<span class="function"><span class="keyword">function</span> <span class="title">RealVectorSpace</span><span class="params">(dimension)</span> {</span>
+  AlgebraVectorSpace.call(<span class="keyword">this</span>, RealElement, dimension)
 }
 
-module.exports = GeneralLinearGroup</pre></div>
+inherits(RealVectorSpace, AlgebraVectorSpace)
+
+module.exports = RealVectorSpace</pre></div>
         
       
  

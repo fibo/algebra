@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>RealVectorSpace.js</title>
+  <title>AlgebraVector.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>RealVectorSpace.js</h1>
+      <h1>AlgebraVector.js</h1>
  
       
  
@@ -337,23 +337,44 @@
         
         
         
+          <div class='highlight'><pre>
+<span class="keyword">var</span> AlgebraTensor = require(<span class="string">'./AlgebraTensor'</span>)
+  , inherits      = require(<span class="string">'inherits'</span>)
+  , _             = require(<span class="string">'underscore'</span>)
+
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraVector</span><span class="params">(Element, elements)</span> {</span></pre></div>
+        
       
         
-        <p>RealVectorSpace</p>
+        <p>elements</p>
 
         
           <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraVectorSpace = require(<span class="string">'./AlgebraVectorSpace'</span>)
-  , RealElement        = require(<span class="string">'./RealElement'</span>)
-  , inherits           = require(<span class="string">'inherits'</span>)
+  <span class="keyword">if</span> (! (_.isArray(elements)))
+    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()</pre></div>
+        
+      
+        
+        <p>dimension</p>
 
-<span class="function"><span class="keyword">function</span> <span class="title">RealVectorSpace</span><span class="params">(dimension)</span> {</span>
-  AlgebraVectorSpace.call(<span class="keyword">this</span>, RealElement, dimension)
+        
+          <div class='highlight'><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">getDimension</span><span class="params">()</span> {</span> <span class="keyword">return</span> elements.length }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'dimension'</span>, {get: getDimension})</pre></div>
+        
+      
+        
+        <p>inheritance</p>
+
+        
+          <div class='highlight'><pre>
+  AlgebraTensor.call(<span class="keyword">this</span>, Element, [<span class="keyword">this</span>.dimension], elements)
 }
 
-inherits(RealVectorSpace, AlgebraVectorSpace)
+inherits(AlgebraVector, AlgebraTensor)
 
-module.exports = RealVectorSpace</pre></div>
+module.exports = AlgebraVector</pre></div>
         
       
  

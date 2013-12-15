@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>RealGeneralLinearGroup.js</title>
+  <title>AlgebraInvertibleMatrix.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>RealGeneralLinearGroup.js</h1>
+      <h1>AlgebraInvertibleMatrix.js</h1>
  
       
  
@@ -337,23 +337,123 @@
         
         
         
+          <div class='highlight'><pre>
+<span class="keyword">var</span> AlgebraMatrix = require(<span class="string">'./AlgebraMatrix'</span>)
+  , inherits      = require(<span class="string">'inherits'</span>)
+  , _             = require(<span class="string">'underscore'</span>)
+
+
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraInvertibleMatrix</span> <span class="params">(Element, order, elements)</span> {</span>
+  <span class="keyword">var</span> self = <span class="keyword">this</span></pre></div>
+        
       
         
-        <p>RealGeneralLinearGroup</p>
+        <p>order</p>
 
         
           <div class='highlight'><pre>
-<span class="keyword">var</span> GeneralLinearGroup = require(<span class="string">'./GeneralLinearGroup'</span>)
-  , RealElement        = require(<span class="string">'./RealElement'</span>)
-  , inherits           = require(<span class="string">'inherits'</span>)
+  <span class="function"><span class="keyword">function</span> <span class="title">getOrder</span> <span class="params">()</span> {</span>
+    <span class="keyword">return</span> order
+  }
 
-<span class="function"><span class="keyword">function</span> <span class="title">RealGeneralLinearGroup</span><span class="params">(degree)</span> {</span>
-  GeneralLinearGroup.call(<span class="keyword">this</span>, RealElement, degree)
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'order'</span>, {get: getOrder})</pre></div>
+        
+      
+        
+        <p>inheritance</p>
+
+        
+          <div class='highlight'><pre>
+  AlgebraMatrix.call(<span class="keyword">this</span>, Element, [order, order], elements)
+
+  <span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
+    <span class="keyword">return</span> <span class="keyword">this</span>.computeDeterminant(order, Element, self.elements)
+  }</pre></div>
+        
+      
+        
+        <p>TODO se il determinante è zero throw new Error()</p>
+
+        
+          <div class='highlight'><pre>  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
+
 }
 
-inherits(RealGeneralLinearGroup, GeneralLinearGroup)
+inherits(AlgebraInvertibleMatrix, AlgebraMatrix)
 
-module.exports = RealGeneralLinearGroup</pre></div>
+<span class="function"><span class="keyword">function</span> <span class="title">computeDeterminant</span> <span class="params">(order, Element, elements)</span> {</span>
+
+  <span class="keyword">var</span> det = <span class="keyword">new</span> Element(<span class="number">0</span>)</pre></div>
+        
+      
+        
+        <p>cloning elements</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements)
+    elements[i] = elements[i].clone()</pre></div>
+        
+      
+        
+        <p>TODO caso degenere, aggiusta</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
+    <span class="keyword">return</span> elements[<span class="number">0</span>]
+
+  <span class="keyword">if</span> (order === <span class="number">2</span>) {
+    det.add(elements[<span class="number">0</span>].mul(elements[<span class="number">3</span>])).sub(elements[<span class="number">2</span>].mul(elements[<span class="number">1</span>]))
+    <span class="keyword">return</span> det
+  }</pre></div>
+        
+      
+        
+        <p>TODO per ora scelgo sempre la prima riga.
+TODO classe Collection con metodo countZeros o numberOfZeros()</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> columnIndex = <span class="number">0</span>; columnIndex &lt; order; columnIndex++) {
+    <span class="keyword">var</span> adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, elements)
+
+    <span class="keyword">var</span> adjointDeterminant = <span class="keyword">this</span>.computeDeterminant(order - <span class="number">1</span>, adjointElements);
+
+    element = elements[<span class="keyword">this</span>.computeIndex([rowIndex, columnIndex])];
+
+    <span class="keyword">if</span> (columnIndex % <span class="number">2</span> === <span class="number">0</span>)
+      det.add(element)
+    <span class="keyword">else</span>
+      det.sub(element)
+
+    det.mul(adjointDeterminant)
+  }
+
+  <span class="keyword">return</span> det
+}
+
+AlgebraInvertibleMatrix.prototype.computeDeterminant = computeDeterminant
+
+<span class="function"><span class="keyword">function</span> <span class="title">getAdjointElements</span><span class="params">(rowIndex, columnIndex, numRows, numCols, elements)</span> {</span>
+  <span class="keyword">var</span> adjointElements = []</pre></div>
+        
+      
+        
+        <p>TODO anche qua dovrei clonare in teoria ?</p>
+
+        
+          <div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numRows; i++) {
+      <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; numCols; j++) {
+        <span class="keyword">if</span> (i != rowIndex &amp;&amp; j != columnIndex) {
+          adjointElements.push(elements[<span class="keyword">this</span>.computeIndex([i, j])])
+        }
+      }
+    }
+
+  <span class="keyword">return</span> adjointElements
+}
+
+module.exports = AlgebraInvertibleMatrix</pre></div>
         
       
  

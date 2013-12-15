@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AlgebraMatrix.js</title>
+  <title>RealTensor.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>AlgebraMatrix.js</h1>
+      <h1>RealTensor.js</h1>
  
       
  
@@ -337,114 +337,23 @@
         
         
         
+      
+        
+        <p>RealTensor</p>
+
+        
           <div class='highlight'><pre>
 <span class="keyword">var</span> AlgebraTensor = require(<span class="string">'./AlgebraTensor'</span>)
+  , RealElement   = require(<span class="string">'./RealElement'</span>)
   , inherits      = require(<span class="string">'inherits'</span>)
-  , _             = require(<span class="string">'underscore'</span>)
 
-<span class="function"><span class="keyword">function</span> <span class="title">matrixToArrayIndex</span> <span class="params">(i, j, numberOfColumns)</span> {</span>
-  <span class="keyword">return</span> i * numberOfColumns + j
+<span class="function"><span class="keyword">function</span> <span class="title">RealTensor</span><span class="params">(elements, indices)</span> {</span>
+  AlgebraTensor.call(<span class="keyword">this</span>, RealElement, indices, elements)
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraMatrix</span> <span class="params">(Element, dimensionArray, elements)</span> {</span>
+inherits(RealTensor, AlgebraTensor)
 
-  <span class="keyword">var</span> self = <span class="keyword">this</span></pre></div>
-        
-      
-        
-        <p>elements</p>
-
-        
-          <div class='highlight'><pre>
-  <span class="keyword">if</span> (! (_.isArray(elements)))
-    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()</pre></div>
-        
-      
-        
-        <p>numberOfColumns</p>
-
-        
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getNumberOfColumns</span> <span class="params">()</span> {</span>
-    <span class="keyword">return</span> dimensionArray[<span class="number">0</span>]
-  }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'numberOfColumns'</span>, {get: getNumberOfColumns})</pre></div>
-        
-      
-        
-        <p>numberOfRows</p>
-
-        
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getNumberOfRows</span> <span class="params">()</span> {</span>
-    <span class="keyword">return</span> dimensionArray[<span class="number">1</span>]
-  }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'numberOfRows'</span>, {get: getNumberOfRows})</pre></div>
-        
-      
-        
-        <p>inheritance</p>
-
-        
-          <div class='highlight'><pre>
-  AlgebraTensor.call(<span class="keyword">this</span>, Element, dimensionArray, elements)
-}
-
-inherits(AlgebraMatrix, AlgebraTensor)
-
-<span class="function"><span class="keyword">function</span> <span class="title">rowByColumnMultiplication</span> <span class="params">(leftMatrix, rightMatrix)</span> {</span>
-
-  <span class="keyword">var</span> rNumRows = rightMatrix.numberOfRows
-    , lNumCols = leftMatrix.numberOfColumns
-
-  <span class="keyword">if</span> (lNumCols !== rNumRows)
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
-
-  <span class="keyword">var</span> elements = []
-    , Element  = leftMatrix.Element
-    , field    = leftMatrix.field
-
-
-  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; lNumCols; i++) {
-    <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; rNumRows; j++) {
-      <span class="keyword">var</span> element = <span class="keyword">new</span> Element(<span class="number">0</span>)
-
-      <span class="keyword">for</span> (<span class="keyword">var</span> k = <span class="number">0</span>; k &lt; lNumCols; k++) {</pre></div>
-        
-      
-        
-        <p>TODO funzione generica di somma sugli indici, tipo notazione di Einstein.
-var rightElement = leftMatrix.ij(i, k);
-var leftElement = rightMatrix.ij(k, j);</p>
-
-        
-          <div class='highlight'><pre>        <span class="keyword">var</span> rightElementData = leftMatrix.data[matrixToArrayIndex(i, k, rightMatrix.numberOfColumns)]
-          , leftElementData = rightMatrix.data[matrixToArrayIndex(k, j, lNumCols)]
-
-        element.add(field.mul(rightElementData,leftElementData))
-      }
-
-      elements.push(element)
-    }
-  }
-
-  <span class="keyword">return</span> elements
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">multiplication</span> <span class="params">(matrix)</span> {</span>
-  <span class="keyword">var</span> newElements = rowByColumnMultiplication(<span class="keyword">this</span>, matrix)
-
-  <span class="keyword">this</span>.elements = newElements
-
-  <span class="keyword">return</span> <span class="keyword">this</span>
-}
-
-AlgebraMatrix.prototype.multiplication = multiplication
-AlgebraMatrix.prototype.mul            = multiplication
-
-module.exports = AlgebraMatrix</pre></div>
+module.exports = RealTensor</pre></div>
         
       
  

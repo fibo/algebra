@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>RealElement.js</title>
+  <title>ComplexField.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>RealElement.js</h1>
+      <h1>ComplexField.js</h1>
  
       
  
@@ -338,32 +338,117 @@
         
         
           <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraElement = require(<span class="string">'./AlgebraElement'</span>)
-  , Field          = require(<span class="string">'./RealField'</span>)
-  , inherits       = require(<span class="string">'inherits'</span>)
+<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
+  , inherits     = require(<span class="string">'inherits'</span>)
 
-<span class="keyword">var</span> data
-  , field = <span class="keyword">new</span> Field()
+<span class="function"><span class="keyword">function</span> <span class="title">ComplexField</span> <span class="params">()</span> {</span>
+  AlgebraField.call(<span class="keyword">this</span>, [<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>])
+}
 
-<span class="function"><span class="keyword">function</span> <span class="title">RealElement</span><span class="params">(data)</span> {</span></pre></div>
+inherits(ComplexField, AlgebraField)
+
+<span class="function"><span class="keyword">function</span> <span class="title">addition</span><span class="params">(z, w)</span> {</span></pre></div>
         
       
         
-        <p>data defaults to 1 and must be a number</p>
+        <p>z + w = (z0 + i z1) + (w0 + i w1)
+      = (z0 + w0) + i (z1 + w1)</p>
 
         
-          <div class='highlight'><pre>  <span class="keyword">if</span> (<span class="keyword">typeof</span> data === <span class="string">'undefined'</span>)
-    data = <span class="number">1</span>
-
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> data !== <span class="string">'number'</span>)
-    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
-
-  AlgebraElement.call(<span class="keyword">this</span>, field, data)
+          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] + w[<span class="number">0</span>], z[<span class="number">1</span>] + w[<span class="number">1</span>]]
 }
+ComplexField.prototype.addition = addition
+ComplexField.prototype.add      = addition
 
-inherits(RealElement, AlgebraElement)
+<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span><span class="params">(z, w)</span> {</span></pre></div>
+        
+      
+        
+        <p>z - w = (z0 + i z1) - (w0 + i w1)
+      = (z0 - w0) + i (z1 - w1)</p>
 
-module.exports = RealElement</pre></div>
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] - w[<span class="number">0</span>], z[<span class="number">1</span>] - w[<span class="number">1</span>]]
+}
+ComplexField.prototype.subtraction = subtraction
+ComplexField.prototype.sub         = subtraction
+
+<span class="function"><span class="keyword">function</span> <span class="title">multiplication</span><span class="params">(z, w)</span> {</span></pre></div>
+        
+      
+        
+        <p>z <em> w = (z0 + i z1) </em> (w0 + i w1)
+      = z0 <em> w0 + z0 </em> i w1 + i z1 <em> w0 + i z1 </em> i w1
+      = (z0 <em> w0 - z1 </em> w1) + i (z0 <em> w1 + z1 </em> w0)</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>] * w[<span class="number">0</span>] - z[<span class="number">1</span>] * w[<span class="number">1</span>], z[<span class="number">0</span>] * w[<span class="number">1</span>] + z[<span class="number">1</span>] * w[<span class="number">0</span>]]
+}
+ComplexField.prototype.multiplication = multiplication
+ComplexField.prototype.mul            = multiplication
+
+<span class="function"><span class="keyword">function</span> <span class="title">division</span><span class="params">(z, w)</span> {</span></pre></div>
+        
+      
+        
+        <p>z / w = z * w^-1</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> multiplication(z, inversion(w))
+}
+ComplexField.prototype.division = division
+ComplexField.prototype.div      = division
+
+<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(z)</span> {</span></pre></div>
+        
+      
+        
+        <p>z~ = (z0 + i z1)~
+   = z0 - i z1</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> [z[<span class="number">0</span>], - z[<span class="number">1</span>]]
+}
+ComplexField.prototype.conjugation = conjugation
+ComplexField.prototype.conj        = conjugation
+
+<span class="function"><span class="keyword">function</span> <span class="title">norm</span><span class="params">(z)</span> {</span></pre></div>
+        
+      
+        
+        <p>|z| = |z0 + i z1|
+    = z0 <em> z0 + z1 </em> z1</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> z[<span class="number">0</span>] * z[<span class="number">0</span>] + z[<span class="number">1</span>] * z[<span class="number">1</span>]
+}
+ComplexField.prototype.norm = norm
+
+<span class="function"><span class="keyword">function</span> <span class="title">inversion</span><span class="params">(z)</span> {</span></pre></div>
+        
+      
+        
+        <p>z^-1 = z~ * 1 / |z|</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> multiplication(conjugation(z), [<span class="number">1</span> / norm(z), <span class="number">0</span>])
+}
+ComplexField.prototype.inversion = inversion
+ComplexField.prototype.inv       = inversion
+
+<span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(z, w)</span> {</span>
+  <span class="keyword">return</span> z[<span class="number">0</span>] === w[<span class="number">0</span>] &amp;&amp; z[<span class="number">1</span>] === w[<span class="number">1</span>]
+}
+ComplexField.prototype.equal = equal
+ComplexField.prototype.eq    = equal
+
+<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span><span class="params">(z, w)</span> {</span>
+  <span class="keyword">return</span> z[<span class="number">0</span>] !== w[<span class="number">0</span>] || z[<span class="number">1</span>] !== w[<span class="number">1</span>]
+}
+ComplexField.prototype.notEqual = notEqual
+ComplexField.prototype.ne       = notEqual
+
+module.exports = ComplexField</pre></div>
         
       
  

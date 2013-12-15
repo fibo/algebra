@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>index.js</title>
+  <title>QuaternionField.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>index.js</h1>
+      <h1>QuaternionField.js</h1>
  
       
  
@@ -338,30 +338,73 @@
         
         
           <div class='highlight'><pre>
-exports.AlgebraElement          = require(<span class="string">'./AlgebraElement'</span>)
-exports.AlgebraField            = require(<span class="string">'./AlgebraField'</span>)
-exports.AlgebraInvertibleMatrix = require(<span class="string">'./AlgebraInvertibleMatrix'</span>)
-exports.AlgebraMatrix           = require(<span class="string">'./AlgebraMatrix'</span>)
-exports.AlgebraTensor           = require(<span class="string">'./AlgebraTensor'</span>)
-exports.AlgebraVector           = require(<span class="string">'./AlgebraVector'</span>)
+<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
+  , inherits     = require(<span class="string">'inherits'</span>)
 
-exports.AlgebraVectorSpace = require(<span class="string">'./AlgebraVectorSpace'</span>)
+<span class="function"><span class="keyword">function</span> <span class="title">QuaternionField</span> <span class="params">()</span> {</span>
+  AlgebraField.call(<span class="keyword">this</span>, [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>])
+}
 
-exports.GeneralLinearGroup     = require(<span class="string">'./GeneralLinearGroup'</span>)
-exports.RealGeneralLinearGroup = require(<span class="string">'./RealGeneralLinearGroup'</span>)
+inherits(QuaternionField, AlgebraField)
 
-exports.RealElement     = require(<span class="string">'./RealElement'</span>)
-exports.RealField       = require(<span class="string">'./RealField'</span>)
-exports.RealTensor      = require(<span class="string">'./RealTensor'</span>)
-exports.RealVector      = require(<span class="string">'./RealVector'</span>)
+<span class="function"><span class="keyword">function</span> <span class="title">addition</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> [
+    a[<span class="number">0</span>] + b[<span class="number">0</span>],
+    a[<span class="number">1</span>] + b[<span class="number">1</span>],
+    a[<span class="number">2</span>] + b[<span class="number">2</span>],
+    a[<span class="number">3</span>] + b[<span class="number">3</span>]
+  ]
+}
+QuaternionField.prototype.addition = addition
+QuaternionField.prototype.add      = addition
 
-exports.RealVectorSpace = require(<span class="string">'./RealVectorSpace'</span>)
+<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> [
+    a[<span class="number">0</span>] - b[<span class="number">0</span>],
+    a[<span class="number">1</span>] - b[<span class="number">1</span>],
+    a[<span class="number">2</span>] - b[<span class="number">2</span>],
+    a[<span class="number">3</span>] - b[<span class="number">3</span>]
+  ]
+}
+QuaternionField.prototype.subtraction = subtraction
+QuaternionField.prototype.sub         = subtraction
 
-exports.ComplexElement = require(<span class="string">'./ComplexElement'</span>)
-exports.ComplexField   = require(<span class="string">'./ComplexField'</span>)
+<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(q)</span> {</span></pre></div>
+        
+      
+        
+        <p>z~ = (q0 + i q1 + j q2 + k q3)~
+   = q0 - i q1 - j q2 - k q3</p>
 
-exports.QuaternionElement = require(<span class="string">'./QuaternionElement'</span>)
-exports.QuaternionField   = require(<span class="string">'./QuaternionField'</span>)</pre></div>
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> [q[<span class="number">0</span>], - q[<span class="number">1</span>], - q[<span class="number">2</span>], - q[<span class="number">3</span>]]
+}
+QuaternionField.prototype.conjugation = conjugation
+QuaternionField.prototype.conj        = conjugation
+
+<span class="function"><span class="keyword">function</span> <span class="title">equal</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> (
+    a[<span class="number">0</span>] === b[<span class="number">0</span>] &amp;&amp;
+    a[<span class="number">1</span>] === b[<span class="number">1</span>] &amp;&amp;
+    a[<span class="number">2</span>] === b[<span class="number">2</span>] &amp;&amp;
+    a[<span class="number">3</span>] === b[<span class="number">3</span>]
+  )
+}
+QuaternionField.prototype.equal = equal
+QuaternionField.prototype.eq    = equal
+
+<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span><span class="params">(a, b)</span> {</span>
+  <span class="keyword">return</span> (
+    a[<span class="number">0</span>] !== b[<span class="number">0</span>] ||
+    a[<span class="number">1</span>] !== b[<span class="number">1</span>] ||
+    a[<span class="number">2</span>] !== b[<span class="number">2</span>] ||
+    a[<span class="number">3</span>] !== b[<span class="number">3</span>]
+  )
+}
+QuaternionField.prototype.notEqual = notEqual
+QuaternionField.prototype.ne    = notEqual
+
+module.exports = QuaternionField</pre></div>
         
       
  

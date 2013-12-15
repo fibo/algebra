@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AlgebraElement.js</title>
+  <title>ComplexElement.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>AlgebraElement.js</h1>
+      <h1>ComplexElement.js</h1>
  
       
  
@@ -337,131 +337,39 @@
         
         
         
-      
-        
-        <h1 id="algebraelement">AlgebraElement</h1>
-<p>It is an abstract algebra element.</p>
-
-        
           <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraField = require(<span class="string">'./AlgebraField'</span>)
+<span class="keyword">var</span> AlgebraElement = require(<span class="string">'./AlgebraElement'</span>)
+  , Field          = require(<span class="string">'./ComplexField'</span>)
+  , inherits       = require(<span class="string">'inherits'</span>)
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraElement</span><span class="params">(field, data)</span> {</span></pre></div>
-        
-      
-        
-        <h1 id="aattributes">Aattributes</h1>
+<span class="keyword">var</span> data
+  , field = <span class="keyword">new</span> Field()
 
-        
-      
-        
-        <h2 id="field">field</h2>
-<p>it is an instance of algebrafield</p>
+<span class="function"><span class="keyword">function</span> <span class="title">ComplexElement</span><span class="params">()</span> {</span>
 
-        
-          <div class='highlight'><pre>
-  <span class="keyword">if</span> (! (field <span class="keyword">instanceof</span> AlgebraField))
-    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()
+  <span class="keyword">if</span> (arguments.length === <span class="number">0</span>)
+    data = [<span class="number">1</span>, <span class="number">0</span>]
 
-  <span class="function"><span class="keyword">function</span> <span class="title">getField</span><span class="params">()</span> {</span> <span class="keyword">return</span> field }
+  <span class="keyword">if</span> (arguments.length === <span class="number">1</span>)
+    data = arguments[<span class="number">0</span>]
 
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'field'</span>, {get: getField})</pre></div>
-        
-      
-        
-        <h2 id="data">data</h2>
-<p>It is any kind of raw data.</p>
+  <span class="keyword">if</span> (arguments.length === <span class="number">2</span>)
+    data = [arguments[<span class="number">0</span>], arguments[<span class="number">1</span>]]
 
-        
-          <div class='highlight'><pre>
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> data === <span class="string">'undefined'</span>)
-    data = field.one
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getData</span><span class="params">()</span> {</span> <span class="keyword">return</span> data }
-
-  <span class="function"><span class="keyword">function</span> <span class="title">setData</span><span class="params">(newData)</span> {</span> data = newData }
-
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'data'</span>, {get: getData, set: setData})
-
-}</pre></div>
-        
-      
-        
-        <p>this.constructor refers to some AlgebraElement subclass,
-since it should be aware of it field, I only pass the element data.</p>
-
-        
-          <div class='highlight'><pre><span class="function"><span class="keyword">function</span> <span class="title">clone</span> <span class="params">()</span> {</span>
-  <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">this</span>.constructor(<span class="keyword">this</span>.data)
-}
-AlgebraElement.prototype.clone = clone
-
-<span class="function"><span class="keyword">function</span> <span class="title">coerceToData</span> <span class="params">()</span> {</span>
-  <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
-    , data
-
-  <span class="keyword">if</span> (arg0 <span class="keyword">instanceof</span> AlgebraElement)
-    data = arg0.data
-  <span class="keyword">else</span>
-    data = arg0
-
-  <span class="keyword">return</span> data
+  AlgebraElement.call(<span class="keyword">this</span>, field, data)
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">addition</span> <span class="params">()</span> {</span>
-  <span class="keyword">var</span> data = coerceToData(arguments[<span class="number">0</span>])
+inherits(ComplexElement, AlgebraElement)
 
-  <span class="keyword">this</span>.data = <span class="keyword">this</span>.field.addition(<span class="keyword">this</span>.data, data)
-  <span class="keyword">return</span> <span class="keyword">this</span>
-}
-AlgebraElement.prototype.addition = addition
-AlgebraElement.prototype.add      = addition
-
-<span class="function"><span class="keyword">function</span> <span class="title">subtraction</span> <span class="params">()</span> {</span>
-  <span class="keyword">var</span> data = coerceToData(arguments[<span class="number">0</span>])
-
-  <span class="keyword">this</span>.data = <span class="keyword">this</span>.field.subtraction(<span class="keyword">this</span>.data, data)
-  <span class="keyword">return</span> <span class="keyword">this</span>
-}
-AlgebraElement.prototype.subtraction = subtraction
-AlgebraElement.prototype.sub         = subtraction
-
-<span class="function"><span class="keyword">function</span> <span class="title">multiplication</span><span class="params">()</span> {</span>
-  <span class="keyword">var</span> data = coerceToData(arguments[<span class="number">0</span>])
-
-  <span class="keyword">this</span>.data = <span class="keyword">this</span>.field.multiplication(<span class="keyword">this</span>.data, data)
-  <span class="keyword">return</span> <span class="keyword">this</span>
-}
-AlgebraElement.prototype.multiplication = multiplication
-AlgebraElement.prototype.mul            = multiplication
-
-<span class="function"><span class="keyword">function</span> <span class="title">division</span> <span class="params">()</span> {</span>
-  <span class="keyword">var</span> data = coerceToData(arguments[<span class="number">0</span>])
-
-  <span class="keyword">this</span>.data = <span class="keyword">this</span>.field.division(<span class="keyword">this</span>.data, data)
+<span class="function"><span class="keyword">function</span> <span class="title">conjugation</span><span class="params">(element)</span> {</span>
+  <span class="keyword">this</span>.data = <span class="keyword">this</span>.field.conjugation(<span class="keyword">this</span>.data)
 
   <span class="keyword">return</span> <span class="keyword">this</span>
 }
-AlgebraElement.prototype.division = division
-AlgebraElement.prototype.div      = division
+ComplexElement.prototype.conjugation = conjugation
+ComplexElement.prototype.conj        = conjugation
 
-<span class="function"><span class="keyword">function</span> <span class="title">equal</span> <span class="params">()</span> {</span>
-  <span class="keyword">var</span> data = coerceToData(arguments[<span class="number">0</span>])
-
-  <span class="keyword">return</span> <span class="keyword">this</span>.field.equal(<span class="keyword">this</span>.data, data)
-}
-AlgebraElement.prototype.equal = equal
-AlgebraElement.prototype.eq    = equal
-
-<span class="function"><span class="keyword">function</span> <span class="title">notEqual</span> <span class="params">()</span> {</span>
-  <span class="keyword">var</span> data = coerceToData(arguments[<span class="number">0</span>])
-
-  <span class="keyword">return</span> <span class="keyword">this</span>.field.notEqual(<span class="keyword">this</span>.data, data)
-}
-AlgebraElement.prototype.equal = notEqual
-AlgebraElement.prototype.eq    = notEqual
-
-module.exports = AlgebraElement</pre></div>
+module.exports = ComplexElement</pre></div>
         
       
  

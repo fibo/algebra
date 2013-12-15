@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AlgebraInvertibleMatrix.js</title>
+  <title>AlgebraMatrix.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>AlgebraInvertibleMatrix.js</h1>
+      <h1>AlgebraMatrix.js</h1>
  
       
  
@@ -338,25 +338,50 @@
         
         
           <div class='highlight'><pre>
-<span class="keyword">var</span> AlgebraMatrix = require(<span class="string">'./AlgebraMatrix'</span>)
+<span class="keyword">var</span> AlgebraTensor = require(<span class="string">'./AlgebraTensor'</span>)
   , inherits      = require(<span class="string">'inherits'</span>)
   , _             = require(<span class="string">'underscore'</span>)
 
+<span class="function"><span class="keyword">function</span> <span class="title">matrixToArrayIndex</span> <span class="params">(i, j, numberOfColumns)</span> {</span>
+  <span class="keyword">return</span> i * numberOfColumns + j
+}
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraInvertibleMatrix</span> <span class="params">(Element, order, elements)</span> {</span>
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraMatrix</span> <span class="params">(Element, dimensionArray, elements)</span> {</span>
+
   <span class="keyword">var</span> self = <span class="keyword">this</span></pre></div>
         
       
         
-        <p>order</p>
+        <p>elements</p>
 
         
           <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getOrder</span> <span class="params">()</span> {</span>
-    <span class="keyword">return</span> order
+  <span class="keyword">if</span> (! (_.isArray(elements)))
+    <span class="keyword">throw</span> <span class="keyword">new</span> TypeError()</pre></div>
+        
+      
+        
+        <p>numberOfColumns</p>
+
+        
+          <div class='highlight'><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">getNumberOfColumns</span> <span class="params">()</span> {</span>
+    <span class="keyword">return</span> dimensionArray[<span class="number">0</span>]
   }
 
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'order'</span>, {get: getOrder})</pre></div>
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'numberOfColumns'</span>, {get: getNumberOfColumns})</pre></div>
+        
+      
+        
+        <p>numberOfRows</p>
+
+        
+          <div class='highlight'><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">getNumberOfRows</span> <span class="params">()</span> {</span>
+    <span class="keyword">return</span> dimensionArray[<span class="number">1</span>]
+  }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'numberOfRows'</span>, {get: getNumberOfRows})</pre></div>
         
       
         
@@ -364,96 +389,62 @@
 
         
           <div class='highlight'><pre>
-  AlgebraMatrix.call(<span class="keyword">this</span>, Element, [order, order], elements)
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getDeterminant</span> <span class="params">()</span> {</span>
-    <span class="keyword">return</span> <span class="keyword">this</span>.computeDeterminant(order, Element, self.elements)
-  }</pre></div>
-        
-      
-        
-        <p>TODO se il determinante è zero throw new Error()</p>
-
-        
-          <div class='highlight'><pre>  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'determinant'</span>, {get: getDeterminant})
-
+  AlgebraTensor.call(<span class="keyword">this</span>, Element, dimensionArray, elements)
 }
 
-inherits(AlgebraInvertibleMatrix, AlgebraMatrix)
+inherits(AlgebraMatrix, AlgebraTensor)
 
-<span class="function"><span class="keyword">function</span> <span class="title">computeDeterminant</span> <span class="params">(order, Element, elements)</span> {</span>
+<span class="function"><span class="keyword">function</span> <span class="title">rowByColumnMultiplication</span> <span class="params">(leftMatrix, rightMatrix)</span> {</span>
 
-  <span class="keyword">var</span> det = <span class="keyword">new</span> Element(<span class="number">0</span>)</pre></div>
+  <span class="keyword">var</span> rNumRows = rightMatrix.numberOfRows
+    , lNumCols = leftMatrix.numberOfColumns
+
+  <span class="keyword">if</span> (lNumCols !== rNumRows)
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
+
+  <span class="keyword">var</span> elements = []
+    , Element  = leftMatrix.Element
+    , field    = leftMatrix.field
+
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; lNumCols; i++) {
+    <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; rNumRows; j++) {
+      <span class="keyword">var</span> element = <span class="keyword">new</span> Element(<span class="number">0</span>)
+
+      <span class="keyword">for</span> (<span class="keyword">var</span> k = <span class="number">0</span>; k &lt; lNumCols; k++) {</pre></div>
         
       
         
-        <p>cloning elements</p>
+        <p>TODO funzione generica di somma sugli indici, tipo notazione di Einstein.
+var rightElement = leftMatrix.ij(i, k);
+var leftElement = rightMatrix.ij(k, j);</p>
 
         
-          <div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> elements)
-    elements[i] = elements[i].clone()</pre></div>
-        
-      
-        
-        <p>TODO caso degenere, aggiusta</p>
+          <div class='highlight'><pre>        <span class="keyword">var</span> rightElementData = leftMatrix.data[matrixToArrayIndex(i, k, rightMatrix.numberOfColumns)]
+          , leftElementData = rightMatrix.data[matrixToArrayIndex(k, j, lNumCols)]
 
-        
-          <div class='highlight'><pre>  <span class="keyword">if</span> (order === <span class="number">1</span>)
-    <span class="keyword">return</span> elements[<span class="number">0</span>]
+        element.add(field.mul(rightElementData,leftElementData))
+      }
 
-  <span class="keyword">if</span> (order === <span class="number">2</span>) {
-    det.add(elements[<span class="number">0</span>].mul(elements[<span class="number">3</span>])).sub(elements[<span class="number">2</span>].mul(elements[<span class="number">1</span>]))
-    <span class="keyword">return</span> det
-  }</pre></div>
-        
-      
-        
-        <p>TODO per ora scelgo sempre la prima riga.
-TODO classe Collection con metodo countZeros o numberOfZeros()</p>
-
-        
-          <div class='highlight'><pre>  <span class="keyword">var</span> rowIndex = <span class="number">0</span>
-
-  <span class="keyword">for</span> (<span class="keyword">var</span> columnIndex = <span class="number">0</span>; columnIndex &lt; order; columnIndex++) {
-    <span class="keyword">var</span> adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, elements)
-
-    <span class="keyword">var</span> adjointDeterminant = <span class="keyword">this</span>.computeDeterminant(order - <span class="number">1</span>, adjointElements);
-
-    element = elements[<span class="keyword">this</span>.computeIndex([rowIndex, columnIndex])];
-
-    <span class="keyword">if</span> (columnIndex % <span class="number">2</span> === <span class="number">0</span>)
-      det.add(element)
-    <span class="keyword">else</span>
-      det.sub(element)
-
-    det.mul(adjointDeterminant)
+      elements.push(element)
+    }
   }
 
-  <span class="keyword">return</span> det
+  <span class="keyword">return</span> elements
 }
 
-AlgebraInvertibleMatrix.prototype.computeDeterminant = computeDeterminant
+<span class="function"><span class="keyword">function</span> <span class="title">multiplication</span> <span class="params">(matrix)</span> {</span>
+  <span class="keyword">var</span> newElements = rowByColumnMultiplication(<span class="keyword">this</span>, matrix)
 
-<span class="function"><span class="keyword">function</span> <span class="title">getAdjointElements</span><span class="params">(rowIndex, columnIndex, numRows, numCols, elements)</span> {</span>
-  <span class="keyword">var</span> adjointElements = []</pre></div>
-        
-      
-        
-        <p>TODO anche qua dovrei clonare in teoria ?</p>
+  <span class="keyword">this</span>.elements = newElements
 
-        
-          <div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numRows; i++) {
-      <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; numCols; j++) {
-        <span class="keyword">if</span> (i != rowIndex &amp;&amp; j != columnIndex) {
-          adjointElements.push(elements[<span class="keyword">this</span>.computeIndex([i, j])])
-        }
-      }
-    }
-
-  <span class="keyword">return</span> adjointElements
+  <span class="keyword">return</span> <span class="keyword">this</span>
 }
 
-module.exports = AlgebraInvertibleMatrix</pre></div>
+AlgebraMatrix.prototype.multiplication = multiplication
+AlgebraMatrix.prototype.mul            = multiplication
+
+module.exports = AlgebraMatrix</pre></div>
         
       
  

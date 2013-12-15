@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AlgebraField.js</title>
+  <title>index.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="../">Home</a></li>
-          <li><a href="../sources">Api</a></li>
+          <li><a href="../classes">Classes</a></li>
           <li><a href="../examples">Examples</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
     <!-- div class="header">
       
  
-      <h1>AlgebraField.js</h1>
+      <h1>index.js</h1>
  
       
  
@@ -337,61 +337,31 @@
         
         
         
-      
-        
-        <h1 id="algebrafield">AlgebraField</h1>
-<p>It is an abstract algebra field.</p>
-
-        
           <div class='highlight'><pre>
-<span class="function"><span class="keyword">function</span> <span class="title">abstractOperator</span><span class="params">()</span> {</span>
-  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'unimplemented abstract operator'</span>)
-}
+exports.AlgebraElement          = require(<span class="string">'./AlgebraElement'</span>)
+exports.AlgebraField            = require(<span class="string">'./AlgebraField'</span>)
+exports.AlgebraInvertibleMatrix = require(<span class="string">'./AlgebraInvertibleMatrix'</span>)
+exports.AlgebraMatrix           = require(<span class="string">'./AlgebraMatrix'</span>)
+exports.AlgebraTensor           = require(<span class="string">'./AlgebraTensor'</span>)
+exports.AlgebraVector           = require(<span class="string">'./AlgebraVector'</span>)
 
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span><span class="params">(zero, one)</span> {</span></pre></div>
-        
-      
-        
-        <h1 id="attributes">Attributes</h1>
-<h2 id="zero">zero</h2>
+exports.AlgebraVectorSpace = require(<span class="string">'./AlgebraVectorSpace'</span>)
 
-        
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getZero</span><span class="params">()</span> {</span> <span class="keyword">return</span> zero }
+exports.GeneralLinearGroup     = require(<span class="string">'./GeneralLinearGroup'</span>)
+exports.RealGeneralLinearGroup = require(<span class="string">'./RealGeneralLinearGroup'</span>)
 
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'zero'</span>, {get: getZero})</pre></div>
-        
-      
-        
-        <h2 id="one">one</h2>
+exports.RealElement     = require(<span class="string">'./RealElement'</span>)
+exports.RealField       = require(<span class="string">'./RealField'</span>)
+exports.RealTensor      = require(<span class="string">'./RealTensor'</span>)
+exports.RealVector      = require(<span class="string">'./RealVector'</span>)
 
-        
-          <div class='highlight'><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">getOne</span><span class="params">()</span> {</span> <span class="keyword">return</span> one }
+exports.RealVectorSpace = require(<span class="string">'./RealVectorSpace'</span>)
 
-  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'one'</span>, {get: getOne})
-}
+exports.ComplexElement = require(<span class="string">'./ComplexElement'</span>)
+exports.ComplexField   = require(<span class="string">'./ComplexField'</span>)
 
-AlgebraField.prototype = {
-  addition       : abstractOperator,
-  add            : abstractOperator,
-  subtraction    : abstractOperator,
-  sub            : abstractOperator,
-  multiplication : abstractOperator,
-  mul            : abstractOperator,
-  division       : abstractOperator,
-  div            : abstractOperator,
-  equal          : abstractOperator,
-  eq             : abstractOperator,
-  notEqual       : abstractOperator,
-  ne             : abstractOperator,
-  inversion      : abstractOperator,
-  inv            : abstractOperator,
-  negation       : abstractOperator,
-  neg            : abstractOperator
-}
-
-module.exports = AlgebraField</pre></div>
+exports.QuaternionElement = require(<span class="string">'./QuaternionElement'</span>)
+exports.QuaternionField   = require(<span class="string">'./QuaternionField'</span>)</pre></div>
         
       
  

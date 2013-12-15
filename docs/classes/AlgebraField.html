@@ -341,19 +341,23 @@
         
         <h1 id="algebrafield">AlgebraField</h1>
 <p>It is an abstract algebra field.</p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><a href="examples/algebraOverAnyField.html">Algebra over any field</a></li>
+</ul>
 
         
           <div class='highlight'><pre>
-<span class="function"><span class="keyword">function</span> <span class="title">abstractOperator</span><span class="params">()</span> {</span>
-  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'unimplemented abstract operator'</span>)
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span><span class="params">(zero, one)</span> {</span></pre></div>
+<span class="function"><span class="keyword">function</span> <span class="title">AlgebraField</span> <span class="params">(zero, one)</span> {</span></pre></div>
         
       
         
-        <h1 id="attributes">Attributes</h1>
-<h2 id="zero">zero</h2>
+        <h2 id="attributes">Attributes</h2>
+
+        
+      
+        
+        <h3 id="zero">zero</h3>
 
         
           <div class='highlight'><pre>
@@ -363,13 +367,17 @@
         
       
         
-        <h2 id="one">one</h2>
+        <h3 id="one">one</h3>
 
         
           <div class='highlight'><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">getOne</span><span class="params">()</span> {</span> <span class="keyword">return</span> one }
 
   Object.defineProperty(<span class="keyword">this</span>, <span class="string">'one'</span>, {get: getOne})
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">abstractOperator</span><span class="params">()</span> {</span>
+  <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'unimplemented abstract operator'</span>)
 }
 
 AlgebraField.prototype = {

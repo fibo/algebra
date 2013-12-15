@@ -1,18 +1,22 @@
 
+//
 // # AlgebraField
 //
 // It is an abstract algebra field.
 //
+// ## Examples
+//
+// * [Algebra over any field](../examples/algebraOverAnyField.html)
+//
 
-function abstractOperator() {
-  throw new Error('unimplemented abstract operator')
-}
+function AlgebraField (zero, one) {
 
-function AlgebraField(zero, one) {
-
-  // # Attributes
   //
-  // ## zero
+  // ## Attributes
+  //
+
+  //
+  // ### zero
   //
 
   function getZero() { return zero }
@@ -20,12 +24,16 @@ function AlgebraField(zero, one) {
   Object.defineProperty(this, 'zero', {get: getZero})
 
   //
-  // ## one
+  // ### one
   //
 
   function getOne() { return one }
 
   Object.defineProperty(this, 'one', {get: getOne})
+}
+
+function abstractOperator() {
+  throw new Error('unimplemented abstract operator')
 }
 
 AlgebraField.prototype = {

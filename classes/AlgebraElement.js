@@ -1,4 +1,5 @@
 
+//
 // # AlgebraElement
 //
 // It is an abstract algebra element.
@@ -8,9 +9,12 @@ var AlgebraField = require('./AlgebraField')
 
 function AlgebraElement(field, data) {
 
-  // # Aattributes
+  //
+  // ## Attributes
+  //
 
-  // ## field
+  //
+  // ### field
   //
   // it is an instance of algebrafield
   //
@@ -22,7 +26,8 @@ function AlgebraElement(field, data) {
 
   Object.defineProperty(this, 'field', {get: getField})
 
-  // ## data
+  //
+  // ### data
   //
   // It is any kind of raw data.
   //
@@ -38,8 +43,9 @@ function AlgebraElement(field, data) {
 
 }
 
-// this.constructor refers to some AlgebraElement subclass,
-// since it should be aware of it field, I only pass the element data.
+/* this.constructor refers to some AlgebraElement subclass,
+ since it should be aware of it field, I only pass the element data.
+ */
 function clone () {
   return new this.constructor(this.data)
 }

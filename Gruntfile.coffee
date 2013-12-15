@@ -29,58 +29,58 @@ module.exports = (grunt) ->
         tasks: ['mochacli:examples', 'docco']
 
       testAlgebraElement:
-        files: ['test/AlgebraElement.js', 'lib/AlgebraElement.js']
+        files: ['test/AlgebraElement.js', 'classes/AlgebraElement.js']
         tasks: 'mochacli:AlgebraElement'
       testAlgebraField:
-        files: ['test/AlgebraField.js', 'lib/AlgebraField.js']
+        files: ['test/AlgebraField.js', 'classes/AlgebraField.js']
         tasks: 'mochacli:AlgebraField'
       testAlgebraMatrix:
-        files: ['test/AlgebraMatrix.js', 'lib/AlgebraMatrix.js']
+        files: ['test/AlgebraMatrix.js', 'classes/AlgebraMatrix.js']
         tasks: 'mochacli:AlgebraMatrix'
       testAlgebraInvertibleMatrix:
-        files: ['test/AlgebraInvertibleMatrix.js', 'lib/AlgebraInvertibleMatrix.js']
+        files: ['test/AlgebraInvertibleMatrix.js', 'classes/AlgebraInvertibleMatrix.js']
         tasks: 'mochacli:AlgebraInvertibleMatrix'
       testAlgebraTensor:
-        files: ['test/AlgebraTensor.js', 'lib/AlgebraTensor.js']
+        files: ['test/AlgebraTensor.js', 'classes/AlgebraTensor.js']
         tasks: 'mochacli:AlgebraTensor'
       testAlgebraVector:
-        files: ['test/AlgebraVector.js', 'lib/AlgebraVector.js']
+        files: ['test/AlgebraVector.js', 'classes/AlgebraVector.js']
         tasks: 'mochacli:AlgebraVector'
       testAlgebraVectorSpace:
-        files: ['test/AlgebraVectorSpace.js', 'lib/AlgebraVectorSpace.js']
+        files: ['test/AlgebraVectorSpace.js', 'classes/AlgebraVectorSpace.js']
         tasks: 'mochacli:AlgebraVectorSpace'
       testComplexElement:
-        files: ['test/ComplexElement.js', 'lib/ComplexElement.js']
+        files: ['test/ComplexElement.js', 'classes/ComplexElement.js']
         tasks: 'mochacli:ComplexElement'
       testComplexField:
-        files: ['test/ComplexField.js', 'lib/ComplexField.js']
+        files: ['test/ComplexField.js', 'classes/ComplexField.js']
         tasks: 'mochacli:ComplexField'
       testGeneralLinearGroup:
-        files: ['test/GeneralLinearGroup.js', 'lib/GeneralLinearGroup.js']
+        files: ['test/GeneralLinearGroup.js', 'classes/GeneralLinearGroup.js']
         tasks: 'mochacli:GeneralLinearGroup'
       testQuaternionElement:
-        files: ['test/QuaternionElement.js', 'lib/QuaternionElement.js']
+        files: ['test/QuaternionElement.js', 'classes/QuaternionElement.js']
         tasks: 'mochacli:QuaternionElement'
       testQuaternionField:
-        files: ['test/QuaternionField.js', 'lib/QuaternionField.js']
+        files: ['test/QuaternionField.js', 'classes/QuaternionField.js']
         tasks: 'mochacli:QuaternionField'
       testRealElement:
-        files: ['test/RealElement.js', 'lib/RealElement.js']
+        files: ['test/RealElement.js', 'classes/RealElement.js']
         tasks: 'mochacli:RealElement'
       testRealField:
-        files: ['test/RealField.js', 'lib/RealField.js']
+        files: ['test/RealField.js', 'classes/RealField.js']
         tasks: 'mochacli:RealField'
       testRealGeneralLinearGroup:
-        files: ['test/RealGeneralLinearGroup.js', 'lib/RealGeneralLinearGroup.js']
+        files: ['test/RealGeneralLinearGroup.js', 'classes/RealGeneralLinearGroup.js']
         tasks: 'mochacli:RealGeneralLinearGroup'
       testRealTensor:
-        files: ['test/RealTensor.js', 'lib/RealTensor.js']
+        files: ['test/RealTensor.js', 'classes/RealTensor.js']
         tasks: 'mochacli:RealTensor'
       testRealVector:
-        files: ['test/RealVector.js', 'lib/RealVector.js']
+        files: ['test/RealVector.js', 'classes/RealVector.js']
         tasks: 'mochacli:RealVector'
       testRealVectorSpace:
-        files: ['test/RealVectorSpace.js', 'lib/RealVectorSpace.js']
+        files: ['test/RealVectorSpace.js', 'classes/RealVectorSpace.js']
         tasks: 'mochacli:RealVectorSpace'
 
       specAlgebraElement:
@@ -198,7 +198,7 @@ module.exports = (grunt) ->
           template: templates.examples
           output: 'docs/examples'
       classes:
-        src: ['lib/*.js']
+        src: ['classes/*.js']
         options:
           template: templates.classes
           output: 'docs/classes'
@@ -209,7 +209,7 @@ module.exports = (grunt) ->
         options:
           # W033:  Missing semicolon
           '-W033': true
-        src: ['index.js', 'lib/*js']
+        src: ['index.js', 'classes/*js']
       examples:
         src: ['examples/*js']
 

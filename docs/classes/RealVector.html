@@ -339,15 +339,31 @@
         
       
         
-        <p>RealVector</p>
+        <h1 id="realvector">RealVector</h1>
+<p>It is a vector over the real field</p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><a href="../examples/realVectors.html">realVectors</a></li>
+</ul>
+
+        
+      
+        
+        <h2 id="imports">Imports</h2>
 
         
           <div class='highlight'><pre>
 <span class="keyword">var</span> AlgebraVector = require(<span class="string">'./AlgebraVector'</span>)
   , RealElement   = require(<span class="string">'./RealElement'</span>)
   , inherits      = require(<span class="string">'inherits'</span>)
-  , _             = require(<span class="string">'underscore'</span>)
+  , _             = require(<span class="string">'underscore'</span>)</pre></div>
+        
+      
+        
+        <h2 id="constructor">Constructor</h2>
 
+        
+          <div class='highlight'><pre>
 <span class="function"><span class="keyword">function</span> <span class="title">RealVector</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> arg0 = arguments[<span class="number">0</span>]
     , numArgs = arguments.length
@@ -358,8 +374,14 @@
 
   <span class="keyword">if</span> (numArgs &gt; <span class="number">1</span>)
     <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arguments)
-      elements.push(arguments[i])
+      elements.push(arguments[i])</pre></div>
+        
+      
+        
+        <h2 id="inheritance">Inheritance</h2>
 
+        
+          <div class='highlight'><pre>
   AlgebraVector.call(<span class="keyword">this</span>, RealElement, elements)
 }
 

@@ -1,5 +1,7 @@
 
-// RealTensor
+//
+// # RealTensor
+//
 
 var AlgebraTensor = require('./AlgebraTensor')
   , RealElement   = require('./RealElement')

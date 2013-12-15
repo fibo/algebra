@@ -1,4 +1,8 @@
 
+//
+// # RealElement
+//
+
 var AlgebraElement = require('./AlgebraElement')
   , Field          = require('./RealField')
   , inherits       = require('inherits')

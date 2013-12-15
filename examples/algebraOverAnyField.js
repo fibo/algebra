@@ -1,4 +1,6 @@
 
+// # Algebra over any field
+//
 // Let's create an algebra over the boolean field.
 
 var algebra  = require('algebra')

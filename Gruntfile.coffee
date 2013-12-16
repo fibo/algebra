@@ -1,4 +1,6 @@
 
+classes = require('./classes')
+
 templates =
   index: '../fibo.github.io/templates/index.jst'
   classes: '../fibo.github.io/templates/classes.jst'
@@ -8,6 +10,20 @@ assets =
   css: '../fibo.github.io/css/*'
 
 livereloadPort = 35729
+
+coffeeConfig = {}
+
+for klass of classes
+  do (klass) ->
+    testPath = 'test/' + klass + '.js'
+    specPath = 'spec/' + klass + '.coffee'
+
+    testFromSpec = {}
+    testFromSpec[testPath] = specPath
+
+    coffeeConfig[klass] =
+      files:
+        testFromSpec
 
 module.exports = (grunt) ->
   grunt.initConfig
@@ -135,61 +151,7 @@ module.exports = (grunt) ->
         files: ['spec/RealVectorSpace.coffee']
         tasks: 'coffee:RealVectorSpace'
 
-    coffee:
-      AlgebraElement:
-        files:
-          'test/AlgebraElement.js': 'spec/AlgebraElement.coffee'
-      AlgebraField:
-        files:
-          'test/AlgebraField.js': 'spec/AlgebraField.coffee'
-      AlgebraMatrix:
-        files:
-          'test/AlgebraMatrix.js': 'spec/AlgebraMatrix.coffee'
-      AlgebraInvertibleMatrix:
-        files:
-          'test/AlgebraInvertibleMatrix.js': 'spec/AlgebraInvertibleMatrix.coffee'
-      AlgebraTensor:
-        files:
-          'test/AlgebraTensor.js': 'spec/AlgebraTensor.coffee'
-      AlgebraVector:
-        files:
-          'test/AlgebraVector.js': 'spec/AlgebraVector.coffee'
-      AlgebraVectorSpace:
-        files:
-          'test/AlgebraVectorSpace.js': 'spec/AlgebraVectorSpace.coffee'
-      ComplexElement:
-        files:
-          'test/ComplexElement.js': 'spec/ComplexElement.coffee'
-      ComplexField:
-        files:
-          'test/ComplexField.js': 'spec/ComplexField.coffee'
-      GeneralLinearGroup:
-        files:
-          'test/GeneralLinearGroup.js': 'spec/GeneralLinearGroup.coffee'
-      QuaternionField:
-        files:
-          'test/QuaternionField.js': 'spec/QuaternionField.coffee'
-      QuaternionElement:
-        files:
-          'test/QuaternionElement.js': 'spec/QuaternionElement.coffee'
-      RealElement:
-        files:
-          'test/RealElement.js': 'spec/RealElement.coffee'
-      RealField:
-        files:
-          'test/RealField.js': 'spec/RealField.coffee'
-      RealGeneralLinearGroup:
-        files:
-          'test/RealGeneralLinearGroup.js': 'spec/RealGeneralLinearGroup.coffee'
-      RealTensor:
-        files:
-          'test/RealTensor.js': 'spec/RealTensor.coffee'
-      RealVector:
-        files:
-          'test/RealVector.js': 'spec/RealVector.coffee'
-      RealVectorSpace:
-        files:
-          'test/RealVectorSpace.js': 'spec/RealVectorSpace.coffee'
+    coffee: coffeeConfig
 
     docco:
       examples:

@@ -33,6 +33,7 @@ it could be extended to a group and maybe to a field and build "matrices of stri
 ## Quick start
 
 This is a 60 seconds tutorial to get your hands dirty with `algebra`.
+
 See also [online examples](http://www.g14n.info/algebra/examples).
 
 ## Complex numbers

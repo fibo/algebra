@@ -1,27 +1,44 @@
-Development
+# Development
 ===========
 
-# Repository
+## Vagrant
 
-Clone the repository
 
+
+
+
+
+
+
+## Bare (Repository)
+
+If you like to develop locally with your machine already configured with Node and NPM simply follow these steps:
+
+1. Clone the repository  
+```javascript
     git clone https://github.com/fibo/algebra.git
     cd algebra
+```
 
-Switch to develop branch
-
+2. Switch to develop branch  
+```javascript
     git checkout -b develop origin/develop
+    ```
 
-Install deps
-
+3. Install deps
+```javascript
     npm install
-
-Install grunt-cli
-
+```
+4. Install grunt-cli globally
+```javascript
     npm uninstall -g grunt-cli
     npm install -g grunt-cli
-
-# Iterative development
+```
+5. Install browserify globally
+```javascript
+    npm install browserify -g
+```
+## Iterative development
 
 Start watching files
 
@@ -36,17 +53,14 @@ Say hello to the nyan cat :)
 
     npm test
 
-# Browserify
+## Browserify
 
-Install browserify globally
-
-    npm install browserify -g
 
 Build algebra client lib
 
     browserify index.js -o algebra.js
 
-# Wiki
+## Wiki
 
 How I added wiki submodule 
 

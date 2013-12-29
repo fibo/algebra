@@ -1,5 +1,6 @@
 {
   "name": "algebra",
+  "homepage": "http://www.g14n.info/algebra/",
   "author": "fibo",
   "version": "0.1.8",
   "description": "Vectors, Matrices, Tensors",

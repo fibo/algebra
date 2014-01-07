@@ -2,7 +2,7 @@
   "name": "algebra",
   "homepage": "http://www.g14n.info/algebra/",
   "author": "fibo",
-  "version": "0.1.8",
+  "version": "0.1.81",
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {

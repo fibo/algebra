@@ -1,5 +1,6 @@
 
 var algebra = require('../index')
+  , should  = require('should')
 
 describe("README's Quick start section", function () {
   it('has a working Complex numbers example', function () {

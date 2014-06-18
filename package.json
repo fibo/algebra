@@ -1,12 +1,15 @@
 {
   "name": "algebra",
-  "homepage": "http://www.g14n.info/algebra/",
-  "author": "fibo",
-  "version": "0.1.81",
+  "homepage": "http://g14n.info/algebra",
+  "author": {
+    "name": "fibo",
+    "url": "http://g14n.info"
+  },
+  "version": "0.1.9",
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --bail --require should --reporter nyan"
+    "test": "mocha --bail --require should --reporter min"
   },
   "repository": {
     "type": "git",
@@ -25,29 +28,16 @@
     }
   ],
   "devDependencies": {
-    "browserify": "*",
-    "coffee-script": "*",
-    "mocha": "*",
-    "should": "*",
-    "grunt": "*",
-    "grunt-contrib-coffee": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-mocha-cli": "*",
-    "grunt-docco-multi": "0.0.2",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-markdown": "~0.4.0",
-    "grunt-contrib-connect": "~0.5.0",
-    "grunt-open": "~0.2.2",
-    "grunt-contrib-copy": "~0.4.1",
-    "matchdep": "~0.3.0"
+    "should": "~4.0.4",
+    "mocha": "~1.20.1"
   },
   "engines": {
     "node": ">=0.8"
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "underscore": "~1.5.1",
+    "underscore": "~1.5.2",
     "inherits": "~2.0.1",
-    "grunt-contrib-concat": "~0.3.0"
+    "strict-mode": "~0.1.4"
   }
 }

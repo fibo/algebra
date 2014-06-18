@@ -1,3 +1,3 @@
 
-module.exports = require('./classes')
+module.exports = require('./src')
 

@@ -1,71 +1,71 @@
-<!DOCTYPE html>
-
 <html>
 <head>
   <meta charset="utf-8">
+
+  <meta name="keywords" content="algebra,matrix,vector,math">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>algebra</title>
 
   <!-- Bootstrap -->
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1//css/bootstrap.min.css">
 
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1//css/bootstrap-theme.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1//js/bootstrap.min.js"></script>
+  <!-- Bootstrap END -->
+
 </head>
 <body style>
 
+  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
 
+        <a href="./" class="navbar-brand">algebra</a>
+      </div>
 
-    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="navbar-brand">algebra</span>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
-            <li><a href="./classes">Classes</a></li>
-            <li><a href="./examples">Examples</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <!-- li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li -->
-            <li><a href="http://g14n.info">Site</a></li>
-            <!-- li class="active"><a href="./">Static top</a></li -->
-          </ul>
-        </div>
-      </div> <!-- div class="container" -->
-    </div> <!-- div class="navbar" -->
-
-
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li ><a href="./api.html">api</a></li>
+          <li><a href="https://github.com/fibo/algebra" target="_blank">code</a></li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- div class="navbar" -->
 
   <div class="container">
-    <div class="jumbotron">
-      <h1 id="algebra">algebra</h1>
+
+    <div style="height: 50px;"></div>
+
+
+
+<h1 id="algebra">algebra</h1>
 <p>Vectors, Matrices, Tensors for Node.js</p>
 <p><a href="https://travis-ci.org/fibo/algebra?branch=master"><img src="https://travis-ci.org/fibo/algebra.png?branch=master" alt="Build Status"></a> <a href="http://badge.fury.io/js/algebra"><img src="https://badge.fury.io/js/algebra.png" alt="NPM version"></a></p>
 <p><img src="http://www.g14n.info/algebra/img/Cover-OnQuaternionsAndOctonions.png" alt="on-quaternions-and-octonions!"> <img src="http://www.g14n.info/algebra/img/Cover-Algebra.png" alt="Algebra!"></p>
 <h1 id="installation">Installation</h1>
-<pre><code>npm install algebra</code></pre>
-<h1 id="description">Description</h1>
+<pre><code>npm install algebra
+</code></pre><h1 id="description">Description</h1>
 <p>I&#39;m implementing matrices and vectors on few algebra fields
 (Reals, Complexes etc.) following Micheal Artin&#39;s &quot;Algebra&quot;,
 which was my book at <a href="http://www.dima.unige.it">Universita&#39; Degli Studi di Genova</a>.</p>
@@ -102,8 +102,8 @@ console.log(z1.data); // [-5, 10]
 // Many chainable operators are available.
 z1.conj().mul([2, 0]);
 
-console.log(z1.data); // [-10, 20]</code></pre>
-<h2 id="vectors">Vectors</h2>
+console.log(z1.data); // [-10, 20]
+</code></pre><h2 id="vectors">Vectors</h2>
 <pre><code>var algebra = require(&#39;algebra&#39;);
 
 // Rn is a class representing a real vector space of dimension = n
@@ -121,8 +121,8 @@ var v2 = new R2.Vector(2, 4);
 // Add v2 to v1
 v1.add(v2); // (1, 1) + (2, 4) = (3, 5)
 
-console.log(v1.data); // [3, 5]</code></pre>
-<h2 id="matrices">Matrices</h2>
+console.log(v1.data); // [3, 5]
+</code></pre><h2 id="matrices">Matrices</h2>
 <pre><code>var algebra = require(&#39;algebra&#39;);
 
 // GLnR is the Real General Linear Group of invertible matrices of order n
@@ -150,20 +150,12 @@ m1.mul(m2);
 console.log(m1.data); // [1, 2, 3, 4]
 
 // Check out m1 determinant, should be 2 = (1 * 4 - 3 * 2) * (-1 * 1 - 0 * 0)
-console.log(m1.determinant.data); // 2</code></pre>
+console.log(m1.determinant.data); // 2
+</code></pre>
 
-    </div>
-  </div>
+  </div> <!-- div class="container" -->
 
-
-
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
-  <!-- Start of Google Analytics tracking code -->
-  <script type="text/javascript">
+  <script type="text/javascript"> <!-- Start of Google Analytics tracking code -->
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-12635045-12']);
@@ -175,8 +167,7 @@ console.log(m1.determinant.data); // 2</code></pre>
      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
    })();
 
-  </script>
-  <!-- End of Google Analytics tracking code -->
-
+  </script> <!-- End of Google Analytics tracking code -->
 </body>
 </html>
+

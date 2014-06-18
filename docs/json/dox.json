@@ -1,0 +1,342 @@
+{
+    "AlgebraElement": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>this.constructor refers to some AlgebraElement subclass,\n since it should be aware of it field, I only pass the element data.</p>\n<p> TODO per ora lo lascio private, non lo documento</p>\n",
+                "summary": "<p>this.constructor refers to some AlgebraElement subclass,\n since it should be aware of it field, I only pass the element data.</p>\n",
+                "body": "<p> TODO per ora lo lascio private, non lo documento</p>\n"
+            },
+            "ignore": false,
+            "code": "function clone () {\n  return new this.constructor(this.data)\n}\nAlgebraElement.prototype.clone = clone\n\nfunction coerceToData () {\n  var arg0 = arguments[0]\n    , data\n\n  if (arg0 instanceof AlgebraElement)\n    data = arg0.data\n  else\n    data = arg0\n\n  return data\n}\n\n//\n// ## Methods\n//\n// Methods of AlgebraElement are operators wrapping the homonym AlgebraField\n// operator.\n//",
+            "ctx": {
+                "type": "function",
+                "name": "clone",
+                "string": "clone()"
+            }
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO manca invert</p>\n",
+                "summary": "<p>TODO manca invert</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "//\n// ### addition\n//\n\nfunction addition () {\n  var data = coerceToData(arguments[0])\n\n  this.data = this.field.addition(this.data, data)\n  return this\n}\nAlgebraElement.prototype.addition = addition"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO per i docs, fai qualche label tipo Alias: add</p>\n",
+                "summary": "<p>TODO per i docs, fai qualche label tipo Alias: add</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "AlgebraElement.prototype.add      = addition\n\n//\n// ### subtraction\n//\n\nfunction subtraction () {\n  var data = coerceToData(arguments[0])\n\n  this.data = this.field.subtraction(this.data, data)\n  return this\n}\nAlgebraElement.prototype.subtraction = subtraction\nAlgebraElement.prototype.sub         = subtraction\n\n//\n// ### multiplication\n//\n\nfunction multiplication() {\n  var data = coerceToData(arguments[0])\n\n  this.data = this.field.multiplication(this.data, data)\n  return this\n}\nAlgebraElement.prototype.multiplication = multiplication\nAlgebraElement.prototype.mul            = multiplication\n\n//\n// ### division\n//\n\nfunction division () {\n  var data = coerceToData(arguments[0])\n\n  this.data = this.field.division(this.data, data)\n\n  return this\n}\nAlgebraElement.prototype.division = division\nAlgebraElement.prototype.div      = division\n\n//\n// ### equal\n//\n\nfunction equal () {\n  var data = coerceToData(arguments[0])\n\n  return this.field.equal(this.data, data)\n}\nAlgebraElement.prototype.equal = equal\nAlgebraElement.prototype.eq    = equal\n\n\n//\n// ### notEqual\n//\n\nfunction notEqual () {\n  var data = coerceToData(arguments[0])\n\n  return this.field.notEqual(this.data, data)\n}\nAlgebraElement.prototype.equal = notEqual\nAlgebraElement.prototype.eq    = notEqual\n\nmodule.exports = AlgebraElement",
+            "ctx": {
+                "type": "property",
+                "constructor": "AlgebraElement",
+                "cons": "AlgebraElement",
+                "name": "add",
+                "value": "addition",
+                "string": "AlgebraElement.prototype.add"
+            }
+        }
+    ],
+    "AlgebraField": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # AlgebraField\n//\n// Abstract algebra field.\n//\n// ## Examples\n//\n// * [Algebra over any field](../examples/algebraOverAnyField.html)\n//\n\nfunction AlgebraField (zero, one) {\n\n  //\n  // ## Attributes\n  //\n\n  //\n  // ### zero\n  //\n\n  function getZero() { return zero }\n\n  Object.defineProperty(this, 'zero', {get: getZero})\n\n  //\n  // ### one\n  //\n\n  function getOne() { return one }\n\n  Object.defineProperty(this, 'one', {get: getOne})\n}\n\nfunction abstractOperator() {\n  throw new Error('unimplemented abstract operator')\n}\n\nAlgebraField.prototype = {\n  addition       : abstractOperator,\n  add            : abstractOperator,\n  subtraction    : abstractOperator,\n  sub            : abstractOperator,\n  multiplication : abstractOperator,\n  mul            : abstractOperator,\n  division       : abstractOperator,\n  div            : abstractOperator,\n  equal          : abstractOperator,\n  eq             : abstractOperator,\n  notEqual       : abstractOperator,\n  ne             : abstractOperator,\n  inversion      : abstractOperator,\n  inv            : abstractOperator,\n  negation       : abstractOperator,\n  neg            : abstractOperator\n}\n\nmodule.exports = AlgebraField"
+        }
+    ],
+    "AlgebraInvertibleMatrix": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO se il determinante è zero throw new Error()</p>\n",
+                "summary": "<p>TODO se il determinante è zero throw new Error()</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "Object.defineProperty(this, 'determinant', {get: getDeterminant})\n\n}\n\ninherits(AlgebraInvertibleMatrix, AlgebraMatrix)\n\nfunction computeDeterminant (order, Element, elements) {\n\n  var det = new Element(0)"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>cloning elements</p>\n",
+                "summary": "<p>cloning elements</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "for (var i in elements)\n    elements[i] = elements[i].clone()"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO caso degenere, aggiusta</p>\n",
+                "summary": "<p>TODO caso degenere, aggiusta</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (order === 1)\n    return elements[0]\n\n  if (order === 2) {\n    det.add(elements[0].mul(elements[3])).sub(elements[2].mul(elements[1]))\n    return det\n  }"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO per ora scelgo sempre la prima riga.\n   TODO classe Collection con metodo countZeros o numberOfZeros()</p>\n",
+                "summary": "<p>TODO per ora scelgo sempre la prima riga.\n   TODO classe Collection con metodo countZeros o numberOfZeros()</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "var rowIndex = 0\n\n  for (var columnIndex = 0; columnIndex < order; columnIndex++) {\n    var adjointElements = getAdjointElements(rowIndex, columnIndex, order, order, elements)\n\n    var adjointDeterminant = this.computeDeterminant(order - 1, adjointElements);\n\n    element = elements[this.computeIndex([rowIndex, columnIndex])];\n\n    if (columnIndex % 2 === 0)\n      det.add(element)\n    else\n      det.sub(element)\n\n    det.mul(adjointDeterminant)\n  }\n\n  return det\n}\n\nAlgebraInvertibleMatrix.prototype.computeDeterminant = computeDeterminant\n\nfunction getAdjointElements(rowIndex, columnIndex, numRows, numCols, elements) {\n  var adjointElements = []",
+            "ctx": {
+                "type": "declaration",
+                "name": "rowIndex",
+                "value": "0",
+                "string": "rowIndex"
+            }
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO anche qua dovrei clonare in teoria ?</p>\n",
+                "summary": "<p>TODO anche qua dovrei clonare in teoria ?</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "for (var i = 0; i < numRows; i++) {\n      for (var j = 0; j < numCols; j++) {\n        if (i != rowIndex && j != columnIndex) {\n          adjointElements.push(elements[this.computeIndex([i, j])])\n        }\n      }\n    }\n\n  return adjointElements\n}\n\nmodule.exports = AlgebraInvertibleMatrix"
+        }
+    ],
+    "AlgebraMatrix": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO funzione generica di somma sugli indici, tipo notazione di Einstein.\n        var rightElement = leftMatrix.ij(i, k);\n        var leftElement = rightMatrix.ij(k, j);</p>\n",
+                "summary": "<p>TODO funzione generica di somma sugli indici, tipo notazione di Einstein.\n        var rightElement = leftMatrix.ij(i, k);\n        var leftElement = rightMatrix.ij(k, j);</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "var rightElementData = leftMatrix.data[matrixToArrayIndex(i, k, rightMatrix.numberOfColumns)]\n          , leftElementData = rightMatrix.data[matrixToArrayIndex(k, j, lNumCols)]\n\n        element.add(field.mul(rightElementData,leftElementData))\n      }\n\n      elements.push(element)\n    }\n  }\n\n  return elements\n}\n\n//\n// ### multiplication\n//\n\nfunction multiplication (matrix) {\n  var newElements = rowByColumnMultiplication(this, matrix)\n\n  this.elements = newElements\n\n  return this\n}\n\nAlgebraMatrix.prototype.multiplication = multiplication\nAlgebraMatrix.prototype.mul            = multiplication\n\nmodule.exports = AlgebraMatrix",
+            "ctx": {
+                "type": "declaration",
+                "name": "rightElementData",
+                "value": "leftMatrix.data[matrixToArrayIndex(i, k, rightMatrix.numberOfColumns)]",
+                "string": "rightElementData"
+            }
+        }
+    ],
+    "AlgebraTensor": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>it is mandatory to clone elements, so every element refer to its own \n       object instance, otherwise can lead to weird behaviourswhen applying operators.</p>\n",
+                "summary": "<p>it is mandatory to clone elements, so every element refer to its own \n       object instance, otherwise can lead to weird behaviourswhen applying operators.</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "elements[i] = element.clone()\n    }\n    else {\n      try {"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>I suppose <em>element</em> is raw data</p>\n",
+                "summary": "<p>I suppose <em>element</em> is raw data</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "elements[i] = new Element(element)\n      }\n      catch (err) { throw err }\n    }\n  }\n\n  function getElements () { return elements }"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO; non mi piace molto, ma, mi serve per AlgebraMatrix per l momento\n   magari dovrei solo abbellirla</p>\n",
+                "summary": "<p>TODO; non mi piace molto, ma, mi serve per AlgebraMatrix per l momento\n   magari dovrei solo abbellirla</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "function setElements (newElements) { elements = newElements }\n\n  Object.defineProperty(this, 'elements', {get: getElements, set: setElements})\n\n  //\n  // ### data\n  //\n\n  function getData () {\n    var data = []\n\n    for (var i in elements) {\n      data.push(elements[i].data)\n    }\n\n    return data\n  }\n\n  Object.defineProperty(this, 'data', {get: getData})\n\n  //\n  // ### indices\n  //\n\n  if (_.isUndefined(indices))\n    indices = [0]\n\n  function getIndices () { return indices }\n\n  Object.defineProperty(this, 'indices', {get: getIndices})\n}\n\nfunction addition (tensor) {\n  for (var i in this.elements)\n    this.elements[i].addition(tensor.elements[i])\n\n  return this\n}\nAlgebraTensor.prototype.addition = addition\nAlgebraTensor.prototype.add      = addition\n\nfunction subtraction (tensor) {\n  for (var i in this.elements)\n    this.elements[i].subtraction(tensor.elements[i])\n\n  return this\n}\nAlgebraTensor.prototype.subtraction = subtraction\nAlgebraTensor.prototype.sub         = subtraction\n\nfunction computeIndex (positions) {\n  var index = positions[0]\n\n  for (var i = 0; i < indices.length - 1; i++)\n    index = index * indices[i] + positions[i + 1]\n\n  return index\n}\n\nAlgebraTensor.prototype.computeIndex = computeIndex\n\nmodule.exports = AlgebraTensor",
+            "ctx": {
+                "type": "function",
+                "name": "setElements",
+                "string": "setElements()"
+            }
+        }
+    ],
+    "AlgebraVector": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>inheritance</p>\n",
+                "summary": "<p>inheritance</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "AlgebraTensor.call(this, Element, [this.dimension], elements)\n}\n\ninherits(AlgebraVector, AlgebraTensor)\n\nmodule.exports = AlgebraVector"
+        }
+    ],
+    "AlgebraVectorSpace": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO metti link ad un esempio</p>\n",
+                "summary": "<p>TODO metti link ad un esempio</p>\n",
+                "body": ""
+            },
+            "ignore": false
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO sarebbe da mettere in Object.defineProperty in modo da renderlo readonly ?\nDa notare infatti che + un attributo che ha come valore una funzione\nquindi anche se è una funzione, non è un metodo</p>\n",
+                "summary": "<p>TODO sarebbe da mettere in Object.defineProperty in modo da renderlo readonly ?\nDa notare infatti che + un attributo che ha come valore una funzione\nquindi anche se è una funzione, non è un metodo</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "function Vector () {\n    var arg0 = arguments[0]\n      , numArgs = arguments.length\n      , elements = []\n\n    if ((numArgs === 1) && (_.isArray(arg0)))\n      elements = arg0\n\n    if (numArgs > 1)\n      for (var i in arguments)\n        elements.push(arguments[i])\n\n    AlgebraVector.call(this, Element, elements)\n  }\n\n  inherits(Vector, AlgebraVector)\n\n  this.Vector = Vector\n}\n\nmodule.exports = AlgebraVectorSpace",
+            "ctx": {
+                "type": "function",
+                "name": "Vector",
+                "string": "Vector()"
+            }
+        }
+    ],
+    "ComplexElement": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # ComplexElement\n//\n// Element of the complex field.\n//\n// ## Examples\n//\n// * [complexNumbers](../examples/complexNumbers.html)\n//\n\nvar AlgebraElement = require('./AlgebraElement')\n  , Field          = require('./ComplexField')\n  , inherits       = require('inherits')\n\nvar data\n  , field = new Field()\n\nfunction ComplexElement() {\n\n  if (arguments.length === 0)\n    data = [1, 0]\n\n  if (arguments.length === 1)\n    data = arguments[0]\n\n  if (arguments.length === 2)\n    data = [arguments[0], arguments[1]]\n\n  AlgebraElement.call(this, field, data)\n}\n\ninherits(ComplexElement, AlgebraElement)\n\n//\n// ## Methods\n//\n\n//\n// ### conjugation\n//\n\nfunction conjugation(element) {\n  this.data = this.field.conjugation(this.data)\n\n  return this\n}\nComplexElement.prototype.conjugation = conjugation\nComplexElement.prototype.conj        = conjugation\n\nmodule.exports = ComplexElement"
+        }
+    ],
+    "ComplexField": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # ComplexField\n//\n// The field of complex numbers.\n//\n\nvar AlgebraField = require('./AlgebraField')\n  , inherits     = require('inherits')\n\nfunction ComplexField () {\n  AlgebraField.call(this, [0, 0], [1, 0])\n}\n\ninherits(ComplexField, AlgebraField)\n\nfunction addition(z, w) {\n  // z + w = (z0 + i z1) + (w0 + i w1)\n  //       = (z0 + w0) + i (z1 + w1)\n  return [z[0] + w[0], z[1] + w[1]]\n}\nComplexField.prototype.addition = addition\nComplexField.prototype.add      = addition\n\nfunction subtraction(z, w) {\n  // z - w = (z0 + i z1) - (w0 + i w1)\n  //       = (z0 - w0) + i (z1 - w1)\n  return [z[0] - w[0], z[1] - w[1]]\n}\nComplexField.prototype.subtraction = subtraction\nComplexField.prototype.sub         = subtraction\n\nfunction multiplication(z, w) {\n  // z * w = (z0 + i z1) * (w0 + i w1)\n  //       = z0 * w0 + z0 * i w1 + i z1 * w0 + i z1 * i w1\n  //       = (z0 * w0 - z1 * w1) + i (z0 * w1 + z1 * w0)\n  return [z[0] * w[0] - z[1] * w[1], z[0] * w[1] + z[1] * w[0]]\n}\nComplexField.prototype.multiplication = multiplication\nComplexField.prototype.mul            = multiplication\n\nfunction division(z, w) {\n  // z / w = z * w^-1\n  return multiplication(z, inversion(w))\n}\nComplexField.prototype.division = division\nComplexField.prototype.div      = division\n\nfunction conjugation(z) {\n  // z~ = (z0 + i z1)~\n  //    = z0 - i z1\n  return [z[0], - z[1]]\n}\nComplexField.prototype.conjugation = conjugation\nComplexField.prototype.conj        = conjugation\n\nfunction norm(z) {\n  // |z| = |z0 + i z1|\n  //     = z0 * z0 + z1 * z1\n  return z[0] * z[0] + z[1] * z[1]\n}\nComplexField.prototype.norm = norm\n\nfunction inversion(z) {\n  // z^-1 = z~ * 1 / |z|\n  return multiplication(conjugation(z), [1 / norm(z), 0])\n}\nComplexField.prototype.inversion = inversion\nComplexField.prototype.inv       = inversion\n\nfunction equal(z, w) {\n  return z[0] === w[0] && z[1] === w[1]\n}\nComplexField.prototype.equal = equal\nComplexField.prototype.eq    = equal\n\nfunction notEqual(z, w) {\n  return z[0] !== w[0] || z[1] !== w[1]\n}\nComplexField.prototype.notEqual = notEqual\nComplexField.prototype.ne       = notEqual\n\nmodule.exports = ComplexField"
+        }
+    ],
+    "GeneralLinearGroup": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # GeneralLinearGroup\n//\n\nvar AlgebraInvertibleMatrix = require('./AlgebraInvertibleMatrix')\n  , inherits                = require('inherits')\n\nfunction GeneralLinearGroup (Element, degree) {\n\n  function Matrix () {\n    var arg0 = arguments[0]\n      , numArgs = arguments.length\n      , elements = []\n\n    if ((numArgs === 1) && (_.isArray(arg0)))\n      elements = arg0\n\n    if (numArgs > 1)\n      for (var i in arguments)\n        elements.push(arguments[i])\n\n    AlgebraInvertibleMatrix.call(this, Element, degree, elements)\n  }\n\n  inherits(Matrix, AlgebraInvertibleMatrix)\n\n  this.Matrix = Matrix\n}\n\nmodule.exports = GeneralLinearGroup"
+        }
+    ],
+    "QuaternionElement": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # QuaternionElement\n//\n\nvar AlgebraElement = require('./AlgebraElement')\n  , Field          = require('./QuaternionField')\n  , inherits       = require('inherits')\n\nvar data\n  , field = new Field()\n\nfunction QuaternionElement () {\n\n  if (arguments.length === 0)\n    data = [1, 0, 0, 0]\n\n  if (arguments.length === 1)\n    data = arguments[0]\n\n  if (arguments.length === 3)\n    data = [0, arguments[0], arguments[1], arguments[2]]\n\n  AlgebraElement.call(this, field, data)\n}\n\ninherits(QuaternionElement, AlgebraElement)\n\nmodule.exports = QuaternionElement"
+        }
+    ],
+    "QuaternionField": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # QuaternionField\n//\n\nvar AlgebraField = require('./AlgebraField')\n  , inherits     = require('inherits')\n\nfunction QuaternionField () {\n  AlgebraField.call(this, [0, 0, 0, 0], [1, 0, 0, 0])\n}\n\ninherits(QuaternionField, AlgebraField)\n\nfunction addition(a, b) {\n  return [\n    a[0] + b[0],\n    a[1] + b[1],\n    a[2] + b[2],\n    a[3] + b[3]\n  ]\n}\nQuaternionField.prototype.addition = addition\nQuaternionField.prototype.add      = addition\n\nfunction subtraction(a, b) {\n  return [\n    a[0] - b[0],\n    a[1] - b[1],\n    a[2] - b[2],\n    a[3] - b[3]\n  ]\n}\nQuaternionField.prototype.subtraction = subtraction\nQuaternionField.prototype.sub         = subtraction\n\nfunction conjugation(q) {\n  // z~ = (q0 + i q1 + j q2 + k q3)~\n  //    = q0 - i q1 - j q2 - k q3\n  return [q[0], - q[1], - q[2], - q[3]]\n}\nQuaternionField.prototype.conjugation = conjugation\nQuaternionField.prototype.conj        = conjugation\n\nfunction equal(a, b) {\n  return (\n    a[0] === b[0] &&\n    a[1] === b[1] &&\n    a[2] === b[2] &&\n    a[3] === b[3]\n  )\n}\nQuaternionField.prototype.equal = equal\nQuaternionField.prototype.eq    = equal\n\nfunction notEqual(a, b) {\n  return (\n    a[0] !== b[0] ||\n    a[1] !== b[1] ||\n    a[2] !== b[2] ||\n    a[3] !== b[3]\n  )\n}\nQuaternionField.prototype.notEqual = notEqual\nQuaternionField.prototype.ne    = notEqual\n\nmodule.exports = QuaternionField"
+        }
+    ],
+    "RealElement": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>data defaults to 1 and must be a number</p>\n",
+                "summary": "<p>data defaults to 1 and must be a number</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (typeof data === 'undefined')\n    data = 1\n\n  if (typeof data !== 'number')\n    throw new TypeError()\n\n  AlgebraElement.call(this, field, data)\n}\n\ninherits(RealElement, AlgebraElement)\n\nmodule.exports = RealElement"
+        }
+    ],
+    "RealField": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO manca &quot;inverse&quot;, inoltre dovrei fare checkData</p>\n",
+                "summary": "<p>TODO manca &quot;inverse&quot;, inoltre dovrei fare checkData</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "//\n// ## Methods\n//\n\n//\n// ### addition\n//\n\nfunction addition (a, b) {\n  return a + b\n}\nRealField.prototype.addition = addition\nRealField.prototype.add      = addition\n\n//\n// ### subtraction\n//\n\nfunction subtraction (a, b) {\n  return a - b\n}\nRealField.prototype.subtraction = subtraction\nRealField.prototype.sub         = subtraction\n\n//\n// ### multiplication\n//\n\nfunction multiplication (a, b) {\n  return a * b\n}\nRealField.prototype.multiplication = multiplication\nRealField.prototype.mul      = multiplication\n\n//\n// ### division\n//\n\nfunction division(a, b) {\n  return a / b\n}\nRealField.prototype.division = division\nRealField.prototype.div      = division\n\n//\n// ### equal\n//\n\nfunction equal(a, b) {\n  return a === b\n}\nRealField.prototype.equal = equal\nRealField.prototype.eq    = equal\n\n//\n// ### notEqual\n//\n\nfunction notEqual(a, b) {\n  return a !== b\n}\nRealField.prototype.notEqual = notEqual\nRealField.prototype.ne       = notEqual\n\nmodule.exports = RealField"
+        }
+    ],
+    "RealGeneralLinearGroup": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # RealGeneralLinearGroup\n//\n\nvar GeneralLinearGroup = require('./GeneralLinearGroup')\n  , RealElement        = require('./RealElement')\n  , inherits           = require('inherits')\n\nfunction RealGeneralLinearGroup(degree) {\n  GeneralLinearGroup.call(this, RealElement, degree)\n}\n\ninherits(RealGeneralLinearGroup, GeneralLinearGroup)\n\nmodule.exports = RealGeneralLinearGroup"
+        }
+    ],
+    "RealTensor": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # RealTensor\n//\n// Tensor over the real field.\n//\n\nvar AlgebraTensor = require('./AlgebraTensor')\n  , RealElement   = require('./RealElement')\n  , inherits      = require('inherits')\n\nfunction RealTensor(elements, indices) {\n  AlgebraTensor.call(this, RealElement, indices, elements)\n}\n\ninherits(RealTensor, AlgebraTensor)\n\nmodule.exports = RealTensor"
+        }
+    ],
+    "RealVector": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # RealVector\n//\n// Vector over the real field.\n//\n// ## Examples\n//\n// * [realVectors](../examples/realVectors.html)\n//\n\nvar AlgebraVector = require('./AlgebraVector')\n  , RealElement   = require('./RealElement')\n  , inherits      = require('inherits')\n  , _             = require('underscore')\n\nfunction RealVector() {\n  var arg0 = arguments[0]\n    , numArgs = arguments.length\n    , elements = []\n\n  if ((numArgs === 1) && (_.isArray(arg0)))\n    elements = arg0\n\n  if (numArgs > 1)\n    for (var i in arguments)\n      elements.push(arguments[i])\n\n  AlgebraVector.call(this, RealElement, elements)\n}\n\ninherits(RealVector, AlgebraVector)\n\nmodule.exports = RealVector"
+        }
+    ],
+    "RealVectorSpace": [
+        {
+            "tags": [],
+            "description": {
+                "full": "",
+                "summary": "",
+                "body": ""
+            },
+            "isPrivate": false,
+            "code": "//\n// # RealVectorSpace\n//\n\nvar AlgebraVectorSpace = require('./AlgebraVectorSpace')\n  , RealElement        = require('./RealElement')\n  , inherits           = require('inherits')\n\nfunction RealVectorSpace(dimension) {\n  AlgebraVectorSpace.call(this, RealElement, dimension)\n}\n\ninherits(RealVectorSpace, AlgebraVectorSpace)\n\nmodule.exports = RealVectorSpace"
+        }
+    ]
+}

@@ -1,11 +1,13 @@
 
-//
-// # AlgebraElement
-//
-// Abstract algebra element.
-//
-
 var AlgebraField = require('./AlgebraField')
+
+/**
+ * Abstract algebra element
+ *
+ * @param {Object} field
+ * @param {Any} data
+ *
+ */
 
 function AlgebraElement(field, data) {
 

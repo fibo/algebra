@@ -1,59 +1,50 @@
 
-//
-// # AlgebraField
-//
-// Abstract algebra field.
-//
-// ## Examples
-//
-// * [Algebra over any field](../examples/algebraOverAnyField.html)
-//
+var operators = [
+  'addition', 'add', 'subtraction', 'sub', 'multiplication', 'mul', 'division',
+  'div', 'equal', 'eq', 'notEqual', 'ne', 'inversion', 'inv', 'negation', 'neg'
+]
+
+/**
+ * Abstract algebra field
+ *
+ * ## Examples
+ *
+ * [Algebra over any field](../examples/algebraOverAnyField.html)
+ */
 
 function AlgebraField (zero, one) {
-
-  //
-  // ## Attributes
-  //
-
-  //
-  // ### zero
-  //
 
   function getZero() { return zero }
 
   Object.defineProperty(this, 'zero', {get: getZero})
-
-  //
-  // ### one
-  //
 
   function getOne() { return one }
 
   Object.defineProperty(this, 'one', {get: getOne})
 }
 
-function abstractOperator() {
-  throw new Error('unimplemented abstract operator')
+function abstractOperator () {
+  throw new Error('Unimplemented abstract operator')
 }
 
-AlgebraField.prototype = {
-  addition       : abstractOperator,
-  add            : abstractOperator,
-  subtraction    : abstractOperator,
-  sub            : abstractOperator,
-  multiplication : abstractOperator,
-  mul            : abstractOperator,
-  division       : abstractOperator,
-  div            : abstractOperator,
-  equal          : abstractOperator,
-  eq             : abstractOperator,
-  notEqual       : abstractOperator,
-  ne             : abstractOperator,
-  inversion      : abstractOperator,
-  inv            : abstractOperator,
-  negation       : abstractOperator,
-  neg            : abstractOperator
+function isAlgebraField (field) {
+  var unimplementedOperators = []
+
+  if (!(field instanceof AlgebraField))
+    throw new Error('Not an AlgebraField')
+
+  operators.forEach(function (operator) {
+    if (operator === abstractOperator)
+      unimplementedOperators.push(operator)
+  })
+
+  if (unimplementedOperators.length > 0)
+    throw new Error('Unimplemented operators: ' + unimplementedOperators.join(' '))
 }
+
+operators.forEach(function (operator) {
+  AlgebraField.prototype[operator] = abstractOperator
+})
 
 module.exports = AlgebraField
 

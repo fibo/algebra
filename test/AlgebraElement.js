@@ -13,15 +13,16 @@
 
   ComplexField = algebra.ComplexField;
 
-  field = new AlgebraField();
+  //field = new AlgebraField();
 
-  element = new AlgebraElement(field);
+  //element = new AlgebraElement(field);
 
   real = new RealField();
 
   complex = new ComplexField();
 
   describe('AlgebraElement', function() {
+/*
     describe('Constructor', function() {
       it('has signature (field, data)', function() {
         var data;
@@ -121,6 +122,7 @@
         });
       });
     });
+*/
   });
 
 }).call(this);

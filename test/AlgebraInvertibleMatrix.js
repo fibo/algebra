@@ -1,7 +1,9 @@
 (function() {
-  var AlgebraInvertibleMatrix, AlgebraMatrix, Element, RealElement, algebra, data1, data2, elements, matrix, order, x, y;
+  var AlgebraInvertibleMatrix, AlgebraMatrix, Element, RealElement, data1, data2, elements, matrix, order, x, y;
 
-  algebra = require('../index');
+  var algebra = require('../index')
+    , should  = require('should')
+  
 
   AlgebraMatrix = algebra.AlgebraMatrix;
 

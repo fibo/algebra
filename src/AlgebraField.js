@@ -4,7 +4,7 @@ var requiredOperators = [
 ]
 
 var derivedOperators = [
-  'addition', 'multiplication', 'equal', 'division', 'subtraction'
+  'inversion', 'negation', 'notEqual'
 ]
 
 var aliasOperatorsOf = {
@@ -38,9 +38,9 @@ function AlgebraField (zero, one) {
   // Check if operators are implemented
   requiredOperators.forEach(function (operator) {
     if (typeof self[operator] === 'function') {
-      // Create aliases for required operators
+      // Create aliases of required operators
       aliasOperatorsOf[operator].forEach(function (alias) {
-        self[alias] = operator
+        self[alias] = self[operator]
       })
     } else {
       unimplementedOperators.push(operator)
@@ -62,7 +62,7 @@ function AlgebraField (zero, one) {
   // Create aliases for derived operators
   derivedOperators.forEach(function (operator) {
     aliasOperatorsOf[operator].forEach(function (alias) {
-      self[alias] = operator
+      self[alias] = self[operator]
     })
   })
 }

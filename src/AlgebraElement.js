@@ -6,54 +6,42 @@ var AlgebraField = require('./AlgebraField')
  *
  * @param {Object} field
  * @param {Any} data
- *
  */
 
 function AlgebraElement(field, data) {
+  if (field instanceof AlgebraField)
+    this.field = field
+  else
+    throw new TypeError('Not an AlgebraField: ' + field)
 
-  //
-  // ## Attributes
-  //
 
-  //
-  // ### field
-  //
-  // it is an instance of algebrafield
-  //
-
-  if (! (field instanceof AlgebraField))
-    throw new TypeError()
-
-  function getField() { return field }
-
-  Object.defineProperty(this, 'field', {get: getField})
-
-  //
-  // ### data
-  //
-  // It is any kind of raw data.
-  //
-
+  // Attribute data defaults to one.
   if (typeof data === 'undefined')
     data = field.one
 
-  function getData() { return data }
-
-  function setData(newData) { data = newData }
-
-  Object.defineProperty(this, 'data', {get: getData, set: setData})
-
+  this.data = data
 }
 
-/* this.constructor refers to some AlgebraElement subclass,
- since it should be aware of it field, I only pass the element data.
-
- TODO per ora lo lascio private, non lo documento
+/**
+ * Get a copy of this AlgebraElement
+ *
+ * @return {Object} AlgebraElement
  */
+
 function clone () {
+  // I only pass the element data cause *this.constructor* refers to some AlgebraElement subclass
+  // so it should be aware of its field.
+
   return new this.constructor(this.data)
 }
+
 AlgebraElement.prototype.clone = clone
+
+/**
+ * Return data from given argument
+ *
+ * @api private
+ */
 
 function coerceToData () {
   var arg0 = arguments[0]
@@ -68,57 +56,62 @@ function coerceToData () {
 }
 
 //
-// ## Methods
-//
-// Methods of AlgebraElement are operators wrapping the homonym AlgebraField
-// operator.
+// Methods of AlgebraElement are operators wrapping the homonym AlgebraField operator.
 //
 
-/* TODO manca invert */
-
-//
-// ### addition
-//
+/**
+ *
+ * @param {Any} arg
+ * @return {Object} self
+ */
 
 function addition () {
   var data = coerceToData(arguments[0])
 
   this.data = this.field.addition(this.data, data)
+
   return this
 }
 AlgebraElement.prototype.addition = addition
-/* TODO per i docs, fai qualche label tipo Alias: add */
 AlgebraElement.prototype.add      = addition
 
-//
-// ### subtraction
-//
+/**
+ *
+ * @param {Any} arg
+ * @return {Object} self
+ */
 
 function subtraction () {
   var data = coerceToData(arguments[0])
 
   this.data = this.field.subtraction(this.data, data)
+
   return this
 }
 AlgebraElement.prototype.subtraction = subtraction
 AlgebraElement.prototype.sub         = subtraction
 
-//
-// ### multiplication
-//
+/**
+ *
+ * @param {Any} arg
+ * @return {Object} self
+ */
 
-function multiplication() {
+function multiplication () {
   var data = coerceToData(arguments[0])
 
   this.data = this.field.multiplication(this.data, data)
+
   return this
 }
 AlgebraElement.prototype.multiplication = multiplication
 AlgebraElement.prototype.mul            = multiplication
 
-//
-// ### division
-//
+/**
+ *
+ * @param {Any} arg
+ * @return {Object} self
+ */
 
 function division () {
   var data = coerceToData(arguments[0])
@@ -130,9 +123,37 @@ function division () {
 AlgebraElement.prototype.division = division
 AlgebraElement.prototype.div      = division
 
-//
-// ### equal
-//
+/**
+ *
+ * @return {Object} self
+ */
+
+function negation () {
+  this.data = this.field.negation(this.data, data)
+
+  return this
+}
+AlgebraElement.prototype.negation = negation
+AlgebraElement.prototype.neg      = negation
+
+/**
+ *
+ * @return {Object} self
+ */
+
+function inversion () {
+  this.data = this.field.inversion(this.data, data)
+
+  return this
+}
+AlgebraElement.prototype.inversion = inversion
+AlgebraElement.prototype.inv       = inversion
+
+/**
+ *
+ * @param {Any} arg
+ * @return {Boolean}
+ */
 
 function equal () {
   var data = coerceToData(arguments[0])
@@ -142,18 +163,19 @@ function equal () {
 AlgebraElement.prototype.equal = equal
 AlgebraElement.prototype.eq    = equal
 
-
-//
-// ### notEqual
-//
+/**
+ *
+ * @param {Any} arg
+ * @return {Boolean}
+ */
 
 function notEqual () {
   var data = coerceToData(arguments[0])
 
   return this.field.notEqual(this.data, data)
 }
-AlgebraElement.prototype.equal = notEqual
-AlgebraElement.prototype.eq    = notEqual
+AlgebraElement.prototype.notEqual = notEqual
+AlgebraElement.prototype.ne       = notEqual
 
 module.exports = AlgebraElement
 

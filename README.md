@@ -21,17 +21,17 @@ Suppose for example the set of strings with the concatenation operator, it could
 
 ## Features
 
-* Algebra over Real and Complex fields
-* Vectors and vector spaces
+* Algebra over Real, Complex and Quaternions plus ∞. See also [Alexandroff compactification](http://en.wikipedia.org/wiki/Alexandroff_extension).
+* Vectors and Vector Spaces
 * Invertible Matrices and the General Linear Group
-* Tensors
+* [Tensors](http://en.wikipedia.org/wiki/Tensor): scalars, vectors and matrices are also implemented as tensors.
 * Algebra over custom fields
 
 ## Quick start
 
 This is a 60 seconds tutorial to get your hands dirty with `algebra`.
 
-See also [online examples](https://github.com/fibo/algebra/examples).
+See also [online examples](https://github.com/fibo/algebra/tree/master/examples).
 
 ## Complex numbers
 

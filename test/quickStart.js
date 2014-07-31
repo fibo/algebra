@@ -13,7 +13,6 @@ describe("README's Quick start section", function () {
 
     z1.data.should.eql([-5, 10])
 
-    // Many chainable operators are available.
     z1.conj().mul([2, 0]);
 
     z1.data.should.eql([-10, -20])

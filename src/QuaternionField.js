@@ -7,6 +7,12 @@ var AlgebraField = require('./AlgebraField')
   , inherits     = require('inherits')
 
 function QuaternionField () {
+  this.addition = addition
+  this.subtraction = subtraction
+  this.multiplication = function () {}
+  this.division = function () {}
+  this.equal = equal
+
   AlgebraField.call(this, [0, 0, 0, 0], [1, 0, 0, 0])
 }
 

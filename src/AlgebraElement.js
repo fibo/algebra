@@ -14,7 +14,6 @@ function AlgebraElement(field, data) {
   else
     throw new TypeError('Not an AlgebraField: ' + field)
 
-
   // Attribute data defaults to one.
   if (typeof data === 'undefined')
     data = field.one

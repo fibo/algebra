@@ -43,12 +43,14 @@ function AlgebraField (zero, one) {
         self[alias] = self[operator]
       })
     } else {
+      console.log(operator)
+      //throw new Error('Unimplemented operator: ' + operator)
       unimplementedOperators.push(operator)
     }
   })
 
   if (unimplementedOperators.length > 0)
-    throw new Error('Unimplemented operators: ', unimplementedOperators.join(' '))
+    throw new Error('Unimplemented operators: ' + unimplementedOperators.join(' '))
 
   function negation (a) { return self.subtraction(self.zero, a) }
   self.negation = negation

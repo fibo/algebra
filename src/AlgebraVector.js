@@ -9,28 +9,18 @@ var AlgebraTensor = require('./AlgebraTensor')
   , inherits      = require('inherits')
   , _             = require('underscore')
 
+/**
+ * Abstract Vector
+ *
+ * @param {Function} Element class
+ * @param {Array} elements
+ */
+
 function AlgebraVector(Element, elements) {
-
-  //
-  // ## Attributes
-  //
-
-  //
-  // ### elements
-  //
-
   if (! (_.isArray(elements)))
     throw new TypeError()
 
-  //
-  // ### dimension
-  //
-
-  function getDimension() { return elements.length }
-
-  Object.defineProperty(this, 'dimension', {get: getDimension})
-
-  /* inheritance */
+  Object.defineProperty(this, 'dimension', {value: elements.length, writable: false})
 
   AlgebraTensor.call(this, Element, [this.dimension], elements)
 }

@@ -17,7 +17,7 @@ function BooleanField () {
     return typeof data === 'boolean'
   }*/
 
-  AlgebraField.call( this, zero, one);
+  AlgebraField.call(this, zero, one);
 }
 
 inherits(BooleanField, AlgebraField);

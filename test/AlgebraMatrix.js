@@ -1,41 +1,16 @@
-(function() {
-  var AlgebraMatrix, RealElement, RealField, algebra, minusOne, one, two, zero;
 
-  algebra = require('../index');
+var algebra = require('../index')
+  , should  = require('should')
 
-  AlgebraMatrix = algebra.AlgebraMatrix;
+var AlgebraMatrix      = algebra.AlgebraMatrix
+  , AlgebraMatrixSpace = algebra.AlgebraMatrixSpace
 
-  RealElement = algebra.RealElement;
+var C = algebra.C
+  , R = algebra.R
 
-  RealField = algebra.RealField;
+describe('AlgebraMatrix', function() {
+  describe('Constructor', function() {
+    it('has signature (space, elements)')
+  })
+})
 
-  one = new RealElement(1);
-
-  two = new RealElement(2);
-
-  zero = new RealElement(0);
-
-  minusOne = new RealElement(-1);
-
-  describe('AlgebraMatrix', function() {
-    describe('Inheritance', function() {
-      return it('is an AlgebraTensor');
-    });
-    describe('Constructor', function() {
-      return it('has signature (Element, dimensionArray, elements)');
-    });
-    describe('Attributes', function() {
-      describe('#numberOfColumns', function() {
-        return it('returns the number of columns');
-      });
-      return describe('#numberOfRows', function() {
-        return it('returns the number of rows');
-      });
-    });
-    return describe('Methods', function() {
-      describe('#addition', function() {});
-      return describe('#multiplication', function() {});
-    });
-  });
-
-}).call(this);

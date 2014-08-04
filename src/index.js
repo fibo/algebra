@@ -4,6 +4,7 @@ require('strict-mode')(function () {
   exports.AlgebraField            = require('./AlgebraField')
   exports.AlgebraInvertibleMatrix = require('./AlgebraInvertibleMatrix')
   exports.AlgebraMatrix           = require('./AlgebraMatrix')
+  exports.AlgebraMatrixSpace      = require('./AlgebraMatrixSpace')
   exports.AlgebraVector           = require('./AlgebraVector')
   
   exports.AlgebraVectorSpace = require('./AlgebraVectorSpace')

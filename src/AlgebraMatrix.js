@@ -1,53 +1,34 @@
 
-//
-// # AlgebraMatrix
-//
-
-var _ = require('underscore')
+var AlgebraVector = require('./AlgebraVector')
+  , _             = require('underscore')
 
 function matrixToArrayIndex (i, j, numberOfColumns) {
   return i * numberOfColumns + j
 }
 
-function AlgebraMatrix (Element, dimensionArray, elements) {
+/**
+ * Abstract matrix
+ *
+ * @param {Object} space instance of AlgebraMatrixSpace
+ * @param {Array} elements
+ */
 
-  var self = this
-
-  //
-  // ## Attributes
-  //
-
-  //
-  // ### elements
-  //
-
-  if (! (_.isArray(elements)))
-    throw new TypeError()
-
-  //
-  // ### numberOfColumns
-  //
+function AlgebraMatrix (space, elements) {
+  this.space = space
+  this.elements = elements
 
   function getNumberOfColumns () {
-    return dimensionArray[0]
+    return space.dimension[0]
   }
 
   Object.defineProperty(this, 'numberOfColumns', {get: getNumberOfColumns})
 
-  //
-  // ### numberOfRows
-  //
-
   function getNumberOfRows () {
-    return dimensionArray[1]
+    return space.dimension[1]
   }
 
   Object.defineProperty(this, 'numberOfRows', {get: getNumberOfRows})
 }
-
-//
-// ## Methods
-//
 
 function rowByColumnMultiplication (leftMatrix, rightMatrix) {
 

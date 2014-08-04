@@ -28,12 +28,6 @@ describe('AlgebraElement', function() {
       element.should.be.instanceOf(AlgebraElement)
     })
 
-    it('checks *field* is an AlgebraField', function() {
-      ;(function() {
-        element = new AlgebraElement('not a field')
-      }).should.throwError()
-    })
-
     it('defaults *data* to field.one', function() {
       field = R
       element = new AlgebraElement(field)
@@ -76,9 +70,13 @@ describe('AlgebraElement', function() {
     })
   })
 
-  describe('addition()', function() {
-    it('is abstract', function() {
-      element.addition.should.throwError()
+  describe('Operators', function() {
+    var operators = AlgebraField.operators.required
+
+    operators.forEach(function(operator) {
+      it(operator + ' is abstract', function() {
+        element[operator].should.throwError()
+      })
     })
   })
 })

@@ -43,14 +43,17 @@
           return matrix.order.should.eql(order);
         });
       });
-      return describe('#determinant', function() {
-        return it('computes the determinant', function() {
-          var det;
-          det = data1 * data1 - data2 * data2;
-          return matrix.determinant.data.should.eql(det);
-        });
-      });
-    });
+
+      describe('#determinant', function() {
+        it('computes the determinant'/*, function() {
+          var det
+          det = data1 * data1 - data2 * data2
+
+          matrix.determinant.data.should.eql(det)
+        }*/)
+      })
+    })
+
     return describe('Methods', function() {
       return describe('#inverse()', function() {
         return it('returns the inverse matrix');

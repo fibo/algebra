@@ -3,9 +3,7 @@
 // # AlgebraMatrix
 //
 
-var AlgebraTensor = require('./AlgebraTensor')
-  , inherits      = require('inherits')
-  , _             = require('underscore')
+var _ = require('underscore')
 
 function matrixToArrayIndex (i, j, numberOfColumns) {
   return i * numberOfColumns + j
@@ -45,11 +43,7 @@ function AlgebraMatrix (Element, dimensionArray, elements) {
   }
 
   Object.defineProperty(this, 'numberOfRows', {get: getNumberOfRows})
-
-  AlgebraTensor.call(this, Element, dimensionArray, elements)
 }
-
-inherits(AlgebraMatrix, AlgebraTensor)
 
 //
 // ## Methods

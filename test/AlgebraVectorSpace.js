@@ -1,32 +1,36 @@
-(function() {
-  var AlgebraField, AlgebraTensorSpace, AlgebraVector, AlgebraVectorSpace, algebra;
 
-  algebra = require('../index');
+var algebra = require('../index')
+  , should  = require('should')
 
-  AlgebraField = algebra.AlgebraField;
+var AlgebraField       = algebra.AlgebraField
+  , AlgebraVector      = algebra.AlgebraVector
+  , AlgebraVectorSpace = algebra.AlgebraVectorSpace
 
-  AlgebraVector = algebra.AlgebraVector;
+var R = algebra.R
+  , C = algebra.C
 
-  AlgebraVectorSpace = algebra.AlgebraVectorSpace;
+var dimension = 3
+  , field     = R
+  , space
 
-  AlgebraTensorSpace = algebra.AlgebraTensorSpace;
+describe('AlgebraVectorSpace', function() {
+  describe('Constructor', function() {
+    it('has signature (field, dimension)', function() {
+      space = new AlgebraVectorSpace(field, dimension)
 
-  describe('AlgebraVectorSpace', function() {
-    describe('Constructor', function() {
-      it('has signature (Vector)', function() {});
-      return it('has signature (Element, dimension)', function() {});
-    });
-    describe('Attributes', function() {
-      return describe('#dimension', function() {});
-    });
-    return describe('Methods', function() {
-      describe('#Vector()', function() {
-        return it('is a constructor');
-      });
-      return describe('#containsVector()', function() {
-        return it('checks that the given vector belongs to this vector space');
-      });
-    });
-  });
+      space.should.be.instanceOf(AlgebraVectorSpace)
+    })
+  })
 
-}).call(this);
+  describe('dimension', function() {
+  })
+
+  describe('Vector()', function() {
+    it('is a constructor')
+  })
+
+  describe('containsVector()', function() {
+    it('checks that the given vector belongs to this vector space')
+  })
+})
+

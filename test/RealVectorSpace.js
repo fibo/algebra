@@ -1,46 +1,43 @@
-(function() {
-  var AlgebraVectorSpace, RealElement, RealVectorSpace, abstractSpace, algebra, dimension, space;
 
-  algebra = require('../index');
+var algebra = require('../index')
+  , should  = require('should')
 
-  AlgebraVectorSpace = algebra.AlgebraVectorSpace;
+var AlgebraVectorSpace = algebra.AlgebraVectorSpace
+  , RealField          = algebra.RealField
+  , RealElement        = algebra.RealElement
+  , RealVector         = algebra.RealVector
+  , RealVectorSpace    = algebra.RealVectorSpace
 
-  RealElement = algebra.RealElement;
+var dimension = 2
+  , space     = new RealVectorSpace(dimension)
 
-  RealVectorSpace = algebra.RealVectorSpace;
+/*
+var zero = RealElement(0)
+  , one  = RealElement(1)
+  , two  = RealElement(2)
+*/
 
-  dimension = 2;
+describe('RealVectorSpace', function() {
+  describe('Inheritance', function() {
+    it('is an AlgebraVectorSpace', function() {
+      space.should.be.instanceOf(AlgebraVectorSpace)
+    })
+  })
 
-  space = new RealVectorSpace(dimension);
+  describe('Constructor', function() {
+    it('has signature (dimension)', function() {
+      dimension = 3
+      space     = new RealVectorSpace(dimension)
 
-  abstractSpace = new AlgebraVectorSpace(RealElement, dimension);
+      space.should.be.instanceOf(RealVectorSpace)
+    })
+  })
 
-  describe('RealVectorSpace', function() {
-    describe('Inheritance', function() {
-      return it('is an AlgebraVectorSpace', function() {
-        return space.should.be.instanceOf(AlgebraVectorSpace);
-      });
-    });
-    describe('Constructor', function() {
-      return it('has signature (dimension)');
-    });
-    describe('Attributes', function() {
-      return describe('#dimension', function() {
-        return it('is a number', function() {
-          return space.dimension.should.be.a.number;
-        });
-      });
-    });
-    return describe('Methods', function() {
-      describe('#Vector()', function() {
-        return it('is inherited by AlgebraVectorSpace', function() {
-          return space.dimension.should.be.eql(abstractSpace.dimension);
-        });
-      });
-      return describe('#containsVector()', function() {
-        return it('is inherited by AlgebraVectorSpace');
-      });
-    });
-  });
+  describe('Vector()', function() {
+    it('returns a RealVector'/*, function() {
+      vector = new space.Vector([zero, one, two])
 
-}).call(this);
+      vector.should.be.instanceOf(RealVector)
+    }*/)
+  })
+})

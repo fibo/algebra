@@ -17,12 +17,8 @@ var data
   , field = new Field()
 
 function RealElement (data) {
-  /* data defaults to 1 and must be a number */
-  if (typeof data === 'undefined')
-    data = 1
-
-  if (typeof data !== 'number')
-    throw new TypeError()
+  //if (! (field.validate(data)))
+  //  throw new TypeError()
 
   AlgebraElement.call(this, field, data)
 }

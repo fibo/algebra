@@ -43,8 +43,6 @@ function AlgebraField (zero, one) {
         self[alias] = self[operator]
       })
     } else {
-      console.log(operator)
-      //throw new Error('Unimplemented operator: ' + operator)
       unimplementedOperators.push(operator)
     }
   })
@@ -67,6 +65,11 @@ function AlgebraField (zero, one) {
       self[alias] = self[operator]
     })
   })
+}
+
+AlgebraField.operators = {
+  required: requiredOperators
+, derived: derivedOperators
 }
 
 module.exports = AlgebraField

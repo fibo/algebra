@@ -1,73 +1,41 @@
-(function() {
-  var AlgebraTensor, AlgebraVector, RealElement, RealField, algebra, minusOne, one, two, zero;
+var algebra = require('../index')
+  , should  = require('should')
 
-  algebra = require('../index');
+var AlgebraVector   = algebra.AlgebraVector
+  , RealElement     = algebra.RealElement
+  , RealField       = algebra.RealField
+  , RealVectorSpace = algebra.RealVectorSpace
 
-  AlgebraTensor = algebra.AlgebraTensor;
+var one      = new RealElement(1)
+  , minusOne = new RealElement(-1)
+  , two      = new RealElement(2)
+  , zero     = new RealElement(0)
 
-  AlgebraVector = algebra.AlgebraVector;
+var elements
+  , space
+  , vector
 
-  RealElement = algebra.RealElement;
+var R  = algebra.R
+  , R3 = new RealVectorSpace(3)
 
-  RealField = algebra.RealField;
+describe('AlgebraVector', function() {
+  describe('Constructor', function() {
+    it('has signature (space, elements)', function() {
+      elements = [one, two]
+      vector = new AlgebraVector(R, elements)
 
-  one = new RealElement(1);
+      vector.should.be.instanceOf(AlgebraVector)
+    })
+  })
 
-  two = new RealElement(2);
+  describe('dimension', function() {
+    it('is equal space dimension', function() {
+      elements = [one, zero, minusOne]
+      space    = R3
+      vector = new AlgebraVector(space, elements)
 
-  zero = new RealElement(0);
+      vector.dimension.should.be.eql(space.dimension)
+    })
+  })
+})
 
-  minusOne = new RealElement(-1);
-
-  describe('AlgebraVector', function() {
-    describe('Inheritance', function() {
-      return it('is an AlgebraTensor', function() {
-        var Element, elements, vector;
-        Element = RealElement;
-        elements = [one, two];
-        vector = new AlgebraVector(Element, elements);
-        return vector.should.be.instanceOf(AlgebraTensor);
-      });
-    });
-    describe('Constructor', function() {
-      return it('has signature (field, elements)', function() {
-        var Element, elements, vector;
-        Element = RealElement;
-        elements = [one, two];
-        vector = new AlgebraVector(Element, elements);
-        return vector.should.be.instanceOf(AlgebraVector);
-      });
-    });
-    return describe('Attributes', function() {
-      describe('#data', function() {
-        return it('returns vector data', function() {
-          var Element, data, element, elements, vector;
-          Element = RealElement;
-          elements = [one, two];
-          vector = new AlgebraVector(Element, elements);
-          data = [];
-          data = (function() {
-            var _i, _len, _results;
-            _results = [];
-            for (_i = 0, _len = elements.length; _i < _len; _i++) {
-              element = elements[_i];
-              _results.push(element.data);
-            }
-            return _results;
-          })();
-          return vector.data.should.eql(data);
-        });
-      });
-      return describe('#dimension', function() {
-        return it('returns vector dimension, that is the number of elements', function() {
-          var Element, elements, vector;
-          Element = RealElement;
-          elements = [one, zero, minusOne];
-          vector = new AlgebraVector(Element, elements);
-          return vector.dimension.should.be.eql(3);
-        });
-      });
-    });
-  });
-
-}).call(this);

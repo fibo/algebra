@@ -9,24 +9,14 @@
 // * [realVectors](../examples/realVectors.html)
 //
 
-var AlgebraVector = require('./AlgebraVector')
-  , RealElement   = require('./RealElement')
-  , inherits      = require('inherits')
-  , _             = require('underscore')
+var AlgebraVector   = require('./AlgebraVector')
+  , RealVectorSpace = require('./RealField')
+  , inherits        = require('inherits')
 
-function RealVector() {
-  var arg0 = arguments[0]
-    , numArgs = arguments.length
-    , elements = []
+function RealVector(elements) {
+  var space = new RealVectorSpace(elements.length)
 
-  if ((numArgs === 1) && (_.isArray(arg0)))
-    elements = arg0
-
-  if (numArgs > 1)
-    for (var i in arguments)
-      elements.push(arguments[i])
-
-  AlgebraVector.call(this, RealElement, elements)
+  AlgebraVector.call(this, space, elements)
 }
 
 inherits(RealVector, AlgebraVector)

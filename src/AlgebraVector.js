@@ -1,31 +1,68 @@
 
-//
-// # AlgebraVector
-//
-// Abstract algebra vector.
-//
-
-var AlgebraTensor = require('./AlgebraTensor')
-  , inherits      = require('inherits')
-  , _             = require('underscore')
-
 /**
  * Abstract Vector
  *
- * @param {Function} Element class
+ * @param {Object} space instance of AlgebraVectorSpace
  * @param {Array} elements
  */
 
-function AlgebraVector(Element, elements) {
-  if (! (_.isArray(elements)))
-    throw new TypeError()
+function AlgebraVector(space, elements) {
+  this.elements = elements
 
-  Object.defineProperty(this, 'dimension', {value: elements.length, writable: false})
+  this.space = space
 
-  AlgebraTensor.call(this, Element, [this.dimension], elements)
+  function getDimension () {
+    return space.dimension
+  }
+
+  Object.defineProperty(this, 'dimension', {get: getDimension})
 }
 
-inherits(AlgebraVector, AlgebraTensor)
+/**
+ *
+ * @param {Object} vector
+ *
+ * @return {Object} this
+ */
+
+function addition (vector) {
+  this.elements.forEach(function (element, index) {
+    element.addition(vector.elements[index])
+  })
+
+  return this
+}
+
+AlgebraVector.prototype.addition = addition
+
+/**
+ *
+ * @param {Object} vector
+ *
+ * @return {Object} this
+ */
+
+function subtraction (vector) {
+  this.elements.forEach(function (element, index) {
+    element.subtraction(vector.elements[index])
+  })
+
+  return this
+}
+
+AlgebraVector.prototype.subtraction = subtraction
+
+function valueOf () {
+  var value = []
+
+  this.elements.forEach(function (element) {
+    value.push(element.valueOf())
+  })
+
+  return value
+}
+
+AlgebraVector.prototype.valueOf = valueOf
 
 module.exports = AlgebraVector
 

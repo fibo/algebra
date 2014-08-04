@@ -16,7 +16,7 @@
   x = new RealElement(2);
 
   y = new RealElement(-10);
-
+/*
   describe('RealElement', function() {
     describe('Inheritance', function() {
       return it('is an AlgebraElement', function() {
@@ -43,10 +43,10 @@
     return describe('Methods', function() {
       describe('#addition()', function() {
         it('implements +', function() {
-          x.data = 2;
-          y.data = -10;
-          x.addition(y);
-          return x.data.should.equal(-8);
+          x.data = 2
+          y.data = -10
+          x.addition(y)
+          x.data.should.equal(-8)
         });
         return it('can be chained', function() {
           return x.addition(y).should.be.instanceOf(RealElement);
@@ -107,5 +107,5 @@
       });
     });
   });
-
+*/
 }).call(this);

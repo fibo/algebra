@@ -9,10 +9,7 @@ var AlgebraField = require('./AlgebraField')
  */
 
 function AlgebraElement(field, data) {
-  if (field instanceof AlgebraField)
-    this.field = field
-  else
-    throw new TypeError('Not an AlgebraField: ' + field)
+  this.field = field
 
   // Attribute data defaults to one.
   if (typeof data === 'undefined')
@@ -20,6 +17,18 @@ function AlgebraElement(field, data) {
 
   this.data = data
 }
+
+/**
+ * Get element data
+ *
+ * @return {Any} data
+ */
+
+function valueOf () {
+  return this.data
+}
+
+AlgebraElement.prototype.valueOf = valueOf
 
 /**
  * Get a copy of this AlgebraElement

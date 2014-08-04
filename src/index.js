@@ -4,7 +4,6 @@ require('strict-mode')(function () {
   exports.AlgebraField            = require('./AlgebraField')
   exports.AlgebraInvertibleMatrix = require('./AlgebraInvertibleMatrix')
   exports.AlgebraMatrix           = require('./AlgebraMatrix')
-  exports.AlgebraTensor           = require('./AlgebraTensor')
   exports.AlgebraVector           = require('./AlgebraVector')
   
   exports.AlgebraVectorSpace = require('./AlgebraVectorSpace')
@@ -18,7 +17,6 @@ require('strict-mode')(function () {
   
   exports.RealElement = require('./RealElement')
   exports.RealField   = RealField
-  exports.RealTensor  = require('./RealTensor')
   exports.RealVector  = require('./RealVector')
   
   exports.RealVectorSpace = require('./RealVectorSpace')

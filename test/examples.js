@@ -1,8 +1,11 @@
 
-var test = require('./examples')
+// TODO require('.js')('../examples/algebraOverAnyField.js')
+/*
+var test = require('../examples/algebraOverAnyField.js')
 
 for (var example in test)
-  describe(example, function () {
-    it('example works', test[example])
+  describe(example + ' example', function () {
+    it('works', test[example])
   })
+*/
 

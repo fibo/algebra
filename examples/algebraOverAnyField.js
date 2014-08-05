@@ -22,13 +22,8 @@ function BooleanField () {
 
 inherits(BooleanField, AlgebraField);
 
-/* TODO devo definire le operazioni
 
- TODO fai anche vettori, tensori, ecc sui booleani, tanto non devo aggiungere altre funzioni
-in raltà dovrei fare anche i complessi sui booleani
-
- Create an instance of boolean field
- */
+// Create an instance of boolean field
 
 var bool = new BooleanField();
 

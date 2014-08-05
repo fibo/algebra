@@ -28,8 +28,9 @@ var field = new Boole()
     })
   /*
   describe('Attributes', function() {
-    describe('#one()', function() {});
-    return describe('#zero()', function() {});
+    describe('one()', function() {});
+    describe('#zero()', function() {});
+        return it('cannot be overridden')
   });
   return describe('Methods', function() {
     describe('#addition()', function() {

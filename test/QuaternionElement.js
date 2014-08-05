@@ -1,68 +1,29 @@
-(function() {
-  var AlgebraElement, QuaternionElement, QuaternionField, algebra, element, quaternion, w, z;
 
-  algebra = require('../index');
+var algebra = require('../index')
+  , should  = require('should')
 
-  AlgebraElement = algebra.AlgebraElement;
+var AlgebraElement     = algebra.AlgebraElement
+  ,  QuaternionElement = algebra.QuaternionElement
 
-  QuaternionElement = algebra.QuaternionElement;
+var element = new QuaternionElement()
+  , one     = new QuaternionElement(1) // TODO use me
 
-  QuaternionField = algebra.QuaternionField;
+describe('QuaternionElement', function() {
+  describe('Inheritance', function() {
+    it('is an AlgebraElement', function() {
+      element.should.be.instanceOf(AlgebraElement)
+    })
+  })
 
-  element = new QuaternionElement();
+  describe('Constructor', function() {
+    it('value should default to [1, 0, 0, 0]', function() {
+      element.valueOf().should.eql([1, 0, 0, 0])
+    })
 
-  quaternion = new QuaternionField();
+    it('has signature (number)')
+    it('has signature ([number, number])')
+    it('has signature ([number, number, number])')
+    it('has signature ([number, number, number, number])')
+  })
+})
 
-  z = new QuaternionElement([2, 1]);
-
-  w = new QuaternionElement(2, 1);
-
-  describe('QuaternionElement', function() {
-    describe('Inheritance', function() {
-      return it('is an AlgebraElement', function() {
-        return element.should.be.instanceOf(AlgebraElement);
-      });
-    });
-    describe('Constructor', function() {
-      it('data should default to [1, 0, 0, 0]', function() {
-        return element.data.should.eql([1, 0, 0, 0]);
-      });
-      it('has signature ([number, number])', function() {});
-      return it('has signature (number, number)', function() {});
-    });
-    describe('Attributes', function() {});
-    return describe('Methods', function() {
-      describe('#addition()', function() {
-        it('implements +');
-        return it('can be chained');
-      });
-      describe('#add()', function() {
-        return it('is an alias of #addition()', function() {
-          return element.add.should.eql(element.addition);
-        });
-      });
-      describe('#subtraction()', function() {
-        it('implements -');
-        return it('can be chained');
-      });
-      describe('#sub()', function() {
-        return it('is an alias of #subtraction()');
-      });
-      describe('#multiplication()', function() {
-        it('implements *');
-        return it('can be chained');
-      });
-      describe('#mul()', function() {
-        return it('is an alias of #multiplication()', function() {
-          return element.mul.should.eql(element.multiplication);
-        });
-      });
-      return describe('#div()', function() {
-        return it('is an alias of #division()', function() {
-          return element.div.should.eql(element.division);
-        });
-      });
-    });
-  });
-
-}).call(this);

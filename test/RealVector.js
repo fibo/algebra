@@ -7,20 +7,20 @@ var AlgebraVector   = algebra.AlgebraVector
   , RealVector      = algebra.RealVector
   , RealVectorSpace = algebra.RealVectorSpace
 
-var vector = new RealVector(0, 0, 1)
-  , vector1
-  , vector2
-
 var minusOne = new RealElement(-1)
   , zero     = new RealElement(0)
   , one      = new RealElement(1)
   , two      = new RealElement(2)
   , three    = new RealElement(3)
 
+var vector = new RealVector(zero, two, one)
+  , vector1
+  , vector2
+
 describe('RealVector', function() {
   describe('Inheritance', function() {
     it('is an AlgebraVector', function() {
-      vector = new RealVector(0, 0, 1)
+      vector.should.be.instanceOf.AlgebraVector
     })
   })
 
@@ -60,17 +60,18 @@ describe('RealVector', function() {
     })
 
     describe('#addition()', function() {
-      return it('implements +', function() {
+      it('implements +', function() {
         vector1 = new RealVector([two, minusOne])
         vector2 = new RealVector([zero, minusOne])
 
         vector1.addition(vector2)
 
         vector1.valueOf().should.be.eql([2, -2])
-      });
-    });
-    return describe('#subtraction()', function() {
-      return it('implements -', function() {
+      })
+    })
+
+    describe('#subtraction()', function() {
+      it('implements -', function() {
         vector1 = new RealVector([two, one])
         vector2 = new RealVector([zero, one])
 

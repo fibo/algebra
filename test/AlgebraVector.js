@@ -37,5 +37,15 @@ describe('AlgebraVector', function() {
       vector.dimension.should.be.eql(space.dimension)
     })
   })
+
+  describe('valueOf()', function() {
+    it('returns element data', function() {
+      elements = [one, zero, minusOne]
+      space    = R3
+      vector = new AlgebraVector(space, elements)
+
+      vector.valueOf().should.be.eql([1, 0, -1])
+    })
+  })
 })
 

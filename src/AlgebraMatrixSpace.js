@@ -1,7 +1,6 @@
 
 var AlgebraVectorSpace = require('./AlgebraVectorSpace')
   , inherits           = require('inherits')
-  , _                  = require('underscore')
 
 /**
  * Space of matrices
@@ -12,6 +11,9 @@ var AlgebraVectorSpace = require('./AlgebraVectorSpace')
  */
 
 function AlgebraMatrixSpace (field, numberOfRows, numberOfColumns) {
+  this.numberOfRows = numberOfRows
+  this.numberOfColumns = numberOfColumns
+
   AlgebraVectorSpace.call(this, field, numberOfRows * numberOfColumns)
 }
 

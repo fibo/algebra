@@ -3,6 +3,7 @@ require('strict-mode')(function () {
   exports.AlgebraElement          = require('./AlgebraElement')
   exports.AlgebraField            = require('./AlgebraField')
   exports.AlgebraInvertibleMatrix = require('./AlgebraInvertibleMatrix')
+  exports.AlgebraSquareMatrix     = require('./AlgebraSquareMatrix')
   exports.AlgebraMatrix           = require('./AlgebraMatrix')
   exports.AlgebraMatrixSpace      = require('./AlgebraMatrixSpace')
   exports.AlgebraVector           = require('./AlgebraVector')
@@ -12,29 +13,25 @@ require('strict-mode')(function () {
   exports.GeneralLinearGroup     = require('./GeneralLinearGroup')
   exports.RealGeneralLinearGroup = require('./RealGeneralLinearGroup')
   
-  var RealField       = require('./RealField')
-    , ComplexField    = require('./ComplexField')
-    , QuaternionField = require('./QuaternionField')
-  
   exports.RealElement = require('./RealElement')
-  exports.RealField   = RealField
+  exports.RealField   = require('./RealField')
   exports.RealVector  = require('./RealVector')
   
+  exports.RealMatrixSpace = require('./RealMatrixSpace')
   exports.RealVectorSpace = require('./RealVectorSpace')
   
 
   exports.ComplexElement = require('./ComplexElement')
-  exports.ComplexField   = ComplexField
+  exports.ComplexField   = require('./ComplexField')
+  exports.ComplexVector  = require('./ComplexVector')
   
   exports.QuaternionElement = require('./QuaternionElement')
-  exports.QuaternionField   = QuaternionField
+  exports.QuaternionField   = require('./QuaternionField')
   
-  var R = new RealField()
-    , C = new ComplexField()
-    , H = new QuaternionField()
-  
-  Object.defineProperty(exports, 'R', {value: R, writable: false})
-  Object.defineProperty(exports, 'C', {value: C, writable: false})
-  Object.defineProperty(exports, 'H', {value: H, writable: false})
+  var common = require('./common')
+
+  for (var item in common)
+    Object.defineProperty(exports, item, {value: common[item], writable: false})
+    
 })
 

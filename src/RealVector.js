@@ -1,17 +1,11 @@
 
-//
-// # RealVector
-//
-// Vector over the real field.
-//
-// ## Examples
-//
-// * [realVectors](../examples/realVectors.html)
-//
-
 var AlgebraVector   = require('./AlgebraVector')
   , RealVectorSpace = require('./RealField')
   , inherits        = require('inherits')
+
+/**
+ * Vector over the real field
+ */
 
 function RealVector(elements) {
   var space = new RealVectorSpace(elements.length)

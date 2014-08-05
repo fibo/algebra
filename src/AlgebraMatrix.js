@@ -18,13 +18,13 @@ function AlgebraMatrix (space, elements) {
   this.elements = elements
 
   function getNumberOfColumns () {
-    return space.dimension[0]
+    return space.numberOfColumns
   }
 
   Object.defineProperty(this, 'numberOfColumns', {get: getNumberOfColumns})
 
   function getNumberOfRows () {
-    return space.dimension[1]
+    return space.numberOfRows
   }
 
   Object.defineProperty(this, 'numberOfRows', {get: getNumberOfRows})

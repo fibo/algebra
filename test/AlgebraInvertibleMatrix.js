@@ -1,4 +1,5 @@
 (function() {
+/*
   var AlgebraInvertibleMatrix, AlgebraMatrix, Element, RealElement, data1, data2, elements, matrix, order, x, y;
 
   var algebra = require('../index')
@@ -44,14 +45,6 @@
         });
       });
 
-      describe('#determinant', function() {
-        it('computes the determinant'/*, function() {
-          var det
-          det = data1 * data1 - data2 * data2
-
-          matrix.determinant.data.should.eql(det)
-        }*/)
-      })
     })
 
     return describe('Methods', function() {
@@ -60,5 +53,5 @@
       });
     });
   });
-
+*/
 }).call(this);

@@ -1,10 +1,10 @@
 
-//
-// # GeneralLinearGroup
-//
-
 var AlgebraInvertibleMatrix = require('./AlgebraInvertibleMatrix')
   , inherits                = require('inherits')
+
+/**
+ * Group of invertible matrices
+ */
 
 function GeneralLinearGroup (Element, degree) {
 

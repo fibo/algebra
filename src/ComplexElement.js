@@ -1,14 +1,4 @@
 
-//
-// # ComplexElement
-//
-// Element of the complex field.
-//
-// ## Examples
-//
-// * [complexNumbers](../examples/complexNumbers.html)
-//
-
 var AlgebraElement = require('./AlgebraElement')
   , Field          = require('./ComplexField')
   , inherits       = require('inherits')
@@ -16,7 +6,11 @@ var AlgebraElement = require('./AlgebraElement')
 var data
   , field = new Field()
 
-function ComplexElement() {
+/**
+ * Element of the complex field.
+ */
+
+function ComplexElement () {
 
   if (arguments.length === 0)
     data = [1, 0]
@@ -32,15 +26,13 @@ function ComplexElement() {
 
 inherits(ComplexElement, AlgebraElement)
 
-//
-// ## Methods
-//
+/**
+ * Conjugation operator
+ *
+ * @return {Object} this
+ */
 
-//
-// ### conjugation
-//
-
-function conjugation(element) {
+function conjugation() {
   this.data = this.field.conjugation(this.data)
 
   return this

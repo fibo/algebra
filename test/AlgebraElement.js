@@ -71,9 +71,7 @@ describe('AlgebraElement', function() {
   })
 
   describe('Operators', function() {
-    var operators = AlgebraField.operators.required
-
-    operators.forEach(function(operator) {
+    AlgebraField.requiredOperators.forEach(function(operator) {
       it(operator + ' is abstract', function() {
         element[operator].should.throwError()
       })

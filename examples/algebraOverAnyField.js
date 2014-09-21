@@ -26,4 +26,3 @@ inherits(BooleanField, AlgebraField);
 // Create an instance of boolean field
 
 var bool = new BooleanField();
-

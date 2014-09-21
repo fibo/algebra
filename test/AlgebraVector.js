@@ -22,7 +22,7 @@ describe('AlgebraVector', function() {
   describe('Constructor', function() {
     it('has signature (space, elements)', function() {
       elements = [one, two]
-      vector = new AlgebraVector(R, elements)
+      vector = new AlgebraVector(R3, elements)
 
       vector.should.be.instanceOf(AlgebraVector)
     })

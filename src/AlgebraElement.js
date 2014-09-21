@@ -8,7 +8,7 @@ var AlgebraField = require('./AlgebraField')
  * @param {Any} data
  */
 
-function AlgebraElement(field, data) {
+function AlgebraElement (field, data) {
   this.field = field
 
   // Attribute data defaults to one.

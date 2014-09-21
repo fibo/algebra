@@ -19,4 +19,3 @@ function RealElement (data) {
 inherits(RealElement, AlgebraElement)
 
 module.exports = RealElement
-

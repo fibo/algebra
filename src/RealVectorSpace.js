@@ -9,7 +9,7 @@ var AlgebraVectorSpace = require('./AlgebraVectorSpace')
  * @param {Number} dimension
  */
 
-function RealVectorSpace(dimension) {
+function RealVectorSpace (dimension) {
   AlgebraVectorSpace.call(this, RealField, dimension)
 }
 

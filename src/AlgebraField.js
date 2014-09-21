@@ -67,10 +67,9 @@ function AlgebraField (zero, one) {
   })
 }
 
-AlgebraField.operators = {
-  required: requiredOperators
-, derived: derivedOperators
-}
+AlgebraField.requiredOperators = requiredOperators
+AlgebraField.derivedOperators = derivedOperators
+AlgebraField.aliasOperatorsOf = aliasOperatorsOf
 
 module.exports = AlgebraField
 

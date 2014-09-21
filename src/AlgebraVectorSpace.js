@@ -1,8 +1,4 @@
 
-//
-// # AlgebraVectorSpace
-//
-
 var AlgebraVector = require('./AlgebraVector')
   , AlgebraField  = require('./AlgebraField')
   , inherits      = require('inherits')
@@ -15,7 +11,7 @@ var AlgebraVector = require('./AlgebraVector')
  * @param {dimension} number
  */
 
-function AlgebraVectorSpace(field, dimension) {
+function AlgebraVectorSpace (field, dimension) {
   var self = this
 
   this.field = field

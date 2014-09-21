@@ -7,7 +7,7 @@ var AlgebraVector   = require('./AlgebraVector')
  * Vector over the real field
  */
 
-function RealVector(elements) {
+function RealVector (elements) {
   var space = new RealVectorSpace(elements.length)
 
   AlgebraVector.call(this, space, elements)
@@ -16,4 +16,3 @@ function RealVector(elements) {
 inherits(RealVector, AlgebraVector)
 
 module.exports = RealVector
-

@@ -1,5 +1,4 @@
 
-
 var RealField       = require('./RealField')
   , ComplexField    = require('./ComplexField')
   , QuaternionField = require('./QuaternionField')
@@ -15,4 +14,3 @@ exports.H = H
 var RealMatrixSpace = require('./RealMatrixSpace')
 
 var R2x2 = new RealMatrixSpace(R, 2, 2)
-

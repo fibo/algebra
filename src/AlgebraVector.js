@@ -6,7 +6,7 @@
  * @param {Array} elements
  */
 
-function AlgebraVector(space, elements) {
+function AlgebraVector (space, elements) {
   this.elements = elements
 
   this.space = space
@@ -34,6 +34,8 @@ function addition (vector) {
 }
 
 AlgebraVector.prototype.addition = addition
+AlgebraVector.prototype.add = addition
+
 
 /**
  *
@@ -52,6 +54,11 @@ function subtraction (vector) {
 
 AlgebraVector.prototype.subtraction = subtraction
 
+/**
+ * 
+ * @return {Array} value
+ */
+
 function valueOf () {
   var value = []
 
@@ -65,4 +72,3 @@ function valueOf () {
 AlgebraVector.prototype.valueOf = valueOf
 
 module.exports = AlgebraVector
-

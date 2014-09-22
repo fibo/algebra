@@ -1,20 +1,19 @@
 
 var AlgebraVector = require('./AlgebraVector')
-  , AlgebraField  = require('./AlgebraField')
   , inherits      = require('inherits')
   , _             = require('underscore')
 
 /**
  * Vector Space over a field
  *
- * @param {Object} field
+ * @param {Object} Element constructor
  * @param {dimension} number
  */
 
-function AlgebraVectorSpace (field, dimension) {
+function AlgebraVectorSpace (Element, dimension) {
   var self = this
 
-  this.field = field
+  this.Element = Element
 
   this.dimension = dimension
 
@@ -37,8 +36,17 @@ function AlgebraVectorSpace (field, dimension) {
       elements = arg0
 
     if (numArgs > 1)
-      for (var i in arguments)
-        elements.push(arguments[i])
+      for (var i in arguments) {
+        var arg = arguments[i]
+          , element
+
+        if (arg instanceof Element)
+          element = arg
+        else
+          element = new Element(arg)
+
+        elements.push(element)
+      }
 
     AlgebraVector.call(this, self, elements)
   }
@@ -71,4 +79,3 @@ function addition (vector1, vector2) {
 AlgebraVectorSpace.prototype.addition = addition
 
 module.exports = AlgebraVectorSpace
-

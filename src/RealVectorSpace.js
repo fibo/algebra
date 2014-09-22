@@ -1,6 +1,6 @@
 
 var AlgebraVectorSpace = require('./AlgebraVectorSpace')
-  , RealField          = require('./RealField')
+  , RealElement        = require('./RealElement')
   , inherits           = require('inherits')
 
 /**
@@ -10,7 +10,7 @@ var AlgebraVectorSpace = require('./AlgebraVectorSpace')
  */
 
 function RealVectorSpace (dimension) {
-  AlgebraVectorSpace.call(this, RealField, dimension)
+  AlgebraVectorSpace.call(this, RealElement, dimension)
 }
 
 inherits(RealVectorSpace, AlgebraVectorSpace)

@@ -16,7 +16,8 @@ var elements
   , vector
 
 var R  = algebra.R
-  , R3 = new RealVectorSpace(3)
+  , R2 = algebra.R2
+  , R3 = algebra.R3
 
 describe('AlgebraVector', function() {
   describe('Constructor', function() {
@@ -28,8 +29,18 @@ describe('AlgebraVector', function() {
     })
   })
 
+  describe('data', function() {
+    it('returns elements data', function() {
+      elements = [one, zero]
+      space    = R2
+      vector = new AlgebraVector(space, elements)
+
+      vector.data.should.be.eql([one.data, zero.data])
+    })
+  })
+
   describe('dimension', function() {
-    it('is equal space dimension', function() {
+    it('is equal to space dimension', function() {
       elements = [one, zero, minusOne]
       space    = R3
       vector = new AlgebraVector(space, elements)

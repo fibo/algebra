@@ -9,7 +9,7 @@
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --bail --require should --reporter min"
+    "test": "mocha --recursive --bail --require should --reporter min"
   },
   "repository": {
     "type": "git",

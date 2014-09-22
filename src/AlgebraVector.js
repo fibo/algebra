@@ -16,6 +16,8 @@ function AlgebraVector (space, elements) {
   }
 
   Object.defineProperty(this, 'dimension', {get: getDimension})
+
+  Object.defineProperty(this, 'data', {get: valueOf})
 }
 
 /**

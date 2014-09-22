@@ -1,10 +1,10 @@
 
 var requiredOperators = [
-  'addition', 'multiplication', 'equal', 'division', 'subtraction'
+  'addition', 'multiplication', 'equal', 'division', 'subtraction', 'contains'
 ]
 
 var derivedOperators = [
-  'inversion', 'negation', 'notEqual'
+  'inversion', 'negation', 'notEqual', 'notContains'
 ]
 
 var aliasOperatorsOf = {
@@ -58,6 +58,9 @@ function AlgebraField (zero, one) {
 
   function notEqual (a, b) { return ! self.equal(a, b) }
   self.notEqual = notEqual
+
+  function notContains (a) { return ! self.contains(a) }
+  self.notContains = notContains
 
   // Create aliases for derived operators
   derivedOperators.forEach(function (operator) {

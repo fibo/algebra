@@ -14,8 +14,6 @@ describe('RealField', function() {
     })
   })
 
-  describe('Constructor', function() {})
-
   describe('Attributes', function() {
     describe('#one', function() {
       it('should be 1', function() {
@@ -57,6 +55,12 @@ describe('RealField', function() {
   describe('equal()', function() {
     it('implements =', function() {
       real.equal(4, 4).should.be.ok
+    })
+  })
+
+  describe('contains()', function() {
+    it('implements inclusion', function() {
+      real.contains(99).should.be.ok
     })
   })
 })

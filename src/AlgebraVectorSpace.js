@@ -20,16 +20,12 @@ function AlgebraVectorSpace (Element, dimension) {
   /**
    * AlgebraVector constructor
    *
-   * ```
-   * var vector = new space.Vector();
-   * ```
-   *
    * @return {Object} vector
    */
 
   function Vector () {
     var arg0 = arguments[0]
-      , numArgs = arguments.length
+      , numArgs = Math.max(arguments.length, dimension)
       , elements = []
 
     if ((numArgs === 1) && (_.isArray(arg0)))
@@ -58,11 +54,13 @@ function AlgebraVectorSpace (Element, dimension) {
 
 /**
  * Add vector element data
+ *
+ * @return {Array} data
  */
 
 function addition (vector1, vector2) {
   var data = []
-    , field = this.field
+    , field = this.Element.field
     , element1
     , element2
 
@@ -79,3 +77,4 @@ function addition (vector1, vector2) {
 AlgebraVectorSpace.prototype.addition = addition
 
 module.exports = AlgebraVectorSpace
+

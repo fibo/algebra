@@ -7,18 +7,28 @@ var AlgebraField = require('./AlgebraField')
   , inherits     = require('inherits')
 
 function QuaternionField () {
-  this.addition = addition
-  this.subtraction = subtraction
+  this.addition       = addition
+  this.subtraction    = subtraction
   this.multiplication = function () {}
-  this.division = function () {}
-  this.equal = equal
+  this.division       = function () {}
+  this.equal          = equal
+  this.contains       = contains
 
   AlgebraField.call(this, [0, 0, 0, 0], [1, 0, 0, 0])
 }
 
 inherits(QuaternionField, AlgebraField)
 
-function addition(a, b) {
+function contains (q) {
+  return (
+    (typeof q[0] === "number") &&
+    (typeof q[1] === "number") &&
+    (typeof q[2] === "number") &&
+    (typeof q[3] === "number")
+  )
+}
+
+function addition (a, b) {
   return [
     a[0] + b[0],
     a[1] + b[1],
@@ -27,7 +37,7 @@ function addition(a, b) {
   ]
 }
 
-function subtraction(a, b) {
+function subtraction (a, b) {
   return [
     a[0] - b[0],
     a[1] - b[1],
@@ -36,13 +46,13 @@ function subtraction(a, b) {
   ]
 }
 
-function conjugation(q) {
+function conjugation (q) {
   // z~ = (q0 + i q1 + j q2 + k q3)~
   //    = q0 - i q1 - j q2 - k q3
   return [q[0], - q[1], - q[2], - q[3]]
 }
 
-function equal(a, b) {
+function equal (a, b) {
   return (
     a[0] === b[0] &&
     a[1] === b[1] &&
@@ -51,7 +61,7 @@ function equal(a, b) {
   )
 }
 
-function notEqual(a, b) {
+function notEqual (a, b) {
   return (
     a[0] !== b[0] ||
     a[1] !== b[1] ||

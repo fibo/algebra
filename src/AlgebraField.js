@@ -16,6 +16,8 @@ var aliasOperatorsOf = {
 , 'notEqual': ['ne']
 , 'inversion': ['inv']
 , 'negation': ['neg']
+, 'contains': []
+, 'notContains': []
 }
 
 /**

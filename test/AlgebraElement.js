@@ -69,12 +69,4 @@ describe('AlgebraElement', function() {
       element1.data.should.be.eql(element2.data)
     })
   })
-
-  describe('Operators', function() {
-    AlgebraField.requiredOperators.forEach(function(operator) {
-      it(operator + ' is abstract', function() {
-        element[operator].should.throwError()
-      })
-    })
-  })
 })

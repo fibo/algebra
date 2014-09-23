@@ -1,6 +1,5 @@
 
-var AlgebraVectorSpace  = require('./AlgebraVectorSpace')
-  , AlgebraMatrix       = require('./AlgebraMatrix')
+var AlgebraMatrix       = require('./AlgebraMatrix')
   , AlgebraSquareMatrix = require('./AlgebraSquareMatrix')
   , inherits            = require('inherits')
 
@@ -24,7 +23,7 @@ function AlgebraMatrixSpace (Element, numberOfRows, numberOfColumns) {
 
   Object.defineProperty(this, 'dimension', {get: getDimension})
 
-  AlgebraVectorSpace.call(this, field, numberOfRows * numberOfColumns)
+  // TODO AlgebraTensorSpace.call(this, Element, numberOfRows * numberOfColumns)
 
   /**
    * Matrix constructor
@@ -59,7 +58,7 @@ function AlgebraMatrixSpace (Element, numberOfRows, numberOfColumns) {
   inherits(Matrix, AlgebraMatrix)
 }
 
-inherits(AlgebraMatrixSpace, AlgebraVectorSpace)
+// TODO inherits(AlgebraMatrixSpace, AlgebraTensorSpace)
 
 /**
  * Add matrix element data

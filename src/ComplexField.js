@@ -7,42 +7,47 @@ var AlgebraField = require('./AlgebraField')
  */
 
 function ComplexField () {
-  this.addition = addition
-  this.subtraction = subtraction
+  this.addition       = addition
+  this.subtraction    = subtraction
   this.multiplication = multiplication
-  this.division = division
-  this.equal = equal
+  this.division       = division
+  this.equal          = equal
+  this.contains       = contains
 
   AlgebraField.call(this, [0, 0], [1, 0])
 }
 
 inherits(ComplexField, AlgebraField)
 
-function addition(z, w) {
+function contains (z) {
+  return ((typeof z[0] === "number") && (typeof z[1] === "number"))
+}
+
+function addition (z, w) {
   // z + w = (z0 + i z1) + (w0 + i w1)
   //       = (z0 + w0) + i (z1 + w1)
   return [z[0] + w[0], z[1] + w[1]]
 }
 
-function subtraction(z, w) {
+function subtraction (z, w) {
   // z - w = (z0 + i z1) - (w0 + i w1)
   //       = (z0 - w0) + i (z1 - w1)
   return [z[0] - w[0], z[1] - w[1]]
 }
 
-function multiplication(z, w) {
+function multiplication (z, w) {
   // z * w = (z0 + i z1) * (w0 + i w1)
   //       = z0 * w0 + z0 * i w1 + i z1 * w0 + i z1 * i w1
   //       = (z0 * w0 - z1 * w1) + i (z0 * w1 + z1 * w0)
   return [z[0] * w[0] - z[1] * w[1], z[0] * w[1] + z[1] * w[0]]
 }
 
-function division(z, w) {
+function division (z, w) {
   // z / w = z * w^-1
   return multiplication(z, inversion(w))
 }
 
-function conjugation(z) {
+function conjugation (z) {
   // z~ = (z0 + i z1)~
   //    = z0 - i z1
   return [z[0], - z[1]]
@@ -50,8 +55,13 @@ function conjugation(z) {
 ComplexField.prototype.conjugation = conjugation
 ComplexField.prototype.conj        = conjugation
 
+/**
+ * Norm of a complex number
+ *
+ * @return {Number} norm
+ */
 
-function norm(z) {
+function norm (z) {
   // |z| = |z0 + i z1|
   //     = z0 * z0 + z1 * z1
   return z[0] * z[0] + z[1] * z[1]

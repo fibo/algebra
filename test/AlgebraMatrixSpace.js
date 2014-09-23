@@ -4,7 +4,7 @@ var algebra = require('../index')
 
 var AlgebraMatrix      = algebra.AlgebraMatrix
   , AlgebraMatrixSpace = algebra.AlgebraMatrixSpace
-  , AlgebraVectorSpace = algebra.AlgebraVectorSpace
+//  , AlgebraTensorSpace = algebra.AlgebraTensorSpace
 
 var C = algebra.C
   , R = algebra.R
@@ -16,9 +16,9 @@ var field           = R
 
 describe('AlgebraMatrixSpace', function() {
   describe('Inheritance', function() {
-    it('is an AlgebraVectorSpace', function() {
-      space.should.be.instanceOf(AlgebraVectorSpace)
-    })
+    it('is an AlgebraTensorSpace'/*, function() {
+      space.should.be.instanceOf(AlgebraTensorSpace)
+    }*/)
   })
 
   describe('Constructor', function() {

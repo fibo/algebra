@@ -7,6 +7,14 @@ var R = new RealField()
   , C = new ComplexField()
   , H = new QuaternionField()
 
+var RealElement       = require('./RealElement')
+  , ComplexElement    = require('./ComplexElement')
+  , QuaternionElement = require('./QuaternionElement')
+
+//R.Element = RealElement
+//C.Element = ComplexElement
+//H.Element = QuaterionElement
+
 exports.R = R
 exports.C = C
 exports.H = H

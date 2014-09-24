@@ -13,7 +13,7 @@ var minusOne = new RealElement(-1)
   , two      = new RealElement(2)
   , three    = new RealElement(3)
 
-var vector = new RealVector(zero, two, one)
+var vector = new RealVector([zero, two, one])
   , vector1
   , vector2
 
@@ -25,20 +25,6 @@ describe('RealVector', function() {
   })
 
   describe('Constructor', function() {
-    it('has signature (v1, v2, ... vn)', function() {
-      vector = new RealVector(zero, one)
-      vector.should.be.instanceOf(RealVector)
-      vector.elements.should.be.eql([zero, one])
-
-      vector = new RealVector(zero, one, two)
-      vector.should.be.instanceOf(RealVector)
-      vector.elements.should.be.eql([zero, one, two])
-
-      vector = new RealVector(zero, one, two, three)
-      vector.should.be.instanceOf(RealVector)
-      vector.elements.should.be.eql([zero, one, two, three])
-    })
-
     it('has signature ([v1, v2, ... vn])', function() {
       vector = new RealVector([one, minusOne])
       vector.should.be.instanceOf(RealVector)
@@ -50,7 +36,7 @@ describe('RealVector', function() {
     })
 
     it('coerces numbers to elements', function() {
-      vector = new RealVector(0, 1)
+      vector = new RealVector([0, 1])
       vector.should.be.instanceOf(RealVector)
 
       vector = new RealVector([1, 0, -1])

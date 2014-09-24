@@ -54,20 +54,20 @@ describe('ComplexVector', function() {
   })
 
     describe('#space', function() {
-      it('is a ComplexVectorSpace'/*, function() {
+      it('is a ComplexVectorSpace', function() {
         vector.space.should.be.instanceOf(ComplexVectorSpace)
-      }*/)
+      })
     })
 
     describe('#addition()', function() {
-      it('implements +'/*, function() {
+      it('implements +', function() {
         vector1 = new ComplexVector([two, minusOne])
         vector2 = new ComplexVector([zero, minusOne])
 
         vector1.addition(vector2)
 
-        vector1.valueOf().should.be.eql([2, -2])
-      }*/)
+        vector1.data.should.be.eql([[2, 0], [-2, 0]])
+      })
     })
 
     describe('#subtraction()', function() {

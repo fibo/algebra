@@ -7,6 +7,16 @@
  */
 
 function AlgebraVector (space, elements) {
+  for (var i = 0; i < space.dimension; i ++) {
+    var element = elements[i]
+
+    if (typeof element === 'undefined')
+      elements[i] = new space.Element()
+
+    if (!element instanceof space.Element)
+      elements[i] = new space.Element(element)
+  }
+
   this.elements = elements
 
   this.space = space

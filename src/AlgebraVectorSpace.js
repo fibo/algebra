@@ -23,27 +23,7 @@ function AlgebraVectorSpace (Element, dimension) {
    * @return {Object} vector
    */
 
-  function Vector () {
-    var arg0 = arguments[0]
-      , numArgs = Math.max(arguments.length, dimension)
-      , elements = []
-
-    if ((numArgs === 1) && (_.isArray(arg0)))
-      elements = arg0
-
-    if (numArgs > 1)
-      for (var i in arguments) {
-        var arg = arguments[i]
-          , element
-
-        if (arg instanceof Element)
-          element = arg
-        else
-          element = new Element(arg)
-
-        elements.push(element)
-      }
-
+  function Vector (elements) {
     AlgebraVector.call(this, self, elements)
   }
 

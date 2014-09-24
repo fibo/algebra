@@ -12,10 +12,10 @@ function BooleField () {
   var zero = false
     , one = true
 
-  this.addition       = function (a, b) { return a && b }
-  this.subtraction    = function (a, b) { return a && (! b) }
-  this.multiplication = function (a, b) { return a || b }
-  this.division       = function (a, b) { return a || (! b) }
+  this.addition       = function (a, b) { return (a + b) % 2 }
+  this.subtraction    = function (a, b) { return (a - b) % 2 }
+  this.multiplication = function (a, b) { return (a * b) % 2 }
+  this.division       = function (a, b) { return (a / b) % 2 }
   this.equal          = function (a, b) { return a === b }
   this.contains       = function (a) { return typeof a === "boolean" }
 

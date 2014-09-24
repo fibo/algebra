@@ -20,5 +20,22 @@ describe('AlgebraField', function() {
       field.subtraction.should.be.Function
     })
   })
+  
+  describe('mul()', function() {
+    it('is an alias of multiplication', function() {
+      field.multiplication.should.be.Function
+    })
+  })
+  
+  describe('div()', function() {
+    it('is an alias of division', function() {
+      field.division.should.be.Function
+    })
+  })
+  
+  describe('eq()', function() {
+    it('is an alias of equal', function() {
+      field.equal.should.be.Function
+    })
+  })
 })
-

@@ -23,6 +23,7 @@ function AlgebraMatrixSpace (Element, numberOfRows, numberOfColumns) {
 
   Object.defineProperty(this, 'dimension', {get: getDimension})
 
+  this.Element = Element
   // TODO AlgebraTensorSpace.call(this, Element, numberOfRows * numberOfColumns)
 
   /**

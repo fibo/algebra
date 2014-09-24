@@ -1,8 +1,4 @@
 
-//
-// # QuaternionElement
-//
-
 var AlgebraElement = require('./AlgebraElement')
   , Field          = require('./QuaternionField')
   , inherits       = require('inherits')
@@ -16,7 +12,10 @@ function QuaternionElement () {
     data = [1, 0, 0, 0]
 
   if (arguments.length === 1)
-    data = arguments[0]
+    if (typeof arguments[0] === "number")
+      data = [arguments[0], 0, 0, 0]
+    else
+      data = arguments[0]
 
   if (arguments.length === 3)
     data = [0, arguments[0], arguments[1], arguments[2]]

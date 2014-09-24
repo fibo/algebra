@@ -1,45 +1,38 @@
-(function() {
-  var AlgebraElement, RealElement, RealField, algebra, element, real, x, y;
 
-  algebra = require('../index');
 
-  AlgebraElement = algebra.AlgebraElement;
+var algebra = require('..')
 
-  RealElement = algebra.RealElement;
+var AlgebraElement = algebra.AlgebraElement
+  , RealElement = algebra.RealElement
 
-  RealField = algebra.RealField;
+var element = new RealElement()
+  , x = new RealElement(2)
+  , y = new RealElement(-10)
 
-  element = new RealElement();
+describe('RealElement', function() {
+  describe('Inheritance', function() {
+    it('is an AlgebraElement', function() {
+      element.should.be.instanceOf(AlgebraElement)
+    })
+  })
 
-  real = new RealField();
+  describe('Constructor', function() {
+    it('has signature (number)', function() {
+      x.data.should.eql(2)
+      y.data.should.eql(-10)
+    })
 
-  x = new RealElement(2);
+    it('data defaults to 1', function() {
+      element.data.should.eql(1)
+    })
 
-  y = new RealElement(-10);
-/*
-  describe('RealElement', function() {
-    describe('Inheritance', function() {
-      return it('is an AlgebraElement', function() {
-        return element.should.be.instanceOf(AlgebraElement);
-      });
-    });
-    describe('Constructor', function() {
-      it('has signature (number)', function() {
-        x.data.should.eql(2);
-        return y.data.should.eql(-10);
-      });
-      it('*number* defaults to 1', function() {
-        return element.data.should.eql(1);
-      });
-      return it('requires *number* is a number', function() {
-        return (function() {
-          return element = new RealElement('not a number');
-        }).should.throwError();
-      });
-    });
-    describe('Attributes', function() {
-      return it('has no attribute', function() {});
-    });
+    it('requires data is a number', function() {
+      (function() {
+        element = new RealElement('not a number')
+      }).should.throwError()
+     })
+  })
+
     return describe('Methods', function() {
       describe('#addition()', function() {
         it('implements +', function() {
@@ -107,5 +100,3 @@
       });
     });
   });
-*/
-}).call(this);

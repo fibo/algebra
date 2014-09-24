@@ -16,7 +16,10 @@ function ComplexElement () {
     data = [1, 0]
 
   if (arguments.length === 1)
-    data = arguments[0]
+    if (typeof arguments[0] === "number")
+      data = [arguments[0], 0]
+    else
+      data = arguments[0]
 
   if (arguments.length === 2)
     data = [arguments[0], arguments[1]]

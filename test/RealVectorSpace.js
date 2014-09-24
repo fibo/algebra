@@ -1,21 +1,18 @@
 
-var algebra = require('../index')
+var algebra = require('..')
   , should  = require('should')
 
 var AlgebraVectorSpace = algebra.AlgebraVectorSpace
-  , RealField          = algebra.RealField
+  , AlgebraVector      = algebra.AlgebraVector
   , RealElement        = algebra.RealElement
-  , RealVector         = algebra.RealVector
   , RealVectorSpace    = algebra.RealVectorSpace
 
 var dimension = 2
   , space     = new RealVectorSpace(dimension)
 
-/*
-var zero = RealElement(0)
-  , one  = RealElement(1)
-  , two  = RealElement(2)
-*/
+var zero = new RealElement(0)
+  , one  = new RealElement(1)
+  , two  = new RealElement(2)
 
 describe('RealVectorSpace', function() {
   describe('Inheritance', function() {
@@ -34,10 +31,11 @@ describe('RealVectorSpace', function() {
   })
 
   describe('Vector()', function() {
-    it('returns a RealVector'/*, function() {
+    it('returns an AlgebraVector over R'/*, function() {
       vector = new space.Vector([zero, one, two])
 
-      vector.should.be.instanceOf(RealVector)
+      vector.should.be.instanceOf(AlgebraVector)
     }*/)
   })
 })
+

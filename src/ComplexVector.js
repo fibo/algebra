@@ -1,10 +1,12 @@
 
 var AlgebraVector      = require('./AlgebraVector')
-  , ComplexVectorSpace = require('./ComplexField')
+  , ComplexVectorSpace = require('./ComplexVectorSpace')
   , inherits           = require('inherits')
 
 /**
  * Vector over the real field
+ *
+ * @param {Array} elements
  */
 
 function ComplexVector(elements) {

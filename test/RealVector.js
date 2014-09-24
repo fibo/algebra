@@ -1,5 +1,5 @@
 
-var algebra = require('../index')
+var algebra = require('..')
   , should  = require('should')
 
 var AlgebraVector   = algebra.AlgebraVector
@@ -28,20 +28,25 @@ describe('RealVector', function() {
     it('has signature (v1, v2, ... vn)', function() {
       vector = new RealVector(zero, one)
       vector.should.be.instanceOf(RealVector)
+      vector.elements.should.be.eql([zero, one])
 
       vector = new RealVector(zero, one, two)
       vector.should.be.instanceOf(RealVector)
+      vector.elements.should.be.eql([zero, one, two])
 
       vector = new RealVector(zero, one, two, three)
       vector.should.be.instanceOf(RealVector)
+      vector.elements.should.be.eql([zero, one, two, three])
     })
 
     it('has signature ([v1, v2, ... vn])', function() {
       vector = new RealVector([one, minusOne])
       vector.should.be.instanceOf(RealVector)
+      vector.elements.should.be.eql([one, minusOne])
 
       vector = new RealVector([one, zero, minusOne])
       vector.should.be.instanceOf(RealVector)
+      vector.elements.should.be.eql([one, zero, minusOne])
     })
 
     it('coerces numbers to elements', function() {
@@ -53,31 +58,31 @@ describe('RealVector', function() {
     })
   })
 
-    describe('#space', function() {
-      it('is a RealVectorSpace'/*, function() {
-        vector.space.should.be.instanceOf(RealVectorSpace)
-      }*/)
+  describe('space', function() {
+    it('is a RealVectorSpace', function() {
+      vector.space.should.be.instanceOf(RealVectorSpace)
+   })
+  })
+
+  describe('addition()', function() {
+    it('implements +', function() {
+      vector1 = new RealVector([two, minusOne])
+      vector2 = new RealVector([zero, minusOne])
+
+      vector1.addition(vector2)
+
+      vector1.valueOf().should.be.eql([2, -2])
     })
+  })
 
-    describe('#addition()', function() {
-      it('implements +', function() {
-        vector1 = new RealVector([two, minusOne])
-        vector2 = new RealVector([zero, minusOne])
+  describe('subtraction()', function() {
+    it('implements -', function() {
+      vector1 = new RealVector([two, one])
+      vector2 = new RealVector([zero, one])
 
-        vector1.addition(vector2)
+      vector1.subtraction(vector2)
 
-        vector1.valueOf().should.be.eql([2, -2])
-      })
-    })
-
-    describe('#subtraction()', function() {
-      it('implements -', function() {
-        vector1 = new RealVector([two, one])
-        vector2 = new RealVector([zero, one])
-
-        vector1.subtraction(vector2)
-
-        vector1.valueOf().should.be.eql([2, 0])
+      vector1.valueOf().should.be.eql([2, 0])
     })
   })
 })

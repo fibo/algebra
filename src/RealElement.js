@@ -10,12 +10,10 @@ var field = new Field()
  */
 
 function RealElement (data) {
-  //if (! (field.validate(data)))
-  //  throw new TypeError()
-
   AlgebraElement.call(this, field, data)
 }
 
 inherits(RealElement, AlgebraElement)
 
 module.exports = RealElement
+

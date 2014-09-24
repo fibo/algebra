@@ -1,5 +1,5 @@
 
-var algebra    = require('../index')
+var algebra    = require('..')
   , inherits   = require('inherits')
   , should     = require('should')
   , BooleField = require('./examples/BooleField')

@@ -1,9 +1,7 @@
 
 var AlgebraMatrixSpace = require('./AlgebraMatrixSpace')
-  , RealField          = require('./RealField')
+  , RealElement        = require('./RealElement')
   , inherits           = require('inherits')
-
-var field = new RealField()
 
 /**
  * Space of matrices over Reals
@@ -13,7 +11,7 @@ var field = new RealField()
  */
 
 function RealMatrixSpace (numberOfRows, numberOfColumns) {
-  AlgebraMatrixSpace.call(this, field, numberOfRows, numberOfColumns)
+  AlgebraMatrixSpace.call(this, RealElement, numberOfRows, numberOfColumns)
 }
 
 inherits(RealMatrixSpace, AlgebraMatrixSpace)

@@ -1,6 +1,4 @@
 
-var AlgebraField = require('./AlgebraField')
-
 /**
  * Abstract algebra element
  *
@@ -14,6 +12,10 @@ function AlgebraElement (field, data) {
   // Attribute data defaults to one.
   if (typeof data === 'undefined')
     data = field.one
+  else
+    // Check if data is valid.
+    if (field.notContains(data))
+      throw new TypeError(data)
 
   this.data = data
 }

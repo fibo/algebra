@@ -1,5 +1,5 @@
 
-var algebra = require('../index')
+var algebra = require('..')
   , should  = require('should')
 
 var AlgebraVector      = algebra.AlgebraVector

@@ -1,4 +1,4 @@
-(function() {
+
   var AlgebraField, AlgebraInvertibleMatrix, GeneralLinearGroup, RealGeneralLinearGroup, algebra, degree, gl;
 
   algebra = require('../index');
@@ -48,4 +48,3 @@
     });
   });
 
-}).call(this);

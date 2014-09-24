@@ -25,6 +25,8 @@ require('strict-mode')(function () {
   exports.ComplexField   = require('./ComplexField')
   exports.ComplexVector  = require('./ComplexVector')
   
+  exports.ComplexVectorSpace = require('./ComplexVectorSpace')
+
   exports.QuaternionElement = require('./QuaternionElement')
   exports.QuaternionField   = require('./QuaternionField')
   

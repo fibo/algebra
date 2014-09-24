@@ -2,7 +2,7 @@
 /*
   var AlgebraInvertibleMatrix, AlgebraMatrix, Element, RealElement, data1, data2, elements, matrix, order, x, y;
 
-  var algebra = require('../index')
+  var algebra = require('..')
     , should  = require('should')
   
 

@@ -1,13 +1,12 @@
-var algebra = require('../index')
+
+var algebra = require('..')
   , should  = require('should')
 
 var AlgebraMatrixSpace = algebra.AlgebraMatrixSpace
+  , RealElement        = algebra.RealElement
   , RealMatrixSpace    = algebra.RealMatrixSpace
 
-var R = algebra.R
-
-var field           = R
-  , numberOfRows    = 2
+var numberOfRows    = 2
   , numberOfColumns = 3
   , space           = new RealMatrixSpace(numberOfRows, numberOfColumns)
 
@@ -25,14 +24,15 @@ describe('RealMatrixSpace', function() {
       space           = new RealMatrixSpace(numberOfRows, numberOfColumns)
      
       space.should.be.instanceOf(RealMatrixSpace)
+      space.numberOfRows.should.be.eql(numberOfRows)
+      space.numberOfColumns.should.be.eql(numberOfColumns)
     })
   })
 
-  describe('field', function() {
-    it('is the RealField'/*, function () {
-      space.field.should.be.eql(R)
-    }*/)
+  describe('Element', function() {
+    it('is the RealElement', function () {
+      space.Element.should.be.eql(RealElement)
+    })
   })
 })
-
 

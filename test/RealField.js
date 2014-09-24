@@ -1,5 +1,5 @@
 
-var algebra = require('../index')
+var algebra = require('..')
   , should  = require('should')
 
 var AlgebraField = algebra.AlgebraField
@@ -14,17 +14,15 @@ describe('RealField', function() {
     })
   })
 
-  describe('Attributes', function() {
-    describe('#one', function() {
-      it('should be 1', function() {
-        real.one.should.eql(1)
-      })
+  describe('#one', function() {
+    it('should be 1', function() {
+      real.one.should.eql(1)
     })
+  })
 
-    describe('#zero', function() {
-      it('should be 0', function() {
-        real.zero.should.eql(0)
-      })
+  describe('#zero', function() {
+    it('should be 0', function() {
+      real.zero.should.eql(0)
     })
   })
 

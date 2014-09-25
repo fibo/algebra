@@ -14,6 +14,7 @@ require('strict-mode')(function () {
   exports.RealGeneralLinearGroup = require('./RealGeneralLinearGroup')
   
   exports.Real = require('./Real')
+  exports.VectorSpace = require('./VectorSpace')
 
   exports.RealElement = require('./RealElement')
   exports.RealField   = require('./RealField')

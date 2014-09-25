@@ -1,34 +1,19 @@
 
-/**
- *
- * @param {Array} vector1
- * @param {Array} vector2
- *
- * @return {Array} vector
- */
+var inherits = require('inherits')
 
-function addition (vector1, vector2) {
-  var vector3 = []
+var TensorSpace = require('./TensorSpace')
 
-  vector1.forEach(function (element1, index) {
-    var element2 = vector2[index]
+function VectorSpace (Field, dimension) {
+  var self = this
 
-    var element3 = Scalar.addition(element1, element2)
+  TensorSpace.call(this, Field, dimension)
 
-    vector3.push(element3)
-  })
-
-  return vector3
+  function Vector (elements) {
+    this.space = self
+  }
 }
 
-/**
- *
- */
-
-function VectorSpace (Scalar, dimension) {
-  this.Scalar = Scalar
-  this.dimension = dimension
-}
+inherits(VectorSpace, TensorSpace)
 
 module.exports = VectorSpace
 

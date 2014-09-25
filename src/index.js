@@ -13,6 +13,8 @@ require('strict-mode')(function () {
   exports.GeneralLinearGroup     = require('./GeneralLinearGroup')
   exports.RealGeneralLinearGroup = require('./RealGeneralLinearGroup')
   
+  exports.Real = require('./Real')
+
   exports.RealElement = require('./RealElement')
   exports.RealField   = require('./RealField')
   exports.RealVector  = require('./RealVector')

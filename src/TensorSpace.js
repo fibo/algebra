@@ -33,12 +33,27 @@ function TensorSpace (Field, indices) {
 
   this.Field = Field
 
+  this.indices = indices
+  
   var dimension = 1 
 
   for (var i in indices)
     dimension *= index[i]
 
   this.dimension = dimension
+  
+  function Tensor (elements) {
+    this.space = self
+    this.elements = elements
+  }
+  
+  Tensor.prototype.addition = function (tensor2) {
+    var tensor1 = this
+    
+    // TODO this.elements
+  }
+  
+  self.Tensor = Tensor
 }
 
 TensorSpace.prototype.addition = addition

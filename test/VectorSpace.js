@@ -17,9 +17,15 @@ describe('VectorSpace', function () {
   describe('addition', function () {
     var R2 = new VectorSpace(Real, 2)
 
-    var vector = R2.addition([0, 2], [-1, 3])
+    var data = R2.addition([0, 2], [-1, 3])
 
-    vector.should.eql([-1, 5])
+    data.should.eql([-1, 5])
+  })
+  
+  describe('Vector', function () {
+    var R2 = new VectorSpace(Real, 2)
+    
+    var vector = R2.Vector([0, 1])
   })
 })
 

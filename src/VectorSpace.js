@@ -8,9 +8,15 @@ function VectorSpace (Field, dimension) {
 
   TensorSpace.call(this, Field, dimension)
 
+  var Tensor = self.Tensor
+  
   function Vector (elements) {
-    this.space = self
+    Tensor.call(this, elements)  
   }
+  
+  inherits(Vector, Tensor)
+  
+  self.Vector = Vector
 }
 
 inherits(VectorSpace, TensorSpace)

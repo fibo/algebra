@@ -6,14 +6,12 @@ var R = algebra.Real
 //  , Scalar = algebra.Scalar
 
 describe('Real', function () {
-  it('inherits from Scalar'/*, function () {
-      var x = new Real(2)
-
-      x.should.be.instanceOf(Scalar)
-  }*/)
-
   it('implements static addition() operator', function () {
-    R.addition(2, 3).should.eql(5) 
+    R.addition(2, 3).should.eql(5)
+  })
+
+  it('implements static subtraction() operator', function () {
+    R.subtraction(2, 3).should.eql(-1)
   })
 
   describe('object', function () {

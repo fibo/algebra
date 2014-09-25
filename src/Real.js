@@ -5,11 +5,13 @@ function coerceToData (a) {
 
   if (contains(a))
     return a
+
+  throw new TypeError(arg)
 }
 
 function addition (a, b) { return coerceToData(a) + coerceToData(b) }
 
-function subtraction (a, b) { return a - b }
+function subtraction (a, b) { return coerceToData(a) - coerceToData(b) }
 
 function multiplication (a, b) { return a * b }
 
@@ -35,7 +37,14 @@ Real.prototype.addition = function (a) {
   return this
 }
 
+Real.prototype.subtraction = function (a) {
+  this.data = subtraction(this, a)
+
+  return this
+}
+
 Real.addition = addition
+Real.subtraction = subtraction
 
 Real.coerceToData = coerceToData
 

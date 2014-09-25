@@ -2,7 +2,7 @@
 function coerceToData (a) {
   if (a instanceof Real)
     return a.data
-    
+
   if (contains(a))
     return a
 }
@@ -36,6 +36,8 @@ Real.prototype.addition = function (a) {
 }
 
 Real.addition = addition
+
+Real.coerceToData = coerceToData
 
 module.exports = Real
 

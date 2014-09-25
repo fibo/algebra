@@ -1,58 +1,77 @@
 
-/**
- *
- * @param {Array} tensor1
- * @param {Array} tensor2
- *
- * @return {Array} tensor3
- */
-
-function addition (tensor1, tensor2) {
-  var tensor3 = []
-  var Field = this.Field
-
-  tensor1.forEach(function (element1, index) {
-    var element2 = tensor2[index]
-
-    var element3 = Field.addition(element1, element2)
-
-    tensor3.push(element3)
-  })
-
-  return tensor3
+function coerceToData (arg) {
+  if (typeof arg.data === "undefined")
+    return arg
+  else
+    return arg.data
 }
 
 /**
  *
- * @param {Object} Field
+ * @param {Array} data1
+ * @param {Array} data2
+ *
+ * @return {Array} data3
+ */
+
+function addition (data1, data2) {
+  var data3 = []
+  var Scalar = this.Scalar
+
+  data1 = coerceToData(data1)
+  data2 = coerceToData(data2)
+
+  data1.forEach(function (element1, index) {
+    var element2 = data2[index]
+
+    var element3 = Scalar.addition(element1, element2)
+
+    data3.push(element3)
+  })
+
+  return data3
+}
+
+/**
+ *
+ * @param {Object} Scalar
  * @param {Array} indices
  */
 
-function TensorSpace (Field, indices) {
+function TensorSpace (Scalar, indices) {
   var self = this
 
-  this.Field = Field
+  this.Scalar = Scalar
 
   this.indices = indices
-  
-  var dimension = 1 
+
+  var dimension = 1
 
   for (var i in indices)
-    dimension *= index[i]
+    dimension *= indices[i]
 
   this.dimension = dimension
-  
+
   function Tensor (elements) {
-    this.space = self
-    this.elements = elements
+    var space = self
+    var data = []
+
+    for (var i = 0; i < space.dimension; i++) {
+      var element = elements[i]
+
+      data.push(Scalar.coerceToData(element))
+    }
+
+    this.space = space
+    this.data = data
   }
-  
+
   Tensor.prototype.addition = function (tensor2) {
-    var tensor1 = this
-    
-    // TODO this.elements
+    this.data = self.addition(this.data, tensor2)
+
+    return this
   }
-  
+
   self.Tensor = Tensor
 }
 

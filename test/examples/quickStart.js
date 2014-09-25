@@ -2,7 +2,7 @@
 var algebra = require('algebra')
   , should  = require('should')
 
-describe("README's Quick start section", function () {
+describe("Quick start", function () {
   it('has a working Complex numbers example', function () {
     var Complex = algebra.ComplexElement
 

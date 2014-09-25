@@ -36,7 +36,6 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "underscore": "~1.5.2",
     "inherits": "~2.0.1",
     "strict-mode": "~0.1.4"
   }

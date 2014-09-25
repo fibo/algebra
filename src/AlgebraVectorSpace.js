@@ -1,7 +1,6 @@
 
 var AlgebraVector = require('./AlgebraVector')
   , inherits      = require('inherits')
-  , _             = require('underscore')
 
 /**
  * Vector Space over a field

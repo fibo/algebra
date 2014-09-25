@@ -1,6 +1,5 @@
 
 var AlgebraVector = require('./AlgebraVector')
-  , _             = require('underscore')
 
 function matrixToArrayIndex (i, j, numberOfColumns) {
   return i * numberOfColumns + j

@@ -8,7 +8,6 @@
 
 var AlgebraMatrix = require('./AlgebraMatrix')
   , inherits      = require('inherits')
-  , _             = require('underscore')
 
 
 function AlgebraInvertibleMatrix (Element, order, elements) {

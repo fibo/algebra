@@ -1,5 +1,13 @@
 
-function addition (a, b) { return a + b }
+function coerceToData (a) {
+  if (a instanceof Real)
+    return a.data
+    
+  if (contains(a))
+    return a
+}
+
+function addition (a, b) { return coerceToData(a) + coerceToData(b) }
 
 function subtraction (a, b) { return a - b }
 
@@ -22,7 +30,9 @@ function Real (data) {
 }
 
 Real.prototype.addition = function (a) {
-  this.data = addition(this.data, a)
+  this.data = addition(this, a)
+
+  return this
 }
 
 Real.addition = addition

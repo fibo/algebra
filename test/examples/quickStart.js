@@ -3,7 +3,7 @@ var algebra = require('algebra')
   , should  = require('should')
 
 describe("Quick start", function () {
-  it('has a working Complex numbers example', function () {
+  it('has a working Complex numbers example'/*, function () {
     var Complex = algebra.ComplexElement
 
     var z1 = new Complex([1, 2])
@@ -16,7 +16,7 @@ describe("Quick start", function () {
     z1.conj().mul([2, 0]);
 
     z1.data.should.eql([-10, -20])
-  })
+  }*/)
 
   it('has a working Vectors example'/*, function () {
     var Rn = algebra.RealVectorSpace

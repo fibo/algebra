@@ -51,6 +51,7 @@ inherits(Real, field.Scalar)
 
 Real.addition = field.addition
 Real.subtraction = field.subtraction
+Real.contains = field.contains
 
 module.exports = Real
 

@@ -3,7 +3,6 @@ var algebra = require('..')
   , should = require('should')
 
 var R = algebra.Real
-//  , Scalar = algebra.Scalar
 
 describe('Real', function () {
   it('implements static addition() operator', function () {

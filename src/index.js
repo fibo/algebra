@@ -16,6 +16,8 @@ require('strict-mode')(function () {
   exports.Real = require('./Real')
   exports.VectorSpace = require('./VectorSpace')
   
+  exports.Space = require('./Space')
+
   exports.RealElement = require('./RealElement')
   exports.RealField   = require('./RealField')
   exports.RealVector  = require('./RealVector')

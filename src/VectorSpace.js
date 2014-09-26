@@ -23,3 +23,4 @@ function VectorSpace (field, dimension) {
 inherits(VectorSpace, Space)
 
 module.exports = VectorSpace
+

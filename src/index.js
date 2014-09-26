@@ -19,13 +19,15 @@ require('strict-mode')(function () {
   exports.Real = require('./Real')
   exports.Space = require('./Space')
   exports.VectorSpace = require('./VectorSpace')
+  exports.MatrixSpace = require('./MatrixSpace')
+  exports.TensorSpace = require('./TensorSpace')
 
   exports.RealElement = require('./RealElement')
   exports.RealField   = require('./RealField')
-  exports.RealVector  = require('./RealVector')
+//  exports.RealVector  = require('./RealVector')
   
   exports.RealMatrixSpace = require('./RealMatrixSpace')
-  exports.RealVectorSpace = require('./RealVectorSpace')
+//  exports.RealVectorSpace = require('./RealVectorSpace')
   
 
   exports.ComplexElement = require('./ComplexElement')

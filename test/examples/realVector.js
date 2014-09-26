@@ -6,12 +6,15 @@ var V = algebra.VectorSpace
   , R = algebra.Real
 
 describe('Real vector example', function () {
-  var R2 = new V(R, 2)
-
-  var vector1
+  var R2
+    , vector1
     , vector2
     , vector3
     , vector4
+
+  it('creates a vector space over R, with dim = 2', function () {
+    R2 = new V(R, 2)
+  })
 
   it('creates few vectors', function () {
     vector1 = new R2.Vector([1, 2])
@@ -21,7 +24,6 @@ describe('Real vector example', function () {
   })
 
   it('creates vector1 and adds it to itself', function () {
-    vector1 = new R2.Vector([1, 2])
     vector1.addition(vector1)
     vector1.data.should.be.eql([2, 4])
   })
@@ -41,8 +43,9 @@ describe('Real vector example', function () {
     vector1.data.should.be.eql([1, 8])
   })
 
-  it('shows that addition accept more than one argument', function () {
+  it('shows that addition accepts more than one argument', function () {
     vector1.addition(vector2, vector3, vector4)
     vector1.data.should.be.eql([2, 10])
   })
 })
+

@@ -1,25 +1,25 @@
 
 var inherits = require('inherits')
 
-var TensorSpace = require('./TensorSpace')
+var Space = require('./Space')
 
-function VectorSpace (Scalar, dimension) {
+function VectorSpace (field, dimension) {
   var self = this
 
-  TensorSpace.call(this, Scalar, [dimension])
+  var space = new Space(field, [dimension])
 
-  var Tensor = self.Tensor
-
-  function Vector (elements) {
-    Tensor.call(this, elements)  
+  self.addition = space.addition
+  self.subtraction = space.subtraction
+  
+  function Vector (data) {
+    space.Element.call(this, data)  
   }
 
-  inherits(Vector, Tensor)
+  inherits(Vector, space.Element)
 
   self.Vector = Vector
 }
 
-inherits(VectorSpace, TensorSpace)
+inherits(VectorSpace, Space)
 
 module.exports = VectorSpace
-

@@ -1,4 +1,7 @@
 
+// TODO usa le string ℝ ℂ ℍ
+// usa anche ratio, lib per i numueri razionali
+//  
 require('strict-mode')(function () {
   exports.AlgebraElement          = require('./AlgebraElement')
   exports.AlgebraField            = require('./AlgebraField')
@@ -14,9 +17,8 @@ require('strict-mode')(function () {
   exports.RealGeneralLinearGroup = require('./RealGeneralLinearGroup')
   
   exports.Real = require('./Real')
-  exports.VectorSpace = require('./VectorSpace')
-  
   exports.Space = require('./Space')
+  exports.VectorSpace = require('./VectorSpace')
 
   exports.RealElement = require('./RealElement')
   exports.RealField   = require('./RealField')

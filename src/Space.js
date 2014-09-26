@@ -56,9 +56,20 @@ function Space (field, indices) {
    * @param {Array} data
    */
     
-  function Tensor (data) {
-    
+  function Element (data) {
+    this.data = data
   }
+  
+  function elementAddition () {
+    this.data = spaceAddition(this.data, spaceAddition.apply(null, arguments))
+    
+    return this 
+  }
+  
+  Element.prototype.addition = elementAddition
+  
+  self.Element = Element
+  
 }
 
 module.exports = Space

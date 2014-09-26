@@ -1,17 +1,14 @@
 
-function coerceToData (a) {
-  if (a instanceof Real)
-    return a.data
+var inherits = require('inherits')
 
-  if (contains(a))
-    return a
+var Field = require('./Field')
 
-  throw new TypeError(arg)
-}
+var zero = 0
+  , one  = 1
 
-function addition (a, b) { return coerceToData(a) + coerceToData(b) }
+function addition (a, b) { return a + b }
 
-function subtraction (a, b) { return coerceToData(a) - coerceToData(b) }
+function subtraction (a, b) { return a - b }
 
 function multiplication (a, b) { return a * b }
 
@@ -21,16 +18,22 @@ function equal (a, b) { return a === b }
 
 function contains (a) { return typeof a === "number" }
 
+var field = new Field(zero, one, {
+  addition   : addition
+, subtraction: subtraction
+, contains   : contains
+})
+
 /**
  * Real number.
  */
 
 function Real (data) {
-  this.data = data
+  field.Scalar.call(this, data)
 
   // TODO inherit from Scalar
 }
-
+/*
 Real.prototype.addition = function (a) {
   this.data = addition(this, a)
 
@@ -42,11 +45,12 @@ Real.prototype.subtraction = function (a) {
 
   return this
 }
+*/
 
-Real.addition = addition
-Real.subtraction = subtraction
+inherits(Real, field.Scalar)
 
-Real.coerceToData = coerceToData
+Real.addition = field.addition
+Real.subtraction = field.subtraction
 
 module.exports = Real
 

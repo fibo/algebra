@@ -43,6 +43,7 @@ function Space (field, indices) {
   }
   
   self.addition = spaceAddition
+  self.add = spaceAddition
   
       
   function spaceSubtraction () {
@@ -67,6 +68,7 @@ function Space (field, indices) {
   }
   
   Element.prototype.addition = elementAddition
+  Element.prototype.add = elementAddition
   
   self.Element = Element
   

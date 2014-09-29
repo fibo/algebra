@@ -18,8 +18,11 @@ describe("Quick start", function () {
     z1.data.should.eql([-10, -20])
   })
 
-  it('has a working Vectors example'/*, function () {
-    var R2 = algebra.VectorSpace(algebra.Real, 2)
+  it('has a working Vectors example', function () {
+    var R = algebra.Real
+    var V = algebra.VectorSpace
+
+    var R2 = new V(R, 2)
 
     var v1 = new R2.Vector([1, 1])
     var v2 = new R2.Vector([2, 4])
@@ -27,7 +30,7 @@ describe("Quick start", function () {
     v1.add(v2)
 
     v1.data.should.eql([3, 5])
-  }*/)
+  })
 
   it('has a working Matrices example'/*, function () {
     var GLnR = algebra.RealGeneralLinearGroup

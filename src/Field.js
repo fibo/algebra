@@ -62,7 +62,8 @@ function Field (zero, one, operators) {
     return arrayFrom(arguments).map(toData).reduce(byMultiplication)        
   }
 
-  self.subtraction = fieldSubtraction
+  self.multiplication = fieldMultiplication
+
   /**
    * Scalar element
    * 

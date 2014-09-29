@@ -11,13 +11,11 @@ describe("Quick start", function () {
 
     z1.mul(z2)
 
-/*
     z1.data.should.eql([-5, 10])
 
     z1.conj().mul([2, 0]);
 
     z1.data.should.eql([-10, -20])
-*/
   })
 
   it('has a working Vectors example'/*, function () {

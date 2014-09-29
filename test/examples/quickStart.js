@@ -3,24 +3,25 @@ var algebra = require('algebra')
   , should  = require('should')
 
 describe("Quick start", function () {
-  it('has a working Complex numbers example'/*, function () {
-    var Complex = algebra.ComplexElement
+  it('has a working Complex numbers example', function () {
+    var Complex = algebra.Complex
 
     var z1 = new Complex([1, 2])
     var z2 = new Complex([3, 4])
 
     z1.mul(z2)
 
+/*
     z1.data.should.eql([-5, 10])
 
     z1.conj().mul([2, 0]);
 
     z1.data.should.eql([-10, -20])
-  }*/)
+*/
+  })
 
   it('has a working Vectors example'/*, function () {
-    var Rn = algebra.RealVectorSpace
-    var R2 = new Rn(2)
+    var R2 = algebra.VectorSpace(algebra.Real, 2)
 
     var v1 = new R2.Vector([1, 1])
     var v2 = new R2.Vector([2, 4])

@@ -21,6 +21,7 @@ function contains (a) { return typeof a === "number" }
 var field = new Field(zero, one, {
   addition   : addition
 , subtraction: subtraction
+, multiplication: multiplication
 , contains   : contains
 })
 

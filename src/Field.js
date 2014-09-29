@@ -32,6 +32,7 @@ function Field (zero, one, operators) {
 
   var byAddition = operators.addition
     , bySubtraction = operators.subtraction
+    , byMultiplication = operators.multiplication
   
   /**
    * Static addition operator 
@@ -53,6 +54,15 @@ function Field (zero, one, operators) {
 
   self.subtraction = fieldSubtraction
     
+  /**
+   * Static multiplication operator 
+   */
+  
+  function fieldMultiplication () {
+    return arrayFrom(arguments).map(toData).reduce(byMultiplication)        
+  }
+
+  self.subtraction = fieldSubtraction
   /**
    * Scalar element
    * 
@@ -79,7 +89,16 @@ function Field (zero, one, operators) {
     return this
   }
   
-  Scalar.prototype.addition = scalarAddition
+  Scalar.prototype.subtraction = scalarSubtraction
+
+  function scalarMultiplication () {
+    this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))
+    
+    return this
+  }
+  
+  Scalar.prototype.multiplication = scalarMultiplication
+  Scalar.prototype.mul = scalarMultiplication
 
   self.Scalar = Scalar
 }

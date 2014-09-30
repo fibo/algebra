@@ -32,12 +32,13 @@ describe("Quick start", function () {
     v1.data.should.eql([3, 5])
   })
 
-  it('has a working Matrices example'/*, function () {
+  it('has a working Matrices example', function () {
     var M = algebra.MatrixSpace
     var R = algebra.Real
 
-    var M2 = new M(Real, 2)
+    var M2 = new M(R, 2)
 
+/*
     var m1 = new M2.Matrix([1, 2,
                             3, 4])
 
@@ -50,6 +51,6 @@ describe("Quick start", function () {
                         -3, 4])
 
     m1.determinant.data.should.eql(2)
-  }*/)
+  */})
 })
 

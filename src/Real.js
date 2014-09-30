@@ -19,10 +19,10 @@ function equal (a, b) { return a === b }
 function contains (a) { return typeof a === "number" }
 
 var field = new Field(zero, one, {
-  addition   : addition
-, subtraction: subtraction
+  addition      : addition
+, subtraction   : subtraction
 , multiplication: multiplication
-, contains   : contains
+, contains      : contains
 })
 
 /**
@@ -31,28 +31,14 @@ var field = new Field(zero, one, {
 
 function Real (data) {
   field.Scalar.call(this, data)
-
-  // TODO inherit from Scalar
 }
-/*
-Real.prototype.addition = function (a) {
-  this.data = addition(this, a)
-
-  return this
-}
-
-Real.prototype.subtraction = function (a) {
-  this.data = subtraction(this, a)
-
-  return this
-}
-*/
 
 inherits(Real, field.Scalar)
 
-Real.addition = field.addition
-Real.subtraction = field.subtraction
-Real.contains = field.contains
+Real.addition       = field.addition
+Real.subtraction    = field.subtraction
+Real.multiplication = field.multiplication
+Real.contains       = field.contains
 
 module.exports = Real
 

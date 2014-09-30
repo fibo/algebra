@@ -33,14 +33,16 @@ describe("Quick start", function () {
   })
 
   it('has a working Matrices example'/*, function () {
-    var GLnR = algebra.RealGeneralLinearGroup
-    var GL2R = new GLnR(2)
+    var M = algebra.MatrixSpace
+    var R = algebra.Real
 
-    var m1 = new GL2R.Matrix(1, 2,
-                             3, 4)
+    var M2 = new M(Real, 2)
 
-    var m2 = new GL2R.Matrix(-1, 0,
-                              0, 1)
+    var m1 = new M2.Matrix([1, 2,
+                            3, 4])
+
+    var m2 = new M2.Matrix([-1, 0,
+                             0, 1])
 
     m1.mul(m2)
 

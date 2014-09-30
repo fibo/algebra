@@ -53,17 +53,17 @@ Complex.prototype.conjugation = scalarConjugation
 Complex.prototype.conj = scalarConjugation
 
 
-Complex.addition = field.addition
-Complex.add = field.addition
-Complex.subtraction = field.subtraction
-Complex.sub = field.subtraction
+Complex.addition       = field.addition
+Complex.add            = field.addition
+Complex.subtraction    = field.subtraction
+Complex.sub            = field.subtraction
 Complex.multiplication = field.multiplication
-Complex.mul = field.multiplication
+Complex.mul            = field.multiplication
 
 Complex.contains = field.contains
 
 Complex.conjugation = fieldConjugation
-Complex.conj = fieldConjugation
+Complex.conj        = fieldConjugation
 
 module.exports = Complex
 

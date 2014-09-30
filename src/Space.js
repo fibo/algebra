@@ -1,6 +1,15 @@
 
 var arrayFrom = require('./arrayFrom')
 
+/**
+ * Abstract multidimensional space
+ *
+ * @param {Object} field
+ * @param {Array} indices
+ *
+ * @constructor
+ */
+
 function Space (field, indices) {
   var self = this
   
@@ -75,3 +84,4 @@ function Space (field, indices) {
 }
 
 module.exports = Space
+

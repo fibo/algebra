@@ -6,12 +6,12 @@ var Space = require('./Space')
 /**
  * Space of tensors
  *
- * @param {field}
+ * @param {Object} Scalar
  * @param {Array} controvariant indices
  * @param {Array} covariant indices
  */
 
-function TensorSpace (field, controvariant, covariant) {
+function TensorSpace (Scalar, controvariant, covariant) {
   var self = this
 
   var indices = controvariant.concat(covariant)
@@ -19,7 +19,7 @@ function TensorSpace (field, controvariant, covariant) {
   var type = [controvariant.length, covariant.length]
   self.type = type
 
-  var space = new Space(field, indices)
+  var space = new Space(Scalar, indices)
 
   self.addition = space.addition
   self.subtraction = space.subtraction

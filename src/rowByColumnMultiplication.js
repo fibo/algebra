@@ -3,7 +3,7 @@ var matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
  *
- * @param {Object} field
+ * @param {Object} Scalar
  * @param {Array} leftMatrix
  * @param {Array} leftIndices
  * @param {Array} rightMatrix
@@ -12,7 +12,7 @@ var matrixToArrayIndex = require('./matrixToArrayIndex')
  * @return {Array} data
  */
 
-function rowByColumnMultiplication (field, leftMatrix, leftIndices, rightMatrix, rightIndices) {
+function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {
   var data = []
 
   // Check if matrix can be multiplied
@@ -38,7 +38,7 @@ function rowByColumnMultiplication (field, leftMatrix, leftIndices, rightMatrix,
       rightElement = rightMatrix[rightIndex]
       leftElement = leftMatrix[leftIndex]
 
-      element = field.multiplication(leftElement, rightElement)
+      element = Scalar.multiplication(leftElement, rightElement)
 
       for (var k = 1; k < commonIndex; k++) {
         leftIndex = matrixToArrayIndex(i, k, commonIndex)
@@ -47,7 +47,7 @@ function rowByColumnMultiplication (field, leftMatrix, leftIndices, rightMatrix,
         rightElement = rightMatrix[rightIndex]
         leftElement = leftMatrix[leftIndex]
 
-        element = field.addition(element, field.multiplication(rightElement, leftElement))
+        element = Scalar.addition(element, Scalar.multiplication(rightElement, leftElement))
       }
 
       data.push(element)

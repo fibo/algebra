@@ -1,5 +1,8 @@
 
+var inherits = require('inherits')
+
 var arrayFrom = require('./arrayFrom')
+  , Element = require('./Element')
   , toData = require('./toData')
 
 /**
@@ -61,11 +64,10 @@ function Field (zero, one, operators) {
    */ 
   
   function Scalar (data) {
-    if (self.contains(data))
-      this.data = data
-    else
-      throw new TypeError(data)
+    Element.call(this, data, self.contains)
   }
+
+  inherits(Scalar, Element)
 
   function scalarAddition () {
     this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))

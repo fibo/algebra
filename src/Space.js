@@ -1,17 +1,20 @@
 
+var inherits = require('inherits')
+
 var arrayFrom = require('./arrayFrom')
+  , AbstractElement = require('./Element')
   , toData = require('./toData')
 
 /**
  * Abstract multidimensional space
  *
- * @param {Object} field
+ * @param {Object} Scalar
  * @param {Array} indices
  *
  * @constructor
  */
 
-function Space (field, indices) {
+function Space (Scalar, indices) {
   var self = this
 
   var zero = []
@@ -20,7 +23,7 @@ function Space (field, indices) {
   self.dimension = indices.reduce(function (a, b) { return a * b }, 1)
 
   function contains (data) {
-    return data.map(field.contains).length === self.dimension
+    return data.map(Scalar.contains).length === self.dimension
   }
 
   self.contains = contains
@@ -38,7 +41,7 @@ function Space (field, indices) {
   }
     
   function spaceAddition () {
-    return getResult(field.addition, arrayFrom(arguments).map(toData))
+    return getResult(Scalar.addition, arrayFrom(arguments).map(toData))
   }
   
   self.addition = spaceAddition
@@ -46,7 +49,7 @@ function Space (field, indices) {
   
       
   function spaceSubtraction () {
-    return getResult(field.subtraction, arrayFrom(arguments).map(toData))
+    return getResult(Scalar.subtraction, arrayFrom(arguments).map(toData))
   }
   
   self.subtraction = spaceSubtraction
@@ -56,14 +59,12 @@ function Space (field, indices) {
    * @param {Array} data
    */
     
-  // TODO Element and Scala has the same code
   function Element (data) {
-    if (self.contains(data))
-      this.data = data
-    else
-      throw new TypeError(data)
+    AbstractElement.call(this, data, self.contains)
   }
   
+  inherits(Element, AbstractElement)
+
   function elementAddition () {
     this.data = spaceAddition(this.data, spaceAddition.apply(null, arguments))
     

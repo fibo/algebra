@@ -3,10 +3,17 @@ var inherits = require('inherits')
 
 var Space = require('./Space')
 
-function VectorSpace (field, dimension) {
+/**
+ * Space of vectors
+ *
+ * @param {Object} Scalar
+ * @param {Number} dimension
+ */
+
+function VectorSpace (Scalar, dimension) {
   var self = this
 
-  var space = new Space(field, [dimension])
+  var space = new Space(Scalar, [dimension])
 
   self.addition = space.addition
   self.subtraction = space.subtraction
@@ -23,3 +30,4 @@ function VectorSpace (field, dimension) {
 inherits(VectorSpace, Space)
 
 module.exports = VectorSpace
+

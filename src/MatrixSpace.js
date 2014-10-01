@@ -9,12 +9,12 @@ var Space = require('./Space')
 /**
  * Space of m x n matrices
  *
- * @param {Object} field
+ * @param {Object} Scalar
  * @param {Number} numRows
  * @param {Number} numCols
  */
 
-function MatrixSpace (field, numRows, numCols) {
+function MatrixSpace (Scalar, numRows, numCols) {
   var self = this
 
   var isSquare = false
@@ -31,13 +31,13 @@ function MatrixSpace (field, numRows, numCols) {
 
   var indices = [numRows, numCols]
 
-  var space = new Space(field, indices)
+  var space = new Space(Scalar, indices)
 
   function spaceMultiplication (leftMatrix, rightMatrix) {
     var left  = toData(leftMatrix)
       , right = toData(rightMatrix)
 
-    return rowByColumnMultiplication(field, left, indices, right, indices)
+    return rowByColumnMultiplication(Scalar, left, indices, right, indices)
   }
 
   self.addition = space.addition
@@ -55,9 +55,9 @@ function MatrixSpace (field, numRows, numCols) {
     space.Element.call(this, data)
 
     function matrixDeterminant () {
-      var det = determinant(field, this.data, numRows)
+      var det = determinant(Scalar, this.data, numRows)
 
-      return new field(det)
+      return new Scalar(det)
     }
 
     if (isSquare) {

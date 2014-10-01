@@ -1,8 +1,6 @@
 
-
 var algebra  = require('algebra')
   , should = require('should')
-
 
 var Boole = require('./Boole')
 

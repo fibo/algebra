@@ -1,9 +1,13 @@
 
-function matrixToArrayIndex(i, j, numberOfColumns) {
-  return i * numberOfColumns + j;
-}
+var matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
+ *
+ * @param {Object} field
+ * @param {Array} leftMatrix
+ * @param {Array} leftIndices
+ * @param {Array} rightMatrix
+ * @param {Array} rightIndices
  *
  * @return {Array} data
  */

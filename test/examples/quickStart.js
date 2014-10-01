@@ -49,7 +49,7 @@ describe("Quick start", function () {
     m1.data.should.eql([-1, 2,
                         -3, 4])
 
-    //m1.determinant.data.should.eql(2)
+    m1.determinant.data.should.eql(2)
   })
 })
 

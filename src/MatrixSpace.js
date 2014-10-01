@@ -2,6 +2,7 @@
 var inherits = require('inherits')
 
 var Space = require('./Space')
+  , determinant = require('./determinant')
   , rowByColumnMultiplication = require('./rowByColumnMultiplication.js')
   , toData = require('./toData')
 
@@ -11,8 +12,6 @@ var Space = require('./Space')
  * @param {Object} field
  * @param {Number} numRows
  * @param {Number} numCols
- *
- * @constructor
  */
 
 function MatrixSpace (field, numRows, numCols) {
@@ -54,6 +53,17 @@ function MatrixSpace (field, numRows, numCols) {
 
   function Matrix (data) {
     space.Element.call(this, data)
+
+    function matrixDeterminant () {
+      var det = determinant(field, this.data, numRows)
+
+      return new field(det)
+    }
+
+    if (isSquare) {
+      Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
+      Object.defineProperty(this, 'det', {get: matrixDeterminant})
+    }
   }
 
   inherits(Matrix, space.Element)
@@ -102,3 +112,4 @@ function MatrixSpace (field, numRows, numCols) {
 inherits(MatrixSpace, Space)
 
 module.exports = MatrixSpace
+

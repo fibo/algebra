@@ -1,5 +1,6 @@
 
 var arrayFrom = require('./arrayFrom')
+  , toData = require('./toData')
 
 /**
  * Abstract multidimensional space
@@ -12,29 +13,18 @@ var arrayFrom = require('./arrayFrom')
 
 function Space (field, indices) {
   var self = this
-  
+
   var zero = []
     , one = []
-  
+
   self.dimension = indices.reduce(function (a, b) { return a * b }, 1)
-  
-  function toData (arg) {
-    var data
-  
-    if (typeof arg.data === 'undefined')
-      data = arg 
-    else
-      data = arg.data
-  
-    if (data.length !== self.dimension)
-      throw new TypeError(data)
-      
-    // Throws TypeError if data is not contained in field
-    data.map(field.contains)
-    
-    return data
+
+  function contains (data) {
+    return data.map(field.contains).length === self.dimension
   }
-  
+
+  self.contains = contains
+
   function getResult (operator, data) {
     var result = data[0]
     
@@ -66,8 +56,12 @@ function Space (field, indices) {
    * @param {Array} data
    */
     
+  // TODO Element and Scala has the same code
   function Element (data) {
-    this.data = data
+    if (self.contains(data))
+      this.data = data
+    else
+      throw new TypeError(data)
   }
   
   function elementAddition () {

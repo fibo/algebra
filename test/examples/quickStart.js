@@ -38,7 +38,6 @@ describe("Quick start", function () {
 
     var M2 = new M(R, 2)
 
-/*
     var m1 = new M2.Matrix([1, 2,
                             3, 4])
 
@@ -50,7 +49,7 @@ describe("Quick start", function () {
     m1.data.should.eql([-1, 2,
                         -3, 4])
 
-    m1.determinant.data.should.eql(2)
-  */})
+    //m1.determinant.data.should.eql(2)
+  })
 })
 

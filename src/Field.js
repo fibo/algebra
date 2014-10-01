@@ -1,34 +1,22 @@
 
 var arrayFrom = require('./arrayFrom')
+  , toData = require('./toData')
+
+/**
+ * Algebra field
+ *
+ * @param {Any} zero
+ * @param {Any} one
+ * @param {Object} operators
+ */
 
 function Field (zero, one, operators) {
   var self = this
+
   self.zero = zero
   self.one = one
 
   self.contains = operators.contains
-  
-  /**
-   * Extract data attribute, if any, and check if it belongs to the Field set
-   * 
-   * @param {Object|Any} arg
-   * 
-   * @return {Any} data
-   */
-
-  function toData (arg) {
-    var data
-  
-    if (typeof arg.data === 'undefined')
-      data = arg 
-    else
-      data = arg.data
-  
-    if (self.contains(data))
-      return data
-    else
-      throw new TypeError(data)
-  }
 
   var byAddition = operators.addition
     , bySubtraction = operators.subtraction
@@ -73,7 +61,10 @@ function Field (zero, one, operators) {
    */ 
   
   function Scalar (data) {
-    this.data = data
+    if (self.contains(data))
+      this.data = data
+    else
+      throw new TypeError(data)
   }
 
   function scalarAddition () {

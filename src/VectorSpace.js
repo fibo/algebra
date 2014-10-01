@@ -10,9 +10,9 @@ function VectorSpace (field, dimension) {
 
   self.addition = space.addition
   self.subtraction = space.subtraction
-  
+
   function Vector (data) {
-    space.Element.call(this, data)  
+    space.Element.call(this, data)
   }
 
   inherits(Vector, space.Element)
@@ -23,4 +23,3 @@ function VectorSpace (field, dimension) {
 inherits(VectorSpace, Space)
 
 module.exports = VectorSpace
-

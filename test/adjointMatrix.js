@@ -18,7 +18,6 @@ describe('adjointMatrix', function () {
             1, 0, 1]
     adjoint = [1, 0,
                1, 1]
- 
     adjointMatrix(data, 3, 3, 1, 1).should.be.eql(adjoint)
   })
 })

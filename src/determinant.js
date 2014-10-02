@@ -13,7 +13,7 @@ var adjointMatrix = require('./adjointMatrix')
 
 function determinant (Scalar, data, order) {
   var adjointData
-    , adjointMatrix
+    , adjointDeterminant
     , det
     , startingCol
     , startingRow
@@ -33,14 +33,18 @@ function determinant (Scalar, data, order) {
   index = matrixToArrayIndex(startingRow, startingCol, order)
 
   adjointData = adjointMatrix(data, order, order, startingRow, startingCol)
-  adjoinDeterminant = determinant(Scalar, adjointData, order - 1)
+  adjointDeterminant = determinant(Scalar, adjointData, order - 1)
 
   det = Scalar.multiplication(data[index], adjointDeterminant)
 
   for (var col = 1; col < order; col++) {
-    adjointData = adjointMatrix(data, order, order, row, col)
+    adjointData = adjointMatrix(data, order, order, startingRow, col)
 
-    adjoinDeterminant = determinant(Scalar, adjointData, order - 1)
+    adjointDeterminant = determinant(Scalar, adjointData, order - 1)
+
+    index = matrixToArrayIndex(startingRow, col, order)
+
+    det = Scalar.addition(det, Scalar.multiplication(data[index], adjointDeterminant))
   }
 
   return det

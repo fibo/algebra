@@ -14,6 +14,8 @@ function multiplication (a, b) { return a * b }
 
 function division (a, b) { return a / b }
 
+function negation (a) { return - a }
+
 function equal (a, b) { return a === b }
 
 function contains (a) { return typeof a === "number" }
@@ -22,6 +24,8 @@ var field = new Field(zero, one, {
   addition      : addition
 , subtraction   : subtraction
 , multiplication: multiplication
+, negation      : negation
+, equal         : equal
 , contains      : contains
 })
 
@@ -38,6 +42,8 @@ inherits(Real, field.Scalar)
 Real.addition       = field.addition
 Real.subtraction    = field.subtraction
 Real.multiplication = field.multiplication
+Real.negation       = field.negation
+Real.equal          = field.equal
 Real.contains       = field.contains
 
 module.exports = Real

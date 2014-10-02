@@ -24,6 +24,7 @@ function Field (zero, one, operators) {
   var byAddition = operators.addition
     , bySubtraction = operators.subtraction
     , byMultiplication = operators.multiplication
+    , byEqual = operators.equal
   
   /**
    * Static addition operator 
@@ -55,6 +56,26 @@ function Field (zero, one, operators) {
 
   self.multiplication = fieldMultiplication
 
+  /**
+   * Static equal operator 
+   */
+  
+  function fieldEqual () {
+    return arrayFrom(arguments).map(toData).reduce(byEqual)        
+  }
+
+  self.equal = fieldEqual
+
+  /**
+   * Static negation operator 
+   */
+  
+  function fieldNegation () {
+    return operators.negation(toData(arguments[0]))  
+  }
+
+  self.negation = fieldNegation
+    
   /**
    * Scalar element
    * 
@@ -93,6 +114,22 @@ function Field (zero, one, operators) {
   
   Scalar.prototype.multiplication = scalarMultiplication
   Scalar.prototype.mul = scalarMultiplication
+
+  function scalarEqual () {
+    return fieldEqual(this.data, fieldEqual.apply(null, arguments))
+  }
+  
+  Scalar.prototype.equal = scalarEqual
+  Scalar.prototype.eq = scalarEqual
+
+  function scalarNegation () {
+    this.data = fieldNegation(this.data)
+    
+    return this
+  }
+  
+  Scalar.prototype.negation = scalarNegation
+  Scalar.prototype.neg = scalarNegation
 
   self.Scalar = Scalar
 }

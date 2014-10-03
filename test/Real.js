@@ -4,9 +4,31 @@ var algebra = require('..')
 
 var R = algebra.Real
 
+var staticOperator = require('./feature/staticOperator')
+
 describe('Real', function () {
-  it('implements static addition() operator', function () {
-    R.addition(2, 3).should.eql(5)
+  var x
+
+  describe('addition operator', function () {
+    it('is implemented as a static method', staticOperator(R, 'addition', 2, 3, 5))
+
+    it('is implemented as a mutator', function () {
+      x = new R(1)
+      x.addition(2)
+      x.data.should.eql(3)
+    })
+
+    it('is chainable', function () {
+      x = new R(1)
+      x.addition(2).addition(3)
+      x.data.should.eql(6)
+    })
+
+    it('accepts many arguments', function () {
+      x = new R(1)
+      x.addition(2, 3, 4)
+      x.data.should.eql(10)
+    })
   })
 
   it('implements static subtraction() operator', function () {
@@ -26,13 +48,6 @@ describe('Real', function () {
   })
 
   describe('object', function () {
-    var x
-
-    it('implements addition() operator', function () {
-      x = new R(1)
-      x.addition(2)
-      x.data.should.eql(3)
-    })
 
     it('implements subtraction() operator', function () {
       x = new R(-1)

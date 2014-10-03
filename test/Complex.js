@@ -4,7 +4,7 @@ var algebra = require('..')
 
 var C = algebra.Complex
 
-describe('Cmplex', function () {
+describe('Complex', function () {
   it('implements static addition() operator', function () {
     C.addition([2, 1], [2, 3]).should.eql([4, 4])
   })

@@ -4,13 +4,13 @@ var algebra = require('..')
 
 var R = algebra.Real
 
-var staticOperator = require('./feature/staticOperator')
+var staticBinaryOperator = require('./features/staticBinaryOperator')
 
 describe('Real', function () {
   var x
 
   describe('addition operator', function () {
-    it('is implemented as a static method', staticOperator(R, 'addition', 2, 3, 5))
+    it('is implemented as a static method', staticBinaryOperator(R, 'addition', 2, 3, 5))
 
     it('is implemented as a mutator', function () {
       x = new R(1)
@@ -31,12 +31,12 @@ describe('Real', function () {
     })
   })
 
-  it('implements static subtraction() operator', function () {
-    R.subtraction(2, 3).should.eql(-1)
+  describe('subtraction operator', function () {
+    it('is implemented as a static method', staticBinaryOperator(R, 'subtraction', 2, 3, -1))
   })
 
-  it('implements static multiplication() operator', function () {
-    R.multiplication(8, -2).should.eql(-16)
+  describe('multiplication operator', function () {
+    it('is implemented as a static method', staticBinaryOperator(R, 'multiplication', 8, -2, -16))
   })
 
   it('implements static equal() operator', function () {

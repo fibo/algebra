@@ -4,19 +4,19 @@ var algebra = require('..')
 
 var R = algebra.Real
 
-var staticBinaryOperator = require('./features/staticBinaryOperator')
+var mutatorBinaryOperator = require('./features/mutatorBinaryOperator')
+  , staticBinaryOperator = require('./features/staticBinaryOperator')
 
 describe('Real', function () {
-  var x
+  var operator
+    , x
 
-  describe('addition operator', function () {
-    it('is implemented as a static method', staticBinaryOperator(R, 'addition', 2, 3, 5))
+  describe('addition', function () {
+    operator = 'addition'
 
-    it('is implemented as a mutator', function () {
-      x = new R(1)
-      x.addition(2)
-      x.data.should.eql(3)
-    })
+    it('is a static method', staticBinaryOperator(R, operator, 2, 3, 5))
+
+    it('is a mutator method', mutatorBinaryOperator(R, operator, 1, 2, 3))
 
     it('is chainable', function () {
       x = new R(1)
@@ -31,12 +31,20 @@ describe('Real', function () {
     })
   })
 
-  describe('subtraction operator', function () {
-    it('is implemented as a static method', staticBinaryOperator(R, 'subtraction', 2, 3, -1))
+  describe('subtraction', function () {
+    operator = 'subtraction'
+
+    it('is a static method', staticBinaryOperator(R, operator, 2, 3, -1))
+
+    it('is a mutator method', mutatorBinaryOperator(R, operator, -1, -2, 3))
   })
 
-  describe('multiplication operator', function () {
-    it('is implemented as a static method', staticBinaryOperator(R, 'multiplication', 8, -2, -16))
+  describe('multiplication', function () {
+    operator = 'multiplication'
+
+    it('is a static method', staticBinaryOperator(R, operator, 8, -2, -16))
+
+    it('is a mutator method', mutatorBinaryOperator(R, operator, 2, 2, 4))
   })
 
   it('implements static equal() operator', function () {
@@ -48,18 +56,6 @@ describe('Real', function () {
   })
 
   describe('object', function () {
-
-    it('implements subtraction() operator', function () {
-      x = new R(-1)
-      x.subtraction(-2)
-      x.data.should.eql(1)
-    })
-
-    it('implements multiplication() operator', function () {
-      x = new R(2)
-      x.multiplication(2)
-      x.data.should.eql(4)
-    })
 
     it('implements equal() operator', function () {
       x = new R(10)

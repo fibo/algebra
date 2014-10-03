@@ -1,7 +1,8 @@
 
 var inherits = require('inherits')
 
-var Field = require('./Field')
+var addStaticOperators = require('./addStaticOperators')
+  , Field = require('./Field')
 
 var zero = 0
   , one  = 1
@@ -39,12 +40,7 @@ function Real (data) {
 
 inherits(Real, field.Scalar)
 
-Real.addition       = field.addition
-Real.subtraction    = field.subtraction
-Real.multiplication = field.multiplication
-Real.negation       = field.negation
-Real.equal          = field.equal
-Real.contains       = field.contains
+addStaticOperators(Real, field)
 
 module.exports = Real
 

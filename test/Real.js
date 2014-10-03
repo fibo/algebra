@@ -36,7 +36,7 @@ describe('Real', function () {
 
     it('is a static method', staticBinaryOperator(R, operator, 2, 3, -1))
 
-    it('is a mutator method', mutatorBinaryOperator(R, operator, -1, -2, 3))
+    it('is a mutator method', mutatorBinaryOperator(R, operator, -1, -4, 3))
   })
 
   describe('multiplication', function () {

@@ -1,7 +1,8 @@
 
 var inherits = require('inherits')
 
-var Field = require('./Field')
+var addStaticOperators = require('./addStaticOperators')
+  , Field = require('./Field')
 
 var zero = [0, 0]
   , one  = [1, 0]
@@ -39,6 +40,8 @@ function Complex (data) {
 
 inherits(Complex, field.Scalar)
 
+addStaticOperators(Complex, field)
+
 function fieldConjugation (z) {
   return [z[0], -z[1]]
 }
@@ -51,16 +54,6 @@ function scalarConjugation (z) {
 
 Complex.prototype.conjugation = scalarConjugation
 Complex.prototype.conj = scalarConjugation
-
-
-Complex.addition       = field.addition
-Complex.add            = field.addition
-Complex.subtraction    = field.subtraction
-Complex.sub            = field.subtraction
-Complex.multiplication = field.multiplication
-Complex.mul            = field.multiplication
-
-Complex.contains = field.contains
 
 Complex.conjugation = fieldConjugation
 Complex.conj        = fieldConjugation

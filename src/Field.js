@@ -139,6 +139,7 @@ function Field (zero, one, operators) {
   }
   
   Scalar.prototype.addition = scalarAddition
+  Scalar.prototype.add      = scalarAddition
 
   function scalarSubtraction () {
     this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))
@@ -147,6 +148,7 @@ function Field (zero, one, operators) {
   }
   
   Scalar.prototype.subtraction = scalarSubtraction
+  Scalar.prototype.sub         = scalarSubtraction
 
   function scalarMultiplication () {
     this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))

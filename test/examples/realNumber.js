@@ -1,14 +1,25 @@
 
-//
-// # Imports
-//
+var algebra = require('algebra')
+  , should  = require('should')
 
-var algebra = require('algebra');
+var R = algebra.Real
 
-var R = algebra.Real;
+describe('Real number example', function () {
+    var x1
+      , x2
+      , x3
+      , x4
 
-//
-// # Constructor
+  it('creates few real numbers', function () {
+    x1 = new R(4)
+    x2 = new R(-1)
+    x3 = new R(0.7)
+    x4 = new R(2)
+  })
+
+  //it('', function () {
+  //})
+
 //
 // A real number is just a common number
 //
@@ -17,11 +28,6 @@ var R = algebra.Real;
 //x3 = 0.7
 //x4 = 2
 //
-
-var x1 = new R(4);
-var x2 = new R(-1);
-var x3 = new R(0.7);
-var x4 = new R(2);
 
 // arithmetic operators are implemented
 //
@@ -51,4 +57,7 @@ var x4 = new R(2);
 
 //x1.add(2).mul(3).sub(6).div(4);
 //x1.data.should.be(3);
+
+
+})
 

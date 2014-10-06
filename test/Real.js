@@ -18,12 +18,6 @@ describe('Real', function () {
 
     it('is a mutator method', mutatorBinaryOperator(R, operator, 1, 2, 3))
 
-    it('is chainable', function () {
-      x = new R(1)
-      x.addition(2).addition(3)
-      x.data.should.eql(6)
-    })
-
     it('accepts many arguments', function () {
       x = new R(1)
       x.addition(2, 3, 4)
@@ -47,22 +41,23 @@ describe('Real', function () {
     it('is a mutator method', mutatorBinaryOperator(R, operator, 2, 2, 4))
   })
 
-  it('implements static equal() operator', function () {
-    R.equal(-2, -2).should.be.ok
-  })
+  describe('equal', function () {
+    operator = 'equal'
 
-  it('implements static negation() operator', function () {
-    R.negation(-2).should.eql(2)
-  })
+    it('is a static method', staticBinaryOperator(R, operator, 10, 10, true))
 
-  describe('object', function () {
-
-    it('implements equal() operator', function () {
+    it('is a class method', function () {
       x = new R(10)
       x.equal(10).should.be.ok
     })
+  })
 
-    it('implements negation() operator', function () {
+  describe('negation', function () {
+    it('is a static method', function () {
+      R.negation(-2).should.eql(2)
+    })
+
+    it('is a class method', function () {
       x = new R(8)
       x.negation()
       x.data.should.eql(-8)

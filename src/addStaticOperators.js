@@ -1,4 +1,11 @@
 
+/**
+ * Add field operators to Scalar as static methods
+ *
+ * @param {Object} Scalar class
+ * @param {Object} field instance
+ */
+
 function addStaticOperators (Scalar, field) {
   Scalar.addition       = field.addition
   Scalar.add            = field.addition

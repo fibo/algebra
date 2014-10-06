@@ -1,4 +1,6 @@
 
+var multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')
+
 /**
  *
  * @param {Number} i row
@@ -9,7 +11,7 @@
  */
 
 function matrixToArrayIndex(i, j, numberOfColumns) {
-  var index = i * numberOfColumns + j
+  var index = multiDimensionalArrayIndex([numberOfColumns, numberOfColumns], [i, j])
 
   return index
 }

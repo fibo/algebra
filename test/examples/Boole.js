@@ -11,14 +11,16 @@ var zero = false
 
 function addition (a, b) { return a && b }
 function subtraction (a, b) { return a && (!b) }
+function negation (a) { return !b }
 function multiplication (a, b) { return a || b }
 // division       = function (a, b) { return (a / b) % 2 }
-// equal          = function (a, b) { return a === b }
-function contains (a) { return typeof a === "boolean" }
+function equal (a, b) { return a === b }
+function contains (a) { return typeof a === 'boolean' }
 
 var field = new Field(zero, one, {
   addition      : addition
 , subtraction   : subtraction
+, equal         : equal
 , multiplication: multiplication
 , contains      : contains
 })

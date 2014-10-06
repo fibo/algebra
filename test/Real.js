@@ -5,7 +5,9 @@ var algebra = require('..')
 var R = algebra.Real
 
 var mutatorBinaryOperator = require('./features/mutatorBinaryOperator')
+  , mutatorUnaryOperator = require('./features/mutatorUnaryOperator')
   , staticBinaryOperator = require('./features/staticBinaryOperator')
+  , staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('Real', function () {
   var operator
@@ -41,6 +43,14 @@ describe('Real', function () {
     it('is a mutator method', mutatorBinaryOperator(R, operator, 2, 2, 4))
   })
 
+  describe('division', function () {
+    operator = 'division'
+
+    it('is a static method', staticBinaryOperator(R, operator, 8, 2, 4))
+
+    it('is a mutator method', mutatorBinaryOperator(R, operator, -2, 4, -0.5))
+  })
+
   describe('equal', function () {
     operator = 'equal'
 
@@ -53,15 +63,11 @@ describe('Real', function () {
   })
 
   describe('negation', function () {
-    it('is a static method', function () {
-      R.negation(-2).should.eql(2)
-    })
+    operator = 'negation'
 
-    it('is a class method', function () {
-      x = new R(8)
-      x.negation()
-      x.data.should.eql(-8)
-    })
+    it('is a static method', staticUnaryOperator(R, operator, -2, 2))
+
+    it('is a mutator method', mutatorUnaryOperator(R, operator, 8, -8))
   })
 })
 

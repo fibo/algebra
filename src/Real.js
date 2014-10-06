@@ -9,23 +9,21 @@ var zero = 0
 
 function addition (a, b) { return a + b }
 
-function subtraction (a, b) { return a - b }
-
 function multiplication (a, b) { return a * b }
 
-function division (a, b) { return a / b }
+function inversion (a) { return 1 / a }
 
 function negation (a) { return - a }
 
 function equal (a, b) { return a === b }
 
-function contains (a) { return typeof a === "number" }
+function contains (a) { return typeof a === 'number' }
 
 var field = new Field(zero, one, {
   addition      : addition
-, subtraction   : subtraction
 , multiplication: multiplication
 , negation      : negation
+, inversion     : inversion
 , equal         : equal
 , contains      : contains
 })

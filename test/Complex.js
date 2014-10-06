@@ -4,24 +4,52 @@ var algebra = require('..')
 
 var C = algebra.Complex
 
+var mutatorBinaryOperator = require('./features/mutatorBinaryOperator')
+  , mutatorUnaryOperator = require('./features/mutatorUnaryOperator')
+  , staticBinaryOperator = require('./features/staticBinaryOperator')
+  , staticUnaryOperator = require('./features/staticUnaryOperator')
+
 describe('Complex', function () {
-  it('implements static addition() operator', function () {
-    C.addition([2, 1], [2, 3]).should.eql([4, 4])
+  var operator
+
+  describe('addition', function () {
+    operator = 'addition'
+
+    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [4, 4]))
+
+    it('is a mutator method', mutatorBinaryOperator(C, operator, [1, 2], [1, -1], [2, 1]))
   })
 
-  it('implements static subtraction() operator', function () {
-    C.subtraction([1, 2], [0, 3]).should.eql([1, -1])
+  describe('subtraction', function () {
+    operator = 'subtraction'
+
+    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [0, -2]))
+
+    it('is a mutator method', mutatorBinaryOperator(C, operator, [0, 2], [1, -2], [-1, 4]))
   })
 
-  describe('object', function () {
-    it('implements addition() operator', function () {
-      var z = new C([1, 0])
+  describe('multiplication', function () {
+    operator = 'multiplication'
 
-      z.addition([2, 1])
+    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, -1], [5, 0]))
 
-      z.data.should.eql([3, 1])
-    })
+    it('is a mutator method', mutatorBinaryOperator(C, operator, [1, 2], [-1, 2], [-5, 0]))
+  })
+
+  describe('division', function () {
+    operator = 'division'
+
+    it('is a static method', staticBinaryOperator(C, operator, [2, 4], [2, 0], [1, 2]))
+
+    it('is a mutator method', mutatorBinaryOperator(C, operator, [5, 0], [2, -1], [2, 1]))
+  })
+
+  describe('negation', function () {
+    operator = 'negation'
+
+    it('is a static method', staticUnaryOperator(C, operator, [-2, 1], [2, -1]))
+
+    it('is a mutator method', mutatorUnaryOperator(C, operator, [1, 8], [-1, -8]))
   })
 })
-
 

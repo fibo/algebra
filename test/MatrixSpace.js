@@ -27,7 +27,7 @@ describe('MatrixSpace', function () {
   })
 
   describe('Matrix', function () {
-      var R2x2 = new MatrixSpace(Real, 2)
+    var R2x2 = new MatrixSpace(Real, 2)
     var matrix = new R2x2.Matrix([1, 0, 0, 1])
   })
 })

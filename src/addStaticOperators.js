@@ -16,6 +16,9 @@ function addStaticOperators (Scalar, field) {
   Scalar.multiplication = field.multiplication
   Scalar.mul            = field.multiplication
 
+  Scalar.division       = field.division
+  Scalar.div            = field.division
+
   Scalar.negation       = field.negation
   Scalar.neg            = field.negation
 

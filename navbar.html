@@ -11,8 +11,8 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li {% if page.title == "Blog" %}class="active"{% endif %}><a href="./blog">Blog</a></li>
-          <li {% if page.title == "Software" %}class="active"{% endif %}><a href="./software">Software</a></li>
+          <li {% if page.title == "Blog" %}class="active"{% endif %}><a href="{{ site.url }}/blog">Blog</a></li>
+          <li {% if page.title == "Software" %}class="active"{% endif %}><a href="{{ site.url }}/software">Software</a></li>
         </ul>
       </div>
     </div>

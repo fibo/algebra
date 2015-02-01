@@ -7,7 +7,7 @@ layout: project
 
 {% include node_badges.md package='algebra' %}
 
-![on-quaternions-and-octonions!](http://g14n.info/images/algebra/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](http://g14n.info/images/algebra/Cover-Algebra.png)
+![on-quaternions-and-octonions!](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](http://g14n.info/algebra/images/Cover-Algebra.png)
 
 ## Installation
 

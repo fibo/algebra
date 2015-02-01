@@ -1,8 +1,9 @@
 
 var inherits = require('inherits')
 
-var addStaticOperators = require('./addStaticOperators')
-  , Field = require('./Field')
+var addStaticOperators  = require('./addStaticOperators'),
+    buildFieldOperators = require('./buildFieldOperators'),
+    Scalar              = require('./Scalar')
 
 var zero = [0, 0]
   , one  = [1, 0]
@@ -15,7 +16,7 @@ function multiplication (z, w) {
   return [z[0] * w[0] - z[1] * w[1], z[1] * w[0] + z[0] * w[1]]
 }
 
-function conjugation(z) {
+function conjugation (z) {
   // z~ = (z0 + i z1)~
   //    = z0 - i z1
   return [z[0], - z[1]]
@@ -44,26 +45,32 @@ function negation (z) {
   return [-z[0], -z[1]]
 }
 
-var field = new Field(zero, one, {
-  addition      : addition
-, multiplication: multiplication
-, equal         : equal
-, negation      : negation
-, inversion     : inversion
-, contains      : contains
-})
+var operators = {
+  addition      : addition,
+  multiplication: multiplication,
+  negation      : negation,
+  inversion     : inversion,
+  equal         : equal,
+  contains      : contains
+}
+
+var field = {
+  one     : one,
+  zero    : zero,
+  operator: operators
+}
 
 /**
  * Complex number.
  */
 
 function Complex (data) {
-  field.Scalar.call(this, data)
+  Scalar.call(this, field, data)
 }
 
-inherits(Complex, field.Scalar)
+inherits(Complex, Scalar)
 
-addStaticOperators(Complex, field)
+addStaticOperators(Complex, buildFieldOperators(field))
 
 function fieldConjugation (z) {
   return conjugation(z)
@@ -76,7 +83,7 @@ function scalarConjugation (z) {
 }
 
 Complex.prototype.conjugation = scalarConjugation
-Complex.prototype.conj = scalarConjugation
+Complex.prototype.conj        = scalarConjugation
 
 Complex.conjugation = fieldConjugation
 Complex.conj        = fieldConjugation

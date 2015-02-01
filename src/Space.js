@@ -26,8 +26,6 @@ function Space (Scalar, indices) {
     return data.map(Scalar.contains).length === self.dimension
   }
 
-  self.contains = contains
-
   function getResult (operator, data) {
     var result = data[0]
 
@@ -60,7 +58,7 @@ function Space (Scalar, indices) {
    */
 
   function Element (data) {
-    AbstractElement.call(this, data, self.contains)
+    AbstractElement.call(this, data, contains)
   }
 
   inherits(Element, AbstractElement)

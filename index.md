@@ -6,14 +6,14 @@ title: algebra
 
 {% include node_badges.md package='algebra' %}
 
-![on-quaternions-and-octonions!](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](http://g14n.info/algebra/images/Cover-Algebra.png)
+![on-quaternions-and-octonions!](//g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png) ![Algebra!](//g14n.info/algebra/images/Cover-Algebra.png)
 
 ## Installation
 
 With [npm](https://npmjs.org/) do
 
 ```
-npm install algebra
+$ npm install algebra
 ```
 
 ## Description
@@ -46,12 +46,11 @@ Another motivation was to implements something similar to a Tensor, that is like
 
 ## Examples
 
-Begin with [algebra quick start](http://g14n.info/algebra/examples/quick-start).
+Begin with [algebra quick start](//g14n.info/algebra/examples/quick-start).
 
 Other examples:
 
-  * [Real number](http://g14n.info/algebra/examples/real-number)  
-  * [Real vector](http://g14n.info/algebra/examples/real-vector)  
-  * [Complex number](http:/g14n.info/algebra/examples/complex-number)  
-  * [Custom field](http://g14n.info/algebra/examples/custom-field)  
-
+  * [Real number](//g14n.info/algebra/examples/real-number)
+  * [Real vector](//g14n.info/algebra/examples/real-vector)
+  * [Complex number](//g14n.info/algebra/examples/complex-number)
+  * [Custom field](//g14n.info/algebra/examples/custom-field)

@@ -1,6 +1,5 @@
 ---
 title: Quick start
-layout: default
 ---
 
 This is a 60 seconds tutorial to get your hands dirty with *algebra*.

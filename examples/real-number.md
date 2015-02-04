@@ -1,6 +1,5 @@
 ---
 title: Real number
-layout: default
 ---
 
 ```

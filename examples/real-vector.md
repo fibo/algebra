@@ -1,6 +1,5 @@
 ---
 title: Real vector
-layout: default
 ---
 
 ```

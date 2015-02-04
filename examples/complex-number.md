@@ -1,6 +1,5 @@
 ---
 title: Complex number
-layout: default
 ---
 
 ```js

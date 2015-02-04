@@ -1,4 +1,6 @@
-url: http://g14n.info
+
+domain: g14n.info
+name: algebra
 encoding: utf-8
 
 author: Gianluca Casati
@@ -32,6 +34,12 @@ defaults:
     values:
       author: Gianluca Casati
       layout: post
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: algebra
 
 # Custom vars
 

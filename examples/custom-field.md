@@ -1,6 +1,5 @@
 ---
 title: Boolean Algebra
-layout: default
 ---
 
 Create an algebra field with only two elements: *true* and *false*

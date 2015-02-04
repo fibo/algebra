@@ -69,5 +69,13 @@ describe('Real', function () {
 
     it('is a mutator method', mutatorUnaryOperator(R, operator, 8, -8))
   })
+
+  describe('inversion', function () {
+    operator = 'inversion'
+
+    it('is a static method', staticUnaryOperator(R, operator, 2, 0.5))
+
+    it('is a mutator method', mutatorUnaryOperator(R, operator, -4, -0.25))
+  })
 })
 

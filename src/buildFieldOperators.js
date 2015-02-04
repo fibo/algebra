@@ -36,43 +36,43 @@ function buildFieldOperators (field) {
   }
 
   function fieldAddition () {
-    return arrayFrom(arguments).map(toData).reduce(addition)        
+    return arrayFrom(arguments).map(toData).reduce(addition)
   }
 
   operators.addition = fieldAddition
-  
+
   function fieldSubtraction () {
-    return arrayFrom(arguments).map(toData).reduce(subtraction)        
+    return arrayFrom(arguments).map(toData).reduce(subtraction)
   }
 
   operators.subtraction = fieldSubtraction
-    
+
   function fieldMultiplication () {
-    return arrayFrom(arguments).map(toData).reduce(multiplication)        
+    return arrayFrom(arguments).map(toData).reduce(multiplication)
   }
 
   operators.multiplication = fieldMultiplication
 
   function fieldDivision () {
-    return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)        
+    return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)
   }
 
   operators.division = fieldDivision
 
   function fieldInversion () {
-    return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(inversion)        
+    return inversion(toData(arguments[0]))
   }
 
   operators.inversion = fieldInversion
 
   function fieldEqual () {
-    return arrayFrom(arguments).map(toData).reduce(equal)        
+    return arrayFrom(arguments).map(toData).reduce(equal)
   }
 
   operators.equal = fieldEqual
 
   function fieldNegation () {
-    return negation(toData(arguments[0]))  
+    return negation(toData(arguments[0]))
   }
 
   operators.negation = fieldNegation

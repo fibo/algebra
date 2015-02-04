@@ -18,7 +18,7 @@ function scalarAddition () {
   var fieldAddition = fieldOperator.addition
 
   this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))
-  
+
   return this
 }
 
@@ -29,7 +29,7 @@ function scalarSubtraction () {
   var fieldSubtraction = fieldOperator.subtraction
 
   this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))
-  
+
   return this
 }
 
@@ -40,7 +40,7 @@ function scalarMultiplication () {
   var fieldMultiplication = fieldOperator.multiplication
 
   this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))
-  
+
   return this
 }
 
@@ -51,7 +51,7 @@ function scalarDivision () {
   var fieldDivision = fieldOperator.division
 
   this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))
-  
+
   return this
 }
 
@@ -61,8 +61,8 @@ Scalar.prototype.div      = scalarDivision
 function scalarInversion () {
   var fieldInversion = fieldOperator.inversion
 
-  this.data = fieldInversion(this.data, fieldInversion.apply(null, arguments))
-  
+  this.data = fieldInversion(this.data)
+
   return this
 }
 
@@ -82,7 +82,7 @@ function scalarNegation () {
   var fieldNegation = fieldOperator.negation
 
   this.data = fieldNegation(this.data)
-  
+
   return this
 }
 

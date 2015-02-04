@@ -3,7 +3,7 @@
  * Add field operators to Scalar as static methods
  *
  * @param {Object} Scalar class
- * @param {Object} field instance
+ * @param {Object} field
  */
 
 function addStaticOperators (Scalar, field) {
@@ -21,6 +21,9 @@ function addStaticOperators (Scalar, field) {
 
   Scalar.negation       = field.negation
   Scalar.neg            = field.negation
+
+  Scalar.inversion      = field.inversion
+  Scalar.inv            = field.inversion
 
   Scalar.equal          = field.equal
   Scalar.eq             = field.equal

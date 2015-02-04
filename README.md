@@ -6,12 +6,25 @@
 
 For more information point your browser to [algebra Homepage](http://g14n.info/algebra).
 
+## Synopsis
+
+```
+var algebra = require('algebra');
+
+var R = algebra.R;
+
+var x = R(2),
+    y = R(-1);
+
+x.inv().mul(2).add(10).div(2);
+```
+
 ## Installation
 
 With [npm](https://npmjs.org/) do
 
-```
-npm install algebra
+```bash
+$ npm install algebra
 ```
 
 ## License

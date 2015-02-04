@@ -4,10 +4,10 @@ var algebra = require('algebra')
 
 describe("Quick start", function () {
   it('has a working Complex numbers example', function () {
-    var Complex = algebra.Complex
+    var C = algebra.Complex
 
-    var z1 = new Complex([1, 2])
-    var z2 = new Complex([3, 4])
+    var z1 = new C([1, 2])
+    var z2 = new C([3, 4])
 
     z1.mul(z2)
 

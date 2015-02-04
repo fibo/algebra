@@ -10,13 +10,13 @@ This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 ```js
 var algebra = require('algebra');
 
-var Complex = algebra.ComplexElement;
+var C = algebra.Complex;
 
 // Create two complex numbers
 // z1 = 1 + 2i
 // z2 = 3 + 4i
-var z1 = new Complex([1, 2]);
-var z2 = new Complex([3, 4]);
+var z1 = new C([1, 2]);
+var z2 = new C([3, 4]);
 
 // Multiply z1 by z2.
 z1.mul(z2); // (1 + 2i) * (3 + 4i) = -5 + 10i

@@ -1,7 +1,7 @@
 
 // TODO usa le string ℝ ℂ ℍ
 // usa anche ratio, lib per i numueri razionali
-//  
+
 require('strict-mode')(function () {
   exports.Field       = require('./Field')
   exports.Space       = require('./Space')
@@ -9,7 +9,7 @@ require('strict-mode')(function () {
   exports.MatrixSpace = require('./MatrixSpace')
   exports.TensorSpace = require('./TensorSpace')
 
-  exports.Real = require('./Real')
+  exports.Real    = require('./Real')
   exports.Complex = require('./Complex')
 })
 

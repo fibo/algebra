@@ -90,4 +90,3 @@ Scalar.prototype.negation = scalarNegation
 Scalar.prototype.neg      = scalarNegation
 
 module.exports = Scalar
-

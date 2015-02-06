@@ -5,9 +5,7 @@ var algebra = require('algebra')
 var C = algebra.Complex
 
 describe('Complex number example', function () {
-    var z1
-      , z2
-      , z3
+  var z1, z2, z3
 
   it('creates few complex numbers', function () {
     z1 = new C([1, 2])

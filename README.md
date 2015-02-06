@@ -30,7 +30,10 @@ x.add(5).mul(2).inv();
 console.log(x.data); // ((-3 + 5) * 2)^(-1) = 0.25
 ```
 
-See also [algebra quick start](//g14n.info/algebra/examples/quick-start).
+##See also 
+
+* [algebra quick start](//g14n.info/algebra/examples/quick-start)
+: A 60 seconds tutorial to get your hands dirty with algebra.
 
 ## Installation
 

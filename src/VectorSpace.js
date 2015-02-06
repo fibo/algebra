@@ -1,33 +1,38 @@
 
-var inherits = require('inherits')
-
 var Space = require('./Space')
 
 /**
  * Space of vectors
  *
+ * ```
+ * var V = VectorSpace(R)(2)
+ *
+ * var v = new V([1, 2])
+ * ```
+ *
  * @param {Object} Scalar
- * @param {Number} dimension
+ *
+ * @return {Function} Dimension
  */
 
-function VectorSpace (Scalar, dimension) {
-  var self = this
+function VectorSpace (Scalar) {
 
-  var space = new Space(Scalar, [dimension])
+  /**
+   * Dimension
+   *
+   * @param {Number} dimension
+   *
+   * @return {Constructor} Vector
+   */
 
-  self.addition = space.addition
-  self.subtraction = space.subtraction
+  function Dimension (dimension) {
+    var Vector = Space(Scalar)([dimension])
 
-  function Vector (data) {
-    space.Element.call(this, data)
+    return Vector
   }
 
-  inherits(Vector, space.Element)
-
-  self.Vector = Vector
+  return Dimension
 }
-
-inherits(VectorSpace, Space)
 
 module.exports = VectorSpace
 

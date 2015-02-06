@@ -2,6 +2,8 @@
 title: Complex number
 ---
 
+The Complex field ℂ is isomorphic to the Real plane ℝ².
+
 ```js
 var algebra = require('algebra');
 
@@ -19,4 +21,5 @@ Arithmetic operators are defined
 z1.add(z2);
 console.log(z1.data); // [1, 5]
 ```
+
 

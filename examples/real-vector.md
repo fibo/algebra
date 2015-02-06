@@ -14,6 +14,8 @@ Create a vector space over Real numbers with dimension 2
 
 ```
 var R2 = new V(R, 2)
+// var R2 = V(R)(2)
+var vector1 = new R2([1, 2])
 ```
 
 Create few vectors

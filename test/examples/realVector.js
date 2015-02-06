@@ -1,26 +1,26 @@
 
-var algebra = require('algebra')
-  , should  = require('should')
+var algebra = require('algebra'),
+    should  = require('should')
 
-var V = algebra.VectorSpace
-  , R = algebra.Real
+var V = algebra.VectorSpace,
+    R = algebra.Real
 
 describe('Real vector example', function () {
-  var R2
-    , vector1
-    , vector2
-    , vector3
-    , vector4
+  var R2,
+      vector1,
+      vector2,
+      vector3,
+      vector4
 
   it('creates a vector space over R, with dim = 2', function () {
-    R2 = new V(R, 2)
+    R2 = V(R)(2)
   })
 
   it('creates few vectors', function () {
-    vector1 = new R2.Vector([1, 2])
-    vector2 = new R2.Vector([-1, 1])
-    vector3 = new R2.Vector([0, 1])
-    vector4 = new R2.Vector([2, 0])
+    vector1 = new R2([1, 2])
+    vector2 = new R2([-1, 1])
+    vector3 = new R2([0, 1])
+    vector4 = new R2([2, 0])
   })
 
   it('creates vector1 and adds it to itself', function () {

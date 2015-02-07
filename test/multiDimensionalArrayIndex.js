@@ -3,8 +3,8 @@ var should = require('should')
 
 var multiDimensionalArrayIndex = require('../src/multiDimensionalArrayIndex')
 
-var dimensions
-  , indices
+var dimensions,
+    indices
 
 describe('multiDimensionalArrayIndex', function () {
   it('works for 1-dim arrays', function () {

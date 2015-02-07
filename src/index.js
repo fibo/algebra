@@ -6,7 +6,7 @@ require('strict-mode')(function () {
   exports.Field       = require('./Field')
   exports.Space       = require('./Space')
   exports.VectorSpace = require('./VectorSpace')
-//  exports.MatrixSpace = require('./MatrixSpace')
+  exports.MatrixSpace = require('./MatrixSpace')
 //  exports.TensorSpace = require('./TensorSpace')
 
   exports.Real    = require('./Real')

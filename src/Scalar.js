@@ -4,15 +4,22 @@ var inherits = require('inherits')
 var buildFieldOperators = require('./buildFieldOperators'),
     Element             = require('./Element')
 
-var fieldOperator
+var fieldOperator,
+    one,
+    zero
 
 function Scalar (field, data) {
   fieldOperator = buildFieldOperators(field)
+  one  = field.one
+  zero = field.zero
 
   Element.call(this, data, field.operator.contains)
 }
 
 inherits(Scalar, Element)
+
+Scalar.one  = one
+Scalar.zero = zero
 
 function scalarAddition () {
   var fieldAddition = fieldOperator.addition

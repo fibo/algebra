@@ -5,26 +5,41 @@ var algebra = require('..')
 var VectorSpace = algebra.VectorSpace
   , Real = algebra.Real
 
-var R2 = new VectorSpace(Real, 2)
 
 describe('VectorSpace', function () {
-  describe('constructor', function () {
-    it('has signature (Field, dimension)', function () {
-      R2.should.be.instanceOf(VectorSpace)
-    })
+  var R2 = VectorSpace(Real)(2)
+
+  it('has signature (Scalar)(dimension)', function () {
+    R2.dimension = 2
   })
 
-  describe('addition()', function () {
-    it('implements static addition operator', function () {
+  describe('static', function () {
+    it('addition', function () {
       var data = R2.addition([0, 2], [-1, 3])
 
       data.should.eql([-1, 5])
     })
   })
 
-  describe('Vector', function () {/*
-    var R2 = new VectorSpace(Real, 2)
-    var vector = R2.Vector([0, 1])
-  */})
+  describe('Vector', function () {
+    var vector1 = new R2([0, 1]),
+        vector2 = new R2([1, 1])
+
+    it('norm', function () {
+      vector1.norm.data.should.be.eql(1)
+      vector2.norm.data.should.be.eql(2)
+    })
+
+    it('addition()', function () {
+      vector1.addition(vector2)
+      vector1.data.should.be.eql([1, 2])
+    })
+
+    it('subtraction()', function () {
+      vector2.subtraction(vector1)
+      vector2.data.should.be.eql([0, -1])
+    })
+
+  })
 })
 

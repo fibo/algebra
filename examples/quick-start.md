@@ -38,13 +38,13 @@ var V = algebra.VectorSpace;
 var R = algebra.Real;
 
 // Create a real vector space with dimension = 2, a.k.a. the cartesian plane
-var R2 = new V(R, 2);
+var R2 = V(R)(2);
 
 // Create two vectors
 // v1 = (1, 1)
 // v2 = (2, 4)
-var v1 = new R2.Vector([1, 1]);
-var v2 = new R2.Vector([2, 4]);
+var v1 = new R2([1, 1]);
+var v2 = new R2([2, 4]);
 
 // Add v2 to v1
 v1.add(v2); // (1, 1) + (2, 4) = (3, 5)
@@ -63,22 +63,24 @@ var M = algebra.MatrixSpace;
 var R = algebra.Real;
 
 // Create the space of 2x2 real matrices
-var R2x2 = new M(R, 2);
+var R2x2 = M(R)(2);
 
-// Create two invertible matrices:
+// Create two new invertible matrices:
 //
 //       | 1 2 |         | -1 0 |
 //       | 3 4 |   and   |  0 1 |
 //
-var m1 = new R2x2.Matrix([1, 2,
-                          3, 4]);
+var m1 = new R2x2([1, 2,
+                   3, 4]);
 
-var m2 = new R2x2.Matrix([-1, 0,
-                           0, 1]);
+var m2 = new R2x2([-1, 0,
+                    0, 1]);
 
 // Multiply m1 by m2 at right side
+//
 //       | 1 2 | * | -1 0 | = | -1 2 |
 //       | 3 4 |   |  0 1 |   | -3 4 |
+//
 m1.mul(m2);
 
 console.log(m1.data); // [-1, 2, -3, 4]

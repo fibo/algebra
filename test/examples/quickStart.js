@@ -22,10 +22,10 @@ describe('Quick start', function () {
     var R = algebra.Real
     var V = algebra.VectorSpace
 
-    var R2 = new V(R, 2)
+    var R2 = V(R)(2)
 
-    var v1 = new R2.Vector([1, 1])
-    var v2 = new R2.Vector([2, 4])
+    var v1 = new R2([1, 1])
+    var v2 = new R2([2, 4])
 
     v1.add(v2)
 
@@ -36,13 +36,13 @@ describe('Quick start', function () {
     var M = algebra.MatrixSpace
     var R = algebra.Real
 
-    var M2 = new M(R, 2)
+    var M2 = M(R)(2)
 
-    var m1 = new M2.Matrix([1, 2,
-                            3, 4])
+    var m1 = new M2([1, 2,
+                     3, 4])
 
-    var m2 = new M2.Matrix([-1, 0,
-                             0, 1])
+    var m2 = new M2([-1, 0,
+                      0, 1])
 
     m1.mul(m2)
 
@@ -52,4 +52,3 @@ describe('Quick start', function () {
     m1.determinant.data.should.eql(2)
   })
 })
-

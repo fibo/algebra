@@ -1,9 +1,9 @@
 
 var inherits = require('inherits')
 
-var arrayFrom = require('./arrayFrom')
-  , AbstractElement = require('./Element')
-  , toData = require('./toData')
+var arrayFrom       = require('./arrayFrom'),
+    AbstractElement = require('./Element'),
+    toData          = require('./toData')
 
 function getResult (dimension, operator, dataArg) {
   var result = dataArg[0]
@@ -30,25 +30,30 @@ function getResult (dimension, operator, dataArg) {
 
 function Space (Scalar) {
 
-
   // TODO function Dimension (indices, coindices)
   function Dimension (indices) {
 
     var dimension = indices.reduce(function (a, b) { return a * b }, 1)
 
+    /*
+     *
+     */
+
     function spaceAddition () {
       return getResult(dimension, Scalar.addition, arrayFrom(arguments).map(toData))
     }
 
-   // Space.prototype.addition = spaceAddition
-   // Space.prototype.add = spaceAddition
+    /*
+     *
+     */
 
     function spaceSubtraction () {
       return getResult(dimension, Scalar.subtraction, arrayFrom(arguments).map(toData))
     }
 
-    // Space.prototype.subtraction = spaceSubtraction
-    // Space.prototype.sub         = spaceSubtraction
+    /*
+     *
+     */
 
     function spaceScalarMultiplication (data, scalar) {
       var result = []
@@ -64,6 +69,26 @@ function Space (Scalar) {
 
       return result
     }
+
+    /*
+     *
+     */
+
+    function spaceScalarProduct () {
+      var dataMul = getResult(dimension, Scalar.multiplication, arrayFrom(arguments).map(toData))
+
+      var result = dataMul[0]
+
+      for (var i=1; i<dimension; i++) {
+        result = Scalar.addition(result, dataMul[i])
+      }
+
+      return result
+    }
+
+    /*
+     *
+     */
 
     function contains (data) {
       return data.map(Scalar.contains).length === dimension
@@ -143,6 +168,13 @@ function Space (Scalar) {
     Element.dimension = dimension
     Element.indices   = indices
     Element.Scalar    = Scalar
+
+    // Static functions.
+    Element.addition = spaceAddition
+    Element.add      = spaceAddition
+
+    Element.subtraction = spaceSubtraction
+    Element.sub         = spaceSubtraction
 
     return Element
   }

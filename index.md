@@ -16,6 +16,12 @@ With [npm](https://npmjs.org/) do
 $ npm install algebra
 ```
 
+With [bower](http://bower.io/) do
+
+```bash
+$ bower install algebra
+```
+
 ## Description
 
 I'm implementing matrices and vectors on few algebra fields (Reals, Complexes etc.) following Micheal Artin's "Algebra", which was my book at [Università Degli Studi di Genova](http://www.dima.unige.it).

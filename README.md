@@ -6,6 +6,10 @@
 
 For more information point your browser to [algebra Homepage](//g14n.info/algebra).
 
+## Status
+
+*algebra* is under development. Api can change until version **1.0** but not without a good reason.
+
 ## Synopsis
 
 ```
@@ -28,6 +32,12 @@ console.log(x.data); // 2 * (-1) = -2
 // Resulting x value will be 0.25: x -> x + 5 -> x * 2 -> x ^-1
 x.add(5).mul(2).inv();
 console.log(x.data); // ((-3 + 5) * 2)^(-1) = 0.25
+
+// Vectors, Matrices, Tensors
+var R2 = algebra.VectorSpace(R)(2);
+
+var v1 = new R2([0, 1]);
+var v2 = new R2([1, -4]);
 ```
 
 ##See also 

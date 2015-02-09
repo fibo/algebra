@@ -3,9 +3,10 @@
 
 ```
 
-var chars = ' 0123456789abcdefghijklmnopqrstuvwxyz'
+var algebra = require('algebra'),
+    should  = require('should')
 
-console.log(chars.length) // 37 which is prime
+var chars = '0123456789abcdefghijklmnopqrstuvwxyz '
 
 function isPrime(n) {
  if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
@@ -14,41 +15,42 @@ function isPrime(n) {
  return true;
 }
 
-function numOf(char) {
- if (char === '') return 0
-  return chars.indexOf(char)
+function numOf(char1) {
+  return chars.indexOf(char1)
 }
 
-function addition (str1, str2) {
-  var n = numOf(str1) + numOf(str2)
+function addition (char1, char2) {
+  var n = numOf(char1) + numOf(char2)
   n = n % chars.length
   return chars[n]
 }
 
-function subtraction (str1, str2) {
- var n = numOf(str1) - numOf(str2)
-  n = n % chars.length
-  return chars[n]
-}
-function contains (char) {
-  if (char === '') return true
-  return (typeof char === 'string') && (char.length === 1) && (chars.indexOf(char) > -1)
-}
-
-function multiplication (str1, str2) {
- var n = numOf(str1) * numOf(str2)
+function subtraction (char1, char2) {
+ var n = numOf(char1) - numOf(char2)
   n = n % chars.length
   return chars[n]
 }
 
-function inverse (char) {
+function contains (char1) {
+  return (typeof char1 === 'string') && (char1.length === 1) && (chars.indexOf(char1) > -1)
+}
+
+function multiplication (char1, char2) {
+ var n = numOf(char1) * numOf(char2)
+  n = n % chars.length
+  return chars[n]
+}
+
+function inversion (char1) {
   for (var i = 0; i < chars.length; i++)
-    if(chars[1] == multiplication(char, chars[i]))
+    if(chars[1] == multiplication(char1, chars[i]))
     return chars[i]
 }
 
-function division (str1, str2) {
-  return multiplication(str1, inverse(str2))
+function division (char1, char2) {
+  return multiplication(char1, inversion(char2))
 }
+
+
 
 ```

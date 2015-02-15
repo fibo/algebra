@@ -11,5 +11,7 @@ require('strict-mode')(function () {
 
   exports.Real    = require('./Real')
   exports.Complex = require('./Complex')
+
+  exports.buildCyclicSpaceOf = require('./buildCyclicSpaceOf')
 })
 

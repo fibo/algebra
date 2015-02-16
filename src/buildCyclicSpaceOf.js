@@ -5,9 +5,6 @@ var addStaticOperators  = require('./addStaticOperators'),
     buildFieldOperators = require('./buildFieldOperators'),
     Scalar              = require('./Scalar')
 
-
-//var elements = '0123456789abcdefghijklmnopqrstuvwxyz '
-
 function isPrime (n) {
   if (n === 1) return false
   if (n === 2) return true
@@ -21,9 +18,29 @@ function isPrime (n) {
   return true
 }
 
+function unique (elements) {
+  for (var i = 0; i < elements.length - 1; i++)
+    for (var j = i + 1; j < elements.length; j++)
+      if (elements[i] === elements[j])
+        return false
+
+  return true
+}
+
+/**
+ * Construct a space isomorphic to Zp: the cyclic group of order p, where p is prime.
+ *
+ * @param {Array|String} elements
+ *
+ * @return {Object} Cyclic
+ */
+
 function buildCyclicSpaceOf (elements) {
   if ((typeof elements.length !== 'number') || (! isPrime(elements.length)))
     throw new TypeError("elements length must be prime")
+
+  if ((! unique(elements)))
+    throw new TypeError("elements must be unique")
 
   var zero = elements[0],
       one  = elements[1]
@@ -34,14 +51,6 @@ function buildCyclicSpaceOf (elements) {
 
   function addition (element1, element2) {
     var n = numOf(element1) + numOf(element2)
-
-    n = n % elements.length
-
-    return elements[n]
-  }
-
-  function subtraction (element1, element2) {
-    var n = numOf(element1) - numOf(element2)
 
     n = n % elements.length
 
@@ -72,7 +81,14 @@ function buildCyclicSpaceOf (elements) {
   }
 
   function negation (element) {
-    return subtraction(zero, element)
+    var n = numOf(element)
+
+    if (n === 0)
+      return element
+
+    n = elements.length - n
+
+    return elements[n]
   }
 
   function equal (element1, element2) {

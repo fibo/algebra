@@ -1,13 +1,13 @@
 
-var algebra = require('..')
-  , should = require('should')
+var algebra = require('..'),
+    should  = require('should')
 
 var R = algebra.Real
 
-var mutatorBinaryOperator = require('./features/mutatorBinaryOperator')
-  , mutatorUnaryOperator = require('./features/mutatorUnaryOperator')
-  , staticBinaryOperator = require('./features/staticBinaryOperator')
-  , staticUnaryOperator = require('./features/staticUnaryOperator')
+var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
+    mutatorUnaryOperator  = require('./features/mutatorUnaryOperator'),
+    staticBinaryOperator  = require('./features/staticBinaryOperator'),
+    staticUnaryOperator   = require('./features/staticUnaryOperator')
 
 describe('Real', function () {
   var operator

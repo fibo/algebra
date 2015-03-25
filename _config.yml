@@ -4,36 +4,19 @@ name: algebra
 encoding: utf-8
 
 author: Gianluca Casati
-description: My digital copybook
+description: Vectors, Matrices, Tensors
+
+source: gh-pages
 
 permalink: ./:year/:month/:title
-
-exclude: 
-  - Gemfile
-  - README.md
-  - _projects/_repos
-  - _projects/README.md
-  - _projects/**/*.yaml
 
 markdown: kramdown
 kramdown:
   input: GFM
 
-collections:
-  projects:
-    output: true
-    permalink: ./:path.html
-
 # Defaults
 
 defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      author: Gianluca Casati
-      layout: post
   -
     scope:
       path: ""
@@ -62,3 +45,4 @@ repo: https://github.com/fibo/fibo.github.io/
 
 disqus:
   shortname: g14n
+

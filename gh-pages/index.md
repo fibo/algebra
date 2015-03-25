@@ -60,3 +60,4 @@ Other examples:
   * [Real vector](//g14n.info/algebra/examples/real-vector)
   * [Complex number](//g14n.info/algebra/examples/complex-number)
   * [Custom field](//g14n.info/algebra/examples/custom-field)
+

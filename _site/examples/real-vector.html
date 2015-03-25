@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="description" content="Vectors, Matrices, Tensors">
+  <meta name="author" content="Gianluca Casati">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+  <title>Real vector</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="//g14n.info/algebra">algebra</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li ><a href="//g14n.info/algebra">Home</a></li>
+          <!--li ><a href="//g14n.info/algebra/api">Api</a></li>
+          <li ><a href="//g14n.info/algebra/examples">Examples</a></li-->
+          <li><a href="https://github.com/fibo/algebra">GitHub</a></li>
+          <li><a href="https://www.npmjs.com/package/algebra">npm</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header class="page-header">
+      <h1> Real vector  </h1>
+
+      <!--p class="lead"></p-->
+
+      <time datetime="" class="badge"></time>
+    </header>
+
+<pre><code>var algebra = require('algebra')
+  , should  = require('should')
+
+var V = algebra.VectorSpace
+  , R = algebra.Real
+</code></pre>
+
+<p>Create a vector space over Real numbers with dimension 2</p>
+
+<pre><code>var R2 = new V(R, 2)
+// var R2 = V(R)(2)
+var vector1 = new R2([1, 2])
+</code></pre>
+
+<p>Create few vectors</p>
+
+<pre><code>var vector1 = new R2.Vector([1, 2])
+var vector2 = new R2.Vector([-1, 1])
+var vector3 = new R2.Vector([0, 1])
+var vector4 = new R2.Vector([2, 0])
+</code></pre>
+
+<p>create vector1 and add it to itself</p>
+
+<pre><code>vector1.addition(vector1)
+console.log(vector1.data) // [2, 4]
+</code></pre>
+
+<p>add vector2 to vector1</p>
+
+<pre><code>vector1.addition(vector2)
+console.log(vector1.data) // [1, 5]
+</code></pre>
+
+<p>addition accepts raw data</p>
+
+<pre><code>vector1.addition([1, 1])
+console.log(vector1.data) // [2, 6]
+</code></pre>
+
+<p>addition is chainable</p>
+
+<pre><code>vector1.addition(vector2).addition(vector3)
+console.log(vector1.data) // [1, 8]
+</code></pre>
+
+<p>addition accepts more than one argument</p>
+
+<pre><code>vector1.addition(vector2, vector3, vector4)
+console.log(vector1.data) // [2, 10]
+</code></pre>
+
+
+  </div>
+
+    
+<footer id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 text-center">
+        <p>Copyright © <a href="/about-me" rel="author">Gianluca Casati</a> 2014</p>
+    </div>
+  </div>
+</footer>
+
+
+
+<!-- JQuery -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Bootstrap compiled plugins -->
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+
+<!-- Google Analytics -->
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12635045-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+</body>
+</html>

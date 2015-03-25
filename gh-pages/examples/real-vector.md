@@ -3,11 +3,11 @@ title: Real vector
 ---
 
 ```
-var algebra = require('algebra')
-  , should  = require('should')
+var algebra = require('algebra'),
+    should  = require('should')
 
-var V = algebra.VectorSpace
-  , R = algebra.Real
+var V = algebra.VectorSpace,
+    R = algebra.Real
 ```
 
 Create a vector space over Real numbers with dimension 2

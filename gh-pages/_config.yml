@@ -6,9 +6,6 @@ encoding: utf-8
 author: Gianluca Casati
 description: Vectors, Matrices, Tensors
 
-source: gh-pages
-destination: gh-pages/_site
-
 permalink: ./:year/:month/:title
 
 markdown: kramdown

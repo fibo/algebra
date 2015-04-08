@@ -22,7 +22,10 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    "gh-pages",
+    "npm-debug.log",
     "test",
-    "tests"
+    "src",
+    "index.js"
   ]
 }

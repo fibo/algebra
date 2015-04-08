@@ -9,9 +9,10 @@
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
-  	"gh-pages": "jekyll build && git commit -a && git subtree --prefix gh-pages/_site push origin gh-pages",
+    "gh-pages": "jekyll build && git commit -a && git subtree --prefix gh-pages/_site push origin gh-pages",
     "test": "mocha --recursive --bail --require should --reporter min",
-    "build": "browserify -s algebra -e index.js -o dist/algebra.js"
+    "build": "browserify -s $npm_package_name -e index.js -o dist/${npm_package_name}.js",
+    "jshint": "jshint -c .jshintrc src/*.js"
   },
   "repository": {
     "type": "git",

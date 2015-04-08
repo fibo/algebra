@@ -11,8 +11,8 @@ function isPrime (n) {
 
   var m = Math.sqrt(n)
 
-  for (var i=2; i<=m; i++)
-    if (n%i==0)
+  for (var i = 2; i <= m; i++)
+    if (n % i === 0)
       return false
 
   return true

@@ -9,7 +9,9 @@
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
-    "gh-pages": "jekyll build && git commit -a && git subtree --prefix gh-pages/_site push origin gh-pages",
+    "homepage": "echo -e \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; cat README.md >> gh-pages/index.md",
+    "gh-pages": "npm run jekyll; git commit -a && git subtree --prefix gh-pages/_site push origin gh-pages",
+    "jekyll": "npm run homepage; jekyll build",
     "test": "mocha --recursive --bail --require should --reporter min",
     "build": "browserify -s $npm_package_name -e index.js -o dist/${npm_package_name}.js",
     "jshint": "jshint -c .jshintrc src/*.js"
@@ -33,6 +35,7 @@
   ],
   "devDependencies": {
     "browserify": "^8.1.3",
+    "jshint": "^2.6.3",
     "mocha": "~1.20.1",
     "should": "~4.0.4"
   },

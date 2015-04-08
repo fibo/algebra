@@ -1,0 +1,41 @@
+
+domain: g14n.info
+name: algebra
+encoding: utf-8
+
+author: Gianluca Casati
+description: Vectors, Matrices, Tensors
+
+permalink: ./:year/:month/:title
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Defaults
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: algebra
+
+# Custom vars
+
+bootstrap:
+  base_url: https://maxcdn.bootstrapcdn.com/bootstrap
+  version: 3.2.0
+
+jquery:
+  base_url: https://ajax.googleapis.com/ajax/libs/jquery
+  version: 1.11.1
+
+mathjax:
+  base_url: https://cdn.mathjax.org/mathjax
+  version: latest
+
+google-analytics:
+  id: UA-12635045-12
+

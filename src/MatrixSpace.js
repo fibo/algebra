@@ -126,17 +126,32 @@ function MatrixSpace (Scalar) {
       var rightData    = toData(right),
           rightIndices = getIndices(right)
 
-      var rightIsSquare = rightIndices[0] === rightIndices[1]
+      var rightIsMatrix = rightIndices.length === 2,
+          rightIsVector = rightIndices.length === 1
+
+      // TODO rightIsScalar and use scalarMultiplication
+
+      var rightIsSquare = rightIsMatrix && (rightIndices[0] === rightIndices[1])
+
+      if (rightIsVector)
+        rightIndices.push(1)
 
       var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)
 
-      if (isSquare && rightIsSquare) {
+      // Right multiply by a square matris is an inner product, so the method
+      // is a mutator and can be chained.
+      if (rightIsSquare) {
         this.data = data
+
         return this
       }
-      else {
-        // TODO return new this(Scalar)(numRows, numCols)(data)
+
+      if (rightIsVector) {
+        var Vector = VectorSpace(Scalar)(numRows)
+
+        return new Vector(data)
       }
+        // TODO if rightIsMatrix return new this(Scalar)(numRows, numCols)(data)
     }
 
     Matrix.prototype.rightMultiplication = rightMultiplication

@@ -25,8 +25,7 @@ describe('Synopsis', function () {
 
     v1.add(v2)
 
-    v1.data.should.eql([1,
-                       -1])
+    v1.data.should.eql([1, -1])
 
     var R3x2 = algebra.MatrixSpace(R)(3, 2)
 
@@ -34,9 +33,22 @@ describe('Synopsis', function () {
                        0, 1,
                        1, 0])
 
-    var v2 = m1.mul(v1)
+    var v3 = m1.mul(v1)
 
-    console.log(v2.data)
-    //v2.data.should.deepEqual([0, -1, 1])
+    should.deepEqual(v3.data, [0, -1, 1])
+
+    var R2x2 = algebra.MatrixSpace(R)(2, 2)
+
+    var m2 = new R2x2([1, 0,
+                       0, 2]),
+        m3 = new R2x2([0, -1,
+                       1, 0])
+
+    m2.mul(m3)
+
+    should.deepEqual(m2.data, [0, -1, 2,  0])
+
+// Since m2 is a square matrix we can calculate its determinant.
+//console.log(m2.determinant.data); // -2
   })
 })

@@ -4,7 +4,7 @@
 
 [![NPM version](https://badge.fury.io/js/algebra.png)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.png?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.png)](https://gemnasium.com/fibo/algebra)
 
-For more information point your browser to [algebra Homepage](//g14n.info/algebra).
+For more information point your browser to [algebra Homepage](http://g14n.info/algebra).
 
 ## Status
 
@@ -104,13 +104,10 @@ console.log(m2.data); // [0, -1,
                       //  2,  0]
 
 // Since m2 is a square matrix we can calculate its determinant.
-console.log(m2.determinant.data); // -2
+console.log(m2.determinant.data); // 2
 ```
 
-## See also
-
-* [algebra quick start](//g14n.info/algebra/examples/quick-start)
-: A 60 sec
+See also [algebra quick start](http://g14n.info/algebra/examples/quick-start).
 
 ## Installation
 
@@ -122,5 +119,5 @@ $ npm install algebra
 
 ## License
 
-[MIT](//g14n.info/mit-licence)
+[MIT](http://g14n.info/mit-licence)
 

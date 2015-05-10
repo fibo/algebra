@@ -12,12 +12,12 @@ var adjointMatrix = require('./adjointMatrix')
  */
 
 function determinant (Scalar, data, order) {
-  var adjointData
-    , adjointDeterminant
-    , det
-    , startingCol
-    , startingRow
-    , index
+  var adjointData,
+      adjointDeterminant,
+      det,
+      startingCol,
+      startingRow,
+      index
 
   if (order === 2) {
     det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]), Scalar.multiplication(data[2], data[1]))

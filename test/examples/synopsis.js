@@ -37,7 +37,7 @@ describe('Synopsis', function () {
 
     should.deepEqual(v3.data, [0, -1, 1])
 
-    var R2x2 = algebra.MatrixSpace(R)(2, 2)
+    var R2x2 = algebra.MatrixSpace(R)(2)
 
     var m2 = new R2x2([1, 0,
                        0, 2]),
@@ -48,7 +48,6 @@ describe('Synopsis', function () {
 
     should.deepEqual(m2.data, [0, -1, 2,  0])
 
-// Since m2 is a square matrix we can calculate its determinant.
-//console.log(m2.determinant.data); // -2
+    m2.determinant.data.should.be.eql(2)
   })
 })

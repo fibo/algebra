@@ -5,7 +5,7 @@
     "name": "fibo",
     "url": "http://g14n.info"
   },
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {

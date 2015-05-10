@@ -61,7 +61,7 @@ function MatrixSpace (Scalar) {
 
       if (isSquare) {
         Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
-        Object.defineProperty(this, 'det',         {get: matrixDeterminant})
+        Object.defineProperty(this, 'det', {get: matrixDeterminant})
       }
     }
 
@@ -75,22 +75,6 @@ function MatrixSpace (Scalar) {
     /*
      *
      */
-
-    function spaceMultiplication (left, right) {
-      var leftData     = toData(left),
-          leftIndices  = getIndices(left),
-          rightData    = toData(right),
-          rightIndices = getIndices(right)
-
-      // TODO var rank = Math.max(leftIndices.length, rightIndices.length)
-      var rank = 2
-
-      // Fill indices to have the same signature
-      for (var i = 0; i < rank - rightIndices.length; i++)
-        rightIndices.push(1)
-
-      return rowByColumnMultiplication(Scalar, leftData, leftIndices, rightData, rightIndices)
-    }
 
     /*
      *
@@ -138,8 +122,8 @@ function MatrixSpace (Scalar) {
 
       var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)
 
-      // Right multiply by a square matris is an inner product, so the method
-      // is a mutator and can be chained.
+      // Left multiplication by a square matrix is an inner product,
+      // so the method is a mutator.
       if (rightIsSquare) {
         this.data = data
 
@@ -164,9 +148,32 @@ function MatrixSpace (Scalar) {
      */
 
     function leftMultiplication (leftMatrix) {
-      this.data = spaceMultiplication(leftMatrix, this)
+      var leftData    = toData(left),
+          leftIndices = getIndices(left)
 
-      return this
+      var leftIsMatrix = leftIndices.length === 2,
+          leftIsVector = leftIndices.length === 1
+
+      var leftIsSquare = leftIsMatrix && (leftIndices[0] === leftIndices[1])
+
+      if (leftIsVector)
+        leftIndices.push(1)
+
+      var data = rowByColumnMultiplication(Scalar, leftData, leftIndices, this.data, this.indices)
+
+      // Left multiplication by a square matrix is an inner product,
+      // so the method is a mutator.
+      if (leftIsSquare) {
+        this.data = data
+
+        return this
+      }
+
+      if (leftIsVector) {
+        var Vector = VectorSpace(Scalar)(numCols)
+
+        return new Vector(data)
+      }
     }
 
     Matrix.prototype.leftMultiplication = leftMultiplication

@@ -1,11 +1,6 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.algebra=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algebra = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
-module.exports = require('./src')
-
-
-},{"./src":20}],2:[function(require,module,exports){
-
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -30,17 +25,17 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 
 module.exports = require('./src/index')
 
 
-},{"./src/index":5}],5:[function(require,module,exports){
+},{"./src/index":4}],4:[function(require,module,exports){
 
 module.exports = require('./strictMode')
 
 
-},{"./strictMode":6}],6:[function(require,module,exports){
+},{"./strictMode":5}],5:[function(require,module,exports){
 
 // The module api is in *Locked* state, so it will not change
 // see http://nodejs.org/api/modules.html
@@ -90,7 +85,7 @@ function exportsWrapper (callback) {
 module.exports = exportsWrapper
 
 
-},{"module":2}],7:[function(require,module,exports){
+},{"module":1}],6:[function(require,module,exports){
 
 var inherits = require('inherits')
 
@@ -184,7 +179,7 @@ Complex.conj        = fieldConjugation
 module.exports = Complex
 
 
-},{"./Scalar":12,"./addStaticOperators":15,"./buildFieldOperators":18,"inherits":3}],8:[function(require,module,exports){
+},{"./Scalar":11,"./addStaticOperators":14,"./buildFieldOperators":18,"inherits":2}],7:[function(require,module,exports){
 
 /**
  * Abstract element
@@ -200,16 +195,17 @@ function Element (data, check) {
     else
       throw new TypeError(data)
 }
-  
+
 function valueOf () {
   return this.data
 }
+
 Element.prototype.valueOf = valueOf
 
 module.exports = Element
 
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 
 var inherits = require('inherits')
 
@@ -411,14 +407,16 @@ function Field (zero, one, operators) {
 module.exports = Field
 
 
-},{"./Element":8,"./arrayFrom":17,"./toData":24,"inherits":3}],10:[function(require,module,exports){
+},{"./Element":7,"./arrayFrom":16,"./toData":25,"inherits":2}],9:[function(require,module,exports){
 
 var inherits = require('inherits')
 
 var determinant               = require('./determinant'),
+    getIndices                = require('./getIndices'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     Space                     = require('./Space'),
-    toData                    = require('./toData')
+    toData                    = require('./toData'),
+    VectorSpace               = require('./VectorSpace')
 
 /**
  * Space of m x n matrices
@@ -454,6 +452,10 @@ function MatrixSpace (Scalar) {
 
     var Element = Space(Scalar)(indices)
 
+      /*
+       *
+       */
+
     function Matrix () {
       Element.apply(this, arguments)
 
@@ -469,7 +471,7 @@ function MatrixSpace (Scalar) {
 
       if (isSquare) {
         Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
-        Object.defineProperty(this, 'det',         {get: matrixDeterminant})
+        Object.defineProperty(this, 'det', {get: matrixDeterminant})
       }
     }
 
@@ -484,17 +486,10 @@ function MatrixSpace (Scalar) {
      *
      */
 
-    function spaceMultiplication (leftMatrix, rightMatrix) {
-      var left  = toData(leftMatrix),
-          right = toData(rightMatrix)
-
-      return rowByColumnMultiplication(Scalar, left, indices, right, indices)
-    }
-
     /*
      *
-
      */
+
     function matrixAddition (matrix) {
       this.data = space.addition(this.data, matrix)
 
@@ -521,10 +516,36 @@ function MatrixSpace (Scalar) {
      *
      */
 
-    function rightMultiplication (rightMatrix) {
-      this.data = spaceMultiplication(this.data, rightMatrix)
+    function rightMultiplication (right) {
+      var rightData    = toData(right),
+          rightIndices = getIndices(right)
 
-      return this
+      var rightIsMatrix = rightIndices.length === 2,
+          rightIsVector = rightIndices.length === 1
+
+      // TODO rightIsScalar and use scalarMultiplication
+
+      var rightIsSquare = rightIsMatrix && (rightIndices[0] === rightIndices[1])
+
+      if (rightIsVector)
+        rightIndices.push(1)
+
+      var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)
+
+      // Left multiplication by a square matrix is an inner product,
+      // so the method is a mutator.
+      if (rightIsSquare) {
+        this.data = data
+
+        return this
+      }
+
+      if (rightIsVector) {
+        var Vector = VectorSpace(Scalar)(numRows)
+
+        return new Vector(data)
+      }
+        // TODO if rightIsMatrix return new this(Scalar)(numRows, numCols)(data)
     }
 
     Matrix.prototype.rightMultiplication = rightMultiplication
@@ -537,9 +558,32 @@ function MatrixSpace (Scalar) {
      */
 
     function leftMultiplication (leftMatrix) {
-      this.data = spaceMultiplication(leftMatrix, this.data)
+      var leftData    = toData(left),
+          leftIndices = getIndices(left)
 
-      return this
+      var leftIsMatrix = leftIndices.length === 2,
+          leftIsVector = leftIndices.length === 1
+
+      var leftIsSquare = leftIsMatrix && (leftIndices[0] === leftIndices[1])
+
+      if (leftIsVector)
+        leftIndices.push(1)
+
+      var data = rowByColumnMultiplication(Scalar, leftData, leftIndices, this.data, this.indices)
+
+      // Left multiplication by a square matrix is an inner product,
+      // so the method is a mutator.
+      if (leftIsSquare) {
+        this.data = data
+
+        return this
+      }
+
+      if (leftIsVector) {
+        var Vector = VectorSpace(Scalar)(numCols)
+
+        return new Vector(data)
+      }
     }
 
     Matrix.prototype.leftMultiplication = leftMultiplication
@@ -553,7 +597,8 @@ function MatrixSpace (Scalar) {
 
 module.exports = MatrixSpace
 
-},{"./Space":13,"./determinant":19,"./rowByColumnMultiplication.js":23,"./toData":24,"inherits":3}],11:[function(require,module,exports){
+
+},{"./Space":12,"./VectorSpace":13,"./determinant":19,"./getIndices":20,"./rowByColumnMultiplication.js":24,"./toData":25,"inherits":2}],10:[function(require,module,exports){
 
 var inherits = require('inherits')
 
@@ -606,7 +651,7 @@ addStaticOperators(Real, buildFieldOperators(field))
 module.exports = Real
 
 
-},{"./Scalar":12,"./addStaticOperators":15,"./buildFieldOperators":18,"inherits":3}],12:[function(require,module,exports){
+},{"./Scalar":11,"./addStaticOperators":14,"./buildFieldOperators":18,"inherits":2}],11:[function(require,module,exports){
 
 var inherits = require('inherits')
 
@@ -707,7 +752,7 @@ Scalar.prototype.neg      = scalarNegation
 
 module.exports = Scalar
 
-},{"./Element":8,"./buildFieldOperators":18,"inherits":3}],13:[function(require,module,exports){
+},{"./Element":7,"./buildFieldOperators":18,"inherits":2}],12:[function(require,module,exports){
 
 var inherits = require('inherits')
 
@@ -816,6 +861,12 @@ function Space (Scalar) {
 
     function Element (data) {
       AbstractElement.call(this, data, contains)
+
+      Object.defineProperty(this, 'indices', {
+        enumerable: false,
+        value: indices,
+        writable: false
+      })
     }
 
     inherits(Element, AbstractElement)
@@ -898,7 +949,7 @@ function Space (Scalar) {
 module.exports = Space
 
 
-},{"./Element":8,"./arrayFrom":17,"./toData":24,"inherits":3}],14:[function(require,module,exports){
+},{"./Element":7,"./arrayFrom":16,"./toData":25,"inherits":2}],13:[function(require,module,exports){
 
 var inherits = require('inherits')
 
@@ -976,7 +1027,7 @@ function VectorSpace (Scalar) {
 module.exports = VectorSpace
 
 
-},{"./Space":13,"inherits":3}],15:[function(require,module,exports){
+},{"./Space":12,"inherits":2}],14:[function(require,module,exports){
 
 /**
  * Add field operators to Scalar as static methods
@@ -1013,7 +1064,7 @@ function addStaticOperators (Scalar, field) {
 module.exports = addStaticOperators
 
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 var matrixToArrayIndex = require('./matrixToArrayIndex')
 
@@ -1048,7 +1099,7 @@ function adjointMatrix (data, numRows, numCols, row, col) {
 module.exports = adjointMatrix
 
 
-},{"./matrixToArrayIndex":21}],17:[function(require,module,exports){
+},{"./matrixToArrayIndex":22}],16:[function(require,module,exports){
 
 /**
  * Convert arguments to array
@@ -1077,7 +1128,138 @@ function arrayFrom () {
 module.exports = arrayFrom
 
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
+
+var inherits = require('inherits')
+
+var addStaticOperators  = require('./addStaticOperators'),
+    buildFieldOperators = require('./buildFieldOperators'),
+    Scalar              = require('./Scalar')
+
+function isPrime (n) {
+  if (n === 1) return false
+  if (n === 2) return true
+
+  var m = Math.sqrt(n)
+
+  for (var i = 2; i <= m; i++)
+    if (n % i === 0)
+      return false
+
+  return true
+}
+
+function unique (elements) {
+  for (var i = 0; i < elements.length - 1; i++)
+    for (var j = i + 1; j < elements.length; j++)
+      if (elements[i] === elements[j])
+        return false
+
+  return true
+}
+
+/**
+ * Construct a space isomorphic to Zp: the cyclic group of order p, where p is prime.
+ *
+ * @param {Array|String} elements
+ *
+ * @return {Object} Cyclic
+ */
+
+function buildCyclicSpaceOf (elements) {
+  if ((typeof elements.length !== 'number') || (! isPrime(elements.length)))
+    throw new TypeError("elements length must be prime")
+
+  if ((! unique(elements)))
+    throw new TypeError("elements must be unique")
+
+  var zero = elements[0],
+      one  = elements[1]
+
+  function numOf (element) {
+    return elements.indexOf(element)
+  }
+
+  function addition (element1, element2) {
+    var n = numOf(element1) + numOf(element2)
+
+    n = n % elements.length
+
+    return elements[n]
+  }
+
+  function contains (element) {
+    return elements.indexOf(element) > -1
+  }
+
+  function multiplication (element1, element2) {
+    var n = numOf(element1) * numOf(element2)
+
+    n = n % elements.length
+
+    return elements[n]
+  }
+
+  function inversion (element) {
+    for (var i = 0; i < elements.length; i++)
+      if(elements[1] == multiplication(element, elements[i]))
+
+    return elements[i]
+  }
+
+  function division (element1, element2) {
+    return multiplication(element1, inversion(element2))
+  }
+
+  function negation (element) {
+    var n = numOf(element)
+
+    if (n === 0)
+      return element
+
+    n = elements.length - n
+
+    return elements[n]
+  }
+
+  function equal (element1, element2) {
+    return element1 === element2
+  }
+
+  var operators = {
+    addition      : addition,
+    multiplication: multiplication,
+    negation      : negation,
+    inversion     : inversion,
+    equal         : equal,
+    contains      : contains
+  }
+
+  var field = {
+    one     : one,
+    zero    : zero,
+    operator: operators
+  }
+
+  /**
+   * Cyclic element.
+   */
+
+  function Cyclic (data) {
+    Scalar.call(this, field, data)
+  }
+
+  inherits(Cyclic, Scalar)
+
+  addStaticOperators(Cyclic, buildFieldOperators(field))
+
+  return Cyclic
+}
+
+module.exports = buildCyclicSpaceOf
+
+
+},{"./Scalar":11,"./addStaticOperators":14,"./buildFieldOperators":18,"inherits":2}],18:[function(require,module,exports){
 
 var arrayFrom = require('./arrayFrom'),
     toData    = require('./toData')
@@ -1163,7 +1345,7 @@ function buildFieldOperators (field) {
 module.exports = buildFieldOperators
 
 
-},{"./arrayFrom":17,"./toData":24}],19:[function(require,module,exports){
+},{"./arrayFrom":16,"./toData":25}],19:[function(require,module,exports){
 
 var adjointMatrix = require('./adjointMatrix')
   , matrixToArrayIndex = require('./matrixToArrayIndex')
@@ -1178,12 +1360,12 @@ var adjointMatrix = require('./adjointMatrix')
  */
 
 function determinant (Scalar, data, order) {
-  var adjointData
-    , adjointDeterminant
-    , det
-    , startingCol
-    , startingRow
-    , index
+  var adjointData,
+      adjointDeterminant,
+      det,
+      startingCol,
+      startingRow,
+      index
 
   if (order === 2) {
     det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]), Scalar.multiplication(data[2], data[1]))
@@ -1219,7 +1401,47 @@ function determinant (Scalar, data, order) {
 module.exports = determinant
 
 
-},{"./adjointMatrix":16,"./matrixToArrayIndex":21}],20:[function(require,module,exports){
+},{"./adjointMatrix":15,"./matrixToArrayIndex":22}],20:[function(require,module,exports){
+
+var toData = require('./toData')
+
+/**
+  *
+  *
+  * @param {Array|Any} arg
+  *
+  * @return {Array} indices
+  */
+
+function getIndices (arg) {
+  var indices
+
+  if (typeof arg.indices === 'undefined') {
+// TODO
+//   var data = toData(arg)
+//
+//   if (typeof data === 'array') {
+//     // TODO recursion into data if it is a multidimensional array
+//     indices = [data.length]
+//   }
+//   else {
+//     indices = [1]
+//   }
+  }
+  else {
+    indices = arg.indices
+  }
+
+  if (typeof indices === 'undefined')
+    throw new TypeError('No indices')
+
+  return indices
+}
+
+module.exports = getIndices
+
+
+},{"./toData":25}],21:[function(require,module,exports){
 
 // TODO usa le string ℝ ℂ ℍ
 // usa anche ratio, lib per i numueri razionali
@@ -1233,10 +1455,12 @@ require('strict-mode')(function () {
 
   exports.Real    = require('./Real')
   exports.Complex = require('./Complex')
+
+  exports.buildCyclicSpaceOf = require('./buildCyclicSpaceOf')
 })
 
 
-},{"./Complex":7,"./Field":9,"./MatrixSpace":10,"./Real":11,"./Space":13,"./VectorSpace":14,"strict-mode":4}],21:[function(require,module,exports){
+},{"./Complex":6,"./Field":8,"./MatrixSpace":9,"./Real":10,"./Space":12,"./VectorSpace":13,"./buildCyclicSpaceOf":17,"strict-mode":3}],22:[function(require,module,exports){
 
 var multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')
 
@@ -1258,7 +1482,7 @@ function matrixToArrayIndex(i, j, numberOfColumns) {
 module.exports = matrixToArrayIndex
 
 
-},{"./multiDimensionalArrayIndex":22}],22:[function(require,module,exports){
+},{"./multiDimensionalArrayIndex":23}],23:[function(require,module,exports){
 
 /**
  * Compute index of multi dim array
@@ -1300,7 +1524,7 @@ function multiDimensionalArrayIndex(dimensions, indices) {
 module.exports = multiDimensionalArrayIndex
 
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 
 var matrixToArrayIndex = require('./matrixToArrayIndex')
 
@@ -1363,7 +1587,7 @@ function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix
 module.exports = rowByColumnMultiplication
 
 
-},{"./matrixToArrayIndex":21}],24:[function(require,module,exports){
+},{"./matrixToArrayIndex":22}],25:[function(require,module,exports){
 
 /**
   * Extract data attribute, if any, and check it
@@ -1390,5 +1614,10 @@ function toData (arg) {
 module.exports = toData
 
 
-},{}]},{},[1])(1)
+},{}],26:[function(require,module,exports){
+
+module.exports = require('./src')
+
+
+},{"./src":21}]},{},[26])(26)
 });

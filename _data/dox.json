@@ -65,7 +65,7 @@
     "ignore": false,
     "line": 94,
     "codeStart": 102,
-    "code": "function Element (data, check) {\n  if (check(data))\n      this.data = data\n    else\n      throw new TypeError(data)\n}\n  \nfunction valueOf () {\n  return this.data\n}\nElement.prototype.valueOf = valueOf\n\nmodule.exports = Element\n\n\nvar inherits = require('inherits')\n\nvar arrayFrom = require('./arrayFrom')\n  , Element = require('./Element')\n  , toData = require('./toData')",
+    "code": "function Element (data, check) {\n  if (check(data))\n      this.data = data\n    else\n      throw new TypeError(data)\n}\n\nfunction valueOf () {\n  return this.data\n}\n\nElement.prototype.valueOf = valueOf\n\nmodule.exports = Element\n\n\nvar inherits = require('inherits')\n\nvar arrayFrom = require('./arrayFrom')\n  , Element = require('./Element')\n  , toData = require('./toData')",
     "ctx": {
       "type": "function",
       "name": "Element",
@@ -130,8 +130,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 123,
-    "codeStart": 131,
+    "line": 124,
+    "codeStart": 132,
     "code": "function Field (zero, one, operators) {\n  var self = this\n\n  self.zero = zero\n  self.one = one\n\n\n  var addition = operators.addition\n    , multiplication = operators.multiplication\n    , inversion = operators.inversion\n    , equal = operators.equal\n    , negation = operators.negation\n    , contains = operators.contains\n  \n  self.contains = contains\n\n  function subtraction (data1, data2) {\n    return addition(data1, negation(data2))\n  }\n\n  function notEqual (data1, data2) {\n    return (! (operators.equal(data1, data2)))\n  }\n\n  function division (data1, data2) {\n    return multiplication(data1, inversion(data2))\n  }\n\n  function checkIsNotZero (data) {\n    if (equal(zero, data))\n      throw new TypeError(data)\n\n    return data\n  }",
     "ctx": {
       "type": "function",
@@ -151,8 +151,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 166,
-    "codeStart": 170,
+    "line": 167,
+    "codeStart": 171,
     "code": "function fieldAddition () {\n  return arrayFrom(arguments).map(toData).reduce(addition)        \n}\n\nself.addition = fieldAddition",
     "ctx": {
       "type": "function",
@@ -172,8 +172,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 176,
-    "codeStart": 180,
+    "line": 177,
+    "codeStart": 181,
     "code": "function fieldSubtraction () {\n  return arrayFrom(arguments).map(toData).reduce(subtraction)        \n}\n\nself.subtraction = fieldSubtraction",
     "ctx": {
       "type": "function",
@@ -193,8 +193,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 186,
-    "codeStart": 190,
+    "line": 187,
+    "codeStart": 191,
     "code": "function fieldMultiplication () {\n  return arrayFrom(arguments).map(toData).reduce(multiplication)        \n}\n\nself.multiplication = fieldMultiplication",
     "ctx": {
       "type": "function",
@@ -214,8 +214,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 196,
-    "codeStart": 200,
+    "line": 197,
+    "codeStart": 201,
     "code": "function fieldDivision () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)        \n}\n\nself.division = fieldDivision",
     "ctx": {
       "type": "function",
@@ -235,8 +235,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 206,
-    "codeStart": 210,
+    "line": 207,
+    "codeStart": 211,
     "code": "function fieldInversion () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(inversion)        \n}\n\nself.inversion = fieldInversion",
     "ctx": {
       "type": "function",
@@ -256,8 +256,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 216,
-    "codeStart": 220,
+    "line": 217,
+    "codeStart": 221,
     "code": "function fieldEqual () {\n  return arrayFrom(arguments).map(toData).reduce(equal)        \n}\n\nself.equal = fieldEqual",
     "ctx": {
       "type": "function",
@@ -277,8 +277,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 226,
-    "codeStart": 230,
+    "line": 227,
+    "codeStart": 231,
     "code": "function fieldNegation () {\n  return operators.negation(toData(arguments[0]))  \n}\n\nself.negation = fieldNegation",
     "ctx": {
       "type": "function",
@@ -327,9 +327,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 236,
-    "codeStart": 245,
-    "code": "function Scalar (data) {\n  Element.call(this, data, self.contains)\n}\n\ninherits(Scalar, Element)\n\nfunction scalarAddition () {\n  this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.addition = scalarAddition\nScalar.prototype.add      = scalarAddition\n\nfunction scalarSubtraction () {\n  this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.subtraction = scalarSubtraction\nScalar.prototype.sub         = scalarSubtraction\n\nfunction scalarMultiplication () {\n  this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.multiplication = scalarMultiplication\nScalar.prototype.mul = scalarMultiplication\n\nfunction scalarDivision () {\n  this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.division = scalarDivision\nScalar.prototype.div = scalarDivision\n\nfunction scalarInversion () {\n  this.data = fieldInversion(this.data, fieldInversion.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.inversion = scalarInversion\nScalar.prototype.inv       = scalarInversion\n\nfunction scalarEqual () {\n  return fieldEqual(this.data, fieldEqual.apply(null, arguments))\n}\n\nScalar.prototype.equal = scalarEqual\nScalar.prototype.eq = scalarEqual\n\nfunction scalarNegation () {\n  this.data = fieldNegation(this.data)\n  \n  return this\n}\n\nScalar.prototype.negation = scalarNegation\nScalar.prototype.neg = scalarNegation\n\nself.Scalar = Scalar\n}\n\nmodule.exports = Field\n\n\nvar inherits = require('inherits')\n\nvar determinant               = require('./determinant'),\n  rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n  Space                     = require('./Space'),\n  toData                    = require('./toData')",
+    "line": 237,
+    "codeStart": 246,
+    "code": "function Scalar (data) {\n  Element.call(this, data, self.contains)\n}\n\ninherits(Scalar, Element)\n\nfunction scalarAddition () {\n  this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.addition = scalarAddition\nScalar.prototype.add      = scalarAddition\n\nfunction scalarSubtraction () {\n  this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.subtraction = scalarSubtraction\nScalar.prototype.sub         = scalarSubtraction\n\nfunction scalarMultiplication () {\n  this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.multiplication = scalarMultiplication\nScalar.prototype.mul = scalarMultiplication\n\nfunction scalarDivision () {\n  this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.division = scalarDivision\nScalar.prototype.div = scalarDivision\n\nfunction scalarInversion () {\n  this.data = fieldInversion(this.data, fieldInversion.apply(null, arguments))\n  \n  return this\n}\n\nScalar.prototype.inversion = scalarInversion\nScalar.prototype.inv       = scalarInversion\n\nfunction scalarEqual () {\n  return fieldEqual(this.data, fieldEqual.apply(null, arguments))\n}\n\nScalar.prototype.equal = scalarEqual\nScalar.prototype.eq = scalarEqual\n\nfunction scalarNegation () {\n  this.data = fieldNegation(this.data)\n  \n  return this\n}\n\nScalar.prototype.negation = scalarNegation\nScalar.prototype.neg = scalarNegation\n\nself.Scalar = Scalar\n}\n\nmodule.exports = Field\n\n\nvar inherits = require('inherits')\n\nvar determinant               = require('./determinant'),\n  getIndices                = require('./getIndices'),\n  rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n  Space                     = require('./Space'),\n  toData                    = require('./toData'),\n  VectorSpace               = require('./VectorSpace')",
     "ctx": {
       "type": "function",
       "name": "Scalar",
@@ -394,8 +394,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 324,
-    "codeStart": 332,
+    "line": 327,
+    "codeStart": 335,
     "code": "function MatrixSpace (Scalar) {\n  var self = this",
     "ctx": {
       "type": "function",
@@ -458,9 +458,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 335,
-    "codeStart": 344,
-    "code": "function Dimension (numRows, numCols) {\n  var isSquare = false\n\n  if (typeof numCols === 'undefined') {\n    // numCols defaults to numRows\n    numCols = numRows\n\n    isSquare = true\n  }\n\n  var indices = [numRows, numCols]\n\n  var Element = Space(Scalar)(indices)\n\n  function Matrix () {\n    Element.apply(this, arguments)",
+    "line": 338,
+    "codeStart": 347,
+    "code": "function Dimension (numRows, numCols) {\n  var isSquare = false\n\n  if (typeof numCols === 'undefined') {\n    // numCols defaults to numRows\n    numCols = numRows\n\n    isSquare = true\n  }\n\n  var indices = [numRows, numCols]\n\n  var Element = Space(Scalar)(indices)",
     "ctx": {
       "type": "function",
       "name": "Dimension",
@@ -481,7 +481,28 @@
     "ignore": false,
     "line": 361,
     "codeStart": 365,
-    "code": "function matrixDeterminant () {\n  var det = determinant(Scalar, this.data, numRows)\n\n  return new Scalar(det)\n}\n\nif (isSquare) {\n  Object.defineProperty(this, 'determinant', {get: matrixDeterminant})\n  Object.defineProperty(this, 'det',         {get: matrixDeterminant})\n}\n    }\n\n    inherits(Matrix, Element)\n\n    // Static attributes.\n    Matrix.isSquare = isSquare\n    Matrix.numRows  = numRows\n    Matrix.numCols  = numCols",
+    "code": "function Matrix () {\n  Element.apply(this, arguments)",
+    "ctx": {
+      "type": "function",
+      "name": "Matrix",
+      "string": "Matrix()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 368,
+    "codeStart": 372,
+    "code": "function matrixDeterminant () {\n  var det = determinant(Scalar, this.data, numRows)\n\n  return new Scalar(det)\n}\n\nif (isSquare) {\n  Object.defineProperty(this, 'determinant', {get: matrixDeterminant})\n  Object.defineProperty(this, 'det', {get: matrixDeterminant})\n}\n    }\n\n    inherits(Matrix, Element)\n\n    // Static attributes.\n    Matrix.isSquare = isSquare\n    Matrix.numRows  = numRows\n    Matrix.numCols  = numCols",
     "ctx": {
       "type": "function",
       "name": "matrixDeterminant",
@@ -500,14 +521,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 384,
-    "codeStart": 388,
-    "code": "function spaceMultiplication (leftMatrix, rightMatrix) {\n  var left  = toData(leftMatrix),\n      right = toData(rightMatrix)\n\n  return rowByColumnMultiplication(Scalar, left, indices, right, indices)\n}",
-    "ctx": {
-      "type": "function",
-      "name": "spaceMultiplication",
-      "string": "spaceMultiplication()"
-    }
+    "line": 391,
+    "codeStart": 394
   },
   {
     "tags": [],
@@ -565,7 +580,7 @@
     "ignore": false,
     "line": 421,
     "codeStart": 425,
-    "code": "function rightMultiplication (rightMatrix) {\n  this.data = spaceMultiplication(this.data, rightMatrix)\n\n  return this\n}\n\nMatrix.prototype.rightMultiplication = rightMultiplication\nMatrix.prototype.rightMul            = rightMultiplication\nMatrix.prototype.multiplication      = rightMultiplication\nMatrix.prototype.mul                 = rightMultiplication",
+    "code": "function rightMultiplication (right) {\n  var rightData    = toData(right),\n      rightIndices = getIndices(right)\n\n  var rightIsMatrix = rightIndices.length === 2,\n      rightIsVector = rightIndices.length === 1\n\n  // TODO rightIsScalar and use scalarMultiplication\n\n  var rightIsSquare = rightIsMatrix && (rightIndices[0] === rightIndices[1])\n\n  if (rightIsVector)\n    rightIndices.push(1)\n\n  var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)\n\n  // Left multiplication by a square matrix is an inner product,\n  // so the method is a mutator.\n  if (rightIsSquare) {\n    this.data = data\n\n    return this\n  }\n\n  if (rightIsVector) {\n    var Vector = VectorSpace(Scalar)(numRows)\n\n    return new Vector(data)\n  }\n    // TODO if rightIsMatrix return new this(Scalar)(numRows, numCols)(data)\n}\n\nMatrix.prototype.rightMultiplication = rightMultiplication\nMatrix.prototype.rightMul            = rightMultiplication\nMatrix.prototype.multiplication      = rightMultiplication\nMatrix.prototype.mul                 = rightMultiplication",
     "ctx": {
       "type": "function",
       "name": "rightMultiplication",
@@ -584,9 +599,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 436,
-    "codeStart": 440,
-    "code": "function leftMultiplication (leftMatrix) {\n  this.data = spaceMultiplication(leftMatrix, this.data)\n\n  return this\n}\n\nMatrix.prototype.leftMultiplication = leftMultiplication\nMatrix.prototype.leftMul            = leftMultiplication\n\nreturn Matrix\n  }\n\n  return Dimension\n}\n\nmodule.exports = MatrixSpace\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\nbuildFieldOperators = require('./buildFieldOperators'),\nScalar              = require('./Scalar')\n\nvar zero = 0\n  , one  = 1\n\nfunction addition (a, b) { return a + b }\n\nfunction multiplication (a, b) { return a * b }\n\nfunction inversion (a) { return one / a }\n\nfunction negation (a) { return - a }\n\nfunction equal (a, b) { return a === b }\n\nfunction contains (a) { return typeof a === 'number' }\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
+    "line": 462,
+    "codeStart": 466,
+    "code": "function leftMultiplication (leftMatrix) {\n  var leftData    = toData(left),\n      leftIndices = getIndices(left)\n\n  var leftIsMatrix = leftIndices.length === 2,\n      leftIsVector = leftIndices.length === 1\n\n  var leftIsSquare = leftIsMatrix && (leftIndices[0] === leftIndices[1])\n\n  if (leftIsVector)\n    leftIndices.push(1)\n\n  var data = rowByColumnMultiplication(Scalar, leftData, leftIndices, this.data, this.indices)\n\n  // Left multiplication by a square matrix is an inner product,\n  // so the method is a mutator.\n  if (leftIsSquare) {\n    this.data = data\n\n    return this\n  }\n\n  if (leftIsVector) {\n    var Vector = VectorSpace(Scalar)(numCols)\n\n    return new Vector(data)\n  }\n}\n\nMatrix.prototype.leftMultiplication = leftMultiplication\nMatrix.prototype.leftMul            = leftMultiplication\n\nreturn Matrix\n  }\n\n  return Dimension\n}\n\nmodule.exports = MatrixSpace\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\nbuildFieldOperators = require('./buildFieldOperators'),\nScalar              = require('./Scalar')\n\nvar zero = 0\n  , one  = 1\n\nfunction addition (a, b) { return a + b }\n\nfunction multiplication (a, b) { return a * b }\n\nfunction inversion (a) { return one / a }\n\nfunction negation (a) { return - a }\n\nfunction equal (a, b) { return a === b }\n\nfunction contains (a) { return typeof a === 'number' }\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
     "ctx": {
       "type": "function",
       "name": "leftMultiplication",
@@ -605,8 +620,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 493,
-    "codeStart": 497,
+    "line": 543,
+    "codeStart": 547,
     "code": "function Real (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Real, Scalar)\n\naddStaticOperators(Real, buildFieldOperators(field))\n\nmodule.exports = Real\n\n\nvar inherits = require('inherits')\n\nvar buildFieldOperators = require('./buildFieldOperators'),\n    Element             = require('./Element')\n\nvar fieldOperator,\n    one,\n    zero\n\nfunction Scalar (field, data) {\n  fieldOperator = buildFieldOperators(field)\n  one  = field.one\n  zero = field.zero\n\n  Element.call(this, data, field.operator.contains)\n}\n\ninherits(Scalar, Element)\n\nScalar.one  = one\nScalar.zero = zero\n\nfunction scalarAddition () {\n  var fieldAddition = fieldOperator.addition\n\n  this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.addition = scalarAddition\nScalar.prototype.add      = scalarAddition\n\nfunction scalarSubtraction () {\n  var fieldSubtraction = fieldOperator.subtraction\n\n  this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.subtraction = scalarSubtraction\nScalar.prototype.sub         = scalarSubtraction\n\nfunction scalarMultiplication () {\n  var fieldMultiplication = fieldOperator.multiplication\n\n  this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.multiplication = scalarMultiplication\nScalar.prototype.mul            = scalarMultiplication\n\nfunction scalarDivision () {\n  var fieldDivision = fieldOperator.division\n\n  this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.division = scalarDivision\nScalar.prototype.div      = scalarDivision\n\nfunction scalarInversion () {\n  var fieldInversion = fieldOperator.inversion\n\n  this.data = fieldInversion(this.data)\n\n  return this\n}\n\nScalar.prototype.inversion = scalarInversion\nScalar.prototype.inv       = scalarInversion\n\nfunction scalarEqual () {\n  var fieldEqual = fieldOperator.equal\n\n  return fieldEqual(this.data, fieldEqual.apply(null, arguments))\n}\n\nScalar.prototype.equal = scalarEqual\nScalar.prototype.eq    = scalarEqual\n\nfunction scalarNegation () {\n  var fieldNegation = fieldOperator.negation\n\n  this.data = fieldNegation(this.data)\n\n  return this\n}\n\nScalar.prototype.negation = scalarNegation\nScalar.prototype.neg      = scalarNegation\n\nmodule.exports = Scalar\n\nvar inherits = require('inherits')\n\nvar arrayFrom       = require('./arrayFrom'),\n    AbstractElement = require('./Element'),\n    toData          = require('./toData')\n\nfunction getResult (dimension, operator, dataArg) {\n  var result = dataArg[0]\n\n  for (var i=1; i < dataArg.length; i++) {\n    var data = dataArg[i]\n\n    for (var j=0; j < dimension; j++) {\n      result[j] = operator(result[j], data[j])\n    }\n  }\n\n  return result\n}",
     "ctx": {
       "type": "function",
@@ -662,8 +677,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 627,
-    "codeStart": 636,
+    "line": 677,
+    "codeStart": 686,
     "code": "function Space (Scalar) {\n\n  // TODO function Dimension (indices, coindices)\n  function Dimension (indices) {\n\n    var dimension = indices.reduce(function (a, b) { return a * b }, 1)",
     "ctx": {
       "type": "constructor",
@@ -683,8 +698,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 643,
-    "codeStart": 647,
+    "line": 693,
+    "codeStart": 697,
     "code": "function spaceAddition () {\n  return getResult(dimension, Scalar.addition, arrayFrom(arguments).map(toData))\n}",
     "ctx": {
       "type": "function",
@@ -704,8 +719,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 651,
-    "codeStart": 655,
+    "line": 701,
+    "codeStart": 705,
     "code": "function spaceSubtraction () {\n  return getResult(dimension, Scalar.subtraction, arrayFrom(arguments).map(toData))\n}",
     "ctx": {
       "type": "function",
@@ -725,8 +740,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 659,
-    "codeStart": 663,
+    "line": 709,
+    "codeStart": 713,
     "code": "function spaceScalarMultiplication (data, scalar) {\n  var result = []\n\n  // Check scalar is ok.\n  var aScalar = [scalar]\n  var scalarOk = aScalar.map(Scalar.contains).map(toData)[0]\n\n  for (var i=0; i<dimension; i++) {\n    var x = Scalar.multiplication(data[i], scalarOk)\n    result.push(x)\n  }\n\n  return result\n}",
     "ctx": {
       "type": "function",
@@ -746,8 +761,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 678,
-    "codeStart": 682,
+    "line": 728,
+    "codeStart": 732,
     "code": "function spaceScalarProduct () {\n  var dataMul = getResult(dimension, Scalar.multiplication, arrayFrom(arguments).map(toData))\n\n  var result = dataMul[0]\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, dataMul[i])\n  }\n\n  return result\n}",
     "ctx": {
       "type": "function",
@@ -767,8 +782,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 694,
-    "codeStart": 698,
+    "line": 744,
+    "codeStart": 748,
     "code": "function contains (data) {\n  return data.map(Scalar.contains).length === dimension\n}\n\n  // TODO spaceIdentity",
     "ctx": {
       "type": "function",
@@ -809,9 +824,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 704,
-    "codeStart": 712,
-    "code": "function Element (data) {\n  AbstractElement.call(this, data, contains)\n}\n\ninherits(Element, AbstractElement)",
+    "line": 754,
+    "codeStart": 762,
+    "code": "function Element (data) {\n  AbstractElement.call(this, data, contains)\n\n  Object.defineProperty(this, 'indices', {\n    enumerable: false,\n    value: indices,\n    writable: false\n  })\n}\n\ninherits(Element, AbstractElement)",
     "ctx": {
       "type": "constructor",
       "name": "Element",
@@ -888,8 +903,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 718,
-    "codeStart": 728,
+    "line": 774,
+    "codeStart": 784,
     "code": "function elementAddition () {\n  this.data = spaceAddition(this.data, spaceAddition.apply(null, arguments))\n\n  return this\n}\n\nElement.prototype.addition = elementAddition\nElement.prototype.add      = elementAddition",
     "ctx": {
       "type": "function",
@@ -967,8 +982,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 737,
-    "codeStart": 747,
+    "line": 793,
+    "codeStart": 803,
     "code": "function elementSubtraction () {\n  this.data = spaceSubtraction(this.data, spaceSubtraction.apply(null, arguments))\n\n  return this\n}\n\nElement.prototype.subtraction = elementSubtraction\nElement.prototype.sub         = elementSubtraction",
     "ctx": {
       "type": "function",
@@ -1017,8 +1032,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 756,
-    "codeStart": 763,
+    "line": 812,
+    "codeStart": 819,
     "code": "function elementScalarMultiplication (scalar) {\n  this.data = spaceScalarMultiplication(this.data, scalar)\n\n  return this\n}\n\nElement.prototype.scalarMultiplication = elementScalarMultiplication\nElement.prototype.scalar               = elementScalarMultiplication\n\n// Static attributes.\nElement.dimension = dimension\nElement.indices   = indices\nElement.Scalar    = Scalar\n\n// Static functions.\nElement.addition = spaceAddition\nElement.add      = spaceAddition\n\nElement.subtraction = spaceSubtraction\nElement.sub         = spaceSubtraction\n\nreturn Element\n  }\n\n  // Static attribute.\n  Dimension.Scalar = Scalar\n\n  return Dimension\n}\n\nmodule.exports = Space\n\n\nvar inherits = require('inherits')\n\nvar Space = require('./Space')",
     "ctx": {
       "type": "function",
@@ -1082,8 +1097,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 800,
-    "codeStart": 808,
+    "line": 856,
+    "codeStart": 864,
     "code": "function TensorSpace (Scalar, controvariant, covariant) {\n  var self = this\n\n  var indices = controvariant.concat(covariant)\n\n  var type = [controvariant.length, covariant.length]\n  self.type = type\n\n  var space = new Space(Scalar, indices)\n\n  self.addition = space.addition\n  self.subtraction = space.subtraction\n\n  function Tensor (data) {\n    space.Element.call(this, data)\n  }\n\n\n inherits(Tensor, space.Element)\n\n  self.Tensor = Tensor\n}\n\ninherits(TensorSpace, Space)\n\nmodule.exports = TensorSpace\n\n\nvar inherits = require('inherits')\n\nvar Space = require('./Space')",
     "ctx": {
       "type": "function",
@@ -1132,8 +1147,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 840,
-    "codeStart": 854,
+    "line": 896,
+    "codeStart": 910,
     "code": "function VectorSpace (Scalar) {",
     "ctx": {
       "type": "function",
@@ -1182,8 +1197,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 856,
-    "codeStart": 864,
+    "line": 912,
+    "codeStart": 920,
     "code": "function Dimension (dimension) {\n  var Element = Space(Scalar)([dimension])\n\n  function Vector () {\n    Element.apply(this, arguments)\n\n    var data = this.data",
     "ctx": {
       "type": "function",
@@ -1217,8 +1232,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 872,
-    "codeStart": 882,
+    "line": 928,
+    "codeStart": 938,
     "code": "function vectorNorm () {\n  var result = Scalar.multiplication(data[0], data[0])\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))\n  }\n\n  return new Scalar(result)\n}\n\nObject.defineProperty(this, 'norm', {get: vectorNorm})\n    }\n\n    inherits(Vector, Element)\n\n    // TODO da mettere in metodo tipo addStaticOperators\n    Vector.addition    = Element.addition\n    Vector.add         = Element.addition\n    Vector.subtraction = Element.subtraction\n    Vector.sub         = Element.subtraction\n\n    return Vector\n  }\n\n  return Dimension\n}\n\nmodule.exports = VectorSpace",
     "ctx": {
       "type": "function",
@@ -1268,8 +1283,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 912,
-    "codeStart": 919,
+    "line": 968,
+    "codeStart": 975,
     "code": "function addStaticOperators (Scalar, field) {\n  Scalar.addition       = field.addition\n  Scalar.add            = field.addition\n\n  Scalar.subtraction    = field.subtraction\n  Scalar.sub            = field.subtraction\n\n  Scalar.multiplication = field.multiplication\n  Scalar.mul            = field.multiplication\n\n  Scalar.division       = field.division\n  Scalar.div            = field.division\n\n  Scalar.negation       = field.negation\n  Scalar.neg            = field.negation\n\n  Scalar.inversion      = field.inversion\n  Scalar.inv            = field.inversion\n\n  Scalar.equal          = field.equal\n  Scalar.eq             = field.equal\n\n  Scalar.contains       = field.contains\n}\n\nmodule.exports = addStaticOperators\n\n\nvar matrixToArrayIndex = require('./matrixToArrayIndex')",
     "ctx": {
       "type": "function",
@@ -1378,8 +1393,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 949,
-    "codeStart": 961,
+    "line": 1005,
+    "codeStart": 1017,
     "code": "function adjointMatrix (data, numRows, numCols, row, col) {\n  var adjoint = []\n\n  for (var i = 0; i < numRows; i++) {\n    for (var j = 0; j < numCols; j++) {\n      if ((i !== row) && (j !== col)) {\n        var index = matrixToArrayIndex(i, j, numCols)\n\n        adjoint.push(data[index])\n      }\n    }\n  }\n\n  return adjoint\n}\n\nmodule.exports = adjointMatrix",
     "ctx": {
       "type": "function",
@@ -1427,8 +1442,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 980,
-    "codeStart": 998,
+    "line": 1036,
+    "codeStart": 1054,
     "code": "function arrayFrom () {\n  return (function arraySlice0 () {\n    return Array.prototype.slice.call(arguments, 0)\n  }).apply(null, arguments[0])\n}\n\nmodule.exports = arrayFrom\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')\n\nfunction isPrime (n) {\n  if (n === 1) return false\n  if (n === 2) return true\n\n  var m = Math.sqrt(n)\n\n  for (var i = 2; i <= m; i++)\n    if (n % i === 0)\n      return false\n\n  return true\n}\n\nfunction unique (elements) {\n  for (var i = 0; i < elements.length - 1; i++)\n    for (var j = i + 1; j < elements.length; j++)\n      if (elements[i] === elements[j])\n        return false\n\n  return true\n}",
     "ctx": {
       "type": "function",
@@ -1478,8 +1493,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1035,
-    "codeStart": 1043,
+    "line": 1091,
+    "codeStart": 1099,
     "code": "function buildCyclicSpaceOf (elements) {\n  if ((typeof elements.length !== 'number') || (! isPrime(elements.length)))\n    throw new TypeError(\"elements length must be prime\")\n\n  if ((! unique(elements)))\n    throw new TypeError(\"elements must be unique\")\n\n  var zero = elements[0],\n      one  = elements[1]\n\n  function numOf (element) {\n    return elements.indexOf(element)\n  }\n\n  function addition (element1, element2) {\n    var n = numOf(element1) + numOf(element2)\n\n    n = n % elements.length\n\n    return elements[n]\n  }\n\n  function contains (element) {\n    return elements.indexOf(element) > -1\n  }\n\n  function multiplication (element1, element2) {\n    var n = numOf(element1) * numOf(element2)\n\n    n = n % elements.length\n\n    return elements[n]\n  }\n\n  function inversion (element) {\n    for (var i = 0; i < elements.length; i++)\n      if(elements[1] == multiplication(element, elements[i]))\n\n    return elements[i]\n  }\n\n  function division (element1, element2) {\n    return multiplication(element1, inversion(element2))\n  }\n\n  function negation (element) {\n    var n = numOf(element)\n\n    if (n === 0)\n      return element\n\n    n = elements.length - n\n\n    return elements[n]\n  }\n\n  function equal (element1, element2) {\n    return element1 === element2\n  }\n\n  var operators = {\n    addition      : addition,\n    multiplication: multiplication,\n    negation      : negation,\n    inversion     : inversion,\n    equal         : equal,\n    contains      : contains\n  }\n\n  var field = {\n    one     : one,\n    zero    : zero,\n    operator: operators\n  }",
     "ctx": {
       "type": "function",
@@ -1499,8 +1514,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1118,
-    "codeStart": 1122,
+    "line": 1174,
+    "codeStart": 1178,
     "code": "function Cyclic (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Cyclic, Scalar)\n\naddStaticOperators(Cyclic, buildFieldOperators(field))\n\nreturn Cyclic\n}\n\nmodule.exports = buildCyclicSpaceOf\n\n\nvar arrayFrom = require('./arrayFrom'),\n  toData    = require('./toData')\n\nfunction buildFieldOperators (field) {\n\nvar one  = field.one,\n    zero = field.zero,\n    addition       = field.operator.addition,\n    multiplication = field.operator.multiplication,\n    inversion      = field.operator.inversion,\n    equal          = field.operator.equal,\n    negation       = field.operator.negation\n\nvar operators = {\n  contains: field.operator.contains\n}\n\nfunction subtraction (data1, data2) {\n  return addition(data1, negation(data2))\n}\n\nfunction notEqual (data1, data2) {\n  return (! (equal(data1, data2)))\n}\n\nfunction division (data1, data2) {\n  return multiplication(data1, inversion(data2))\n}\n\nfunction checkIsNotZero (data) {\n  if (equal(zero, data))\n    throw new TypeError(data)\n\n  return data\n}\n\nfunction fieldAddition () {\n  return arrayFrom(arguments).map(toData).reduce(addition)\n}\n\noperators.addition = fieldAddition\n\nfunction fieldSubtraction () {\n  return arrayFrom(arguments).map(toData).reduce(subtraction)\n}\n\noperators.subtraction = fieldSubtraction\n\nfunction fieldMultiplication () {\n  return arrayFrom(arguments).map(toData).reduce(multiplication)\n}\n\noperators.multiplication = fieldMultiplication\n\nfunction fieldDivision () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)\n}\n\noperators.division = fieldDivision\n\nfunction fieldInversion () {\n  return inversion(toData(arguments[0]))\n}\n\noperators.inversion = fieldInversion\n\nfunction fieldEqual () {\n  return arrayFrom(arguments).map(toData).reduce(equal)\n}\n\noperators.equal = fieldEqual\n\nfunction fieldNegation () {\n  return negation(toData(arguments[0]))\n}\n\noperators.negation = fieldNegation\n\nreturn operators\n}\n\nmodule.exports = buildFieldOperators\n\n\nvar adjointMatrix = require('./adjointMatrix')\n, matrixToArrayIndex = require('./matrixToArrayIndex')",
     "ctx": {
       "type": "function",
@@ -1579,13 +1594,64 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1223,
-    "codeStart": 1232,
-    "code": "function determinant (Scalar, data, order) {\n  var adjointData\n    , adjointDeterminant\n    , det\n    , startingCol\n    , startingRow\n    , index\n\n  if (order === 2) {\n    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]), Scalar.multiplication(data[2], data[1]))\n\n    return det\n  }\n\n  // TODO choose best row or column to start from, i.e. the one with more zeros\n  // by now we start from first row, and walk by column\n  startingCol = 0\n  startingRow = 0\n\n  index = matrixToArrayIndex(startingRow, startingCol, order)\n\n  adjointData = adjointMatrix(data, order, order, startingRow, startingCol)\n  adjointDeterminant = determinant(Scalar, adjointData, order - 1)\n\n  det = Scalar.multiplication(data[index], adjointDeterminant)\n\n  for (var col = 1; col < order; col++) {\n    adjointData = adjointMatrix(data, order, order, startingRow, col)\n\n    adjointDeterminant = determinant(Scalar, adjointData, order - 1)\n\n    index = matrixToArrayIndex(startingRow, col, order)\n\n    det = Scalar.addition(det, Scalar.multiplication(data[index], adjointDeterminant))\n  }\n\n  return det\n}\n\nmodule.exports = determinant\n\n\n// TODO usa le string ℝ ℂ ℍ\n// usa anche ratio, lib per i numueri razionali\n\nrequire('strict-mode')(function () {\n  exports.Field       = require('./Field')\n  exports.Space       = require('./Space')\n  exports.VectorSpace = require('./VectorSpace')\n  exports.MatrixSpace = require('./MatrixSpace')\n//  exports.TensorSpace = require('./TensorSpace')\n\n  exports.Real    = require('./Real')\n  exports.Complex = require('./Complex')\n\n  exports.buildCyclicSpaceOf = require('./buildCyclicSpaceOf')\n})\n\n\nvar multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')",
+    "line": 1279,
+    "codeStart": 1288,
+    "code": "function determinant (Scalar, data, order) {\n  var adjointData,\n      adjointDeterminant,\n      det,\n      startingCol,\n      startingRow,\n      index\n\n  if (order === 2) {\n    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]), Scalar.multiplication(data[2], data[1]))\n\n    return det\n  }\n\n  // TODO choose best row or column to start from, i.e. the one with more zeros\n  // by now we start from first row, and walk by column\n  startingCol = 0\n  startingRow = 0\n\n  index = matrixToArrayIndex(startingRow, startingCol, order)\n\n  adjointData = adjointMatrix(data, order, order, startingRow, startingCol)\n  adjointDeterminant = determinant(Scalar, adjointData, order - 1)\n\n  det = Scalar.multiplication(data[index], adjointDeterminant)\n\n  for (var col = 1; col < order; col++) {\n    adjointData = adjointMatrix(data, order, order, startingRow, col)\n\n    adjointDeterminant = determinant(Scalar, adjointData, order - 1)\n\n    index = matrixToArrayIndex(startingRow, col, order)\n\n    det = Scalar.addition(det, Scalar.multiplication(data[index], adjointDeterminant))\n  }\n\n  return det\n}\n\nmodule.exports = determinant\n\n\nvar toData = require('./toData')",
     "ctx": {
       "type": "function",
       "name": "determinant",
       "string": "determinant()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Array|Any} arg\n",
+        "name": "arg",
+        "description": "",
+        "types": [
+          "Array",
+          "Any"
+        ],
+        "typesDescription": "<code>Array</code>|<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array|Any} arg</p>"
+      },
+      {
+        "type": "return",
+        "string": "{Array} indices",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>indices</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1332,
+    "codeStart": 1340,
+    "code": "function getIndices (arg) {\n  var indices\n\n  if (typeof arg.indices === 'undefined') {\n// TODO\n//   var data = toData(arg)\n//\n//   if (typeof data === 'array') {\n//     // TODO recursion into data if it is a multidimensional array\n//     indices = [data.length]\n//   }\n//   else {\n//     indices = [1]\n//   }\n  }\n  else {\n    indices = arg.indices\n  }\n\n  if (typeof indices === 'undefined')\n    throw new TypeError('No indices')\n\n  return indices\n}\n\nmodule.exports = getIndices\n\n\n// TODO usa le string ℝ ℂ ℍ\n// usa anche ratio, lib per i numueri razionali\n\nrequire('strict-mode')(function () {\n  exports.Field       = require('./Field')\n  exports.Space       = require('./Space')\n  exports.VectorSpace = require('./VectorSpace')\n  exports.MatrixSpace = require('./MatrixSpace')\n//  exports.TensorSpace = require('./TensorSpace')\n\n  exports.Real    = require('./Real')\n  exports.Complex = require('./Complex')\n\n  exports.buildCyclicSpaceOf = require('./buildCyclicSpaceOf')\n})\n\n\nvar multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')",
+    "ctx": {
+      "type": "function",
+      "name": "getIndices",
+      "string": "getIndices()"
     }
   },
   {
@@ -1657,8 +1723,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1293,
-    "codeStart": 1302,
+    "line": 1387,
+    "codeStart": 1396,
     "code": "function matrixToArrayIndex(i, j, numberOfColumns) {\n  var index = multiDimensionalArrayIndex([numberOfColumns, numberOfColumns], [i, j])\n\n  return index\n}\n\nmodule.exports = matrixToArrayIndex",
     "ctx": {
       "type": "function",
@@ -1722,8 +1788,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1311,
-    "codeStart": 1320,
+    "line": 1405,
+    "codeStart": 1414,
     "code": "function multiDimensionalArrayIndex(dimensions, indices) {\n  var l = dimensions.length - 1\n    , index = indices[l]\n    , factor\n\n  if (dimensions.length > 1) {\n    factor = dimensions[l - 1]\n\n    index += factor * indices[l - 1]\n  }\n\n  for (var i = 2; i < dimensions.length; i++) {\n    factor *= dimensions[l - i + 1]\n\n    index += factor * indices[l - i]\n  }\n\n  // Given\n  //\n  // dimensions d_1, d_2, d_3 .. d_n\n  // and\n  // indices i_1, i_2, i_3 .. i_n\n  //\n  // index is computed by formula\n  // index = i_n + i_(n-1) * d_n + i_(n-2) * d_n * d_(n-1) + ... + i_2 * d_n * d_(n-1) * ... * d_3 + i_1 * d_n * ... * d_2\n  return index\n}\n\nmodule.exports = multiDimensionalArrayIndex\n\n\nvar matrixToArrayIndex = require('./matrixToArrayIndex')",
     "ctx": {
       "type": "function",
@@ -1832,8 +1898,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1353,
-    "codeStart": 1364,
+    "line": 1447,
+    "codeStart": 1458,
     "code": "function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {\n  var data = []\n\n  // Check if matrix can be multiplied\n  if (leftIndices[1] !== rightIndices[0])\n    throw new TypeError('Left num cols != right num rows')\n\n  var commonIndex = leftIndices[1]\n\n  var rows = leftIndices[0]\n  var cols = rightIndices[1]\n\n  for (var i = 0; i < rows; i++) {\n    for (var j = 0; j < cols; j++) {\n      var element\n        , leftIndex\n        , rightIndex\n        , rightElement\n        , leftElement\n\n      leftIndex = matrixToArrayIndex(i, 0, commonIndex)\n      rightIndex = matrixToArrayIndex(0, j, cols)\n\n      rightElement = rightMatrix[rightIndex]\n      leftElement = leftMatrix[leftIndex]\n\n      element = Scalar.multiplication(leftElement, rightElement)\n\n      for (var k = 1; k < commonIndex; k++) {\n        leftIndex = matrixToArrayIndex(i, k, commonIndex)\n        rightIndex = matrixToArrayIndex(k, j, cols)\n\n        rightElement = rightMatrix[rightIndex]\n        leftElement = leftMatrix[leftIndex]\n\n        element = Scalar.addition(element, Scalar.multiplication(rightElement, leftElement))\n      }\n\n      data.push(element)\n    }\n  }\n\n  return data\n}\n\nmodule.exports = rowByColumnMultiplication",
     "ctx": {
       "type": "function",
@@ -1883,8 +1949,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1412,
-    "codeStart": 1420,
+    "line": 1506,
+    "codeStart": 1514,
     "code": "function toData (arg) {\n  var data\n\n  if (typeof arg.data === 'undefined')\n    data = arg\n  else\n    data = arg.data\n\n  if (typeof data === 'undefined')\n    throw new TypeError('No data')\n\n  return data\n}\n\nmodule.exports = toData",
     "ctx": {
       "type": "function",

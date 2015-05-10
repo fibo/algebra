@@ -13,10 +13,11 @@ function Element (data, check) {
     else
       throw new TypeError(data)
 }
-  
+
 function valueOf () {
   return this.data
 }
+
 Element.prototype.valueOf = valueOf
 
 module.exports = Element

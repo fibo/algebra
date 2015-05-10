@@ -106,6 +106,12 @@ function Space (Scalar) {
 
     function Element (data) {
       AbstractElement.call(this, data, contains)
+
+      Object.defineProperty(this, 'indices', {
+        enumerable: false,
+        value: indices,
+        writable: false
+      })
     }
 
     inherits(Element, AbstractElement)

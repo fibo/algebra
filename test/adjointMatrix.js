@@ -5,8 +5,8 @@ var adjointMatrix = require('../src/adjointMatrix')
 
 describe('adjointMatrix', function () {
   it('computes the adjoint of a matrix', function () {
-    var data
-      , adjoint
+    var data,
+        adjoint
 
     data = [1, 0,
             0, 1]

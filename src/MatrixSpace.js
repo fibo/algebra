@@ -2,9 +2,11 @@
 var inherits = require('inherits')
 
 var determinant               = require('./determinant'),
+    getIndices                = require('./getIndices'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     Space                     = require('./Space'),
-    toData                    = require('./toData')
+    toData                    = require('./toData'),
+    VectorSpace               = require('./VectorSpace')
 
 /**
  * Space of m x n matrices
@@ -40,6 +42,10 @@ function MatrixSpace (Scalar) {
 
     var Element = Space(Scalar)(indices)
 
+      /*
+       *
+       */
+
     function Matrix () {
       Element.apply(this, arguments)
 
@@ -70,17 +76,26 @@ function MatrixSpace (Scalar) {
      *
      */
 
-    function spaceMultiplication (leftMatrix, rightMatrix) {
-      var left  = toData(leftMatrix),
-          right = toData(rightMatrix)
+    function spaceMultiplication (left, right) {
+      var leftData     = toData(left),
+          leftIndices  = getIndices(left),
+          rightData    = toData(right),
+          rightIndices = getIndices(right)
 
-      return rowByColumnMultiplication(Scalar, left, indices, right, indices)
+      // TODO var rank = Math.max(leftIndices.length, rightIndices.length)
+      var rank = 2
+
+      // Fill indices to have the same signature
+      for (var i = 0; i < rank - rightIndices.length; i++)
+        rightIndices.push(1)
+
+      return rowByColumnMultiplication(Scalar, leftData, leftIndices, rightData, rightIndices)
     }
 
     /*
      *
-
      */
+
     function matrixAddition (matrix) {
       this.data = space.addition(this.data, matrix)
 
@@ -107,10 +122,21 @@ function MatrixSpace (Scalar) {
      *
      */
 
-    function rightMultiplication (rightMatrix) {
-      this.data = spaceMultiplication(this.data, rightMatrix)
+    function rightMultiplication (right) {
+      var rightData    = toData(right),
+          rightIndices = getIndices(right)
 
-      return this
+      var rightIsSquare = rightIndices[0] === rightIndices[1]
+
+      var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)
+
+      if (isSquare && rightIsSquare) {
+        this.data = data
+        return this
+      }
+      else {
+        // TODO return new this(Scalar)(numRows, numCols)(data)
+      }
     }
 
     Matrix.prototype.rightMultiplication = rightMultiplication
@@ -123,7 +149,7 @@ function MatrixSpace (Scalar) {
      */
 
     function leftMultiplication (leftMatrix) {
-      this.data = spaceMultiplication(leftMatrix, this.data)
+      this.data = spaceMultiplication(leftMatrix, this)
 
       return this
     }
@@ -138,3 +164,4 @@ function MatrixSpace (Scalar) {
 }
 
 module.exports = MatrixSpace
+

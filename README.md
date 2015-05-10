@@ -8,7 +8,8 @@ For more information point your browser to [algebra Homepage](//g14n.info/algebr
 
 ## Status
 
-*algebra* is under development. Api can change until version **1.0** but not without a good reason.
+*algebra* is under development.
+Api can change until version **1.0** but not without a good reason.
 
 ## Synopsis
 
@@ -24,7 +25,8 @@ console.log(R.add(1, 2, 3)); // 1 + 2 + 3 = 6
 var x = new R(2),
     y = new R(-2);
 
-// Operators on objects are mutators. Here x value is modified, multipling it by y value.
+// Operators on objects are mutators.
+// Here x value is modified, multipling it by y value.
 x.mul(y);
 console.log(x.data); // 2 * (-2) = -4
 

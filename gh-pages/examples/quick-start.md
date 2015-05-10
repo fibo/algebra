@@ -88,3 +88,4 @@ console.log(m1.data); // [-1, 2, -3, 4]
 // Check out m1 determinant, should be 2 = (-1) * 4 - (-3) * 2
 console.log(m1.determinant.data); // 2
 ```
+

@@ -1,0 +1,18 @@
+---
+layout: null
+---
+
+<!-- included by http://g14n.info/sitemap.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+      <loc>{{ site.url }}</loc>
+      <priority>1</priority>
+      <changefreq>monthly</changefreq>
+    </url>
+    <url>
+      <loc>{{ site.url }}/api</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.71</priority>
+    </url>
+</urlset>

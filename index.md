@@ -88,7 +88,7 @@ var m1 = new R3x2([1, 1,
 
 var v3 = m1.mul(v1);
 
-console.log(v3.data); // [0, -1, 1])
+console.log(v3.data); // [0, -1, 1]
 
 // But that was not an inner product, so m1 is not mutated.
 

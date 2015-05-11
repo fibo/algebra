@@ -119,5 +119,5 @@ $ npm install algebra
 
 ## License
 
-[MIT](http://g14n.info/mit-licence)
+[MIT](http://g14n.info/mit-licence.html)
 

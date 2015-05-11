@@ -22,20 +22,20 @@ describe('MatrixSpace', function () {
   })
 
   describe('static', function () {
-    it('addition()', function () {
-    })
+    it('addition()'/*, function () {
+    }*/)
 
-    it('subtraction()', function () {
-    })
+    it('subtraction()'/*, function () {
+    }*/)
 
-    it('multiplication()', function () {
-    })
+    it('multiplication()'/*, function () {
+    }*/)
 
-    it('transpose()', function () {
-    })
+    it('transpose()'/*, function () {
+    }*/)
 
-    it('adjoint()', function () {
-    })
+    it('adjoint()'/*, function () {
+    }*/)
   })
 
   describe('Matrix', function () {
@@ -48,20 +48,28 @@ describe('MatrixSpace', function () {
       matrix1.determinant.data.should.be.eql(-1)
     })
 
-    it('addition()', function () {
-    })
+    it('addition()'/*, function () {
+    }*/)
 
-    it('subtraction()', function () {
-    })
+    it('subtraction()'/*, function () {
+    }*/)
 
-    it('multiplication()', function () {
-    })
+    it('multiplication()'/*, function () {
+    }*/)
 
-    it('transpose()', function () {
-    })
+    it('transpose()'/*, function () {
+      var matrix  = new R2x2([1, 2,  3,
+                              4, 5,  6])
 
-    it('adjoint()', function () {
-    })
+      var matrixTransposed = matrix.transpose()
+
+      should.deepEqual(matrixTransposed.data, [1, 4,
+                                               2, 5,
+                                               3, 6])
+    }*/)
+
+    it('adjoint()'/*, function () {
+    }*/)
   })
 })
 

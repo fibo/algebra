@@ -3,6 +3,7 @@ var inherits = require('inherits')
 
 var determinant               = require('./determinant'),
     getIndices                = require('./getIndices'),
+    matrixToArrayIndex        = require('./matrixToArrayIndex'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     Space                     = require('./Space'),
     toData                    = require('./toData'),
@@ -178,6 +179,31 @@ function MatrixSpace (Scalar) {
 
     Matrix.prototype.leftMultiplication = leftMultiplication
     Matrix.prototype.leftMul            = leftMultiplication
+
+    /*
+     *
+     * @returns {Object} transposedMatrix
+     */
+
+    function matrixTransposition () {
+      var data = this.data,
+          transposedData = [],
+          transposedIndices = [numCols, numRows]
+
+      for (var i = 0; i < numRows; i++)
+        for (var j = 0; j < numCols; j++)
+          transposedData.push(data[matrixToArrayIndex(j, i, numCols)])
+
+      var TransposedMatrix = Space(Scalar)(transposedIndices)
+
+      var transposedMatrix = new TransposedMatrix(transposedData)
+
+      return transposedData
+    }
+
+    Matrix.prototype.transpose = matrixTransposition
+    Matrix.prototype.tr        = matrixTransposition
+    Matrix.prototype.t         = matrixTransposition
 
     return Matrix
   }

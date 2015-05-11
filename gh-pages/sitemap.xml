@@ -2,8 +2,8 @@
 layout: null
 ---
 
-<!-- included by http://g14n.info/sitemapindex.xml -->
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- included by http://g14n.info/sitemapindex.xml -->
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
       <loc>{{ site.url }}</loc>

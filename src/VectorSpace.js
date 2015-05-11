@@ -1,7 +1,8 @@
 
 var inherits = require('inherits')
 
-var Space = require('./Space')
+var rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
+    Space                     = require('./Space')
 
 /**
  * Space of vectors
@@ -59,6 +60,65 @@ function VectorSpace (Scalar) {
     }
 
     inherits(Vector, Element)
+
+    /*
+     *
+     */
+
+    function crossProduct (rght) {
+      var rightData      = toData(right),
+          rightDimension = rightData.length,
+          rightIndices   = getIndices(right)
+
+      if (rightDimension !== 3)
+        throw new TypeError('Vector has not the same dimension')
+    }
+
+    // Cross product is defined only in dimension 3.
+    if (dimension === 3) {
+      Vector.prototype.crossProduct = crossProduct
+      Vector.prototype.cross        = crossProduct
+      Vector.prototype.x            = crossProduct
+    }
+
+    /*
+     *
+     */
+
+    function matrixProduct (right) {
+      var rightData    = toData(right),
+          rightIndices = getIndices(right)
+
+      var indices = [1, dimension]
+
+      var data = rowByColumnMultiplication(Scalar, this.data, indices, rightData, rightIndices)
+
+      this.data = data
+
+      return this
+    }
+
+    /*
+     *
+     */
+
+    function scalarProduct (right) {
+      var rightData    = toData(right),
+          rightDimension = rightData.length,
+          rightIndices = getIndices(right)
+
+      if (dimension !== rightData.length)
+        throw new TypeError('Vector has not the same dimension')
+
+    }
+
+    /*
+     *
+     */
+
+    function perScalarProduct () {
+
+    }
 
     // TODO da mettere in metodo tipo addStaticOperators
     Vector.addition    = Element.addition

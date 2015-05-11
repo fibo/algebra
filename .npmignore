@@ -1,3 +1,5 @@
 .travis.yml
 .jshintrc
-_config.yml
+dist/
+npm-debug.log
+gh-pages

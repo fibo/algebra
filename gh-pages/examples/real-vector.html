@@ -2,21 +2,26 @@
 title: Real vector
 ---
 
-```
+<div class="row">
+<div class="col-md-6">
+<code>
 var algebra = require('algebra'),
     should  = require('should')
 
 var V = algebra.VectorSpace,
     R = algebra.Real
-```
+</code>
+</div>
 
-Create a vector space over Real numbers with dimension 2
+<div class="col-md-6">
+<p>Create a vector space over Real numbers with dimension 2.</p>
+</div>
 
-```
-var R2 = new V(R, 2)
-// var R2 = V(R)(2)
+</div>
+<code>
+var R2 = V(R)(2)
 var vector1 = new R2([1, 2])
-```
+</code>
 
 Create few vectors
 

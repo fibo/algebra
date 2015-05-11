@@ -1,4 +1,4 @@
----
+-e ---
 title: algebra
 ---
 # algebra
@@ -7,16 +7,20 @@ title: algebra
 
 [![NPM version](https://badge.fury.io/js/algebra.png)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.png?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.png)](https://gemnasium.com/fibo/algebra)
 
-For more information point your browser to [algebra Homepage](//g14n.info/algebra).
+For more information point your browser to [algebra Homepage](http://g14n.info/algebra).
 
 ## Status
 
-*algebra* is under development. Api can change until version **1.0** but not without a good reason.
+*algebra* is under development.
+Api can change until version **1.0** but not without a good reason.
 
 ## Synopsis
 
 ```
 var algebra = require('algebra');
+
+// Scalars
+////////////////////////////////////////////////////////////////////////////////
 
 var R = algebra.Real;
 
@@ -27,7 +31,8 @@ console.log(R.add(1, 2, 3)); // 1 + 2 + 3 = 6
 var x = new R(2),
     y = new R(-2);
 
-// Operators on objects are mutators. Here x value is modified, multipling it by y value.
+// Operators on objects are mutators.
+// Here x value is modified, multipling it by y value.
 x.mul(y);
 console.log(x.data); // 2 * (-2) = -4
 
@@ -36,7 +41,10 @@ console.log(x.data); // 2 * (-2) = -4
 x.add(6).mul(2).inv();
 console.log(x.data); // ((-4 + 6) * 2)^(-1) = 0.25
 
-// Vectors, Matrices, Tensors
+// Vectors
+////////////////////////////////////////////////////////////////////////////////
+
+// Create vector space of dimension 2 over Reals.
 var R2 = algebra.VectorSpace(R)(2);
 
 // Create two vectors and add them.
@@ -47,12 +55,62 @@ var v2 = new R2([1, -2]);
 v1.add(v2);
 
 console.log(v1.data); // [1, -1]
+
+// Matrices
+////////////////////////////////////////////////////////////////////////////////
+
+// Create space of matrices 3x2 over Reals.
+var R3x2 = algebra.MatrixSpace(R)(3, 2);
+
+// Create a matrix
+//                      | 1 1 |
+//                 m1 = | 0 1 |
+//                      | 1 0 |
+//
+var m1 = new R3x2([1, 1,
+                   0, 1,
+                   1, 0]);
+
+// Multiply m1 by v1, the result is a vector v3 with dimension 3
+// In fact we are multipling a 3 x 2 matrix by a 2 dimensional vector
+// but v1 is traited as a column vector so it is like a 2 x 1 matrix.
+//
+// Then, following the row by column multiplication law we have
+//
+//     3 x 2  by  2 x 1  which gives a   3 x 1
+//         ↑      ↑
+//         +------+----→  by removing the middle indices.
+//
+//                      | 1 1 |
+//       v3 = m1 * v1 = | 0 1 | * [1 , -1] = [0, -1, 1]
+//                      | 1 0 |
+//
+
+var v3 = m1.mul(v1);
+
+console.log(v3.data); // [0, -1, 1])
+
+// But that was not an inner product, so m1 is not mutated.
+
+// Let's try with two square matrices.
+var R2x2 = algebra.MatrixSpace(R)(2, 2);
+
+var m2 = new R2x2([1, 0,
+                   0, 2]),
+    m3 = new R2x2([0, -1,
+                   1, 0]);
+
+m2.mul(m3);
+
+// This is an inner product, so mul is a mutator for m2.
+console.log(m2.data); // [0, -1,
+                      //  2,  0]
+
+// Since m2 is a square matrix we can calculate its determinant.
+console.log(m2.determinant.data); // 2
 ```
 
-## See also 
-
-* [algebra quick start](//g14n.info/algebra/examples/quick-start)
-: A 60 seconds tutorial to get your hands dirty with algebra.
+See also [algebra quick start](http://g14n.info/algebra/examples/quick-start).
 
 ## Installation
 
@@ -64,5 +122,5 @@ $ npm install algebra
 
 ## License
 
-[MIT](//g14n.info/mit-licence)
+[MIT](http://g14n.info/mit-licence)
 

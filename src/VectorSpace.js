@@ -1,8 +1,11 @@
 
 var inherits = require('inherits')
 
-var rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
-    Space                     = require('./Space')
+var getIndices                = require('./getIndices'),
+    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
+    Space                     = require('./Space'),
+    toData                    = require('./toData')
+
 
 /**
  * Space of vectors
@@ -65,13 +68,11 @@ function VectorSpace (Scalar) {
      *
      */
 
-    function crossProduct (rght) {
+    function crossProduct (right) {
       var rightData      = toData(right),
           rightDimension = rightData.length,
           rightIndices   = getIndices(right)
 
-      if (rightDimension !== 3)
-        throw new TypeError('Vector has not the same dimension')
     }
 
     // Cross product is defined only in dimension 3.
@@ -85,42 +86,68 @@ function VectorSpace (Scalar) {
      *
      */
 
-    function matrixProduct (right) {
-      var rightData    = toData(right),
-          rightIndices = getIndices(right)
+    function matrixProduct (matrix) {
+      var matrixData    = toData(matrix),
+          matrixIndices = getIndices(matrix)
 
       var indices = [1, dimension]
 
-      var data = rowByColumnMultiplication(Scalar, this.data, indices, rightData, rightIndices)
+      var data = rowByColumnMultiplication(Scalar, this.data, indices, matrixData, matrixIndices)
 
       this.data = data
 
       return this
     }
 
+    Vector.prototype.matrixProduct = matrixProduct
+
     /*
      *
      */
 
-    function scalarProduct (right) {
-      var rightData    = toData(right),
-          rightDimension = rightData.length,
-          rightIndices = getIndices(right)
+    function scalarProduct (vector) {
+      var data          = this.data,
+          vectorData    = toData(vector),
+          vectorIndices = getIndices(vector)
 
-      if (dimension !== rightData.length)
+      if (dimension !== vectorData.length)
         throw new TypeError('Vector has not the same dimension')
 
+      var result = Scalar.multiplication(data[0], vectorData[0])
+
+      for (var i=1; i<dimension; i++) {
+        result = Scalar.addition(result, Scalar.multiplication(data[i], vectorData[i]))
+      }
+
+      return new Scalar(result)
     }
+
+    Vector.prototype.scalarProduct = scalarProduct
+    Vector.prototype.dotProduct    = scalarProduct
+    Vector.prototype.dot           = scalarProduct
 
     /*
      *
      */
 
-    function perScalarProduct () {
+    function perScalarProduct (scalar) {
+      var data       = this.data,
+          scalarData = toData(scalar)
 
+      for (var i = 0; i < dimension; i++)
+        data[i] = Scalar.mul(data[i], scalarData)
+
+      this.data = data
+
+      return this
     }
 
-    // TODO da mettere in metodo tipo addStaticOperators
+    Vector.prototype.perScalarProduct = perScalarProduct
+
+    /*
+     *
+     */
+
     Vector.addition    = Element.addition
     Vector.add         = Element.addition
     Vector.subtraction = Element.subtraction

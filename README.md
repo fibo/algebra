@@ -11,6 +11,14 @@ For more information point your browser to [algebra Homepage](http://g14n.info/a
 *algebra* is under development.
 Api can change until version **1.0** but not without a good reason.
 
+## Installation
+
+With [npm](https://npmjs.org/) do
+
+```bash
+$ npm install algebra
+```
+
 ## Synopsis
 
 ```
@@ -65,8 +73,8 @@ var R3x2 = algebra.MatrixSpace(R)(3, 2);
 //                      | 1 0 |
 //
 var m1 = new R3x2([1, 1,
-                   0, 1,
-                   1, 0]);
+                  0, 1,
+                  1, 0]);
 
 // Multiply m1 by v1, the result is a vector v3 with dimension 3
 // In fact we are multipling a 3 x 2 matrix by a 2 dimensional vector
@@ -87,15 +95,16 @@ var v3 = m1.mul(v1);
 
 console.log(v3.data); // [0, -1, 1]
 
-// But that was not an inner product, so m1 is not mutated.
+// But that was not a closed operation, so m1 is not mutated: otherwise it would
+// be a matrix that become a vector which does not make sense.
 
 // Let's try with two square matrices.
 var R2x2 = algebra.MatrixSpace(R)(2, 2);
 
 var m2 = new R2x2([1, 0,
-                   0, 2]),
+                  0, 2]),
     m3 = new R2x2([0, -1,
-                   1, 0]);
+                  1, 0]);
 
 m2.mul(m3);
 
@@ -109,13 +118,6 @@ console.log(m2.determinant.data); // 2
 
 See also [algebra quick start](http://g14n.info/algebra/examples/quick-start).
 
-## Installation
-
-With [npm](https://npmjs.org/) do
-
-```bash
-$ npm install algebra
-```
 
 ## License
 

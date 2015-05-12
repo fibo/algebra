@@ -25,6 +25,14 @@ describe('VectorSpace', function () {
     var vector1 = new R2([0, 1]),
         vector2 = new R2([1, 1])
 
+    it('scalarProduct()', function () {
+      var scalar = vector1.scalarProduct(vector2)
+
+      scalar.should.be.instanceOf(Real)
+
+      scalar.data.should.be.eql(1)
+    })
+
     it('norm', function () {
       vector1.norm.data.should.be.eql(1)
       vector2.norm.data.should.be.eql(2)
@@ -39,7 +47,6 @@ describe('VectorSpace', function () {
       vector2.subtraction(vector1)
       vector2.data.should.be.eql([0, -1])
     })
-
   })
 })
 

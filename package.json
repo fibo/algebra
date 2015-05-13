@@ -44,10 +44,6 @@
     "mocha": "^2.2.4",
     "should": "^6.0.1"
   },
-  "engines": {
-    "node": ">=0.8"
-  },
-  "readmeFilename": "README.md",
   "dependencies": {
     "inherits": "~2.0.1",
     "strict-mode": "~0.1.4"

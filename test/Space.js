@@ -1,6 +1,6 @@
 
 var algebra = require('..'),
-    should = require('should')
+    should  = require('should')
 
 var R     = algebra.Real,
     Space = algebra.Space
@@ -23,10 +23,19 @@ describe('Space', function () {
     it('subtraction()', function () {
       R2x2.subtraction([2, 2, 2, 2], [1, 1, 1, 1]).should.eql([1, 1, 1, 1])
     })
+
+    it('scalarMultiplication()'/*, function () {
+      R2.scalarMultiplication([3], 2).should.eql([6])
+      R2x2.scalarMultiplication([1, 2, 3, 4], 2).should.eql([2, 4, 6, 8])
+    }*/)
   })
 
   describe('dimension', function () {
     it('is the product of indices', function () {
+      R2.dimension.should.be.eql(2)
+
+      R2x2.dimension.should.be.eql(4)
+
       R2x3.dimension.should.be.eql(6)
 
       R2x2x2.dimension.should.be.eql(8)

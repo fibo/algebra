@@ -1,9 +1,9 @@
 
 var inherits = require('inherits')
 
-var arrayFrom       = require('./arrayFrom'),
-    AbstractElement = require('./Element'),
-    toData          = require('./toData')
+var arrayFrom = require('./arrayFrom'),
+    Element   = require('./Element'),
+    toData    = require('./toData')
 
 function getResult (dimension, operator, dataArg) {
   var result = dataArg[0]
@@ -33,6 +33,7 @@ function Space (Scalar) {
   // TODO function Dimension (indices, coindices)
   function Dimension (indices) {
 
+    // Attribute dimension is the product of all indices.
     var dimension = indices.reduce(function (a, b) { return a * b }, 1)
 
     /*
@@ -58,7 +59,7 @@ function Space (Scalar) {
     function spaceScalarMultiplication (data, scalar) {
       var result = []
 
-      // Check scalar is ok.
+      // Check if scalar is ok.
       var aScalar = [scalar]
       var scalarOk = aScalar.map(Scalar.contains).map(toData)[0]
 
@@ -87,7 +88,9 @@ function Space (Scalar) {
     }
 
     /*
+     * @param {Array} data
      *
+     * @returns {Boolean}
      */
 
     function contains (data) {
@@ -97,24 +100,24 @@ function Space (Scalar) {
       // TODO spaceIdentity
 
     /**
-      * Space Element
+     * Tensor
      *
      * @param {Array} data
      *
      * @constructor
      */
 
-    function Element (data) {
-      AbstractElement.call(this, data, contains)
+    function Tensor (data) {
+      Element.call(this, data, contains)
 
       Object.defineProperty(this, 'indices', {
-        enumerable: false,
-        value: indices,
-        writable: false
+        enumerable : true,
+        value      : indices,
+        writable   : false
       })
     }
 
-    inherits(Element, AbstractElement)
+    inherits(Tensor, Element)
 
     /**
      *
@@ -123,17 +126,17 @@ function Space (Scalar) {
      * ...
      * @param {Array} dataN
      *
-     * @return this Element with updated data
+     * @returns this Tensor with updated data
      */
 
-    function elementAddition () {
+    function tensorAddition () {
       this.data = spaceAddition(this.data, spaceAddition.apply(null, arguments))
 
       return this
     }
 
-    Element.prototype.addition = elementAddition
-    Element.prototype.add      = elementAddition
+    Tensor.prototype.addition = tensorAddition
+    Tensor.prototype.add      = tensorAddition
 
     /**
      *
@@ -142,47 +145,50 @@ function Space (Scalar) {
      * ...
      * @param {Array} dataN
      *
-     * @return this Element with updated data
+     * @return this Tensor with updated data
      */
 
-    function elementSubtraction () {
+    function tensorSubtraction () {
       this.data = spaceSubtraction(this.data, spaceSubtraction.apply(null, arguments))
 
       return this
     }
 
-    Element.prototype.subtraction = elementSubtraction
-    Element.prototype.sub         = elementSubtraction
+    Tensor.prototype.subtraction = tensorSubtraction
+    Tensor.prototype.sub         = tensorSubtraction
 
     /**
      *
      * @param {Any} scalar
      *
-     * @return this Element with updated data
+     * @return this Tensor with updated data
      */
 
-    function elementScalarMultiplication (scalar) {
+    function tensorScalarMultiplication (scalar) {
       this.data = spaceScalarMultiplication(this.data, scalar)
 
       return this
     }
 
-    Element.prototype.scalarMultiplication = elementScalarMultiplication
-    Element.prototype.scalar               = elementScalarMultiplication
+    Tensor.prototype.scalarMultiplication = tensorScalarMultiplication
+    Tensor.prototype.scalar               = tensorScalarMultiplication
 
     // Static attributes.
-    Element.dimension = dimension
-    Element.indices   = indices
-    Element.Scalar    = Scalar
+    Tensor.dimension = dimension
+    Tensor.indices   = indices
+    Tensor.Scalar    = Scalar
 
-    // Static functions.
-    Element.addition = spaceAddition
-    Element.add      = spaceAddition
+    // Static operators.
+    Tensor.addition             = spaceAddition
+    Tensor.add                  = spaceAddition
 
-    Element.subtraction = spaceSubtraction
-    Element.sub         = spaceSubtraction
+    Tensor.subtraction          = spaceSubtraction
+    Tensor.sub                  = spaceSubtraction
 
-    return Element
+    Tensor.scalarMultiplication = spaceScalarMultiplication
+    Tensor.scalar               = spaceScalarMultiplication
+
+    return Tensor
   }
 
   // Static attribute.

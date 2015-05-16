@@ -1,6 +1,6 @@
 
-var adjointMatrix = require('./adjointMatrix')
-  , matrixToArrayIndex = require('./matrixToArrayIndex')
+var adjointMatrix      = require('./adjointMatrix'),
+    matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
  *
@@ -12,28 +12,29 @@ var adjointMatrix = require('./adjointMatrix')
  */
 
 function determinant (Scalar, data, order) {
-  var adjointData,
-      adjointDeterminant,
-      det,
-      startingCol,
-      startingRow,
-      index
+  var det
 
+  // If order is 2, go for a straight calculation.
+  //
+  //  det | a b | = a * d - c * b
+  //      | c d |
+  //
   if (order === 2) {
-    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]), Scalar.multiplication(data[2], data[1]))
+    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]),
+                             Scalar.multiplication(data[2], data[1]))
 
     return det
   }
 
   // TODO choose best row or column to start from, i.e. the one with more zeros
   // by now we start from first row, and walk by column
-  startingCol = 0
-  startingRow = 0
+  var startingCol = 0,
+      startingRow = 0
 
-  index = matrixToArrayIndex(startingRow, startingCol, order)
 
-  adjointData = adjointMatrix(data, order, order, startingRow, startingCol)
-  adjointDeterminant = determinant(Scalar, adjointData, order - 1)
+  var adjointData        = adjointMatrix(data, order, order, startingRow, startingCol),
+      adjointDeterminant = determinant(Scalar, adjointData, order - 1),
+      index              = matrixToArrayIndex(startingRow, startingCol, order)
 
   det = Scalar.multiplication(data[index], adjointDeterminant)
 

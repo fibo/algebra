@@ -27,7 +27,7 @@ function unique (elements) {
   return true
 }
 
-/**
+/*!
  * Construct a space isomorphic to Zp: the cyclic group of order p, where p is prime.
  *
  * @param {Array|String} elements
@@ -110,7 +110,7 @@ function buildCyclicSpaceOf (elements) {
     operator: operators
   }
 
-  /**
+  /*!
    * Cyclic element.
    */
 

@@ -1,7 +1,7 @@
 
 var matrixToArrayIndex = require('./matrixToArrayIndex')
 
-/**
+/*!
  *
  * @param {Object} Scalar
  * @param {Array} leftMatrix

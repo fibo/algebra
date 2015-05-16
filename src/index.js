@@ -1,6 +1,6 @@
 
-// TODO usa le string ℝ ℂ ℍ
-// usa anche ratio, lib per i numueri razionali
+// TODO use strings ℝ ℂ ℍ
+// usa anche ratio, lib per i numeri razionali
 
 require('strict-mode')(function () {
   exports.Field       = require('./Field')

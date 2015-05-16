@@ -62,6 +62,15 @@ var field = {
 
 /**
  * Complex number.
+ *
+ * ```
+ * var z = new Complex([1, 2]),
+ *     w = new Complex([-2, 8.5]);
+ * ```
+ *
+ * @param {Array} data
+ *
+ * @returns {Object} complex number
  */
 
 function Complex (data) {

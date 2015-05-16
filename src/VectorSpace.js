@@ -23,7 +23,7 @@ var getIndices                = require('./getIndices'),
 
 function VectorSpace (Scalar) {
 
-  /**
+  /*!
    * Dimension
    *
    * @param {Number} dimension
@@ -39,7 +39,7 @@ function VectorSpace (Scalar) {
 
       var data = this.data
 
-      /*
+      /*!
        * Norm of a vector
        *
        * Given v = (x1, x2, ... xN)
@@ -64,7 +64,7 @@ function VectorSpace (Scalar) {
 
     inherits(Vector, Element)
 
-    /*
+    /*!
      *
      */
 
@@ -82,7 +82,7 @@ function VectorSpace (Scalar) {
       Vector.prototype.x            = crossProduct
     }
 
-    /*
+    /*!
      *
      */
 
@@ -101,7 +101,7 @@ function VectorSpace (Scalar) {
 
     Vector.prototype.matrixProduct = matrixProduct
 
-    /*
+    /*!
      *
      */
 
@@ -126,7 +126,7 @@ function VectorSpace (Scalar) {
     Vector.prototype.dotProduct    = scalarProduct
     Vector.prototype.dot           = scalarProduct
 
-    /*
+    /*!
      *
      */
 
@@ -144,7 +144,7 @@ function VectorSpace (Scalar) {
 
     Vector.prototype.perScalarProduct = perScalarProduct
 
-    /*
+    /*!
      *
      */
 

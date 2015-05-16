@@ -1,5 +1,5 @@
 
-/**
+/*!
  * Convert arguments to array
  *
  * ```

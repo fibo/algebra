@@ -1,7 +1,9 @@
 
 var matrixToArrayIndex = require('./matrixToArrayIndex')
 
-/**
+// TODO: check name disambiguation https://en.wikipedia.org/wiki/Adjugate_matrix
+
+/*!
  * Compute the adjoint of a matrix
  *
  * @param {Array} data

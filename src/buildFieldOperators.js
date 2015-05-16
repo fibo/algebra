@@ -2,11 +2,15 @@
 var arrayFrom = require('./arrayFrom'),
     toData    = require('./toData')
 
+/*!
+ */
+
 function buildFieldOperators (field) {
 
   var one  = field.one,
-      zero = field.zero,
-      addition       = field.operator.addition,
+      zero = field.zero
+
+  var addition       = field.operator.addition,
       multiplication = field.operator.multiplication,
       inversion      = field.operator.inversion,
       equal          = field.operator.equal,

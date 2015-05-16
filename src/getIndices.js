@@ -1,13 +1,13 @@
 
 var toData = require('./toData')
 
-/**
-  *
-  *
-  * @param {Array|Any} arg
-  *
-  * @return {Array} indices
-  */
+/*!
+ *
+ *
+ * @param {Array|Any} arg
+ *
+ * @return {Array} indices
+ */
 
 function getIndices (arg) {
   var indices

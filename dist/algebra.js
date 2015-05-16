@@ -413,6 +413,7 @@ var inherits = require('inherits')
 
 var determinant               = require('./determinant'),
     getIndices                = require('./getIndices'),
+    matrixToArrayIndex        = require('./matrixToArrayIndex'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     Space                     = require('./Space'),
     toData                    = require('./toData'),
@@ -589,6 +590,31 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.leftMultiplication = leftMultiplication
     Matrix.prototype.leftMul            = leftMultiplication
 
+    /*
+     *
+     * @returns {Object} transposedMatrix
+     */
+
+    function matrixTransposition () {
+      var data = this.data,
+          transposedData = [],
+          transposedIndices = [numCols, numRows]
+
+      for (var i = 0; i < numRows; i++)
+        for (var j = 0; j < numCols; j++)
+          transposedData.push(data[matrixToArrayIndex(j, i, numCols)])
+
+      var TransposedMatrix = Space(Scalar)(transposedIndices)
+
+      var transposedMatrix = new TransposedMatrix(transposedData)
+
+      return transposedData
+    }
+
+    Matrix.prototype.transpose = matrixTransposition
+    Matrix.prototype.tr        = matrixTransposition
+    Matrix.prototype.t         = matrixTransposition
+
     return Matrix
   }
 
@@ -598,7 +624,7 @@ function MatrixSpace (Scalar) {
 module.exports = MatrixSpace
 
 
-},{"./Space":12,"./VectorSpace":13,"./determinant":19,"./getIndices":20,"./rowByColumnMultiplication.js":24,"./toData":25,"inherits":2}],10:[function(require,module,exports){
+},{"./Space":12,"./VectorSpace":13,"./determinant":19,"./getIndices":20,"./matrixToArrayIndex":22,"./rowByColumnMultiplication.js":24,"./toData":25,"inherits":2}],10:[function(require,module,exports){
 
 var inherits = require('inherits')
 
@@ -756,9 +782,9 @@ module.exports = Scalar
 
 var inherits = require('inherits')
 
-var arrayFrom       = require('./arrayFrom'),
-    AbstractElement = require('./Element'),
-    toData          = require('./toData')
+var arrayFrom = require('./arrayFrom'),
+    Element   = require('./Element'),
+    toData    = require('./toData')
 
 function getResult (dimension, operator, dataArg) {
   var result = dataArg[0]
@@ -788,6 +814,7 @@ function Space (Scalar) {
   // TODO function Dimension (indices, coindices)
   function Dimension (indices) {
 
+    // Attribute dimension is the product of all indices.
     var dimension = indices.reduce(function (a, b) { return a * b }, 1)
 
     /*
@@ -813,7 +840,7 @@ function Space (Scalar) {
     function spaceScalarMultiplication (data, scalar) {
       var result = []
 
-      // Check scalar is ok.
+      // Check if scalar is ok.
       var aScalar = [scalar]
       var scalarOk = aScalar.map(Scalar.contains).map(toData)[0]
 
@@ -842,7 +869,9 @@ function Space (Scalar) {
     }
 
     /*
+     * @param {Array} data
      *
+     * @returns {Boolean}
      */
 
     function contains (data) {
@@ -852,24 +881,24 @@ function Space (Scalar) {
       // TODO spaceIdentity
 
     /**
-      * Space Element
+     * Tensor
      *
      * @param {Array} data
      *
      * @constructor
      */
 
-    function Element (data) {
-      AbstractElement.call(this, data, contains)
+    function Tensor (data) {
+      Element.call(this, data, contains)
 
       Object.defineProperty(this, 'indices', {
-        enumerable: false,
-        value: indices,
-        writable: false
+        enumerable : true,
+        value      : indices,
+        writable   : false
       })
     }
 
-    inherits(Element, AbstractElement)
+    inherits(Tensor, Element)
 
     /**
      *
@@ -878,17 +907,17 @@ function Space (Scalar) {
      * ...
      * @param {Array} dataN
      *
-     * @return this Element with updated data
+     * @returns this Tensor with updated data
      */
 
-    function elementAddition () {
+    function tensorAddition () {
       this.data = spaceAddition(this.data, spaceAddition.apply(null, arguments))
 
       return this
     }
 
-    Element.prototype.addition = elementAddition
-    Element.prototype.add      = elementAddition
+    Tensor.prototype.addition = tensorAddition
+    Tensor.prototype.add      = tensorAddition
 
     /**
      *
@@ -897,47 +926,50 @@ function Space (Scalar) {
      * ...
      * @param {Array} dataN
      *
-     * @return this Element with updated data
+     * @return this Tensor with updated data
      */
 
-    function elementSubtraction () {
+    function tensorSubtraction () {
       this.data = spaceSubtraction(this.data, spaceSubtraction.apply(null, arguments))
 
       return this
     }
 
-    Element.prototype.subtraction = elementSubtraction
-    Element.prototype.sub         = elementSubtraction
+    Tensor.prototype.subtraction = tensorSubtraction
+    Tensor.prototype.sub         = tensorSubtraction
 
     /**
      *
      * @param {Any} scalar
      *
-     * @return this Element with updated data
+     * @return this Tensor with updated data
      */
 
-    function elementScalarMultiplication (scalar) {
+    function tensorScalarMultiplication (scalar) {
       this.data = spaceScalarMultiplication(this.data, scalar)
 
       return this
     }
 
-    Element.prototype.scalarMultiplication = elementScalarMultiplication
-    Element.prototype.scalar               = elementScalarMultiplication
+    Tensor.prototype.scalarMultiplication = tensorScalarMultiplication
+    Tensor.prototype.scalar               = tensorScalarMultiplication
 
     // Static attributes.
-    Element.dimension = dimension
-    Element.indices   = indices
-    Element.Scalar    = Scalar
+    Tensor.dimension = dimension
+    Tensor.indices   = indices
+    Tensor.Scalar    = Scalar
 
-    // Static functions.
-    Element.addition = spaceAddition
-    Element.add      = spaceAddition
+    // Static operators.
+    Tensor.addition             = spaceAddition
+    Tensor.add                  = spaceAddition
 
-    Element.subtraction = spaceSubtraction
-    Element.sub         = spaceSubtraction
+    Tensor.subtraction          = spaceSubtraction
+    Tensor.sub                  = spaceSubtraction
 
-    return Element
+    Tensor.scalarMultiplication = spaceScalarMultiplication
+    Tensor.scalar               = spaceScalarMultiplication
+
+    return Tensor
   }
 
   // Static attribute.
@@ -953,7 +985,11 @@ module.exports = Space
 
 var inherits = require('inherits')
 
-var Space = require('./Space')
+var getIndices                = require('./getIndices'),
+    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
+    Space                     = require('./Space'),
+    toData                    = require('./toData')
+
 
 /**
  * Space of vectors
@@ -1012,7 +1048,90 @@ function VectorSpace (Scalar) {
 
     inherits(Vector, Element)
 
-    // TODO da mettere in metodo tipo addStaticOperators
+    /*
+     *
+     */
+
+    function crossProduct (right) {
+      var rightData      = toData(right),
+          rightDimension = rightData.length,
+          rightIndices   = getIndices(right)
+
+    }
+
+    // Cross product is defined only in dimension 3.
+    if (dimension === 3) {
+      Vector.prototype.crossProduct = crossProduct
+      Vector.prototype.cross        = crossProduct
+      Vector.prototype.x            = crossProduct
+    }
+
+    /*
+     *
+     */
+
+    function matrixProduct (matrix) {
+      var matrixData    = toData(matrix),
+          matrixIndices = getIndices(matrix)
+
+      var indices = [1, dimension]
+
+      var data = rowByColumnMultiplication(Scalar, this.data, indices, matrixData, matrixIndices)
+
+      this.data = data
+
+      return this
+    }
+
+    Vector.prototype.matrixProduct = matrixProduct
+
+    /*
+     *
+     */
+
+    function scalarProduct (vector) {
+      var data          = this.data,
+          vectorData    = toData(vector),
+          vectorIndices = getIndices(vector)
+
+      if (dimension !== vectorData.length)
+        throw new TypeError('Vector has not the same dimension')
+
+      var result = Scalar.multiplication(data[0], vectorData[0])
+
+      for (var i=1; i<dimension; i++) {
+        result = Scalar.addition(result, Scalar.multiplication(data[i], vectorData[i]))
+      }
+
+      return new Scalar(result)
+    }
+
+    Vector.prototype.scalarProduct = scalarProduct
+    Vector.prototype.dotProduct    = scalarProduct
+    Vector.prototype.dot           = scalarProduct
+
+    /*
+     *
+     */
+
+    function perScalarProduct (scalar) {
+      var data       = this.data,
+          scalarData = toData(scalar)
+
+      for (var i = 0; i < dimension; i++)
+        data[i] = Scalar.mul(data[i], scalarData)
+
+      this.data = data
+
+      return this
+    }
+
+    Vector.prototype.perScalarProduct = perScalarProduct
+
+    /*
+     *
+     */
+
     Vector.addition    = Element.addition
     Vector.add         = Element.addition
     Vector.subtraction = Element.subtraction
@@ -1027,7 +1146,7 @@ function VectorSpace (Scalar) {
 module.exports = VectorSpace
 
 
-},{"./Space":12,"inherits":2}],14:[function(require,module,exports){
+},{"./Space":12,"./getIndices":20,"./rowByColumnMultiplication.js":24,"./toData":25,"inherits":2}],14:[function(require,module,exports){
 
 /**
  * Add field operators to Scalar as static methods
@@ -1347,8 +1466,8 @@ module.exports = buildFieldOperators
 
 },{"./arrayFrom":16,"./toData":25}],19:[function(require,module,exports){
 
-var adjointMatrix = require('./adjointMatrix')
-  , matrixToArrayIndex = require('./matrixToArrayIndex')
+var adjointMatrix      = require('./adjointMatrix'),
+    matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
  *
@@ -1360,28 +1479,29 @@ var adjointMatrix = require('./adjointMatrix')
  */
 
 function determinant (Scalar, data, order) {
-  var adjointData,
-      adjointDeterminant,
-      det,
-      startingCol,
-      startingRow,
-      index
+  var det
 
+  // If order is 2, go for a straight calculation.
+  //
+  //  det | a b | = a * d - c * b
+  //      | c d |
+  //
   if (order === 2) {
-    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]), Scalar.multiplication(data[2], data[1]))
+    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]),
+                             Scalar.multiplication(data[2], data[1]))
 
     return det
   }
 
   // TODO choose best row or column to start from, i.e. the one with more zeros
   // by now we start from first row, and walk by column
-  startingCol = 0
-  startingRow = 0
+  var startingCol = 0,
+      startingRow = 0
 
-  index = matrixToArrayIndex(startingRow, startingCol, order)
 
-  adjointData = adjointMatrix(data, order, order, startingRow, startingCol)
-  adjointDeterminant = determinant(Scalar, adjointData, order - 1)
+  var adjointData        = adjointMatrix(data, order, order, startingRow, startingCol),
+      adjointDeterminant = determinant(Scalar, adjointData, order - 1),
+      index              = matrixToArrayIndex(startingRow, startingCol, order)
 
   det = Scalar.multiplication(data[index], adjointDeterminant)
 
@@ -1487,10 +1607,19 @@ module.exports = matrixToArrayIndex
 /**
  * Compute index of multi dim array
  *
+ * Given
+ *
+ * dimensions d_1, d_2, d_3 .. d_n
+ * and
+ * indices i_1, i_2, i_3 .. i_n
+ *
+ * index is computed by formula
+ * index = i_n + i_(n-1) * d_n + i_(n-2) * d_n * d_(n-1) + ... + i_2 * d_n * d_(n-1) * ... * d_3 + i_1 * d_n * ... * d_2
+ *
  * @param {Array} dimensions
  * @param {Array} indices
  *
- * @return {Number} index
+ * @returns {Number} index
  */
 
 function multiDimensionalArrayIndex(dimensions, indices) {
@@ -1510,14 +1639,6 @@ function multiDimensionalArrayIndex(dimensions, indices) {
     index += factor * indices[l - i]
   }
 
-  // Given
-  //
-  // dimensions d_1, d_2, d_3 .. d_n
-  // and
-  // indices i_1, i_2, i_3 .. i_n
-  //
-  // index is computed by formula
-  // index = i_n + i_(n-1) * d_n + i_(n-2) * d_n * d_(n-1) + ... + i_2 * d_n * d_(n-1) * ... * d_3 + i_1 * d_n * ... * d_2
   return index
 }
 

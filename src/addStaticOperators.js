@@ -1,5 +1,5 @@
 
-/**
+/*!
  * Add field operators to Scalar as static methods
  *
  * @param {Object} Scalar class

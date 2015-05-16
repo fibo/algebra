@@ -1,11 +1,11 @@
 
-/**
-  * Extract data attribute, if any, and check it
-  *
-  * @param {Object|Any} arg
-  *
-  * @return {Any} data
-  */
+/*!
+ * Extract data attribute, if any, and check it
+ *
+ * @param {Object|Any} arg
+ *
+ * @return {Any} data
+ */
 
 function toData (arg) {
   var data

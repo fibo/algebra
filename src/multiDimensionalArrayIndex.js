@@ -1,5 +1,5 @@
 
-/**
+/*!
  * Compute index of multi dim array
  *
  * Given

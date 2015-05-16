@@ -1,7 +1,7 @@
 
 var multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')
 
-/**
+/*!
  *
  * @param {Number} i row
  * @param {Number} j column

@@ -2,13 +2,13 @@
 var adjointMatrix      = require('./adjointMatrix'),
     matrixToArrayIndex = require('./matrixToArrayIndex')
 
-/**
+/*!
  *
  * @param {Object} Scalar
  * @param {Array} data
  * @param {Number} order
  *
- * @return {Any} det
+ * @returns {Any} det
  */
 
 function determinant (Scalar, data, order) {

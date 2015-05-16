@@ -19,6 +19,12 @@ With [npm](https://npmjs.org/) do
 $ npm install algebra
 ```
 
+With [bower](http://bower.io/) do
+
+```bash
+$ bower install algebra
+```
+
 ## Synopsis
 
 ```

@@ -8,6 +8,12 @@ var fieldOperator,
     one,
     zero
 
+/**
+ *
+ * @param {Object} field
+ * @param {Any} data
+ */
+
 function Scalar (field, data) {
   fieldOperator = buildFieldOperators(field)
   one  = field.one

@@ -37,6 +37,15 @@ var field = {
 
 /**
  * Real number.
+ *
+ * ```
+ * var x = new Real(1.5),
+ *     y = new Real(-20);
+ * ```
+ *
+ * @param {Number} data
+ *
+ * @returns {Object} real number
  */
 
 function Real (data) {

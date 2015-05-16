@@ -1,19 +1,33 @@
 ---
-title: Api
+title: API
 layout: page
 ---
-{% for dox in site.data.dox %}
+{% comment %}
+                 Loop over all objects in _data/dox.json, ignoring private comments.
+{% endcomment %}
+{% assign doxes = site.data.dox | where:'ignore', false %}
+{% for dox in doxes %}
   <div class="panel panel-default">
     <div class="panel-heading">{{ dox.ctx.name }}</div>
     <div class="panel-body">{{ dox.description.full }}</div>
     <div class="panel-footer">
       <dl>
-        {% for tag in dox.tags where "type","params" %}
-	<dt><strong>@param</strong> {{ tag.name }} <span class="label label-default">{{ tag.types | join: ',' }}</span></dt><dd>tag.description</dd>
+        {% comment %}
+                         Loop over all @param tags.
+        {% endcomment %}
+        {% assign params = dox.tags | where:'type', 'param' %}
+        {% for param in params %}
+          <dt><strong>@param</strong> {{ param.name }} <span class="label label-default">{{ param.types | join: ',' }}</span></dt>
+          <dd>{{ param.description }}</dd>
         {% endfor %}
-        {% for tag in dox.tags where "type","returns" %}
-	<dt><strong>@returns </strong> {{ tag.name }} <span class="label label-default">{{ tag.types | join: ',' }}</span></dt><dd>tag.description</dd>
-        {% endfor %}
+        {% comment %}
+                         Get @returns tag.
+        {% endcomment %}
+        {% assign returns = dox.tags | where:'type', 'returns' | first %}
+        {% if returns != null %}
+          <dt><strong>@returns </strong> {{ returns.name }} <span class="label label-default">{{ returns.types | join: ',' }}</span></dt>
+          <dd>{{ returns.description }}</dd>
+        {% endif %}
       </dl>
     </div>
   </div>

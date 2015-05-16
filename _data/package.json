@@ -5,7 +5,7 @@
     "name": "fibo",
     "url": "http://g14n.info"
   },
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,9 @@
     "gh-pages:push": "git subtree --prefix gh-pages push origin gh-pages",
     "gh-pages:pull": "git subtree --prefix gh-pages pull origin gh-pages",
     "jekyll": "npm run homepage; npm run gh-pages:_data; cd gh-pages; jekyll build; cd ..",
+    "istanbul": "istanbul cover _mocha",
+    "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
+    "coverage": "npm run istanbul && npm run coveralls",
     "test": "mocha --bail --require should --reporter min --recursive",
     "browserify": "browserify -s $npm_package_name -e index.js -o dist/${npm_package_name}.js",
     "build": "npm test && npm run browserify",
@@ -35,19 +38,20 @@
   "license": [
     {
       "type": "MIT",
-      "url": "http://g14n.info/mit-license"
+      "url": "http://g14n.info/mit-license.html"
     }
   ],
   "devDependencies": {
     "browserify": "^10.1.3",
+    "coveralls": "^2.11.2",
     "dox": "^0.7.1",
+    "install": "^0.1.8",
+    "istanbul": "^0.3.14",
     "mocha": "^2.2.4",
+    "mocha-lcov-reporter": "0.0.2",
+    "npm": "^2.9.1",
     "should": "^6.0.1"
   },
-  "engines": {
-    "node": ">=0.8"
-  },
-  "readmeFilename": "README.md",
   "dependencies": {
     "inherits": "~2.0.1",
     "strict-mode": "~0.1.4"

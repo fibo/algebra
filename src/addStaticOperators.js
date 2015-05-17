@@ -2,6 +2,8 @@
 /*!
  * Add field operators to Scalar as static methods
  *
+ * @function
+ *
  * @param {Object} Scalar class
  * @param {Object} field
  */

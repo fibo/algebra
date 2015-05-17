@@ -1,6 +1,6 @@
 
 /*!
- * Convert arguments to array
+ * Converts arguments to array
  *
  * ```
  * function () {
@@ -12,15 +12,22 @@
  * }
  * ```
  *
+ * @function
+ *
  * @param {Object} arguments of a function
  *
- * @return {Array} array of arguments
+ * @returns {Array} array of arguments
  */
 
 function arrayFrom () {
-  return (function arraySlice0 () {
-    return Array.prototype.slice.call(arguments, 0)
-  }).apply(null, arguments[0])
+  return arraySlice0.apply(null, arguments[0])
+}
+
+/*!
+ */
+
+function arraySlice0 () {
+  return Array.prototype.slice.call(arguments, 0)
 }
 
 module.exports = arrayFrom

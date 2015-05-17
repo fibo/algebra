@@ -8,15 +8,33 @@ var addStaticOperators  = require('./addStaticOperators'),
 var zero = 0
   , one  = 1
 
+/*!
+ */
+
 function addition (a, b) { return a + b }
+
+/*!
+ */
 
 function multiplication (a, b) { return a * b }
 
+/*!
+ */
+
 function inversion (a) { return one / a }
+
+/*!
+ */
 
 function negation (a) { return - a }
 
+/*!
+ */
+
 function equal (a, b) { return a === b }
+
+/*!
+ */
 
 function contains (a) { return typeof a === 'number' }
 
@@ -43,9 +61,9 @@ var field = {
  *     y = new Real(-20);
  * ```
  *
- * @param {Number} data
+ * @class
  *
- * @returns {Object} real number
+ * @param {Number} data
  */
 
 function Real (data) {

@@ -1,15 +1,15 @@
 
 var should = require('should')
 
-/**
+/*!
  * Check if unary operator is static
  *
  * @param {Object} Scalar
  * @param {String} operator name
- * @param {Any} operand
- * @param {Any} result
+ * @param {*} operand
+ * @param {*} result
  *
- * @return {Function} staticUnaryOperatorTest
+ * @returns {Function} staticUnaryOperatorTest
  */
 
 function staticUnaryOperator (Scalar, operator, operand, result) {

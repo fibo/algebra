@@ -2,9 +2,9 @@
 /*!
  * Extract data attribute, if any, and check it
  *
- * @param {Object|Any} arg
+ * @param {*} arg
  *
- * @return {Any} data
+ * @returns {*} data
  */
 
 function toData (arg) {

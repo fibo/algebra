@@ -16,9 +16,11 @@ var getIndices                = require('./getIndices'),
  * var v = new V([1, 2])
  * ```
  *
+ * @function
+ *
  * @param {Object} Scalar
  *
- * @return {Function} Dimension
+ * @returns {Function} Dimension
  */
 
 function VectorSpace (Scalar) {
@@ -32,12 +34,19 @@ function VectorSpace (Scalar) {
    */
 
   function Dimension (dimension) {
-    var Element = Space(Scalar)([dimension])
+    var indices = [dimension]
 
-    function Vector () {
-      Element.apply(this, arguments)
+    var Element = Space(Scalar)(indices)
 
-      var data = this.data
+    /**
+     *
+     * @class
+     *
+     * @param {*} data
+     */
+
+    function Vector (data) {
+      Element.call(this, data)
 
       /*!
        * Norm of a vector

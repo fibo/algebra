@@ -9,10 +9,6 @@ var VectorSpace = algebra.VectorSpace
 describe('VectorSpace', function () {
   var R2 = VectorSpace(Real)(2)
 
-  it('has signature (Scalar)(dimension)'/*, function () {
-    R2.dimension = 2
-  }*/)
-
   describe('static', function () {
     it('addition', function () {
       var data = R2.addition([0, 2], [-1, 3])

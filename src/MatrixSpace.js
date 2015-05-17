@@ -12,6 +12,8 @@ var determinant               = require('./determinant'),
 /**
  * Space of m x n matrices
  *
+ * @class
+ *
  * @param {Object} Scalar
  * @param {Number} numRows
  * @param {Number} numCols

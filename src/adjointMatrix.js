@@ -6,13 +6,15 @@ var matrixToArrayIndex = require('./matrixToArrayIndex')
 /*!
  * Compute the adjoint of a matrix
  *
+ * @function
+ *
  * @param {Array} data
  * @param {Number} numRows
  * @param {Number} numCols
  * @param {Number} row
  * @param {Number} col
  *
- * @return {Array} adjoint
+ * @returns {Array} adjoint
  */
 
 function adjointMatrix (data, numRows, numCols, row, col) {

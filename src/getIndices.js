@@ -2,7 +2,9 @@
 var toData = require('./toData')
 
 /*!
+ * Extract indices attribute, if any
  *
+ * @function
  *
  * @param {Array|Any} arg
  *

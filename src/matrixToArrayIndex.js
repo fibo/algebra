@@ -2,12 +2,14 @@
 var multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')
 
 /*!
+ * Convert a pair of indices to a 1-dimensional index
  *
+ * @function
  * @param {Number} i row
  * @param {Number} j column
  * @param {Number} numberOfColumns
  *
- * @return {Number} index
+ * @returns {Number} index
  */
 
 function matrixToArrayIndex(i, j, numberOfColumns) {

@@ -3,6 +3,9 @@ var adjointMatrix      = require('./adjointMatrix'),
     matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /*!
+ * Computes the determinant of a matrix
+ *
+ * @function
  *
  * @param {Object} Scalar
  * @param {Array} data

@@ -1,16 +1,16 @@
 
 var should = require('should')
 
-/**
+/*!
  * Check if binary operator is static
  *
  * @param {Object} Scalar
  * @param {String} operator name
- * @param {Any} operand1
- * @param {Any} operand2
- * @param {Any} result
+ * @param {*} operand1
+ * @param {*} operand2
+ * @param {*} result
  *
- * @return {Function} staticBinaryOperatorTest
+ * @returns {Function} staticBinaryOperatorTest
  */
 
 function staticBinaryOperator (Scalar, operator, operand1, operand2, result) {

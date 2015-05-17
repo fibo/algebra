@@ -6,6 +6,8 @@ var Space = require('./Space')
 /**
  * Space of tensors
  *
+ * @class
+ *
  * @param {Object} Scalar
  * @param {Array} controvariant indices
  * @param {Array} covariant indices

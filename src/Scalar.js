@@ -9,6 +9,9 @@ var fieldOperator,
     zero
 
 /**
+ * Element of a field.
+ *
+ * @class
  *
  * @param {Object} field
  * @param {Any} data
@@ -27,6 +30,9 @@ inherits(Scalar, Element)
 Scalar.one  = one
 Scalar.zero = zero
 
+/*!
+ */
+
 function scalarAddition () {
   var fieldAddition = fieldOperator.addition
 
@@ -37,6 +43,9 @@ function scalarAddition () {
 
 Scalar.prototype.addition = scalarAddition
 Scalar.prototype.add      = scalarAddition
+
+/*!
+ */
 
 function scalarSubtraction () {
   var fieldSubtraction = fieldOperator.subtraction
@@ -49,6 +58,9 @@ function scalarSubtraction () {
 Scalar.prototype.subtraction = scalarSubtraction
 Scalar.prototype.sub         = scalarSubtraction
 
+/*!
+ */
+
 function scalarMultiplication () {
   var fieldMultiplication = fieldOperator.multiplication
 
@@ -59,6 +71,9 @@ function scalarMultiplication () {
 
 Scalar.prototype.multiplication = scalarMultiplication
 Scalar.prototype.mul            = scalarMultiplication
+
+/*!
+ */
 
 function scalarDivision () {
   var fieldDivision = fieldOperator.division
@@ -71,6 +86,9 @@ function scalarDivision () {
 Scalar.prototype.division = scalarDivision
 Scalar.prototype.div      = scalarDivision
 
+/*!
+ */
+
 function scalarInversion () {
   var fieldInversion = fieldOperator.inversion
 
@@ -82,6 +100,9 @@ function scalarInversion () {
 Scalar.prototype.inversion = scalarInversion
 Scalar.prototype.inv       = scalarInversion
 
+/*!
+ */
+
 function scalarEqual () {
   var fieldEqual = fieldOperator.equal
 
@@ -90,6 +111,9 @@ function scalarEqual () {
 
 Scalar.prototype.equal = scalarEqual
 Scalar.prototype.eq    = scalarEqual
+
+/*!
+ */
 
 function scalarNegation () {
   var fieldNegation = fieldOperator.negation
@@ -103,3 +127,4 @@ Scalar.prototype.negation = scalarNegation
 Scalar.prototype.neg      = scalarNegation
 
 module.exports = Scalar
+

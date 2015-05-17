@@ -5,6 +5,9 @@ var arrayFrom = require('./arrayFrom'),
     Element   = require('./Element'),
     toData    = require('./toData')
 
+/*!
+ */
+
 function getResult (dimension, operator, dataArg) {
   var result = dataArg[0]
 
@@ -20,12 +23,12 @@ function getResult (dimension, operator, dataArg) {
 }
 
 /**
- * Abstract multidimensional space
+ * Abstract multidimensional space.
+ *
+ * @class
  *
  * @param {Object} Scalar
  * @param {Array} indices
- *
- * @constructor
  */
 
 function Space (Scalar) {
@@ -36,7 +39,7 @@ function Space (Scalar) {
     // Attribute dimension is the product of all indices.
     var dimension = indices.reduce(function (a, b) { return a * b }, 1)
 
-    /*
+    /*!
      *
      */
 
@@ -44,7 +47,7 @@ function Space (Scalar) {
       return getResult(dimension, Scalar.addition, arrayFrom(arguments).map(toData))
     }
 
-    /*
+    /*!
      *
      */
 
@@ -52,7 +55,7 @@ function Space (Scalar) {
       return getResult(dimension, Scalar.subtraction, arrayFrom(arguments).map(toData))
     }
 
-    /*
+    /*!
      *
      */
 
@@ -71,7 +74,7 @@ function Space (Scalar) {
       return result
     }
 
-    /*
+    /*!
      *
      */
 
@@ -87,7 +90,8 @@ function Space (Scalar) {
       return result
     }
 
-    /*
+    /*!
+     *
      * @param {Array} data
      *
      * @returns {Boolean}
@@ -102,9 +106,9 @@ function Space (Scalar) {
     /**
      * Tensor
      *
-     * @param {Array} data
+     * @class
      *
-     * @constructor
+     * @param {Array} data
      */
 
     function Tensor (data) {
@@ -121,10 +125,7 @@ function Space (Scalar) {
 
     /**
      *
-     * @param {Array} data1
-     * @param {Array} data2
-     * ...
-     * @param {Array} dataN
+     * @param {...Array} data
      *
      * @returns this Tensor with updated data
      */
@@ -140,12 +141,9 @@ function Space (Scalar) {
 
     /**
      *
-     * @param {Array} data1
-     * @param {Array} data2
-     * ...
-     * @param {Array} dataN
+     * @param {...Array} data
      *
-     * @return this Tensor with updated data
+     * @returns this Tensor with updated data
      */
 
     function tensorSubtraction () {
@@ -159,9 +157,9 @@ function Space (Scalar) {
 
     /**
      *
-     * @param {Any} scalar
+     * @param {*} scalar
      *
-     * @return this Tensor with updated data
+     * @returns this Tensor with updated data
      */
 
     function tensorScalarMultiplication (scalar) {

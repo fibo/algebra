@@ -8,11 +8,11 @@ var arrayFrom = require('./arrayFrom'),
 /*!
  * Algebra field
  *
+ * @class
+ *
  * @param {Any} zero
  * @param {Any} one
  * @param {Object} operators
- *
- * @returns {Object} field
  */
 
 function Field (zero, one, operators) {
@@ -31,17 +31,29 @@ function Field (zero, one, operators) {
 
   self.contains = contains
 
+  /*!
+   */
+
   function subtraction (data1, data2) {
     return addition(data1, negation(data2))
   }
+
+  /*!
+   */
 
   function notEqual (data1, data2) {
     return (! (operators.equal(data1, data2)))
   }
 
+  /*!
+   */
+
   function division (data1, data2) {
     return multiplication(data1, inversion(data2))
   }
+
+  /*!
+   */
 
   function checkIsNotZero (data) {
     if (equal(zero, data))

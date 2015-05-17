@@ -1,6 +1,2507 @@
 [
   {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 11,
+    "codeStart": 14,
+    "code": "function addition (z, w) {\n  return [z[0] + w[0], z[1] + w[1]]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "addition",
+      "string": "addition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 18,
+    "codeStart": 21,
+    "code": "function multiplication (z, w) {\n  return [z[0] * w[0] - z[1] * w[1], z[1] * w[0] + z[0] * w[1]]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "multiplication",
+      "string": "multiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 25,
+    "codeStart": 28,
+    "code": "function conjugation (z) {\n  // z~ = (z0 + i z1)~\n  //    = z0 - i z1\n  return [z[0], - z[1]]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "conjugation",
+      "string": "conjugation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 34,
+    "codeStart": 37,
+    "code": "function norm (z) {\n  // |z| = |z0 + i z1|\n  //     = z0 * z0 + z1 * z1\n  return z[0] * z[0] + z[1] * z[1]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "norm",
+      "string": "norm()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 43,
+    "codeStart": 46,
+    "code": "function inversion (z) {\n  // z^-1 = z~ * 1 / |z|\n  return multiplication(conjugation(z), [1 / norm(z), 0])\n}",
+    "ctx": {
+      "type": "function",
+      "name": "inversion",
+      "string": "inversion()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 51,
+    "codeStart": 54,
+    "code": "function equal (z, w) {\n  return ((z[0] === w[0]) && (z[1] === w[1]))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "equal",
+      "string": "equal()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 58,
+    "codeStart": 61,
+    "code": "function contains (z) {\n  return (typeof z[0] === 'number') && (typeof z[1] === 'number')\n}",
+    "ctx": {
+      "type": "function",
+      "name": "contains",
+      "string": "contains()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 65,
+    "codeStart": 68,
+    "code": "function negation (z) {\n  return [-z[0], -z[1]]\n}\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
+    "ctx": {
+      "type": "function",
+      "name": "negation",
+      "string": "negation()"
+    }
+  },
+  {
     "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Array} data",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array} data</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Complex number.</p><pre><code>var z = new Complex([1, 2]),\n    w = new Complex([-2, 8.5]);\n</code></pre>",
+      "summary": "<p>Complex number.</p>",
+      "body": "<pre><code>var z = new Complex([1, 2]),\n    w = new Complex([-2, 8.5]);\n</code></pre>"
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 87,
+    "codeStart": 100,
+    "code": "function Complex (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Complex, Scalar)\n\naddStaticOperators(Complex, buildFieldOperators(field))",
+    "ctx": {
+      "type": "function",
+      "name": "Complex",
+      "string": "Complex()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 108,
+    "codeStart": 111,
+    "code": "function fieldConjugation (z) {\n  return conjugation(z)\n}",
+    "ctx": {
+      "type": "function",
+      "name": "fieldConjugation",
+      "string": "fieldConjugation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 115,
+    "codeStart": 118,
+    "code": "function scalarConjugation (z) {\n  this.data = fieldConjugation(this.data)\n\n  return this\n}\n\nComplex.prototype.conjugation = scalarConjugation\nComplex.prototype.conj        = scalarConjugation\n\n// Add conjugation as a static operator.\nComplex.conjugation = fieldConjugation\nComplex.conj        = fieldConjugation\n\nmodule.exports = Complex",
+    "ctx": {
+      "type": "function",
+      "name": "scalarConjugation",
+      "string": "scalarConjugation()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Any} data",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Any"
+        ],
+        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Any} data</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Function} check",
+        "name": "check",
+        "description": "",
+        "types": [
+          "Function"
+        ],
+        "typesDescription": "<code>Function</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Function} check</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Abstract element</p>",
+      "summary": "<p>Abstract element</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": true,
+    "line": 134,
+    "codeStart": 143,
+    "code": "function Element (data, check) {\n  if (check(data))\n    this.data = data\n  else\n    throw new TypeError('Invalid data:', data)\n}",
+    "ctx": {
+      "type": "function",
+      "name": "Element",
+      "string": "Element()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 150,
+    "codeStart": 153,
+    "code": "function valueOf () {\n  return this.data\n}\n\nElement.prototype.valueOf = valueOf\n\nmodule.exports = Element\n\n\nvar inherits = require('inherits')\n\nvar arrayFrom = require('./arrayFrom'),\n    Element   = require('./Element'),\n    toData    = require('./toData')",
+    "ctx": {
+      "type": "function",
+      "name": "valueOf",
+      "string": "valueOf()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Any} zero",
+        "name": "zero",
+        "description": "",
+        "types": [
+          "Any"
+        ],
+        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Any} zero</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Any} one",
+        "name": "one",
+        "description": "",
+        "types": [
+          "Any"
+        ],
+        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Any} one</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Object} operators",
+        "name": "operators",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} operators</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Algebra field</p>",
+      "summary": "<p>Algebra field</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": true,
+    "line": 168,
+    "codeStart": 178,
+    "code": "function Field (zero, one, operators) {\n  var self = this\n\n  self.zero = zero\n  self.one  = one\n\n\n  var addition       = operators.addition,\n      contains       = operators.contains,\n      equal          = operators.equal,\n      inversion      = operators.inversion,\n      multiplication = operators.multiplication,\n      negation       = operators.negation\n\n  self.contains = contains",
+    "ctx": {
+      "type": "function",
+      "name": "Field",
+      "string": "Field()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 194,
+    "codeStart": 197,
+    "code": "function subtraction (data1, data2) {\n  return addition(data1, negation(data2))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "subtraction",
+      "string": "subtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 201,
+    "codeStart": 204,
+    "code": "function notEqual (data1, data2) {\n  return (! (operators.equal(data1, data2)))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "notEqual",
+      "string": "notEqual()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 208,
+    "codeStart": 211,
+    "code": "function division (data1, data2) {\n  return multiplication(data1, inversion(data2))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "division",
+      "string": "division()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 215,
+    "codeStart": 218,
+    "code": "function checkIsNotZero (data) {\n  if (equal(zero, data))\n    throw new TypeError(data)\n\n  return data\n}",
+    "ctx": {
+      "type": "function",
+      "name": "checkIsNotZero",
+      "string": "checkIsNotZero()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Static addition operator</p>",
+      "summary": "<p>Static addition operator</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 225,
+    "codeStart": 229,
+    "code": "function fieldAddition () {\n  return arrayFrom(arguments).map(toData).reduce(addition)\n}\n\nself.addition = fieldAddition",
+    "ctx": {
+      "type": "function",
+      "name": "fieldAddition",
+      "string": "fieldAddition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Static subtraction operator</p>",
+      "summary": "<p>Static subtraction operator</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 235,
+    "codeStart": 239,
+    "code": "function fieldSubtraction () {\n  return arrayFrom(arguments).map(toData).reduce(subtraction)\n}\n\nself.subtraction = fieldSubtraction",
+    "ctx": {
+      "type": "function",
+      "name": "fieldSubtraction",
+      "string": "fieldSubtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Static multiplication operator</p>",
+      "summary": "<p>Static multiplication operator</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 245,
+    "codeStart": 249,
+    "code": "function fieldMultiplication () {\n  return arrayFrom(arguments).map(toData).reduce(multiplication)\n}\n\nself.multiplication = fieldMultiplication",
+    "ctx": {
+      "type": "function",
+      "name": "fieldMultiplication",
+      "string": "fieldMultiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Static division operator</p>",
+      "summary": "<p>Static division operator</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 255,
+    "codeStart": 259,
+    "code": "function fieldDivision () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)\n}\n\nself.division = fieldDivision",
+    "ctx": {
+      "type": "function",
+      "name": "fieldDivision",
+      "string": "fieldDivision()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Static inversion operator</p>",
+      "summary": "<p>Static inversion operator</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 265,
+    "codeStart": 269,
+    "code": "function fieldInversion () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(inversion)\n}\n\nself.inversion = fieldInversion",
+    "ctx": {
+      "type": "function",
+      "name": "fieldInversion",
+      "string": "fieldInversion()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Static equal operator</p>",
+      "summary": "<p>Static equal operator</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 275,
+    "codeStart": 279,
+    "code": "function fieldEqual () {\n  return arrayFrom(arguments).map(toData).reduce(equal)\n}\n\nself.equal = fieldEqual",
+    "ctx": {
+      "type": "function",
+      "name": "fieldEqual",
+      "string": "fieldEqual()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Static negation operator</p>",
+      "summary": "<p>Static negation operator</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 285,
+    "codeStart": 289,
+    "code": "function fieldNegation () {\n  return operators.negation(toData(arguments[0]))\n}\n\nself.negation = fieldNegation",
+    "ctx": {
+      "type": "function",
+      "name": "fieldNegation",
+      "string": "fieldNegation()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Any} data\n",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Any"
+        ],
+        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Any} data</p>"
+      },
+      {
+        "type": "return",
+        "string": "{Object} this",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>this</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Scalar element</p>",
+      "summary": "<p>Scalar element</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 295,
+    "codeStart": 303,
+    "code": "function Scalar (data) {\n  Element.call(this, data, self.contains)\n}\n\ninherits(Scalar, Element)",
+    "ctx": {
+      "type": "function",
+      "name": "Scalar",
+      "string": "Scalar()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 309,
+    "codeStart": 312,
+    "code": "function scalarAddition () {\n  this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.addition = scalarAddition\nScalar.prototype.add      = scalarAddition",
+    "ctx": {
+      "type": "function",
+      "name": "scalarAddition",
+      "string": "scalarAddition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 321,
+    "codeStart": 324,
+    "code": "function scalarSubtraction () {\n  this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.subtraction = scalarSubtraction\nScalar.prototype.sub         = scalarSubtraction",
+    "ctx": {
+      "type": "function",
+      "name": "scalarSubtraction",
+      "string": "scalarSubtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 333,
+    "codeStart": 336,
+    "code": "function scalarMultiplication () {\n  this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.multiplication = scalarMultiplication\nScalar.prototype.mul = scalarMultiplication",
+    "ctx": {
+      "type": "function",
+      "name": "scalarMultiplication",
+      "string": "scalarMultiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 345,
+    "codeStart": 348,
+    "code": "function scalarDivision () {\n  this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.division = scalarDivision\nScalar.prototype.div = scalarDivision",
+    "ctx": {
+      "type": "function",
+      "name": "scalarDivision",
+      "string": "scalarDivision()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 357,
+    "codeStart": 360,
+    "code": "function scalarInversion () {\n  this.data = fieldInversion(this.data, fieldInversion.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.inversion = scalarInversion\nScalar.prototype.inv       = scalarInversion",
+    "ctx": {
+      "type": "function",
+      "name": "scalarInversion",
+      "string": "scalarInversion()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 369,
+    "codeStart": 372,
+    "code": "function scalarEqual () {\n  return fieldEqual(this.data, fieldEqual.apply(null, arguments))\n}\n\nScalar.prototype.equal = scalarEqual\nScalar.prototype.eq = scalarEqual",
+    "ctx": {
+      "type": "function",
+      "name": "scalarEqual",
+      "string": "scalarEqual()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 379,
+    "codeStart": 382,
+    "code": "function scalarNegation () {\n  this.data = fieldNegation(this.data)\n\n  return this\n}\n\nScalar.prototype.negation = scalarNegation\nScalar.prototype.neg = scalarNegation\n\nself.Scalar = Scalar\n}\n\nmodule.exports = Field\n\n\nvar inherits = require('inherits')\n\nvar determinant               = require('./determinant'),\n  getIndices                = require('./getIndices'),\n  matrixToArrayIndex        = require('./matrixToArrayIndex'),\n  rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n  Space                     = require('./Space'),\n  toData                    = require('./toData'),\n  VectorSpace               = require('./VectorSpace')",
+    "ctx": {
+      "type": "function",
+      "name": "scalarNegation",
+      "string": "scalarNegation()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Object} Scalar",
+        "name": "Scalar",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} Scalar</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Number} numRows",
+        "name": "numRows",
+        "description": "",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Number} numRows</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Number} numCols",
+        "name": "numCols",
+        "description": "",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Number} numCols</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Space of m x n matrices</p>",
+      "summary": "<p>Space of m x n matrices</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 407,
+    "codeStart": 417,
+    "code": "function MatrixSpace (Scalar) {\n  var self = this",
+    "ctx": {
+      "type": "function",
+      "name": "MatrixSpace",
+      "string": "MatrixSpace()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Number} numRows",
+        "name": "numRows",
+        "description": "",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Number} numRows</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Number} numCols which is optional: defaults to a square matrix.\n",
+        "name": "numCols",
+        "description": "<p>which is optional: defaults to a square matrix. </p>",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false
+      },
+      {
+        "type": "return",
+        "string": "{Constructor} Matrix",
+        "types": [
+          "Constructor"
+        ],
+        "typesDescription": "<a href=\"Constructor.html\">Constructor</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>Matrix</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Dimension</p>",
+      "summary": "<p>Dimension</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 420,
+    "codeStart": 429,
+    "code": "function Dimension (numRows, numCols) {\n  var isSquare = false\n\n  if (typeof numCols === 'undefined') {\n    // numCols defaults to numRows\n    numCols = numRows\n\n    isSquare = true\n  }\n\n  var indices = [numRows, numCols]\n\n  var Element = Space(Scalar)(indices)",
+    "ctx": {
+      "type": "function",
+      "name": "Dimension",
+      "string": "Dimension()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 443,
+    "codeStart": 447,
+    "code": "function Matrix () {\n  Element.apply(this, arguments)",
+    "ctx": {
+      "type": "function",
+      "name": "Matrix",
+      "string": "Matrix()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 450,
+    "codeStart": 454,
+    "code": "function matrixDeterminant () {\n  var det = determinant(Scalar, this.data, numRows)\n\n  return new Scalar(det)\n}\n\nif (isSquare) {\n  Object.defineProperty(this, 'determinant', {get: matrixDeterminant})\n  Object.defineProperty(this, 'det', {get: matrixDeterminant})\n}\n    }\n\n    inherits(Matrix, Element)\n\n    // Static attributes.\n    Matrix.isSquare = isSquare\n    Matrix.numRows  = numRows\n    Matrix.numCols  = numCols",
+    "ctx": {
+      "type": "function",
+      "name": "matrixDeterminant",
+      "string": "matrixDeterminant()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 473,
+    "codeStart": 476
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 477,
+    "codeStart": 481,
+    "code": "function matrixAddition (matrix) {\n  this.data = space.addition(this.data, matrix)\n\n  return this\n}\n\nMatrix.prototype.addition = matrixAddition\nMatrix.prototype.add      = matrixAddition",
+    "ctx": {
+      "type": "function",
+      "name": "matrixAddition",
+      "string": "matrixAddition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 490,
+    "codeStart": 494,
+    "code": "function matrixSubtraction (matrix) {\n  this.data = space.subtraction(this.data, matrix)\n\n  return this\n}\n\nMatrix.prototype.subtraction = matrixSubtraction\nMatrix.prototype.sub         = matrixSubtraction",
+    "ctx": {
+      "type": "function",
+      "name": "matrixSubtraction",
+      "string": "matrixSubtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 503,
+    "codeStart": 507,
+    "code": "function rightMultiplication (right) {\n  var rightData    = toData(right),\n      rightIndices = getIndices(right)\n\n  var rightIsMatrix = rightIndices.length === 2,\n      rightIsVector = rightIndices.length === 1\n\n  // TODO rightIsScalar and use scalarMultiplication\n\n  var rightIsSquare = rightIsMatrix && (rightIndices[0] === rightIndices[1])\n\n  if (rightIsVector)\n    rightIndices.push(1)\n\n  var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)\n\n  // Left multiplication by a square matrix is an inner product,\n  // so the method is a mutator.\n  if (rightIsSquare) {\n    this.data = data\n\n    return this\n  }\n\n  if (rightIsVector) {\n    var Vector = VectorSpace(Scalar)(numRows)\n\n    return new Vector(data)\n  }\n    // TODO if rightIsMatrix return new this(Scalar)(numRows, numCols)(data)\n}\n\nMatrix.prototype.rightMultiplication = rightMultiplication\nMatrix.prototype.rightMul            = rightMultiplication\nMatrix.prototype.multiplication      = rightMultiplication\nMatrix.prototype.mul                 = rightMultiplication",
+    "ctx": {
+      "type": "function",
+      "name": "rightMultiplication",
+      "string": "rightMultiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 544,
+    "codeStart": 548,
+    "code": "function leftMultiplication (leftMatrix) {\n  var leftData    = toData(left),\n      leftIndices = getIndices(left)\n\n  var leftIsMatrix = leftIndices.length === 2,\n      leftIsVector = leftIndices.length === 1\n\n  var leftIsSquare = leftIsMatrix && (leftIndices[0] === leftIndices[1])\n\n  if (leftIsVector)\n    leftIndices.push(1)\n\n  var data = rowByColumnMultiplication(Scalar, leftData, leftIndices, this.data, this.indices)\n\n  // Left multiplication by a square matrix is an inner product,\n  // so the method is a mutator.\n  if (leftIsSquare) {\n    this.data = data\n\n    return this\n  }\n\n  if (leftIsVector) {\n    var Vector = VectorSpace(Scalar)(numCols)\n\n    return new Vector(data)\n  }\n}\n\nMatrix.prototype.leftMultiplication = leftMultiplication\nMatrix.prototype.leftMul            = leftMultiplication",
+    "ctx": {
+      "type": "function",
+      "name": "leftMultiplication",
+      "string": "leftMultiplication()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "returns",
+        "string": "{Object} transposedMatrix",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>transposedMatrix</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 580,
+    "codeStart": 585,
+    "code": "function matrixTransposition () {\n  var data = this.data,\n      transposedData = [],\n      transposedIndices = [numCols, numRows]\n\n  for (var i = 0; i < numRows; i++)\n    for (var j = 0; j < numCols; j++)\n      transposedData.push(data[matrixToArrayIndex(j, i, numCols)])\n\n  var TransposedMatrix = Space(Scalar)(transposedIndices)\n\n  var transposedMatrix = new TransposedMatrix(transposedData)\n\n  return transposedData\n}\n\nMatrix.prototype.transpose = matrixTransposition\nMatrix.prototype.tr        = matrixTransposition\nMatrix.prototype.t         = matrixTransposition\n\nreturn Matrix\n  }\n\n  return Dimension\n}\n\nmodule.exports = MatrixSpace\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\nbuildFieldOperators = require('./buildFieldOperators'),\nScalar              = require('./Scalar')\n\nvar zero = [0, 0, 0, 0],\none  = [1, 0, 0, 0]",
+    "ctx": {
+      "type": "function",
+      "name": "matrixTransposition",
+      "string": "matrixTransposition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 623,
+    "codeStart": 626,
+    "code": "function addition (p, q) {\n  return [z[0] + w[0], z[1] + w[1]]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "addition",
+      "string": "addition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 630,
+    "codeStart": 633,
+    "code": "function multiplication (p, q) {\n// TODO  return [z[0] * w[0] - z[1] * w[1], z[1] * w[0] + z[0] * w[1]]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "multiplication",
+      "string": "multiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 637,
+    "codeStart": 640,
+    "code": "function conjugation (p) {\n  // p~ = (p0 + i p1 + j p2 + k p3)~\n  //    = p0 - i p1 - j p2 - k p3\n  return [p[0], - p[1], -p[2], -p[3]]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "conjugation",
+      "string": "conjugation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 646,
+    "codeStart": 649,
+    "code": "function norm (z) {\n  // |p| = |p0 + i p1|\n  //     = p0 * p0 + p1 * p1 + p2 * p2 + p3 * p3\n  return p[0] * p[0] + p[1] * p[1] + p[2] + p[3]\n}\n\n// TODO which inversion? right or left inversion?\n//function inversion (z) {\n//  // z^-1 = z~ * 1 / |z|\n//  return multiplication(conjugation(z), [1 / norm(z), 0])\n//}",
+    "ctx": {
+      "type": "function",
+      "name": "norm",
+      "string": "norm()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 661,
+    "codeStart": 664,
+    "code": "function equal (p, q) {\n  return ((p[0] === q[0]) && (p[1] === q[1])) && ((p[2] === q[2]) && (p[3] === q[3]))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "equal",
+      "string": "equal()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 668,
+    "codeStart": 671,
+    "code": "function contains (p) {\n  return (typeof p[0] === 'number') && (typeof p[1] === 'number') && (typeof p[2] === 'number') && (typeof p[3] === 'number')\n}",
+    "ctx": {
+      "type": "function",
+      "name": "contains",
+      "string": "contains()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 675,
+    "codeStart": 678,
+    "code": "function negation (p) {\n  return [-p[0], -p[1], -p[2], -p[3]]\n}\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
+    "ctx": {
+      "type": "function",
+      "name": "negation",
+      "string": "negation()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Array} data",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array} data</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Quaternion number.</p><p>Ladies and gentlmen, this class implements a <a href=\"https://en.wikipedia.org/wiki/Quaternion\">Quaternion</a>.</p><pre><code>var p = new Quaternion([1, 0, 3.5, 1]),\n    q = new Quaternion([-1, 2, 4, 0]);\n</code></pre>",
+      "summary": "<p>Quaternion number.</p>",
+      "body": "<p>Ladies and gentlmen, this class implements a <a href=\"https://en.wikipedia.org/wiki/Quaternion\">Quaternion</a>.</p><pre><code>var p = new Quaternion([1, 0, 3.5, 1]),\n    q = new Quaternion([-1, 2, 4, 0]);\n</code></pre>"
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 697,
+    "codeStart": 712,
+    "code": "// TODO Quaternions are a skew field, there is left and right multiplication. Create a SkewField class.\nfunction Quaternion (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Quaternion, Scalar)\n\naddStaticOperators(Complex, buildFieldOperators(field))",
+    "ctx": false
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 721,
+    "codeStart": 724,
+    "code": "function fieldConjugation (z) {\n  return conjugation(z)\n}",
+    "ctx": {
+      "type": "function",
+      "name": "fieldConjugation",
+      "string": "fieldConjugation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 728,
+    "codeStart": 731,
+    "code": "function scalarConjugation (z) {\n  this.data = fieldConjugation(this.data)\n\n  return this\n}\n\nQuaternion.prototype.conjugation = scalarConjugation\nQuaternion.prototype.conj        = scalarConjugation\nQuaternion\nQuaternion.conjugation = fieldConjugation\nQuaternion.conj        = fieldConjugation\n\nmodule.exports = Complex\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')\n\nvar zero = 0\n  , one  = 1",
+    "ctx": {
+      "type": "function",
+      "name": "scalarConjugation",
+      "string": "scalarConjugation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 755,
+    "codeStart": 758,
+    "code": "function addition (a, b) { return a + b }",
+    "ctx": {
+      "type": "function",
+      "name": "addition",
+      "string": "addition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 760,
+    "codeStart": 763,
+    "code": "function multiplication (a, b) { return a * b }",
+    "ctx": {
+      "type": "function",
+      "name": "multiplication",
+      "string": "multiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 765,
+    "codeStart": 768,
+    "code": "function inversion (a) { return one / a }",
+    "ctx": {
+      "type": "function",
+      "name": "inversion",
+      "string": "inversion()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 770,
+    "codeStart": 773,
+    "code": "function negation (a) { return - a }",
+    "ctx": {
+      "type": "function",
+      "name": "negation",
+      "string": "negation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 775,
+    "codeStart": 778,
+    "code": "function equal (a, b) { return a === b }",
+    "ctx": {
+      "type": "function",
+      "name": "equal",
+      "string": "equal()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 780,
+    "codeStart": 783,
+    "code": "function contains (a) { return typeof a === 'number' }\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
+    "ctx": {
+      "type": "function",
+      "name": "contains",
+      "string": "contains()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Number} data",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Number} data</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Real number.</p><pre><code>var x = new Real(1.5),\n    y = new Real(-20);\n</code></pre>",
+      "summary": "<p>Real number.</p>",
+      "body": "<pre><code>var x = new Real(1.5),\n    y = new Real(-20);\n</code></pre>"
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 800,
+    "codeStart": 813,
+    "code": "function Real (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Real, Scalar)\n\naddStaticOperators(Real, buildFieldOperators(field))\n\nmodule.exports = Real\n\n\nvar inherits = require('inherits')\n\nvar buildFieldOperators = require('./buildFieldOperators'),\n    Element             = require('./Element')\n\nvar fieldOperator,\n    one,\n    zero",
+    "ctx": {
+      "type": "function",
+      "name": "Real",
+      "string": "Real()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Object} field",
+        "name": "field",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} field</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Any} data",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Any"
+        ],
+        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Any} data</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Element of a field.</p>",
+      "summary": "<p>Element of a field.</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 833,
+    "codeStart": 842,
+    "code": "function Scalar (field, data) {\n  fieldOperator = buildFieldOperators(field)\n  one  = field.one\n  zero = field.zero\n\n  Element.call(this, data, field.operator.contains)\n}\n\ninherits(Scalar, Element)\n\nScalar.one  = one\nScalar.zero = zero",
+    "ctx": {
+      "type": "function",
+      "name": "Scalar",
+      "string": "Scalar()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 855,
+    "codeStart": 858,
+    "code": "function scalarAddition () {\n  var fieldAddition = fieldOperator.addition\n\n  this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.addition = scalarAddition\nScalar.prototype.add      = scalarAddition",
+    "ctx": {
+      "type": "function",
+      "name": "scalarAddition",
+      "string": "scalarAddition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 869,
+    "codeStart": 872,
+    "code": "function scalarSubtraction () {\n  var fieldSubtraction = fieldOperator.subtraction\n\n  this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.subtraction = scalarSubtraction\nScalar.prototype.sub         = scalarSubtraction",
+    "ctx": {
+      "type": "function",
+      "name": "scalarSubtraction",
+      "string": "scalarSubtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 883,
+    "codeStart": 886,
+    "code": "function scalarMultiplication () {\n  var fieldMultiplication = fieldOperator.multiplication\n\n  this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.multiplication = scalarMultiplication\nScalar.prototype.mul            = scalarMultiplication",
+    "ctx": {
+      "type": "function",
+      "name": "scalarMultiplication",
+      "string": "scalarMultiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 897,
+    "codeStart": 900,
+    "code": "function scalarDivision () {\n  var fieldDivision = fieldOperator.division\n\n  this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.division = scalarDivision\nScalar.prototype.div      = scalarDivision",
+    "ctx": {
+      "type": "function",
+      "name": "scalarDivision",
+      "string": "scalarDivision()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 911,
+    "codeStart": 914,
+    "code": "function scalarInversion () {\n  var fieldInversion = fieldOperator.inversion\n\n  this.data = fieldInversion(this.data)\n\n  return this\n}\n\nScalar.prototype.inversion = scalarInversion\nScalar.prototype.inv       = scalarInversion",
+    "ctx": {
+      "type": "function",
+      "name": "scalarInversion",
+      "string": "scalarInversion()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 925,
+    "codeStart": 928,
+    "code": "function scalarEqual () {\n  var fieldEqual = fieldOperator.equal\n\n  return fieldEqual(this.data, fieldEqual.apply(null, arguments))\n}\n\nScalar.prototype.equal = scalarEqual\nScalar.prototype.eq    = scalarEqual",
+    "ctx": {
+      "type": "function",
+      "name": "scalarEqual",
+      "string": "scalarEqual()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 937,
+    "codeStart": 940,
+    "code": "function scalarNegation () {\n  var fieldNegation = fieldOperator.negation\n\n  this.data = fieldNegation(this.data)\n\n  return this\n}\n\nScalar.prototype.negation = scalarNegation\nScalar.prototype.neg      = scalarNegation\n\nmodule.exports = Scalar\n\n\nvar inherits = require('inherits')\n\nvar arrayFrom = require('./arrayFrom'),\n    Element   = require('./Element'),\n    toData    = require('./toData')",
+    "ctx": {
+      "type": "function",
+      "name": "scalarNegation",
+      "string": "scalarNegation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 960,
+    "codeStart": 963,
+    "code": "function getResult (dimension, operator, dataArg) {\n  var result = dataArg[0]\n\n  for (var i=1; i < dataArg.length; i++) {\n    var data = dataArg[i]\n\n    for (var j=0; j < dimension; j++) {\n      result[j] = operator(result[j], data[j])\n    }\n  }\n\n  return result\n}",
+    "ctx": {
+      "type": "function",
+      "name": "getResult",
+      "string": "getResult()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Object} Scalar",
+        "name": "Scalar",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} Scalar</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Array} indices",
+        "name": "indices",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array} indices</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Abstract multidimensional space.</p>",
+      "summary": "<p>Abstract multidimensional space.</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 977,
+    "codeStart": 986,
+    "code": "function Space (Scalar) {\n\n  // TODO function Dimension (indices, coindices)\n  function Dimension (indices) {\n\n    // Attribute dimension is the product of all indices.\n    var dimension = indices.reduce(function (a, b) { return a * b }, 1)",
+    "ctx": {
+      "type": "function",
+      "name": "Space",
+      "string": "Space()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 994,
+    "codeStart": 998,
+    "code": "function spaceAddition () {\n  return getResult(dimension, Scalar.addition, arrayFrom(arguments).map(toData))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "spaceAddition",
+      "string": "spaceAddition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1002,
+    "codeStart": 1006,
+    "code": "function spaceSubtraction () {\n  return getResult(dimension, Scalar.subtraction, arrayFrom(arguments).map(toData))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "spaceSubtraction",
+      "string": "spaceSubtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1010,
+    "codeStart": 1014,
+    "code": "function spaceScalarMultiplication (data, scalar) {\n  var result = []\n\n  // Check if scalar is ok.\n  var aScalar = [scalar]\n  var scalarOk = aScalar.map(Scalar.contains).map(toData)[0]\n\n  for (var i=0; i<dimension; i++) {\n    var x = Scalar.multiplication(data[i], scalarOk)\n    result.push(x)\n  }\n\n  return result\n}",
+    "ctx": {
+      "type": "function",
+      "name": "spaceScalarMultiplication",
+      "string": "spaceScalarMultiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1029,
+    "codeStart": 1033,
+    "code": "function spaceScalarProduct () {\n  var dataMul = getResult(dimension, Scalar.multiplication, arrayFrom(arguments).map(toData))\n\n  var result = dataMul[0]\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, dataMul[i])\n  }\n\n  return result\n}",
+    "ctx": {
+      "type": "function",
+      "name": "spaceScalarProduct",
+      "string": "spaceScalarProduct()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Array} data\n",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array} data</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Boolean}",
+        "types": [
+          "Boolean"
+        ],
+        "typesDescription": "<code>Boolean</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "",
+        "html": "<p>{Boolean}</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1045,
+    "codeStart": 1052,
+    "code": "function contains (data) {\n  return data.map(Scalar.contains).length === dimension\n}\n\n  // TODO spaceIdentity",
+    "ctx": {
+      "type": "function",
+      "name": "contains",
+      "string": "contains()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Array} data",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array} data</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Tensor</p>",
+      "summary": "<p>Tensor</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1058,
+    "codeStart": 1066,
+    "code": "function Tensor (data) {\n  Element.call(this, data, contains)\n\n  Object.defineProperty(this, 'indices', {\n    enumerable : true,\n    value      : indices,\n    writable   : false\n  })\n}\n\ninherits(Tensor, Element)",
+    "ctx": {
+      "type": "function",
+      "name": "Tensor",
+      "string": "Tensor()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{...Array} data\n",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "...<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": true,
+        "html": "<p>{...Array} data</p>"
+      },
+      {
+        "type": "returns",
+        "string": "this Tensor with updated data",
+        "types": [
+          "hi"
+        ],
+        "typesDescription": "<a href=\"hi.html\">hi</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>Tensor with updated data</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1078,
+    "codeStart": 1085,
+    "code": "function tensorAddition () {\n  this.data = spaceAddition(this.data, spaceAddition.apply(null, arguments))\n\n  return this\n}\n\nTensor.prototype.addition = tensorAddition\nTensor.prototype.add      = tensorAddition",
+    "ctx": {
+      "type": "function",
+      "name": "tensorAddition",
+      "string": "tensorAddition()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{...Array} data\n",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "...<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": true,
+        "html": "<p>{...Array} data</p>"
+      },
+      {
+        "type": "returns",
+        "string": "this Tensor with updated data",
+        "types": [
+          "hi"
+        ],
+        "typesDescription": "<a href=\"hi.html\">hi</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>Tensor with updated data</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1094,
+    "codeStart": 1101,
+    "code": "function tensorSubtraction () {\n  this.data = spaceSubtraction(this.data, spaceSubtraction.apply(null, arguments))\n\n  return this\n}\n\nTensor.prototype.subtraction = tensorSubtraction\nTensor.prototype.sub         = tensorSubtraction",
+    "ctx": {
+      "type": "function",
+      "name": "tensorSubtraction",
+      "string": "tensorSubtraction()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{*} scalar\n",
+        "name": "scalar",
+        "description": "",
+        "types": [],
+        "typesDescription": "<code>*</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{*} scalar</p>"
+      },
+      {
+        "type": "returns",
+        "string": "this Tensor with updated data",
+        "types": [
+          "hi"
+        ],
+        "typesDescription": "<a href=\"hi.html\">hi</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>Tensor with updated data</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1110,
+    "codeStart": 1117,
+    "code": "function tensorScalarMultiplication (scalar) {\n  this.data = spaceScalarMultiplication(this.data, scalar)\n\n  return this\n}\n\nTensor.prototype.scalarMultiplication = tensorScalarMultiplication\nTensor.prototype.scalar               = tensorScalarMultiplication\n\n// Static attributes.\nTensor.dimension = dimension\nTensor.indices   = indices\nTensor.Scalar    = Scalar\n\n// Static operators.\nTensor.addition             = spaceAddition\nTensor.add                  = spaceAddition\n\nTensor.subtraction          = spaceSubtraction\nTensor.sub                  = spaceSubtraction\n\nTensor.scalarMultiplication = spaceScalarMultiplication\nTensor.scalar               = spaceScalarMultiplication\n\nreturn Tensor\n  }\n\n  // Static attribute.\n  Dimension.Scalar = Scalar\n\n  return Dimension\n}\n\nmodule.exports = Space\n\n\nvar inherits = require('inherits')\n\nvar Space = require('./Space')",
+    "ctx": {
+      "type": "function",
+      "name": "tensorScalarMultiplication",
+      "string": "tensorScalarMultiplication()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Object} Scalar",
+        "name": "Scalar",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} Scalar</p>"
+      },
+      {
+        "type": "param",
+        "string": "{Array} controvariant indices",
+        "name": "controvariant",
+        "description": "<p>indices</p>",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false
+      },
+      {
+        "type": "param",
+        "string": "{Array} covariant indices",
+        "name": "covariant",
+        "description": "<p>indices</p>",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false
+      }
+    ],
+    "description": {
+      "full": "<p>Space of tensors</p>",
+      "summary": "<p>Space of tensors</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1157,
+    "codeStart": 1167,
+    "code": "function TensorSpace (Scalar, controvariant, covariant) {\n  var self = this\n\n  var indices = controvariant.concat(covariant)\n\n  var type = [controvariant.length, covariant.length]\n  self.type = type\n\n  var space = new Space(Scalar, indices)\n\n  self.addition = space.addition\n  self.subtraction = space.subtraction\n\n  function Tensor (data) {\n    space.Element.call(this, data)\n  }\n\n\n inherits(Tensor, space.Element)\n\n  self.Tensor = Tensor\n}\n\ninherits(TensorSpace, Space)\n\nmodule.exports = TensorSpace\n\n\nvar inherits = require('inherits')\n\nvar getIndices                = require('./getIndices'),\n    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n    Space                     = require('./Space'),\n    toData                    = require('./toData')",
+    "ctx": {
+      "type": "function",
+      "name": "TensorSpace",
+      "string": "TensorSpace()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Object} Scalar\n",
+        "name": "Scalar",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} Scalar</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Function} Dimension",
+        "types": [
+          "Function"
+        ],
+        "typesDescription": "<code>Function</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>Dimension</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Space of vectors</p><pre><code>var V = VectorSpace(R)(2)\n\nvar v = new V([1, 2])\n</code></pre>",
+      "summary": "<p>Space of vectors</p>",
+      "body": "<pre><code>var V = VectorSpace(R)(2)\n\nvar v = new V([1, 2])\n</code></pre>"
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1203,
+    "codeStart": 1217,
+    "code": "function VectorSpace (Scalar) {",
+    "ctx": {
+      "type": "function",
+      "name": "VectorSpace",
+      "string": "VectorSpace()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Number} dimension\n",
+        "name": "dimension",
+        "description": "",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Number} dimension</p>"
+      },
+      {
+        "type": "return",
+        "string": "{Constructor} Vector",
+        "types": [
+          "Constructor"
+        ],
+        "typesDescription": "<a href=\"Constructor.html\">Constructor</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>Vector</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Dimension</p>",
+      "summary": "<p>Dimension</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1219,
+    "codeStart": 1227,
+    "code": "function Dimension (dimension) {\n  var Element = Space(Scalar)([dimension])",
+    "ctx": {
+      "type": "function",
+      "name": "Dimension",
+      "string": "Dimension()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{*} data",
+        "name": "data",
+        "description": "",
+        "types": [],
+        "typesDescription": "<code>*</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{*} data</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1230,
+    "codeStart": 1237,
+    "code": "function Vector () {\n  Element.apply(this, arguments)\n\n  var data = this.data",
+    "ctx": {
+      "type": "function",
+      "name": "Vector",
+      "string": "Vector()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "return",
+        "string": "{Scalar} result",
+        "types": [
+          "Scalar"
+        ],
+        "typesDescription": "<a href=\"Scalar.html\">Scalar</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>result</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Norm of a vector</p><p>Given v = (x1, x2, ... xN)</p><p>norm is defined as n = x1 <em> x1 + x2 </em> x2 + ... + xN * xN</p>",
+      "summary": "<p>Norm of a vector</p>",
+      "body": "<p>Given v = (x1, x2, ... xN)</p><p>norm is defined as n = x1 <em> x1 + x2 </em> x2 + ... + xN * xN</p>"
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1242,
+    "codeStart": 1252,
+    "code": "function vectorNorm () {\n  var result = Scalar.multiplication(data[0], data[0])\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))\n  }\n\n  return new Scalar(result)\n}\n\nObject.defineProperty(this, 'norm', {get: vectorNorm})\n    }\n\n    inherits(Vector, Element)",
+    "ctx": {
+      "type": "function",
+      "name": "vectorNorm",
+      "string": "vectorNorm()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1267,
+    "codeStart": 1271,
+    "code": "function crossProduct (right) {\n  var rightData      = toData(right),\n      rightDimension = rightData.length,\n      rightIndices   = getIndices(right)\n\n}\n\n// Cross product is defined only in dimension 3.\nif (dimension === 3) {\n  Vector.prototype.crossProduct = crossProduct\n  Vector.prototype.cross        = crossProduct\n  Vector.prototype.x            = crossProduct\n}",
+    "ctx": {
+      "type": "function",
+      "name": "crossProduct",
+      "string": "crossProduct()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1285,
+    "codeStart": 1289,
+    "code": "function matrixProduct (matrix) {\n  var matrixData    = toData(matrix),\n      matrixIndices = getIndices(matrix)\n\n  var indices = [1, dimension]\n\n  var data = rowByColumnMultiplication(Scalar, this.data, indices, matrixData, matrixIndices)\n\n  this.data = data\n\n  return this\n}\n\nVector.prototype.matrixProduct = matrixProduct",
+    "ctx": {
+      "type": "function",
+      "name": "matrixProduct",
+      "string": "matrixProduct()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1304,
+    "codeStart": 1308,
+    "code": "function scalarProduct (vector) {\n  var data          = this.data,\n      vectorData    = toData(vector),\n      vectorIndices = getIndices(vector)\n\n  if (dimension !== vectorData.length)\n    throw new TypeError('Vector has not the same dimension')\n\n  var result = Scalar.multiplication(data[0], vectorData[0])\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(data[i], vectorData[i]))\n  }\n\n  return new Scalar(result)\n}\n\nVector.prototype.scalarProduct = scalarProduct\nVector.prototype.dotProduct    = scalarProduct\nVector.prototype.dot           = scalarProduct",
+    "ctx": {
+      "type": "function",
+      "name": "scalarProduct",
+      "string": "scalarProduct()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1329,
+    "codeStart": 1333,
+    "code": "function perScalarProduct (scalar) {\n  var data       = this.data,\n      scalarData = toData(scalar)\n\n  for (var i = 0; i < dimension; i++)\n    data[i] = Scalar.mul(data[i], scalarData)\n\n  this.data = data\n\n  return this\n}\n\nVector.prototype.perScalarProduct = perScalarProduct",
+    "ctx": {
+      "type": "function",
+      "name": "perScalarProduct",
+      "string": "perScalarProduct()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1347,
+    "codeStart": 1351,
+    "code": "Vector.addition    = Element.addition\nVector.add         = Element.addition\nVector.subtraction = Element.subtraction\nVector.sub         = Element.subtraction\n\nreturn Vector\n  }\n\n  return Dimension\n}\n\nmodule.exports = VectorSpace",
+    "ctx": {
+      "type": "property",
+      "receiver": "Vector",
+      "name": "addition",
+      "value": "Element.addition",
+      "string": "Vector.addition"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
       {
         "type": "param",
         "string": "{Object} Scalar class",
@@ -41,8 +2542,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 2,
-    "codeStart": 9,
+    "line": 1365,
+    "codeStart": 1374,
     "code": "function addStaticOperators (Scalar, field) {\n  Scalar.addition       = field.addition\n  Scalar.add            = field.addition\n\n  Scalar.subtraction    = field.subtraction\n  Scalar.sub            = field.subtraction\n\n  Scalar.multiplication = field.multiplication\n  Scalar.mul            = field.multiplication\n\n  Scalar.division       = field.division\n  Scalar.div            = field.division\n\n  Scalar.negation       = field.negation\n  Scalar.neg            = field.negation\n\n  Scalar.inversion      = field.inversion\n  Scalar.inv            = field.inversion\n\n  Scalar.equal          = field.equal\n  Scalar.eq             = field.equal\n\n  Scalar.contains       = field.contains\n}\n\nmodule.exports = addStaticOperators\n\n\nvar matrixToArrayIndex = require('./matrixToArrayIndex')\n\n// TODO: check name disambiguation https://en.wikipedia.org/wiki/Adjugate_matrix",
     "ctx": {
       "type": "function",
@@ -52,6 +2553,11 @@
   },
   {
     "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
       {
         "type": "param",
         "string": "{Array} data",
@@ -128,7 +2634,7 @@
         "html": "<p>{Number} col</p>"
       },
       {
-        "type": "return",
+        "type": "returns",
         "string": "{Array} adjoint",
         "types": [
           "Array"
@@ -151,8 +2657,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 41,
-    "codeStart": 53,
+    "line": 1406,
+    "codeStart": 1420,
     "code": "function adjointMatrix (data, numRows, numCols, row, col) {\n  var adjoint = []\n\n  for (var i = 0; i < numRows; i++) {\n    for (var j = 0; j < numCols; j++) {\n      if ((i !== row) && (j !== col)) {\n        var index = matrixToArrayIndex(i, j, numCols)\n\n        adjoint.push(data[index])\n      }\n    }\n  }\n\n  return adjoint\n}\n\nmodule.exports = adjointMatrix",
     "ctx": {
       "type": "function",
@@ -162,6 +2668,11 @@
   },
   {
     "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
       {
         "type": "param",
         "string": "{Object} arguments of a function\n",
@@ -177,7 +2688,7 @@
         "variable": false
       },
       {
-        "type": "return",
+        "type": "returns",
         "string": "{Array} array of arguments",
         "types": [
           "Array"
@@ -191,8 +2702,8 @@
       }
     ],
     "description": {
-      "full": "<p>Convert arguments to array</p><pre><code>function () {\n  console.log(typeof arguments) // object\n\n  var args = arrayFrom(arguments)\n\n  console.log(typeof args) // array\n}\n</code></pre>",
-      "summary": "<p>Convert arguments to array</p>",
+      "full": "<p>Converts arguments to array</p><pre><code>function () {\n  console.log(typeof arguments) // object\n\n  var args = arrayFrom(arguments)\n\n  console.log(typeof args) // array\n}\n</code></pre>",
+      "summary": "<p>Converts arguments to array</p>",
       "body": "<pre><code>function () {\n  console.log(typeof arguments) // object\n\n  var args = arrayFrom(arguments)\n\n  console.log(typeof args) // array\n}\n</code></pre>"
     },
     "isPrivate": false,
@@ -200,9 +2711,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 72,
-    "codeStart": 90,
-    "code": "function arrayFrom () {\n  return (function arraySlice0 () {\n    return Array.prototype.slice.call(arguments, 0)\n  }).apply(null, arguments[0])\n}\n\nmodule.exports = arrayFrom\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')\n\nfunction isPrime (n) {\n  if (n === 1) return false\n  if (n === 2) return true\n\n  var m = Math.sqrt(n)\n\n  for (var i = 2; i <= m; i++)\n    if (n % i === 0)\n      return false\n\n  return true\n}\n\nfunction unique (elements) {\n  for (var i = 0; i < elements.length - 1; i++)\n    for (var j = i + 1; j < elements.length; j++)\n      if (elements[i] === elements[j])\n        return false\n\n  return true\n}",
+    "line": 1439,
+    "codeStart": 1459,
+    "code": "function arrayFrom () {\n  arraySlice0.apply(null, arguments[0])\n}",
     "ctx": {
       "type": "function",
       "name": "arrayFrom",
@@ -210,7 +2721,145 @@
     }
   },
   {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1463,
+    "codeStart": 1466,
+    "code": "function arraySlice0 () {\n  return Array.prototype.slice.call(arguments, 0)\n}\n\nmodule.exports = arrayFrom\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')",
+    "ctx": {
+      "type": "function",
+      "name": "arraySlice0",
+      "string": "arraySlice0()"
+    }
+  },
+  {
     "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Number} n\n",
+        "name": "n",
+        "description": "",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Number} n</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Boolean}",
+        "types": [
+          "Boolean"
+        ],
+        "typesDescription": "<code>Boolean</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "",
+        "html": "<p>{Boolean}</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Check if a number is prime</p>",
+      "summary": "<p>Check if a number is prime</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1479,
+    "codeStart": 1489,
+    "code": "function isPrime (n) {\n  if (n === 1) return false\n  if (n === 2) return true\n\n  var m = Math.sqrt(n)\n\n  for (var i = 2; i <= m; i++)\n    if (n % i === 0)\n      return false\n\n  return true\n}",
+    "ctx": {
+      "type": "function",
+      "name": "isPrime",
+      "string": "isPrime()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
+      {
+        "type": "param",
+        "string": "{Array} elements\n",
+        "name": "elements",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array} elements</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Boolean}",
+        "types": [
+          "Boolean"
+        ],
+        "typesDescription": "<code>Boolean</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "",
+        "html": "<p>{Boolean}</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Check if given elements are unique</p>",
+      "summary": "<p>Check if given elements are unique</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1502,
+    "codeStart": 1512,
+    "code": "function unique (elements) {\n  for (var i = 0; i < elements.length - 1; i++)\n    for (var j = i + 1; j < elements.length; j++)\n      if (elements[i] === elements[j])\n        return false\n\n  return true\n}",
+    "ctx": {
+      "type": "function",
+      "name": "unique",
+      "string": "unique()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
       {
         "type": "param",
         "string": "{Array|String} elements\n",
@@ -228,7 +2877,7 @@
         "html": "<p>{Array|String} elements</p>"
       },
       {
-        "type": "return",
+        "type": "returns",
         "string": "{Object} Cyclic",
         "types": [
           "Object"
@@ -251,34 +2900,13 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 127,
-    "codeStart": 135,
-    "code": "function buildCyclicSpaceOf (elements) {\n  if ((typeof elements.length !== 'number') || (! isPrime(elements.length)))\n    throw new TypeError(\"elements length must be prime\")\n\n  if ((! unique(elements)))\n    throw new TypeError(\"elements must be unique\")\n\n  var zero = elements[0],\n      one  = elements[1]\n\n  function numOf (element) {\n    return elements.indexOf(element)\n  }\n\n  function addition (element1, element2) {\n    var n = numOf(element1) + numOf(element2)\n\n    n = n % elements.length\n\n    return elements[n]\n  }\n\n  function contains (element) {\n    return elements.indexOf(element) > -1\n  }\n\n  function multiplication (element1, element2) {\n    var n = numOf(element1) * numOf(element2)\n\n    n = n % elements.length\n\n    return elements[n]\n  }\n\n  function inversion (element) {\n    for (var i = 0; i < elements.length; i++)\n      if(elements[1] == multiplication(element, elements[i]))\n\n    return elements[i]\n  }\n\n  function division (element1, element2) {\n    return multiplication(element1, inversion(element2))\n  }\n\n  function negation (element) {\n    var n = numOf(element)\n\n    if (n === 0)\n      return element\n\n    n = elements.length - n\n\n    return elements[n]\n  }\n\n  function equal (element1, element2) {\n    return element1 === element2\n  }\n\n  var operators = {\n    addition      : addition,\n    multiplication: multiplication,\n    negation      : negation,\n    inversion     : inversion,\n    equal         : equal,\n    contains      : contains\n  }\n\n  var field = {\n    one     : one,\n    zero    : zero,\n    operator: operators\n  }",
+    "line": 1521,
+    "codeStart": 1531,
+    "code": "function buildCyclicSpaceOf (elements) {\n  if ((typeof elements.length !== 'number') || (! isPrime(elements.length)))\n    throw new TypeError(\"elements length must be prime\")\n\n  if ((! unique(elements)))\n    throw new TypeError(\"elements must be unique\")\n\n  var zero = elements[0],\n      one  = elements[1]",
     "ctx": {
       "type": "function",
       "name": "buildCyclicSpaceOf",
       "string": "buildCyclicSpaceOf()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Cyclic element.</p>",
-      "summary": "<p>Cyclic element.</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 210,
-    "codeStart": 214,
-    "code": "function Cyclic (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Cyclic, Scalar)\n\naddStaticOperators(Cyclic, buildFieldOperators(field))\n\nreturn Cyclic\n}\n\nmodule.exports = buildCyclicSpaceOf\n\n\nvar arrayFrom = require('./arrayFrom'),\n  toData    = require('./toData')",
-    "ctx": {
-      "type": "function",
-      "name": "Cyclic",
-      "string": "Cyclic()"
     }
   },
   {
@@ -293,35 +2921,201 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 231,
-    "codeStart": 234,
-    "code": "function buildFieldOperators (field) {\n\n  var one  = field.one,\n      zero = field.zero\n\n  var addition       = field.operator.addition,\n      multiplication = field.operator.multiplication,\n      inversion      = field.operator.inversion,\n      equal          = field.operator.equal,\n      negation       = field.operator.negation\n\n  var operators = {\n    contains: field.operator.contains\n  }\n\n  function subtraction (data1, data2) {\n    return addition(data1, negation(data2))\n  }\n\n  function notEqual (data1, data2) {\n    return (! (equal(data1, data2)))\n  }\n\n  function division (data1, data2) {\n    return multiplication(data1, inversion(data2))\n  }\n\n  function checkIsNotZero (data) {\n    if (equal(zero, data))\n      throw new TypeError(data)\n\n    return data\n  }\n\n  function fieldAddition () {\n    return arrayFrom(arguments).map(toData).reduce(addition)\n  }\n\n  operators.addition = fieldAddition\n\n  function fieldSubtraction () {\n    return arrayFrom(arguments).map(toData).reduce(subtraction)\n  }\n\n  operators.subtraction = fieldSubtraction\n\n  function fieldMultiplication () {\n    return arrayFrom(arguments).map(toData).reduce(multiplication)\n  }\n\n  operators.multiplication = fieldMultiplication\n\n  function fieldDivision () {\n    return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)\n  }\n\n  operators.division = fieldDivision\n\n  function fieldInversion () {\n    return inversion(toData(arguments[0]))\n  }\n\n  operators.inversion = fieldInversion\n\n  function fieldEqual () {\n    return arrayFrom(arguments).map(toData).reduce(equal)\n  }\n\n  operators.equal = fieldEqual\n\n  function fieldNegation () {\n    return negation(toData(arguments[0]))\n  }\n\n  operators.negation = fieldNegation\n\n  return operators\n}\n\nmodule.exports = buildFieldOperators\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')\n\nvar zero = [0, 0]\n  , one  = [1, 0]\n\nfunction addition (z, w) {\n  return [z[0] + w[0], z[1] + w[1]]\n}\n\nfunction multiplication (z, w) {\n  return [z[0] * w[0] - z[1] * w[1], z[1] * w[0] + z[0] * w[1]]\n}\n\nfunction conjugation (z) {\n  // z~ = (z0 + i z1)~\n  //    = z0 - i z1\n  return [z[0], - z[1]]\n}\n\nfunction norm (z) {\n  // |z| = |z0 + i z1|\n  //     = z0 * z0 + z1 * z1\n  return z[0] * z[0] + z[1] * z[1]\n}\n\nfunction inversion (z) {\n  // z^-1 = z~ * 1 / |z|\n  return multiplication(conjugation(z), [1 / norm(z), 0])\n}\n\nfunction equal (z, w) {\n  return ((z[0] === w[0]) && (z[1] === w[1]))\n}\n\nfunction contains (z) {\n  return (typeof z[0] === 'number') && (typeof z[1] === 'number')\n}\n\nfunction negation (z) {\n  return [-z[0], -z[1]]\n}\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
+    "line": 1541,
+    "codeStart": 1544,
+    "code": "function numOf (element) {\n  return elements.indexOf(element)\n}",
     "ctx": {
       "type": "function",
-      "name": "buildFieldOperators",
-      "string": "buildFieldOperators()"
+      "name": "numOf",
+      "string": "numOf()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1548,
+    "codeStart": 1551,
+    "code": "function addition (element1, element2) {\n  var n = numOf(element1) + numOf(element2)\n\n  n = n % elements.length\n\n  return elements[n]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "addition",
+      "string": "addition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1559,
+    "codeStart": 1562,
+    "code": "function contains (element) {\n  return elements.indexOf(element) > -1\n}",
+    "ctx": {
+      "type": "function",
+      "name": "contains",
+      "string": "contains()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1566,
+    "codeStart": 1569,
+    "code": "function multiplication (element1, element2) {\n  var n = numOf(element1) * numOf(element2)\n\n  n = n % elements.length\n\n  return elements[n]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "multiplication",
+      "string": "multiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1577,
+    "codeStart": 1580,
+    "code": "function inversion (element) {\n  for (var i = 0; i < elements.length; i++)\n    if(elements[1] == multiplication(element, elements[i]))\n\n  return elements[i]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "inversion",
+      "string": "inversion()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1587,
+    "codeStart": 1590,
+    "code": "function division (element1, element2) {\n  return multiplication(element1, inversion(element2))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "division",
+      "string": "division()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1594,
+    "codeStart": 1597,
+    "code": "function negation (element) {\n  var n = numOf(element)\n\n  if (n === 0)\n    return element\n\n  n = elements.length - n\n\n  return elements[n]\n}",
+    "ctx": {
+      "type": "function",
+      "name": "negation",
+      "string": "negation()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1608,
+    "codeStart": 1611,
+    "code": "function equal (element1, element2) {\n  return element1 === element2\n}\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
+    "ctx": {
+      "type": "function",
+      "name": "equal",
+      "string": "equal()"
     }
   },
   {
     "tags": [
       {
-        "type": "param",
-        "string": "{Array} data\n",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} data</p>"
+        "type": "class",
+        "string": "",
+        "html": ""
+      }
+    ],
+    "description": {
+      "full": "<p>Cyclic element.</p>",
+      "summary": "<p>Cyclic element.</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1630,
+    "codeStart": 1636,
+    "code": "function Cyclic (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Cyclic, Scalar)\n\naddStaticOperators(Cyclic, buildFieldOperators(field))\n\nreturn Cyclic\n}\n\nmodule.exports = buildCyclicSpaceOf\n\n\nvar arrayFrom = require('./arrayFrom'),\n  toData    = require('./toData')",
+    "ctx": {
+      "type": "function",
+      "name": "Cyclic",
+      "string": "Cyclic()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
       },
       {
-        "type": "returns",
-        "string": "{Object} complex number",
+        "type": "param",
+        "string": "{Object} field\n",
+        "name": "field",
+        "description": "",
         "types": [
           "Object"
         ],
@@ -330,30 +3124,279 @@
         "nullable": false,
         "nonNullable": false,
         "variable": false,
-        "description": "<p>complex number</p>"
+        "html": "<p>{Object} field</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Object} operators",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>operators</p>"
       }
     ],
     "description": {
-      "full": "<p>Complex number.</p><pre><code>var z = new Complex([1, 2]),\n    w = new Complex([-2, 8.5]);\n</code></pre>",
-      "summary": "<p>Complex number.</p>",
-      "body": "<pre><code>var z = new Complex([1, 2]),\n    w = new Complex([-2, 8.5]);\n</code></pre>"
+      "full": "",
+      "summary": "",
+      "body": ""
     },
     "isPrivate": false,
     "isConstructor": false,
     "isClass": false,
     "isEvent": false,
-    "ignore": false,
-    "line": 377,
-    "codeStart": 390,
-    "code": "function Complex (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Complex, Scalar)\n\naddStaticOperators(Complex, buildFieldOperators(field))\n\nfunction fieldConjugation (z) {\n  return conjugation(z)\n}\n\nfunction scalarConjugation (z) {\n  this.data = fieldConjugation(this.data)\n\n  return this\n}\n\nComplex.prototype.conjugation = scalarConjugation\nComplex.prototype.conj        = scalarConjugation\n\nComplex.conjugation = fieldConjugation\nComplex.conj        = fieldConjugation\n\nmodule.exports = Complex\n\n\nvar adjointMatrix      = require('./adjointMatrix'),\n    matrixToArrayIndex = require('./matrixToArrayIndex')",
+    "ignore": true,
+    "line": 1653,
+    "codeStart": 1662,
+    "code": "function buildFieldOperators (field) {\n\n  var one  = field.one,\n      zero = field.zero\n\n  var addition       = field.operator.addition,\n      multiplication = field.operator.multiplication,\n      inversion      = field.operator.inversion,\n      equal          = field.operator.equal,\n      negation       = field.operator.negation\n\n  var operators = {\n    contains: field.operator.contains\n  }",
     "ctx": {
       "type": "function",
-      "name": "Complex",
-      "string": "Complex()"
+      "name": "buildFieldOperators",
+      "string": "buildFieldOperators()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1677,
+    "codeStart": 1680,
+    "code": "function subtraction (data1, data2) {\n  return addition(data1, negation(data2))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "subtraction",
+      "string": "subtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1684,
+    "codeStart": 1687,
+    "code": "function notEqual (data1, data2) {\n  return (! (equal(data1, data2)))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "notEqual",
+      "string": "notEqual()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1691,
+    "codeStart": 1694,
+    "code": "function division (data1, data2) {\n  return multiplication(data1, inversion(data2))\n}",
+    "ctx": {
+      "type": "function",
+      "name": "division",
+      "string": "division()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1698,
+    "codeStart": 1701,
+    "code": "function checkIsNotZero (data) {\n  if (equal(zero, data))\n    throw new TypeError(data)\n\n  return data\n}",
+    "ctx": {
+      "type": "function",
+      "name": "checkIsNotZero",
+      "string": "checkIsNotZero()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1708,
+    "codeStart": 1711,
+    "code": "function fieldAddition () {\n  return arrayFrom(arguments).map(toData).reduce(addition)\n}\n\noperators.addition = fieldAddition",
+    "ctx": {
+      "type": "function",
+      "name": "fieldAddition",
+      "string": "fieldAddition()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1717,
+    "codeStart": 1720,
+    "code": "function fieldSubtraction () {\n  return arrayFrom(arguments).map(toData).reduce(subtraction)\n}\n\noperators.subtraction = fieldSubtraction",
+    "ctx": {
+      "type": "function",
+      "name": "fieldSubtraction",
+      "string": "fieldSubtraction()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1726,
+    "codeStart": 1729,
+    "code": "function fieldMultiplication () {\n  return arrayFrom(arguments).map(toData).reduce(multiplication)\n}\n\noperators.multiplication = fieldMultiplication",
+    "ctx": {
+      "type": "function",
+      "name": "fieldMultiplication",
+      "string": "fieldMultiplication()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1735,
+    "codeStart": 1738,
+    "code": "function fieldDivision () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)\n}\n\noperators.division = fieldDivision",
+    "ctx": {
+      "type": "function",
+      "name": "fieldDivision",
+      "string": "fieldDivision()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1744,
+    "codeStart": 1747,
+    "code": "function fieldInversion () {\n  return inversion(toData(arguments[0]))\n}\n\noperators.inversion = fieldInversion",
+    "ctx": {
+      "type": "function",
+      "name": "fieldInversion",
+      "string": "fieldInversion()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1753,
+    "codeStart": 1756,
+    "code": "function fieldEqual () {\n  return arrayFrom(arguments).map(toData).reduce(equal)\n}\n\noperators.equal = fieldEqual",
+    "ctx": {
+      "type": "function",
+      "name": "fieldEqual",
+      "string": "fieldEqual()"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": true,
+    "line": 1762,
+    "codeStart": 1765,
+    "code": "function fieldNegation () {\n  return negation(toData(arguments[0]))\n}\n\noperators.negation = fieldNegation\n\nreturn operators\n}\n\nmodule.exports = buildFieldOperators\n\n\nvar adjointMatrix      = require('./adjointMatrix'),\n  matrixToArrayIndex = require('./matrixToArrayIndex')",
+    "ctx": {
+      "type": "function",
+      "name": "fieldNegation",
+      "string": "fieldNegation()"
     }
   },
   {
     "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
       {
         "type": "param",
         "string": "{Object} Scalar",
@@ -414,8 +3457,8 @@
       }
     ],
     "description": {
-      "full": "",
-      "summary": "",
+      "full": "<p>Computes the determinant of a matrix</p>",
+      "summary": "<p>Computes the determinant of a matrix</p>",
       "body": ""
     },
     "isPrivate": false,
@@ -423,9 +3466,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 420,
-    "codeStart": 429,
-    "code": "function determinant (Scalar, data, order) {\n  var det\n\n  // If order is 2, go for a straight calculation.\n  //\n  //  det | a b | = a * d - c * b\n  //      | c d |\n  //\n  if (order === 2) {\n    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]),\n                             Scalar.multiplication(data[2], data[1]))\n\n    return det\n  }\n\n  // TODO choose best row or column to start from, i.e. the one with more zeros\n  // by now we start from first row, and walk by column\n  var startingCol = 0,\n      startingRow = 0\n\n\n  var adjointData        = adjointMatrix(data, order, order, startingRow, startingCol),\n      adjointDeterminant = determinant(Scalar, adjointData, order - 1),\n      index              = matrixToArrayIndex(startingRow, startingCol, order)\n\n  det = Scalar.multiplication(data[index], adjointDeterminant)\n\n  for (var col = 1; col < order; col++) {\n    adjointData = adjointMatrix(data, order, order, startingRow, col)\n\n    adjointDeterminant = determinant(Scalar, adjointData, order - 1)\n\n    index = matrixToArrayIndex(startingRow, col, order)\n\n    det = Scalar.addition(det, Scalar.multiplication(data[index], adjointDeterminant))\n  }\n\n  return det\n}\n\nmodule.exports = determinant",
+    "line": 1780,
+    "codeStart": 1792,
+    "code": "function determinant (Scalar, data, order) {\n  var det\n\n  // If order is 2, go for a straight calculation.\n  //\n  //  det | a b | = a * d - c * b\n  //      | c d |\n  //\n  if (order === 2) {\n    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]),\n                             Scalar.multiplication(data[2], data[1]))\n\n    return det\n  }\n\n  // TODO choose best row or column to start from, i.e. the one with more zeros\n  // by now we start from first row, and walk by column\n  var startingCol = 0,\n      startingRow = 0\n\n\n  var adjointData        = adjointMatrix(data, order, order, startingRow, startingCol),\n      adjointDeterminant = determinant(Scalar, adjointData, order - 1),\n      index              = matrixToArrayIndex(startingRow, startingCol, order)\n\n  det = Scalar.multiplication(data[index], adjointDeterminant)\n\n  for (var col = 1; col < order; col++) {\n    adjointData = adjointMatrix(data, order, order, startingRow, col)\n\n    adjointDeterminant = determinant(Scalar, adjointData, order - 1)\n\n    index = matrixToArrayIndex(startingRow, col, order)\n\n    det = Scalar.addition(det, Scalar.multiplication(data[index], adjointDeterminant))\n  }\n\n  return det\n}\n\nmodule.exports = determinant\n\n\nvar toData = require('./toData')",
     "ctx": {
       "type": "function",
       "name": "determinant",
@@ -435,515 +3478,10 @@
   {
     "tags": [
       {
-        "type": "param",
-        "string": "{Any} data",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Any"
-        ],
-        "typesDescription": "<a href=\"Any.html\">Any</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Any} data</p>"
+        "type": "function",
+        "string": "",
+        "html": ""
       },
-      {
-        "type": "param",
-        "string": "{Function} check\n",
-        "name": "check",
-        "description": "",
-        "types": [
-          "Function"
-        ],
-        "typesDescription": "<code>Function</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Function} check</p>"
-      },
-      {
-        "type": "returns",
-        "string": "{Object} element",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>element</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Abstract element</p>",
-      "summary": "<p>Abstract element</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 472,
-    "codeStart": 481,
-    "code": "function Element (data, check) {\n  if (check(data))\n      this.data = data\n    else\n      throw new TypeError('Invalid data:', data)\n}",
-    "ctx": {
-      "type": "function",
-      "name": "Element",
-      "string": "Element()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 488,
-    "codeStart": 491,
-    "code": "function valueOf () {\n  return this.data\n}\n\nElement.prototype.valueOf = valueOf\n\nmodule.exports = Element\n\n\nvar inherits = require('inherits')\n\nvar arrayFrom = require('./arrayFrom'),\n    Element   = require('./Element'),\n    toData    = require('./toData')",
-    "ctx": {
-      "type": "function",
-      "name": "valueOf",
-      "string": "valueOf()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Any} zero",
-        "name": "zero",
-        "description": "",
-        "types": [
-          "Any"
-        ],
-        "typesDescription": "<a href=\"Any.html\">Any</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Any} zero</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Any} one",
-        "name": "one",
-        "description": "",
-        "types": [
-          "Any"
-        ],
-        "typesDescription": "<a href=\"Any.html\">Any</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Any} one</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Object} operators\n",
-        "name": "operators",
-        "description": "",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Object} operators</p>"
-      },
-      {
-        "type": "returns",
-        "string": "{Object} field",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>field</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Algebra field</p>",
-      "summary": "<p>Algebra field</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 506,
-    "codeStart": 516,
-    "code": "function Field (zero, one, operators) {\n  var self = this\n\n  self.zero = zero\n  self.one  = one\n\n\n  var addition       = operators.addition,\n      contains       = operators.contains,\n      equal          = operators.equal,\n      inversion      = operators.inversion,\n      multiplication = operators.multiplication,\n      negation       = operators.negation\n\n  self.contains = contains\n\n  function subtraction (data1, data2) {\n    return addition(data1, negation(data2))\n  }\n\n  function notEqual (data1, data2) {\n    return (! (operators.equal(data1, data2)))\n  }\n\n  function division (data1, data2) {\n    return multiplication(data1, inversion(data2))\n  }\n\n  function checkIsNotZero (data) {\n    if (equal(zero, data))\n      throw new TypeError(data)\n\n    return data\n  }",
-    "ctx": {
-      "type": "function",
-      "name": "Field",
-      "string": "Field()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Static addition operator</p>",
-      "summary": "<p>Static addition operator</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 551,
-    "codeStart": 555,
-    "code": "function fieldAddition () {\n  return arrayFrom(arguments).map(toData).reduce(addition)\n}\n\nself.addition = fieldAddition",
-    "ctx": {
-      "type": "function",
-      "name": "fieldAddition",
-      "string": "fieldAddition()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Static subtraction operator</p>",
-      "summary": "<p>Static subtraction operator</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 561,
-    "codeStart": 565,
-    "code": "function fieldSubtraction () {\n  return arrayFrom(arguments).map(toData).reduce(subtraction)\n}\n\nself.subtraction = fieldSubtraction",
-    "ctx": {
-      "type": "function",
-      "name": "fieldSubtraction",
-      "string": "fieldSubtraction()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Static multiplication operator</p>",
-      "summary": "<p>Static multiplication operator</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 571,
-    "codeStart": 575,
-    "code": "function fieldMultiplication () {\n  return arrayFrom(arguments).map(toData).reduce(multiplication)\n}\n\nself.multiplication = fieldMultiplication",
-    "ctx": {
-      "type": "function",
-      "name": "fieldMultiplication",
-      "string": "fieldMultiplication()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Static division operator</p>",
-      "summary": "<p>Static division operator</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 581,
-    "codeStart": 585,
-    "code": "function fieldDivision () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(division)\n}\n\nself.division = fieldDivision",
-    "ctx": {
-      "type": "function",
-      "name": "fieldDivision",
-      "string": "fieldDivision()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Static inversion operator</p>",
-      "summary": "<p>Static inversion operator</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 591,
-    "codeStart": 595,
-    "code": "function fieldInversion () {\n  return arrayFrom(arguments).map(toData).map(checkIsNotZero).reduce(inversion)\n}\n\nself.inversion = fieldInversion",
-    "ctx": {
-      "type": "function",
-      "name": "fieldInversion",
-      "string": "fieldInversion()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Static equal operator</p>",
-      "summary": "<p>Static equal operator</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 601,
-    "codeStart": 605,
-    "code": "function fieldEqual () {\n  return arrayFrom(arguments).map(toData).reduce(equal)\n}\n\nself.equal = fieldEqual",
-    "ctx": {
-      "type": "function",
-      "name": "fieldEqual",
-      "string": "fieldEqual()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Static negation operator</p>",
-      "summary": "<p>Static negation operator</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 611,
-    "codeStart": 615,
-    "code": "function fieldNegation () {\n  return operators.negation(toData(arguments[0]))\n}\n\nself.negation = fieldNegation",
-    "ctx": {
-      "type": "function",
-      "name": "fieldNegation",
-      "string": "fieldNegation()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Any} data\n",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Any"
-        ],
-        "typesDescription": "<a href=\"Any.html\">Any</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Any} data</p>"
-      },
-      {
-        "type": "return",
-        "string": "{Object} this",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>this</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Scalar element</p>",
-      "summary": "<p>Scalar element</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 621,
-    "codeStart": 629,
-    "code": "function Scalar (data) {\n  Element.call(this, data, self.contains)\n}\n\ninherits(Scalar, Element)",
-    "ctx": {
-      "type": "function",
-      "name": "Scalar",
-      "string": "Scalar()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 635,
-    "codeStart": 638,
-    "code": "function scalarAddition () {\n  this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.addition = scalarAddition\nScalar.prototype.add      = scalarAddition",
-    "ctx": {
-      "type": "function",
-      "name": "scalarAddition",
-      "string": "scalarAddition()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 647,
-    "codeStart": 650,
-    "code": "function scalarSubtraction () {\n  this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.subtraction = scalarSubtraction\nScalar.prototype.sub         = scalarSubtraction",
-    "ctx": {
-      "type": "function",
-      "name": "scalarSubtraction",
-      "string": "scalarSubtraction()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 659,
-    "codeStart": 662,
-    "code": "function scalarMultiplication () {\n  this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.multiplication = scalarMultiplication\nScalar.prototype.mul = scalarMultiplication",
-    "ctx": {
-      "type": "function",
-      "name": "scalarMultiplication",
-      "string": "scalarMultiplication()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 671,
-    "codeStart": 674,
-    "code": "function scalarDivision () {\n  this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.division = scalarDivision\nScalar.prototype.div = scalarDivision",
-    "ctx": {
-      "type": "function",
-      "name": "scalarDivision",
-      "string": "scalarDivision()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 683,
-    "codeStart": 686,
-    "code": "function scalarInversion () {\n  this.data = fieldInversion(this.data, fieldInversion.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.inversion = scalarInversion\nScalar.prototype.inv       = scalarInversion",
-    "ctx": {
-      "type": "function",
-      "name": "scalarInversion",
-      "string": "scalarInversion()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 695,
-    "codeStart": 698,
-    "code": "function scalarEqual () {\n  return fieldEqual(this.data, fieldEqual.apply(null, arguments))\n}\n\nScalar.prototype.equal = scalarEqual\nScalar.prototype.eq = scalarEqual",
-    "ctx": {
-      "type": "function",
-      "name": "scalarEqual",
-      "string": "scalarEqual()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 705,
-    "codeStart": 708,
-    "code": "function scalarNegation () {\n  this.data = fieldNegation(this.data)\n\n  return this\n}\n\nScalar.prototype.negation = scalarNegation\nScalar.prototype.neg = scalarNegation\n\nself.Scalar = Scalar\n}\n\nmodule.exports = Field\n\n\nvar toData = require('./toData')",
-    "ctx": {
-      "type": "function",
-      "name": "scalarNegation",
-      "string": "scalarNegation()"
-    }
-  },
-  {
-    "tags": [
       {
         "type": "param",
         "string": "{Array|Any} arg\n",
@@ -975,8 +3513,8 @@
       }
     ],
     "description": {
-      "full": "",
-      "summary": "",
+      "full": "<p>Extract indices attribute, if any</p>",
+      "summary": "<p>Extract indices attribute, if any</p>",
       "body": ""
     },
     "isPrivate": false,
@@ -984,9 +3522,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 725,
-    "codeStart": 733,
-    "code": "function getIndices (arg) {\n  var indices\n\n  if (typeof arg.indices === 'undefined') {\n// TODO\n//   var data = toData(arg)\n//\n//   if (typeof data === 'array') {\n//     // TODO recursion into data if it is a multidimensional array\n//     indices = [data.length]\n//   }\n//   else {\n//     indices = [1]\n//   }\n  }\n  else {\n    indices = arg.indices\n  }\n\n  if (typeof indices === 'undefined')\n    throw new TypeError('No indices')\n\n  return indices\n}\n\nmodule.exports = getIndices\n\n\n// TODO use strings ℝ ℂ ℍ\n// usa anche ratio, lib per i numeri razionali\n\nrequire('strict-mode')(function () {\n  exports.Field       = require('./Field')\n  exports.Space       = require('./Space')\n  exports.VectorSpace = require('./VectorSpace')\n  exports.MatrixSpace = require('./MatrixSpace')\n//  exports.TensorSpace = require('./TensorSpace')\n\n  exports.Real    = require('./Real')\n  exports.Complex = require('./Complex')\n\n  exports.buildCyclicSpaceOf = require('./buildCyclicSpaceOf')\n})\n\n\nvar inherits = require('inherits')\n\nvar determinant               = require('./determinant'),\n    getIndices                = require('./getIndices'),\n    matrixToArrayIndex        = require('./matrixToArrayIndex'),\n    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n    Space                     = require('./Space'),\n    toData                    = require('./toData'),\n    VectorSpace               = require('./VectorSpace')",
+    "line": 1837,
+    "codeStart": 1847,
+    "code": "function getIndices (arg) {\n  var indices\n\n  if (typeof arg.indices === 'undefined') {\n// TODO\n//   var data = toData(arg)\n//\n//   if (typeof data === 'array') {\n//     // TODO recursion into data if it is a multidimensional array\n//     indices = [data.length]\n//   }\n//   else {\n//     indices = [1]\n//   }\n  }\n  else {\n    indices = arg.indices\n  }\n\n  if (typeof indices === 'undefined')\n    throw new TypeError('No indices')\n\n  return indices\n}\n\nmodule.exports = getIndices\n\n\n// TODO use strings ℝ ℂ ℍ\n// usa anche ratio, lib per i numeri razionali\n\nrequire('strict-mode')(function () {\n  exports.Field       = require('./Field')\n  exports.Space       = require('./Space')\n  exports.VectorSpace = require('./VectorSpace')\n  exports.MatrixSpace = require('./MatrixSpace')\n  exports.TensorSpace = require('./TensorSpace')\n\n  exports.Real    = require('./Real')\n  exports.Complex = require('./Complex')\n\n  exports.buildCyclicSpaceOf = require('./buildCyclicSpaceOf')\n})\n\n\nvar multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')",
     "ctx": {
       "type": "function",
       "name": "getIndices",
@@ -996,312 +3534,10 @@
   {
     "tags": [
       {
-        "type": "param",
-        "string": "{Object} Scalar",
-        "name": "Scalar",
-        "description": "",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Object} Scalar</p>"
+        "type": "function",
+        "string": "",
+        "html": ""
       },
-      {
-        "type": "param",
-        "string": "{Number} numRows",
-        "name": "numRows",
-        "description": "",
-        "types": [
-          "Number"
-        ],
-        "typesDescription": "<code>Number</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Number} numRows</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Number} numCols",
-        "name": "numCols",
-        "description": "",
-        "types": [
-          "Number"
-        ],
-        "typesDescription": "<code>Number</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Number} numCols</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Space of m x n matrices</p>",
-      "summary": "<p>Space of m x n matrices</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 788,
-    "codeStart": 796,
-    "code": "function MatrixSpace (Scalar) {\n  var self = this",
-    "ctx": {
-      "type": "function",
-      "name": "MatrixSpace",
-      "string": "MatrixSpace()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Number} numRows",
-        "name": "numRows",
-        "description": "",
-        "types": [
-          "Number"
-        ],
-        "typesDescription": "<code>Number</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Number} numRows</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Number} numCols which is optional: defaults to a square matrix.\n",
-        "name": "numCols",
-        "description": "<p>which is optional: defaults to a square matrix. </p>",
-        "types": [
-          "Number"
-        ],
-        "typesDescription": "<code>Number</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false
-      },
-      {
-        "type": "return",
-        "string": "{Constructor} Matrix",
-        "types": [
-          "Constructor"
-        ],
-        "typesDescription": "<a href=\"Constructor.html\">Constructor</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>Matrix</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Dimension</p>",
-      "summary": "<p>Dimension</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 799,
-    "codeStart": 808,
-    "code": "function Dimension (numRows, numCols) {\n  var isSquare = false\n\n  if (typeof numCols === 'undefined') {\n    // numCols defaults to numRows\n    numCols = numRows\n\n    isSquare = true\n  }\n\n  var indices = [numRows, numCols]\n\n  var Element = Space(Scalar)(indices)",
-    "ctx": {
-      "type": "function",
-      "name": "Dimension",
-      "string": "Dimension()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 822,
-    "codeStart": 826,
-    "code": "function Matrix () {\n  Element.apply(this, arguments)",
-    "ctx": {
-      "type": "function",
-      "name": "Matrix",
-      "string": "Matrix()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 829,
-    "codeStart": 833,
-    "code": "function matrixDeterminant () {\n  var det = determinant(Scalar, this.data, numRows)\n\n  return new Scalar(det)\n}\n\nif (isSquare) {\n  Object.defineProperty(this, 'determinant', {get: matrixDeterminant})\n  Object.defineProperty(this, 'det', {get: matrixDeterminant})\n}\n    }\n\n    inherits(Matrix, Element)\n\n    // Static attributes.\n    Matrix.isSquare = isSquare\n    Matrix.numRows  = numRows\n    Matrix.numCols  = numCols",
-    "ctx": {
-      "type": "function",
-      "name": "matrixDeterminant",
-      "string": "matrixDeterminant()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 852,
-    "codeStart": 855
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 856,
-    "codeStart": 860,
-    "code": "function matrixAddition (matrix) {\n  this.data = space.addition(this.data, matrix)\n\n  return this\n}\n\nMatrix.prototype.addition = matrixAddition\nMatrix.prototype.add      = matrixAddition",
-    "ctx": {
-      "type": "function",
-      "name": "matrixAddition",
-      "string": "matrixAddition()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 869,
-    "codeStart": 873,
-    "code": "function matrixSubtraction (matrix) {\n  this.data = space.subtraction(this.data, matrix)\n\n  return this\n}\n\nMatrix.prototype.subtraction = matrixSubtraction\nMatrix.prototype.sub         = matrixSubtraction",
-    "ctx": {
-      "type": "function",
-      "name": "matrixSubtraction",
-      "string": "matrixSubtraction()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 882,
-    "codeStart": 886,
-    "code": "function rightMultiplication (right) {\n  var rightData    = toData(right),\n      rightIndices = getIndices(right)\n\n  var rightIsMatrix = rightIndices.length === 2,\n      rightIsVector = rightIndices.length === 1\n\n  // TODO rightIsScalar and use scalarMultiplication\n\n  var rightIsSquare = rightIsMatrix && (rightIndices[0] === rightIndices[1])\n\n  if (rightIsVector)\n    rightIndices.push(1)\n\n  var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)\n\n  // Left multiplication by a square matrix is an inner product,\n  // so the method is a mutator.\n  if (rightIsSquare) {\n    this.data = data\n\n    return this\n  }\n\n  if (rightIsVector) {\n    var Vector = VectorSpace(Scalar)(numRows)\n\n    return new Vector(data)\n  }\n    // TODO if rightIsMatrix return new this(Scalar)(numRows, numCols)(data)\n}\n\nMatrix.prototype.rightMultiplication = rightMultiplication\nMatrix.prototype.rightMul            = rightMultiplication\nMatrix.prototype.multiplication      = rightMultiplication\nMatrix.prototype.mul                 = rightMultiplication",
-    "ctx": {
-      "type": "function",
-      "name": "rightMultiplication",
-      "string": "rightMultiplication()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 923,
-    "codeStart": 927,
-    "code": "function leftMultiplication (leftMatrix) {\n  var leftData    = toData(left),\n      leftIndices = getIndices(left)\n\n  var leftIsMatrix = leftIndices.length === 2,\n      leftIsVector = leftIndices.length === 1\n\n  var leftIsSquare = leftIsMatrix && (leftIndices[0] === leftIndices[1])\n\n  if (leftIsVector)\n    leftIndices.push(1)\n\n  var data = rowByColumnMultiplication(Scalar, leftData, leftIndices, this.data, this.indices)\n\n  // Left multiplication by a square matrix is an inner product,\n  // so the method is a mutator.\n  if (leftIsSquare) {\n    this.data = data\n\n    return this\n  }\n\n  if (leftIsVector) {\n    var Vector = VectorSpace(Scalar)(numCols)\n\n    return new Vector(data)\n  }\n}\n\nMatrix.prototype.leftMultiplication = leftMultiplication\nMatrix.prototype.leftMul            = leftMultiplication",
-    "ctx": {
-      "type": "function",
-      "name": "leftMultiplication",
-      "string": "leftMultiplication()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "returns",
-        "string": "{Object} transposedMatrix",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>transposedMatrix</p>"
-      }
-    ],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 959,
-    "codeStart": 964,
-    "code": "function matrixTransposition () {\n  var data = this.data,\n      transposedData = [],\n      transposedIndices = [numCols, numRows]\n\n  for (var i = 0; i < numRows; i++)\n    for (var j = 0; j < numCols; j++)\n      transposedData.push(data[matrixToArrayIndex(j, i, numCols)])\n\n  var TransposedMatrix = Space(Scalar)(transposedIndices)\n\n  var transposedMatrix = new TransposedMatrix(transposedData)\n\n  return transposedData\n}\n\nMatrix.prototype.transpose = matrixTransposition\nMatrix.prototype.tr        = matrixTransposition\nMatrix.prototype.t         = matrixTransposition\n\nreturn Matrix\n  }\n\n  return Dimension\n}\n\nmodule.exports = MatrixSpace\n\n\nvar multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')",
-    "ctx": {
-      "type": "function",
-      "name": "matrixTransposition",
-      "string": "matrixTransposition()"
-    }
-  },
-  {
-    "tags": [
       {
         "type": "param",
         "string": "{Number} i row",
@@ -1346,7 +3582,7 @@
         "html": "<p>{Number} numberOfColumns</p>"
       },
       {
-        "type": "return",
+        "type": "returns",
         "string": "{Number} index",
         "types": [
           "Number"
@@ -1360,8 +3596,8 @@
       }
     ],
     "description": {
-      "full": "",
-      "summary": "",
+      "full": "<p>Convert a pair of indices to a 1-dimensional index</p>",
+      "summary": "<p>Convert a pair of indices to a 1-dimensional index</p>",
       "body": ""
     },
     "isPrivate": false,
@@ -1369,8 +3605,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 995,
-    "codeStart": 1004,
+    "line": 1894,
+    "codeStart": 1905,
     "code": "function matrixToArrayIndex(i, j, numberOfColumns) {\n  var index = multiDimensionalArrayIndex([numberOfColumns, numberOfColumns], [i, j])\n\n  return index\n}\n\nmodule.exports = matrixToArrayIndex",
     "ctx": {
       "type": "function",
@@ -1380,6 +3616,11 @@
   },
   {
     "tags": [
+      {
+        "type": "function",
+        "string": "",
+        "html": ""
+      },
       {
         "type": "param",
         "string": "{Array} dimensions",
@@ -1434,9 +3675,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1013,
-    "codeStart": 1031,
-    "code": "function multiDimensionalArrayIndex(dimensions, indices) {\n  var l = dimensions.length - 1\n    , index = indices[l]\n    , factor\n\n  if (dimensions.length > 1) {\n    factor = dimensions[l - 1]\n\n    index += factor * indices[l - 1]\n  }\n\n  for (var i = 2; i < dimensions.length; i++) {\n    factor *= dimensions[l - i + 1]\n\n    index += factor * indices[l - i]\n  }\n\n  return index\n}\n\nmodule.exports = multiDimensionalArrayIndex\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')\n\nvar zero = [0, 0, 0, 0]\n  , one  = [1, 0, 0, 0]\n\nfunction addition (p, q) {\n  return [z[0] + w[0], z[1] + w[1]]\n}\n\nfunction multiplication (p, q) {\n// TODO  return [z[0] * w[0] - z[1] * w[1], z[1] * w[0] + z[0] * w[1]]\n}\n\nfunction conjugation (p) {\n  // p~ = (p0 + i p1 + j p2 + k p3)~\n  //    = p0 - i p1 - j p2 - k p3\n  return [p[0], - p[1], -p[2], -p[3]]\n}\n\nfunction norm (z) {\n  // |p| = |p0 + i p1|\n  //     = p0 * p0 + p1 * p1 + p2 * p2 + p3 * p3\n  return p[0] * p[0] + p[1] * p[1] + p[2] + p[3]\n}\n\n// TODO which inversion? right or left inversion?\n//function inversion (z) {\n//  // z^-1 = z~ * 1 / |z|\n//  return multiplication(conjugation(z), [1 / norm(z), 0])\n//}\n\nfunction equal (p, q) {\n  return ((p[0] === q[0]) && (p[1] === q[1])) && ((p[2] === q[2]) && (p[3] === q[3]))\n}\n\nfunction contains (p) {\n  return (typeof p[0] === 'number') && (typeof p[1] === 'number') && (typeof p[2] === 'number') && (typeof p[3] === 'number')\n}\n\nfunction negation (p) {\n  return [-p[0], -p[1], -p[2], -p[3]]\n}\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
+    "line": 1914,
+    "codeStart": 1934,
+    "code": "function multiDimensionalArrayIndex(dimensions, indices) {\n  var l = dimensions.length - 1\n    , index = indices[l]\n    , factor\n\n  if (dimensions.length > 1) {\n    factor = dimensions[l - 1]\n\n    index += factor * indices[l - 1]\n  }\n\n  for (var i = 2; i < dimensions.length; i++) {\n    factor *= dimensions[l - i + 1]\n\n    index += factor * indices[l - i]\n  }\n\n  return index\n}\n\nmodule.exports = multiDimensionalArrayIndex\n\n\nvar matrixToArrayIndex = require('./matrixToArrayIndex')",
     "ctx": {
       "type": "function",
       "name": "multiDimensionalArrayIndex",
@@ -1446,101 +3687,10 @@
   {
     "tags": [
       {
-        "type": "param",
-        "string": "{Array} data\n",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} data</p>"
+        "type": "function",
+        "string": "",
+        "html": ""
       },
-      {
-        "type": "returns",
-        "string": "{Object} quaternion number",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>quaternion number</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Quaternion number.</p><p>Ladies and gentlmen, this class implements a <a href=\"https://en.wikipedia.org/wiki/Quaternion\">Quaternion</a>.</p><pre><code>var p = new Quaternion([1, 0, 3.5, 1]),\n    q = new Quaternion([-1, 2, 4, 0]);\n</code></pre>",
-      "summary": "<p>Quaternion number.</p>",
-      "body": "<p>Ladies and gentlmen, this class implements a <a href=\"https://en.wikipedia.org/wiki/Quaternion\">Quaternion</a>.</p><pre><code>var p = new Quaternion([1, 0, 3.5, 1]),\n    q = new Quaternion([-1, 2, 4, 0]);\n</code></pre>"
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1116,
-    "codeStart": 1131,
-    "code": "// TODO Quaternions are a skew field, there is left and right multiplication. Create a SkewField class.\nfunction Quaternion (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Quaternion, Scalar)\n\naddStaticOperators(Complex, buildFieldOperators(field))\n\nfunction fieldConjugation (z) {\n  return conjugation(z)\n}\n\nfunction scalarConjugation (z) {\n  this.data = fieldConjugation(this.data)\n\n  return this\n}\n\nComplex.prototype.conjugation = scalarConjugation\nComplex.prototype.conj        = scalarConjugation\n\nComplex.conjugation = fieldConjugation\nComplex.conj        = fieldConjugation\n\nmodule.exports = Complex\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')\n\nvar zero = 0\n  , one  = 1\n\nfunction addition (a, b) { return a + b }\n\nfunction multiplication (a, b) { return a * b }\n\nfunction inversion (a) { return one / a }\n\nfunction negation (a) { return - a }\n\nfunction equal (a, b) { return a === b }\n\nfunction contains (a) { return typeof a === 'number' }\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
-    "ctx": false
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Number} data\n",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Number"
-        ],
-        "typesDescription": "<code>Number</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Number} data</p>"
-      },
-      {
-        "type": "returns",
-        "string": "{Object} real number",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>real number</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Real number.</p><pre><code>var x = new Real(1.5),\n    y = new Real(-20);\n</code></pre>",
-      "summary": "<p>Real number.</p>",
-      "body": "<pre><code>var x = new Real(1.5),\n    y = new Real(-20);\n</code></pre>"
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1195,
-    "codeStart": 1208,
-    "code": "function Real (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Real, Scalar)\n\naddStaticOperators(Real, buildFieldOperators(field))\n\nmodule.exports = Real\n\n\nvar matrixToArrayIndex = require('./matrixToArrayIndex')",
-    "ctx": {
-      "type": "function",
-      "name": "Real",
-      "string": "Real()"
-    }
-  },
-  {
-    "tags": [
       {
         "type": "param",
         "string": "{Object} Scalar",
@@ -1617,7 +3767,7 @@
         "html": "<p>{Array} rightIndices</p>"
       },
       {
-        "type": "return",
+        "type": "returns",
         "string": "{Array} data",
         "types": [
           "Array"
@@ -1640,9 +3790,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1221,
-    "codeStart": 1232,
-    "code": "function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {\n  var data = []\n\n  // Check if matrix can be multiplied\n  if (leftIndices[1] !== rightIndices[0])\n    throw new TypeError('Left num cols != right num rows')\n\n  var commonIndex = leftIndices[1]\n\n  var rows = leftIndices[0]\n  var cols = rightIndices[1]\n\n  for (var i = 0; i < rows; i++) {\n    for (var j = 0; j < cols; j++) {\n      var element\n        , leftIndex\n        , rightIndex\n        , rightElement\n        , leftElement\n\n      leftIndex = matrixToArrayIndex(i, 0, commonIndex)\n      rightIndex = matrixToArrayIndex(0, j, cols)\n\n      rightElement = rightMatrix[rightIndex]\n      leftElement = leftMatrix[leftIndex]\n\n      element = Scalar.multiplication(leftElement, rightElement)\n\n      for (var k = 1; k < commonIndex; k++) {\n        leftIndex = matrixToArrayIndex(i, k, commonIndex)\n        rightIndex = matrixToArrayIndex(k, j, cols)\n\n        rightElement = rightMatrix[rightIndex]\n        leftElement = leftMatrix[leftIndex]\n\n        element = Scalar.addition(element, Scalar.multiplication(rightElement, leftElement))\n      }\n\n      data.push(element)\n    }\n  }\n\n  return data\n}\n\nmodule.exports = rowByColumnMultiplication\n\n\nvar inherits = require('inherits')\n\nvar buildFieldOperators = require('./buildFieldOperators'),\n    Element             = require('./Element')\n\nvar fieldOperator,\n    one,\n    zero",
+    "line": 1959,
+    "codeStart": 1972,
+    "code": "function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {\n  // Check if matrix can be multiplied\n  if (leftIndices[1] !== rightIndices[0])\n    throw new TypeError('Left num cols != right num rows')\n\n  var commonIndex = leftIndices[1],\n      data        = [],\n      rows        = leftIndices[0],\n      cols        = rightIndices[1]\n\n  for (var i = 0; i < rows; i++) {\n    for (var j = 0; j < cols; j++) {\n      var leftIndex  = matrixToArrayIndex(i, 0, commonIndex),\n          rightIndex = matrixToArrayIndex(0, j, cols)\n\n      var rightElement = rightMatrix[rightIndex],\n          leftElement  = leftMatrix[leftIndex]\n\n      var element = Scalar.multiplication(leftElement, rightElement)\n\n      for (var k = 1; k < commonIndex; k++) {\n        leftIndex = matrixToArrayIndex(i, k, commonIndex)\n        rightIndex = matrixToArrayIndex(k, j, cols)\n\n        rightElement = rightMatrix[rightIndex]\n        leftElement = leftMatrix[leftIndex]\n\n        element = Scalar.addition(element, Scalar.multiplication(rightElement, leftElement))\n      }\n\n      data.push(element)\n    }\n  }\n\n  return data\n}\n\nmodule.exports = rowByColumnMultiplication",
     "ctx": {
       "type": "function",
       "name": "rowByColumnMultiplication",
@@ -1653,586 +3803,22 @@
     "tags": [
       {
         "type": "param",
-        "string": "{Object} field",
-        "name": "field",
-        "description": "",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Object} field</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Any} data",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Any"
-        ],
-        "typesDescription": "<a href=\"Any.html\">Any</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Any} data</p>"
-      }
-    ],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1289,
-    "codeStart": 1295,
-    "code": "function Scalar (field, data) {\n  fieldOperator = buildFieldOperators(field)\n  one  = field.one\n  zero = field.zero\n\n  Element.call(this, data, field.operator.contains)\n}\n\ninherits(Scalar, Element)\n\nScalar.one  = one\nScalar.zero = zero\n\nfunction scalarAddition () {\n  var fieldAddition = fieldOperator.addition\n\n  this.data = fieldAddition(this.data, fieldAddition.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.addition = scalarAddition\nScalar.prototype.add      = scalarAddition\n\nfunction scalarSubtraction () {\n  var fieldSubtraction = fieldOperator.subtraction\n\n  this.data = fieldSubtraction(this.data, fieldSubtraction.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.subtraction = scalarSubtraction\nScalar.prototype.sub         = scalarSubtraction\n\nfunction scalarMultiplication () {\n  var fieldMultiplication = fieldOperator.multiplication\n\n  this.data = fieldMultiplication(this.data, fieldMultiplication.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.multiplication = scalarMultiplication\nScalar.prototype.mul            = scalarMultiplication\n\nfunction scalarDivision () {\n  var fieldDivision = fieldOperator.division\n\n  this.data = fieldDivision(this.data, fieldDivision.apply(null, arguments))\n\n  return this\n}\n\nScalar.prototype.division = scalarDivision\nScalar.prototype.div      = scalarDivision\n\nfunction scalarInversion () {\n  var fieldInversion = fieldOperator.inversion\n\n  this.data = fieldInversion(this.data)\n\n  return this\n}\n\nScalar.prototype.inversion = scalarInversion\nScalar.prototype.inv       = scalarInversion\n\nfunction scalarEqual () {\n  var fieldEqual = fieldOperator.equal\n\n  return fieldEqual(this.data, fieldEqual.apply(null, arguments))\n}\n\nScalar.prototype.equal = scalarEqual\nScalar.prototype.eq    = scalarEqual\n\nfunction scalarNegation () {\n  var fieldNegation = fieldOperator.negation\n\n  this.data = fieldNegation(this.data)\n\n  return this\n}\n\nScalar.prototype.negation = scalarNegation\nScalar.prototype.neg      = scalarNegation\n\nmodule.exports = Scalar\n\nvar inherits = require('inherits')\n\nvar arrayFrom = require('./arrayFrom'),\n    Element   = require('./Element'),\n    toData    = require('./toData')\n\nfunction getResult (dimension, operator, dataArg) {\n  var result = dataArg[0]\n\n  for (var i=1; i < dataArg.length; i++) {\n    var data = dataArg[i]\n\n    for (var j=0; j < dimension; j++) {\n      result[j] = operator(result[j], data[j])\n    }\n  }\n\n  return result\n}",
-    "ctx": {
-      "type": "function",
-      "name": "Scalar",
-      "string": "Scalar()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Object} Scalar",
-        "name": "Scalar",
-        "description": "",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Object} Scalar</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Array} indices\n",
-        "name": "indices",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} indices</p>"
-      },
-      {
-        "type": "constructor",
-        "string": "",
-        "html": ""
-      }
-    ],
-    "description": {
-      "full": "<p>Abstract multidimensional space</p>",
-      "summary": "<p>Abstract multidimensional space</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": true,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1405,
-    "codeStart": 1414,
-    "code": "function Space (Scalar) {\n\n  // TODO function Dimension (indices, coindices)\n  function Dimension (indices) {\n\n    // Attribute dimension is the product of all indices.\n    var dimension = indices.reduce(function (a, b) { return a * b }, 1)",
-    "ctx": {
-      "type": "constructor",
-      "name": "Space",
-      "string": "Space()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1422,
-    "codeStart": 1426,
-    "code": "function spaceAddition () {\n  return getResult(dimension, Scalar.addition, arrayFrom(arguments).map(toData))\n}",
-    "ctx": {
-      "type": "function",
-      "name": "spaceAddition",
-      "string": "spaceAddition()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1430,
-    "codeStart": 1434,
-    "code": "function spaceSubtraction () {\n  return getResult(dimension, Scalar.subtraction, arrayFrom(arguments).map(toData))\n}",
-    "ctx": {
-      "type": "function",
-      "name": "spaceSubtraction",
-      "string": "spaceSubtraction()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1438,
-    "codeStart": 1442,
-    "code": "function spaceScalarMultiplication (data, scalar) {\n  var result = []\n\n  // Check if scalar is ok.\n  var aScalar = [scalar]\n  var scalarOk = aScalar.map(Scalar.contains).map(toData)[0]\n\n  for (var i=0; i<dimension; i++) {\n    var x = Scalar.multiplication(data[i], scalarOk)\n    result.push(x)\n  }\n\n  return result\n}",
-    "ctx": {
-      "type": "function",
-      "name": "spaceScalarMultiplication",
-      "string": "spaceScalarMultiplication()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1457,
-    "codeStart": 1461,
-    "code": "function spaceScalarProduct () {\n  var dataMul = getResult(dimension, Scalar.multiplication, arrayFrom(arguments).map(toData))\n\n  var result = dataMul[0]\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, dataMul[i])\n  }\n\n  return result\n}",
-    "ctx": {
-      "type": "function",
-      "name": "spaceScalarProduct",
-      "string": "spaceScalarProduct()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Array} data\n",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} data</p>"
-      },
-      {
-        "type": "returns",
-        "string": "{Boolean}",
-        "types": [
-          "Boolean"
-        ],
-        "typesDescription": "<code>Boolean</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "",
-        "html": "<p>{Boolean}</p>"
-      }
-    ],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1473,
-    "codeStart": 1479,
-    "code": "function contains (data) {\n  return data.map(Scalar.contains).length === dimension\n}\n\n  // TODO spaceIdentity",
-    "ctx": {
-      "type": "function",
-      "name": "contains",
-      "string": "contains()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Array} data\n",
-        "name": "data",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} data</p>"
-      },
-      {
-        "type": "constructor",
-        "string": "",
-        "html": ""
-      }
-    ],
-    "description": {
-      "full": "<p>Tensor</p>",
-      "summary": "<p>Tensor</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": true,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1485,
-    "codeStart": 1493,
-    "code": "function Tensor (data) {\n  Element.call(this, data, contains)\n\n  Object.defineProperty(this, 'indices', {\n    enumerable : true,\n    value      : indices,\n    writable   : false\n  })\n}\n\ninherits(Tensor, Element)",
-    "ctx": {
-      "type": "constructor",
-      "name": "Tensor",
-      "string": "Tensor()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Array} data1",
-        "name": "data1",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} data1</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Array} data2\n...",
-        "name": "data2",
-        "description": "<p>...</p>",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false
-      },
-      {
-        "type": "param",
-        "string": "{Array} dataN\n",
-        "name": "dataN",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} dataN</p>"
-      },
-      {
-        "type": "returns",
-        "string": "this Tensor with updated data",
-        "types": [
-          "hi"
-        ],
-        "typesDescription": "<a href=\"hi.html\">hi</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>Tensor with updated data</p>"
-      }
-    ],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1505,
-    "codeStart": 1515,
-    "code": "function tensorAddition () {\n  this.data = spaceAddition(this.data, spaceAddition.apply(null, arguments))\n\n  return this\n}\n\nTensor.prototype.addition = tensorAddition\nTensor.prototype.add      = tensorAddition",
-    "ctx": {
-      "type": "function",
-      "name": "tensorAddition",
-      "string": "tensorAddition()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Array} data1",
-        "name": "data1",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} data1</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Array} data2\n...",
-        "name": "data2",
-        "description": "<p>...</p>",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false
-      },
-      {
-        "type": "param",
-        "string": "{Array} dataN\n",
-        "name": "dataN",
-        "description": "",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Array} dataN</p>"
-      },
-      {
-        "type": "return",
-        "string": "this Tensor with updated data",
-        "types": [
-          "hi"
-        ],
-        "typesDescription": "<a href=\"hi.html\">hi</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>Tensor with updated data</p>"
-      }
-    ],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1524,
-    "codeStart": 1534,
-    "code": "function tensorSubtraction () {\n  this.data = spaceSubtraction(this.data, spaceSubtraction.apply(null, arguments))\n\n  return this\n}\n\nTensor.prototype.subtraction = tensorSubtraction\nTensor.prototype.sub         = tensorSubtraction",
-    "ctx": {
-      "type": "function",
-      "name": "tensorSubtraction",
-      "string": "tensorSubtraction()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Any} scalar\n",
-        "name": "scalar",
-        "description": "",
-        "types": [
-          "Any"
-        ],
-        "typesDescription": "<a href=\"Any.html\">Any</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Any} scalar</p>"
-      },
-      {
-        "type": "return",
-        "string": "this Tensor with updated data",
-        "types": [
-          "hi"
-        ],
-        "typesDescription": "<a href=\"hi.html\">hi</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>Tensor with updated data</p>"
-      }
-    ],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1543,
-    "codeStart": 1550,
-    "code": "function tensorScalarMultiplication (scalar) {\n  this.data = spaceScalarMultiplication(this.data, scalar)\n\n  return this\n}\n\nTensor.prototype.scalarMultiplication = tensorScalarMultiplication\nTensor.prototype.scalar               = tensorScalarMultiplication\n\n// Static attributes.\nTensor.dimension = dimension\nTensor.indices   = indices\nTensor.Scalar    = Scalar\n\n// Static operators.\nTensor.addition             = spaceAddition\nTensor.add                  = spaceAddition\n\nTensor.subtraction          = spaceSubtraction\nTensor.sub                  = spaceSubtraction\n\nTensor.scalarMultiplication = spaceScalarMultiplication\nTensor.scalar               = spaceScalarMultiplication\n\nreturn Tensor\n  }\n\n  // Static attribute.\n  Dimension.Scalar = Scalar\n\n  return Dimension\n}\n\nmodule.exports = Space\n\n\nvar inherits = require('inherits')\n\nvar Space = require('./Space')",
-    "ctx": {
-      "type": "function",
-      "name": "tensorScalarMultiplication",
-      "string": "tensorScalarMultiplication()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Object} Scalar",
-        "name": "Scalar",
-        "description": "",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Object} Scalar</p>"
-      },
-      {
-        "type": "param",
-        "string": "{Array} controvariant indices",
-        "name": "controvariant",
-        "description": "<p>indices</p>",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false
-      },
-      {
-        "type": "param",
-        "string": "{Array} covariant indices",
-        "name": "covariant",
-        "description": "<p>indices</p>",
-        "types": [
-          "Array"
-        ],
-        "typesDescription": "<code>Array</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false
-      }
-    ],
-    "description": {
-      "full": "<p>Space of tensors</p>",
-      "summary": "<p>Space of tensors</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1590,
-    "codeStart": 1598,
-    "code": "function TensorSpace (Scalar, controvariant, covariant) {\n  var self = this\n\n  var indices = controvariant.concat(covariant)\n\n  var type = [controvariant.length, covariant.length]\n  self.type = type\n\n  var space = new Space(Scalar, indices)\n\n  self.addition = space.addition\n  self.subtraction = space.subtraction\n\n  function Tensor (data) {\n    space.Element.call(this, data)\n  }\n\n\n inherits(Tensor, space.Element)\n\n  self.Tensor = Tensor\n}\n\ninherits(TensorSpace, Space)\n\nmodule.exports = TensorSpace",
-    "ctx": {
-      "type": "function",
-      "name": "TensorSpace",
-      "string": "TensorSpace()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Object|Any} arg\n",
+        "string": "{*} arg\n",
         "name": "arg",
         "description": "",
-        "types": [
-          "Object",
-          "Any"
-        ],
-        "typesDescription": "<code>Object</code>|<a href=\"Any.html\">Any</a>",
+        "types": [],
+        "typesDescription": "<code>*</code>",
         "optional": false,
         "nullable": false,
         "nonNullable": false,
         "variable": false,
-        "html": "<p>{Object|Any} arg</p>"
+        "html": "<p>{*} arg</p>"
       },
       {
-        "type": "return",
-        "string": "{Any} data",
-        "types": [
-          "Any"
-        ],
-        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "type": "returns",
+        "string": "{*} data",
+        "types": [],
+        "typesDescription": "<code>*</code>",
         "optional": false,
         "nullable": false,
         "nonNullable": false,
@@ -2250,255 +3836,13 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1626,
-    "codeStart": 1634,
-    "code": "function toData (arg) {\n  var data\n\n  if (typeof arg.data === 'undefined')\n    data = arg\n  else\n    data = arg.data\n\n  if (typeof data === 'undefined')\n    throw new TypeError('No data')\n\n  return data\n}\n\nmodule.exports = toData\n\n\nvar inherits = require('inherits')\n\nvar getIndices                = require('./getIndices'),\n    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n    Space                     = require('./Space'),\n    toData                    = require('./toData')",
+    "line": 2012,
+    "codeStart": 2020,
+    "code": "function toData (arg) {\n  var data\n\n  if (typeof arg.data === 'undefined')\n    data = arg\n  else\n    data = arg.data\n\n  if (typeof data === 'undefined')\n    throw new TypeError('No data')\n\n  return data\n}\n\nmodule.exports = toData",
     "ctx": {
       "type": "function",
       "name": "toData",
       "string": "toData()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Object} Scalar\n",
-        "name": "Scalar",
-        "description": "",
-        "types": [
-          "Object"
-        ],
-        "typesDescription": "<code>Object</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Object} Scalar</p>"
-      },
-      {
-        "type": "return",
-        "string": "{Function} Dimension",
-        "types": [
-          "Function"
-        ],
-        "typesDescription": "<code>Function</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>Dimension</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Space of vectors</p><pre><code>var V = VectorSpace(R)(2)\n\nvar v = new V([1, 2])\n</code></pre>",
-      "summary": "<p>Space of vectors</p>",
-      "body": "<pre><code>var V = VectorSpace(R)(2)\n\nvar v = new V([1, 2])\n</code></pre>"
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 1659,
-    "codeStart": 1673,
-    "code": "function VectorSpace (Scalar) {",
-    "ctx": {
-      "type": "function",
-      "name": "VectorSpace",
-      "string": "VectorSpace()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "param",
-        "string": "{Number} dimension\n",
-        "name": "dimension",
-        "description": "",
-        "types": [
-          "Number"
-        ],
-        "typesDescription": "<code>Number</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "html": "<p>{Number} dimension</p>"
-      },
-      {
-        "type": "return",
-        "string": "{Constructor} Vector",
-        "types": [
-          "Constructor"
-        ],
-        "typesDescription": "<a href=\"Constructor.html\">Constructor</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>Vector</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Dimension</p>",
-      "summary": "<p>Dimension</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 1675,
-    "codeStart": 1683,
-    "code": "function Dimension (dimension) {\n  var Element = Space(Scalar)([dimension])\n\n  function Vector () {\n    Element.apply(this, arguments)\n\n    var data = this.data",
-    "ctx": {
-      "type": "function",
-      "name": "Dimension",
-      "string": "Dimension()"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "return",
-        "string": "{Scalar} result",
-        "types": [
-          "Scalar"
-        ],
-        "typesDescription": "<a href=\"Scalar.html\">Scalar</a>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>result</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Norm of a vector</p><p>Given v = (x1, x2, ... xN)</p><p>norm is defined as n = x1 <em> x1 + x2 </em> x2 + ... + xN * xN</p>",
-      "summary": "<p>Norm of a vector</p>",
-      "body": "<p>Given v = (x1, x2, ... xN)</p><p>norm is defined as n = x1 <em> x1 + x2 </em> x2 + ... + xN * xN</p>"
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 1691,
-    "codeStart": 1701,
-    "code": "function vectorNorm () {\n  var result = Scalar.multiplication(data[0], data[0])\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))\n  }\n\n  return new Scalar(result)\n}\n\nObject.defineProperty(this, 'norm', {get: vectorNorm})\n    }\n\n    inherits(Vector, Element)",
-    "ctx": {
-      "type": "function",
-      "name": "vectorNorm",
-      "string": "vectorNorm()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 1716,
-    "codeStart": 1720,
-    "code": "function crossProduct (right) {\n  var rightData      = toData(right),\n      rightDimension = rightData.length,\n      rightIndices   = getIndices(right)\n\n}\n\n// Cross product is defined only in dimension 3.\nif (dimension === 3) {\n  Vector.prototype.crossProduct = crossProduct\n  Vector.prototype.cross        = crossProduct\n  Vector.prototype.x            = crossProduct\n}",
-    "ctx": {
-      "type": "function",
-      "name": "crossProduct",
-      "string": "crossProduct()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 1734,
-    "codeStart": 1738,
-    "code": "function matrixProduct (matrix) {\n  var matrixData    = toData(matrix),\n      matrixIndices = getIndices(matrix)\n\n  var indices = [1, dimension]\n\n  var data = rowByColumnMultiplication(Scalar, this.data, indices, matrixData, matrixIndices)\n\n  this.data = data\n\n  return this\n}\n\nVector.prototype.matrixProduct = matrixProduct",
-    "ctx": {
-      "type": "function",
-      "name": "matrixProduct",
-      "string": "matrixProduct()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 1753,
-    "codeStart": 1757,
-    "code": "function scalarProduct (vector) {\n  var data          = this.data,\n      vectorData    = toData(vector),\n      vectorIndices = getIndices(vector)\n\n  if (dimension !== vectorData.length)\n    throw new TypeError('Vector has not the same dimension')\n\n  var result = Scalar.multiplication(data[0], vectorData[0])\n\n  for (var i=1; i<dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(data[i], vectorData[i]))\n  }\n\n  return new Scalar(result)\n}\n\nVector.prototype.scalarProduct = scalarProduct\nVector.prototype.dotProduct    = scalarProduct\nVector.prototype.dot           = scalarProduct",
-    "ctx": {
-      "type": "function",
-      "name": "scalarProduct",
-      "string": "scalarProduct()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 1778,
-    "codeStart": 1782,
-    "code": "function perScalarProduct (scalar) {\n  var data       = this.data,\n      scalarData = toData(scalar)\n\n  for (var i = 0; i < dimension; i++)\n    data[i] = Scalar.mul(data[i], scalarData)\n\n  this.data = data\n\n  return this\n}\n\nVector.prototype.perScalarProduct = perScalarProduct",
-    "ctx": {
-      "type": "function",
-      "name": "perScalarProduct",
-      "string": "perScalarProduct()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "",
-      "summary": "",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": true,
-    "line": 1796,
-    "codeStart": 1800,
-    "code": "Vector.addition    = Element.addition\nVector.add         = Element.addition\nVector.subtraction = Element.subtraction\nVector.sub         = Element.subtraction\n\nreturn Vector\n  }\n\n  return Dimension\n}\n\nmodule.exports = VectorSpace",
-    "ctx": {
-      "type": "property",
-      "receiver": "Vector",
-      "name": "addition",
-      "value": "Element.addition",
-      "string": "Vector.addition"
     }
   }
 ]

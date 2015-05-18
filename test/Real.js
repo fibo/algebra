@@ -10,8 +10,8 @@ var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
     staticUnaryOperator   = require('./features/staticUnaryOperator')
 
 describe('Real', function () {
-  var operator
-    , x
+  var operator,
+      x
 
   describe('addition', function () {
     operator = 'addition'

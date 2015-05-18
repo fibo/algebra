@@ -1,13 +1,13 @@
 
-var algebra = require('..')
-  , should = require('should')
+var algebra = require('..'),
+    should = require('should')
 
 var C = algebra.Complex
 
-var mutatorBinaryOperator = require('./features/mutatorBinaryOperator')
-  , mutatorUnaryOperator = require('./features/mutatorUnaryOperator')
-  , staticBinaryOperator = require('./features/staticBinaryOperator')
-  , staticUnaryOperator = require('./features/staticUnaryOperator')
+var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
+    mutatorUnaryOperator  = require('./features/mutatorUnaryOperator'),
+    staticBinaryOperator  = require('./features/staticBinaryOperator'),
+    staticUnaryOperator   = require('./features/staticUnaryOperator')
 
 describe('Complex', function () {
   var operator
@@ -50,6 +50,14 @@ describe('Complex', function () {
     it('is a static method', staticUnaryOperator(C, operator, [-2, 1], [2, -1]))
 
     it('is a mutator method', mutatorUnaryOperator(C, operator, [1, 8], [-1, -8]))
+  })
+
+  describe('conjugation', function () {
+    operator = 'conjugation'
+
+    it('is a static method', staticUnaryOperator(C, operator, [2, 1], [2, -1]))
+
+    it('is a mutator method', mutatorUnaryOperator(C, operator, [1, 7], [1, -7]))
   })
 })
 

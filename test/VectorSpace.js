@@ -9,39 +9,60 @@ var VectorSpace = algebra.VectorSpace
 describe('VectorSpace', function () {
   var R2 = VectorSpace(Real)(2)
 
-  describe('static', function () {
-    it('addition', function () {
+  describe('addition()', function () {
+    var vector1 = new R2([0, 1]),
+        vector2 = new R2([1, 1])
+
+    it('is a static operator', function () {
       var data = R2.addition([0, 2], [-1, 3])
 
       data.should.eql([-1, 5])
     })
+
+    it('is a mutator', function () {
+      vector1.addition(vector2)
+      vector1.data.should.be.eql([1, 2])
+    })
   })
 
-  describe('Vector', function () {
+  describe('subtraction()', function () {
     var vector1 = new R2([0, 1]),
         vector2 = new R2([1, 1])
 
-    it('scalarProduct()', function () {
+    it('is a static operator', function () {
+      var data = R2.subtraction([0, 2], [-1, 3])
+
+      data.should.eql([1, -1])
+    })
+
+    it('is a mutator', function () {
+      vector2.subtraction(vector1)
+      vector2.data.should.be.eql([1, 0])
+    })
+  })
+
+  describe('scalarProduct()', function () {
+    var vector1 = new R2([0, 1]),
+        vector2 = new R2([1, 1])
+
+    it('is a static operator')
+
+    it('is returns a scalar', function () {
       var scalar = vector1.scalarProduct(vector2)
 
       scalar.should.be.instanceOf(Real)
 
       scalar.data.should.be.eql(1)
     })
+  })
 
-    it('norm', function () {
+  describe('norm', function () {
+    var vector1 = new R2([0, 1]),
+        vector2 = new R2([1, 1])
+
+    it('is a scalar', function () {
       vector1.norm.data.should.be.eql(1)
       vector2.norm.data.should.be.eql(2)
-    })
-
-    it('addition()', function () {
-      vector1.addition(vector2)
-      vector1.data.should.be.eql([1, 2])
-    })
-
-    it('subtraction()', function () {
-      vector2.subtraction(vector1)
-      vector2.data.should.be.eql([0, -1])
     })
   })
 })

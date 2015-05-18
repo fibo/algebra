@@ -20,8 +20,6 @@ var determinant               = require('./determinant'),
  */
 
 function MatrixSpace (Scalar) {
-  var self = this
-
   /**
    * Dimension
    *
@@ -75,16 +73,15 @@ function MatrixSpace (Scalar) {
     Matrix.numRows  = numRows
     Matrix.numCols  = numCols
 
-    /*
-     *
-     */
+    // Static operators.
+    Matrix.addition = Element.addition
 
-    /*
+    /*!
      *
      */
 
     function matrixAddition (matrix) {
-      this.data = space.addition(this.data, matrix)
+      this.data = Element.addition(this.data, matrix)
 
       return this
     }
@@ -92,12 +89,12 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.addition = matrixAddition
     Matrix.prototype.add      = matrixAddition
 
-    /*
+    /*!
      *
-
      */
+
     function matrixSubtraction (matrix) {
-      this.data = space.subtraction(this.data, matrix)
+      this.data = Element.subtraction(this.data, matrix)
 
       return this
     }
@@ -105,7 +102,7 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.subtraction = matrixSubtraction
     Matrix.prototype.sub         = matrixSubtraction
 
-    /*
+    /*!
      *
      */
 
@@ -125,7 +122,7 @@ function MatrixSpace (Scalar) {
 
       var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)
 
-      // Left multiplication by a square matrix is an inner product,
+      // Left multiplication by a square matrix is an internal operation,
       // so the method is a mutator.
       if (rightIsSquare) {
         this.data = data
@@ -146,7 +143,7 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.multiplication      = rightMultiplication
     Matrix.prototype.mul                 = rightMultiplication
 
-    /*
+    /*!
      *
      */
 
@@ -182,7 +179,7 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.leftMultiplication = leftMultiplication
     Matrix.prototype.leftMul            = leftMultiplication
 
-    /*
+    /*!
      *
      * @returns {Object} transposedMatrix
      */

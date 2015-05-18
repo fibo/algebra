@@ -21,55 +21,84 @@ describe('MatrixSpace', function () {
     R2x2.isSquare.should.be.ok
   })
 
-  describe('static', function () {
-    it('addition()'/*, function () {
-    }*/)
 
-    it('subtraction()'/*, function () {
-    }*/)
+  var matrix1  = new R2x2([2, 3,  1, 1]),
+      matrix2  = new R2x2([0, 1, -1, 0])
 
-    it('multiplication()'/*, function () {
-    }*/)
+  matrix1.should.be.instanceOf(R2x2)
+  matrix2.should.be.instanceOf(R2x2)
 
-    it('transpose()'/*, function () {
-    }*/)
+  describe('determinant', function () {
+    it('returns a Scalar', function () {
+      matrix1.determinant.should.be.instanceOf(Real)
+      matrix2.determinant.should.be.instanceOf(Real)
 
-    it('adjoint()'/*, function () {
-    }*/)
+      matrix1.determinant.data.should.be.eql(-1)
+      matrix2.determinant.data.should.be.eql(1)
+    })
   })
 
-  describe('Matrix', function () {
+  describe('addition()', function () {
     var matrix1  = new R2x2([2, 3,  1, 1]),
         matrix2  = new R2x2([0, 1, -1, 0])
 
-    matrix1.should.be.instanceOf(R2x2)
+    it('is a static operator'/*, function () {
+      should.deepEqual(R2x2.addition(matrix1, matrix2), [2, 4, 0, 1])
+    }*/)
 
-    it('determinant', function () {
-      matrix1.determinant.data.should.be.eql(-1)
+    it('is a mutator', function () {
+      matrix1.addition(matrix2)
+
+      should.deepEqual(matrix1.data, [2, 4, 0, 1])
     })
+  })
 
-    it('addition()'/*, function () {
-    }*/)
+  describe('subtraction()', function () {
+    var matrix1  = new R2x2([2, 3,  1, 1]),
+        matrix2  = new R2x2([0, 1, -1, 0])
 
-    it('subtraction()'/*, function () {
-    }*/)
+    it('is a static operator')
 
-    it('multiplication()'/*, function () {
-    }*/)
+    it('is a mutator', function () {
+      matrix1.subtraction(matrix2)
 
-    it('transpose()'/*, function () {
-      var matrix  = new R2x2([1, 2,  3,
-                              4, 5,  6])
+      should.deepEqual(matrix1.data, [2, 2, 2, 1])
+    })
+  })
 
-      var matrixTransposed = matrix.transpose()
+  describe('subtraction()', function () {
+    var matrix1  = new R2x2([2, 3,  1, 1]),
+        matrix2  = new R2x2([0, 1, -1, 0])
 
-      should.deepEqual(matrixTransposed.data, [1, 4,
-                                               2, 5,
-                                               3, 6])
-    }*/)
+    it('is a static operator')
 
-    it('adjoint()'/*, function () {
-    }*/)
+    it('is a mutator', function () {
+      matrix1.subtraction(matrix2)
+
+      should.deepEqual(matrix1.data, [2, 2, 2, 1])
+    })
+  })
+
+
+  describe('transpose()', function () {
+    it('is a static operator')
+
+    it('is a mutator'/*, function () {
+    var matrix  = new R2x2([1, 2,  3,
+                            4, 5,  6])
+
+    var matrixTransposed = matrix.transpose()
+
+    should.deepEqual(matrixTransposed.data, [1, 4,
+                                             2, 5,
+                                             3, 6])
+  }*/)
+  })
+
+  describe('adjoin()', function () {
+    it('is a static operator')
+
+    it('is a mutator')
   })
 })
 

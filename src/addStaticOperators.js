@@ -1,36 +1,41 @@
 
 /*!
- * Add field operators to Scalar as static methods
+ * Add operator operators to Scalar as static methods
  *
  * @function
  *
  * @param {Object} Scalar class
- * @param {Object} field
+ * @param {Object} operator
  */
 
-function addStaticOperators (Scalar, field) {
-  Scalar.addition       = field.addition
-  Scalar.add            = field.addition
+function addStaticOperators (Scalar, operator) {
+  Scalar.addition       = operator.addition
+  Scalar.add            = operator.addition
 
-  Scalar.subtraction    = field.subtraction
-  Scalar.sub            = field.subtraction
+  Scalar.subtraction    = operator.subtraction
+  Scalar.sub            = operator.subtraction
 
-  Scalar.multiplication = field.multiplication
-  Scalar.mul            = field.multiplication
+  Scalar.multiplication = operator.multiplication
+  Scalar.mul            = operator.multiplication
 
-  Scalar.division       = field.division
-  Scalar.div            = field.division
+  Scalar.division       = operator.division
+  Scalar.div            = operator.division
 
-  Scalar.negation       = field.negation
-  Scalar.neg            = field.negation
+  Scalar.negation       = operator.negation
+  Scalar.neg            = operator.negation
 
-  Scalar.inversion      = field.inversion
-  Scalar.inv            = field.inversion
+  Scalar.inversion      = operator.inversion
+  Scalar.inv            = operator.inversion
 
-  Scalar.equal          = field.equal
-  Scalar.eq             = field.equal
+  Scalar.equal          = operator.equal
+  Scalar.eq             = operator.equal
 
-  Scalar.contains       = field.contains
+  Scalar.contains       = operator.contains
+
+  if (typeof operator.conjugation === 'function') {
+    Scalar.conjugation = operator.conjugation
+    Scalar.conj        = operator.conjugation
+  }
 }
 
 module.exports = addStaticOperators

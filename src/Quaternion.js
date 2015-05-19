@@ -1,4 +1,6 @@
 
+// TODO refactor as Real and Complex were.
+
 var inherits = require('inherits')
 
 var addStaticOperators  = require('./addStaticOperators'),

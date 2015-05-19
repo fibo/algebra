@@ -12,7 +12,6 @@ var arrayFrom = require('./arrayFrom'),
  */
 
 function buildFieldOperators (field) {
-
   var one  = field.one,
       zero = field.zero
 
@@ -25,6 +24,9 @@ function buildFieldOperators (field) {
   var operators = {
     contains: field.operator.contains
   }
+
+  if (typeof field.operator.conjugation === 'function')
+    operators.conjugation = field.operator.conjugation
 
   /*!
    */

@@ -3,3 +3,9 @@ matrix calculator with angular
 
 docco like layout for examples, see http://g14n.info/algebra/examples/real-vector.html
 
+color space as example, but with color names  white -> 1  black -> 0
+
+example of complex space over custom field
+
+1 byte is an octonion over booleans
+

@@ -4,15 +4,18 @@
  *
  * @class
  *
- * @param {Any} data
+ * @param {Object|Array|Number|String|Function} data
  * @param {Function} check
  */
 
 function Element (data, check) {
+  if (typeof data === 'undefined')
+    throw new TypeError('Undefined data')
+
   if (check(data))
     this.data = data
   else
-    throw new TypeError('Invalid data:', data)
+    throw new TypeError('Invalid data = ', data)
 }
 
 /*!

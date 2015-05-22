@@ -7,7 +7,8 @@ var MatrixSpace = algebra.MatrixSpace,
 
 describe('MatrixSpace', function () {
   var R2x3 = MatrixSpace(Real)(2, 3),
-      R2x2 = MatrixSpace(Real)(2)
+      R2x2 = MatrixSpace(Real)(2),
+      R3x2 = MatrixSpace(Real)(3, 2)
 
   it('has signature (Scalar)(numRows, numCols)', function () {
     R2x3.numRows.should.be.eql(2)
@@ -39,66 +40,86 @@ describe('MatrixSpace', function () {
   })
 
   describe('addition()', function () {
-    var matrix1  = new R2x2([2, 3,  1, 1]),
-        matrix2  = new R2x2([0, 1, -1, 0])
+    it('is a static operator', function () {
+      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
+          matrix2x2b  = new R2x2([0, 1, -1, 0])
 
-    it('is a static operator'/*, function () {
-      should.deepEqual(R2x2.addition(matrix1, matrix2), [2, 4, 0, 1])
-    }*/)
+      should.deepEqual(R2x2.addition(matrix2x2a, matrix2x2b), [2, 4, 0, 1])
+    })
 
     it('is a mutator', function () {
-      matrix1.addition(matrix2)
+      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
+          matrix2x2b  = new R2x2([0, 1, -1, 0])
 
-      should.deepEqual(matrix1.data, [2, 4, 0, 1])
+      matrix2x2a.addition(matrix2x2b)
+
+      should.deepEqual(matrix2x2a.data, [2, 4, 0, 1])
     })
   })
 
   describe('subtraction()', function () {
-    var matrix1  = new R2x2([2, 3,  1, 1]),
-        matrix2  = new R2x2([0, 1, -1, 0])
+    it('is a static operator', function () {
+      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
+          matrix2x2b  = new R2x2([0, 1, -1, 0])
 
-    it('is a static operator')
+      should.deepEqual(R2x2.subtraction(matrix2x2a, matrix2x2b), [2, 2, 2, 1])
+    })
 
     it('is a mutator', function () {
-      matrix1.subtraction(matrix2)
+      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
+          matrix2x2b  = new R2x2([0, 1, -1, 0])
 
-      should.deepEqual(matrix1.data, [2, 2, 2, 1])
+      matrix2x2a.subtraction(matrix2x2b)
+
+      should.deepEqual(matrix2x2a.data, [2, 2, 2, 1])
     })
   })
-
-  describe('subtraction()', function () {
-    var matrix1  = new R2x2([2, 3,  1, 1]),
-        matrix2  = new R2x2([0, 1, -1, 0])
-
-    it('is a static operator')
-
-    it('is a mutator', function () {
-      matrix1.subtraction(matrix2)
-
-      should.deepEqual(matrix1.data, [2, 2, 2, 1])
-    })
-  })
-
 
   describe('transpose()', function () {
-    it('is a static operator')
+    it('is a static operator'/*, function () {
+      var matrix3x2a  = new R3x2([1, 2,
+                                  3, 4,
+                                  5, 6])
 
-    it('is a mutator'/*, function () {
-    var matrix  = new R2x2([1, 2,  3,
-                            4, 5,  6])
+      should.deepEqual(R3x2.transpose(matrix3x2a), [1, 3, 5,
+                                                    2, 4, 6])
+    }*/)
 
-    var matrixTransposed = matrix.transpose()
+    it('returns a transposed matrix'/*, function () {
+      var matrix3x2a  = new R3x2([1, 2,  3,
+                                  4, 5,  6])
 
-    should.deepEqual(matrixTransposed.data, [1, 4,
-                                             2, 5,
-                                             3, 6])
-  }*/)
-  })
+      var matrixTransposed = matrix3x2a.transpose()
 
-  describe('adjoin()', function () {
-    it('is a static operator')
+      should.deepEqual(matrixTransposed.data, [1, 4,
+                                               2, 5,
+                                               3, 6])
 
-    it('is a mutator')
+      matrix3x2a.numRows.should.be.eql(matrixTransposed.numCols)
+      matrix3x2a.numCols.should.be.eql(matrixTransposed.numRows)
+    }*/)
+
+    it('is a mutator for square matrices'/*, function () {
+      var matrix2x2a  = new R2x2([1, 2,
+                                  3, 4])
+
+      matrix2x2a.transpose()
+
+      should.deepEqual(matrix2x2a.data, [1, 3,
+                                         2, 4])
+    }*/)
+
+    it('is chainable for square matrices'/*, function () {
+      var matrix2x2a  = new R2x2([1, 2,
+                                  3, 4]),
+          matrix2x2b  = new R2x2([-1, -3,
+                                  -2, -4])
+
+      matrix2x2a.transpose().addition(matrix2x2b)
+
+      should.deepEqual(matrix2x2a.data, [0, 0,
+                                         0, 0])
+    }*/)
   })
 })
 

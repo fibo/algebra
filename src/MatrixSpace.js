@@ -74,7 +74,10 @@ function MatrixSpace (Scalar) {
     Matrix.numCols  = numCols
 
     // Static operators.
-    Matrix.addition = Element.addition
+    Matrix.addition    = Element.addition
+    Matrix.add         = Element.addition
+    Matrix.subtraction = Element.subtraction
+    Matrix.sub         = Element.subtraction
 
     /*!
      *
@@ -180,24 +183,48 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.leftMul            = leftMultiplication
 
     /*!
+     * @todo should be extended to a Tensor operator, also vectors can be transposed
      *
-     * @returns {Object} transposedMatrix
+     * @param {numRows}
+     * @param {numCols}
+     * @param {Object|Array} matrix
+     *
+     * @returns {Array} transposedData
      */
 
-    function matrixTransposition () {
-      var data = this.data,
-          transposedData = [],
-          transposedIndices = [numCols, numRows]
+    function transpose (numRows, numCols, matrix) {
+      var data = toData(matrix),
+          transposedData = []
 
       for (var i = 0; i < numRows; i++)
         for (var j = 0; j < numCols; j++)
           transposedData.push(data[matrixToArrayIndex(j, i, numCols)])
 
+      return transposedData
+    }
+
+    var staticTranspose = transpose.bind(null, numRows, numCols)
+    Matrix.transpose = staticTranspose
+    Matrix.tr            = staticTranspose
+
+    /*!
+     *
+     * @returns {Object} transposedMatrix
+     */
+
+    function matrixTransposition () {
+      var data    = this.data,
+          numCols = this.numCols,
+          numRows = this.numRows
+
+      var transposedData     = transpose(numCols, numRows, data),
+          transposedIndices  = [numCols, numRows]
+
       var TransposedMatrix = Space(Scalar)(transposedIndices)
 
       var transposedMatrix = new TransposedMatrix(transposedData)
 
-      return transposedData
+      return transposedMatrix
     }
 
     Matrix.prototype.transpose = matrixTransposition

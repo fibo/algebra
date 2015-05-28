@@ -4,6 +4,8 @@
 
 [![NPM version](https://badge.fury.io/js/algebra.png)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.png?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.png)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
 
+[![NPM](https://nodei.co/npm/algebra.png)](https://nodei.co/npm-dl/algebra/)
+
 For more information point your browser to [algebra Homepage](http://g14n.info/algebra).
 
 ## Status
@@ -127,5 +129,5 @@ See also [algebra quick start](http://g14n.info/algebra/examples/quick-start).
 
 ## License
 
-[MIT](http://g14n.info/mit-licence.html)
+[MIT](http://g14n.info/mit-licence)
 

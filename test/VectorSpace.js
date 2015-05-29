@@ -45,7 +45,11 @@ describe('VectorSpace', function () {
     var vector1 = new R2([0, 1]),
         vector2 = new R2([1, 1])
 
-    it('is a static operator')
+    it('is a static operator', function () {
+      var data = R2.scalarProduct([0, 1], [1, 1])
+
+      data.should.eql(1)
+    })
 
     it('is returns a scalar', function () {
       var scalar = vector1.scalarProduct(vector2)

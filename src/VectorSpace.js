@@ -114,26 +114,32 @@ function VectorSpace (Scalar) {
      *
      */
 
-    function scalarProduct (vector) {
-      var data          = this.data,
-          vectorData    = toData(vector),
-          vectorIndices = getIndices(vector)
+    function scalarProduct (vector1, vector2) {
+      var vectorData1    = toData(vector1),
+          vectorData2    = toData(vector2)
 
-      if (dimension !== vectorData.length)
-        throw new TypeError('Vector has not the same dimension')
+      if (vectorData1.length !== vectorData2.length)
+        throw new TypeError('Vectors has not the same dimension')
 
-      var result = Scalar.multiplication(data[0], vectorData[0])
+      var result = Scalar.multiplication(vectorData1[0], vectorData2[0])
 
       for (var i=1; i<dimension; i++) {
-        result = Scalar.addition(result, Scalar.multiplication(data[i], vectorData[i]))
+        result = Scalar.addition(result, Scalar.multiplication(vectorData1[i], vectorData2[i]))
       }
+
+      return result
+    }
+
+    // TODO da spostare nei tensori
+    function vectorScalarProduct (vector) {
+      var result = scalarProduct(this.data, vector)
 
       return new Scalar(result)
     }
 
-    Vector.prototype.scalarProduct = scalarProduct
-    Vector.prototype.dotProduct    = scalarProduct
-    Vector.prototype.dot           = scalarProduct
+    Vector.prototype.scalarProduct = vectorScalarProduct
+    Vector.prototype.dotProduct    = vectorScalarProduct
+    Vector.prototype.dot           = vectorScalarProduct
 
     /*!
      *
@@ -154,13 +160,15 @@ function VectorSpace (Scalar) {
     Vector.prototype.perScalarProduct = perScalarProduct
 
     /*!
-     *
+     * Static operators
      */
 
     Vector.addition    = Element.addition
     Vector.add         = Element.addition
     Vector.subtraction = Element.subtraction
     Vector.sub         = Element.subtraction
+
+    Vector.scalarProduct = scalarProduct
 
     return Vector
   }

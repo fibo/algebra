@@ -6,7 +6,7 @@
 
 [![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 
-For more information point your browser to [algebra Homepage](http://g14n.info/algebra).
+![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
 ## Status
 

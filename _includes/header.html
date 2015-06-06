@@ -5,7 +5,7 @@
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<meta name="description" content="{{ package.description }}">
+<meta name="description" content="{{ package.description | strip_newlines }}">
 <meta name="keywords" content="{{ package.keywords | join: ',' }}">
 <meta name="author" content="{{ package.author.name }}">
 
@@ -13,9 +13,9 @@
 
 <title>{{ page.title }}</title>
 
-<!-- Bootstrap -->
-<link rel="stylesheet" href="{{ site.bootstrap.base_url }}/{{ site.bootstrap.version }}/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ site.bootstrap.base_url }}/{{ site.bootstrap.version }}/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//{{ site.domain }}/css/bootstrap.min.css">
+<link rel="stylesheet" href="//{{ site.domain }}/css/bootstrap-theme.min.css">
 
-<link rel="stylesheet" href="/css/style.css">
+<script type="text/javascript" src="//{{ site.domain }}/js/jquery.min.js"></script>
+
 <!-- _includes/header.html end -->

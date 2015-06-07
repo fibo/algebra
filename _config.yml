@@ -1,7 +1,5 @@
 
 domain: g14n.info
-name: algebra
-url: http://g14n.info/algebra
 
 gems:
   - jekyll-sitemap

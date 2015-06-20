@@ -21,7 +21,7 @@
     "istanbul": "istanbul cover _mocha",
     "jekyll": "npm run homepage; npm run gh-pages:_data; cd gh-pages; jekyll build; cd ..",
     "jshint": "jshint -c .jshintrc src/**.js test/**.js",
-    "package.json": "cp package.json gh-pages/_data",
+    "package.json": "cp package.json gh-pages/_data/",
     "test": "mocha --bail --require should --reporter min --recursive"
   },
   "repository": {

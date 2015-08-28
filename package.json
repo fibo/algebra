@@ -55,6 +55,8 @@
     "should": "^6.0.1"
   },
   "dependencies": {
+    "algebra-group": "^0.1.0",
+    "algebra-ring": "^0.1.0",
     "inherits": "~2.0.1",
     "strict-mode": "~0.1.4"
   }

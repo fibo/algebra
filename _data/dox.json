@@ -3337,11 +3337,56 @@
     "ignore": true,
     "line": 1781,
     "codeStart": 1784,
-    "code": "function fieldNegation () {\n  return negation(toData(arguments[0]))\n}\n\noperators.negation = fieldNegation\n\nreturn operators\n}\n\nmodule.exports = buildFieldOperators\n\n\nvar adjointMatrix      = require('./adjointMatrix'),\n  matrixToArrayIndex = require('./matrixToArrayIndex')",
+    "code": "function fieldNegation () {\n  return negation(toData(arguments[0]))\n}\n\noperators.negation = fieldNegation\n\nreturn operators\n}\n\nmodule.exports = buildFieldOperators\n\n\nvar algebraGroup = require('algebra-group'),\n  algebraRing  = require('algebra-ring')",
     "ctx": {
       "type": "function",
       "name": "fieldNegation",
       "string": "fieldNegation()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "params",
+        "string": "{Object} field",
+        "html": "<p>{Object} field</p>"
+      },
+      {
+        "type": "params",
+        "string": "{Number} iterations ",
+        "html": "<p>{Number} iterations </p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Object} algebra",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>algebra</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Iterate Cayley-Disckson construction</p>",
+      "summary": "<p>Iterate Cayley-Disckson construction</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 1799,
+    "codeStart": 1808,
+    "code": "function constructCayleyDicksonAlgebra (field, iterations) {\n  if (iterations === 0)\n    return field\n\n  var dim = Math.pow(2, iterations)\n\n  if (! (iterations in {1: 'complex', 2: 'quaternion', 3: 'octonion'}))\n    throw new TypeError('Num of iterations must be 1, 2 or 3')\n\n  // identities\n\n  var one  = [],\n      zero = []\n\n  one.push(field.one)\n  zero.push(field.zero)\n\n  for (var i = 1; i < dim; i++) {\n    one.push(field.zero)\n    zero.push(field.zero)\n  }\n\n  // operators\n\n  function equality (a, b) {\n    for (var i = 0; i < dim; i++)\n      if (field.disequality(a[i], b[i]))\n        return false\n\n    return true\n  }\n\n  function contains (a) {\n    for (var i = 0; i < dim; i++)\n      if (field.notContains(a[i]))\n        return false\n\n    return true\n  }\n\n  function buildAddition (fieldAddition, iterations) {\n    var dim = Math.pow(2, iterations)\n\n    function addition (a, b) {\n      var c = []\n\n      for (var i = 0; i , dim; i++)\n        c.push(fieldAddition(a[i], b[i]))\n\n      return c\n    }\n\n    return addition\n  }\n\n  function buildNegation (fieldNegation, iterations) {\n    var dim = Math.pow(2, iterations)\n\n    function negation (a) {\n      var b = []\n\n      for (var i = 0; i , dim; i++)\n        b.push(fieldNegation(a[i]))\n\n      return b\n    }\n\n    return negation\n  }\n\n  var addition = buildAddition(field.addition, iterations),\n      negation = buildNegation(field.negation, iterations)\n\n  var group = algebraGroup(contains, zero, equality, addition, negation)\n\n  function buildConjugation (fieldNegation, iterations) {\n    var dim = Math.pow(2, iterations)\n\n    if (dim === 1)\n      return function (b) { return b[0] }\n\n    // b -> p looks like complex conjugation simmetry (:\n    function conjugation (b) {\n      var p = [],\n          halfDim = Math.pow(2, iterations - 1),\n          i = 0\n\n      // First, copy half of b into q.\n      for (i = 0; i < halfDim; i++)\n        p.push(b[i])\n\n      // Then conjugate b, according to lower algebra conjugation.\n      // Note that if iterations - 1 == 0 it is the identity.\n      p = buildConjugation(fieldNegation, iterations - 1)(q)\n\n      for (i = halfDim; i < dim; i++)\n        p.push(fieldNegation(b[i]))\n\n      return p\n    }\n\n    return conjugation\n  }\n\n  function norm (a) {\n    var n       = field.zero,\n        squares = multiplication(a, conjugation(a))\n\n    for (var i = 0; i < dim; i++)\n      n = field.addition(n, squares[i])\n\n    return n\n  }\n\n  function buildMultiplication (field, iterations) {\n    if (iterations === 0)\n      return field.multiplication\n\n    var add  = buildAddition(field.addition, iterations - 1),\n        conj = buildConjugation(field.negation, iterations -1),\n        mul  = buildMultiplication(field, iterations - 1)\n        neg  = buildNegation(field.negation, iterations - 1)\n\n    var dim     = Math.pow(2, iterations),\n        halfDim = Math.pow(2, iterations - 1)\n\n    function multiplication (a, b) {\n      var c = [],\n          i = 0\n\n      //         a = (p, q)\n      //         b = (r, s)\n      //\n      // a + b = c = (t, u)\n\n      var p = [], q = [],\n          r = [], s = []\n\n      for (i = 0; i < halfDim; i++) {\n        p.push(a[i])\n        r.push(b[i])\n      }\n\n      for (i = halfDim; i < dim; i++) {\n        q.push(a[i])\n        s.push(b[i])\n      }\n\n      // let denote conj(x) as x`\n      //\n      // Multiplication law is given by\n      //\n      // (p, q)(r, s) = (pr - s`q, sp + qr`)\n\n      var t = add(mul(p, r), neg(mul(conj(s), q))),\n          u = add(mul(s, p), mul(q, conj(r)))\n\n      for (i = 0; i < halfDim; i++)\n        c.push(t[i])\n\n      for (i = halfDim; i < dim; i++)\n        c.push(u[i])\n\n      return c\n    }\n\n    return multiplication\n  }\n\n  var multiplication = buildMultiplication(field, iterations)\n\n  function inversion (a) {\n    var n = norm(a)\n\n    var b = conjugation(a)\n\n    for (var i = 0; i < dim; i++)\n      b[i] = field.division(b[i], n)\n\n    return b\n  }\n\n  var algebra = algebraRing(group, one, multiplication, inversion)\n\n  algebra.conjugation = buildConjugation(field.negation, iterations)\n  algebra.norm        = norm\n\n  return algebra\n}\n\nmodule.exports = constructCayleyDicksonAlgebra\n\n\nvar adjointMatrix      = require('./adjointMatrix'),\n    matrixToArrayIndex = require('./matrixToArrayIndex')",
+    "ctx": {
+      "type": "function",
+      "name": "constructCayleyDicksonAlgebra",
+      "string": "constructCayleyDicksonAlgebra()"
     }
   },
   {
@@ -3420,8 +3465,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1799,
-    "codeStart": 1811,
+    "line": 2004,
+    "codeStart": 2016,
     "code": "function determinant (Scalar, data, order) {\n  var det\n\n  // If order is 2, go for a straight calculation.\n  //\n  //  det | a b | = a * d - c * b\n  //      | c d |\n  //\n  if (order === 2) {\n    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]),\n                             Scalar.multiplication(data[2], data[1]))\n\n    return det\n  }\n\n  // TODO choose best row or column to start from, i.e. the one with more zeros\n  // by now we start from first row, and walk by column\n  var startingCol = 0,\n      startingRow = 0\n\n\n  var adjointData        = adjointMatrix(data, order, order, startingRow, startingCol),\n      adjointDeterminant = determinant(Scalar, adjointData, order - 1),\n      index              = matrixToArrayIndex(startingRow, startingCol, order)\n\n  det = Scalar.multiplication(data[index], adjointDeterminant)\n\n  for (var col = 1; col < order; col++) {\n    adjointData = adjointMatrix(data, order, order, startingRow, col)\n\n    adjointDeterminant = determinant(Scalar, adjointData, order - 1)\n\n    index = matrixToArrayIndex(startingRow, col, order)\n\n    det = Scalar.addition(det, Scalar.multiplication(data[index], adjointDeterminant))\n  }\n\n  return det\n}\n\nmodule.exports = determinant\n\n\nvar toData = require('./toData')",
     "ctx": {
       "type": "function",
@@ -3476,8 +3521,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1856,
-    "codeStart": 1866,
+    "line": 2061,
+    "codeStart": 2071,
     "code": "function getIndices (arg) {\n  var indices\n\n  if (typeof arg.indices === 'undefined') {\n// TODO\n//   var data = toData(arg)\n//\n//   if (typeof data === 'array') {\n//     // TODO recursion into data if it is a multidimensional array\n//     indices = [data.length]\n//   }\n//   else {\n//     indices = [1]\n//   }\n  }\n  else {\n    indices = arg.indices\n  }\n\n  if (typeof indices === 'undefined')\n    throw new TypeError('No indices')\n\n  return indices\n}\n\nmodule.exports = getIndices\n\n\n// TODO use strings ℝ ℂ ℍ\n// usa anche ratio, lib per i numeri razionali\n\nrequire('strict-mode')(function () {\n  exports.Field       = require('./Field')\n  exports.Space       = require('./Space')\n  exports.VectorSpace = require('./VectorSpace')\n  exports.MatrixSpace = require('./MatrixSpace')\n  exports.TensorSpace = require('./TensorSpace')\n\n  exports.Real    = require('./Real')\n  exports.Complex = require('./Complex')\n\n  exports.buildCyclicSpaceOf = require('./buildCyclicSpaceOf')\n})\n\n\nvar multiDimensionalArrayIndex = require('./multiDimensionalArrayIndex')",
     "ctx": {
       "type": "function",
@@ -3559,8 +3604,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1913,
-    "codeStart": 1924,
+    "line": 2118,
+    "codeStart": 2129,
     "code": "function matrixToArrayIndex(i, j, numberOfColumns) {\n  var index = multiDimensionalArrayIndex([numberOfColumns, numberOfColumns], [i, j])\n\n  return index\n}\n\nmodule.exports = matrixToArrayIndex",
     "ctx": {
       "type": "function",
@@ -3629,8 +3674,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1933,
-    "codeStart": 1953,
+    "line": 2138,
+    "codeStart": 2158,
     "code": "function multiDimensionalArrayIndex(dimensions, indices) {\n  var l = dimensions.length - 1\n    , index = indices[l]\n    , factor\n\n  if (dimensions.length > 1) {\n    factor = dimensions[l - 1]\n\n    index += factor * indices[l - 1]\n  }\n\n  for (var i = 2; i < dimensions.length; i++) {\n    factor *= dimensions[l - i + 1]\n\n    index += factor * indices[l - i]\n  }\n\n  return index\n}\n\nmodule.exports = multiDimensionalArrayIndex\n\n\nvar zero = 0,\n    one  = 1",
     "ctx": {
       "type": "function",
@@ -3650,8 +3695,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1979,
-    "codeStart": 1982,
+    "line": 2184,
+    "codeStart": 2187,
     "code": "function addition (a, b) { return a + b }",
     "ctx": {
       "type": "function",
@@ -3671,8 +3716,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1984,
-    "codeStart": 1987,
+    "line": 2189,
+    "codeStart": 2192,
     "code": "function multiplication (a, b) { return a * b }",
     "ctx": {
       "type": "function",
@@ -3692,8 +3737,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1989,
-    "codeStart": 1992,
+    "line": 2194,
+    "codeStart": 2197,
     "code": "function inversion (a) { return one / a }",
     "ctx": {
       "type": "function",
@@ -3713,8 +3758,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1994,
-    "codeStart": 1997,
+    "line": 2199,
+    "codeStart": 2202,
     "code": "function negation (a) { return - a }",
     "ctx": {
       "type": "function",
@@ -3734,8 +3779,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 1999,
-    "codeStart": 2002,
+    "line": 2204,
+    "codeStart": 2207,
     "code": "function equal (a, b) { return a === b }",
     "ctx": {
       "type": "function",
@@ -3755,9 +3800,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 2004,
-    "codeStart": 2007,
-    "code": "function contains (a) { return typeof a === 'number' }\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar realField = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}\n\nmodule.exports = realField\n\n\nvar matrixToArrayIndex = require('./matrixToArrayIndex')",
+    "line": 2209,
+    "codeStart": 2212,
+    "code": "function contains (a) {\n  // NaN, Infinity and -Infinity are not allowed\n  return (typeof a === 'number' && isFinite(a))\n}\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar realField = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}\n\nmodule.exports = realField\n\n\nvar matrixToArrayIndex = require('./matrixToArrayIndex')",
     "ctx": {
       "type": "function",
       "name": "contains",
@@ -3870,8 +3915,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 2029,
-    "codeStart": 2042,
+    "line": 2237,
+    "codeStart": 2250,
     "code": "function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {\n  // Check if matrix can be multiplied\n  if (leftIndices[1] !== rightIndices[0])\n    throw new TypeError('Left num cols != right num rows')\n\n  var commonIndex = leftIndices[1],\n      data        = [],\n      rows        = leftIndices[0],\n      cols        = rightIndices[1]\n\n  for (var i = 0; i < rows; i++) {\n    for (var j = 0; j < cols; j++) {\n      var leftIndex  = matrixToArrayIndex(i, 0, commonIndex),\n          rightIndex = matrixToArrayIndex(0, j, cols)\n\n      var rightElement = rightMatrix[rightIndex],\n          leftElement  = leftMatrix[leftIndex]\n\n      var element = Scalar.multiplication(leftElement, rightElement)\n\n      for (var k = 1; k < commonIndex; k++) {\n        leftIndex = matrixToArrayIndex(i, k, commonIndex)\n        rightIndex = matrixToArrayIndex(k, j, cols)\n\n        rightElement = rightMatrix[rightIndex]\n        leftElement = leftMatrix[leftIndex]\n\n        element = Scalar.addition(element, Scalar.multiplication(rightElement, leftElement))\n      }\n\n      data.push(element)\n    }\n  }\n\n  return data\n}\n\nmodule.exports = rowByColumnMultiplication",
     "ctx": {
       "type": "function",
@@ -3916,8 +3961,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 2082,
-    "codeStart": 2090,
+    "line": 2290,
+    "codeStart": 2298,
     "code": "function toData (arg) {\n  var data\n\n  if (typeof arg.data === 'undefined')\n    data = arg\n  else\n    data = arg.data\n\n  if (typeof data === 'undefined')\n    throw new TypeError('No data')\n\n  return data\n}\n\nmodule.exports = toData",
     "ctx": {
       "type": "function",

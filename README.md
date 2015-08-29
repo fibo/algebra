@@ -8,6 +8,10 @@
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
+<!-- readmenot
+{% include posts_list.html limit="5" %}
+     readmenot -->
+
 ## Status
 
 *algebra* is under development.

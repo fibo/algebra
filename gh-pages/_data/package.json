@@ -9,15 +9,17 @@
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
+    "_build": "npm test && npm run browserify && npm run jekyll",
+    "_pull": "git pull origin master && npm run gh-pages:pull",
+    "_push": "git push origin master && npm run gh-pages:push",
     "browserify": "browserify -s $npm_package_name -e index.js -o dist/${npm_package_name}.js",
-    "build": "npm test && npm run browserify && npm run jekyll",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "dox": "cat src/*.js | dox > gh-pages/_data/dox.json",
     "gh-pages:_data": "npm run package.json; npm run dox",
     "gh-pages:push": "git subtree --prefix gh-pages push origin gh-pages",
     "gh-pages:pull": "git subtree --prefix gh-pages pull origin gh-pages",
-    "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; cat README.md >> gh-pages/index.md",
+    "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; grep -v readmenot README.md >> gh-pages/index.md",
     "istanbul": "istanbul cover _mocha",
     "jekyll": "npm run homepage; npm run gh-pages:_data; cd gh-pages; jekyll build; cd ..",
     "jshint": "jshint -c .jshintrc src/**.js test/**.js",
@@ -53,6 +55,8 @@
     "should": "^6.0.1"
   },
   "dependencies": {
+    "algebra-group": "^0.1.0",
+    "algebra-ring": "^0.1.0",
     "inherits": "~2.0.1",
     "strict-mode": "~0.1.4"
   }

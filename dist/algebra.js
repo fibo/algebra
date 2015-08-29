@@ -1998,7 +1998,10 @@ function equal (a, b) { return a === b }
 /*!
  */
 
-function contains (a) { return typeof a === 'number' }
+function contains (a) {
+  // NaN, Infinity and -Infinity are not allowed
+  return (typeof a === 'number' && isFinite(a))
+}
 
 var operators = {
   addition      : addition,

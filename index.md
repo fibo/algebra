@@ -11,6 +11,9 @@ title: algebra
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
+
+## Latest posts
+
 {% include posts_list.html limit="5" %}
 
 ## Status

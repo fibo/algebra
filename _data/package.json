@@ -9,7 +9,7 @@
   "description": "Vectors, Matrices, Tensors",
   "main": "index.js",
   "scripts": {
-    "_build": "npm test && npm run browserify && npm run jekyll",
+    "_build": "npm test && npm run browserify && npm run latex && npm run jekyll",
     "_pull": "git pull origin master && npm run gh-pages:pull",
     "_push": "git push origin master && npm run gh-pages:push",
     "browserify": "browserify -s $npm_package_name -e index.js -o dist/${npm_package_name}.js",
@@ -23,6 +23,9 @@
     "istanbul": "istanbul cover _mocha",
     "jekyll": "npm run homepage; npm run gh-pages:_data; cd gh-pages; jekyll build; cd ..",
     "jshint": "jshint -c .jshintrc src/**.js test/**.js",
+    "latex": "npm run latex:display; npm run latex:inline",
+    "latex:display": "ls gh-pages/latex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
+    "latex:inline": "ls gh-pages/latex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
     "package.json": "cp package.json gh-pages/_data/",
     "test": "mocha --bail --require should --reporter min --recursive"
   },
@@ -58,6 +61,7 @@
     "algebra-group": "^0.1.0",
     "algebra-ring": "^0.1.0",
     "inherits": "~2.0.1",
+    "katex": "^0.5.0",
     "strict-mode": "~0.1.4"
   }
 }

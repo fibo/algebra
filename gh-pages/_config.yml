@@ -4,9 +4,16 @@ domain: g14n.info
 gems:
   - jekyll-sitemap
 
+permalink: ./:year/:month/:title
+
 markdown: redcarpet
 redcarpet:
   extensions: ["smart", "tables", "no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
+
+exclude:
+  - npm-debug.log
+  - node_modules/
+  - package.json
 
 # Defaults
 

@@ -1,10 +1,11 @@
 <!-- _includes/posts_list.html start -->
+{% assign package = site.data.package %}
 <div class="list-group">
   {% for post in site.posts limit:{{include.limit}} %}
-    <a href="{{ post.url }}" class="list-group-item">
+  <a href="/{{ package.name }}{{ post.url }}" class="list-group-item">
       <article>
         <header>
-          <h1> {{ post.title }}  </h1>
+          <h1>{{ post.title }}</h1>
 
           <p class="lead">{{ post.description }}</p>
 

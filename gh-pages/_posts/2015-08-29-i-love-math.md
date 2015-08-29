@@ -1,5 +1,6 @@
 ---
 title: I love math
+description: why I started this blog
 layout: post
 ---
 
@@ -11,7 +12,7 @@ In those days I was in love with my thesis subject, drawing all the day, thinkin
 Montesinos' subject was really innovative and interesting, and many students idolezed him for his results in [Knot theory][2].
 When I gave him a paper I wrote about Apollonius' problem he said to me
 
-> If you want to pass my exam, do not study my subject but write more about Apollonius' problem and bring it to me. You mind is thinking about it! Your exam note will be evaluated on this subject.
+> If you want to pass my exam, do not study my subject but write more about Apollonius' problem and bring it to me. Your mind is thinking about it! Your exam note will be evaluated on this topic.
 
 What a lesson he gave me! When I brought him a first version he also said that he really like how I write about math, discursively like *Luigi Bianchi*, and he urged me to start writing one day and to read *Bianchi*'s work which indeed wrote some articles connected with my Apollonius thesis.
 So I got my note and went back to Italy where I rewrote my thesis in Italian and finished in 2005.
@@ -25,8 +26,12 @@ Last release was published 4 months ago and reached more than 1000 downloads per
 
 > Gracias profesor Montesinos!
 
+Last but not least, I was thinking about how to display math in browsers for a long time. Few years ago it was not so easy to find a proper solution but now I think I am going for [KaTeX][5] server side rendering feature.
+Check out the [latex snippets](/algebra/latex-snippets) index for details.
+
   [1]: http://www.dima.unige.it/ "Università degli Studi di Genova"
   [2]: https://en.wikipedia.org/wiki/Knot_theory "Knot theory"
   [3]: http://nodejs.org/ "Node.js"
   [4]: https://www.npmjs.com/package/algebra "algebra on npm"
+  [5]: http://khan.github.io/KaTeX/ "KaTeX"
 

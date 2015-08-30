@@ -1,5 +1,6 @@
-.travis.yml
 .jshintrc
+.travis.yml
+bower.json
 dist/
-npm-debug.log
 gh-pages
+npm-debug.log

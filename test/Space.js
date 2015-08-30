@@ -1,5 +1,5 @@
 
-var algebra = require('..'),
+var algebra = require('algebra'),
     should  = require('should')
 
 var R     = algebra.Real,

@@ -51,8 +51,8 @@ describe('Real', function () {
     it('is a mutator method', mutatorBinaryOperator(R, operator, -2, 4, -0.5))
   })
 
-  describe('equal', function () {
-    operator = 'equal'
+  describe('equality', function () {
+    operator = 'equality'
 
     it('is a static method', staticBinaryOperator(R, operator, 10, 10, true))
 

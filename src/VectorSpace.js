@@ -130,7 +130,6 @@ function VectorSpace (Scalar) {
       return result
     }
 
-    // TODO da spostare nei tensori
     function vectorScalarProduct (vector) {
       var result = scalarProduct(this.data, vector)
 

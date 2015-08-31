@@ -3,7 +3,6 @@ var inherits = require('inherits')
 
 var getIndices                = require('./getIndices'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
-    Space                     = require('./Space'),
     toData                    = require('./toData')
 
 

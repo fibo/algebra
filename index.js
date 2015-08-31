@@ -1,14 +1,17 @@
 
 require('strict-mode')(function () {
-  exports.Field       = require('./src/Field')
-  exports.Space       = require('./src/Space')
-  exports.VectorSpace = require('./src/VectorSpace')
-  exports.MatrixSpace = require('./src/MatrixSpace')
-  exports.TensorSpace = require('./src/TensorSpace')
+  var CayleyDickson = require('./src/cayley-dickson'),
+      Real          = require('./src/Real')
 
-  exports.Real    = require('./src/Real')
-  exports.Complex = require('./src/Complex')
+  exports.CayleyDickson = CayleyDickson
+//  exports.VectorSpace = require('./src/VectorSpace')
+//  exports.MatrixSpace = require('./src/MatrixSpace')
 
-  exports.buildCyclicSpaceOf = require('./src/buildCyclicSpaceOf')
+  exports.Real       = Real
+  exports.Complex    = CayleyDickson(Real, 1)
+//  exports.Quaternion = CayleyDickson(Real, 2)
+//  exports.Octonion   = CayleyDickson(Real, 3)
+
+//  exports.buildCyclicSpaceOf = require('./src/buildCyclicSpaceOf')
 })
 

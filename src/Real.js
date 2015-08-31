@@ -1,7 +1,7 @@
 
 var ring = require('./ring')
 
-var R = ring([0, 1], {
+var Real = ring([0, 1], {
   contains:       function (a, b) {
                     // NaN, Infinity and -Infinity are not allowed
                     return (typeof a === 'number' && isFinite(a))
@@ -13,5 +13,5 @@ var R = ring([0, 1], {
   inversion:      function (a) { return 1 / a }
 })
 
-module.exports = R
+module.exports = Real
 

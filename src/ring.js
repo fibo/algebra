@@ -69,12 +69,14 @@ function ring (id, op) {
   // Static operators.
 
   K.addition       = addition
+  K.contains       = g.contains
   K.disequality    = disequality
   K.division       = division
   K.equality       = equality
   K.inversion      = r.inversion
   K.multiplication = multiplication
   K.negation       = g.negation
+  K.notContains    = g.notContains
   K.subtraction    = subtraction
 
   // Identities.

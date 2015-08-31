@@ -5,7 +5,6 @@ var determinant               = require('./determinant'),
     getIndices                = require('./getIndices'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
-    Space                     = require('./Space'),
     toData                    = require('./toData'),
     VectorSpace               = require('./VectorSpace')
 

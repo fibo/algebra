@@ -131,7 +131,7 @@ function constructCayleyDicksonAlgebra (field, iterations) {
 
     var add  = buildAddition(field.addition, iterations - 1),
         conj = buildConjugation(field.negation, iterations -1),
-        mul  = buildMultiplication(field, iterations - 1)
+        mul  = buildMultiplication(field, iterations - 1),
         neg  = buildNegation(field.negation, iterations - 1)
 
     var dim     = Math.pow(2, iterations),

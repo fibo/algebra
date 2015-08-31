@@ -26,67 +26,53 @@ function ring (id, op) {
 
   var addition       = nArify(g.addition),
       disequality    = nArify(g.disequality),
+      division       = nArify(r.division),
       equality       = nArify(g.equality),
       multiplication = nArify(r.multiplication),
       subtraction    = nArify(g.subtraction)
 
   // Comparison operators.
 
-  function equalityComparison () {
-    return equality(this.data, equality.apply(null, arguments))
+  function comparison (operator) {
+    return function () {
+      return operator.bind(null, this.data).apply(null, arguments)
+    }
   }
 
-  K.prototype.equality = equalityComparison
-
-  function disequalityComparison () {
-    return disequality(this.data, disequality.apply(null, arguments))
-  }
-
-  K.prototype.disequality = disequalityComparison
+  K.prototype.equality    = comparison(equality)
+  K.prototype.disequality = comparison(disequality)
 
   // Chainable class methods.
 
-  function additionMutator () {
-    this.data = addition(this.data, addition.apply(null, arguments))
-    return this
+  function mutator (operator) {
+    return function () {
+      this.data = operator.bind(null, this.data).apply(null, arguments)
+      return this
+    }
   }
 
-  K.prototype.addition = additionMutator
+  K.prototype.addition       = mutator(addition)
+  K.prototype.division       = mutator(division)
+  K.prototype.multiplication = mutator(multiplication)
+  K.prototype.subtraction    = mutator(subtraction)
 
-  function inversionMutator () {
-    this.data = r.inversion(this.data)
-    return this
+  function unaryMutator (operator) {
+    return function () {
+      this.data = operator(this.data)
+      return this
+    }
   }
 
-  K.prototype.inversion = inversionMutator
-
-  function multiplicationMutator () {
-    this.data = multiplication(this.data, multiplication.apply(null, arguments))
-    return this
-  }
-
-  K.prototype.multiplication = multiplicationMutator
-
-  function negationMutator () {
-    this.data = g.negation(this.data)
-    return this
-  }
-
-  K.prototype.negation = negationMutator
-
-  function subtractionMutator () {
-    this.data = subtraction(this.data, subtraction.apply(null, arguments))
-    return this
-  }
-
-  K.prototype.subtraction = subtractionMutator
+  K.prototype.inversion = unaryMutator(r.inversion)
+  K.prototype.negation  = unaryMutator(g.negation)
 
   // Static operators.
 
   K.addition       = addition
-  K.equality       = equality
   K.disequality    = disequality
-  K.inversion      = g.inversion
+  K.division       = division
+  K.equality       = equality
+  K.inversion      = r.inversion
   K.multiplication = multiplication
   K.negation       = g.negation
   K.subtraction    = subtraction
@@ -114,16 +100,18 @@ function ring (id, op) {
   K.notEq    = K.disequality
 
   K.add = K.addition
+  K.div = K.division
   K.inv = K.inversion
   K.mul = K.multiplication
   K.neg = K.negation
   K.sub = K.subtraction
 
-  K.prototype.add = additionMutator
-  K.prototype.inv = inversionMutator
-  K.prototype.mul = multiplicationMutator
-  K.prototype.neg = negationMutator
-  K.prototype.sub = subtractionMutator
+  K.prototype.add = K.prototype.addition
+  K.prototype.div = K.prototype.division
+  K.prototype.inv = K.prototype.inversion
+  K.prototype.mul = K.prototype.multiplication
+  K.prototype.neg = K.prototype.negation
+  K.prototype.sub = K.prototype.subtraction
 
   return K
 }

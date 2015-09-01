@@ -1,6 +1,9 @@
 
-var algebraGroup = require('algebra-group'),
-    algebraRing  = require('algebra-ring')
+//var algebraGroup = require('algebra-group'),
+//    algebraRing  = require('algebra-ring')
+var ring = require('./ring')
+
+var twoPow = Math.pow.bind(null, 2)
 
 /**
  * Iterate Cayley-Disckson construction
@@ -12,18 +15,17 @@ var algebraGroup = require('algebra-group'),
  */
 
 function constructCayleyDicksonAlgebra (field, iterations) {
+  if (! (iterations in {0: 'real', 1: 'complex', 2: 'quaternion', 3: 'octonion'}))
+    throw new TypeError('Num of iterations must be 1, 2 or 3')
+
   if (iterations === 0)
     return field
-
-  var dim = Math.pow(2, iterations)
-
-  if (! (iterations in {1: 'complex', 2: 'quaternion', 3: 'octonion'}))
-    throw new TypeError('Num of iterations must be 1, 2 or 3')
 
   // identities
 
   var one  = [],
-      zero = []
+      zero = [],
+      dim  = twoPow(iterations)
 
   one.push(field.one)
   zero.push(field.zero)
@@ -51,43 +53,45 @@ function constructCayleyDicksonAlgebra (field, iterations) {
     return true
   }
 
-  function buildAddition (fieldAddition, iterations) {
-    var dim = Math.pow(2, iterations)
+  /**
+   * Turn unary operator on single value to operator on n values.
+   */
 
-    function addition (a, b) {
-      var c = []
+ function arrayfy1 (operator, dim) {
+    return function (a) {
+      if (dim === 1)
+        return [operator(a)]
 
-      for (var i = 0; i , dim; i++)
-        c.push(fieldAddition(a[i], b[i]))
-
-      return c
-    }
-
-    return addition
-  }
-
-  function buildNegation (fieldNegation, iterations) {
-    var dim = Math.pow(2, iterations)
-
-    function negation (a) {
       var b = []
 
-      for (var i = 0; i , dim; i++)
-        b.push(fieldNegation(a[i]))
+      for (var i = 0; i < dim; i++)
+        b.push(operator(a[i]))
 
       return b
     }
+ }
 
-    return negation
-  }
+  /**
+   * Turn binary operator on single value to operator on n values.
+   */
 
-  var addition = buildAddition(field.addition, iterations),
-      negation = buildNegation(field.negation, iterations)
+ function arrayfy2 (operator, dim) {
+    return function (a, b) {
+      console.log(dim, a, b)
+      if (dim === 1)
+        return [operator(a, b)]
 
-  var group = algebraGroup(contains, zero, equality, addition, negation)
+      var c = []
+
+      for (var i = 0; i < dim; i++)
+        c.push(operator(a[i], b[i]))
+
+      return c
+    }
+ }
 
   function buildConjugation (fieldNegation, iterations) {
-    var dim = Math.pow(2, iterations)
+    var dim = twoPow(iterations)
 
     if (dim === 1)
       return function (b) { return b[0] }
@@ -95,7 +99,7 @@ function constructCayleyDicksonAlgebra (field, iterations) {
     // b -> p looks like complex conjugation simmetry (:
     function conjugation (b) {
       var p = [],
-          halfDim = Math.pow(2, iterations - 1),
+          halfDim = twoPow(iterations - 1),
           i = 0
 
       // First, copy half of b into q.
@@ -104,7 +108,7 @@ function constructCayleyDicksonAlgebra (field, iterations) {
 
       // Then conjugate b, according to lower algebra conjugation.
       // Note that if iterations - 1 == 0 it is the identity.
-      p = buildConjugation(fieldNegation, iterations - 1)(q)
+      p = buildConjugation(fieldNegation, iterations - 1)(b)
 
       for (i = halfDim; i < dim; i++)
         p.push(fieldNegation(b[i]))
@@ -114,6 +118,8 @@ function constructCayleyDicksonAlgebra (field, iterations) {
 
     return conjugation
   }
+
+  var conjugation = buildConjugation(field.negation, iterations)
 
   function norm (a) {
     var n       = field.zero,
@@ -126,16 +132,18 @@ function constructCayleyDicksonAlgebra (field, iterations) {
   }
 
   function buildMultiplication (field, iterations) {
+    var dim     = twoPow(iterations),
+        halfDim = 1
+
     if (iterations === 0)
       return field.multiplication
+    else
+      halfDim = twoPow(iterations - 1)
 
-    var add  = buildAddition(field.addition, iterations - 1),
+    var add  = arrayfy2(field.addition, halfDim),
         conj = buildConjugation(field.negation, iterations -1),
         mul  = buildMultiplication(field, iterations - 1),
-        neg  = buildNegation(field.negation, iterations - 1)
-
-    var dim     = Math.pow(2, iterations),
-        halfDim = Math.pow(2, iterations - 1)
+        neg  = arrayfy1(field.negation, halfDim)
 
     function multiplication (a, b) {
       var c = [],
@@ -193,9 +201,19 @@ function constructCayleyDicksonAlgebra (field, iterations) {
     return b
   }
 
-  var algebra = algebraRing(group, one, multiplication, inversion)
+  var addition = arrayfy2(field.addition, dim),
+      negation = arrayfy1(field.negation, dim)
 
-  algebra.conjugation = buildConjugation(field.negation, iterations)
+  var algebra = ring([zero, one], {
+    contains       : contains,
+    equality       : equality,
+    addition       : addition,
+    negation       : negation,
+    multiplication : multiplication,
+    inversion      : inversion
+  })
+
+  algebra.conjugation = conjugation
   algebra.norm        = norm
 
   return algebra

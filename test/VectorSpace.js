@@ -1,4 +1,4 @@
-
+/*
 var algebra = require('algebra'),
     should  = require('should')
 
@@ -69,4 +69,4 @@ describe('VectorSpace', function () {
     })
   })
 })
-
+*/

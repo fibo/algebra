@@ -1,4 +1,4 @@
-
+/*
 var algebra = require('algebra'),
      should = require('should')
 
@@ -76,16 +76,16 @@ describe('MatrixSpace', function () {
   })
 
   describe('transpose()', function () {
-    it('is a static operator'/*, function () {
+    it('is a static operator', function () {
       var matrix3x2a  = new R3x2([1, 2,
                                   3, 4,
                                   5, 6])
 
       should.deepEqual(R3x2.transpose(matrix3x2a), [1, 3, 5,
                                                     2, 4, 6])
-    }*/)
+    })
 
-    it('returns a transposed matrix'/*, function () {
+    it('returns a transposed matrix', function () {
       var matrix3x2a  = new R3x2([1, 2,  3,
                                   4, 5,  6])
 
@@ -97,9 +97,9 @@ describe('MatrixSpace', function () {
 
       matrix3x2a.numRows.should.be.eql(matrixTransposed.numCols)
       matrix3x2a.numCols.should.be.eql(matrixTransposed.numRows)
-    }*/)
+    })
 
-    it('is a mutator for square matrices'/*, function () {
+    it('is a mutator for square matrices', function () {
       var matrix2x2a  = new R2x2([1, 2,
                                   3, 4])
 
@@ -107,9 +107,9 @@ describe('MatrixSpace', function () {
 
       should.deepEqual(matrix2x2a.data, [1, 3,
                                          2, 4])
-    }*/)
+    })
 
-    it('is chainable for square matrices'/*, function () {
+    it('is chainable for square matrices', function () {
       var matrix2x2a  = new R2x2([1, 2,
                                   3, 4]),
           matrix2x2b  = new R2x2([-1, -3,
@@ -119,7 +119,7 @@ describe('MatrixSpace', function () {
 
       should.deepEqual(matrix2x2a.data, [0, 0,
                                          0, 0])
-    }*/)
+    })
   })
 })
-
+*/

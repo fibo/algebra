@@ -1,4 +1,4 @@
-
+/*
 var should = require('should')
 
 var adjointMatrix = require('../src/adjointMatrix')
@@ -31,4 +31,4 @@ describe('adjointMatrix', function () {
     adjointMatrix(data, numRows, numCols, row, col).should.be.eql(adjoint)
   })
 })
-
+*/

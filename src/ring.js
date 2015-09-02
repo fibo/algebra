@@ -2,8 +2,12 @@
 var algebraGroup = require('algebra-group'),
     algebraRing  = require('algebra-ring'),
     Element      = require('./Element'),
+    mutator      = require('./mutator'),
     inherits     = require('inherits'),
     nArify       = require('./nArify')
+
+var nAryMutator  = mutator.nAry,
+    unaryMutator = mutator.unary
 
 /**
  * Create an algebra ring.
@@ -44,24 +48,10 @@ function ring (id, op) {
 
   // Chainable class methods.
 
-  function mutator (operator) {
-    return function () {
-      this.data = operator.bind(null, this.data).apply(null, arguments)
-      return this
-    }
-  }
-
-  K.prototype.addition       = mutator(addition)
-  K.prototype.division       = mutator(division)
-  K.prototype.multiplication = mutator(multiplication)
-  K.prototype.subtraction    = mutator(subtraction)
-
-  function unaryMutator (operator) {
-    return function () {
-      this.data = operator(this.data)
-      return this
-    }
-  }
+  K.prototype.addition       = nAryMutator(addition)
+  K.prototype.division       = nAryMutator(division)
+  K.prototype.multiplication = nAryMutator(multiplication)
+  K.prototype.subtraction    = nAryMutator(subtraction)
 
   K.prototype.inversion = unaryMutator(r.inversion)
   K.prototype.negation  = unaryMutator(g.negation)

@@ -20,7 +20,7 @@ var arrayFrom = require('./arrayFrom'),
 
 function nArify (operator) {
   return function () {
-    return arrayFrom(arguments).map(toData).reduce(operator)
+    return [].slice.call(arguments).map(toData).reduce(operator)
   }
 }
 

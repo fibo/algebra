@@ -1,10 +1,10 @@
 
-var algebraGroup = require('algebra-group'),
-    algebraRing  = require('algebra-ring'),
-    Element      = require('./Element'),
-    mutator      = require('./mutator'),
-    inherits     = require('inherits'),
-    nArify       = require('./nArify')
+var algebraRing = require('algebra-ring'),
+    coerced     = require('./coerced'),
+    Element     = require('./Element'),
+    group       = require('./group'),
+    mutator     = require('./mutator'),
+    inherits    = require('inherits')
 
 var nAryMutator  = mutator.nAry,
     unaryMutator = mutator.unary
@@ -13,99 +13,70 @@ var nAryMutator  = mutator.nAry,
  * Create an algebra ring.
  *
  * @params {Array} identities [zero, one]
- * @params {Object} operators: contains, equality, addition, negation, multiplication, inversion
+ * @params {Object} operator definition
+ * @param {Function} operator.contains
+ * @param {Function} operator.equality
+ * @param {Function} operator.addition
+ * @param {Function} operator.negation
+ * @param {Function} operator.multiplication
+ * @param {Function} operator.inversion
  *
- * @returns {Function} K ring
+ * @returns {Function} Ring that implements an algebra ring as a class
  */
 
 function ring (id, op) {
-  var g = algebraGroup(op.contains, id[0], op.equality, op.addition, op.negation),
-      r = algebraRing(g, id[1], op.multiplication, op.inversion)
+  /*
+  var Group = group({
+    identity       : id[0],
+    contains       : op.contains,
+    equality       : op.equality,
+    compositionLaw : op.addition,
+    inversion      : op.negation
+  }),
+  r = null // algebraRing(g, id[1], op.multiplication, op.inversion)
 
-  function K (data) {
-    Element.call(this, data, op.contains)
+  function Ring (data) {
+    Group.call(this, data)
   }
 
-  inherits(K, Element)
+  inherits(Ring, Group)
 
-  var addition       = nArify(g.addition),
-      disequality    = nArify(g.disequality),
-      division       = nArify(r.division),
-      equality       = nArify(g.equality),
-      multiplication = nArify(r.multiplication),
-      subtraction    = nArify(g.subtraction)
-
-  // Comparison operators.
-
-  function comparison (operator) {
-    return function () {
-      return operator.bind(null, this.data).apply(null, arguments)
-    }
-  }
-
-  K.prototype.equality    = comparison(equality)
-  K.prototype.disequality = comparison(disequality)
+  var multiplication = coerced(r.multiplication),
+      division       = coerced(r.division),
+      inversion      = coerced(r.inversion)
 
   // Chainable class methods.
 
-  K.prototype.addition       = nAryMutator(addition)
-  K.prototype.division       = nAryMutator(division)
-  K.prototype.multiplication = nAryMutator(multiplication)
-  K.prototype.subtraction    = nAryMutator(subtraction)
+  Ring.prototype.multiplication = nAryMutator(multiplication)
+  Ring.prototype.division       = nAryMutator(division)
 
-  K.prototype.inversion = unaryMutator(r.inversion)
-  K.prototype.negation  = unaryMutator(g.negation)
+  Ring.prototype.inversion = unaryMutator(r.inversion)
 
   // Static operators.
 
-  K.addition       = addition
-  K.contains       = g.contains
-  K.disequality    = disequality
-  K.division       = division
-  K.equality       = equality
-  K.inversion      = r.inversion
-  K.multiplication = multiplication
-  K.negation       = g.negation
-  K.notContains    = g.notContains
-  K.subtraction    = subtraction
+  Ring.multiplication = multiplication
+  Ring.division       = division
+  Ring.inversion      = inversion
 
-  // Identities.
+  // Identity.
 
-  Object.defineProperties(K, {
-    'zero': {
-      writable: false,
-      value: id[0]
-    },
-    'one': {
-      writable: false,
-      value: id[1]
-    },
+  Object.defineProperties(Ring, 'one', {
+    writable: false,
+    value: id[1]
   })
 
   // Aliases.
 
-  K.eq = K.equality
-  K.ne = K.disequality
+  Ring.div = Ring.division
+  Ring.inv = Ring.inversion
+  Ring.mul = Ring.multiplication
 
-  K.equal    = K.equality
-  K.notEqual = K.disequality
-  K.notEq    = K.disequality
+  Ring.prototype.mul = Ring.prototype.multiplication
+  Ring.prototype.div = Ring.prototype.division
+  Ring.prototype.inv = Ring.prototype.inversion
 
-  K.add = K.addition
-  K.div = K.division
-  K.inv = K.inversion
-  K.mul = K.multiplication
-  K.neg = K.negation
-  K.sub = K.subtraction
-
-  K.prototype.add = K.prototype.addition
-  K.prototype.div = K.prototype.division
-  K.prototype.inv = K.prototype.inversion
-  K.prototype.mul = K.prototype.multiplication
-  K.prototype.neg = K.prototype.negation
-  K.prototype.sub = K.prototype.subtraction
-
-  return K
+  return Ring
+  */
 }
 
 module.exports = ring

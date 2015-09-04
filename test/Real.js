@@ -1,4 +1,5 @@
 
+/*
 var algebra = require('algebra'),
     should  = require('should')
 
@@ -78,11 +79,6 @@ describe('Real', function () {
       x = new R(10)
       x.equality(10).should.be.true
     })
-
-    it('accepts many arguments'/*, function () {
-      x = new R(10)
-      x.equality(5+5, 20/2).should.be.true
-    }*/)
   })
 
   describe('disequality', function () {
@@ -94,11 +90,6 @@ describe('Real', function () {
       x = new R(10)
       x.disequality(20).should.be.true
     })
-
-    it('accepts many arguments'/*, function () {
-      x = new R(10)
-      x.disequality(20, 30).should.be.true
-    }*/)
   })
 
   describe('negation', function () {
@@ -127,4 +118,5 @@ describe('Real', function () {
     })
   })
 })
+  */
 

@@ -1,6 +1,8 @@
 
-/*!
+/**
  * Extract data attribute, if any, and check it
+ *
+ * @api private
  *
  * @param {*} arg
  *

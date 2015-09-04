@@ -11,7 +11,7 @@
  */
 
 function matrixToArrayIndex (i, j, numCols) {
-  return i + j * numCols
+  return j + i * numCols
 }
 
 module.exports = matrixToArrayIndex

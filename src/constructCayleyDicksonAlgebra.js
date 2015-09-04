@@ -77,7 +77,6 @@ function constructCayleyDicksonAlgebra (field, iterations) {
 
  function arrayfy2 (operator, dim) {
     return function (a, b) {
-      console.log(dim, a, b)
       if (dim === 1)
         return [operator(a, b)]
 

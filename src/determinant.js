@@ -1,54 +1,57 @@
 
-var adjointMatrix      = require('./adjointMatrix'),
-    matrixToArrayIndex = require('./matrixToArrayIndex')
+var matrixToArrayIndex = require('./matrixToArrayIndex'),
+    subMatrix          = require('./subMatrix')
 
-/*!
- * Computes the determinant of a matrix
+/**
+ * Computes the determinant of a matrix using Laplace's formula
+ *
+ * See https://en.wikipedia.org/wiki/Laplace_expansion
  *
  * @function
  *
- * @param {Object} Scalar
+ * @param {Object} scalar
+ * @param {Function} scalar.addition
+ * @param {Function} scalar.multiplication
+ * @param {Function} scalar.negation
  * @param {Array} data
  * @param {Number} order
  *
  * @returns {Any} det
  */
 
-function determinant (Scalar, data, order) {
-  var det
+function determinant (scalar, data, order) {
+  var det,
+      add = scalar.addition,
+      mul = scalar.multiplication,
+      neg = scalar.negation
 
-  // If order is 2, go for a straight calculation.
-  //
-  //  det | a b | = a * d - c * b
-  //      | c d |
-  //
-  if (order === 2) {
-    det = Scalar.subtraction(Scalar.multiplication(data[0], data[3]),
-                             Scalar.multiplication(data[2], data[1]))
-
-    return det
-  }
+  // Recursion will stop here:
+  // the determinant of a 1x1 matrix is its only element.
+  if (order === 1)
+    return data[0]
 
   // TODO choose best row or column to start from, i.e. the one with more zeros
   // by now we start from first row, and walk by column
+  // needs scalar.isZero
   var startingCol = 0,
       startingRow = 0
 
+  for (var col = 0; col < order; col++) {
+    var subData = subMatrix(data, order, order, startingRow, col)
 
-  var adjointData        = adjointMatrix(data, order, order, startingRow, startingCol),
-      adjointDeterminant = determinant(Scalar, adjointData, order - 1),
-      index              = matrixToArrayIndex(startingRow, startingCol, order)
+                // +-- Recursion here.
+                // ↓
+    var cofactor = determinant(scalar, subData, order - 1)
 
-  det = Scalar.multiplication(data[index], adjointDeterminant)
+    if ((startingRow + col) % 2 === 1)
+      cofactor = neg(cofactor)
 
-  for (var col = 1; col < order; col++) {
-    adjointData = adjointMatrix(data, order, order, startingRow, col)
+    var index = matrixToArrayIndex(startingRow, col, order)
 
-    adjointDeterminant = determinant(Scalar, adjointData, order - 1)
-
-    index = matrixToArrayIndex(startingRow, col, order)
-
-    det = Scalar.addition(det, Scalar.multiplication(data[index], adjointDeterminant))
+    if (typeof det === 'undefined')
+      det = mul(data[index], cofactor) // first iteration
+    else
+      det = add(det, mul(data[index], cofactor))
   }
 
   return det

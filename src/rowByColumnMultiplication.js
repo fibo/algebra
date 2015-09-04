@@ -1,11 +1,16 @@
 
 var matrixToArrayIndex = require('./matrixToArrayIndex')
 
-/*!
+/**
+ * Multiply two matrices, row by column.
  *
  * @function
  *
- * @param {Object} Scalar
+ * @api private
+ *
+ * @param {Object}   scalar
+ * @param {Function} scalar.addition
+ * @param {Function} scalar.multiplication
  * @param {Array} leftMatrix
  * @param {Array} leftIndices
  * @param {Array} rightMatrix
@@ -14,8 +19,8 @@ var matrixToArrayIndex = require('./matrixToArrayIndex')
  * @returns {Array} data
  */
 
-function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {
-  // Check if matrix can be multiplied
+function rowByColumnMultiplication (scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {
+  // Check if matrices can be multiplied.
   if (leftIndices[1] !== rightIndices[0])
     throw new TypeError('Left num cols != right num rows')
 
@@ -32,7 +37,7 @@ function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix
       var rightElement = rightMatrix[rightIndex],
           leftElement  = leftMatrix[leftIndex]
 
-      var element = Scalar.multiplication(leftElement, rightElement)
+      var element = scalar.multiplication(leftElement, rightElement)
 
       for (var k = 1; k < commonIndex; k++) {
         leftIndex = matrixToArrayIndex(i, k, commonIndex)
@@ -41,7 +46,7 @@ function rowByColumnMultiplication (Scalar, leftMatrix, leftIndices, rightMatrix
         rightElement = rightMatrix[rightIndex]
         leftElement = leftMatrix[leftIndex]
 
-        element = Scalar.addition(element, Scalar.multiplication(rightElement, leftElement))
+        element = scalar.addition(element, scalar.multiplication(rightElement, leftElement))
       }
 
       data.push(element)

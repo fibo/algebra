@@ -1,6 +1,7 @@
 
 var algebraGroup = require('algebra-group'),
     coerced      = require('./coerced'),
+    comparison   = require('./comparison'),
     Element      = require('./Element'),
     mutator      = require('./mutator'),
     inherits     = require('inherits')
@@ -47,12 +48,6 @@ function group (given, naming) {
       subtraction = coerced(g.subtraction)
 
   // Comparison operators.
-
-  function comparison (operator) {
-    return function () {
-      return operator.bind(null, this.data).apply(null, arguments)
-    }
-  }
 
   Group.prototype.equality    = comparison(equality)
   Group.prototype.disequality = comparison(disequality)

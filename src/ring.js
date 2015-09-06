@@ -1,8 +1,8 @@
 
 var algebraRing = require('algebra-ring'),
     coerced     = require('./coerced'),
+    comparison  = require('./comparison'),
     Element     = require('./Element'),
-    group       = require('./group'),
     mutator     = require('./mutator'),
     inherits    = require('inherits')
 
@@ -12,71 +12,112 @@ var nAryMutator  = mutator.nAry,
 /**
  * Create an algebra ring.
  *
- * @params {Array} identities [zero, one]
- * @params {Object} operator definition
- * @param {Function} operator.contains
- * @param {Function} operator.equality
- * @param {Function} operator.addition
- * @param {Function} operator.negation
- * @param {Function} operator.multiplication
- * @param {Function} operator.inversion
+ * @params {Array} identity
+ * @params {Array} identity[0] a.k.a. zero
+ * @params {Array} identity[1] a.k.a. uno
+ * @params {Object} given operator functions
+ * @param {Function} given.contains
+ * @param {Function} given.equality
+ * @param {Function} given.addition
+ * @param {Function} given.negation
+ * @param {Function} given.multiplication
+ * @param {Function} given.inversion
  *
  * @returns {Function} Ring that implements an algebra ring as a class
  */
 
-function ring (id, op) {
-  /*
-  var Group = group({
-    identity       : id[0],
-    contains       : op.contains,
-    equality       : op.equality,
-    compositionLaw : op.addition,
-    inversion      : op.negation
-  }),
-  r = null // algebraRing(g, id[1], op.multiplication, op.inversion)
+function ring (identity, given) {
+  var r = algebraRing(identity, given)
 
   function Ring (data) {
-    Group.call(this, data)
+    Element.call(this, data, given.contains)
   }
 
-  inherits(Ring, Group)
+  inherits(Ring, Element)
+
+  // Note that many code in ring.js is almost the same of group.js:
+  // copy and paste over inheritance!
+
+  var addition    = coerced(r.addition),
+      contains    = coerced(r.contains),
+      disequality = coerced(r.disequality),
+      equality    = coerced(r.equality),
+      negation    = coerced(r.negation),
+      notContains = coerced(r.notContains),
+      subtraction = coerced(r.subtraction)
 
   var multiplication = coerced(r.multiplication),
       division       = coerced(r.division),
       inversion      = coerced(r.inversion)
 
+  // Comparison operators.
+
+  Ring.prototype.equality    = comparison(equality)
+  Ring.prototype.disequality = comparison(disequality)
+
   // Chainable class methods.
+
+  Ring.prototype.addition    = nAryMutator(addition)
+  Ring.prototype.subtraction = nAryMutator(subtraction)
+  Ring.prototype.negation    = unaryMutator(negation)
 
   Ring.prototype.multiplication = nAryMutator(multiplication)
   Ring.prototype.division       = nAryMutator(division)
-
-  Ring.prototype.inversion = unaryMutator(r.inversion)
+  Ring.prototype.inversion      = unaryMutator(r.inversion)
 
   // Static operators.
+
+  Ring.addition    = addition
+  Ring.contains    = contains
+  Ring.disequality = disequality
+  Ring.equality    = equality
+  Ring.negation    = negation
+  Ring.notContains = notContains
+  Ring.subtraction = subtraction
 
   Ring.multiplication = multiplication
   Ring.division       = division
   Ring.inversion      = inversion
 
-  // Identity.
-
-  Object.defineProperties(Ring, 'one', {
-    writable: false,
-    value: id[1]
-  })
-
   // Aliases.
+
+  Ring.eq = Ring.equality
+  Ring.ne = Ring.disequality
+
+  Ring.equal    = Ring.equality
+  Ring.notEqual = Ring.disequality
+  Ring.notEq    = Ring.disequality
+
+  Ring.add = Ring.addition
+  Ring.neg = Ring.negation
+  Ring.sub = Ring.subtraction
 
   Ring.div = Ring.division
   Ring.inv = Ring.inversion
   Ring.mul = Ring.multiplication
 
+  Ring.prototype.add = Ring.prototype.addition
+  Ring.prototype.neg = Ring.prototype.negation
+  Ring.prototype.sub = Ring.prototype.subtraction
+
   Ring.prototype.mul = Ring.prototype.multiplication
   Ring.prototype.div = Ring.prototype.division
   Ring.prototype.inv = Ring.prototype.inversion
 
+  // Identities.
+
+  Object.defineProperties(Ring, {
+    'zero': {
+      writable: false,
+      value: identity[0]
+    },
+    'one': {
+      writable: false,
+      value: identity[1]
+    }
+  })
+
   return Ring
-  */
 }
 
 module.exports = ring

@@ -1,5 +1,4 @@
 
-/*
 var algebra = require('algebra'),
     should  = require('should')
 
@@ -118,5 +117,4 @@ describe('Real', function () {
     })
   })
 })
-  */
 

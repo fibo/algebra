@@ -1,10 +1,11 @@
-/*
+
 var algebra = require('algebra'),
     should  = require('should')
 
 var VectorSpace = algebra.VectorSpace,
     Real        = algebra.Real
 
+/*
 describe('VectorSpace', function () {
   var R2 = VectorSpace(Real)(2)
 

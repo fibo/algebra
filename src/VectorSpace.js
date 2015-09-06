@@ -5,7 +5,6 @@ var getIndices                = require('./getIndices'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
 
-
 /**
  * Space of vectors
  *
@@ -17,25 +16,75 @@ var getIndices                = require('./getIndices'),
  *
  * @function
  *
- * @param {Object} Scalar
+ * @param {Object} Scalar class
  *
- * @returns {Function} Dimension
+ * @returns {Function} anonymous with signature (dimension)
  */
 
 function VectorSpace (Scalar) {
 
   /*!
-   * Dimension
    *
    * @param {Number} dimension
    *
-   * @return {Constructor} Vector
+   * @returns {Constructor} Vector
    */
 
-  function Dimension (dimension) {
-    var indices = [dimension]
+  return function (dimension) {
 
-    var Element = Space(Scalar)(indices)
+    function createZero (zero, dimension) {
+      var zero = []
+
+      for (var i = 0; i < dimension; i++)
+        zero.push(zero)
+
+     return zero
+    }
+
+    var zero = createZero(Scalar.zero, dimension)
+
+    function contains (a) {
+      if (a.length !== dimension) return false
+
+      for (var i = 0; i < dimension; i++)
+        if (! Scalar.contains(a[i]))
+          return false
+
+      return true
+    }
+
+    function equality (a, b) {
+      for (var i = 0; i < dimension; i++)
+        if (! Scalar.equality(a[i], b[i]))
+          return false
+
+      return true
+    }
+
+    function addition (a, b) {
+      var c = []
+
+      for (var i = 0; i < dimension; i++)
+        c.push(Scalar.addition(a[i], b[i]))
+
+      return c
+    }
+
+    function negation (a) {
+      var b = []
+
+      for (var i = 0; i < dimension; i++)
+        b.push(Scalar.negation(a[i]))
+
+      return b
+    }
+
+    var Group = group({
+      identity       : zero,
+      equality       : equality,
+      compositionLaw : addition,
+      inversion      : negation
+    })
 
     /**
      *
@@ -45,22 +94,22 @@ function VectorSpace (Scalar) {
      */
 
     function Vector (data) {
-      Element.call(this, data)
+      Group.call(this, data)
 
-      /*!
+      /**
        * Norm of a vector
        *
        * Given v = (x1, x2, ... xN)
        *
        * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
        *
-       * @return {Scalar} result
+       * @returns {Scalar} result
        */
 
       function vectorNorm () {
         var result = Scalar.multiplication(data[0], data[0])
 
-        for (var i=1; i<dimension; i++) {
+        for (var i = 1; i < dimension; i++) {
           result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))
         }
 
@@ -70,17 +119,14 @@ function VectorSpace (Scalar) {
       Object.defineProperty(this, 'norm', {get: vectorNorm})
     }
 
-    inherits(Vector, Element)
-
-    /*!
-     *
-     */
+    inherits(Vector, Group)
 
     function crossProduct (right) {
       var rightData      = toData(right),
           rightDimension = rightData.length,
           rightIndices   = getIndices(right)
 
+            // TODO complete cross product
     }
 
     // Cross product is defined only in dimension 3.
@@ -122,7 +168,7 @@ function VectorSpace (Scalar) {
 
       var result = Scalar.multiplication(vectorData1[0], vectorData2[0])
 
-      for (var i=1; i<dimension; i++) {
+      for (var i = 1; i < dimension; i++) {
         result = Scalar.addition(result, Scalar.multiplication(vectorData1[i], vectorData2[i]))
       }
 
@@ -139,16 +185,12 @@ function VectorSpace (Scalar) {
     Vector.prototype.dotProduct    = vectorScalarProduct
     Vector.prototype.dot           = vectorScalarProduct
 
-    /*!
-     *
-     */
-
-    function perScalarProduct (scalar) {
+    function perScalarProduct (Scalar) {
       var data       = this.data,
-          scalarData = toData(scalar)
+          ScalarData = toData(Scalar)
 
       for (var i = 0; i < dimension; i++)
-        data[i] = Scalar.mul(data[i], scalarData)
+        data[i] = Scalar.mul(data[i], ScalarData)
 
       this.data = data
 
@@ -170,8 +212,6 @@ function VectorSpace (Scalar) {
 
     return Vector
   }
-
-  return Dimension
 }
 
 module.exports = VectorSpace

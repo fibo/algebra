@@ -20,7 +20,7 @@ So I got my mark and went back to Italy where I rewrote my thesis in Italian and
 Then I was hired in Milan, working in IT, so I learned a lot of new things, also about programming.
 
 In 2013 I started programming with [Node.js][3] and I wanted to learn how to write a library. I was also curious about the comparison of an implementation of a group or a field, for instance in JavaScript, with the learning process of the human brain about these algebra topics.
-So, I started my first *npm package*, and taking advantage of those early days, I could publish it as [algebra][4].
+So, because of this I decided to start my first *npm package*. as [npm](https://www.npmjs.com/) had just started I was lucky and could register it just as [algebra][4].
 
 Last release was published 4 months ago and reached more than 1000 downloads per month. I'd like to start this *math blog* saying
 

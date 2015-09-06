@@ -8,26 +8,26 @@ I was graduated in Mathematics at [Università degli Studi di Genova][1] in 2005
 
 I wrote my thesis, titled *The Problem of Apollonius*, in Madrid at the *Universidad Complutense*. I found there an extensive library and a great teacher, *el profesor Montesinos*, who gave me a life lesson I will never forget.
 
-In those days I was in love with my thesis subject, drawing all the day, thinking about it more than a dutch girlfriend, *Anneke*, I had in that 2003.
+In those days I was in love with my thesis subject, drawing circles all the day, thinking all the time about the [problem of Apollonius](https://en.wikipedia.org/wiki/Problem_of_Apollonius) and its iteration: the [Apollonian gasket](https://en.wikipedia.org/wiki/Apollonian_gasket).
 Montesinos' subject was really innovative and interesting, and many students idolezed him for his results in [Knot theory][2].
-When I gave him a paper I wrote about Apollonius' problem he said to me
+When I gave him a paper I wrote about the Apollonian gasket he said to me
 
-> If you want to pass my exam, do not study my subject but write more about Apollonius' problem and bring it to me. Your mind is thinking about it! Your exam note will be evaluated on this topic.
+> If you want to pass my exam, do not study my subject but write more about the problem of Apollonius and bring it to me. Your mind is thinking about it! Your exam note will be evaluated on this topic.
 
-What a lesson he gave me! When I brought him a first version he also said that he really like how I write about math, discursively like *Luigi Bianchi*, and he urged me to start writing one day and to read *Bianchi*'s work which indeed wrote some articles connected with my Apollonius thesis.
-So I got my note and went back to Italy where I rewrote my thesis in Italian and finished in 2005.
+What a lesson he gave me! When I brought him a first version he also said that he really liked how I wrote about math, discursively like *Luigi Bianchi*. He urged me to start writing one day and to read *Bianchi*'s work which indeed wrote some articles connected with my Apollonius thesis.
+So I got my mark and went back to Italy where I rewrote my thesis in Italian and then I graduated in 2005.
 
 Then I was hired in Milan, working in IT, so I learned a lot of new things, also about programming.
 
-In 2013 I started programming with [Node.js][3] and I wanted to learn writing a library. I was also curious about the comparison of an implementation of a group or a field, for instance in JavaScript, with the learning process of the human brain about these algebra topics.
-So, I started my first *npm package*, and taking advantage of those early days I could register it as [algebra][4].
+In 2013 I started programming with [Node.js][3] and I wanted to learn how to write a library. I was also curious about the comparison of an implementation of a group or a field, for instance in JavaScript, with the learning process of the human brain about these algebra topics.
+So, I started my first *npm package*, and taking advantage of those early days, I could publish it as [algebra][4].
 
 Last release was published 4 months ago and reached more than 1000 downloads per month. I'd like to start this *math blog* saying
 
 > Gracias profesor Montesinos!
 
 Last but not least, I was thinking about how to display math in browsers for a long time. Few years ago it was not so easy to find a proper solution but now I think I am going for [KaTeX][5] server side rendering feature.
-Check out the [tex snippets](/algebra/tex-snippets) index for details.
+Check out the [TeX snippets](/algebra/tex-snippets) index for details.
 
   [1]: http://www.dima.unige.it/ "Università degli Studi di Genova"
   [2]: https://en.wikipedia.org/wiki/Knot_theory "Knot theory"

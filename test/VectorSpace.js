@@ -5,40 +5,30 @@ var algebra = require('algebra'),
 var VectorSpace = algebra.VectorSpace,
     Real        = algebra.Real
 
-/*
+var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
+    mutatorUnaryOperator  = require('./features/mutatorUnaryOperator'),
+    staticBinaryOperator  = require('./features/staticBinaryOperator'),
+    staticUnaryOperator   = require('./features/staticUnaryOperator')
+
+var R2 = VectorSpace(Real)(2)
+
 describe('VectorSpace', function () {
-  var R2 = VectorSpace(Real)(2)
+  var operator
 
   describe('addition()', function () {
-    var vector1 = new R2([0, 1]),
-        vector2 = new R2([1, 1])
+    operator = 'addition'
 
-    it('is a static operator', function () {
-      var data = R2.addition([0, 2], [-1, 3])
+    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
 
-      data.should.eql([-1, 5])
-    })
-
-    it('is a mutator', function () {
-      vector1.addition(vector2)
-      vector1.data.should.be.eql([1, 2])
-    })
+    it('is a mutator method', mutatorBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
   })
 
   describe('subtraction()', function () {
-    var vector1 = new R2([0, 1]),
-        vector2 = new R2([1, 1])
+    operator = 'subtraction'
 
-    it('is a static operator', function () {
-      var data = R2.subtraction([0, 2], [-1, 3])
+    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
 
-      data.should.eql([1, -1])
-    })
-
-    it('is a mutator', function () {
-      vector2.subtraction(vector1)
-      vector2.data.should.be.eql([1, 0])
-    })
+    it('is a mutator method', mutatorBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
   })
 
   describe('scalarProduct()', function () {
@@ -70,4 +60,3 @@ describe('VectorSpace', function () {
     })
   })
 })
-*/

@@ -1,7 +1,7 @@
 
-var inherits = require('inherits')
-
 var getIndices                = require('./getIndices'),
+    group                     = require('./group'),
+    inherits                  = require('inherits'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
 
@@ -32,13 +32,13 @@ function VectorSpace (Scalar) {
 
   return function (dimension) {
 
-    function createZero (zero, dimension) {
-      var zero = []
+    function createZero (scalarZero, dimension) {
+      var vectorZero = []
 
       for (var i = 0; i < dimension; i++)
-        zero.push(zero)
+        vectorZero.push(scalarZero)
 
-     return zero
+     return vectorZero
     }
 
     var zero = createZero(Scalar.zero, dimension)
@@ -81,6 +81,7 @@ function VectorSpace (Scalar) {
 
     var Group = group({
       identity       : zero,
+      contains       : contains,
       equality       : equality,
       compositionLaw : addition,
       inversion      : negation
@@ -120,6 +121,15 @@ function VectorSpace (Scalar) {
     }
 
     inherits(Vector, Group)
+
+    Vector.addition = Group.addition
+    Vector.subtraction = Group.subtraction
+    Vector.negation = Group.negation
+
+    Object.defineProperty(Vector, 'zero', {
+      writable: false,
+      value: zero
+    })
 
     function crossProduct (right) {
       var rightData      = toData(right),
@@ -198,15 +208,6 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.perScalarProduct = perScalarProduct
-
-    /*!
-     * Static operators
-     */
-
-    Vector.addition    = Element.addition
-    Vector.add         = Element.addition
-    Vector.subtraction = Element.subtraction
-    Vector.sub         = Element.subtraction
 
     Vector.scalarProduct = scalarProduct
 

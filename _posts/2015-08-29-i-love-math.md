@@ -26,7 +26,7 @@ Last release was published 4 months ago and reached more than 1000 downloads per
 
 > Gracias profesor Montesinos!
 
-Last but not least, I was thinking about how to display math in browsers for a long time. Few years ago it was not so easy to find a proper solution but now I think I am going for [KaTeX][5] server side rendering feature.
+Last but not least, I've been thinking about how to display math in browsers for a long time. Few years ago it was not so easy to find a proper solution but now I think I am going for [KaTeX][5] server side rendering feature.
 Check out the [TeX snippets](/algebra/tex-snippets) index for details.
 
   [1]: http://www.dima.unige.it/ "Università degli Studi di Genova"

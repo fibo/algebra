@@ -1,53 +1,52 @@
 
-var inherits = require('inherits')
-
 var determinant               = require('./determinant'),
     getIndices                = require('./getIndices'),
+    inherits                  = require('inherits'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
-    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
+    rowByColumnMultiplication = require('./rowByColumnMultiplication'),
     toData                    = require('./toData'),
     VectorSpace               = require('./VectorSpace')
 
 /**
  * Space of m x n matrices
  *
- * @class
+ * @function
  *
  * @param {Object} Scalar
- * @param {Number} numRows
- * @param {Number} numCols
+ *
+ * @returns {Function} anonymous with signature (numRows[, numCols])
  */
 
 function MatrixSpace (Scalar) {
+
   /**
-   * Dimension
    *
    * @param {Number} numRows
    * @param {Number} numCols which is optional: defaults to a square matrix.
    *
-   * @return {Constructor} Matrix
+   * @returns {Constructor} Matrix
    */
 
-  function Dimension (numRows, numCols) {
-    var isSquare = false
+  return function (numRows, numCols) {
 
-    if (typeof numCols === 'undefined') {
-      // numCols defaults to numRows
+    // numCols defaults to numRows
+    if (typeof numCols === 'undefined')
       numCols = numRows
 
-      isSquare = true
-    }
+    var dimension = numRows * numCols,
+        indices   = [numRows, numCols],
+        isSquare  = (numRows === numCols)
 
-    var indices = [numRows, numCols]
+    // MatrixSpace mxn is a VectorSpace with dim=m*n
 
-    var Element = Space(Scalar)(indices)
+    var Vector = VectorSpace(Scalar)(dimension)
 
       /*
        *
        */
 
-    function Matrix () {
-      Element.apply(this, arguments)
+    function Matrix (data) {
+      Vector.call(this, data)
 
       /*
        *
@@ -65,18 +64,20 @@ function MatrixSpace (Scalar) {
       }
     }
 
-    inherits(Matrix, Element)
+    inherits(Matrix, Vector)
 
     // Static attributes.
+
     Matrix.isSquare = isSquare
     Matrix.numRows  = numRows
     Matrix.numCols  = numCols
 
     // Static operators.
-    Matrix.addition    = Element.addition
-    Matrix.add         = Element.addition
-    Matrix.subtraction = Element.subtraction
-    Matrix.sub         = Element.subtraction
+
+    Matrix.addition    = Vector.addition
+    Matrix.add         = Vector.addition
+    Matrix.subtraction = Vector.subtraction
+    Matrix.sub         = Vector.subtraction
 
     /*!
      *
@@ -232,8 +233,6 @@ function MatrixSpace (Scalar) {
 
     return Matrix
   }
-
-  return Dimension
 }
 
 module.exports = MatrixSpace

@@ -23,7 +23,7 @@ var getIndices                = require('./getIndices'),
 
 function VectorSpace (Scalar) {
 
-  /*!
+  /**
    *
    * @param {Number} dimension
    *

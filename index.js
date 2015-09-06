@@ -11,10 +11,10 @@ require('strict-mode')(function () {
   exports.MatrixSpace = require('./src/MatrixSpace')
 
   exports.Real       = Real
-  exports.Complex    = CayleyDickson(Real, 1)
-  exports.Quaternion = CayleyDickson(Real, 2)
-  exports.Octonion   = CayleyDickson(Real, 3)
+//  exports.Complex    = CayleyDickson(Real, 1)
+//  exports.Quaternion = CayleyDickson(Real, 2)
+//  exports.Octonion   = CayleyDickson(Real, 3)
 
-  exports.buildCyclicSpaceOf = require('./src/buildCyclicSpaceOf')
+//  exports.buildCyclicSpaceOf = require('./src/buildCyclicSpaceOf')
 })
 

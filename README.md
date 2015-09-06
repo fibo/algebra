@@ -8,12 +8,17 @@
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
+## Math blog
+
+I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning math.
+Please find here my [math articles](http://g14n.info/algebra/articles).
+
 <!-- readmenot
      Line containing the readmenot string are filtered from index.md,
      while this readmenot comment is not displayed in README.md
      which is rendered on npm and GitHub … ehm readmenot
 
-## Latest posts
+Follows a list of recent posts.
 
 {% include posts_list.html limit="5" %}
      readmenot -->

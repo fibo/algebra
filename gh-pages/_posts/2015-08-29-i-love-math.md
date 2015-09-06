@@ -6,7 +6,7 @@ layout: post
 
 I was graduated in Mathematics at [Università degli Studi di Genova][1] in 2005. I have a deep passion for math, in particular for algebra and geometry, and I feel really lucky about the teachers I found during my studies.
 
-My thesis, titled *The Problem of Apollonius*, was at first written in Spain at the *Universidad Complutense* in Madrid, where I found an extensive library and a great teacher, *el profesor Montesinos* who gave me a life lesson I will never forget.
+I wrote my thesis, titled *The Problem of Apollonius*, in Madrid at the *Universidad Complutense*. I found there an extensive library and a great teacher, *el profesor Montesinos*, who gave me a life lesson I will never forget.
 
 In those days I was in love with my thesis subject, drawing all the day, thinking about it more than a dutch girlfriend, *Anneke*, I had in that 2003.
 Montesinos' subject was really innovative and interesting, and many students idolezed him for his results in [Knot theory][2].

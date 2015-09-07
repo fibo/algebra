@@ -122,9 +122,9 @@ function VectorSpace (Scalar) {
 
     inherits(Vector, Group)
 
-    Vector.addition = Group.addition
+    Vector.addition    = Group.addition
     Vector.subtraction = Group.subtraction
-    Vector.negation = Group.negation
+    Vector.negation    = Group.negation
 
     Object.defineProperty(Vector, 'zero', {
       writable: false,

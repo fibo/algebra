@@ -12,22 +12,31 @@ var matrixToArrayIndex = require('./matrixToArrayIndex')
  * @param {Function} scalar.addition
  * @param {Function} scalar.multiplication
  * @param {Array} leftMatrix
- * @param {Array} leftIndices
+ * @param {Array} leftNumRows
  * @param {Array} rightMatrix
- * @param {Array} rightIndices
+ * @param {Array} rightNumCols
  *
  * @returns {Array} data
  */
 
-function rowByColumnMultiplication (scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {
+function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
+  var leftNumCols  = leftMatrix.length / leftNumRows,
+      rightNumRows = rightMatrix.length / rightNumCols
+
+  if (leftNumCols % 1 !== 0)
+    throw new TypeError('leftNumCols does not divide leftMatrix.length')
+
+  if (rightNumRows % 1 !== 0)
+    throw new TypeError('rightNumRows does not divide rightMatrix.length')
+
   // Check if matrices can be multiplied.
-  if (leftIndices[1] !== rightIndices[0])
+  if (leftNumCols !== rightNumRows)
     throw new TypeError('Left num cols != right num rows')
 
-  var commonIndex = leftIndices[1],
+  var commonIndex = leftNumCols,
       data        = [],
-      rows        = leftIndices[0],
-      cols        = rightIndices[1]
+      rows        = leftNumRows,
+      cols        = rightNumCols
 
   for (var i = 0; i < rows; i++) {
     for (var j = 0; j < cols; j++) {

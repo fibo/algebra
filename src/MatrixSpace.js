@@ -66,27 +66,56 @@ function MatrixSpace (Scalar) {
 
     inherits(Matrix, Vector)
 
-    // Static attributes.
+    // Static operators and attributes.
 
     Matrix.isSquare = isSquare
     Matrix.numRows  = numRows
     Matrix.numCols  = numCols
 
-    function rightMultiplication (right) {
-      var rightData    = toData(right),
-          rightIndices = getIndices(right)
+    Matrix.addition    = Vector.addition
+    Matrix.subtraction = Vector.subtraction
+    Matrix.negation    = Vector.negation
 
-      var rightIsMatrix = rightIndices.length === 2,
-          rightIsVector = rightIndices.length === 1
+    Object.defineProperty(Matrix, 'zero', {
+      writable: false,
+      value: Vector.zero
+    })
+
+
+    function rightMultiplication (right) {
+      // Multiplication is possible only if
+      //
+      // left num cols = right num rows
+      //
+      // Since
+      //
+      // right num rows * right num cols = rightData.length
+      //
+      // it is possible to compute rightNumCols by rightData.length / numCols
+      //
+      // and the right matrix is square if
+      //
+      // right num rows = right num cols
+      //
+      // which is the same as rightNumCols = (left)numCols
+
+      var rightData    = toData(right),
+          rightNumCols = rightData.length / numCols
+
+      // Check if rightNumCols results to be an integer.
+      if (rightNumCols % 1 !== 0)
+        throw new TypeError('left num cols != right num rows')
+
+      var rightIsSquare = (rightNumCols === numCols)
 
       // TODO rightIsScalar and use scalarMultiplication
 
-      var rightIsSquare = rightIsMatrix && (rightIndices[0] === rightIndices[1])
+      var rightIsVector = (rightNumCols === 1)
 
       if (rightIsVector)
         rightIndices.push(1)
 
-      var data = rowByColumnMultiplication(Scalar, this.data, this.indices, rightData, rightIndices)
+      var data = rowByColumnMultiplication(Scalar, this.data, numRows, rightData, rightNumCols)
 
       // Left multiplication by a square matrix is an internal operation,
       // so the method is a mutator.

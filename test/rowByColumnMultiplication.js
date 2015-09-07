@@ -21,12 +21,10 @@ describe('rowByColumnMultiplication', function () {
     scalar       = real
     leftMatrix   = [1, 0,
                     0, 1]
-    leftIndices  = [2, 2]
     rightMatrix  = [1, 0,
                     0, 1]
-    rightIndices = [2, 2]
 
-    data = mul(scalar, leftMatrix, leftIndices, rightMatrix, rightIndices)
+    data = mul(scalar, leftMatrix, 2, rightMatrix, 2)
 
     data.should.eql([1, 0,
                      0, 1])

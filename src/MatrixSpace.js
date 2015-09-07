@@ -1,5 +1,5 @@
 
-var determinant               = require('./determinant'),
+var determinant               = require('laplace-determinant'),
     getIndices                = require('./getIndices'),
     inherits                  = require('inherits'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
@@ -53,7 +53,7 @@ function MatrixSpace (Scalar) {
        */
 
       function matrixDeterminant () {
-        var det = determinant(Scalar, this.data, numRows)
+        var det = determinant(this.data, Scalar, numRows)
 
         return new Scalar(det)
       }
@@ -71,43 +71,6 @@ function MatrixSpace (Scalar) {
     Matrix.isSquare = isSquare
     Matrix.numRows  = numRows
     Matrix.numCols  = numCols
-
-    // Static operators.
-
-    Matrix.addition    = Vector.addition
-    Matrix.add         = Vector.addition
-    Matrix.subtraction = Vector.subtraction
-    Matrix.sub         = Vector.subtraction
-
-    /*!
-     *
-     */
-
-    function matrixAddition (matrix) {
-      this.data = Element.addition(this.data, matrix)
-
-      return this
-    }
-
-    Matrix.prototype.addition = matrixAddition
-    Matrix.prototype.add      = matrixAddition
-
-    /*!
-     *
-     */
-
-    function matrixSubtraction (matrix) {
-      this.data = Element.subtraction(this.data, matrix)
-
-      return this
-    }
-
-    Matrix.prototype.subtraction = matrixSubtraction
-    Matrix.prototype.sub         = matrixSubtraction
-
-    /*!
-     *
-     */
 
     function rightMultiplication (right) {
       var rightData    = toData(right),

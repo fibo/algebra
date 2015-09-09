@@ -30,6 +30,19 @@ function MatrixSpace (Scalar) {
 
   return function (numRows, numCols) {
 
+    function createIdentity (scalarZero, scalarOne, rank) {
+      var identity = []
+
+      for (var i = 0; i < rank; i++)
+        for (var j = 0; j < rank; j++)
+          if (i === j)
+            identity.push(scalarOne)
+          else
+            identity.push(scalarZero)
+
+     return identity
+    }
+
     // numCols defaults to numRows
     if (typeof numCols === 'undefined')
       numCols = numRows
@@ -39,7 +52,6 @@ function MatrixSpace (Scalar) {
         isSquare  = (numRows === numCols)
 
     // MatrixSpace mxn is a VectorSpace with dim=m*n
-
     var Vector = VectorSpace(Scalar)(dimension)
 
       /*
@@ -67,27 +79,34 @@ function MatrixSpace (Scalar) {
 
     inherits(Matrix, Vector)
 
-    // Static operators and attributes.
+    // Static attributes.
 
-    Matrix.isSquare = isSquare
-    Matrix.numRows  = numRows
-    Matrix.numCols  = numCols
+    if (isSquare) {
+      // TODO rank should be calculated depending on determinant
+      // if determinant is zero, rank < numRows, but this needs sub-matrix function
+      // which is in laplace-determinant package and should be placed in its own package
+      var rank = numRows
 
-    Matrix.addition    = Vector.addition
-    Matrix.subtraction = Vector.subtraction
-    Matrix.negation    = Vector.negation
+      var identity = createIdentity(Scalar.zero, Scalar.one, rank)
 
-    Object.defineProperty(Matrix, 'zero', {
-      writable: false,
-      value: Vector.zero
+      Object.defineProperty(Matrix, 'identity', {
+        writable: false,
+        value: identity
+      })
+    }
+
+    Object.defineProperties(Matrix, {
+      'isSquare': { writable: false, value: isSquare },
+      'numCols': { writable: false, value: numCols },
+      'numRows': { writable: false, value: numRows },
+      'zero': { writable: false, value: Vector.zero }
     })
-
 
     /**
      * Row by column multiplication at right side
      */
 
-    function multiplication (right) {
+    function staticRightMultiplication (leftNumRows, leftNumCols, left, right, rightNumCols) {
       // Multiplication is possible only if
       //
       //     left num cols = right num rows
@@ -100,46 +119,52 @@ function MatrixSpace (Scalar) {
       //
       //     right num rows = right num cols
       //
-      // which is the same as rightNumCols = (left)numCols
 
       // leftNumRows, leftNumCols = rightNumRows, rightNumCols
 
-      var rightData    = toData(right),
-          rightNumCols = rightData.length / numCols
+      var rightData = toData(right),
+          leftData  = toData(left)
+
+      if (typeof rightNumCols === 'undefined')
+          rightNumCols = rightData.length / leftNumCols
 
       // Check if rightNumCols results to be an integer.
       if (isInteger(rightNumCols))
         throw new TypeError('left num cols != right num rows')
 
-      var rightIsSquare = (rightNumCols === numCols),
+      return rowByColumnMultiplication(Scalar, leftData, numRows, rightData, rightNumCols)
+    }
+
+    function rightMultiplication (right) {
+      var left        = this.data,
+          leftNumCols = this.numCols,
+          leftNumRows = this.numRows,
+          rightData   = toData(right)
+
+      var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
+
+      var rightNumRows = leftNumCols
+      var rightNumCols = rightData.length / leftNumCols
+
+      var rightIsSquare = (rightNumCols === rightNumRows),
           rightIsVector = (rightNumCols === 1)
 
-      var data = rowByColumnMultiplication(Scalar, this.data, numRows, rightData, rightNumCols)
-
-      if (rightIsVector) {
-        var Vector = VectorSpace(Scalar)(numRows)
-
-        return new Vector(data)
-      }
-
-      if (rightIsSquare) {
+      //if (rightIsSquare) {
         // Right multiplication by a square matrix is an internal operation,
         // so the method behaves like a mutator.
 
-        this.data = data
+       // this.data = data
 
-        return this
-      }
-      else {
+        //return this
+      //}
+     // else {
         // In this case, right element should be a matrix, but not square,
-        // so the methos returns a new element.
-        return new MatrixSpace(Scalar)(numRows, rightNumCols)(data)
-      }
-
+        // so the method returns a new element.
+       // return new MatrixSpace(Scalar)(numRows, rightNumCols)(data)
+      //}
     }
 
-    Matrix.prototype.multiplication = multiplication
-    Matrix.prototype.mul            = multiplication
+    Matrix.prototype.multiplication = rightMultiplication
 
     /**
      *
@@ -151,6 +176,7 @@ function MatrixSpace (Scalar) {
      */
 
     function transpose (numRows, numCols, matrix) {
+      // TODO put it in a separated file
       var data = toData(matrix),
           transposedData = []
 
@@ -162,10 +188,8 @@ function MatrixSpace (Scalar) {
     }
 
     var staticTranspose = transpose.bind(null, numRows, numCols)
-    Matrix.transpose = staticTranspose
-    Matrix.tr            = staticTranspose
 
-    /*!
+    /**
      *
      * @returns {Object} transposedMatrix
      */
@@ -186,8 +210,30 @@ function MatrixSpace (Scalar) {
     }
 
     Matrix.prototype.transpose = matrixTransposition
-    Matrix.prototype.tr        = matrixTransposition
-    Matrix.prototype.t         = matrixTransposition
+
+    // Static operators.
+
+    Matrix.addition       = Vector.addition
+    Matrix.multiplication = staticRightMultiplication.bind(null, numRows, numCols)
+    Matrix.negation       = Vector.negation
+    Matrix.subtraction    = Vector.subtraction
+
+    // Aliases.
+
+    Matrix.add = Matrix.addition
+    Matrix.mul = Matrix.multiplication
+    Matrix.neg = Matrix.negation
+    Matrix.sub = Matrix.subtraction
+
+    Matrix.prototype.mul = rightMultiplication
+    Matrix.prototype.o   = rightMultiplication
+
+    Matrix.prototype.tr = matrixTransposition
+    Matrix.prototype.t  = matrixTransposition
+
+    Matrix.transpose = staticTranspose
+    Matrix.tr        = staticTranspose
+    Matrix.t         = staticTranspose
 
     return Matrix
   }

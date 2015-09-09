@@ -4,6 +4,11 @@ var algebra = require('algebra'),
 var MatrixSpace = algebra.MatrixSpace,
     Real        = algebra.Real
 
+var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
+    mutatorUnaryOperator  = require('./features/mutatorUnaryOperator'),
+    staticBinaryOperator  = require('./features/staticBinaryOperator'),
+    staticUnaryOperator   = require('./features/staticUnaryOperator')
+
 describe('MatrixSpace', function () {
   var R2x3 = MatrixSpace(Real)(2, 3),
       R2x2 = MatrixSpace(Real)(2),
@@ -38,39 +43,71 @@ describe('MatrixSpace', function () {
   })
 
   describe('addition()', function () {
-    it('is a static operator', function () {
-      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
-          matrix2x2b  = new R2x2([0, 1, -1, 0])
+    operator = 'addition'
 
-      should.deepEqual(R2x2.addition(matrix2x2a, matrix2x2b), [2, 4, 0, 1])
-    })
+    it('is a static method', staticBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 4,
+          0, 1 ]
+    ))
 
-    it('is a mutator', function () {
-      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
-          matrix2x2b  = new R2x2([0, 1, -1, 0])
-
-      matrix2x2a.addition(matrix2x2b)
-
-      should.deepEqual(matrix2x2a.data, [2, 4, 0, 1])
-    })
+    it('is a mutator method', mutatorBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 4,
+          0, 1 ]
+    ))
   })
 
   describe('subtraction()', function () {
-    it('is a static operator', function () {
-      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
-          matrix2x2b  = new R2x2([0, 1, -1, 0])
+    operator = 'subtraction'
 
-      should.deepEqual(R2x2.subtraction(matrix2x2a, matrix2x2b), [2, 2, 2, 1])
-    })
+    it('is a static method', staticBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 2,
+          2, 1 ]
+    ))
 
-    it('is a mutator', function () {
-      var matrix2x2a  = new R2x2([2, 3,  1, 1]),
-          matrix2x2b  = new R2x2([0, 1, -1, 0])
+    it('is a mutator method', mutatorBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 2,
+          2, 1 ]
+    ))
+  })
 
-      matrix2x2a.subtraction(matrix2x2b)
+  describe('multiplication()', function () {
+    operator = 'multiplication'
 
-      should.deepEqual(matrix2x2a.data, [2, 2, 2, 1])
-    })
+    it('is a static method', staticBinaryOperator(R3x2, operator,
+        [ 2, 3,
+          1, 1,
+          1, 1 ],
+        [ 0, 1, 1, 1,
+         -1, 0, 2, 3 ],
+        [ -3, 2, 8, 11,
+          -1, 1, 3, 4,
+          -1, 1, 3, 4 ]
+    ))
+
+    it('is a mutator method for square matrices'/*, mutatorBinaryOperator(R2x3, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ -3, 2,
+          -1, 1 ]
+    )*/)
   })
 
   describe('transpose()', function () {

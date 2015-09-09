@@ -122,9 +122,7 @@ function VectorSpace (Scalar) {
 
     inherits(Vector, Group)
 
-    Vector.addition    = Group.addition
-    Vector.subtraction = Group.subtraction
-    Vector.negation    = Group.negation
+    // Static attributes.
 
     Object.defineProperty(Vector, 'zero', {
       writable: false,
@@ -146,10 +144,6 @@ function VectorSpace (Scalar) {
       Vector.prototype.x            = crossProduct
     }
 
-    /*!
-     *
-     */
-
     function matrixProduct (matrix) {
       var matrixData    = toData(matrix),
           matrixIndices = getIndices(matrix)
@@ -164,10 +158,6 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.matrixProduct = matrixProduct
-
-    /*!
-     *
-     */
 
     function scalarProduct (vector1, vector2) {
       var vectorData1    = toData(vector1),
@@ -210,6 +200,18 @@ function VectorSpace (Scalar) {
     Vector.prototype.perScalarProduct = perScalarProduct
 
     Vector.scalarProduct = scalarProduct
+
+    // Static operators.
+
+    Vector.addition    = Group.addition
+    Vector.subtraction = Group.subtraction
+    Vector.negation    = Group.negation
+
+    // Aliases
+
+    Vector.add = Group.addition
+    Vector.sub = Group.subtraction
+    Vector.neg = Group.negation
 
     return Vector
   }

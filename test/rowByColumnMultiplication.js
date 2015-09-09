@@ -28,5 +28,27 @@ describe('rowByColumnMultiplication', function () {
 
     data.should.eql([1, 0,
                      0, 1])
+
+    leftMatrix = [ 2, 3,
+                   1, 1,
+                   1, 1 ],
+    rightMatrix = [ 0, 1, 1, 1,
+                   -1, 0, 2, 3 ]
+
+    data = mul(scalar, leftMatrix, 3, rightMatrix, 4)
+
+    data.should.eql([ -3, 2, 8, 11,
+                      -1, 1, 3, 4,
+                      -1, 1, 3, 4 ])
+
+    leftMatrix = [ 2, 3,
+                   1, 1 ]
+    rightMatrix = [ 0, 1,
+                   -1, 0 ]
+
+    data = mul(scalar, leftMatrix, 2, rightMatrix, 2)
+
+    data.should.eql([ -3, 2,
+                      -1, 1 ])
   })
 })

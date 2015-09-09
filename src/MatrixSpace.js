@@ -106,7 +106,7 @@ function MatrixSpace (Scalar) {
      * Row by column multiplication at right side
      */
 
-    function staticRightMultiplication (leftNumRows, leftNumCols, left, right, rightNumCols) {
+    function staticRightMultiplication (leftNumRows, leftNumCols, left, right) {
       // Multiplication is possible only if
       //
       //     left num cols = right num rows
@@ -122,17 +122,15 @@ function MatrixSpace (Scalar) {
 
       // leftNumRows, leftNumCols = rightNumRows, rightNumCols
 
-      var rightData = toData(right),
-          leftData  = toData(left)
-
-      if (typeof rightNumCols === 'undefined')
+      var leftData  = toData(left),
+          rightData = toData(right),
           rightNumCols = rightData.length / leftNumCols
 
-      // Check if rightNumCols results to be an integer.
-      if (isInteger(rightNumCols))
+      // Check if rightNumCols results to be an integer: it means matrices can be multiplied.
+      if (! isInteger(rightNumCols))
         throw new TypeError('left num cols != right num rows')
 
-      return rowByColumnMultiplication(Scalar, leftData, numRows, rightData, rightNumCols)
+      return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols)
     }
 
     function rightMultiplication (right) {
@@ -143,25 +141,30 @@ function MatrixSpace (Scalar) {
 
       var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
 
-      var rightNumRows = leftNumCols
-      var rightNumCols = rightData.length / leftNumCols
+      // If staticRightMultiplication does not throw it means that matrices can multiplied.
+      var rightNumCols = rightData.length / leftNumCols,
+          rightNumRows = leftNumCols
 
       var rightIsSquare = (rightNumCols === rightNumRows),
           rightIsVector = (rightNumCols === 1)
 
-      //if (rightIsSquare) {
+      if (rightIsVector) {
+        return new VectorSpace(rightNumRows)(data)
+      }
+
+      if (rightIsSquare) {
         // Right multiplication by a square matrix is an internal operation,
         // so the method behaves like a mutator.
 
-       // this.data = data
+        this.data = data
 
-        //return this
-      //}
-     // else {
+        return this
+      }
+      else {
         // In this case, right element should be a matrix, but not square,
         // so the method returns a new element.
-       // return new MatrixSpace(Scalar)(numRows, rightNumCols)(data)
-      //}
+        return new MatrixSpace(Scalar)(rightNumRows, rightNumCols)(data)
+      }
     }
 
     Matrix.prototype.multiplication = rightMultiplication

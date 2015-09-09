@@ -100,7 +100,7 @@ describe('MatrixSpace', function () {
           -1, 1, 3, 4 ]
     ))
 
-    it('is a mutator method for square matrices'/*, mutatorBinaryOperator(R2x3, operator,
+    it('is a mutator method for square matrices'/*, mutatorBinaryOperator(R2x2, operator,
         [ 2, 3,
           1, 1 ],
         [ 0, 1,

@@ -2,6 +2,7 @@
 var determinant               = require('laplace-determinant'),
     getIndices                = require('./getIndices'),
     inherits                  = require('inherits'),
+    isInteger                 = require('is-integer'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication'),
     toData                    = require('./toData'),
@@ -82,100 +83,65 @@ function MatrixSpace (Scalar) {
     })
 
 
-    function rightMultiplication (right) {
+    /**
+     * Row by column multiplication at right side
+     */
+
+    function multiplication (right) {
       // Multiplication is possible only if
       //
-      // left num cols = right num rows
+      //     left num cols = right num rows
       //
       // Since
       //
-      // right num rows * right num cols = rightData.length
+      //     right num rows * right num cols = rightData.length
       //
-      // it is possible to compute rightNumCols by rightData.length / numCols
+      // it is possible to compute right num cols and the right matrix is square if
       //
-      // and the right matrix is square if
-      //
-      // right num rows = right num cols
+      //     right num rows = right num cols
       //
       // which is the same as rightNumCols = (left)numCols
+
+      // leftNumRows, leftNumCols = rightNumRows, rightNumCols
 
       var rightData    = toData(right),
           rightNumCols = rightData.length / numCols
 
       // Check if rightNumCols results to be an integer.
-      if (rightNumCols % 1 !== 0)
+      if (isInteger(rightNumCols))
         throw new TypeError('left num cols != right num rows')
 
-      var rightIsSquare = (rightNumCols === numCols)
-
-      // TODO rightIsScalar and use scalarMultiplication
-
-      var rightIsVector = (rightNumCols === 1)
-
-      if (rightIsVector)
-        rightIndices.push(1)
+      var rightIsSquare = (rightNumCols === numCols),
+          rightIsVector = (rightNumCols === 1)
 
       var data = rowByColumnMultiplication(Scalar, this.data, numRows, rightData, rightNumCols)
-
-      // Left multiplication by a square matrix is an internal operation,
-      // so the method is a mutator.
-      if (rightIsSquare) {
-        this.data = data
-
-        return this
-      }
 
       if (rightIsVector) {
         var Vector = VectorSpace(Scalar)(numRows)
 
         return new Vector(data)
       }
-        // TODO if rightIsMatrix return new this(Scalar)(numRows, numCols)(data)
-    }
 
-    Matrix.prototype.rightMultiplication = rightMultiplication
-    Matrix.prototype.rightMul            = rightMultiplication
-    Matrix.prototype.multiplication      = rightMultiplication
-    Matrix.prototype.mul                 = rightMultiplication
+      if (rightIsSquare) {
+        // Right multiplication by a square matrix is an internal operation,
+        // so the method behaves like a mutator.
 
-    /*!
-     *
-     */
-
-    function leftMultiplication (leftMatrix) {
-      var leftData    = toData(left),
-          leftIndices = getIndices(left)
-
-      var leftIsMatrix = leftIndices.length === 2,
-          leftIsVector = leftIndices.length === 1
-
-      var leftIsSquare = leftIsMatrix && (leftIndices[0] === leftIndices[1])
-
-      if (leftIsVector)
-        leftIndices.push(1)
-
-      var data = rowByColumnMultiplication(Scalar, leftData, leftIndices, this.data, this.indices)
-
-      // Left multiplication by a square matrix is an inner product,
-      // so the method is a mutator.
-      if (leftIsSquare) {
         this.data = data
 
         return this
       }
-
-      if (leftIsVector) {
-        var Vector = VectorSpace(Scalar)(numCols)
-
-        return new Vector(data)
+      else {
+        // In this case, right element should be a matrix, but not square,
+        // so the methos returns a new element.
+        return new MatrixSpace(Scalar)(numRows, rightNumCols)(data)
       }
+
     }
 
-    Matrix.prototype.leftMultiplication = leftMultiplication
-    Matrix.prototype.leftMul            = leftMultiplication
+    Matrix.prototype.multiplication = multiplication
+    Matrix.prototype.mul            = multiplication
 
-    /*!
-     * @todo should be extended to a Tensor operator, also vectors can be transposed
+    /**
      *
      * @param {numRows}
      * @param {numCols}

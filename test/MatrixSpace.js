@@ -26,11 +26,28 @@ describe('MatrixSpace', function () {
     R2x2.isSquare.should.be.ok
   })
 
-  var matrix1  = new R2x2([2, 3,  1, 1]),
-      matrix2  = new R2x2([0, 1, -1, 0])
+  var matrix1  = new R2x2([ 2, 3,
+                            1, 1 ]),
+      matrix2  = new R2x2([ 0, 1,
+                           -1, 0 ])
+      matrix3  = new R2x3([ 0, 1, 2,
+                           -2, 1, 0 ])
 
-  matrix1.should.be.instanceOf(R2x2)
-  matrix2.should.be.instanceOf(R2x2)
+  describe('numRows', function () {
+    it('returns the number of rows', function () {
+      matrix1.numRows.should.be.eql(2)
+      matrix2.numRows.should.be.eql(2)
+      matrix3.numRows.should.be.eql(2)
+    })
+  })
+
+  describe('numCols', function () {
+    it('returns the number of cols', function () {
+      matrix1.numCols.should.be.eql(2)
+      matrix2.numCols.should.be.eql(2)
+      matrix3.numCols.should.be.eql(3)
+    })
+  })
 
   describe('determinant', function () {
     it('returns a Scalar', function () {
@@ -100,25 +117,26 @@ describe('MatrixSpace', function () {
           -1, 1, 3, 4 ]
     ))
 
-    it('is a mutator method for square matrices'/*, mutatorBinaryOperator(R2x2, operator,
+    it('is a mutator method for square matrices', mutatorBinaryOperator(R2x2, operator,
         [ 2, 3,
           1, 1 ],
         [ 0, 1,
          -1, 0 ],
         [ -3, 2,
           -1, 1 ]
-    )*/)
+    ))
   })
 
   describe('transpose()', function () {
-    it('is a static operator'/*, function () {
+
+    it('is a static operator', function () {
       var matrix3x2a  = new R3x2([1, 2,
                                   3, 4,
                                   5, 6])
 
       should.deepEqual(R3x2.transpose(matrix3x2a), [1, 3, 5,
                                                     2, 4, 6])
-    }*/)
+    })
 
     it('returns a transposed matrix'/*, function () {
       var matrix3x2a  = new R3x2([1, 2,  3,

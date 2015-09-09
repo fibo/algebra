@@ -61,6 +61,14 @@ function MatrixSpace (Scalar) {
     function Matrix (data) {
       Vector.call(this, data)
 
+      this.numCols = numCols
+      this.numRows = numRows
+
+      Object.defineProperties(this, {
+        'numCols': { writable: false, value: numCols },
+        'numRows': { writable: false, value: numRows }
+      })
+
       /*
        *
        */
@@ -73,7 +81,6 @@ function MatrixSpace (Scalar) {
 
       if (isSquare) {
         Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
-        Object.defineProperty(this, 'det', {get: matrixDeterminant})
       }
     }
 
@@ -179,22 +186,20 @@ function MatrixSpace (Scalar) {
      */
 
     function transpose (numRows, numCols, matrix) {
-      // TODO put it in a separated file
-      var data = toData(matrix),
+      var data           = toData(matrix),
           transposedData = []
 
       for (var i = 0; i < numRows; i++)
-        for (var j = 0; j < numCols; j++)
-          transposedData.push(data[matrixToArrayIndex(j, i, numCols)])
+        for (var j = 0; j < numCols; j++) {
+          transposedData[matrixToArrayIndex(j, i, numRows)] = data[matrixToArrayIndex(i, j, numCols)]
+        }
 
       return transposedData
     }
 
-    var staticTranspose = transpose.bind(null, numRows, numCols)
-
     /**
      *
-     * @returns {Object} transposedMatrix
+     * @returns {Object} transposed matrix
      */
 
     function matrixTransposition () {
@@ -202,14 +207,11 @@ function MatrixSpace (Scalar) {
           numCols = this.numCols,
           numRows = this.numRows
 
-      var transposedData     = transpose(numCols, numRows, data),
-          transposedIndices  = [numCols, numRows]
+      var transposedData = transpose(numRows, numCols, data)
 
-      var TransposedMatrix = Space(Scalar)(transposedIndices)
-
-      var transposedMatrix = new TransposedMatrix(transposedData)
-
-      return transposedMatrix
+                                  // +--------+-- Transposed indices here.
+                                  // ↓        ↓
+      return new MatrixSpace(Scalar)(numCols, numRows)(transposedData)
     }
 
     Matrix.prototype.transpose = matrixTransposition
@@ -220,6 +222,7 @@ function MatrixSpace (Scalar) {
     Matrix.multiplication = staticRightMultiplication.bind(null, numRows, numCols)
     Matrix.negation       = Vector.negation
     Matrix.subtraction    = Vector.subtraction
+    Matrix.transpose      = transpose.bind(null, numRows, numCols)
 
     // Aliases.
 
@@ -234,9 +237,7 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.tr = matrixTransposition
     Matrix.prototype.t  = matrixTransposition
 
-    Matrix.transpose = staticTranspose
-    Matrix.tr        = staticTranspose
-    Matrix.t         = staticTranspose
+    Matrix.tr = Matrix.transpose
 
     return Matrix
   }

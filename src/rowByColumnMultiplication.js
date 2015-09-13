@@ -1,5 +1,6 @@
 
-var matrixToArrayIndex = require('./matrixToArrayIndex')
+var isInteger          = require('is-integer'),
+    matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
  * Multiply two matrices, row by column.
@@ -23,10 +24,10 @@ function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix
   var leftNumCols  = leftMatrix.length / leftNumRows,
       rightNumRows = rightMatrix.length / rightNumCols
 
-  if (leftNumCols % 1 !== 0)
+  if (! isInteger(leftNumCols))
     throw new TypeError('leftNumCols does not divide leftMatrix.length')
 
-  if (rightNumRows % 1 !== 0)
+  if (! isInteger(rightNumRows))
     throw new TypeError('rightNumRows does not divide rightMatrix.length')
 
   // Check if matrices can be multiplied.

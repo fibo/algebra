@@ -12,9 +12,7 @@ require('strict-mode')(function () {
 
   exports.Real       = Real
 //  exports.Complex    = CayleyDickson(Real, 1)
-//  exports.Quaternion = CayleyDickson(Real, 2)
+  exports.Quaternion = CayleyDickson(Real, 2)
 //  exports.Octonion   = CayleyDickson(Real, 3)
-
-//  exports.buildCyclicSpaceOf = require('./src/buildCyclicSpaceOf')
 })
 

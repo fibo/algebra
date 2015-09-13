@@ -1,6 +1,4 @@
 
-//var algebraGroup = require('algebra-group'),
-//    algebraRing  = require('algebra-ring')
 var ring = require('./ring')
 
 var twoPow = Math.pow.bind(null, 2)
@@ -15,8 +13,8 @@ var twoPow = Math.pow.bind(null, 2)
  */
 
 function constructCayleyDicksonAlgebra (field, iterations) {
-  if (! (iterations in {0: 'real', 1: 'complex', 2: 'quaternion', 3: 'octonion'}))
-    throw new TypeError('Num of iterations must be 1, 2 or 3')
+  if (! (iterations in {0: 'R', 1: 'C', 2: 'H', 3: 'O'}))
+    throw new TypeError('Num of iterations must be 0, 1, 2 or 3')
 
   if (iterations === 0)
     return field
@@ -57,61 +55,49 @@ function constructCayleyDicksonAlgebra (field, iterations) {
    * Turn unary operator on single value to operator on n values.
    */
 
- function arrayfy1 (operator, dim) {
-    return function (a) {
-      if (dim === 1)
-        return [operator(a)]
+  function arrayfy1 (operator, dim) {
+     return function (a) {
+       var b = []
 
-      var b = []
+       for (var i = 0; i < dim; i++)
+         b.push(operator(a[i]))
 
-      for (var i = 0; i < dim; i++)
-        b.push(operator(a[i]))
-
-      return b
-    }
- }
+       return b
+     }
+  }
 
   /**
    * Turn binary operator on single value to operator on n values.
    */
 
- function arrayfy2 (operator, dim) {
-    return function (a, b) {
-      if (dim === 1)
-        return [operator(a, b)]
+  function arrayfy2 (operator, dim) {
+     return function (a, b) {
 
-      var c = []
+       var c = []
 
-      for (var i = 0; i < dim; i++)
-        c.push(operator(a[i], b[i]))
+       for (var i = 0; i < dim; i++)
+         c.push(operator(a[i], b[i]))
 
-      return c
-    }
- }
+       return c
+     }
+  }
 
   function buildConjugation (fieldNegation, iterations) {
-    var dim = twoPow(iterations)
+    if (iterations === 0)
+      return function (a) { return a }
 
-    if (dim === 1)
-      return function (b) { return b[0] }
+    var dim = twoPow(iterations)
 
     // b -> p looks like complex conjugation simmetry (:
     function conjugation (b) {
-      var p = [],
-          halfDim = twoPow(iterations - 1),
-          i = 0
+      var p = [b[0]],
+          i
 
       // First, copy half of b into q.
-      for (i = 0; i < halfDim; i++)
-        p.push(b[i])
-
-      // Then conjugate b, according to lower algebra conjugation.
-      // Note that if iterations - 1 == 0 it is the identity.
-      p = buildConjugation(fieldNegation, iterations - 1)(b)
-
-      for (i = halfDim; i < dim; i++)
+      for (i = 1; i < dim; i++)
         p.push(fieldNegation(b[i]))
 
+      console.log(b, ' -> ', p)
       return p
     }
 
@@ -135,7 +121,7 @@ function constructCayleyDicksonAlgebra (field, iterations) {
         halfDim = 1
 
     if (iterations === 0)
-      return field.multiplication
+      return function (a, b) { return [field.multiplication(a, b)] }
     else
       halfDim = twoPow(iterations - 1)
 
@@ -149,8 +135,9 @@ function constructCayleyDicksonAlgebra (field, iterations) {
           i = 0
 
       //         a = (p, q)
+      //         +    +  +
       //         b = (r, s)
-      //
+      //         =    =  =
       // a + b = c = (t, u)
 
       var p = [], q = [],
@@ -172,6 +159,9 @@ function constructCayleyDicksonAlgebra (field, iterations) {
       //
       // (p, q)(r, s) = (pr - s`q, sp + qr`)
 
+      console.log(p, q, r, s)
+        console.log('conj(r)', r, conj(r))
+        console.log('mul(q,conj(r))', q, r, mul(q,conj(r)))
       var t = add(mul(p, r), neg(mul(conj(s), q))),
           u = add(mul(s, p), mul(q, conj(r)))
 

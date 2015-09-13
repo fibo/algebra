@@ -209,9 +209,10 @@ function MatrixSpace (Scalar) {
 
       var transposedData = transpose(numRows, numCols, data)
 
-                                  // +--------+-- Transposed indices here.
-                                  // ↓        ↓
-      return new MatrixSpace(Scalar)(numCols, numRows)(transposedData)
+                                              // +--------+-- Transposed indices here.
+                                              // ↓        ↓
+      var TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows)
+      return new TransposedMatrix(transposedData)
     }
 
     Matrix.prototype.transpose = matrixTransposition

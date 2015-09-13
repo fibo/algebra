@@ -1,4 +1,5 @@
-var algebra = require('algebra'),
+
+  var algebra = require('algebra'),
      should = require('should')
 
 var MatrixSpace = algebra.MatrixSpace,
@@ -139,8 +140,8 @@ describe('MatrixSpace', function () {
     })
 
     it('returns a transposed matrix'/*, function () {
-      var matrix3x2a  = new R3x2([1, 2,  3,
-                                  4, 5,  6])
+      var matrix3x2a  = new R3x2([1, 2, 3,
+                                  4, 5, 6])
 
       var matrixTransposed = matrix3x2a.transpose()
 
@@ -152,26 +153,13 @@ describe('MatrixSpace', function () {
       matrix3x2a.numCols.should.be.eql(matrixTransposed.numRows)
     }*/)
 
-    it('is a mutator for square matrices'/*, function () {
+    it('is chainable for square matrices', function () {
       var matrix2x2a  = new R2x2([1, 2,
                                   3, 4])
 
-      matrix2x2a.transpose()
+      var matrix2x2b = matrix2x2a.transpose().transpose()
 
-      should.deepEqual(matrix2x2a.data, [1, 3,
-                                         2, 4])
-    }*/)
-
-    it('is chainable for square matrices'/*, function () {
-      var matrix2x2a  = new R2x2([1, 2,
-                                  3, 4]),
-          matrix2x2b  = new R2x2([-1, -3,
-                                  -2, -4])
-
-      matrix2x2a.transpose().addition(matrix2x2b)
-
-      should.deepEqual(matrix2x2a.data, [0, 0,
-                                         0, 0])
-    }*/)
+      should.deepEqual(matrix2x2a.data, matrix2x2b.data)
+    })
   })
 })

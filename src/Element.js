@@ -18,9 +18,6 @@ function Element (data, check) {
     throw new TypeError('Invalid data = ', data)
 }
 
-/*!
- */
-
 function valueOf () {
   return this.data
 }

@@ -6,7 +6,7 @@
     "url": "http://g14n.info"
   },
   "version": "0.6.0",
-  "description": "Vectors, Matrices, Tensors",
+  "description": "Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings",
   "main": "index.js",
   "scripts": {
     "_build": "npm test && npm run browserify && npm run tex && npm run jekyll",
@@ -60,9 +60,10 @@
   "dependencies": {
     "algebra-group": "^0.2.0",
     "algebra-ring": "^0.2.0",
+    "cayley-dickson": "^0.1.0",
     "inherits": "~2.0.1",
     "is-integer": "^1.0.6",
     "laplace-determinant": "^0.1.0",
-    "strict-mode": "~0.1.4"
+    "strict-mode": "^0.4.1"
   }
 }

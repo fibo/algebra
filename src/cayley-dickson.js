@@ -1,12 +1,12 @@
 
-var CayleyDickson = require('./constructCayleyDicksonAlgebra'),
+var CayleyDickson = require('cayley-dickson'),
     ring          = require('./ring')
 
-function CayleyDicksonAlgebra (K, iterations) {
+function CayleyDickson (K, iterations) {
   var Kn = CayleyDickson(K, iterations)
 
   return ring([Kn.zero, Kn.one], Kn)
 }
 
-module.exports = CayleyDicksonAlgebra
+module.exports = CayleyDickson
 

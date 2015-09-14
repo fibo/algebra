@@ -106,16 +106,8 @@ function ring (identity, given) {
 
   // Identities.
 
-  Object.defineProperties(Ring, {
-    'zero': {
-      writable: false,
-      value: identity[0]
-    },
-    'one': {
-      writable: false,
-      value: identity[1]
-    }
-  })
+  Ring.zero = new Ring(identity[0])
+  Ring.one = new Ring(identity[1])
 
   return Ring
 }

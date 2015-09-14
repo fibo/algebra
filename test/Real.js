@@ -13,6 +13,18 @@ describe('Real', function () {
   var operator,
       x
 
+  describe('zero', function () {
+    it('is static', function () {
+      R.zero.data.should.eql(0)
+    })
+  })
+
+  describe('one', function () {
+    it('is static', function () {
+      R.one.data.should.eql(1)
+    })
+  })
+
   describe('addition', function () {
     operator = 'addition'
 

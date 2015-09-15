@@ -38,17 +38,17 @@ function ring (identity, given) {
   // Note that many code in ring.js is almost the same of group.js:
   // copy and paste over inheritance!
 
-  var addition    = coerced(r.addition),
-      contains    = coerced(r.contains),
-      disequality = coerced(r.disequality),
-      equality    = coerced(r.equality),
-      negation    = coerced(r.negation),
-      notContains = coerced(r.notContains),
-      subtraction = coerced(r.subtraction)
+  var addition    = coerced(given.addition),
+      contains    = coerced(given.contains),
+      disequality = coerced(given.disequality),
+      equality    = coerced(given.equality),
+      negation    = coerced(given.negation),
+      notContains = coerced(given.notContains),
+      subtraction = coerced(given.subtraction)
 
-  var multiplication = coerced(r.multiplication),
-      division       = coerced(r.division),
-      inversion      = coerced(r.inversion)
+  var multiplication = coerced(given.multiplication),
+      division       = coerced(given.division),
+      inversion      = coerced(given.inversion)
 
   // Comparison operators.
 

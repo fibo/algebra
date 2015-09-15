@@ -1,4 +1,3 @@
-/*
 
 var algebra = require('algebra'),
     should  = require('should')
@@ -13,6 +12,18 @@ var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
 describe('Complex', function () {
   var operator
 
+  describe('zero', function () {
+    it('is static', function () {
+      C.zero.data.should.eql([0, 0])
+    })
+  })
+
+  describe('one', function () {
+    it('is static', function () {
+      C.one.data.should.eql([1, 0])
+    })
+  })
+
   describe('addition', function () {
     operator = 'addition'
 
@@ -21,6 +32,7 @@ describe('Complex', function () {
     it('is a mutator method', mutatorBinaryOperator(C, operator, [1, 2], [1, -1], [2, 1]))
   })
 
+/*
   describe('subtraction', function () {
     operator = 'subtraction'
 
@@ -60,6 +72,6 @@ describe('Complex', function () {
 
     it('is a mutator method', mutatorUnaryOperator(C, operator, [1, 7], [1, -7]))
   })
+*/
 })
 
-*/

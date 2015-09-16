@@ -156,7 +156,8 @@ function MatrixSpace (Scalar) {
           rightIsVector = (rightNumCols === 1)
 
       if (rightIsVector) {
-        return new VectorSpace(rightNumRows)(data)
+        console.log(rightNumRows, data)
+        return new VectorSpace(Scalar)(rightNumRows)(data)
       }
 
       if (rightIsSquare) {

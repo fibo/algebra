@@ -35,11 +35,13 @@ function ring (identity, given) {
 
   inherits(Ring, Element)
 
-  // Note that many code in ring.js is almost the same of group.js:
-  // copy and paste over inheritance!
+    // TODO questo codice dovrebbe stare in cayley-dickson
+  if (typeof given.conjugation === 'undefined')
+    given.conjugation = function (a) { return a }
 
   var addition    = coerced(given.addition),
       contains    = coerced(given.contains),
+      conjugation = coerced(given.conjugation),
       disequality = coerced(given.disequality),
       equality    = coerced(given.equality),
       negation    = coerced(given.negation),
@@ -60,6 +62,7 @@ function ring (identity, given) {
   Ring.prototype.addition    = nAryMutator(addition)
   Ring.prototype.subtraction = nAryMutator(subtraction)
   Ring.prototype.negation    = unaryMutator(negation)
+  Ring.prototype.conjugation = unaryMutator(conjugation)
 
   Ring.prototype.multiplication = nAryMutator(multiplication)
   Ring.prototype.division       = nAryMutator(division)
@@ -69,6 +72,7 @@ function ring (identity, given) {
 
   Ring.addition    = addition
   Ring.contains    = contains
+  Ring.conjugation = conjugation
   Ring.disequality = disequality
   Ring.equality    = equality
   Ring.negation    = negation
@@ -96,6 +100,8 @@ function ring (identity, given) {
   Ring.inv = Ring.inversion
   Ring.mul = Ring.multiplication
 
+  Ring.conj = Ring.conj
+
   Ring.prototype.add = Ring.prototype.addition
   Ring.prototype.neg = Ring.prototype.negation
   Ring.prototype.sub = Ring.prototype.subtraction
@@ -103,6 +109,8 @@ function ring (identity, given) {
   Ring.prototype.mul = Ring.prototype.multiplication
   Ring.prototype.div = Ring.prototype.division
   Ring.prototype.inv = Ring.prototype.inversion
+
+  Ring.prototype.conj = Ring.prototype.conjugation
 
   // Identities.
 

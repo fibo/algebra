@@ -12,7 +12,7 @@ require('strict-mode')(function () {
   exports.Real       = ring([K0.zero, K0.one], K0)
   exports.Complex    = ring([K1.zero, K1.one], K1)
   exports.Quaternion = ring([K2.zero, K2.one], K2)
-  exports.Octonion   = ring([K2.zero, K3.one], K3)
+  exports.Octonion   = ring([K3.zero, K3.one], K3)
 
   exports.VectorSpace = require('./src/VectorSpace')
   exports.MatrixSpace = require('./src/MatrixSpace')

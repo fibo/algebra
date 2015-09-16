@@ -32,7 +32,6 @@ describe('Complex', function () {
     it('is a mutator method', mutatorBinaryOperator(C, operator, [1, 2], [1, -1], [2, 1]))
   })
 
-/*
   describe('subtraction', function () {
     operator = 'subtraction'
 
@@ -72,6 +71,5 @@ describe('Complex', function () {
 
     it('is a mutator method', mutatorUnaryOperator(C, operator, [1, 7], [1, -7]))
   })
-*/
 })
 

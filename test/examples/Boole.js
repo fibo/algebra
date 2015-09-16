@@ -3,7 +3,7 @@
 
 var algebra  = require('algebra')
 
-var ring = algebra.ring
+var ring = require('algebra-ring') // algebra.ring
 
 var Boole = ring([false, true], {
   contains      : function  (a) { return typeof a === 'boolean' },

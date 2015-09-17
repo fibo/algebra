@@ -8,27 +8,22 @@ layout: page
 {% assign doxes = site.data.dox | where:'ignore', false %}
 {% for dox in doxes %}
   <div class="panel panel-default">
-    <div class="panel-heading">{{ dox.ctx.name }}</div>
-    <div class="panel-body">{{ dox.description.full }}</div>
-    <div class="panel-footer">
-      <dl class="dl-horizontal">
-        {% comment %}
-                         Loop over all @param tags.
-        {% endcomment %}
-        {% assign params = dox.tags | where:'type', 'param' %}
-        {% for param in params %}
-          <dt><strong>@param</strong> {{ param.name }} <span class="label label-default">{{ param.types | join: ',' }}</span></dt>
-          <dd>{{ param.description }}</dd>
-        {% endfor %}
-        {% comment %}
-                         Get @returns tag.
-        {% endcomment %}
-        {% assign returns = dox.tags | where:'type', 'returns' | first %}
-        {% if returns != null %}
-          <dt><strong>@returns </strong> {{ returns.name }} <span class="label label-default">{{ returns.types | join: ',' }}</span></dt>
-          <dd>{{ returns.description }}</dd>
-        {% endif %}
-      </dl>
-    </div>
-  </div>
+    <h2>{{ dox.ctx.name }}</h2>
+    <p>{{ dox.description.full }}</p>
+{% comment %}
+                 Loop over all @param tags.
+{% endcomment %}
+{% assign params = dox.tags | where:'type', 'param' %}
+    <ul>
+{% for param in params %}
+      <li><strong>@param</strong> {{ param.name }} <span class="label label-default">{{ param.types | join: ',' }}</span>{{ param.description }}</li>
+{% endfor %}
+{% comment %}
+                 Get @returns tag.
+{% endcomment %}
+{% assign returns = dox.tags | where:'type', 'returns' | first %}
+{% if returns != null %}
+      <li><strong>@returns </strong> {{ returns.name }} <span class="label label-default">{{ returns.types | join: ',' }}</span>{{ returns.description }}</li>
+{% endif %}
+    </ul>
 {% endfor %}

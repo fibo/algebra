@@ -1,26 +1,26 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algebra = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 require('strict-mode')(function () {
-  var CayleyDickson = require('./src/cayley-dickson'),
-      Real          = require('./src/Real')
+  var iterateCayleyDickson = require('cayley-dickson'),
+      realField            = require('./src/realField'),
+      Scalar               = require('./src/Scalar')
 
-  exports.CayleyDickson = CayleyDickson
-  exports.group = require('./src/group')
-  exports.ring = require('./src/ring')
+  var K0 = iterateCayleyDickson(realField, 0),
+      K1 = iterateCayleyDickson(realField, 1),
+      K2 = iterateCayleyDickson(realField, 2),
+      K3 = iterateCayleyDickson(realField, 3)
+
+  exports.Real       = Scalar([K0.zero, K0.one], K0)
+  exports.Complex    = Scalar([K1.zero, K1.one], K1)
+  exports.Quaternion = Scalar([K2.zero, K2.one], K2)
+  exports.Octonion   = Scalar([K3.zero, K3.one], K3)
 
   exports.VectorSpace = require('./src/VectorSpace')
-//  exports.MatrixSpace = require('./src/MatrixSpace')
-
-  exports.Real       = Real
-//  exports.Complex    = CayleyDickson(Real, 1)
-//  exports.Quaternion = CayleyDickson(Real, 2)
-//  exports.Octonion   = CayleyDickson(Real, 3)
-
-//  exports.buildCyclicSpaceOf = require('./src/buildCyclicSpaceOf')
+  exports.MatrixSpace = require('./src/MatrixSpace')
 })
 
 
-},{"./src/Real":10,"./src/VectorSpace":11,"./src/cayley-dickson":12,"./src/group":17,"./src/ring":20,"strict-mode":6}],2:[function(require,module,exports){
+},{"./src/MatrixSpace":12,"./src/Scalar":13,"./src/VectorSpace":14,"./src/realField":21,"cayley-dickson":4,"strict-mode":10}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -200,7 +200,230 @@ module.exports = algebraRing
 
 },{"algebra-group":2}],4:[function(require,module,exports){
 
-},{}],5:[function(require,module,exports){
+var ring = require('algebra-ring')
+
+var twoPow = Math.pow.bind(null, 2)
+
+/**
+ * Turn unary operator on single value to operator on n values.
+ */
+
+function arrayfy1 (operator, dim) {
+   return function (a) {
+     var b = []
+
+     for (var i = 0; i < dim; i++)
+       b.push(operator(a[i]))
+
+     return b
+   }
+}
+
+/**
+ * Turn binary operator on single value to operator on n values.
+ */
+
+function arrayfy2 (operator, dim) {
+   return function (a, b) {
+
+     var c = []
+
+     for (var i = 0; i < dim; i++)
+       c.push(operator(a[i], b[i]))
+
+     return c
+   }
+}
+
+/**
+ * Iterate Cayley-Disckson construction
+ *
+ * @params {Object} given field
+ * @params {*} given.zero
+ * @params {*} given.one
+ * @params {Function} given.equality
+ * @params {Function} given.contains
+ * @params {Function} given.addition
+ * @params {Function} given.negation
+ * @params {Function} given.multiplication
+ * @params {Function} given.inversion
+ * @params {Number} iterations
+ *
+ * @returns {Object} algebra
+ */
+
+function iterateCayleyDickson (given, iterations) {
+  var field = ring([given.zero, given.one], given)
+
+  if (iterations === 0)
+    return field
+
+   var fieldZero           = field.zero,
+       fieldOne            = field.one,
+       fieldAddition       = field.addition,
+       fieldMultiplication = field.multiplication,
+       fieldNegation       = field.negation,
+       fieldDisequality    = field.disequality,
+       fieldNotContains    = field.notContains
+
+  // identities
+
+  var one  = [],
+      zero = [],
+      dim  = twoPow(iterations)
+
+  one.push(fieldOne)
+  zero.push(fieldZero)
+
+  for (var i = 1; i < dim; i++) {
+    one.push(fieldZero)
+    zero.push(fieldZero)
+  }
+
+  // operators
+
+  function equality (a, b) {
+    for (var i = 0; i < dim; i++)
+      if (fieldDisequality(a[i], b[i]))
+        return false
+
+    return true
+  }
+
+  function contains (a) {
+    for (var i = 0; i < dim; i++)
+      if (fieldNotContains(a[i]))
+        return false
+
+    return true
+  }
+
+  function buildConjugation (fieldNegation, iterations) {
+    if (iterations === 0)
+      return function (a) { return a }
+
+    var dim = twoPow(iterations)
+
+    // b -> p looks like complex conjugation simmetry (:
+    function conjugation (b) {
+      var p = [b[0]],
+          i
+
+      // First, copy half of b into q.
+      for (i = 1; i < dim; i++)
+        p.push(fieldNegation(b[i]))
+
+      return p
+    }
+
+    return conjugation
+  }
+
+  var conjugation = buildConjugation(fieldNegation, iterations)
+
+  function buildMultiplication (fieldAddition, fieldNegation, fieldMultiplication, iterations) {
+    if (iterations === 0)
+      return function (a, b) { return [fieldMultiplication(a, b)] }
+
+    var dim     = twoPow(iterations),
+        halfDim = twoPow(iterations - 1)
+
+    var add  = arrayfy2(fieldAddition, halfDim),
+        conj = buildConjugation(fieldNegation, iterations -1),
+        mul  = buildMultiplication(fieldAddition, fieldNegation, fieldMultiplication, iterations - 1),
+        neg  = arrayfy1(fieldNegation, halfDim)
+
+    function multiplication (a, b) {
+      var c = []
+
+      //         a = (p, q)
+      //         +    +  +
+      //         b = (r, s)
+      //         =    =  =
+      // a + b = c = (t, u)
+
+      var p = [], q = [],
+          r = [], s = []
+
+      for (var i1 = 0; i1 < halfDim; i1++) {
+        p.push(a[i1])
+        r.push(b[i1])
+      }
+
+      for (var i2 = halfDim; i2 < dim; i2++) {
+        q.push(a[i2])
+        s.push(b[i2])
+      }
+
+      // let denote conj(x) as x`
+      //
+      // Multiplication law is given by
+      //
+      // (p, q)(r, s) = (pr - s`q, sp + qr`)
+
+      var t = add(mul(p, r), neg(mul(conj(s), q))),
+          u = add(mul(s, p), mul(q, conj(r)))
+
+      for (var i3 = 0; i3 < halfDim; i3++)
+        c.push(t[i3])
+
+      for (var i4 = 0; i4 < halfDim; i4++)
+        c.push(u[i4])
+
+      return c
+    }
+
+    return multiplication
+  }
+
+  var multiplication = buildMultiplication(fieldAddition, fieldNegation, fieldMultiplication, iterations)
+
+  function norm (a) {
+    var n       = fieldZero,
+        squares = multiplication(a, conjugation(a))
+
+    for (var i = 0; i < dim; i++)
+      n = fieldAddition(n, squares[i])
+
+    return n
+  }
+
+  function inversion (a) {
+    var n = norm(a)
+
+    var b = conjugation(a)
+
+    for (var i = 0; i < dim; i++)
+      b[i] = field.division(b[i], n)
+
+    return b
+  }
+
+  var addition = arrayfy2(fieldAddition, dim),
+      negation = arrayfy1(fieldNegation, dim)
+
+  // Cayley-Dickson construction take a field as input but the result can be often a ring,
+  // this means that it can be *not-commutative*.
+  // To elevate it to an algebra, we need a bilinear form wich is given by the norm.
+  var algebra = ring([zero, one], {
+    contains       : contains,
+    equality       : equality,
+    addition       : addition,
+    negation       : negation,
+    multiplication : multiplication,
+    inversion      : inversion
+  })
+
+  algebra.conjugation = conjugation
+  algebra.norm        = norm
+
+  return algebra
+}
+
+module.exports = iterateCayleyDickson
+
+
+},{"algebra-ring":3}],5:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -226,66 +449,150 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],6:[function(require,module,exports){
+// https://github.com/paulmillr/es6-shim
+// http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
+var isFinite = require("is-finite");
+module.exports = Number.isInteger || function(val) {
+  return typeof val === "number" &&
+    isFinite(val) &&
+    Math.floor(val) === val;
+};
 
-module.exports = require('./src/index')
+},{"is-finite":7}],7:[function(require,module,exports){
+'use strict';
+var numberIsNan = require('number-is-nan');
 
+module.exports = Number.isFinite || function (val) {
+	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
+};
 
-},{"./src/index":7}],7:[function(require,module,exports){
+},{"number-is-nan":8}],8:[function(require,module,exports){
+'use strict';
+module.exports = Number.isNaN || function (x) {
+	return x !== x;
+};
 
-module.exports = require('./strictMode')
+},{}],9:[function(require,module,exports){
 
-
-},{"./strictMode":8}],8:[function(require,module,exports){
-
-// The module api is in *Locked* state, so it will not change
-// see http://nodejs.org/api/modules.html
-// that is why I just copyed and pasted the orig module wrapper.
-//
-// By the way, in test/strictMode.js there is a test that checks if
-// the content of *origWrapper* needs an update.
-
-var origWrapper         = '(function (exports, require, module, __filename, __dirname) { '
-  , strictWrapper       = origWrapper + '"use strict";'
-  , strictModeExecuting = false
-
-/* Package `exports` wrapper
+/**
+ * Convert a pair of indices to a 1-dimensional index
  *
- * See [Usage](./#usage)
+ * @function
+ * @param {Number} i index row
+ * @param {Number} j index column
+ * @param {Number} numCols
  *
- * @param {Function} callback containing caller package's exports statements
+ * @returns {Number} index
  */
 
-function exportsWrapper (callback) {
-  "use strict";
-
-  if (typeof callback !== 'function')
-    throw new TypeError('Not a function')
-
-  // Avoid nested require('strict-mode')
-  if (strictModeExecuting)
-    throw new Error('Nested strict-mode calls')
-
-  strictModeExecuting = true
-
-  var module = require('module')
-  module.wrapper[0] = strictWrapper
-
-  // Every require in this callback will load modules in strict mode.
-  try {
-    callback()
-  }
-  catch (err) {
-      console.error(err.stack)
-  }
-
-  // Restore orig module wrapper, play well with others.
-  module.wrapper[0] = origWrapper
+function matrixToArrayIndex (i, j, numCols) {
+  return j + i * numCols
 }
 
-module.exports = exportsWrapper
+/**
+ * Compute the sub-matrix formed by deleting the i-th row and j-th column
+ *
+ * @function
+ *
+ * @param {Array} data set
+ * @param {Number} numRows
+ * @param {Number} numCols
+ * @param {Number} row index deleted
+ * @param {Number} col index deleted
+ *
+ * @returns {Array} sub data-set
+ */
+
+function subMatrix (data, numRows, numCols, row, col) {
+  var sub = []
+
+  for (var i = 0; i < numRows; i++)
+    for (var j = 0; j < numCols; j++)
+      if ((i !== row) && (j !== col))
+        sub.push(data[matrixToArrayIndex(i, j, numCols)])
+
+  return sub
+}
+
+/**
+ * Computes the determinant of a matrix using Laplace's formula
+ *
+ * See https://en.wikipedia.org/wiki/Laplace_expansion
+ *
+ * @function
+ *
+ * @param {Array} data, lenght must be a square.
+ * @param {Object} [scalar]
+ * @param {Function} [scalar.addition       = (a, b) -> a + b ]
+ * @param {Function} [scalar.multiplication = (a, b) -> a * b ]
+ * @param {Function} [scalar.negation       = (a)    -> -a    ]
+ * @param {Number} [order], defaults to Math.sqrt(data.length)
+ *
+ * @returns {*} det
+ */
+
+function determinant (data, scalar, order) {
+  // Recursion will stop here:
+  // the determinant of a 1x1 matrix is its only element.
+  if (data.length === 1)
+    return data[0]
+
+  if (typeof order === 'undefined')
+    order = Math.sqrt(data.length)
+
+  if (order % 1 !== 0)
+    throw new TypeError('data.lenght must be a square')
+
+  // Default to common real number field.
+  if (typeof scalar === 'undefined') {
+    scalar = {
+      addition      : function (a, b) { return a + b },
+      multiplication: function (a, b) { return a * b },
+      negation      : function (a) { return -a }
+    }
+  }
+
+  var det
+
+  // TODO choose best row or column to start from, i.e. the one with more zeros
+  // by now we start from first row, and walk by column
+  // needs scalar.isZero
+  //
+  // is scalar.isZero is a function will be used, but should remain optional
+  var startingCol = 0,
+      startingRow = 0
+
+  for (var col = 0; col < order; col++) {
+    var subData = subMatrix(data, order, order, startingRow, col)
+
+                // +-- Recursion here.
+                // ↓
+    var cofactor = determinant(subData, scalar, order - 1)
+
+    if ((startingRow + col) % 2 === 1)
+      cofactor = scalar.negation(cofactor)
+
+    var index = matrixToArrayIndex(startingRow, col, order)
+
+    if (typeof det === 'undefined')
+      det = scalar.multiplication(data[index], cofactor) // first iteration
+    else
+      det = scalar.addition(det, scalar.multiplication(data[index], cofactor))
+  }
+
+  return det
+}
+
+module.exports = determinant
 
 
-},{"module":4}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
+
+// IN browserify context, fall back to a no op
+module.exports = function (cb) { cb() }
+
+
+},{}],11:[function(require,module,exports){
 
 /*!
  * Abstract element
@@ -306,9 +613,6 @@ function Element (data, check) {
     throw new TypeError('Invalid data = ', data)
 }
 
-/*!
- */
-
 function valueOf () {
   return this.data
 }
@@ -318,26 +622,384 @@ Element.prototype.valueOf = valueOf
 module.exports = Element
 
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 
-var ring = require('./ring')
+var determinant               = require('laplace-determinant'),
+    getIndices                = require('./getIndices'),
+    inherits                  = require('inherits'),
+    isInteger                 = require('is-integer'),
+    matrixToArrayIndex        = require('./matrixToArrayIndex'),
+    rowByColumnMultiplication = require('./rowByColumnMultiplication'),
+    toData                    = require('./toData'),
+    VectorSpace               = require('./VectorSpace')
 
-var Real = ring([0, 1], {
-  contains:       function (a, b) {
-                    // NaN, Infinity and -Infinity are not allowed
-                    return (typeof a === 'number' && isFinite(a))
-                  },
-  equality:       function (a, b) { return a === b },
-  addition:       function (a, b) { return a + b },
-  negation:       function (a) { return -a },
-  multiplication: function (a, b) { return a * b },
-  inversion:      function (a) { return 1 / a }
-})
+/**
+ * Space of m x n matrices
+ *
+ * @function
+ *
+ * @param {Object} Scalar
+ *
+ * @returns {Function} anonymous with signature (numRows[, numCols])
+ */
 
-module.exports = Real
+function MatrixSpace (Scalar) {
+
+  /**
+   *
+   * @param {Number} numRows
+   * @param {Number} numCols which is optional: defaults to a square matrix.
+   *
+   * @returns {Constructor} Matrix
+   */
+
+  return function (numRows, numCols) {
+
+    function createIdentity (scalarZero, scalarOne, rank) {
+      var identity = []
+
+      for (var i = 0; i < rank; i++)
+        for (var j = 0; j < rank; j++)
+          if (i === j)
+            identity.push(scalarOne)
+          else
+            identity.push(scalarZero)
+
+     return identity
+    }
+
+    // numCols defaults to numRows
+    if (typeof numCols === 'undefined')
+      numCols = numRows
+
+    var dimension = numRows * numCols,
+        indices   = [numRows, numCols],
+        isSquare  = (numRows === numCols)
+
+    // MatrixSpace mxn is a VectorSpace with dim=m*n
+    var Vector = VectorSpace(Scalar)(dimension)
+
+      /*
+       *
+       */
+
+    function Matrix (data) {
+      Vector.call(this, data)
+
+      this.numCols = numCols
+      this.numRows = numRows
+
+      Object.defineProperties(this, {
+        'numCols': { writable: false, value: numCols },
+        'numRows': { writable: false, value: numRows }
+      })
+
+      /*
+       *
+       */
+
+      function matrixDeterminant () {
+        var det = determinant(this.data, Scalar, numRows)
+
+        return new Scalar(det)
+      }
+
+      if (isSquare) {
+        Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
+      }
+    }
+
+    inherits(Matrix, Vector)
+
+    // Static attributes.
+
+    if (isSquare) {
+      // TODO rank should be calculated depending on determinant
+      // if determinant is zero, rank < numRows, but this needs sub-matrix function
+      // which is in laplace-determinant package and should be placed in its own package
+      var rank = numRows
+
+      var identity = createIdentity(Scalar.zero, Scalar.one, rank)
+
+      Object.defineProperty(Matrix, 'identity', {
+        writable: false,
+        value: identity
+      })
+    }
+
+    Object.defineProperties(Matrix, {
+      'isSquare': { writable: false, value: isSquare },
+      'numCols': { writable: false, value: numCols },
+      'numRows': { writable: false, value: numRows },
+      'zero': { writable: false, value: Vector.zero }
+    })
+
+    /**
+     * Row by column multiplication at right side
+     */
+
+    function staticRightMultiplication (leftNumRows, leftNumCols, left, right) {
+      // Multiplication is possible only if
+      //
+      //     left num cols = right num rows
+      //
+      // Since
+      //
+      //     right num rows * right num cols = rightData.length
+      //
+      // it is possible to compute right num cols and the right matrix is square if
+      //
+      //     right num rows = right num cols
+      //
+
+      // leftNumRows, leftNumCols = rightNumRows, rightNumCols
+
+      var leftData  = toData(left),
+          rightData = toData(right),
+          rightNumCols = rightData.length / leftNumCols
+
+      // Check if rightNumCols results to be an integer: it means matrices can be multiplied.
+      if (! isInteger(rightNumCols))
+        throw new TypeError('left num cols != right num rows')
+
+      return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols)
+    }
+
+    function rightMultiplication (right) {
+      var left        = this.data,
+          leftNumCols = this.numCols,
+          leftNumRows = this.numRows,
+          rightData   = toData(right)
+
+      var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
+
+      // If staticRightMultiplication does not throw it means that matrices can multiplied.
+      var rightNumCols = rightData.length / leftNumCols,
+          rightNumRows = leftNumCols
+
+      var rightIsSquare = (rightNumCols === rightNumRows),
+          rightIsVector = (rightNumCols === 1)
+
+      if (rightIsVector) {
+        var Vector = VectorSpace(Scalar)(leftNumRows)
+        return new Vector(data)
+      }
+
+      if (rightIsSquare) {
+        // Right multiplication by a square matrix is an internal operation,
+        // so the method behaves like a mutator.
+
+        this.data = data
+
+        return this
+      }
+      else {
+        // In this case, right element should be a matrix, but not square,
+        // so the method returns a new element.
+        return new MatrixSpace(Scalar)(rightNumRows, rightNumCols)(data)
+      }
+    }
+
+    Matrix.prototype.multiplication = rightMultiplication
+
+    /**
+     *
+     * @param {numRows}
+     * @param {numCols}
+     * @param {Object|Array} matrix
+     *
+     * @returns {Array} transposedData
+     */
+
+    function transpose (numRows, numCols, matrix) {
+      var data           = toData(matrix),
+          transposedData = []
+
+      for (var i = 0; i < numRows; i++)
+        for (var j = 0; j < numCols; j++) {
+          transposedData[matrixToArrayIndex(j, i, numRows)] = data[matrixToArrayIndex(i, j, numCols)]
+        }
+
+      return transposedData
+    }
+
+    /**
+     *
+     * @returns {Object} transposed matrix
+     */
+
+    function matrixTransposition () {
+      var data    = this.data,
+          numCols = this.numCols,
+          numRows = this.numRows
+
+      var transposedData = transpose(numRows, numCols, data)
+
+                                              // +--------+-- Transposed indices here.
+                                              // ↓        ↓
+      var TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows)
+      return new TransposedMatrix(transposedData)
+    }
+
+    Matrix.prototype.transpose = matrixTransposition
+
+    // Static operators.
+
+    Matrix.addition       = Vector.addition
+    Matrix.multiplication = staticRightMultiplication.bind(null, numRows, numCols)
+    Matrix.negation       = Vector.negation
+    Matrix.subtraction    = Vector.subtraction
+    Matrix.transpose      = transpose.bind(null, numRows, numCols)
+
+    // Aliases.
+
+    Matrix.add = Matrix.addition
+    Matrix.mul = Matrix.multiplication
+    Matrix.neg = Matrix.negation
+    Matrix.sub = Matrix.subtraction
+
+    Matrix.prototype.mul = rightMultiplication
+    Matrix.prototype.o   = rightMultiplication
+
+    Matrix.prototype.tr = matrixTransposition
+    Matrix.prototype.t  = matrixTransposition
+
+    Matrix.tr = Matrix.transpose
+
+    return Matrix
+  }
+}
+
+module.exports = MatrixSpace
 
 
-},{"./ring":20}],11:[function(require,module,exports){
+},{"./VectorSpace":14,"./getIndices":17,"./matrixToArrayIndex":19,"./rowByColumnMultiplication":22,"./toData":23,"inherits":5,"is-integer":6,"laplace-determinant":9}],13:[function(require,module,exports){
+
+var algebraRing = require('algebra-ring'),
+    coerced     = require('./coerced'),
+    comparison  = require('./comparison'),
+    Element     = require('./Element'),
+    mutator     = require('./mutator'),
+    inherits    = require('inherits')
+
+var nAryMutator  = mutator.nAry,
+    unaryMutator = mutator.unary
+
+/**
+ * Create an algebra scalar.
+ *
+ * @params {Array} identity
+ * @params {Array} identity[0] a.k.a. zero
+ * @params {Array} identity[1] a.k.a. uno
+ * @params {Object} given operator functions
+ * @param {Function} given.contains
+ * @param {Function} given.equality
+ * @param {Function} given.addition
+ * @param {Function} given.negation
+ * @param {Function} given.multiplication
+ * @param {Function} given.inversion
+ *
+ * @returns {Function} Scalar that implements an algebra scalar as a class
+ */
+
+function Scalar (identity, given) {
+  var r = algebraRing(identity, given)
+
+  function Scalar (data) {
+    Element.call(this, data, given.contains)
+  }
+
+  inherits(Scalar, Element)
+
+    // TODO questo codice dovrebbe stare in cayley-dickson
+  if (typeof given.conjugation === 'undefined')
+    given.conjugation = function (a) { return a }
+
+  var addition    = coerced(given.addition),
+      contains    = coerced(given.contains),
+      conjugation = coerced(given.conjugation),
+      disequality = coerced(given.disequality),
+      equality    = coerced(given.equality),
+      negation    = coerced(given.negation),
+      notContains = coerced(given.notContains),
+      subtraction = coerced(given.subtraction)
+
+  var multiplication = coerced(given.multiplication),
+      division       = coerced(given.division),
+      inversion      = coerced(given.inversion)
+
+  // Comparison operators.
+
+  Scalar.prototype.equality    = comparison(equality)
+  Scalar.prototype.disequality = comparison(disequality)
+
+  // Chainable class methods.
+
+  Scalar.prototype.addition    = nAryMutator(addition)
+  Scalar.prototype.subtraction = nAryMutator(subtraction)
+  Scalar.prototype.negation    = unaryMutator(negation)
+  Scalar.prototype.conjugation = unaryMutator(conjugation)
+
+  Scalar.prototype.multiplication = nAryMutator(multiplication)
+  Scalar.prototype.division       = nAryMutator(division)
+  Scalar.prototype.inversion      = unaryMutator(r.inversion)
+
+  // Static operators.
+
+  Scalar.addition    = addition
+  Scalar.contains    = contains
+  Scalar.conjugation = conjugation
+  Scalar.disequality = disequality
+  Scalar.equality    = equality
+  Scalar.negation    = negation
+  Scalar.notContains = notContains
+  Scalar.subtraction = subtraction
+
+  Scalar.multiplication = multiplication
+  Scalar.division       = division
+  Scalar.inversion      = inversion
+
+  // Aliases.
+
+  Scalar.eq = Scalar.equality
+  Scalar.ne = Scalar.disequality
+
+  Scalar.equal    = Scalar.equality
+  Scalar.notEqual = Scalar.disequality
+  Scalar.notEq    = Scalar.disequality
+
+  Scalar.add = Scalar.addition
+  Scalar.neg = Scalar.negation
+  Scalar.sub = Scalar.subtraction
+
+  Scalar.div = Scalar.division
+  Scalar.inv = Scalar.inversion
+  Scalar.mul = Scalar.multiplication
+
+  Scalar.conj = Scalar.conj
+
+  Scalar.prototype.add = Scalar.prototype.addition
+  Scalar.prototype.neg = Scalar.prototype.negation
+  Scalar.prototype.sub = Scalar.prototype.subtraction
+
+  Scalar.prototype.mul = Scalar.prototype.multiplication
+  Scalar.prototype.div = Scalar.prototype.division
+  Scalar.prototype.inv = Scalar.prototype.inversion
+
+  Scalar.prototype.conj = Scalar.prototype.conjugation
+
+  // Identities.
+
+  Scalar.zero = new Scalar(identity[0])
+  Scalar.one  = new Scalar(identity[1])
+
+  return Scalar
+}
+
+module.exports = Scalar
+
+
+},{"./Element":11,"./coerced":15,"./comparison":16,"./mutator":20,"algebra-ring":3,"inherits":5}],14:[function(require,module,exports){
 
 var getIndices                = require('./getIndices'),
     group                     = require('./group'),
@@ -363,7 +1025,7 @@ var getIndices                = require('./getIndices'),
 
 function VectorSpace (Scalar) {
 
-  /*!
+  /**
    *
    * @param {Number} dimension
    *
@@ -462,9 +1124,7 @@ function VectorSpace (Scalar) {
 
     inherits(Vector, Group)
 
-    Vector.addition = Group.addition
-    Vector.subtraction = Group.subtraction
-    Vector.negation = Group.negation
+    // Static attributes.
 
     Object.defineProperty(Vector, 'zero', {
       writable: false,
@@ -486,10 +1146,6 @@ function VectorSpace (Scalar) {
       Vector.prototype.x            = crossProduct
     }
 
-    /*!
-     *
-     */
-
     function matrixProduct (matrix) {
       var matrixData    = toData(matrix),
           matrixIndices = getIndices(matrix)
@@ -504,10 +1160,6 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.matrixProduct = matrixProduct
-
-    /*!
-     *
-     */
 
     function scalarProduct (vector1, vector2) {
       var vectorData1    = toData(vector1),
@@ -551,6 +1203,18 @@ function VectorSpace (Scalar) {
 
     Vector.scalarProduct = scalarProduct
 
+    // Static operators.
+
+    Vector.addition    = Group.addition
+    Vector.subtraction = Group.subtraction
+    Vector.negation    = Group.negation
+
+    // Aliases
+
+    Vector.add = Group.addition
+    Vector.sub = Group.subtraction
+    Vector.neg = Group.negation
+
     return Vector
   }
 }
@@ -558,21 +1222,7 @@ function VectorSpace (Scalar) {
 module.exports = VectorSpace
 
 
-},{"./getIndices":16,"./group":17,"./rowByColumnMultiplication.js":21,"./toData":22,"inherits":5}],12:[function(require,module,exports){
-
-var CayleyDickson = require('./constructCayleyDicksonAlgebra'),
-    ring          = require('./ring')
-
-function CayleyDicksonAlgebra (K, iterations) {
-  var Kn = CayleyDickson(K, iterations)
-
-  return ring([Kn.zero, Kn.one], Kn)
-}
-
-module.exports = CayleyDicksonAlgebra
-
-
-},{"./constructCayleyDicksonAlgebra":15,"./ring":20}],13:[function(require,module,exports){
+},{"./getIndices":17,"./group":18,"./rowByColumnMultiplication.js":22,"./toData":23,"inherits":5}],15:[function(require,module,exports){
 
 var toData = require('./toData')
 
@@ -595,7 +1245,7 @@ function coerced (operator) {
 module.exports = coerced
 
 
-},{"./toData":22}],14:[function(require,module,exports){
+},{"./toData":23}],16:[function(require,module,exports){
 
 /**
  * Comparison operator for group and ring classes
@@ -614,231 +1264,7 @@ function comparison (operator) {
 module.exports = comparison
 
 
-},{}],15:[function(require,module,exports){
-
-//var algebraGroup = require('algebra-group'),
-//    algebraRing  = require('algebra-ring')
-var ring = require('./ring')
-
-var twoPow = Math.pow.bind(null, 2)
-
-/**
- * Iterate Cayley-Disckson construction
- *
- * @params {Object} field
- * @params {Number} iterations
- *
- * @returns {Object} algebra
- */
-
-function constructCayleyDicksonAlgebra (field, iterations) {
-  if (! (iterations in {0: 'real', 1: 'complex', 2: 'quaternion', 3: 'octonion'}))
-    throw new TypeError('Num of iterations must be 1, 2 or 3')
-
-  if (iterations === 0)
-    return field
-
-  // identities
-
-  var one  = [],
-      zero = [],
-      dim  = twoPow(iterations)
-
-  one.push(field.one)
-  zero.push(field.zero)
-
-  for (var i = 1; i < dim; i++) {
-    one.push(field.zero)
-    zero.push(field.zero)
-  }
-
-  // operators
-
-  function equality (a, b) {
-    for (var i = 0; i < dim; i++)
-      if (field.disequality(a[i], b[i]))
-        return false
-
-    return true
-  }
-
-  function contains (a) {
-    for (var i = 0; i < dim; i++)
-      if (field.notContains(a[i]))
-        return false
-
-    return true
-  }
-
-  /**
-   * Turn unary operator on single value to operator on n values.
-   */
-
- function arrayfy1 (operator, dim) {
-    return function (a) {
-      if (dim === 1)
-        return [operator(a)]
-
-      var b = []
-
-      for (var i = 0; i < dim; i++)
-        b.push(operator(a[i]))
-
-      return b
-    }
- }
-
-  /**
-   * Turn binary operator on single value to operator on n values.
-   */
-
- function arrayfy2 (operator, dim) {
-    return function (a, b) {
-      if (dim === 1)
-        return [operator(a, b)]
-
-      var c = []
-
-      for (var i = 0; i < dim; i++)
-        c.push(operator(a[i], b[i]))
-
-      return c
-    }
- }
-
-  function buildConjugation (fieldNegation, iterations) {
-    var dim = twoPow(iterations)
-
-    if (dim === 1)
-      return function (b) { return b[0] }
-
-    // b -> p looks like complex conjugation simmetry (:
-    function conjugation (b) {
-      var p = [],
-          halfDim = twoPow(iterations - 1),
-          i = 0
-
-      // First, copy half of b into q.
-      for (i = 0; i < halfDim; i++)
-        p.push(b[i])
-
-      // Then conjugate b, according to lower algebra conjugation.
-      // Note that if iterations - 1 == 0 it is the identity.
-      p = buildConjugation(fieldNegation, iterations - 1)(b)
-
-      for (i = halfDim; i < dim; i++)
-        p.push(fieldNegation(b[i]))
-
-      return p
-    }
-
-    return conjugation
-  }
-
-  var conjugation = buildConjugation(field.negation, iterations)
-
-  function norm (a) {
-    var n       = field.zero,
-        squares = multiplication(a, conjugation(a))
-
-    for (var i = 0; i < dim; i++)
-      n = field.addition(n, squares[i])
-
-    return n
-  }
-
-  function buildMultiplication (field, iterations) {
-    var dim     = twoPow(iterations),
-        halfDim = 1
-
-    if (iterations === 0)
-      return field.multiplication
-    else
-      halfDim = twoPow(iterations - 1)
-
-    var add  = arrayfy2(field.addition, halfDim),
-        conj = buildConjugation(field.negation, iterations -1),
-        mul  = buildMultiplication(field, iterations - 1),
-        neg  = arrayfy1(field.negation, halfDim)
-
-    function multiplication (a, b) {
-      var c = [],
-          i = 0
-
-      //         a = (p, q)
-      //         b = (r, s)
-      //
-      // a + b = c = (t, u)
-
-      var p = [], q = [],
-          r = [], s = []
-
-      for (i = 0; i < halfDim; i++) {
-        p.push(a[i])
-        r.push(b[i])
-      }
-
-      for (i = halfDim; i < dim; i++) {
-        q.push(a[i])
-        s.push(b[i])
-      }
-
-      // let denote conj(x) as x`
-      //
-      // Multiplication law is given by
-      //
-      // (p, q)(r, s) = (pr - s`q, sp + qr`)
-
-      var t = add(mul(p, r), neg(mul(conj(s), q))),
-          u = add(mul(s, p), mul(q, conj(r)))
-
-      for (i = 0; i < halfDim; i++)
-        c.push(t[i])
-
-      for (i = halfDim; i < dim; i++)
-        c.push(u[i])
-
-      return c
-    }
-
-    return multiplication
-  }
-
-  var multiplication = buildMultiplication(field, iterations)
-
-  function inversion (a) {
-    var n = norm(a)
-
-    var b = conjugation(a)
-
-    for (var i = 0; i < dim; i++)
-      b[i] = field.division(b[i], n)
-
-    return b
-  }
-
-  var addition = arrayfy2(field.addition, dim),
-      negation = arrayfy1(field.negation, dim)
-
-  var algebra = ring([zero, one], {
-    contains       : contains,
-    equality       : equality,
-    addition       : addition,
-    negation       : negation,
-    multiplication : multiplication,
-    inversion      : inversion
-  })
-
-  algebra.conjugation = conjugation
-  algebra.norm        = norm
-
-  return algebra
-}
-
-module.exports = constructCayleyDicksonAlgebra
-
-
-},{"./ring":20}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 
 var toData = require('./toData')
 
@@ -880,7 +1306,7 @@ function getIndices (arg) {
 module.exports = getIndices
 
 
-},{"./toData":22}],17:[function(require,module,exports){
+},{"./toData":23}],18:[function(require,module,exports){
 
 var algebraGroup = require('algebra-group'),
     coerced      = require('./coerced'),
@@ -981,7 +1407,7 @@ function group (given, naming) {
 module.exports = group
 
 
-},{"./Element":9,"./coerced":13,"./comparison":14,"./mutator":19,"algebra-group":2,"inherits":5}],18:[function(require,module,exports){
+},{"./Element":11,"./coerced":15,"./comparison":16,"./mutator":20,"algebra-group":2,"inherits":5}],19:[function(require,module,exports){
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -1001,7 +1427,7 @@ function matrixToArrayIndex (i, j, numCols) {
 module.exports = matrixToArrayIndex
 
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 function unaryMutator (operator) {
   return function () {
@@ -1022,135 +1448,29 @@ function nAryMutator (operator) {
 exports.nAry = nAryMutator
 
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
-var algebraRing = require('algebra-ring'),
-    coerced     = require('./coerced'),
-    comparison  = require('./comparison'),
-    Element     = require('./Element'),
-    mutator     = require('./mutator'),
-    inherits    = require('inherits')
-
-var nAryMutator  = mutator.nAry,
-    unaryMutator = mutator.unary
-
-/**
- * Create an algebra ring.
- *
- * @params {Array} identity
- * @params {Array} identity[0] a.k.a. zero
- * @params {Array} identity[1] a.k.a. uno
- * @params {Object} given operator functions
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.addition
- * @param {Function} given.negation
- * @param {Function} given.multiplication
- * @param {Function} given.inversion
- *
- * @returns {Function} Ring that implements an algebra ring as a class
- */
-
-function ring (identity, given) {
-  var r = algebraRing(identity, given)
-
-  function Ring (data) {
-    Element.call(this, data, given.contains)
-  }
-
-  inherits(Ring, Element)
-
-  // Note that many code in ring.js is almost the same of group.js:
-  // copy and paste over inheritance!
-
-  var addition    = coerced(r.addition),
-      contains    = coerced(r.contains),
-      disequality = coerced(r.disequality),
-      equality    = coerced(r.equality),
-      negation    = coerced(r.negation),
-      notContains = coerced(r.notContains),
-      subtraction = coerced(r.subtraction)
-
-  var multiplication = coerced(r.multiplication),
-      division       = coerced(r.division),
-      inversion      = coerced(r.inversion)
-
-  // Comparison operators.
-
-  Ring.prototype.equality    = comparison(equality)
-  Ring.prototype.disequality = comparison(disequality)
-
-  // Chainable class methods.
-
-  Ring.prototype.addition    = nAryMutator(addition)
-  Ring.prototype.subtraction = nAryMutator(subtraction)
-  Ring.prototype.negation    = unaryMutator(negation)
-
-  Ring.prototype.multiplication = nAryMutator(multiplication)
-  Ring.prototype.division       = nAryMutator(division)
-  Ring.prototype.inversion      = unaryMutator(r.inversion)
-
-  // Static operators.
-
-  Ring.addition    = addition
-  Ring.contains    = contains
-  Ring.disequality = disequality
-  Ring.equality    = equality
-  Ring.negation    = negation
-  Ring.notContains = notContains
-  Ring.subtraction = subtraction
-
-  Ring.multiplication = multiplication
-  Ring.division       = division
-  Ring.inversion      = inversion
-
-  // Aliases.
-
-  Ring.eq = Ring.equality
-  Ring.ne = Ring.disequality
-
-  Ring.equal    = Ring.equality
-  Ring.notEqual = Ring.disequality
-  Ring.notEq    = Ring.disequality
-
-  Ring.add = Ring.addition
-  Ring.neg = Ring.negation
-  Ring.sub = Ring.subtraction
-
-  Ring.div = Ring.division
-  Ring.inv = Ring.inversion
-  Ring.mul = Ring.multiplication
-
-  Ring.prototype.add = Ring.prototype.addition
-  Ring.prototype.neg = Ring.prototype.negation
-  Ring.prototype.sub = Ring.prototype.subtraction
-
-  Ring.prototype.mul = Ring.prototype.multiplication
-  Ring.prototype.div = Ring.prototype.division
-  Ring.prototype.inv = Ring.prototype.inversion
-
-  // Identities.
-
-  Object.defineProperties(Ring, {
-    'zero': {
-      writable: false,
-      value: identity[0]
-    },
-    'one': {
-      writable: false,
-      value: identity[1]
-    }
-  })
-
-  return Ring
+var realField = {
+  zero: 0,
+  one : 1,
+  contains:       function (a, b) {
+                    // NaN, Infinity and -Infinity are not allowed
+                    return (typeof a === 'number' && isFinite(a))
+                  },
+  equality:       function (a, b) { return a === b },
+  addition:       function (a, b) { return a + b },
+  negation:       function (a) { return -a },
+  multiplication: function (a, b) { return a * b },
+  inversion:      function (a) { return 1 / a }
 }
 
-module.exports = ring
+module.exports = realField
 
 
-},{"./Element":9,"./coerced":13,"./comparison":14,"./mutator":19,"algebra-ring":3,"inherits":5}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 
-var matrixToArrayIndex = require('./matrixToArrayIndex')
+var isInteger          = require('is-integer'),
+    matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
  * Multiply two matrices, row by column.
@@ -1163,22 +1483,31 @@ var matrixToArrayIndex = require('./matrixToArrayIndex')
  * @param {Function} scalar.addition
  * @param {Function} scalar.multiplication
  * @param {Array} leftMatrix
- * @param {Array} leftIndices
+ * @param {Array} leftNumRows
  * @param {Array} rightMatrix
- * @param {Array} rightIndices
+ * @param {Array} rightNumCols
  *
  * @returns {Array} data
  */
 
-function rowByColumnMultiplication (scalar, leftMatrix, leftIndices, rightMatrix, rightIndices) {
+function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
+  var leftNumCols  = leftMatrix.length / leftNumRows,
+      rightNumRows = rightMatrix.length / rightNumCols
+
+  if (! isInteger(leftNumCols))
+    throw new TypeError('leftNumCols does not divide leftMatrix.length')
+
+  if (! isInteger(rightNumRows))
+    throw new TypeError('rightNumRows does not divide rightMatrix.length')
+
   // Check if matrices can be multiplied.
-  if (leftIndices[1] !== rightIndices[0])
+  if (leftNumCols !== rightNumRows)
     throw new TypeError('Left num cols != right num rows')
 
-  var commonIndex = leftIndices[1],
+  var commonIndex = leftNumCols,
       data        = [],
-      rows        = leftIndices[0],
-      cols        = rightIndices[1]
+      rows        = leftNumRows,
+      cols        = rightNumCols
 
   for (var i = 0; i < rows; i++) {
     for (var j = 0; j < cols; j++) {
@@ -1210,7 +1539,7 @@ function rowByColumnMultiplication (scalar, leftMatrix, leftIndices, rightMatrix
 module.exports = rowByColumnMultiplication
 
 
-},{"./matrixToArrayIndex":18}],22:[function(require,module,exports){
+},{"./matrixToArrayIndex":19,"is-integer":6}],23:[function(require,module,exports){
 
 /**
  * Extract data attribute, if any, and check it

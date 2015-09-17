@@ -1,11 +1,11 @@
 
-var CayleyDickson = require('cayley-dickson'),
-    ring          = require('./ring')
+var iterateCayleyDickson = require('cayley-dickson'),
+    Scalar               = require('./Scalar')
 
 function CayleyDickson (K, iterations) {
-  var Kn = CayleyDickson(K, iterations)
+  var Kn = iterateCayleyDickson(K, iterations)
 
-  return ring([Kn.zero, Kn.one], Kn)
+  return Scalar([Kn.zero, Kn.one], Kn)
 }
 
 module.exports = CayleyDickson

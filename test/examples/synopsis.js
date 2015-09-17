@@ -34,7 +34,6 @@ describe('Synopsis', function () {
                        1, 0])
 
     var v3 = m1.mul(v1)
-
     should.deepEqual(v3.data, [0, -1, 1])
 
     var R2x2 = algebra.MatrixSpace(R)(2)

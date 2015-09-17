@@ -27,7 +27,7 @@
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
     "package.json": "cp package.json gh-pages/_data/",
-    "test": "mocha --bail --require should --reporter min #--recursive"
+    "test": "mocha --bail --require should --reporter min --recursive"
   },
   "repository": {
     "type": "git",
@@ -40,12 +40,7 @@
     "tensor",
     "math"
   ],
-  "license": [
-    {
-      "type": "MIT",
-      "url": "http://g14n.info/mit-license"
-    }
-  ],
+  "license": "MIT",
   "devDependencies": {
     "browserify": "^10.1.3",
     "coveralls": "^2.11.2",

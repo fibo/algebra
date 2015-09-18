@@ -11,12 +11,13 @@ describe('Synopsis', function () {
     var x = new R(2),
         y = new R(-2)
 
-    x.mul(y)
-    x.data.should.eql(-4)
+    var r = x.mul(y)
+    r.data.should.eql(-4)
+    x.data.should.eql(2)
 
-    x.add(6).mul(2).inv()
+    x = x.add(3).mul(2).inv()
 
-    x.data.should.eql(0.25)
+    x.data.should.eql(0.1)
 
     var R2 = algebra.VectorSpace(R)(2)
 

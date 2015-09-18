@@ -59,13 +59,13 @@ function Scalar (identity, given) {
 
   // Chainable class methods.
 
-  Scalar.prototype.addition    = nAryMutator(addition)
-  Scalar.prototype.subtraction = nAryMutator(subtraction)
+  Scalar.prototype.addition    = nAryMutator(addition, Scalar)
+  Scalar.prototype.subtraction = nAryMutator(subtraction, Scalar)
   Scalar.prototype.negation    = unaryMutator(negation)
   Scalar.prototype.conjugation = unaryMutator(conjugation)
 
-  Scalar.prototype.multiplication = nAryMutator(multiplication)
-  Scalar.prototype.division       = nAryMutator(division)
+  Scalar.prototype.multiplication = nAryMutator(multiplication, Scalar)
+  Scalar.prototype.division       = nAryMutator(division, Scalar)
   Scalar.prototype.inversion      = unaryMutator(r.inversion)
 
   // Static operators.

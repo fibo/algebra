@@ -1,4 +1,6 @@
 
+// TODO Rename it, there will be no mutator, but only immutable objects.
+
 function unaryMutator (operator) {
   return function () {
     this.data = operator(this.data)
@@ -8,10 +10,10 @@ function unaryMutator (operator) {
 
 exports.unary = unaryMutator
 
-function nAryMutator (operator) {
+function nAryMutator (operator, Scalar) {
   return function () {
-    this.data = operator.bind(null, this.data).apply(null, arguments)
-    return this
+    var data = operator.bind(null, this.data).apply(null, arguments)
+    return new Scalar(data)
   }
 }
 

@@ -23,9 +23,9 @@ Many functionalities of previous versions are now in separated atomic packages l
 ## Features
 
 * Real, Complex, Quaternion, Octonion numbers.
-* Vector and Matrix spaces over any field (included Real numbers, of course :).
+* [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#scalars), of course :).
 * Expressive syntax.
-<!-- * [math blog][1] with articles explaining algebra concepts and practical examples. -->
+* [math blog][1] with articles explaining algebra concepts and practical examples.
 
 ## Math blog
 
@@ -53,18 +53,29 @@ $ bower install algebra
 
 ## Synopsis
 
+This is a 60 seconds tutorial to get your hands dirty with algebra.
+
+All code in the examples below is intended to be contained into a [single file](https://github.com/fibo/algebra/blob/master/test/synopsis.js).
+
 ```
 var algebra = require('algebra');
+```
 
-// Scalars
-////////////////////////////////////////////////////////////////////////////////
+### Scalars
 
+```
 var R = algebra.Real;
+```
 
-// Static addition operator.
+Static addition operator.
+
+```
 console.log(R.add(1, 2, 3)); // 1 + 2 + 3 = 6
+```
 
-// Create two real numbers: x = 2, y = -1
+Create two real numbers: x = 2, y = -1
+
+```
 var x = new R(2),
     y = new R(-2);
 
@@ -77,14 +88,19 @@ console.log(x.data); // 2 * (-2) = -4
 // Resulting x value will be 0.25: x -> x + 6 -> x * 2 -> x ^-1
 x.add(6).mul(2).inv();
 console.log(x.data); // ((-4 + 6) * 2)^(-1) = 0.25
+```
 
-// Vectors
-////////////////////////////////////////////////////////////////////////////////
+### Vectors
 
-// Create vector space of dimension 2 over Reals.
+Create vector space of dimension 2 over Reals.
+
+```
 var R2 = algebra.VectorSpace(R)(2);
+```
 
-// Create two vectors and add them.
+Create two vectors and add them.
+
+```
 var v1 = new R2([0, 1]);
 var v2 = new R2([1, -2]);
 
@@ -92,14 +108,19 @@ var v2 = new R2([1, -2]);
 v1.add(v2);
 
 console.log(v1.data); // [1, -1]
+```
 
-// Matrices
-////////////////////////////////////////////////////////////////////////////////
+### Matrices
 
-// Create space of matrices 3x2 over Reals.
+Create space of matrices 3x2 over Reals.
+
+```
 var R3x2 = algebra.MatrixSpace(R)(3, 2);
+```
 
-// Create a matrix
+Create a matrix.
+
+```
 //                      | 1 1 |
 //                 m1 = | 0 1 |
 //                      | 1 0 |
@@ -147,8 +168,6 @@ console.log(m2.data); // [0, -1,
 // Since m2 is a square matrix we can calculate its determinant.
 console.log(m2.determinant.data); // 2
 ```
-
-See also [algebra quick start](http://g14n.info/algebra/examples/quick-start).
 
 ## License
 

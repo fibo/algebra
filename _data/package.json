@@ -5,8 +5,8 @@
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
   },
-  "version": "0.6.0",
-  "description": "Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings",
+  "version": "0.5.0",
+  "description": "Vectors, Matrices, Real, Complex, Quaternion",
   "main": "index.js",
   "scripts": {
     "_build": "npm test && npm run browserify && npm run tex && npm run jekyll",
@@ -37,7 +37,9 @@
     "algebra",
     "matrix",
     "vector",
-    "tensor",
+    "real",
+    "complex",
+    "quaternion",
     "math"
   ],
   "license": "MIT",

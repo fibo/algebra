@@ -11,20 +11,31 @@ title: algebra
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
+## Status
+
+*algebra* is under development, but API will not change until version **1.0**.
+I am currently adding more tests and examples to achieve a stable version.
+Many functionalities of previous versions are now in separated atomic packages like:
+* [algebra-group](http://npm.im/algebra-group)
+* [algebra-ring](http://npm.im/algebra-ring)
+* [laplace-determinant](http://npm.im/laplace-determinant)
+
+## Features
+
+* Real, Complex, Quaternion, Octonion numbers.
+* Vector and Matrix spaces over any field (included Real numbers, of course :).
+* Expressive syntax.
+<!-- * [math blog][1] with articles explaining algebra concepts and practical examples. -->
+
 ## Math blog
 
 I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning math.
-Please find here my [math articles](http://g14n.info/algebra/articles).
+Please find here my [math articles][1].
 
 
 Follows a list of recent posts.
 
 {% include posts_list.html limit="5" %}
-
-## Status
-
-*algebra* is under development.
-Api can change until version **1.0** but not without a good reason.
 
 ## Installation
 
@@ -139,8 +150,8 @@ console.log(m2.determinant.data); // 2
 
 See also [algebra quick start](http://g14n.info/algebra/examples/quick-start).
 
-
 ## License
 
 [MIT](http://g14n.info/mit-licence)
 
+  [1]: http://g14n.info/algebra/articles "algebra blog"

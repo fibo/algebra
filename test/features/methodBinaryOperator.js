@@ -1,25 +1,27 @@
 
 var should = require('should')
 
-/*!
+/**
  * Check if binary operator is a mutator
+ *
+ * @api private
  *
  * @param {Object} Scalar
  * @param {String} operator name
  * @param {*} operand1
  * @param {*} operand2
- * @param {*} result
+ * @param {*} resultData
  *
  * @returns {Function} mutatorBinaryOperatorTest
  */
 
-function mutatorBinaryOperator (Scalar, operator, operand1, operand2, result) {
+function mutatorBinaryOperator (Scalar, operator, operand1, operand2, resultData) {
   return function mutatorBinaryOperatorTest () {
     var scalar = new Scalar(operand1)
 
-    scalar[operator](operand2)
+    var result = scalar[operator](operand2)
 
-    scalar.data.should.eql(result)
+    result.data.should.eql(resultData)
   }
 }
 

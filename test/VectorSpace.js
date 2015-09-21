@@ -5,8 +5,8 @@ var algebra = require('algebra'),
 var VectorSpace = algebra.VectorSpace,
     Real        = algebra.Real
 
-var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
-    mutatorUnaryOperator  = require('./features/mutatorUnaryOperator'),
+var methodBinaryOperator = require('./features/methodBinaryOperator'),
+    methodUnaryOperator  = require('./features/methodUnaryOperator'),
     staticBinaryOperator  = require('./features/staticBinaryOperator'),
     staticUnaryOperator   = require('./features/staticUnaryOperator')
 
@@ -20,7 +20,7 @@ describe('VectorSpace', function () {
 
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
 
-    it('is a mutator method', mutatorBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
+    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
   })
 
   describe('subtraction()', function () {
@@ -28,7 +28,7 @@ describe('VectorSpace', function () {
 
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
 
-    it('is a mutator method', mutatorBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
+    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
   })
 
   describe('scalarProduct()', function () {

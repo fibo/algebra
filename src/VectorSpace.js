@@ -1,7 +1,15 @@
 
-var inherits                  = require('inherits'),
+var algebraGroup              = require('algebra-group'),
+    coerced                   = require('./coerced'),
+    comparison                = require('./comparison'),
+    Element                   = require('./Element'),
+    method                    = require('./method'),
+    inherits                  = require('inherits'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
+
+var nAryMethod  = method.nAry,
+    unaryMethod = method.unary
 
 /**
  * Space of vectors
@@ -226,9 +234,9 @@ function VectorSpace (Scalar) {
     Vector.neg = Vector.negation
     Vector.sub = Vector.subtraction
 
-    Vector.prototype.add = addition
-    Vector.prototype.neg = negation
-    Vector.prototype.sub = subtraction
+    Vector.prototype.add = Vector.prototype.addition
+    Vector.prototype.neg = Vector.prototype.negation
+    Vector.prototype.sub = Vector.prototype.subtraction
 
     Vector.prototype.dotProduct = vectorScalarProduct
     Vector.prototype.dot        = vectorScalarProduct

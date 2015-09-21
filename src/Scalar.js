@@ -59,7 +59,11 @@ function Scalar (identity, given) {
 
   // Chainable class methods.
 
-  Scalar.prototype.addition    = nAryMethod(addition, Scalar)
+  Scalar.prototype.addition = function () {
+    var data = addition.bind(null, this.data).apply(null, arguments)
+    return new Scalar(data)
+  }
+
   Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar)
   Scalar.prototype.negation    = unaryMethod(negation, Scalar)
   Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar)

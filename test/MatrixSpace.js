@@ -5,8 +5,8 @@
 var MatrixSpace = algebra.MatrixSpace,
     Real        = algebra.Real
 
-var mutatorBinaryOperator = require('./features/mutatorBinaryOperator'),
-    mutatorUnaryOperator  = require('./features/mutatorUnaryOperator'),
+var methodBinaryOperator = require('./features/methodBinaryOperator'),
+    methodUnaryOperator  = require('./features/methodUnaryOperator'),
     staticBinaryOperator  = require('./features/staticBinaryOperator'),
     staticUnaryOperator   = require('./features/staticUnaryOperator')
 
@@ -72,7 +72,7 @@ describe('MatrixSpace', function () {
           0, 1 ]
     ))
 
-    it('is a mutator method', mutatorBinaryOperator(R2x2, operator,
+    it('is a class method', methodBinaryOperator(R2x2, operator,
         [ 2, 3,
           1, 1 ],
         [ 0, 1,
@@ -94,7 +94,7 @@ describe('MatrixSpace', function () {
           2, 1 ]
     ))
 
-    it('is a mutator method', mutatorBinaryOperator(R2x2, operator,
+    it('is a class method', methodBinaryOperator(R2x2, operator,
         [ 2, 3,
           1, 1 ],
         [ 0, 1,
@@ -118,7 +118,7 @@ describe('MatrixSpace', function () {
           -1, 1, 3, 4 ]
     ))
 
-    it('is a mutator method for square matrices', mutatorBinaryOperator(R2x2, operator,
+    it('is a class method for square matrices', methodBinaryOperator(R2x2, operator,
         [ 2, 3,
           1, 1 ],
         [ 0, 1,

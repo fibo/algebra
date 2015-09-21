@@ -24,7 +24,7 @@ describe('Synopsis', function () {
     var v1 = new R2([0, 1])
     var v2 = new R2([1, -2])
 
-    v1.add(v2)
+    v1 = v1.add(v2)
 
     v1.data.should.eql([1, -1])
 
@@ -35,6 +35,7 @@ describe('Synopsis', function () {
                        1, 0])
 
     var v3 = m1.mul(v1)
+
     should.deepEqual(v3.data, [0, -1, 1])
 
     var R2x2 = algebra.MatrixSpace(R)(2)
@@ -44,7 +45,7 @@ describe('Synopsis', function () {
         m3 = new R2x2([0, -1,
                        1, 0])
 
-    m2.mul(m3)
+    m2 = m2.mul(m3)
 
     should.deepEqual(m2.data, [0, -1, 2,  0])
 

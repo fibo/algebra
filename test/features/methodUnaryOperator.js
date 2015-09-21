@@ -1,24 +1,26 @@
 
 var should = require('should')
 
-/*!
+/**
  * Check if unary operator is a mutator
+ *
+ * @api private
  *
  * @param {Object} Scalar
  * @param {String} operator name
  * @param {*} operand
- * @param {*} result
+ * @param {*} resultData
  *
  * @returns {Function} mutatorUnaryOperatorTest
  */
 
-function mutatorUnaryOperator (Scalar, operator, operand, result) {
+function mutatorUnaryOperator (Scalar, operator, operand, resultData) {
   return function mutatorUnaryOperatorTest () {
     var scalar = new Scalar(operand)
 
-    scalar[operator]()
+    var result = scalar[operator]()
 
-    scalar.data.should.eql(result)
+    result.data.should.eql(resultData)
   }
 }
 

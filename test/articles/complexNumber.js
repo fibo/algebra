@@ -14,7 +14,7 @@ describe('Complex number example', function () {
   })
 
   it('shows arithmetic operators', function () {
-    z1.add(z2)
+    z1 = z1.add(z2)
     z1.data.should.be.eql([1, 5])
   })
 })

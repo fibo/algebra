@@ -6,6 +6,7 @@ var V = algebra.VectorSpace,
     R = algebra.Real
 
 describe('Real vector example', function () {
+  /*
   var R2,
       vector1,
       vector2,
@@ -47,5 +48,6 @@ describe('Real vector example', function () {
     vector1.addition(vector2, vector3, vector4)
     vector1.data.should.be.eql([2, 10])
   })
+  */
 })
 

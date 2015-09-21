@@ -11,8 +11,10 @@
 ## Status
 
 *algebra* is under development, but API will not change until version **1.0**.
+
 I am currently adding more tests and examples to achieve a stable version.
-Many functionalities of previous versions are now in separated atomic packages like:
+
+Many functionalities of previous versions are now in separated atomic packages:
 
 * [algebra-group](http://npm.im/algebra-group)
 * [algebra-ring](http://npm.im/algebra-ring)
@@ -25,6 +27,7 @@ Many functionalities of previous versions are now in separated atomic packages l
 * [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#scalars), of course :).
 * Expressive syntax.
 * [math blog][1] with articles explaining algebra concepts and practical examples.
+* Class instances are immutables.
 
 ## Math blog
 
@@ -125,7 +128,7 @@ var v1 = new R2([0, 1]);
 var v2 = new R2([1, -2]);
 
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
-v1.add(v2);
+v1 = v1.add(v2);
 
 console.log(v1.data); // [1, -1]
 ```
@@ -186,7 +189,7 @@ var m2 = new R2x2([1, 0,
     m3 = new R2x2([0, -1,
                    1, 0]);
 
-m2.mul(m3);
+m2 = m2.mul(m3);
 ```
 
 This is an inner product, so mul is a mutator for m2.
@@ -204,7 +207,7 @@ console.log(m2.determinant.data); // 2
 
 ## License
 
-[MIT](http://g14n.info/mit-license)
+MIT
 
   [1]: http://g14n.info/algebra/articles "algebra blog"
 

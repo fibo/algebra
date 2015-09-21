@@ -18,12 +18,12 @@ var z1 = new C([1, 2]);
 var z2 = new C([3, 4]);
 
 // Multiply z1 by z2.
-z1.mul(z2); // (1 + 2i) * (3 + 4i) = -5 + 10i
+z1 = z1.mul(z2); // (1 + 2i) * (3 + 4i) = -5 + 10i
 
 console.log(z1.data); // [-5, 10]
 
 // Many chainable operators are available.
-z1.conj().mul([2, 0]);
+z1 = z1.conj().mul([2, 0]);
 
 console.log(z1.data); // [-10, 20]
 ```
@@ -47,7 +47,7 @@ var v1 = new R2([1, 1]);
 var v2 = new R2([2, 4]);
 
 // Add v2 to v1
-v1.add(v2); // (1, 1) + (2, 4) = (3, 5)
+v1 = v1.add(v2); // (1, 1) + (2, 4) = (3, 5)
 
 console.log(v1.data); // [3, 5]
 ```
@@ -81,7 +81,7 @@ var m2 = new R2x2([-1, 0,
 //       | 1 2 | * | -1 0 | = | -1 2 |
 //       | 3 4 |   |  0 1 |   | -3 4 |
 //
-m1.mul(m2);
+m1 = m1.mul(m2);
 
 console.log(m1.data); // [-1, 2, -3, 4]
 

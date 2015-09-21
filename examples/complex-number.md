@@ -18,7 +18,7 @@ Arithmetic operators are defined
 
 ```
 // z1 + z2 = [1, 2] + [0, 3] = [1, 5]
-z1.add(z2);
+z1 = z1.add(z2);
 console.log(z1.data); // [1, 5]
 ```
 

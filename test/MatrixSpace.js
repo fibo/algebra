@@ -139,19 +139,19 @@ describe('MatrixSpace', function () {
                                                     2, 4, 6])
     })
 
-    it('returns a transposed matrix'/*, function () {
-      var matrix3x2a  = new R3x2([1, 2, 3,
+    it('returns a transposed matrix', function () {
+      var matrix2x3a  = new R2x3([1, 2, 3,
                                   4, 5, 6])
 
-      var matrixTransposed = matrix3x2a.transpose()
+      var matrixTransposed = matrix2x3a.transpose()
 
       should.deepEqual(matrixTransposed.data, [1, 4,
                                                2, 5,
                                                3, 6])
 
-      matrix3x2a.numRows.should.be.eql(matrixTransposed.numCols)
-      matrix3x2a.numCols.should.be.eql(matrixTransposed.numRows)
-    }*/)
+      matrix2x3a.numRows.should.be.eql(matrixTransposed.numCols)
+      matrix2x3a.numCols.should.be.eql(matrixTransposed.numRows)
+    })
 
     it('is chainable for square matrices', function () {
       var matrix2x2a  = new R2x2([1, 2,

@@ -20,7 +20,7 @@ require('strict-mode')(function () {
 })
 
 
-},{"./src/MatrixSpace":12,"./src/Scalar":13,"./src/VectorSpace":14,"./src/realField":21,"cayley-dickson":4,"strict-mode":10}],2:[function(require,module,exports){
+},{"./src/MatrixSpace":12,"./src/Scalar":13,"./src/VectorSpace":14,"./src/realField":19,"cayley-dickson":4,"strict-mode":10}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -594,10 +594,8 @@ module.exports = function (cb) { cb() }
 
 },{}],11:[function(require,module,exports){
 
-/*!
+/**
  * Abstract element
- *
- * @class
  *
  * @param {Object|Array|Number|String|Function} data
  * @param {Function} check
@@ -625,7 +623,6 @@ module.exports = Element
 },{}],12:[function(require,module,exports){
 
 var determinant               = require('laplace-determinant'),
-    getIndices                = require('./getIndices'),
     inherits                  = require('inherits'),
     isInteger                 = require('is-integer'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
@@ -636,8 +633,6 @@ var determinant               = require('laplace-determinant'),
 /**
  * Space of m x n matrices
  *
- * @function
- *
  * @param {Object} Scalar
  *
  * @returns {Function} anonymous with signature (numRows[, numCols])
@@ -646,6 +641,8 @@ var determinant               = require('laplace-determinant'),
 function MatrixSpace (Scalar) {
 
   /**
+   *
+   * @api private
    *
    * @param {Number} numRows
    * @param {Number} numCols which is optional: defaults to a square matrix.
@@ -679,9 +676,18 @@ function MatrixSpace (Scalar) {
     // MatrixSpace mxn is a VectorSpace with dim=m*n
     var Vector = VectorSpace(Scalar)(dimension)
 
-      /*
-       *
-       */
+    /**
+     * Matrix
+     *
+     * Inherits from [Element](#element).
+     *
+     * ```
+     * var m = R2x2([0, 1,
+     *               1, 0]
+     * ```
+     *
+     * @param {*} data
+     */
 
     function Matrix (data) {
       Vector.call(this, data)
@@ -773,30 +779,19 @@ function MatrixSpace (Scalar) {
 
       var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
 
-      // If staticRightMultiplication does not throw it means that matrices can multiplied.
+      // If staticRightMultiplication does not throw it means that matrices can be multiplied.
       var rightNumCols = rightData.length / leftNumCols,
           rightNumRows = leftNumCols
 
-      var rightIsSquare = (rightNumCols === rightNumRows),
-          rightIsVector = (rightNumCols === 1)
+      var rightIsVector = (rightNumCols === 1)
 
       if (rightIsVector) {
         var Vector = VectorSpace(Scalar)(leftNumRows)
         return new Vector(data)
       }
-
-      if (rightIsSquare) {
-        // Right multiplication by a square matrix is an internal operation,
-        // so the method behaves like a mutator.
-
-        this.data = data
-
-        return this
-      }
       else {
-        // In this case, right element should be a matrix, but not square,
-        // so the method returns a new element.
-        return new MatrixSpace(Scalar)(rightNumRows, rightNumCols)(data)
+        var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+        return new Matrix(data)
       }
     }
 
@@ -873,25 +868,25 @@ function MatrixSpace (Scalar) {
 module.exports = MatrixSpace
 
 
-},{"./VectorSpace":14,"./getIndices":17,"./matrixToArrayIndex":19,"./rowByColumnMultiplication":22,"./toData":23,"inherits":5,"is-integer":6,"laplace-determinant":9}],13:[function(require,module,exports){
+},{"./VectorSpace":14,"./matrixToArrayIndex":17,"./rowByColumnMultiplication":20,"./toData":21,"inherits":5,"is-integer":6,"laplace-determinant":9}],13:[function(require,module,exports){
 
 var algebraRing = require('algebra-ring'),
     coerced     = require('./coerced'),
     comparison  = require('./comparison'),
     Element     = require('./Element'),
-    mutator     = require('./mutator'),
+    method      = require('./method'),
     inherits    = require('inherits')
 
-var nAryMutator  = mutator.nAry,
-    unaryMutator = mutator.unary
+var nAryMethod  = method.nAry,
+    unaryMethod = method.unary
 
 /**
  * Create an algebra scalar.
  *
- * @params {Array} identity
- * @params {Array} identity[0] a.k.a. zero
- * @params {Array} identity[1] a.k.a. uno
- * @params {Object} given operator functions
+ * @param {Array} identity
+ * @param {Array} identity[0] a.k.a. zero
+ * @param {Array} identity[1] a.k.a. uno
+ * @param {Object}   given operator functions
  * @param {Function} given.contains
  * @param {Function} given.equality
  * @param {Function} given.addition
@@ -935,14 +930,18 @@ function Scalar (identity, given) {
 
   // Chainable class methods.
 
-  Scalar.prototype.addition    = nAryMutator(addition)
-  Scalar.prototype.subtraction = nAryMutator(subtraction)
-  Scalar.prototype.negation    = unaryMutator(negation)
-  Scalar.prototype.conjugation = unaryMutator(conjugation)
+  Scalar.prototype.addition = function () {
+    var data = addition.bind(null, this.data).apply(null, arguments)
+    return new Scalar(data)
+  }
 
-  Scalar.prototype.multiplication = nAryMutator(multiplication)
-  Scalar.prototype.division       = nAryMutator(division)
-  Scalar.prototype.inversion      = unaryMutator(r.inversion)
+  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar)
+  Scalar.prototype.negation    = unaryMethod(negation, Scalar)
+  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar)
+
+  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar)
+  Scalar.prototype.division       = nAryMethod(division, Scalar)
+  Scalar.prototype.inversion      = unaryMethod(inversion, Scalar)
 
   // Static operators.
 
@@ -999,13 +998,19 @@ function Scalar (identity, given) {
 module.exports = Scalar
 
 
-},{"./Element":11,"./coerced":15,"./comparison":16,"./mutator":20,"algebra-ring":3,"inherits":5}],14:[function(require,module,exports){
+},{"./Element":11,"./coerced":15,"./comparison":16,"./method":18,"algebra-ring":3,"inherits":5}],14:[function(require,module,exports){
 
-var getIndices                = require('./getIndices'),
-    group                     = require('./group'),
+var algebraGroup              = require('algebra-group'),
+    coerced                   = require('./coerced'),
+    comparison                = require('./comparison'),
+    Element                   = require('./Element'),
+    method                    = require('./method'),
     inherits                  = require('inherits'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
+
+var nAryMethod  = method.nAry,
+    unaryMethod = method.unary
 
 /**
  * Space of vectors
@@ -1016,8 +1021,6 @@ var getIndices                = require('./getIndices'),
  * var v = new V([1, 2])
  * ```
  *
- * @function
- *
  * @param {Object} Scalar class
  *
  * @returns {Function} anonymous with signature (dimension)
@@ -1026,6 +1029,8 @@ var getIndices                = require('./getIndices'),
 function VectorSpace (Scalar) {
 
   /**
+   *
+   * @api private
    *
    * @param {Number} dimension
    *
@@ -1045,7 +1050,7 @@ function VectorSpace (Scalar) {
 
     var zero = createZero(Scalar.zero, dimension)
 
-    function contains (a) {
+    function _contains (a) {
       if (a.length !== dimension) return false
 
       for (var i = 0; i < dimension; i++)
@@ -1055,7 +1060,7 @@ function VectorSpace (Scalar) {
       return true
     }
 
-    function equality (a, b) {
+    function _equality (a, b) {
       for (var i = 0; i < dimension; i++)
         if (! Scalar.equality(a[i], b[i]))
           return false
@@ -1063,7 +1068,7 @@ function VectorSpace (Scalar) {
       return true
     }
 
-    function addition (a, b) {
+    function _addition (a, b) {
       var c = []
 
       for (var i = 0; i < dimension; i++)
@@ -1072,7 +1077,7 @@ function VectorSpace (Scalar) {
       return c
     }
 
-    function negation (a) {
+    function _negation (a) {
       var b = []
 
       for (var i = 0; i < dimension; i++)
@@ -1081,23 +1086,32 @@ function VectorSpace (Scalar) {
       return b
     }
 
-    var Group = group({
+    var g = algebraGroup({
       identity       : zero,
-      contains       : contains,
-      equality       : equality,
-      compositionLaw : addition,
-      inversion      : negation
+      contains       : _contains,
+      equality       : _equality,
+      compositionLaw : _addition,
+      inversion      : _negation
     })
 
+    var addition    = coerced(g.addition),
+        contains    = coerced(g.contains),
+        disequality = coerced(g.disequality),
+        equality    = coerced(g.equality),
+        negation    = coerced(g.negation),
+        notContains = coerced(g.notContains),
+        subtraction = coerced(g.subtraction)
+
     /**
+     * Vector
      *
-     * @class
+     * Inherits from [Element](#element).
      *
      * @param {*} data
      */
 
     function Vector (data) {
-      Group.call(this, data)
+      Element.call(this, data, contains)
 
       /**
        * Norm of a vector
@@ -1122,7 +1136,7 @@ function VectorSpace (Scalar) {
       Object.defineProperty(this, 'norm', {get: vectorNorm})
     }
 
-    inherits(Vector, Group)
+    inherits(Vector, Element)
 
     // Static attributes.
 
@@ -1132,9 +1146,7 @@ function VectorSpace (Scalar) {
     })
 
     function crossProduct (right) {
-      var rightData      = toData(right),
-          rightDimension = rightData.length,
-          rightIndices   = getIndices(right)
+      var rightData      = toData(right)
 
             // TODO complete cross product
     }
@@ -1146,20 +1158,7 @@ function VectorSpace (Scalar) {
       Vector.prototype.x            = crossProduct
     }
 
-    function matrixProduct (matrix) {
-      var matrixData    = toData(matrix),
-          matrixIndices = getIndices(matrix)
-
-      var indices = [1, dimension]
-
-      var data = rowByColumnMultiplication(Scalar, this.data, indices, matrixData, matrixIndices)
-
-      this.data = data
-
-      return this
-    }
-
-    Vector.prototype.matrixProduct = matrixProduct
+  // TODO staticRightMultiplication by a matrix
 
     function scalarProduct (vector1, vector2) {
       var vectorData1    = toData(vector1),
@@ -1184,8 +1183,6 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.scalarProduct = vectorScalarProduct
-    Vector.prototype.dotProduct    = vectorScalarProduct
-    Vector.prototype.dot           = vectorScalarProduct
 
     function perScalarProduct (Scalar) {
       var data       = this.data,
@@ -1201,19 +1198,49 @@ function VectorSpace (Scalar) {
 
     Vector.prototype.perScalarProduct = perScalarProduct
 
-    Vector.scalarProduct = scalarProduct
+    // Comparison operators.
+
+    Vector.prototype.equality    = comparison(equality)
+    Vector.prototype.disequality = comparison(disequality)
+
+    // Chainable class methods.
+
+    Vector.prototype.addition    = nAryMethod(addition, Vector)
+    Vector.prototype.subtraction = nAryMethod(subtraction, Vector)
+    Vector.prototype.negation    = unaryMethod(negation, Vector)
 
     // Static operators.
 
-    Vector.addition    = Group.addition
-    Vector.subtraction = Group.subtraction
-    Vector.negation    = Group.negation
+    Vector.contains    = contains
+    Vector.disequality = disequality
+    Vector.equality    = equality
+    Vector.notContains = notContains
+
+    Vector.addition    = addition
+    Vector.subtraction = subtraction
+    Vector.negation    = negation
+
+    Vector.scalarProduct = scalarProduct
 
     // Aliases
 
-    Vector.add = Group.addition
-    Vector.sub = Group.subtraction
-    Vector.neg = Group.negation
+    Vector.eq = Vector.equality
+    Vector.ne = Vector.disequality
+
+    Vector.equal    = Vector.equality
+    Vector.notEqual = Vector.disequality
+    Vector.notEq    = Vector.disequality
+
+    Vector.add = Vector.addition
+    Vector.neg = Vector.negation
+    Vector.sub = Vector.subtraction
+
+    Vector.prototype.add = Vector.prototype.addition
+    Vector.prototype.neg = Vector.prototype.negation
+    Vector.prototype.sub = Vector.prototype.subtraction
+
+    Vector.prototype.dotProduct = vectorScalarProduct
+    Vector.prototype.dot        = vectorScalarProduct
 
     return Vector
   }
@@ -1222,7 +1249,7 @@ function VectorSpace (Scalar) {
 module.exports = VectorSpace
 
 
-},{"./getIndices":17,"./group":18,"./rowByColumnMultiplication.js":22,"./toData":23,"inherits":5}],15:[function(require,module,exports){
+},{"./Element":11,"./coerced":15,"./comparison":16,"./method":18,"./rowByColumnMultiplication.js":20,"./toData":21,"algebra-group":2,"inherits":5}],15:[function(require,module,exports){
 
 var toData = require('./toData')
 
@@ -1245,10 +1272,12 @@ function coerced (operator) {
 module.exports = coerced
 
 
-},{"./toData":23}],16:[function(require,module,exports){
+},{"./toData":21}],16:[function(require,module,exports){
 
 /**
  * Comparison operator for group and ring classes
+ *
+ * @api private
  *
  * @param {Function} operator
  *
@@ -1266,153 +1295,11 @@ module.exports = comparison
 
 },{}],17:[function(require,module,exports){
 
-var toData = require('./toData')
-
-/*!
- * Extract indices attribute, if any
- *
- * @function
- *
- * @param {Array|Any} arg
- *
- * @return {Array} indices
- */
-
-function getIndices (arg) {
-  var indices
-
-  if (typeof arg.indices === 'undefined') {
-// TODO
-//   var data = toData(arg)
-//
-//   if (typeof data === 'array') {
-//     // TODO recursion into data if it is a multidimensional array
-//     indices = [data.length]
-//   }
-//   else {
-//     indices = [1]
-//   }
-  }
-  else {
-    indices = arg.indices
-  }
-
-  if (typeof indices === 'undefined')
-    throw new TypeError('No indices')
-
-  return indices
-}
-
-module.exports = getIndices
-
-
-},{"./toData":23}],18:[function(require,module,exports){
-
-var algebraGroup = require('algebra-group'),
-    coerced      = require('./coerced'),
-    comparison   = require('./comparison'),
-    Element      = require('./Element'),
-    mutator      = require('./mutator'),
-    inherits     = require('inherits')
-
-var nAryMutator  = mutator.nAry,
-    unaryMutator = mutator.unary
-
-/**
- * Create an algebra group.
- *
- * @param {Object} given
- * @param {*}        given.identity a.k.a neutral element
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.compositionLaw
- * @param {Function} given.inversion
- * @param {Object} [naming]
- * @param {String} [naming.identity=zero]
- * @param {String} [naming.contains=contains]
- * @param {String} [naming.equality=equality]
- * @param {String} [naming.compositionLaw=addition]
- * @param {String} [naming.inversion=negation]
- * @param {String} [naming.inverseCompositionLaw=subtraction]
- * @param {String} [naming.notContains=notContains]
- *
- * @returns {Function} Group that implements an algebra group as a class
- */
-
-function group (given, naming) {
-  var g = algebraGroup(given, naming)
-
-  function Group (data) {
-    Element.call(this, data, given.contains)
-  }
-
-  inherits(Group, Element)
-
-  var addition    = coerced(g.addition),
-      contains    = coerced(g.contains),
-      disequality = coerced(g.disequality),
-      equality    = coerced(g.equality),
-      negation    = coerced(g.negation),
-      notContains = coerced(g.notContains),
-      subtraction = coerced(g.subtraction)
-
-  // Comparison operators.
-
-  Group.prototype.equality    = comparison(equality)
-  Group.prototype.disequality = comparison(disequality)
-
-  // Chainable class methods.
-
-  Group.prototype.addition    = nAryMutator(addition)
-  Group.prototype.subtraction = nAryMutator(subtraction)
-  Group.prototype.negation    = unaryMutator(negation)
-
-  // Static operators.
-
-  Group.addition       = addition
-  Group.contains       = contains
-  Group.disequality    = disequality
-  Group.equality       = equality
-  Group.negation       = negation
-  Group.notContains    = notContains
-  Group.subtraction    = subtraction
-
-  // Identity.
-
-  Object.defineProperty(Group, 'zero', {
-    writable: false,
-    value: g.zero
-  })
-
-  // Aliases.
-
-  Group.eq = Group.equality
-  Group.ne = Group.disequality
-
-  Group.equal    = Group.equality
-  Group.notEqual = Group.disequality
-  Group.notEq    = Group.disequality
-
-  Group.add = Group.addition
-  Group.neg = Group.negation
-  Group.sub = Group.subtraction
-
-  Group.prototype.add = Group.prototype.addition
-  Group.prototype.neg = Group.prototype.negation
-  Group.prototype.sub = Group.prototype.subtraction
-
-  return Group
-}
-
-module.exports = group
-
-
-},{"./Element":11,"./coerced":15,"./comparison":16,"./mutator":20,"algebra-group":2,"inherits":5}],19:[function(require,module,exports){
-
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
- * @function
+ * @api private
+ *
  * @param {Number} i index row
  * @param {Number} j index column
  * @param {Number} numCols
@@ -1427,28 +1314,28 @@ function matrixToArrayIndex (i, j, numCols) {
 module.exports = matrixToArrayIndex
 
 
-},{}],20:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 
-function unaryMutator (operator) {
+function unaryMethod (operator, Scalar) {
   return function () {
-    this.data = operator(this.data)
-    return this
+    var data = operator(this.data)
+    return new Scalar(data)
   }
 }
 
-exports.unary = unaryMutator
+exports.unary = unaryMethod
 
-function nAryMutator (operator) {
+function nAryMethod (operator, Scalar) {
   return function () {
-    this.data = operator.bind(null, this.data).apply(null, arguments)
-    return this
+    var data = operator.bind(null, this.data).apply(null, arguments)
+    return new Scalar(data)
   }
 }
 
-exports.nAry = nAryMutator
+exports.nAry = nAryMethod
 
 
-},{}],21:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 var realField = {
   zero: 0,
@@ -1467,15 +1354,13 @@ var realField = {
 module.exports = realField
 
 
-},{}],22:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 var isInteger          = require('is-integer'),
     matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
  * Multiply two matrices, row by column.
- *
- * @function
  *
  * @api private
  *
@@ -1539,7 +1424,7 @@ function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix
 module.exports = rowByColumnMultiplication
 
 
-},{"./matrixToArrayIndex":19,"is-integer":6}],23:[function(require,module,exports){
+},{"./matrixToArrayIndex":17,"is-integer":6}],21:[function(require,module,exports){
 
 /**
  * Extract data attribute, if any, and check it

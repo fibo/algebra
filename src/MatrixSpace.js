@@ -78,6 +78,7 @@ function MatrixSpace (Scalar) {
       })
 
       /*
+       * @api private
        *
        */
 
@@ -118,6 +119,8 @@ function MatrixSpace (Scalar) {
     })
 
     /**
+     * @api private
+     *
      * Row by column multiplication at right side
      */
 
@@ -176,6 +179,8 @@ function MatrixSpace (Scalar) {
 
     /**
      *
+     * @api private
+     *
      * @param {numRows}
      * @param {numCols}
      * @param {Object|Array} matrix
@@ -196,6 +201,8 @@ function MatrixSpace (Scalar) {
     }
 
     /**
+     *
+     * @api private
      *
      * @returns {Object} transposed matrix
      */

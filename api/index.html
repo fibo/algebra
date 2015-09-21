@@ -15,18 +15,31 @@ layout: page
                  Loop over all @param tags.
 {% endcomment %}
 {% assign params = dox.tags | where:'type', 'param' %}
-    <ul>
+    <table class="table table-bordered table-striped">
+      <colgroup>
+        <col class="col-xs-1">
+        <col class="col-xs-7">
+      </colgroup>
+      <thead>
+        <tr><th>Type</th><th>Param</th>
+      </thead>
+      <tbody>
 {% for param in params %}
-      <li><strong>@param</strong> {{ param.name }} <span class="label label-default">{{ param.types | join: ',' }}</span></li>
+      <tr>
+        <th scope="row"><span class="label label-default">{{ param.types | join: ',' }}</span></th><tr>{{ param.name }}{{ param.description }}l</tr>
+      </tr>
 {% endfor %}
+      </tbody>
+    </table>
 {% comment %}
                  Get @returns tag.
 {% endcomment %}
 {% assign returns = dox.tags | where:'type', 'returns' | first %}
 {% if returns != null %}
-      <li><strong>@returns </strong> {{ returns.name }} <span class="label label-default">{{ returns.types | join: ',' }}</span></li>
-{% endif %}
+    <ul>
+      <li><strong>@returns </strong><span class="label label-default">{{ returns.types | join: ',' }}</span></li>
     </ul>
+{% endif %}
   </div>
 </div>
 {% endfor %}

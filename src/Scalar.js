@@ -3,19 +3,19 @@ var algebraRing = require('algebra-ring'),
     coerced     = require('./coerced'),
     comparison  = require('./comparison'),
     Element     = require('./Element'),
-    mutator     = require('./mutator'),
+    method      = require('./method'),
     inherits    = require('inherits')
 
-var nAryMutator  = mutator.nAry,
-    unaryMutator = mutator.unary
+var nAryMethod  = method.nAry,
+    unaryMethod = method.unary
 
 /**
  * Create an algebra scalar.
  *
- * @params {Array} identity
- * @params {Array} identity[0] a.k.a. zero
- * @params {Array} identity[1] a.k.a. uno
- * @params {Object} given operator functions
+ * @param {Array} identity
+ * @param {Array} identity[0] a.k.a. zero
+ * @param {Array} identity[1] a.k.a. uno
+ * @param {Object}   given operator functions
  * @param {Function} given.contains
  * @param {Function} given.equality
  * @param {Function} given.addition
@@ -59,14 +59,14 @@ function Scalar (identity, given) {
 
   // Chainable class methods.
 
-  Scalar.prototype.addition    = nAryMutator(addition, Scalar)
-  Scalar.prototype.subtraction = nAryMutator(subtraction, Scalar)
-  Scalar.prototype.negation    = unaryMutator(negation)
-  Scalar.prototype.conjugation = unaryMutator(conjugation)
+  Scalar.prototype.addition    = nAryMethod(addition, Scalar)
+  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar)
+  Scalar.prototype.negation    = unaryMethod(negation, Scalar)
+  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar)
 
-  Scalar.prototype.multiplication = nAryMutator(multiplication, Scalar)
-  Scalar.prototype.division       = nAryMutator(division, Scalar)
-  Scalar.prototype.inversion      = unaryMutator(r.inversion)
+  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar)
+  Scalar.prototype.division       = nAryMethod(division, Scalar)
+  Scalar.prototype.inversion      = unaryMethod(inversion, Scalar)
 
   // Static operators.
 

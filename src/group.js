@@ -1,16 +1,16 @@
 
+// TODO remove this file
+
 var algebraGroup = require('algebra-group'),
     coerced      = require('./coerced'),
     comparison   = require('./comparison'),
     Element      = require('./Element'),
-    mutator      = require('./mutator'),
     inherits     = require('inherits')
-
-var nAryMutator  = mutator.nAry,
-    unaryMutator = mutator.unary
 
 /**
  * Create an algebra group.
+ *
+ * @api private
  *
  * @param {Object} given
  * @param {*}        given.identity a.k.a neutral element

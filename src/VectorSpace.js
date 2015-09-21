@@ -1,7 +1,5 @@
 
-var getIndices                = require('./getIndices'),
-    group                     = require('./group'),
-    inherits                  = require('inherits'),
+var inherits                  = require('inherits'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
 
@@ -14,8 +12,6 @@ var getIndices                = require('./getIndices'),
  * var v = new V([1, 2])
  * ```
  *
- * @function
- *
  * @param {Object} Scalar class
  *
  * @returns {Function} anonymous with signature (dimension)
@@ -24,6 +20,8 @@ var getIndices                = require('./getIndices'),
 function VectorSpace (Scalar) {
 
   /**
+   *
+   * @api private
    *
    * @param {Number} dimension
    *
@@ -43,7 +41,7 @@ function VectorSpace (Scalar) {
 
     var zero = createZero(Scalar.zero, dimension)
 
-    function contains (a) {
+    function _contains (a) {
       if (a.length !== dimension) return false
 
       for (var i = 0; i < dimension; i++)
@@ -53,7 +51,7 @@ function VectorSpace (Scalar) {
       return true
     }
 
-    function equality (a, b) {
+    function _equality (a, b) {
       for (var i = 0; i < dimension; i++)
         if (! Scalar.equality(a[i], b[i]))
           return false
@@ -61,7 +59,7 @@ function VectorSpace (Scalar) {
       return true
     }
 
-    function addition (a, b) {
+    function _addition (a, b) {
       var c = []
 
       for (var i = 0; i < dimension; i++)
@@ -70,7 +68,7 @@ function VectorSpace (Scalar) {
       return c
     }
 
-    function negation (a) {
+    function _negation (a) {
       var b = []
 
       for (var i = 0; i < dimension; i++)
@@ -79,23 +77,32 @@ function VectorSpace (Scalar) {
       return b
     }
 
-    var Group = group({
+    var g = algebraGroup({
       identity       : zero,
-      contains       : contains,
-      equality       : equality,
-      compositionLaw : addition,
-      inversion      : negation
+      contains       : _contains,
+      equality       : _equality,
+      compositionLaw : _addition,
+      inversion      : _negation
     })
 
+    var addition    = coerced(g.addition),
+        contains    = coerced(g.contains),
+        disequality = coerced(g.disequality),
+        equality    = coerced(g.equality),
+        negation    = coerced(g.negation),
+        notContains = coerced(g.notContains),
+        subtraction = coerced(g.subtraction)
+
     /**
+     * Vector
      *
-     * @class
+     * Inherits from [Element](#element).
      *
      * @param {*} data
      */
 
     function Vector (data) {
-      Group.call(this, data)
+      Element.call(this, data, contains)
 
       /**
        * Norm of a vector
@@ -120,7 +127,7 @@ function VectorSpace (Scalar) {
       Object.defineProperty(this, 'norm', {get: vectorNorm})
     }
 
-    inherits(Vector, Group)
+    inherits(Vector, Element)
 
     // Static attributes.
 
@@ -130,9 +137,7 @@ function VectorSpace (Scalar) {
     })
 
     function crossProduct (right) {
-      var rightData      = toData(right),
-          rightDimension = rightData.length,
-          rightIndices   = getIndices(right)
+      var rightData      = toData(right)
 
             // TODO complete cross product
     }
@@ -144,20 +149,7 @@ function VectorSpace (Scalar) {
       Vector.prototype.x            = crossProduct
     }
 
-    function matrixProduct (matrix) {
-      var matrixData    = toData(matrix),
-          matrixIndices = getIndices(matrix)
-
-      var indices = [1, dimension]
-
-      var data = rowByColumnMultiplication(Scalar, this.data, indices, matrixData, matrixIndices)
-
-      this.data = data
-
-      return this
-    }
-
-    Vector.prototype.matrixProduct = matrixProduct
+  // TODO staticRightMultiplication by a matrix
 
     function scalarProduct (vector1, vector2) {
       var vectorData1    = toData(vector1),
@@ -182,8 +174,6 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.scalarProduct = vectorScalarProduct
-    Vector.prototype.dotProduct    = vectorScalarProduct
-    Vector.prototype.dot           = vectorScalarProduct
 
     function perScalarProduct (Scalar) {
       var data       = this.data,
@@ -199,19 +189,49 @@ function VectorSpace (Scalar) {
 
     Vector.prototype.perScalarProduct = perScalarProduct
 
-    Vector.scalarProduct = scalarProduct
+    // Comparison operators.
+
+    Vector.prototype.equality    = comparison(equality)
+    Vector.prototype.disequality = comparison(disequality)
+
+    // Chainable class methods.
+
+    Vector.prototype.addition    = nAryMethod(addition, Vector)
+    Vector.prototype.subtraction = nAryMethod(subtraction, Vector)
+    Vector.prototype.negation    = unaryMethod(negation, Vector)
 
     // Static operators.
 
-    Vector.addition    = Group.addition
-    Vector.subtraction = Group.subtraction
-    Vector.negation    = Group.negation
+    Vector.contains    = contains
+    Vector.disequality = disequality
+    Vector.equality    = equality
+    Vector.notContains = notContains
+
+    Vector.addition    = addition
+    Vector.subtraction = subtraction
+    Vector.negation    = negation
+
+    Vector.scalarProduct = scalarProduct
 
     // Aliases
 
-    Vector.add = Group.addition
-    Vector.sub = Group.subtraction
-    Vector.neg = Group.negation
+    Vector.eq = Vector.equality
+    Vector.ne = Vector.disequality
+
+    Vector.equal    = Vector.equality
+    Vector.notEqual = Vector.disequality
+    Vector.notEq    = Vector.disequality
+
+    Vector.add = Vector.addition
+    Vector.neg = Vector.negation
+    Vector.sub = Vector.subtraction
+
+    Vector.prototype.add = addition
+    Vector.prototype.neg = negation
+    Vector.prototype.sub = subtraction
+
+    Vector.prototype.dotProduct = vectorScalarProduct
+    Vector.prototype.dot        = vectorScalarProduct
 
     return Vector
   }

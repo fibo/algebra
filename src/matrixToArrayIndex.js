@@ -2,7 +2,8 @@
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
- * @function
+ * @api private
+ *
  * @param {Number} i index row
  * @param {Number} j index column
  * @param {Number} numCols

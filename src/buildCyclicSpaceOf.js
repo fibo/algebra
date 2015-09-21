@@ -5,10 +5,10 @@ var addStaticOperators  = require('./addStaticOperators'),
     buildFieldOperators = require('./buildFieldOperators'),
     Scalar              = require('./Scalar')
 
-/*!
+/**
  * Check if a number is prime
  *
- * @function
+ * @api private
  *
  * @param {Number} n
  *
@@ -28,10 +28,10 @@ function isPrime (n) {
   return true
 }
 
-/*!
+/**
  * Check if given elements are unique
  *
- * @function
+ * @api private
  *
  * @param {Array} elements
  *
@@ -47,10 +47,10 @@ function unique (elements) {
   return true
 }
 
-/*!
+/**
  * Construct a space isomorphic to Zp: the cyclic group of order p, where p is prime.
  *
- * @function
+ * @api private
  *
  * @param {Array|String} elements
  *

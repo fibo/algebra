@@ -1,6 +1,5 @@
 
 var determinant               = require('laplace-determinant'),
-    getIndices                = require('./getIndices'),
     inherits                  = require('inherits'),
     isInteger                 = require('is-integer'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
@@ -11,8 +10,6 @@ var determinant               = require('laplace-determinant'),
 /**
  * Space of m x n matrices
  *
- * @function
- *
  * @param {Object} Scalar
  *
  * @returns {Function} anonymous with signature (numRows[, numCols])
@@ -21,6 +18,8 @@ var determinant               = require('laplace-determinant'),
 function MatrixSpace (Scalar) {
 
   /**
+   *
+   * @api private
    *
    * @param {Number} numRows
    * @param {Number} numCols which is optional: defaults to a square matrix.
@@ -54,9 +53,18 @@ function MatrixSpace (Scalar) {
     // MatrixSpace mxn is a VectorSpace with dim=m*n
     var Vector = VectorSpace(Scalar)(dimension)
 
-      /*
-       *
-       */
+    /**
+     * Matrix
+     *
+     * Inherits from [Element](#element).
+     *
+     * ```
+     * var m = R2x2([0, 1,
+     *               1, 0]
+     * ```
+     *
+     * @param {*} data
+     */
 
     function Matrix (data) {
       Vector.call(this, data)
@@ -148,30 +156,19 @@ function MatrixSpace (Scalar) {
 
       var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
 
-      // If staticRightMultiplication does not throw it means that matrices can multiplied.
+      // If staticRightMultiplication does not throw it means that matrices can be multiplied.
       var rightNumCols = rightData.length / leftNumCols,
           rightNumRows = leftNumCols
 
-      var rightIsSquare = (rightNumCols === rightNumRows),
-          rightIsVector = (rightNumCols === 1)
+      var rightIsVector = (rightNumCols === 1)
 
       if (rightIsVector) {
         var Vector = VectorSpace(Scalar)(leftNumRows)
         return new Vector(data)
       }
-
-      if (rightIsSquare) {
-        // Right multiplication by a square matrix is an internal operation,
-        // so the method behaves like a mutator.
-
-        this.data = data
-
-        return this
-      }
       else {
-        // In this case, right element should be a matrix, but not square,
-        // so the method returns a new element.
-        return new MatrixSpace(Scalar)(rightNumRows, rightNumCols)(data)
+        var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+        return new Matrix(data)
       }
     }
 

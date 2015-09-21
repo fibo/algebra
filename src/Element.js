@@ -1,8 +1,6 @@
 
-/*!
+/**
  * Abstract element
- *
- * @class
  *
  * @param {Object|Array|Number|String|Function} data
  * @param {Function} check

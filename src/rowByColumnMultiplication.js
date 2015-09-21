@@ -5,8 +5,6 @@ var isInteger          = require('is-integer'),
 /**
  * Multiply two matrices, row by column.
  *
- * @function
- *
  * @api private
  *
  * @param {Object}   scalar

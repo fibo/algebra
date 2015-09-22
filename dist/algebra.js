@@ -597,6 +597,8 @@ module.exports = function (cb) { cb() }
 /**
  * Abstract element
  *
+ * It has a *data* attribute that can contain anything, validated by its *check*.
+ *
  * @param {*} data
  * @param {Function} check
  */
@@ -1051,7 +1053,6 @@ var nAryMethod  = method.nAry,
 function VectorSpace (Scalar) {
 
   /**
-   *
    * @api private
    *
    * @param {Number} dimension
@@ -1141,6 +1142,8 @@ function VectorSpace (Scalar) {
        * Given v = (x1, x2, ... xN)
        *
        * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
+       *
+       * @api private
        *
        * @returns {Scalar} result
        */

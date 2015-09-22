@@ -29,7 +29,6 @@ var nAryMethod  = method.nAry,
 function VectorSpace (Scalar) {
 
   /**
-   *
    * @api private
    *
    * @param {Number} dimension
@@ -119,6 +118,8 @@ function VectorSpace (Scalar) {
        * Given v = (x1, x2, ... xN)
        *
        * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
+       *
+       * @api private
        *
        * @returns {Scalar} result
        */

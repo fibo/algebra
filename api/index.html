@@ -3,12 +3,12 @@ title: API
 layout: page
 ---
 {% comment %}
-                 Loop over all objects in _data/dox.json, ignoring private comments.
+                 Loop over all objects in _data/dox.json, ignoring private api.
 {% endcomment %}
 {% assign doxes = site.data.dox | where:'isPrivate', false %}
 {% for dox in doxes %}
 <div class="panel panel-default">
-  <div class="panel-heading">{{ dox.ctx.name }}</div>
+  <div class="panel-heading" id="{{ dox.ctx.name | downcase }}">{{ dox.ctx.name }}</div>
   <div class="panel-body">
     <p>{{ dox.description.full }}</p>
 {% comment %}
@@ -26,7 +26,7 @@ layout: page
       <tbody>
 {% for param in params %}
       <tr>
-        <th scope="row"><span class="label label-default">{{ param.types | join: ',' }}</span></th><tr>{{ param.name }}</tr>
+        <th scope="row"><span class="label label-default">{{ param.types | join: ',' }}</span></th><td>{{ param.name }}</td>
       </tr>
 {% endfor %}
       </tbody>

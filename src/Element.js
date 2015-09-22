@@ -2,7 +2,7 @@
 /**
  * Abstract element
  *
- * @param {Object|Array|Number|String|Function} data
+ * @param {*} data
  * @param {Function} check
  */
 
@@ -13,7 +13,7 @@ function Element (data, check) {
   if (check(data))
     this.data = data
   else
-    throw new TypeError('Invalid data = ', data)
+    throw new TypeError('Invalid data = ' + data)
 }
 
 function valueOf () {

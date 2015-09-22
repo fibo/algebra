@@ -19,7 +19,7 @@
     "gh-pages:_data": "npm run package.json; npm run dox",
     "gh-pages:push": "git subtree --prefix gh-pages push origin gh-pages",
     "gh-pages:pull": "git subtree --prefix gh-pages pull origin gh-pages",
-    "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; grep -v readmenot README.md >> gh-pages/index.md",
+    "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; cat README.md >> gh-pages/index.md",
     "istanbul": "istanbul cover _mocha",
     "jekyll": "npm run homepage; npm run gh-pages:_data; cd gh-pages; jekyll build; cd ..",
     "jshint": "jshint -c .jshintrc src/**.js test/**.js",

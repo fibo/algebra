@@ -3,8 +3,9 @@ var algebraGroup              = require('algebra-group'),
     coerced                   = require('./coerced'),
     comparison                = require('./comparison'),
     Element                   = require('./Element'),
-    method                    = require('./method'),
     inherits                  = require('inherits'),
+    itemsPool                 = require('./itemsPool'),
+    method                    = require('./method'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
 
@@ -144,6 +145,10 @@ function VectorSpace (Scalar) {
       value: zero
     })
 
+    /**
+     * @api private
+     */
+
     function crossProduct (right) {
       var rightData      = toData(right)
 
@@ -158,6 +163,10 @@ function VectorSpace (Scalar) {
     }
 
   // TODO staticRightMultiplication by a matrix
+
+    /**
+     * @api private
+     */
 
     function scalarProduct (vector1, vector2) {
       var vectorData1    = toData(vector1),
@@ -175,6 +184,10 @@ function VectorSpace (Scalar) {
       return result
     }
 
+    /**
+     * @api private
+     */
+
     function vectorScalarProduct (vector) {
       var result = scalarProduct(this.data, vector)
 
@@ -182,6 +195,10 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.scalarProduct = vectorScalarProduct
+
+    /**
+     * @api private
+     */
 
     function perScalarProduct (Scalar) {
       var data       = this.data,
@@ -196,6 +213,28 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.perScalarProduct = perScalarProduct
+
+    /**
+     * Transpose a column-vector to a row-vector
+     *
+     * If you want to multiply at right a vector by a matrix you need to transpose it.
+     *
+     * @api private
+     *
+     * @returns {Object} Matrix
+     */
+
+    function transpose () {
+      var data   = this.data
+
+      var MatrixSpace = itemsPool.getMatrixSpace()
+
+      var Matrix = MatrixSpace(Scalar)(dimension, 1)
+
+      return new Matrix(data)
+    }
+
+    Vector.prototype.transpose = transpose
 
     // Comparison operators.
 
@@ -244,6 +283,8 @@ function VectorSpace (Scalar) {
     return Vector
   }
 }
+
+itemsPool.setVectorSpace(VectorSpace)
 
 module.exports = VectorSpace
 

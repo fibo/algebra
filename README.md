@@ -10,7 +10,7 @@
 
 ## Status
 
-*algebra* is under development, but API will not change until version **1.0**.
+*algebra* is under development, but API should not change until version **1.0**.
 
 I am currently adding more tests and examples to achieve a stable version.
 
@@ -26,23 +26,8 @@ Many functionalities of previous versions are now in separated atomic packages:
 * Real, Complex, Quaternion, Octonion numbers.
 * [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#scalars), of course :).
 * Expressive syntax.
-* [math blog][1] with articles explaining algebra concepts and practical examples.
-* Class instances are immutables.
-
-## Math blog
-
-I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning math.
-Please find here my [math articles][1].
-
-<!-- readmenot
-     Line containing the readmenot string are filtered from index.md,
-     while this readmenot comment is not displayed in README.md
-     which is rendered on npm and GitHub … ehm readmenot
-
-Follows a list of recent posts.
-
-{% include posts_list.html limit="5" %}
-     readmenot -->
+* [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
+* [math blog][1] with articles explaining algebra concepts and practical examples. I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning about the *Queen of Science*.
 
 ## Installation
 
@@ -60,7 +45,7 @@ $ bower install algebra
 
 ## Synopsis
 
-This is a 60 seconds tutorial to get your hands dirty with algebra.
+This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
 All code in the examples below is intended to be contained into a [single file](https://github.com/fibo/algebra/blob/master/test/synopsis.js).
 

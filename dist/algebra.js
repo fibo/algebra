@@ -20,7 +20,7 @@ require('strict-mode')(function () {
 })
 
 
-},{"./src/MatrixSpace":12,"./src/Scalar":13,"./src/VectorSpace":14,"./src/realField":19,"cayley-dickson":4,"strict-mode":10}],2:[function(require,module,exports){
+},{"./src/MatrixSpace":12,"./src/Scalar":13,"./src/VectorSpace":14,"./src/realField":20,"cayley-dickson":4,"strict-mode":10}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -597,7 +597,7 @@ module.exports = function (cb) { cb() }
 /**
  * Abstract element
  *
- * @param {Object|Array|Number|String|Function} data
+ * @param {*} data
  * @param {Function} check
  */
 
@@ -608,7 +608,7 @@ function Element (data, check) {
   if (check(data))
     this.data = data
   else
-    throw new TypeError('Invalid data = ', data)
+    throw new TypeError('Invalid data = ' + data)
 }
 
 function valueOf () {
@@ -624,6 +624,7 @@ module.exports = Element
 
 var determinant               = require('laplace-determinant'),
     inherits                  = require('inherits'),
+    itemsPool                 = require('./itemsPool'),
     isInteger                 = require('is-integer'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication'),
@@ -632,6 +633,12 @@ var determinant               = require('laplace-determinant'),
 
 /**
  * Space of m x n matrices
+ *
+ * ```
+ * var R = algebra.R
+ *
+ * var R2x2 = algebra.MatrixSpace(R)(2)
+ * ```
  *
  * @param {Object} Scalar
  *
@@ -645,9 +652,9 @@ function MatrixSpace (Scalar) {
    * @api private
    *
    * @param {Number} numRows
-   * @param {Number} numCols which is optional: defaults to a square matrix.
+   * @param {Number} [numCols] defaults to a square matrix.
    *
-   * @returns {Constructor} Matrix
+   * @returns {Function} Matrix
    */
 
   return function (numRows, numCols) {
@@ -700,10 +707,6 @@ function MatrixSpace (Scalar) {
         'numRows': { writable: false, value: numRows }
       })
 
-      /*
-       *
-       */
-
       function matrixDeterminant () {
         var det = determinant(this.data, Scalar, numRows)
 
@@ -741,6 +744,8 @@ function MatrixSpace (Scalar) {
     })
 
     /**
+     * @api private
+     *
      * Row by column multiplication at right side
      */
 
@@ -783,14 +788,24 @@ function MatrixSpace (Scalar) {
       var rightNumCols = rightData.length / leftNumCols,
           rightNumRows = leftNumCols
 
-      var rightIsVector = (rightNumCols === 1)
+      var leftIsVector  = (leftNumCols === 1),
+          rightIsVector = (rightNumCols === 1)
+
+      if (leftIsVector && rightIsVector)
+        return new Scalar(data[0])
 
       if (rightIsVector) {
+        var VectorSpace = itemsPool.getVectorSpace()
+
         var Vector = VectorSpace(Scalar)(leftNumRows)
+
         return new Vector(data)
       }
       else {
+        var MatrixSpace = itemsPool.getMatrixSpace()
+
         var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+
         return new Matrix(data)
       }
     }
@@ -798,6 +813,8 @@ function MatrixSpace (Scalar) {
     Matrix.prototype.multiplication = rightMultiplication
 
     /**
+     *
+     * @api private
      *
      * @param {numRows}
      * @param {numCols}
@@ -819,6 +836,8 @@ function MatrixSpace (Scalar) {
     }
 
     /**
+     *
+     * @api private
      *
      * @returns {Object} transposed matrix
      */
@@ -865,10 +884,12 @@ function MatrixSpace (Scalar) {
   }
 }
 
+itemsPool.setMatrixSpace(MatrixSpace)
+
 module.exports = MatrixSpace
 
 
-},{"./VectorSpace":14,"./matrixToArrayIndex":17,"./rowByColumnMultiplication":20,"./toData":21,"inherits":5,"is-integer":6,"laplace-determinant":9}],13:[function(require,module,exports){
+},{"./VectorSpace":14,"./itemsPool":17,"./matrixToArrayIndex":18,"./rowByColumnMultiplication":21,"./toData":22,"inherits":5,"is-integer":6,"laplace-determinant":9}],13:[function(require,module,exports){
 
 var algebraRing = require('algebra-ring'),
     coerced     = require('./coerced'),
@@ -998,14 +1019,15 @@ function Scalar (identity, given) {
 module.exports = Scalar
 
 
-},{"./Element":11,"./coerced":15,"./comparison":16,"./method":18,"algebra-ring":3,"inherits":5}],14:[function(require,module,exports){
+},{"./Element":11,"./coerced":15,"./comparison":16,"./method":19,"algebra-ring":3,"inherits":5}],14:[function(require,module,exports){
 
 var algebraGroup              = require('algebra-group'),
     coerced                   = require('./coerced'),
     comparison                = require('./comparison'),
     Element                   = require('./Element'),
-    method                    = require('./method'),
     inherits                  = require('inherits'),
+    itemsPool                 = require('./itemsPool'),
+    method                    = require('./method'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
 
@@ -1145,6 +1167,10 @@ function VectorSpace (Scalar) {
       value: zero
     })
 
+    /**
+     * @api private
+     */
+
     function crossProduct (right) {
       var rightData      = toData(right)
 
@@ -1159,6 +1185,10 @@ function VectorSpace (Scalar) {
     }
 
   // TODO staticRightMultiplication by a matrix
+
+    /**
+     * @api private
+     */
 
     function scalarProduct (vector1, vector2) {
       var vectorData1    = toData(vector1),
@@ -1176,6 +1206,10 @@ function VectorSpace (Scalar) {
       return result
     }
 
+    /**
+     * @api private
+     */
+
     function vectorScalarProduct (vector) {
       var result = scalarProduct(this.data, vector)
 
@@ -1183,6 +1217,10 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.scalarProduct = vectorScalarProduct
+
+    /**
+     * @api private
+     */
 
     function perScalarProduct (Scalar) {
       var data       = this.data,
@@ -1197,6 +1235,28 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.perScalarProduct = perScalarProduct
+
+    /**
+     * Transpose a column-vector to a row-vector
+     *
+     * If you want to multiply at right a vector by a matrix you need to transpose it.
+     *
+     * @api private
+     *
+     * @returns {Object} Matrix
+     */
+
+    function transpose () {
+      var data   = this.data
+
+      var MatrixSpace = itemsPool.getMatrixSpace()
+
+      var Matrix = MatrixSpace(Scalar)(dimension, 1)
+
+      return new Matrix(data)
+    }
+
+    Vector.prototype.transpose = transpose
 
     // Comparison operators.
 
@@ -1246,10 +1306,12 @@ function VectorSpace (Scalar) {
   }
 }
 
+itemsPool.setVectorSpace(VectorSpace)
+
 module.exports = VectorSpace
 
 
-},{"./Element":11,"./coerced":15,"./comparison":16,"./method":18,"./rowByColumnMultiplication.js":20,"./toData":21,"algebra-group":2,"inherits":5}],15:[function(require,module,exports){
+},{"./Element":11,"./coerced":15,"./comparison":16,"./itemsPool":17,"./method":19,"./rowByColumnMultiplication.js":21,"./toData":22,"algebra-group":2,"inherits":5}],15:[function(require,module,exports){
 
 var toData = require('./toData')
 
@@ -1272,7 +1334,7 @@ function coerced (operator) {
 module.exports = coerced
 
 
-},{"./toData":21}],16:[function(require,module,exports){
+},{"./toData":22}],16:[function(require,module,exports){
 
 /**
  * Comparison operator for group and ring classes
@@ -1295,6 +1357,50 @@ module.exports = comparison
 
 },{}],17:[function(require,module,exports){
 
+function itemsPool () {
+  var MatrixSpace,
+      VectorSpace
+
+  function getMatrixSpace () {
+    if (typeof MatrixSpace === 'undefined')
+      throw new Error('MatrixSpace not yet in items pool')
+
+    return MatrixSpace
+  }
+
+  this.getMatrixSpace = getMatrixSpace
+
+  function setMatrixSpace (item) {
+    if (typeof MatrixSpace === 'undefined')
+      MatrixSpace = item
+    else throw new Error('MatrixSpace already in items pool')
+  }
+
+  this.setMatrixSpace = setMatrixSpace
+
+  function getVectorSpace () {
+    if (typeof VectorSpace === 'undefined')
+      throw new Error('VectorSpace not yet in items pool')
+
+    return VectorSpace
+  }
+
+  this.getVectorSpace = getVectorSpace
+
+  function setVectorSpace (item) {
+    if (typeof VectorSpace === 'undefined')
+      VectorSpace = item
+    else throw new Error('VectorSpace already in items pool')
+  }
+
+  this.setVectorSpace = setVectorSpace
+}
+
+module.exports = new itemsPool()
+
+
+},{}],18:[function(require,module,exports){
+
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
@@ -1314,7 +1420,7 @@ function matrixToArrayIndex (i, j, numCols) {
 module.exports = matrixToArrayIndex
 
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 function unaryMethod (operator, Scalar) {
   return function () {
@@ -1335,7 +1441,7 @@ function nAryMethod (operator, Scalar) {
 exports.nAry = nAryMethod
 
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 var realField = {
   zero: 0,
@@ -1354,7 +1460,7 @@ var realField = {
 module.exports = realField
 
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
 var isInteger          = require('is-integer'),
     matrixToArrayIndex = require('./matrixToArrayIndex')
@@ -1424,7 +1530,7 @@ function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix
 module.exports = rowByColumnMultiplication
 
 
-},{"./matrixToArrayIndex":17,"is-integer":6}],21:[function(require,module,exports){
+},{"./matrixToArrayIndex":18,"is-integer":6}],22:[function(require,module,exports){
 
 /**
  * Extract data attribute, if any, and check it

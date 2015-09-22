@@ -1,6 +1,7 @@
 
 var determinant               = require('laplace-determinant'),
     inherits                  = require('inherits'),
+    itemsPool                 = require('./itemsPool'),
     isInteger                 = require('is-integer'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication'),
@@ -9,6 +10,12 @@ var determinant               = require('laplace-determinant'),
 
 /**
  * Space of m x n matrices
+ *
+ * ```
+ * var R = algebra.R
+ *
+ * var R2x2 = algebra.MatrixSpace(R)(2)
+ * ```
  *
  * @param {Object} Scalar
  *
@@ -22,9 +29,9 @@ function MatrixSpace (Scalar) {
    * @api private
    *
    * @param {Number} numRows
-   * @param {Number} numCols which is optional: defaults to a square matrix.
+   * @param {Number} [numCols] defaults to a square matrix.
    *
-   * @returns {Constructor} Matrix
+   * @returns {Function} Matrix
    */
 
   return function (numRows, numCols) {
@@ -76,11 +83,6 @@ function MatrixSpace (Scalar) {
         'numCols': { writable: false, value: numCols },
         'numRows': { writable: false, value: numRows }
       })
-
-      /*
-       * @api private
-       *
-       */
 
       function matrixDeterminant () {
         var det = determinant(this.data, Scalar, numRows)
@@ -163,14 +165,24 @@ function MatrixSpace (Scalar) {
       var rightNumCols = rightData.length / leftNumCols,
           rightNumRows = leftNumCols
 
-      var rightIsVector = (rightNumCols === 1)
+      var leftIsVector  = (leftNumCols === 1),
+          rightIsVector = (rightNumCols === 1)
+
+      if (leftIsVector && rightIsVector)
+        return new Scalar(data[0])
 
       if (rightIsVector) {
+        var VectorSpace = itemsPool.getVectorSpace()
+
         var Vector = VectorSpace(Scalar)(leftNumRows)
+
         return new Vector(data)
       }
       else {
+        var MatrixSpace = itemsPool.getMatrixSpace()
+
         var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+
         return new Matrix(data)
       }
     }
@@ -248,6 +260,8 @@ function MatrixSpace (Scalar) {
     return Matrix
   }
 }
+
+itemsPool.setMatrixSpace(MatrixSpace)
 
 module.exports = MatrixSpace
 

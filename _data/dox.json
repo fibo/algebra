@@ -3,22 +3,16 @@
     "tags": [
       {
         "type": "param",
-        "string": "{Object|Array|Number|String|Function} data",
+        "string": "{*} data",
         "name": "data",
         "description": "",
-        "types": [
-          "Object",
-          "Array",
-          "Number",
-          "String",
-          "Function"
-        ],
-        "typesDescription": "<code>Object</code>|<code>Array</code>|<code>Number</code>|<code>String</code>|<code>Function</code>",
+        "types": [],
+        "typesDescription": "<code>*</code>",
         "optional": false,
         "nullable": false,
         "nonNullable": false,
         "variable": false,
-        "html": "<p>{Object|Array|Number|String|Function} data</p>"
+        "html": "<p>{*} data</p>"
       },
       {
         "type": "param",
@@ -48,7 +42,7 @@
     "ignore": false,
     "line": 2,
     "codeStart": 9,
-    "code": "function Element (data, check) {\n  if (typeof data === 'undefined')\n    throw new TypeError('Undefined data')\n\n  if (check(data))\n    this.data = data\n  else\n    throw new TypeError('Invalid data = ', data)\n}\n\nfunction valueOf () {\n  return this.data\n}\n\nElement.prototype.valueOf = valueOf\n\nmodule.exports = Element\n\n\nvar determinant               = require('laplace-determinant'),\n    inherits                  = require('inherits'),\n    isInteger                 = require('is-integer'),\n    matrixToArrayIndex        = require('./matrixToArrayIndex'),\n    rowByColumnMultiplication = require('./rowByColumnMultiplication'),\n    toData                    = require('./toData'),\n    VectorSpace               = require('./VectorSpace')",
+    "code": "function Element (data, check) {\n  if (typeof data === 'undefined')\n    throw new TypeError('Undefined data')\n\n  if (check(data))\n    this.data = data\n  else\n    throw new TypeError('Invalid data = ' + data)\n}\n\nfunction valueOf () {\n  return this.data\n}\n\nElement.prototype.valueOf = valueOf\n\nmodule.exports = Element\n\n\nvar determinant               = require('laplace-determinant'),\n    inherits                  = require('inherits'),\n    itemsPool                 = require('./itemsPool'),\n    isInteger                 = require('is-integer'),\n    matrixToArrayIndex        = require('./matrixToArrayIndex'),\n    rowByColumnMultiplication = require('./rowByColumnMultiplication'),\n    toData                    = require('./toData'),\n    VectorSpace               = require('./VectorSpace')",
     "ctx": {
       "type": "function",
       "name": "Element",
@@ -87,17 +81,17 @@
       }
     ],
     "description": {
-      "full": "<p>Space of m x n matrices</p>",
+      "full": "<p>Space of m x n matrices</p><pre><code>var R = algebra.R\n\nvar R2x2 = algebra.MatrixSpace(R)(2)\n</code></pre>",
       "summary": "<p>Space of m x n matrices</p>",
-      "body": ""
+      "body": "<pre><code>var R = algebra.R\n\nvar R2x2 = algebra.MatrixSpace(R)(2)\n</code></pre>"
     },
     "isPrivate": false,
     "isConstructor": false,
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 36,
-    "codeStart": 44,
+    "line": 37,
+    "codeStart": 51,
     "code": "function MatrixSpace (Scalar) {",
     "ctx": {
       "type": "function",
@@ -130,25 +124,25 @@
       },
       {
         "type": "param",
-        "string": "{Number} numCols which is optional: defaults to a square matrix.\n",
-        "name": "numCols",
-        "description": "<p>which is optional: defaults to a square matrix. </p>",
+        "string": "{Number} [numCols] defaults to a square matrix.\n",
+        "name": "[numCols]",
+        "description": "<p>defaults to a square matrix. </p>",
         "types": [
           "Number"
         ],
         "typesDescription": "<code>Number</code>",
-        "optional": false,
+        "optional": true,
         "nullable": false,
         "nonNullable": false,
         "variable": false
       },
       {
         "type": "returns",
-        "string": "{Constructor} Matrix",
+        "string": "{Function} Matrix",
         "types": [
-          "Constructor"
+          "Function"
         ],
-        "typesDescription": "<a href=\"Constructor.html\">Constructor</a>",
+        "typesDescription": "<code>Function</code>",
         "optional": false,
         "nullable": false,
         "nonNullable": false,
@@ -166,8 +160,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 46,
-    "codeStart": 56,
+    "line": 53,
+    "codeStart": 63,
     "code": "return function (numRows, numCols) {\n\n  function createIdentity (scalarZero, scalarOne, rank) {\n    var identity = []\n\n    for (var i = 0; i < rank; i++)\n      for (var j = 0; j < rank; j++)\n        if (i === j)\n          identity.push(scalarOne)\n        else\n          identity.push(scalarZero)\n\n   return identity\n  }\n\n  // numCols defaults to numRows\n  if (typeof numCols === 'undefined')\n    numCols = numRows\n\n  var dimension = numRows * numCols,\n      indices   = [numRows, numCols],\n      isSquare  = (numRows === numCols)\n\n  // MatrixSpace mxn is a VectorSpace with dim=m*n\n  var Vector = VectorSpace(Scalar)(dimension)",
     "ctx": {
       "type": "function",
@@ -201,9 +195,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 82,
-    "codeStart": 95,
-    "code": "function Matrix (data) {\n  Vector.call(this, data)\n\n  this.numCols = numCols\n  this.numRows = numRows\n\n  Object.defineProperties(this, {\n    'numCols': { writable: false, value: numCols },\n    'numRows': { writable: false, value: numRows }\n  })",
+    "line": 89,
+    "codeStart": 102,
+    "code": "function Matrix (data) {\n  Vector.call(this, data)\n\n  this.numCols = numCols\n  this.numRows = numRows\n\n  Object.defineProperties(this, {\n    'numCols': { writable: false, value: numCols },\n    'numRows': { writable: false, value: numRows }\n  })\n\n  function matrixDeterminant () {\n    var det = determinant(this.data, Scalar, numRows)\n\n    return new Scalar(det)\n  }\n\n  if (isSquare) {\n    Object.defineProperty(this, 'determinant', {get: matrixDeterminant})\n  }\n}\n\ninherits(Matrix, Vector)\n\n// Static attributes.\n\nif (isSquare) {\n  // TODO rank should be calculated depending on determinant\n  // if determinant is zero, rank < numRows, but this needs sub-matrix function\n  // which is in laplace-determinant package and should be placed in its own package\n  var rank = numRows\n\n  var identity = createIdentity(Scalar.zero, Scalar.one, rank)\n\n  Object.defineProperty(Matrix, 'identity', {\n    writable: false,\n    value: identity\n  })\n}\n\nObject.defineProperties(Matrix, {\n  'isSquare': { writable: false, value: isSquare },\n  'numCols': { writable: false, value: numCols },\n  'numRows': { writable: false, value: numRows },\n  'zero': { writable: false, value: Vector.zero }\n})",
     "ctx": {
       "type": "function",
       "name": "Matrix",
@@ -211,41 +205,27 @@
     }
   },
   {
-    "tags": [],
+    "tags": [
+      {
+        "type": "api",
+        "string": "private\n\nRow by column multiplication at right side",
+        "visibility": "private",
+        "html": "<p>private</p><p>Row by column multiplication at right side</p>"
+      }
+    ],
     "description": {
       "full": "",
       "summary": "",
       "body": ""
     },
-    "isPrivate": false,
+    "isPrivate": true,
     "isConstructor": false,
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 106,
-    "codeStart": 110,
-    "code": "function matrixDeterminant () {\n  var det = determinant(this.data, Scalar, numRows)\n\n  return new Scalar(det)\n}\n\nif (isSquare) {\n  Object.defineProperty(this, 'determinant', {get: matrixDeterminant})\n}\n    }\n\n    inherits(Matrix, Vector)\n\n    // Static attributes.\n\n    if (isSquare) {\n// TODO rank should be calculated depending on determinant\n// if determinant is zero, rank < numRows, but this needs sub-matrix function\n// which is in laplace-determinant package and should be placed in its own package\nvar rank = numRows\n\nvar identity = createIdentity(Scalar.zero, Scalar.one, rank)\n\nObject.defineProperty(Matrix, 'identity', {\n  writable: false,\n  value: identity\n})\n    }\n\n    Object.defineProperties(Matrix, {\n'isSquare': { writable: false, value: isSquare },\n'numCols': { writable: false, value: numCols },\n'numRows': { writable: false, value: numRows },\n'zero': { writable: false, value: Vector.zero }\n    })",
-    "ctx": {
-      "type": "function",
-      "name": "matrixDeterminant",
-      "string": "matrixDeterminant()"
-    }
-  },
-  {
-    "tags": [],
-    "description": {
-      "full": "<p>Row by column multiplication at right side</p>",
-      "summary": "<p>Row by column multiplication at right side</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 146,
-    "codeStart": 150,
-    "code": "function staticRightMultiplication (leftNumRows, leftNumCols, left, right) {\n  // Multiplication is possible only if\n  //\n  //     left num cols = right num rows\n  //\n  // Since\n  //\n  //     right num rows * right num cols = rightData.length\n  //\n  // it is possible to compute right num cols and the right matrix is square if\n  //\n  //     right num rows = right num cols\n  //\n\n  // leftNumRows, leftNumCols = rightNumRows, rightNumCols\n\n  var leftData  = toData(left),\n      rightData = toData(right),\n      rightNumCols = rightData.length / leftNumCols\n\n  // Check if rightNumCols results to be an integer: it means matrices can be multiplied.\n  if (! isInteger(rightNumCols))\n    throw new TypeError('left num cols != right num rows')\n\n  return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols)\n}\n\nfunction rightMultiplication (right) {\n  var left        = this.data,\n      leftNumCols = this.numCols,\n      leftNumRows = this.numRows,\n      rightData   = toData(right)\n\n  var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)\n\n  // If staticRightMultiplication does not throw it means that matrices can be multiplied.\n  var rightNumCols = rightData.length / leftNumCols,\n      rightNumRows = leftNumCols\n\n  var rightIsVector = (rightNumCols === 1)\n\n  if (rightIsVector) {\n    var Vector = VectorSpace(Scalar)(leftNumRows)\n    return new Vector(data)\n  }\n  else {\n    var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)\n    return new Matrix(data)\n  }\n}\n\nMatrix.prototype.multiplication = rightMultiplication",
+    "line": 149,
+    "codeStart": 155,
+    "code": "function staticRightMultiplication (leftNumRows, leftNumCols, left, right) {\n  // Multiplication is possible only if\n  //\n  //     left num cols = right num rows\n  //\n  // Since\n  //\n  //     right num rows * right num cols = rightData.length\n  //\n  // it is possible to compute right num cols and the right matrix is square if\n  //\n  //     right num rows = right num cols\n  //\n\n  // leftNumRows, leftNumCols = rightNumRows, rightNumCols\n\n  var leftData  = toData(left),\n      rightData = toData(right),\n      rightNumCols = rightData.length / leftNumCols\n\n  // Check if rightNumCols results to be an integer: it means matrices can be multiplied.\n  if (! isInteger(rightNumCols))\n    throw new TypeError('left num cols != right num rows')\n\n  return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols)\n}\n\nfunction rightMultiplication (right) {\n  var left        = this.data,\n      leftNumCols = this.numCols,\n      leftNumRows = this.numRows,\n      rightData   = toData(right)\n\n  var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)\n\n  // If staticRightMultiplication does not throw it means that matrices can be multiplied.\n  var rightNumCols = rightData.length / leftNumCols,\n      rightNumRows = leftNumCols\n\n  var leftIsVector  = (leftNumCols === 1),\n      rightIsVector = (rightNumCols === 1)\n\n  if (leftIsVector && rightIsVector)\n    return new Scalar(data[0])\n\n  if (rightIsVector) {\n    var VectorSpace = itemsPool.getVectorSpace()\n\n    var Vector = VectorSpace(Scalar)(leftNumRows)\n\n    return new Vector(data)\n  }\n  else {\n    var MatrixSpace = itemsPool.getMatrixSpace()\n\n    var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)\n\n    return new Matrix(data)\n  }\n}\n\nMatrix.prototype.multiplication = rightMultiplication",
     "ctx": {
       "type": "function",
       "name": "staticRightMultiplication",
@@ -254,6 +234,12 @@
   },
   {
     "tags": [
+      {
+        "type": "api",
+        "string": "private\n",
+        "visibility": "private",
+        "html": "<p>private</p>"
+      },
       {
         "type": "param",
         "string": "{numRows}",
@@ -319,13 +305,13 @@
       "summary": "",
       "body": ""
     },
-    "isPrivate": false,
+    "isPrivate": true,
     "isConstructor": false,
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 203,
-    "codeStart": 212,
+    "line": 218,
+    "codeStart": 229,
     "code": "function transpose (numRows, numCols, matrix) {\n  var data           = toData(matrix),\n      transposedData = []\n\n  for (var i = 0; i < numRows; i++)\n    for (var j = 0; j < numCols; j++) {\n      transposedData[matrixToArrayIndex(j, i, numRows)] = data[matrixToArrayIndex(i, j, numCols)]\n    }\n\n  return transposedData\n}",
     "ctx": {
       "type": "function",
@@ -335,6 +321,12 @@
   },
   {
     "tags": [
+      {
+        "type": "api",
+        "string": "private\n",
+        "visibility": "private",
+        "html": "<p>private</p>"
+      },
       {
         "type": "returns",
         "string": "{Object} transposed matrix",
@@ -354,14 +346,14 @@
       "summary": "",
       "body": ""
     },
-    "isPrivate": false,
+    "isPrivate": true,
     "isConstructor": false,
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 224,
-    "codeStart": 229,
-    "code": "function matrixTransposition () {\n  var data    = this.data,\n      numCols = this.numCols,\n      numRows = this.numRows\n\n  var transposedData = transpose(numRows, numCols, data)\n\n                                          // +--------+-- Transposed indices here.\n                                          // ↓        ↓\n  var TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows)\n  return new TransposedMatrix(transposedData)\n}\n\nMatrix.prototype.transpose = matrixTransposition\n\n// Static operators.\n\nMatrix.addition       = Vector.addition\nMatrix.multiplication = staticRightMultiplication.bind(null, numRows, numCols)\nMatrix.negation       = Vector.negation\nMatrix.subtraction    = Vector.subtraction\nMatrix.transpose      = transpose.bind(null, numRows, numCols)\n\n// Aliases.\n\nMatrix.add = Matrix.addition\nMatrix.mul = Matrix.multiplication\nMatrix.neg = Matrix.negation\nMatrix.sub = Matrix.subtraction\n\nMatrix.prototype.mul = rightMultiplication\nMatrix.prototype.o   = rightMultiplication\n\nMatrix.prototype.tr = matrixTransposition\nMatrix.prototype.t  = matrixTransposition\n\nMatrix.tr = Matrix.transpose\n\nreturn Matrix\n  }\n}\n\nmodule.exports = MatrixSpace\n\n\nvar algebraRing = require('algebra-ring'),\ncoerced     = require('./coerced'),\ncomparison  = require('./comparison'),\nElement     = require('./Element'),\nmethod      = require('./method'),\ninherits    = require('inherits')\n\nvar nAryMethod  = method.nAry,\nunaryMethod = method.unary",
+    "line": 241,
+    "codeStart": 248,
+    "code": "function matrixTransposition () {\n  var data    = this.data,\n      numCols = this.numCols,\n      numRows = this.numRows\n\n  var transposedData = transpose(numRows, numCols, data)\n\n                                          // +--------+-- Transposed indices here.\n                                          // ↓        ↓\n  var TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows)\n  return new TransposedMatrix(transposedData)\n}\n\nMatrix.prototype.transpose = matrixTransposition\n\n// Static operators.\n\nMatrix.addition       = Vector.addition\nMatrix.multiplication = staticRightMultiplication.bind(null, numRows, numCols)\nMatrix.negation       = Vector.negation\nMatrix.subtraction    = Vector.subtraction\nMatrix.transpose      = transpose.bind(null, numRows, numCols)\n\n// Aliases.\n\nMatrix.add = Matrix.addition\nMatrix.mul = Matrix.multiplication\nMatrix.neg = Matrix.negation\nMatrix.sub = Matrix.subtraction\n\nMatrix.prototype.mul = rightMultiplication\nMatrix.prototype.o   = rightMultiplication\n\nMatrix.prototype.tr = matrixTransposition\nMatrix.prototype.t  = matrixTransposition\n\nMatrix.tr = Matrix.transpose\n\nreturn Matrix\n  }\n}\n\nitemsPool.setMatrixSpace(MatrixSpace)\n\nmodule.exports = MatrixSpace\n\n\nvar algebraRing = require('algebra-ring'),\ncoerced     = require('./coerced'),\ncomparison  = require('./comparison'),\nElement     = require('./Element'),\nmethod      = require('./method'),\ninherits    = require('inherits')\n\nvar nAryMethod  = method.nAry,\nunaryMethod = method.unary",
     "ctx": {
       "type": "function",
       "name": "matrixTransposition",
@@ -541,9 +533,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 284,
-    "codeStart": 301,
-    "code": "function Scalar (identity, given) {\n  var r = algebraRing(identity, given)\n\n  function Scalar (data) {\n    Element.call(this, data, given.contains)\n  }\n\n  inherits(Scalar, Element)\n\n    // TODO questo codice dovrebbe stare in cayley-dickson\n  if (typeof given.conjugation === 'undefined')\n    given.conjugation = function (a) { return a }\n\n  var addition    = coerced(given.addition),\n      contains    = coerced(given.contains),\n      conjugation = coerced(given.conjugation),\n      disequality = coerced(given.disequality),\n      equality    = coerced(given.equality),\n      negation    = coerced(given.negation),\n      notContains = coerced(given.notContains),\n      subtraction = coerced(given.subtraction)\n\n  var multiplication = coerced(given.multiplication),\n      division       = coerced(given.division),\n      inversion      = coerced(given.inversion)\n\n  // Comparison operators.\n\n  Scalar.prototype.equality    = comparison(equality)\n  Scalar.prototype.disequality = comparison(disequality)\n\n  // Chainable class methods.\n\n  Scalar.prototype.addition = function () {\n    var data = addition.bind(null, this.data).apply(null, arguments)\n    return new Scalar(data)\n  }\n\n  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar)\n  Scalar.prototype.negation    = unaryMethod(negation, Scalar)\n  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar)\n\n  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar)\n  Scalar.prototype.division       = nAryMethod(division, Scalar)\n  Scalar.prototype.inversion      = unaryMethod(inversion, Scalar)\n\n  // Static operators.\n\n  Scalar.addition    = addition\n  Scalar.contains    = contains\n  Scalar.conjugation = conjugation\n  Scalar.disequality = disequality\n  Scalar.equality    = equality\n  Scalar.negation    = negation\n  Scalar.notContains = notContains\n  Scalar.subtraction = subtraction\n\n  Scalar.multiplication = multiplication\n  Scalar.division       = division\n  Scalar.inversion      = inversion\n\n  // Aliases.\n\n  Scalar.eq = Scalar.equality\n  Scalar.ne = Scalar.disequality\n\n  Scalar.equal    = Scalar.equality\n  Scalar.notEqual = Scalar.disequality\n  Scalar.notEq    = Scalar.disequality\n\n  Scalar.add = Scalar.addition\n  Scalar.neg = Scalar.negation\n  Scalar.sub = Scalar.subtraction\n\n  Scalar.div = Scalar.division\n  Scalar.inv = Scalar.inversion\n  Scalar.mul = Scalar.multiplication\n\n  Scalar.conj = Scalar.conj\n\n  Scalar.prototype.add = Scalar.prototype.addition\n  Scalar.prototype.neg = Scalar.prototype.negation\n  Scalar.prototype.sub = Scalar.prototype.subtraction\n\n  Scalar.prototype.mul = Scalar.prototype.multiplication\n  Scalar.prototype.div = Scalar.prototype.division\n  Scalar.prototype.inv = Scalar.prototype.inversion\n\n  Scalar.prototype.conj = Scalar.prototype.conjugation\n\n  // Identities.\n\n  Scalar.zero = new Scalar(identity[0])\n  Scalar.one  = new Scalar(identity[1])\n\n  return Scalar\n}\n\nmodule.exports = Scalar\n\n\nvar algebraGroup              = require('algebra-group'),\n    coerced                   = require('./coerced'),\n    comparison                = require('./comparison'),\n    Element                   = require('./Element'),\n    method                    = require('./method'),\n    inherits                  = require('inherits'),\n    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n    toData                    = require('./toData')\n\nvar nAryMethod  = method.nAry,\n    unaryMethod = method.unary",
+    "line": 305,
+    "codeStart": 322,
+    "code": "function Scalar (identity, given) {\n  var r = algebraRing(identity, given)\n\n  function Scalar (data) {\n    Element.call(this, data, given.contains)\n  }\n\n  inherits(Scalar, Element)\n\n    // TODO questo codice dovrebbe stare in cayley-dickson\n  if (typeof given.conjugation === 'undefined')\n    given.conjugation = function (a) { return a }\n\n  var addition    = coerced(given.addition),\n      contains    = coerced(given.contains),\n      conjugation = coerced(given.conjugation),\n      disequality = coerced(given.disequality),\n      equality    = coerced(given.equality),\n      negation    = coerced(given.negation),\n      notContains = coerced(given.notContains),\n      subtraction = coerced(given.subtraction)\n\n  var multiplication = coerced(given.multiplication),\n      division       = coerced(given.division),\n      inversion      = coerced(given.inversion)\n\n  // Comparison operators.\n\n  Scalar.prototype.equality    = comparison(equality)\n  Scalar.prototype.disequality = comparison(disequality)\n\n  // Chainable class methods.\n\n  Scalar.prototype.addition = function () {\n    var data = addition.bind(null, this.data).apply(null, arguments)\n    return new Scalar(data)\n  }\n\n  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar)\n  Scalar.prototype.negation    = unaryMethod(negation, Scalar)\n  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar)\n\n  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar)\n  Scalar.prototype.division       = nAryMethod(division, Scalar)\n  Scalar.prototype.inversion      = unaryMethod(inversion, Scalar)\n\n  // Static operators.\n\n  Scalar.addition    = addition\n  Scalar.contains    = contains\n  Scalar.conjugation = conjugation\n  Scalar.disequality = disequality\n  Scalar.equality    = equality\n  Scalar.negation    = negation\n  Scalar.notContains = notContains\n  Scalar.subtraction = subtraction\n\n  Scalar.multiplication = multiplication\n  Scalar.division       = division\n  Scalar.inversion      = inversion\n\n  // Aliases.\n\n  Scalar.eq = Scalar.equality\n  Scalar.ne = Scalar.disequality\n\n  Scalar.equal    = Scalar.equality\n  Scalar.notEqual = Scalar.disequality\n  Scalar.notEq    = Scalar.disequality\n\n  Scalar.add = Scalar.addition\n  Scalar.neg = Scalar.negation\n  Scalar.sub = Scalar.subtraction\n\n  Scalar.div = Scalar.division\n  Scalar.inv = Scalar.inversion\n  Scalar.mul = Scalar.multiplication\n\n  Scalar.conj = Scalar.conj\n\n  Scalar.prototype.add = Scalar.prototype.addition\n  Scalar.prototype.neg = Scalar.prototype.negation\n  Scalar.prototype.sub = Scalar.prototype.subtraction\n\n  Scalar.prototype.mul = Scalar.prototype.multiplication\n  Scalar.prototype.div = Scalar.prototype.division\n  Scalar.prototype.inv = Scalar.prototype.inversion\n\n  Scalar.prototype.conj = Scalar.prototype.conjugation\n\n  // Identities.\n\n  Scalar.zero = new Scalar(identity[0])\n  Scalar.one  = new Scalar(identity[1])\n\n  return Scalar\n}\n\nmodule.exports = Scalar\n\n\nvar algebraGroup              = require('algebra-group'),\n    coerced                   = require('./coerced'),\n    comparison                = require('./comparison'),\n    Element                   = require('./Element'),\n    inherits                  = require('inherits'),\n    itemsPool                 = require('./itemsPool'),\n    method                    = require('./method'),\n    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),\n    toData                    = require('./toData')\n\nvar nAryMethod  = method.nAry,\n    unaryMethod = method.unary",
     "ctx": {
       "type": "function",
       "name": "Scalar",
@@ -590,8 +582,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 414,
-    "codeStart": 428,
+    "line": 436,
+    "codeStart": 450,
     "code": "function VectorSpace (Scalar) {",
     "ctx": {
       "type": "function",
@@ -646,8 +638,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 430,
-    "codeStart": 439,
+    "line": 452,
+    "codeStart": 461,
     "code": "return function (dimension) {\n\n  function createZero (scalarZero, dimension) {\n    var vectorZero = []\n\n    for (var i = 0; i < dimension; i++)\n      vectorZero.push(scalarZero)\n\n   return vectorZero\n  }\n\n  var zero = createZero(Scalar.zero, dimension)\n\n  function _contains (a) {\n    if (a.length !== dimension) return false\n\n    for (var i = 0; i < dimension; i++)\n      if (! Scalar.contains(a[i]))\n        return false\n\n    return true\n  }\n\n  function _equality (a, b) {\n    for (var i = 0; i < dimension; i++)\n      if (! Scalar.equality(a[i], b[i]))\n        return false\n\n    return true\n  }\n\n  function _addition (a, b) {\n    var c = []\n\n    for (var i = 0; i < dimension; i++)\n      c.push(Scalar.addition(a[i], b[i]))\n\n    return c\n  }\n\n  function _negation (a) {\n    var b = []\n\n    for (var i = 0; i < dimension; i++)\n      b.push(Scalar.negation(a[i]))\n\n    return b\n  }\n\n  var g = algebraGroup({\n    identity       : zero,\n    contains       : _contains,\n    equality       : _equality,\n    compositionLaw : _addition,\n    inversion      : _negation\n  })\n\n  var addition    = coerced(g.addition),\n      contains    = coerced(g.contains),\n      disequality = coerced(g.disequality),\n      equality    = coerced(g.equality),\n      negation    = coerced(g.negation),\n      notContains = coerced(g.notContains),\n      subtraction = coerced(g.subtraction)",
     "ctx": {
       "type": "function",
@@ -681,8 +673,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 504,
-    "codeStart": 512,
+    "line": 526,
+    "codeStart": 534,
     "code": "function Vector (data) {\n  Element.call(this, data, contains)",
     "ctx": {
       "type": "function",
@@ -716,13 +708,166 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 515,
-    "codeStart": 525,
-    "code": "function vectorNorm () {\n  var result = Scalar.multiplication(data[0], data[0])\n\n  for (var i = 1; i < dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))\n  }\n\n  return new Scalar(result)\n}\n\nObject.defineProperty(this, 'norm', {get: vectorNorm})\n    }\n\n    inherits(Vector, Element)\n\n    // Static attributes.\n\n    Object.defineProperty(Vector, 'zero', {\nwritable: false,\nvalue: zero\n    })\n\n    function crossProduct (right) {\nvar rightData      = toData(right)\n\n      // TODO complete cross product\n    }\n\n    // Cross product is defined only in dimension 3.\n    if (dimension === 3) {\nVector.prototype.crossProduct = crossProduct\nVector.prototype.cross        = crossProduct\nVector.prototype.x            = crossProduct\n    }\n\n  // TODO staticRightMultiplication by a matrix\n\n    function scalarProduct (vector1, vector2) {\nvar vectorData1    = toData(vector1),\n    vectorData2    = toData(vector2)\n\nif (vectorData1.length !== vectorData2.length)\n  throw new TypeError('Vectors has not the same dimension')\n\nvar result = Scalar.multiplication(vectorData1[0], vectorData2[0])\n\nfor (var i = 1; i < dimension; i++) {\n  result = Scalar.addition(result, Scalar.multiplication(vectorData1[i], vectorData2[i]))\n}\n\nreturn result\n    }\n\n    function vectorScalarProduct (vector) {\nvar result = scalarProduct(this.data, vector)\n\nreturn new Scalar(result)\n    }\n\n    Vector.prototype.scalarProduct = vectorScalarProduct\n\n    function perScalarProduct (Scalar) {\nvar data       = this.data,\n    ScalarData = toData(Scalar)\n\nfor (var i = 0; i < dimension; i++)\n  data[i] = Scalar.mul(data[i], ScalarData)\n\nthis.data = data\n\nreturn this\n    }\n\n    Vector.prototype.perScalarProduct = perScalarProduct\n\n    // Comparison operators.\n\n    Vector.prototype.equality    = comparison(equality)\n    Vector.prototype.disequality = comparison(disequality)\n\n    // Chainable class methods.\n\n    Vector.prototype.addition    = nAryMethod(addition, Vector)\n    Vector.prototype.subtraction = nAryMethod(subtraction, Vector)\n    Vector.prototype.negation    = unaryMethod(negation, Vector)\n\n    // Static operators.\n\n    Vector.contains    = contains\n    Vector.disequality = disequality\n    Vector.equality    = equality\n    Vector.notContains = notContains\n\n    Vector.addition    = addition\n    Vector.subtraction = subtraction\n    Vector.negation    = negation\n\n    Vector.scalarProduct = scalarProduct\n\n    // Aliases\n\n    Vector.eq = Vector.equality\n    Vector.ne = Vector.disequality\n\n    Vector.equal    = Vector.equality\n    Vector.notEqual = Vector.disequality\n    Vector.notEq    = Vector.disequality\n\n    Vector.add = Vector.addition\n    Vector.neg = Vector.negation\n    Vector.sub = Vector.subtraction\n\n    Vector.prototype.add = Vector.prototype.addition\n    Vector.prototype.neg = Vector.prototype.negation\n    Vector.prototype.sub = Vector.prototype.subtraction\n\n    Vector.prototype.dotProduct = vectorScalarProduct\n    Vector.prototype.dot        = vectorScalarProduct\n\n    return Vector\n  }\n}\n\nmodule.exports = VectorSpace\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\n    buildFieldOperators = require('./buildFieldOperators'),\n    Scalar              = require('./Scalar')",
+    "line": 537,
+    "codeStart": 547,
+    "code": "function vectorNorm () {\n  var result = Scalar.multiplication(data[0], data[0])\n\n  for (var i = 1; i < dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))\n  }\n\n  return new Scalar(result)\n}\n\nObject.defineProperty(this, 'norm', {get: vectorNorm})\n    }\n\n    inherits(Vector, Element)\n\n    // Static attributes.\n\n    Object.defineProperty(Vector, 'zero', {\nwritable: false,\nvalue: zero\n    })",
     "ctx": {
       "type": "function",
       "name": "vectorNorm",
       "string": "vectorNorm()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "api",
+        "string": "private",
+        "visibility": "private",
+        "html": "<p>private</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": true,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 569,
+    "codeStart": 573,
+    "code": "function crossProduct (right) {\n  var rightData      = toData(right)\n\n        // TODO complete cross product\n}\n\n// Cross product is defined only in dimension 3.\nif (dimension === 3) {\n  Vector.prototype.crossProduct = crossProduct\n  Vector.prototype.cross        = crossProduct\n  Vector.prototype.x            = crossProduct\n}\n\n  // TODO staticRightMultiplication by a matrix",
+    "ctx": {
+      "type": "function",
+      "name": "crossProduct",
+      "string": "crossProduct()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "api",
+        "string": "private",
+        "visibility": "private",
+        "html": "<p>private</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": true,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 588,
+    "codeStart": 592,
+    "code": "function scalarProduct (vector1, vector2) {\n  var vectorData1    = toData(vector1),\n      vectorData2    = toData(vector2)\n\n  if (vectorData1.length !== vectorData2.length)\n    throw new TypeError('Vectors has not the same dimension')\n\n  var result = Scalar.multiplication(vectorData1[0], vectorData2[0])\n\n  for (var i = 1; i < dimension; i++) {\n    result = Scalar.addition(result, Scalar.multiplication(vectorData1[i], vectorData2[i]))\n  }\n\n  return result\n}",
+    "ctx": {
+      "type": "function",
+      "name": "scalarProduct",
+      "string": "scalarProduct()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "api",
+        "string": "private",
+        "visibility": "private",
+        "html": "<p>private</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": true,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 608,
+    "codeStart": 612,
+    "code": "function vectorScalarProduct (vector) {\n  var result = scalarProduct(this.data, vector)\n\n  return new Scalar(result)\n}\n\nVector.prototype.scalarProduct = vectorScalarProduct",
+    "ctx": {
+      "type": "function",
+      "name": "vectorScalarProduct",
+      "string": "vectorScalarProduct()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "api",
+        "string": "private",
+        "visibility": "private",
+        "html": "<p>private</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": true,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 620,
+    "codeStart": 624,
+    "code": "function perScalarProduct (Scalar) {\n  var data       = this.data,\n      ScalarData = toData(Scalar)\n\n  for (var i = 0; i < dimension; i++)\n    data[i] = Scalar.mul(data[i], ScalarData)\n\n  this.data = data\n\n  return this\n}\n\nVector.prototype.perScalarProduct = perScalarProduct",
+    "ctx": {
+      "type": "function",
+      "name": "perScalarProduct",
+      "string": "perScalarProduct()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "api",
+        "string": "private\n",
+        "visibility": "private",
+        "html": "<p>private</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Object} Matrix",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>Matrix</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Transpose a column-vector to a row-vector</p><p>If you want to multiply at right a vector by a matrix you need to transpose it.</p>",
+      "summary": "<p>Transpose a column-vector to a row-vector</p>",
+      "body": "<p>If you want to multiply at right a vector by a matrix you need to transpose it.</p>"
+    },
+    "isPrivate": true,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 638,
+    "codeStart": 648,
+    "code": "function transpose () {\n  var data   = this.data\n\n  var MatrixSpace = itemsPool.getMatrixSpace()\n\n  var Matrix = MatrixSpace(Scalar)(dimension, 1)\n\n  return new Matrix(data)\n}\n\nVector.prototype.transpose = transpose\n\n// Comparison operators.\n\nVector.prototype.equality    = comparison(equality)\nVector.prototype.disequality = comparison(disequality)\n\n// Chainable class methods.\n\nVector.prototype.addition    = nAryMethod(addition, Vector)\nVector.prototype.subtraction = nAryMethod(subtraction, Vector)\nVector.prototype.negation    = unaryMethod(negation, Vector)\n\n// Static operators.\n\nVector.contains    = contains\nVector.disequality = disequality\nVector.equality    = equality\nVector.notContains = notContains\n\nVector.addition    = addition\nVector.subtraction = subtraction\nVector.negation    = negation\n\nVector.scalarProduct = scalarProduct\n\n// Aliases\n\nVector.eq = Vector.equality\nVector.ne = Vector.disequality\n\nVector.equal    = Vector.equality\nVector.notEqual = Vector.disequality\nVector.notEq    = Vector.disequality\n\nVector.add = Vector.addition\nVector.neg = Vector.negation\nVector.sub = Vector.subtraction\n\nVector.prototype.add = Vector.prototype.addition\nVector.prototype.neg = Vector.prototype.negation\nVector.prototype.sub = Vector.prototype.subtraction\n\nVector.prototype.dotProduct = vectorScalarProduct\nVector.prototype.dot        = vectorScalarProduct\n\nreturn Vector\n  }\n}\n\nitemsPool.setVectorSpace(VectorSpace)\n\nmodule.exports = VectorSpace\n\n\nvar inherits = require('inherits')\n\nvar addStaticOperators  = require('./addStaticOperators'),\nbuildFieldOperators = require('./buildFieldOperators'),\nScalar              = require('./Scalar')",
+    "ctx": {
+      "type": "function",
+      "name": "transpose",
+      "string": "transpose()"
     }
   },
   {
@@ -773,8 +918,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 657,
-    "codeStart": 667,
+    "line": 719,
+    "codeStart": 729,
     "code": "function isPrime (n) {\n  if (n === 1) return false\n  if (n === 2) return true\n\n  var m = Math.sqrt(n)\n\n  for (var i = 2; i <= m; i++)\n    if (n % i === 0)\n      return false\n\n  return true\n}",
     "ctx": {
       "type": "function",
@@ -830,8 +975,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 680,
-    "codeStart": 690,
+    "line": 742,
+    "codeStart": 752,
     "code": "function unique (elements) {\n  for (var i = 0; i < elements.length - 1; i++)\n    for (var j = i + 1; j < elements.length; j++)\n      if (elements[i] === elements[j])\n        return false\n\n  return true\n}",
     "ctx": {
       "type": "function",
@@ -887,8 +1032,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 699,
-    "codeStart": 709,
+    "line": 761,
+    "codeStart": 771,
     "code": "function buildCyclicSpaceOf (elements) {\n  if ((typeof elements.length !== 'number') || (! isPrime(elements.length)))\n    throw new TypeError(\"elements length must be prime\")\n\n  if ((! unique(elements)))\n    throw new TypeError(\"elements must be unique\")\n\n  var zero = elements[0],\n      one  = elements[1]",
     "ctx": {
       "type": "function",
@@ -908,8 +1053,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 719,
-    "codeStart": 722,
+    "line": 781,
+    "codeStart": 784,
     "code": "function numOf (element) {\n  return elements.indexOf(element)\n}",
     "ctx": {
       "type": "function",
@@ -929,8 +1074,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 726,
-    "codeStart": 729,
+    "line": 788,
+    "codeStart": 791,
     "code": "function addition (element1, element2) {\n  var n = numOf(element1) + numOf(element2)\n\n  n = n % elements.length\n\n  return elements[n]\n}",
     "ctx": {
       "type": "function",
@@ -950,8 +1095,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 737,
-    "codeStart": 740,
+    "line": 799,
+    "codeStart": 802,
     "code": "function contains (element) {\n  return elements.indexOf(element) > -1\n}",
     "ctx": {
       "type": "function",
@@ -971,8 +1116,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 744,
-    "codeStart": 747,
+    "line": 806,
+    "codeStart": 809,
     "code": "function multiplication (element1, element2) {\n  var n = numOf(element1) * numOf(element2)\n\n  n = n % elements.length\n\n  return elements[n]\n}",
     "ctx": {
       "type": "function",
@@ -992,8 +1137,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 755,
-    "codeStart": 758,
+    "line": 817,
+    "codeStart": 820,
     "code": "function inversion (element) {\n  for (var i = 0; i < elements.length; i++)\n    if(elements[1] == multiplication(element, elements[i]))\n\n  return elements[i]\n}",
     "ctx": {
       "type": "function",
@@ -1013,8 +1158,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 765,
-    "codeStart": 768,
+    "line": 827,
+    "codeStart": 830,
     "code": "function division (element1, element2) {\n  return multiplication(element1, inversion(element2))\n}",
     "ctx": {
       "type": "function",
@@ -1034,8 +1179,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 772,
-    "codeStart": 775,
+    "line": 834,
+    "codeStart": 837,
     "code": "function negation (element) {\n  var n = numOf(element)\n\n  if (n === 0)\n    return element\n\n  n = elements.length - n\n\n  return elements[n]\n}",
     "ctx": {
       "type": "function",
@@ -1055,8 +1200,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": true,
-    "line": 786,
-    "codeStart": 789,
+    "line": 848,
+    "codeStart": 851,
     "code": "function equal (element1, element2) {\n  return element1 === element2\n}\n\nvar operators = {\n  addition      : addition,\n  multiplication: multiplication,\n  negation      : negation,\n  inversion     : inversion,\n  equal         : equal,\n  contains      : contains\n}\n\nvar field = {\n  one     : one,\n  zero    : zero,\n  operator: operators\n}",
     "ctx": {
       "type": "function",
@@ -1082,8 +1227,8 @@
     "isClass": true,
     "isEvent": false,
     "ignore": true,
-    "line": 808,
-    "codeStart": 814,
+    "line": 870,
+    "codeStart": 876,
     "code": "function Cyclic (data) {\n  Scalar.call(this, field, data)\n}\n\ninherits(Cyclic, Scalar)\n\naddStaticOperators(Cyclic, buildFieldOperators(field))\n\nreturn Cyclic\n}\n\nmodule.exports = buildCyclicSpaceOf\n\n\nvar iterateCayleyDickson = require('cayley-dickson'),\n  Scalar               = require('./Scalar')\n\nfunction CayleyDickson (K, iterations) {\nvar Kn = iterateCayleyDickson(K, iterations)\n\nreturn Scalar([Kn.zero, Kn.one], Kn)\n}\n\nmodule.exports = CayleyDickson\n\n\nvar toData = require('./toData')",
     "ctx": {
       "type": "function",
@@ -1138,8 +1283,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 842,
-    "codeStart": 852,
+    "line": 904,
+    "codeStart": 914,
     "code": "function coerced (operator) {\n  return function () {\n    return operator.apply(null, [].slice.call(arguments).map(toData))\n  }\n}\n\nmodule.exports = coerced",
     "ctx": {
       "type": "function",
@@ -1194,8 +1339,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 861,
-    "codeStart": 871,
+    "line": 923,
+    "codeStart": 933,
     "code": "function comparison (operator) {\n  return function () {\n    return operator.bind(null, this.data).apply(null, arguments)\n  }\n}\n\nmodule.exports = comparison\n\n\n// TODO remove this file\n\nvar algebraGroup = require('algebra-group'),\n    coerced      = require('./coerced'),\n    comparison   = require('./comparison'),\n    Element      = require('./Element'),\n    inherits     = require('inherits')",
     "ctx": {
       "type": "function",
@@ -1442,9 +1587,9 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 888,
-    "codeStart": 911,
-    "code": "function group (given, naming) {\n  var g = algebraGroup(given, naming)\n\n  function Group (data) {\n    Element.call(this, data, given.contains)\n  }\n\n  inherits(Group, Element)\n\n  var addition    = coerced(g.addition),\n      contains    = coerced(g.contains),\n      disequality = coerced(g.disequality),\n      equality    = coerced(g.equality),\n      negation    = coerced(g.negation),\n      notContains = coerced(g.notContains),\n      subtraction = coerced(g.subtraction)\n\n  // Comparison operators.\n\n  Group.prototype.equality    = comparison(equality)\n  Group.prototype.disequality = comparison(disequality)\n\n  // Chainable class methods.\n\n  Group.prototype.addition    = nAryMutator(addition)\n  Group.prototype.subtraction = nAryMutator(subtraction)\n  Group.prototype.negation    = unaryMutator(negation)\n\n  // Static operators.\n\n  Group.addition       = addition\n  Group.contains       = contains\n  Group.disequality    = disequality\n  Group.equality       = equality\n  Group.negation       = negation\n  Group.notContains    = notContains\n  Group.subtraction    = subtraction\n\n  // Identity.\n\n  Object.defineProperty(Group, 'zero', {\n    writable: false,\n    value: g.zero\n  })\n\n  // Aliases.\n\n  Group.eq = Group.equality\n  Group.ne = Group.disequality\n\n  Group.equal    = Group.equality\n  Group.notEqual = Group.disequality\n  Group.notEq    = Group.disequality\n\n  Group.add = Group.addition\n  Group.neg = Group.negation\n  Group.sub = Group.subtraction\n\n  Group.prototype.add = Group.prototype.addition\n  Group.prototype.neg = Group.prototype.negation\n  Group.prototype.sub = Group.prototype.subtraction\n\n  return Group\n}\n\nmodule.exports = group",
+    "line": 950,
+    "codeStart": 973,
+    "code": "function group (given, naming) {\n  var g = algebraGroup(given, naming)\n\n  function Group (data) {\n    Element.call(this, data, given.contains)\n  }\n\n  inherits(Group, Element)\n\n  var addition    = coerced(g.addition),\n      contains    = coerced(g.contains),\n      disequality = coerced(g.disequality),\n      equality    = coerced(g.equality),\n      negation    = coerced(g.negation),\n      notContains = coerced(g.notContains),\n      subtraction = coerced(g.subtraction)\n\n  // Comparison operators.\n\n  Group.prototype.equality    = comparison(equality)\n  Group.prototype.disequality = comparison(disequality)\n\n  // Chainable class methods.\n\n  Group.prototype.addition    = nAryMutator(addition)\n  Group.prototype.subtraction = nAryMutator(subtraction)\n  Group.prototype.negation    = unaryMutator(negation)\n\n  // Static operators.\n\n  Group.addition       = addition\n  Group.contains       = contains\n  Group.disequality    = disequality\n  Group.equality       = equality\n  Group.negation       = negation\n  Group.notContains    = notContains\n  Group.subtraction    = subtraction\n\n  // Identity.\n\n  Object.defineProperty(Group, 'zero', {\n    writable: false,\n    value: g.zero\n  })\n\n  // Aliases.\n\n  Group.eq = Group.equality\n  Group.ne = Group.disequality\n\n  Group.equal    = Group.equality\n  Group.notEqual = Group.disequality\n  Group.notEq    = Group.disequality\n\n  Group.add = Group.addition\n  Group.neg = Group.negation\n  Group.sub = Group.subtraction\n\n  Group.prototype.add = Group.prototype.addition\n  Group.prototype.neg = Group.prototype.negation\n  Group.prototype.sub = Group.prototype.subtraction\n\n  return Group\n}\n\nmodule.exports = group\n\n\nfunction itemsPool () {\n  var MatrixSpace,\n      VectorSpace\n\n  function getMatrixSpace () {\n    if (typeof MatrixSpace === 'undefined')\n      throw new Error('MatrixSpace not yet in items pool')\n\n    return MatrixSpace\n  }\n\n  this.getMatrixSpace = getMatrixSpace\n\n  function setMatrixSpace (item) {\n    if (typeof MatrixSpace === 'undefined')\n      MatrixSpace = item\n    else throw new Error('MatrixSpace already in items pool')\n  }\n\n  this.setMatrixSpace = setMatrixSpace\n\n  function getVectorSpace () {\n    if (typeof VectorSpace === 'undefined')\n      throw new Error('VectorSpace not yet in items pool')\n\n    return VectorSpace\n  }\n\n  this.getVectorSpace = getVectorSpace\n\n  function setVectorSpace (item) {\n    if (typeof VectorSpace === 'undefined')\n      VectorSpace = item\n    else throw new Error('VectorSpace already in items pool')\n  }\n\n  this.setVectorSpace = setVectorSpace\n}\n\nmodule.exports = new itemsPool()",
     "ctx": {
       "type": "function",
       "name": "group",
@@ -1526,8 +1671,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 979,
-    "codeStart": 991,
+    "line": 1083,
+    "codeStart": 1095,
     "code": "function matrixToArrayIndex (i, j, numCols) {\n  return j + i * numCols\n}\n\nmodule.exports = matrixToArrayIndex\n\n\nfunction unaryMethod (operator, Scalar) {\n  return function () {\n    var data = operator(this.data)\n    return new Scalar(data)\n  }\n}\n\nexports.unary = unaryMethod\n\nfunction nAryMethod (operator, Scalar) {\n  return function () {\n    var data = operator.bind(null, this.data).apply(null, arguments)\n    return new Scalar(data)\n  }\n}\n\nexports.nAry = nAryMethod\n\n\nvar realField = {\n  zero: 0,\n  one : 1,\n  contains:       function (a, b) {\n                    // NaN, Infinity and -Infinity are not allowed\n                    return (typeof a === 'number' && isFinite(a))\n                  },\n  equality:       function (a, b) { return a === b },\n  addition:       function (a, b) { return a + b },\n  negation:       function (a) { return -a },\n  multiplication: function (a, b) { return a * b },\n  inversion:      function (a) { return 1 / a }\n}\n\nmodule.exports = realField\n\n\nvar isInteger          = require('is-integer'),\n    matrixToArrayIndex = require('./matrixToArrayIndex')",
     "ctx": {
       "type": "function",
@@ -1672,8 +1817,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1037,
-    "codeStart": 1053,
+    "line": 1141,
+    "codeStart": 1157,
     "code": "function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {\n  var leftNumCols  = leftMatrix.length / leftNumRows,\n      rightNumRows = rightMatrix.length / rightNumCols\n\n  if (! isInteger(leftNumCols))\n    throw new TypeError('leftNumCols does not divide leftMatrix.length')\n\n  if (! isInteger(rightNumRows))\n    throw new TypeError('rightNumRows does not divide rightMatrix.length')\n\n  // Check if matrices can be multiplied.\n  if (leftNumCols !== rightNumRows)\n    throw new TypeError('Left num cols != right num rows')\n\n  var commonIndex = leftNumCols,\n      data        = [],\n      rows        = leftNumRows,\n      cols        = rightNumCols\n\n  for (var i = 0; i < rows; i++) {\n    for (var j = 0; j < cols; j++) {\n      var leftIndex  = matrixToArrayIndex(i, 0, commonIndex),\n          rightIndex = matrixToArrayIndex(0, j, cols)\n\n      var rightElement = rightMatrix[rightIndex],\n          leftElement  = leftMatrix[leftIndex]\n\n      var element = scalar.multiplication(leftElement, rightElement)\n\n      for (var k = 1; k < commonIndex; k++) {\n        leftIndex = matrixToArrayIndex(i, k, commonIndex)\n        rightIndex = matrixToArrayIndex(k, j, cols)\n\n        rightElement = rightMatrix[rightIndex]\n        leftElement = leftMatrix[leftIndex]\n\n        element = scalar.addition(element, scalar.multiplication(rightElement, leftElement))\n      }\n\n      data.push(element)\n    }\n  }\n\n  return data\n}\n\nmodule.exports = rowByColumnMultiplication",
     "ctx": {
       "type": "function",
@@ -1724,8 +1869,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1102,
-    "codeStart": 1112,
+    "line": 1206,
+    "codeStart": 1216,
     "code": "function toData (arg) {\n  var data\n\n  if (typeof arg.data === 'undefined')\n    data = arg\n  else\n    data = arg.data\n\n  if (typeof data === 'undefined')\n    throw new TypeError('No data')\n\n  return data\n}\n\nmodule.exports = toData",
     "ctx": {
       "type": "function",

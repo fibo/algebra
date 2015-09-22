@@ -2,18 +2,6 @@
 layout: page
 title: articles
 ---
-<div class="list-group">
-  {% for post in site.posts limit:{{include.limit}} %}
-    <a href="{{ post.url }}" class="list-group-item">
-      <article>
-        <header>
-          <h1> {{ post.title }}  </h1>
 
-          <p class="lead">{{ post.description }}</p>
+{% include posts_list.html limit="10" %}
 
-          <time datetime="{{ post.date }}" class="badge">{{ post.date | date: "%F" }}</time>
-        </header>
-      </article>
-    </a>
-  {% endfor %}
-</div>

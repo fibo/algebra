@@ -3,7 +3,6 @@ var algebraGroup              = require('algebra-group'),
     coerced                   = require('./coerced'),
     comparison                = require('./comparison'),
     Element                   = require('./Element'),
-    inherits                  = require('inherits'),
     itemsPool                 = require('./itemsPool'),
     method                    = require('./method'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
@@ -109,35 +108,34 @@ function VectorSpace (Scalar) {
      * @param {*} data
      */
 
-    function Vector (data) {
-      Element.call(this, data, contains)
+    class Vector extends Element {
+      constructor (data) {
+        super(data, contains)
 
-      /**
-       * Norm of a vector
-       *
-       * Given v = (x1, x2, ... xN)
-       *
-       * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
-       *
-       * @api private
-       *
-       * @returns {Scalar} result
-       */
+        /**
+         * Norm of a vector
+         *
+         * Given v = (x1, x2, ... xN)
+         *
+         * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
+         *
+         * @api private
+         *
+         * @returns {Scalar} result
+         */
 
-      function vectorNorm () {
-        var result = Scalar.multiplication(data[0], data[0])
+        function vectorNorm () {
+          var result = Scalar.multiplication(data[0], data[0])
 
-        for (var i = 1; i < dimension; i++) {
-          result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))
+          for (var i = 1; i < dimension; i++)
+            result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))
+
+          return new Scalar(result)
         }
 
-        return new Scalar(result)
+        Object.defineProperty(this, 'norm', {get: vectorNorm})
       }
-
-      Object.defineProperty(this, 'norm', {get: vectorNorm})
     }
-
-    inherits(Vector, Element)
 
     // Static attributes.
 

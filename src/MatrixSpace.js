@@ -1,6 +1,5 @@
 
 var determinant               = require('laplace-determinant'),
-    inherits                  = require('inherits'),
     itemsPool                 = require('./itemsPool'),
     isInteger                 = require('is-integer'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
@@ -73,29 +72,29 @@ function MatrixSpace (Scalar) {
      * @param {*} data
      */
 
-    function Matrix (data) {
-      Vector.call(this, data)
+    class Matrix extends Vector {
+      constructor (data) {
+        super(data)
 
-      this.numCols = numCols
-      this.numRows = numRows
+        this.numCols = numCols
+        this.numRows = numRows
 
-      Object.defineProperties(this, {
-        'numCols': { writable: false, value: numCols },
-        'numRows': { writable: false, value: numRows }
-      })
+        Object.defineProperties(this, {
+          'numCols': { writable: false, value: numCols },
+          'numRows': { writable: false, value: numRows }
+        })
 
-      function matrixDeterminant () {
-        var det = determinant(this.data, Scalar, numRows)
+        function matrixDeterminant () {
+          var det = determinant(this.data, Scalar, numRows)
 
-        return new Scalar(det)
-      }
+          return new Scalar(det)
+        }
 
-      if (isSquare) {
-        Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
+        if (isSquare) {
+          Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
+        }
       }
     }
-
-    inherits(Matrix, Vector)
 
     // Static attributes.
 

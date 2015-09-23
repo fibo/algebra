@@ -43,7 +43,7 @@ With [bower](http://bower.io/) do
 $ bower install algebra
 ```
 
-## Synopsis
+## Quick start
 
 This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
@@ -80,7 +80,7 @@ var x = new R(2),
     y = new R(-2);
 ```
 
-Here, *r* value is the result of x multiplied by y, which does not change.
+Here, *r* value is the result of x multiplied by y.
 
 ```
 var r = x.mul(y);
@@ -89,13 +89,19 @@ console.log(x.data); // still 2
 console.log(y.data); // still -2
 ```
 
-Raw numbers are coerced, operators can be chained.
-
-Of course you can reassign x, for example, Resulting x value will be 0.1: x -> x + 3 -> x * 2 -> x ^-1
+Raw numbers are coerced, operators can be chained when it makes sense.
+Of course you can reassign x, for example, x value will be 0.1: x -> x + 3 -> x * 2 -> x ^-1
 
 ```
 x = x.add(3).mul(2).inv();
 console.log(x.data); // ((2 + 3) * 2)^(-1) = 0.1
+```
+
+Comparison operators *equal* and *notEqual* are available, but they cannot be chained.
+
+```
+x.equal(0.1) // true
+x.notEqual(Math.PI) // true
 ```
 
 ### Vectors
@@ -120,7 +126,7 @@ console.log(v1.data); // [1, -1]
 
 ### Matrices
 
-Create space of matrices 3x2 over Reals.
+Create space of matrices 3 x 2 over Reals.
 
 ```
 var R3x2 = algebra.MatrixSpace(R)(3, 2);
@@ -129,9 +135,9 @@ var R3x2 = algebra.MatrixSpace(R)(3, 2);
 Create a matrix.
 
 ```
-//                      | 1 1 |
-//                 m1 = | 0 1 |
-//                      | 1 0 |
+//       | 1 1 |
+//  m1 = | 0 1 |
+//       | 1 0 |
 //
 var m1 = new R3x2([1, 1,
                    0, 1,
@@ -139,32 +145,25 @@ var m1 = new R3x2([1, 1,
 ```
 
 Multiply m1 by v1, the result is a vector v3 with dimension 3.
-In fact we are multipling a 3 x 2 matrix by a 2 dimensional vector,
-but v1 is traited as a column vector so it is like a 2 x 1 matrix.
+In fact we are multiplying a 3 x 2 matrix by a 2 dimensional vector, but v1 is traited as a column vector so it is like a 2 x 1 matrix.
 
 Then, following the row by column multiplication law we have
 
 ```
-     3 x 2  by  2 x 1  which gives a   3 x 1
-         ↑      ↑
-         +------+----→  by removing the middle indices.
+//  3 x 2  by  2 x 1  which gives a   3 x 1
+//      ↑      ↑
+//      +------+----→  by removing the middle indices.
+//
+//                   | 1 1 |
+//    v3 = m1 * v1 = | 0 1 | * [1 , -1] = [0, -1, 1]
+//                   | 1 0 |
 
-                      | 1 1 |
-       v3 = m1 * v1 = | 0 1 | * [1 , -1] = [0, -1, 1]
-                      | 1 0 |
-
-```
-
-```
 var v3 = m1.mul(v1);
 
 console.log(v3.data); // [0, -1, 1]
 ```
 
-But that was not a closed operation, so m1 is not mutated: otherwise it would
-be a matrix that become a vector which does not make sense.
-
-Let's try with two square matrices.
+Let's try with two square matrices 2 x 2.
 
 ```
 var R2x2 = algebra.MatrixSpace(R)(2, 2);
@@ -175,11 +174,7 @@ var m2 = new R2x2([1, 0,
                    1, 0]);
 
 m2 = m2.mul(m3);
-```
 
-This is an inner product, so mul is a mutator for m2.
-
-```
 console.log(m2.data); // [0, -1,
                       //  2,  0]
 ```

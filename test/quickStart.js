@@ -19,6 +19,9 @@ describe('Synopsis', function () {
 
     x.data.should.eql(0.1)
 
+    x.equal(0.1).should.be.ok
+    x.notEqual(Math.PI).should.be.ok
+
     var R2 = algebra.VectorSpace(R)(2)
 
     var v1 = new R2([0, 1])

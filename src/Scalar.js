@@ -106,6 +106,13 @@ function Scalar (identity, given) {
 
   Scalar.conj = Scalar.conj
 
+  Scalar.prototype.eq = Scalar.prototype.equality
+  Scalar.prototype.ne = Scalar.prototype.disequality
+
+  Scalar.prototype.equal = Scalar.prototype.equality
+  Scalar.prototype.notEqual = Scalar.prototype.disequality
+  Scalar.prototype.notEq    = Scalar.prototype.disequality
+
   Scalar.prototype.add = Scalar.prototype.addition
   Scalar.prototype.neg = Scalar.prototype.negation
   Scalar.prototype.sub = Scalar.prototype.subtraction

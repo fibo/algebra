@@ -228,7 +228,7 @@ function VectorSpace (Scalar) {
 
       var MatrixSpace = itemsPool.getMatrixSpace()
 
-      var Matrix = MatrixSpace(Scalar)(dimension, 1)
+      var Matrix = MatrixSpace(Scalar)(1, dimension)
 
       return new Matrix(data)
     }

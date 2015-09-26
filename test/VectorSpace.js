@@ -61,11 +61,11 @@ describe('VectorSpace', function () {
       var transposed = vector1.transpose()
 
       should.deepEqual(transposed.data, vector1.data)
-      transposed.numCols.should.be.eql(1)
-      transposed.numRows.should.be.eql(3)
+      transposed.numCols.should.be.eql(3)
+      transposed.numRows.should.be.eql(1)
     })
 
-    it('is used to right multiply a vector by a matrix'/*, function () {
+    it('is used to right multiply a vector by a matrix', function () {
       var matrix  = new R2x2([0, 1,
                               1, 0]),
           vector1 = new R2([0, 1])
@@ -75,7 +75,7 @@ describe('VectorSpace', function () {
       var vector2 = vector1.transpose().multiplication(matrix)
 
       should.deepEqual(vector2.data, [1, 0])
-    }*/)
+    })
   })
 
   describe('norm', function () {

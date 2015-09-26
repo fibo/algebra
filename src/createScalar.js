@@ -11,6 +11,8 @@ var nAryMethod  = method.nAry,
 /**
  * Create an algebra scalar.
  *
+ * @api private
+ *
  * @param {Array} identity
  * @param {Array} identity[0] a.k.a. zero
  * @param {Array} identity[1] a.k.a. uno
@@ -25,7 +27,7 @@ var nAryMethod  = method.nAry,
  * @returns {Function} Scalar that implements an algebra scalar as a class
  */
 
-function Scalar (identity, given) {
+function createScalar (identity, given) {
   var r = algebraRing(identity, given)
 
   class Scalar extends Element {
@@ -130,5 +132,5 @@ function Scalar (identity, given) {
   return Scalar
 }
 
-module.exports = Scalar
+module.exports = createScalar
 

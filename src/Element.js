@@ -4,7 +4,7 @@
  *
  * It has a *data* attribute that can contain anything, validated by its *check*.
  *
- * @param {*} data
+ * @param {Any} data
  * @param {Function} check
  */
 

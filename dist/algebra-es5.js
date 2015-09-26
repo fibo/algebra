@@ -4,23 +4,23 @@
 require('strict-mode')(function () {
     var iterateCayleyDickson = require('cayley-dickson'),
         realField = require('./src/realField'),
-        Scalar = require('./src/Scalar');
+        createScalar = require('./src/createScalar');
 
     var K0 = iterateCayleyDickson(realField, 0),
         K1 = iterateCayleyDickson(realField, 1),
         K2 = iterateCayleyDickson(realField, 2),
         K3 = iterateCayleyDickson(realField, 3);
 
-    exports.Real = Scalar([K0.zero, K0.one], K0);
-    exports.Complex = Scalar([K1.zero, K1.one], K1);
-    exports.Quaternion = Scalar([K2.zero, K2.one], K2);
-    exports.Octonion = Scalar([K3.zero, K3.one], K3);
+    exports.Real = createScalar([K0.zero, K0.one], K0);
+    exports.Complex = createScalar([K1.zero, K1.one], K1);
+    exports.Quaternion = createScalar([K2.zero, K2.one], K2);
+    exports.Octonion = createScalar([K3.zero, K3.one], K3);
 
     exports.VectorSpace = require('./src/VectorSpace');
     exports.MatrixSpace = require('./src/MatrixSpace');
 });
 
-},{"./src/MatrixSpace":11,"./src/Scalar":12,"./src/VectorSpace":13,"./src/realField":19,"cayley-dickson":4,"strict-mode":9}],2:[function(require,module,exports){
+},{"./src/MatrixSpace":11,"./src/VectorSpace":12,"./src/createScalar":15,"./src/realField":19,"cayley-dickson":4,"strict-mode":9}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -574,7 +574,7 @@ module.exports = function (cb) { cb() }
  *
  * It has a *data* attribute that can contain anything, validated by its *check*.
  *
- * @param {*} data
+ * @param {Any} data
  * @param {Function} check
  */
 
@@ -608,6 +608,8 @@ module.exports = Element;
 },{}],11:[function(require,module,exports){
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -639,13 +641,12 @@ var determinant = require('laplace-determinant'),
 function MatrixSpace(Scalar) {
 
   /**
-   *
    * @api private
    *
    * @param {Number} numRows
    * @param {Number} [numCols] defaults to a square matrix.
    *
-   * @returns {Function} Matrix
+   * @returns {Class} Matrix
    */
 
   return function (numRows, numCols) {
@@ -664,75 +665,6 @@ function MatrixSpace(Scalar) {
     var dimension = numRows * numCols,
         indices = [numRows, numCols],
         isSquare = numRows === numCols;
-
-    // MatrixSpace mxn is a VectorSpace with dim=m*n
-    var Vector = VectorSpace(Scalar)(dimension);
-
-    /**
-     * Matrix
-     *
-     * Inherits from [Element](#element).
-     *
-     * ```
-     * var m = R2x2([0, 1,
-     *               1, 0]
-     * ```
-     *
-     * @param {*} data
-     */
-
-    var Matrix = (function (_Vector) {
-      _inherits(Matrix, _Vector);
-
-      function Matrix(data) {
-        _classCallCheck(this, Matrix);
-
-        _get(Object.getPrototypeOf(Matrix.prototype), 'constructor', this).call(this, data);
-
-        this.numCols = numCols;
-        this.numRows = numRows;
-
-        Object.defineProperties(this, {
-          'numCols': { writable: false, value: numCols },
-          'numRows': { writable: false, value: numRows }
-        });
-
-        function matrixDeterminant() {
-          var det = determinant(this.data, Scalar, numRows);
-
-          return new Scalar(det);
-        }
-
-        if (isSquare) {
-          Object.defineProperty(this, 'determinant', { get: matrixDeterminant });
-        }
-      }
-
-      // Static attributes.
-
-      return Matrix;
-    })(Vector);
-
-    if (isSquare) {
-      // TODO rank should be calculated depending on determinant
-      // if determinant is zero, rank < numRows, but this needs sub-matrix function
-      // which is in laplace-determinant package and should be placed in its own package
-      var rank = numRows;
-
-      var identity = createIdentity(Scalar.zero, Scalar.one, rank);
-
-      Object.defineProperty(Matrix, 'identity', {
-        writable: false,
-        value: identity
-      });
-    }
-
-    Object.defineProperties(Matrix, {
-      'isSquare': { writable: false, value: isSquare },
-      'numCols': { writable: false, value: numCols },
-      'numRows': { writable: false, value: numRows },
-      'zero': { writable: false, value: Vector.zero }
-    });
 
     /**
      * @api private
@@ -766,39 +698,119 @@ function MatrixSpace(Scalar) {
       return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols);
     }
 
-    function rightMultiplication(right) {
-      var left = this.data,
-          leftNumCols = this.numCols,
-          leftNumRows = this.numRows,
-          rightData = toData(right);
+    // MatrixSpace mxn is a VectorSpace with dim=m*n
+    var Vector = VectorSpace(Scalar)(dimension);
 
-      var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right);
+    /**
+     * Inherits from [Element](#element).
+     *
+     * ```
+     * var MatrixSpace = algebra.MatrixSpace,
+     *     R           = algebra.Real
+     *
+     * var R3x2 = MatrixSpace(R)(3, 2)
+     *
+     * var m = R3x2([1, 2,
+     *               3, 4,
+     *               5, 6]
+     * ```
+     *
+     * @param {Any} data
+     */
 
-      // If staticRightMultiplication does not throw it means that matrices can be multiplied.
-      var rightNumCols = rightData.length / leftNumCols,
-          rightNumRows = leftNumCols;
+    var Matrix = (function (_Vector) {
+      _inherits(Matrix, _Vector);
 
-      var leftIsVector = leftNumCols === 1,
-          rightIsVector = rightNumCols === 1;
+      function Matrix(data) {
+        _classCallCheck(this, Matrix);
 
-      if (leftIsVector && rightIsVector) return new Scalar(data[0]);
+        _get(Object.getPrototypeOf(Matrix.prototype), 'constructor', this).call(this, data);
 
-      if (rightIsVector) {
-        var VectorSpace = itemsPool.getVectorSpace();
+        this.numCols = numCols;
+        this.numRows = numRows;
 
-        var Vector = VectorSpace(Scalar)(leftNumRows);
+        Object.defineProperties(this, {
+          'numCols': { writable: false, value: numCols },
+          'numRows': { writable: false, value: numRows }
+        });
 
-        return new Vector(data);
-      } else {
-        var MatrixSpace = itemsPool.getMatrixSpace();
+        function matrixDeterminant() {
+          var det = determinant(data, Scalar, numRows);
 
-        var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols);
+          return new Scalar(det);
+        }
 
-        return new Matrix(data);
+        if (isSquare) {
+          Object.defineProperty(this, 'determinant', { get: matrixDeterminant });
+        }
       }
+
+      // Static attributes.
+
+      _createClass(Matrix, [{
+        key: 'rightMultiplication',
+        value: function rightMultiplication(right) {
+          var left = this.data,
+              leftNumCols = this.numCols,
+              leftNumRows = this.numRows,
+              rightData = toData(right);
+
+          var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right);
+
+          // If staticRightMultiplication does not throw it means that matrices can be multiplied.
+          var rightNumCols = rightData.length / leftNumCols,
+              rightNumRows = leftNumCols;
+
+          var leftIsVector = leftNumRows === 1,
+              rightIsVector = rightNumCols === 1;
+
+          if (leftIsVector && rightIsVector) return new Scalar(data[0]);
+
+          var VectorSpace = itemsPool.getVectorSpace();
+
+          if (leftIsVector) {
+            var LeftVector = VectorSpace(Scalar)(rightNumCols);
+
+            return new LeftVector(data);
+          }
+
+          if (rightIsVector) {
+            var RightVector = VectorSpace(Scalar)(leftNumRows);
+
+            return new RightVector(data);
+          }
+
+          var MatrixSpace = itemsPool.getMatrixSpace();
+
+          var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols);
+
+          return new Matrix(data);
+        }
+      }]);
+
+      return Matrix;
+    })(Vector);
+
+    if (isSquare) {
+      // TODO rank should be calculated depending on determinant
+      // if determinant is zero, rank < numRows, but this needs sub-matrix function
+      // which is in laplace-determinant package and should be placed in its own package
+      var rank = numRows;
+
+      var identity = createIdentity(Scalar.zero, Scalar.one, rank);
+
+      Object.defineProperty(Matrix, 'identity', {
+        writable: false,
+        value: identity
+      });
     }
 
-    Matrix.prototype.multiplication = rightMultiplication;
+    Object.defineProperties(Matrix, {
+      'isSquare': { writable: false, value: isSquare },
+      'numCols': { writable: false, value: numCols },
+      'numRows': { writable: false, value: numRows },
+      'zero': { writable: false, value: Vector.zero }
+    });
 
     /**
      *
@@ -859,8 +871,8 @@ function MatrixSpace(Scalar) {
     Matrix.neg = Matrix.negation;
     Matrix.sub = Matrix.subtraction;
 
-    Matrix.prototype.mul = rightMultiplication;
-    Matrix.prototype.o = rightMultiplication;
+    Matrix.prototype.multiplication = Matrix.prototype.rightMultiplication;
+    Matrix.prototype.mul = Matrix.prototype.rightMultiplication;
 
     Matrix.prototype.tr = matrixTransposition;
     Matrix.prototype.t = matrixTransposition;
@@ -875,156 +887,7 @@ itemsPool.setMatrixSpace(MatrixSpace);
 
 module.exports = MatrixSpace;
 
-},{"./VectorSpace":13,"./itemsPool":16,"./matrixToArrayIndex":17,"./rowByColumnMultiplication":20,"./toData":21,"is-integer":5,"laplace-determinant":8}],12:[function(require,module,exports){
-'use strict';
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var algebraRing = require('algebra-ring'),
-    coerced = require('./coerced'),
-    comparison = require('./comparison'),
-    Element = require('./Element'),
-    method = require('./method');
-
-var nAryMethod = method.nAry,
-    unaryMethod = method.unary;
-
-/**
- * Create an algebra scalar.
- *
- * @param {Array} identity
- * @param {Array} identity[0] a.k.a. zero
- * @param {Array} identity[1] a.k.a. uno
- * @param {Object}   given operator functions
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.addition
- * @param {Function} given.negation
- * @param {Function} given.multiplication
- * @param {Function} given.inversion
- *
- * @returns {Function} Scalar that implements an algebra scalar as a class
- */
-
-function Scalar(identity, given) {
-  var r = algebraRing(identity, given);
-
-  var Scalar = (function (_Element) {
-    _inherits(Scalar, _Element);
-
-    function Scalar(data) {
-      _classCallCheck(this, Scalar);
-
-      _get(Object.getPrototypeOf(Scalar.prototype), 'constructor', this).call(this, data, given.contains);
-    }
-
-    // TODO questo codice dovrebbe stare in cayley-dickson
-    return Scalar;
-  })(Element);
-
-  if (typeof given.conjugation === 'undefined') given.conjugation = function (a) {
-    return a;
-  };
-
-  var addition = coerced(given.addition),
-      contains = coerced(given.contains),
-      conjugation = coerced(given.conjugation),
-      disequality = coerced(given.disequality),
-      equality = coerced(given.equality),
-      negation = coerced(given.negation),
-      notContains = coerced(given.notContains),
-      subtraction = coerced(given.subtraction);
-
-  var multiplication = coerced(given.multiplication),
-      division = coerced(given.division),
-      inversion = coerced(given.inversion);
-
-  // Comparison operators.
-
-  Scalar.prototype.equality = comparison(equality);
-  Scalar.prototype.disequality = comparison(disequality);
-
-  // Chainable class methods.
-
-  Scalar.prototype.addition = function () {
-    var data = addition.bind(null, this.data).apply(null, arguments);
-    return new Scalar(data);
-  };
-
-  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar);
-  Scalar.prototype.negation = unaryMethod(negation, Scalar);
-  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar);
-
-  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar);
-  Scalar.prototype.division = nAryMethod(division, Scalar);
-  Scalar.prototype.inversion = unaryMethod(inversion, Scalar);
-
-  // Static operators.
-
-  Scalar.addition = addition;
-  Scalar.contains = contains;
-  Scalar.conjugation = conjugation;
-  Scalar.disequality = disequality;
-  Scalar.equality = equality;
-  Scalar.negation = negation;
-  Scalar.notContains = notContains;
-  Scalar.subtraction = subtraction;
-
-  Scalar.multiplication = multiplication;
-  Scalar.division = division;
-  Scalar.inversion = inversion;
-
-  // Aliases.
-
-  Scalar.eq = Scalar.equality;
-  Scalar.ne = Scalar.disequality;
-
-  Scalar.equal = Scalar.equality;
-  Scalar.notEqual = Scalar.disequality;
-  Scalar.notEq = Scalar.disequality;
-
-  Scalar.add = Scalar.addition;
-  Scalar.neg = Scalar.negation;
-  Scalar.sub = Scalar.subtraction;
-
-  Scalar.div = Scalar.division;
-  Scalar.inv = Scalar.inversion;
-  Scalar.mul = Scalar.multiplication;
-
-  Scalar.conj = Scalar.conj;
-
-  Scalar.prototype.eq = Scalar.prototype.equality;
-  Scalar.prototype.ne = Scalar.prototype.disequality;
-
-  Scalar.prototype.equal = Scalar.prototype.equality;
-  Scalar.prototype.notEqual = Scalar.prototype.disequality;
-  Scalar.prototype.notEq = Scalar.prototype.disequality;
-
-  Scalar.prototype.add = Scalar.prototype.addition;
-  Scalar.prototype.neg = Scalar.prototype.negation;
-  Scalar.prototype.sub = Scalar.prototype.subtraction;
-
-  Scalar.prototype.mul = Scalar.prototype.multiplication;
-  Scalar.prototype.div = Scalar.prototype.division;
-  Scalar.prototype.inv = Scalar.prototype.inversion;
-
-  Scalar.prototype.conj = Scalar.prototype.conjugation;
-
-  // Identities.
-
-  Scalar.zero = new Scalar(identity[0]);
-  Scalar.one = new Scalar(identity[1]);
-
-  return Scalar;
-}
-
-module.exports = Scalar;
-
-},{"./Element":10,"./coerced":14,"./comparison":15,"./method":18,"algebra-ring":3}],13:[function(require,module,exports){
+},{"./VectorSpace":12,"./itemsPool":16,"./matrixToArrayIndex":17,"./rowByColumnMultiplication":20,"./toData":21,"is-integer":5,"laplace-determinant":8}],12:[function(require,module,exports){
 'use strict';
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -1258,7 +1121,7 @@ function VectorSpace(Scalar) {
 
       var MatrixSpace = itemsPool.getMatrixSpace();
 
-      var Matrix = MatrixSpace(Scalar)(dimension, 1);
+      var Matrix = MatrixSpace(Scalar)(1, dimension);
 
       return new Matrix(data);
     }
@@ -1317,7 +1180,7 @@ itemsPool.setVectorSpace(VectorSpace);
 
 module.exports = VectorSpace;
 
-},{"./Element":10,"./coerced":14,"./comparison":15,"./itemsPool":16,"./method":18,"./rowByColumnMultiplication.js":20,"./toData":21,"algebra-group":2}],14:[function(require,module,exports){
+},{"./Element":10,"./coerced":13,"./comparison":14,"./itemsPool":16,"./method":18,"./rowByColumnMultiplication.js":20,"./toData":21,"algebra-group":2}],13:[function(require,module,exports){
 'use strict';
 
 var toData = require('./toData');
@@ -1340,7 +1203,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":21}],15:[function(require,module,exports){
+},{"./toData":21}],14:[function(require,module,exports){
 
 /**
  * Comparison operator for group and ring classes
@@ -1362,7 +1225,158 @@ function comparison(operator) {
 
 module.exports = comparison;
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
+'use strict';
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var algebraRing = require('algebra-ring'),
+    coerced = require('./coerced'),
+    comparison = require('./comparison'),
+    Element = require('./Element'),
+    method = require('./method');
+
+var nAryMethod = method.nAry,
+    unaryMethod = method.unary;
+
+/**
+ * Create an algebra scalar.
+ *
+ * @api private
+ *
+ * @param {Array} identity
+ * @param {Array} identity[0] a.k.a. zero
+ * @param {Array} identity[1] a.k.a. uno
+ * @param {Object}   given operator functions
+ * @param {Function} given.contains
+ * @param {Function} given.equality
+ * @param {Function} given.addition
+ * @param {Function} given.negation
+ * @param {Function} given.multiplication
+ * @param {Function} given.inversion
+ *
+ * @returns {Function} Scalar that implements an algebra scalar as a class
+ */
+
+function createScalar(identity, given) {
+  var r = algebraRing(identity, given);
+
+  var Scalar = (function (_Element) {
+    _inherits(Scalar, _Element);
+
+    function Scalar(data) {
+      _classCallCheck(this, Scalar);
+
+      _get(Object.getPrototypeOf(Scalar.prototype), 'constructor', this).call(this, data, given.contains);
+    }
+
+    // TODO questo codice dovrebbe stare in cayley-dickson
+    return Scalar;
+  })(Element);
+
+  if (typeof given.conjugation === 'undefined') given.conjugation = function (a) {
+    return a;
+  };
+
+  var addition = coerced(given.addition),
+      contains = coerced(given.contains),
+      conjugation = coerced(given.conjugation),
+      disequality = coerced(given.disequality),
+      equality = coerced(given.equality),
+      negation = coerced(given.negation),
+      notContains = coerced(given.notContains),
+      subtraction = coerced(given.subtraction);
+
+  var multiplication = coerced(given.multiplication),
+      division = coerced(given.division),
+      inversion = coerced(given.inversion);
+
+  // Comparison operators.
+
+  Scalar.prototype.equality = comparison(equality);
+  Scalar.prototype.disequality = comparison(disequality);
+
+  // Chainable class methods.
+
+  Scalar.prototype.addition = function () {
+    var data = addition.bind(null, this.data).apply(null, arguments);
+    return new Scalar(data);
+  };
+
+  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar);
+  Scalar.prototype.negation = unaryMethod(negation, Scalar);
+  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar);
+
+  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar);
+  Scalar.prototype.division = nAryMethod(division, Scalar);
+  Scalar.prototype.inversion = unaryMethod(inversion, Scalar);
+
+  // Static operators.
+
+  Scalar.addition = addition;
+  Scalar.contains = contains;
+  Scalar.conjugation = conjugation;
+  Scalar.disequality = disequality;
+  Scalar.equality = equality;
+  Scalar.negation = negation;
+  Scalar.notContains = notContains;
+  Scalar.subtraction = subtraction;
+
+  Scalar.multiplication = multiplication;
+  Scalar.division = division;
+  Scalar.inversion = inversion;
+
+  // Aliases.
+
+  Scalar.eq = Scalar.equality;
+  Scalar.ne = Scalar.disequality;
+
+  Scalar.equal = Scalar.equality;
+  Scalar.notEqual = Scalar.disequality;
+  Scalar.notEq = Scalar.disequality;
+
+  Scalar.add = Scalar.addition;
+  Scalar.neg = Scalar.negation;
+  Scalar.sub = Scalar.subtraction;
+
+  Scalar.div = Scalar.division;
+  Scalar.inv = Scalar.inversion;
+  Scalar.mul = Scalar.multiplication;
+
+  Scalar.conj = Scalar.conj;
+
+  Scalar.prototype.eq = Scalar.prototype.equality;
+  Scalar.prototype.ne = Scalar.prototype.disequality;
+
+  Scalar.prototype.equal = Scalar.prototype.equality;
+  Scalar.prototype.notEqual = Scalar.prototype.disequality;
+  Scalar.prototype.notEq = Scalar.prototype.disequality;
+
+  Scalar.prototype.add = Scalar.prototype.addition;
+  Scalar.prototype.neg = Scalar.prototype.negation;
+  Scalar.prototype.sub = Scalar.prototype.subtraction;
+
+  Scalar.prototype.mul = Scalar.prototype.multiplication;
+  Scalar.prototype.div = Scalar.prototype.division;
+  Scalar.prototype.inv = Scalar.prototype.inversion;
+
+  Scalar.prototype.conj = Scalar.prototype.conjugation;
+
+  // Identities.
+
+  Scalar.zero = new Scalar(identity[0]);
+  Scalar.one = new Scalar(identity[1]);
+
+  return Scalar;
+}
+
+module.exports = createScalar;
+
+},{"./Element":10,"./coerced":13,"./comparison":14,"./method":18,"algebra-ring":3}],16:[function(require,module,exports){
 'use strict';
 
 function itemsPool() {

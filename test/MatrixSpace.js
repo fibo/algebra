@@ -1,14 +1,14 @@
 
   var algebra = require('algebra'),
-     should = require('should')
+     should   = require('should')
 
 var MatrixSpace = algebra.MatrixSpace,
     Real        = algebra.Real
 
 var methodBinaryOperator = require('./features/methodBinaryOperator'),
     methodUnaryOperator  = require('./features/methodUnaryOperator'),
-    staticBinaryOperator  = require('./features/staticBinaryOperator'),
-    staticUnaryOperator   = require('./features/staticUnaryOperator')
+    staticBinaryOperator = require('./features/staticBinaryOperator'),
+    staticUnaryOperator  = require('./features/staticUnaryOperator')
 
 describe('MatrixSpace', function () {
   var R2x3 = MatrixSpace(Real)(2, 3),

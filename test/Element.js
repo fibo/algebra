@@ -11,6 +11,12 @@ describe('Element', function () {
 
     var e = new Element(data, check)
   })
+
+  it('throws if no data is given', function () {
+    ;(function () {
+        var e = new Element()
+      }).should.throwError(/Undefined data/)
+  })
 })
 
 })

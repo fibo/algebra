@@ -24,13 +24,12 @@ var determinant               = require('laplace-determinant'),
 function MatrixSpace (Scalar) {
 
   /**
-   *
    * @api private
    *
    * @param {Number} numRows
    * @param {Number} [numCols] defaults to a square matrix.
    *
-   * @returns {Function} Matrix
+   * @returns {Class} Matrix
    */
 
   return function (numRows, numCols) {
@@ -55,69 +54,6 @@ function MatrixSpace (Scalar) {
     var dimension = numRows * numCols,
         indices   = [numRows, numCols],
         isSquare  = (numRows === numCols)
-
-    // MatrixSpace mxn is a VectorSpace with dim=m*n
-    var Vector = VectorSpace(Scalar)(dimension)
-
-    /**
-     * Matrix
-     *
-     * Inherits from [Element](#element).
-     *
-     * ```
-     * var m = R2x2([0, 1,
-     *               1, 0]
-     * ```
-     *
-     * @param {*} data
-     */
-
-    class Matrix extends Vector {
-      constructor (data) {
-        super(data)
-
-        this.numCols = numCols
-        this.numRows = numRows
-
-        Object.defineProperties(this, {
-          'numCols': { writable: false, value: numCols },
-          'numRows': { writable: false, value: numRows }
-        })
-
-        function matrixDeterminant () {
-          var det = determinant(this.data, Scalar, numRows)
-
-          return new Scalar(det)
-        }
-
-        if (isSquare) {
-          Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
-        }
-      }
-    }
-
-    // Static attributes.
-
-    if (isSquare) {
-      // TODO rank should be calculated depending on determinant
-      // if determinant is zero, rank < numRows, but this needs sub-matrix function
-      // which is in laplace-determinant package and should be placed in its own package
-      var rank = numRows
-
-      var identity = createIdentity(Scalar.zero, Scalar.one, rank)
-
-      Object.defineProperty(Matrix, 'identity', {
-        writable: false,
-        value: identity
-      })
-    }
-
-    Object.defineProperties(Matrix, {
-      'isSquare': { writable: false, value: isSquare },
-      'numCols': { writable: false, value: numCols },
-      'numRows': { writable: false, value: numRows },
-      'zero': { writable: false, value: Vector.zero }
-    })
 
     /**
      * @api private
@@ -152,32 +88,82 @@ function MatrixSpace (Scalar) {
       return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols)
     }
 
-    function rightMultiplication (right) {
-      var left        = this.data,
-          leftNumCols = this.numCols,
-          leftNumRows = this.numRows,
-          rightData   = toData(right)
+    // MatrixSpace mxn is a VectorSpace with dim=m*n
+    var Vector = VectorSpace(Scalar)(dimension)
 
-      var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
+    /**
+     * Inherits from [Element](#element).
+     *
+     * ```
+     * var MatrixSpace = algebra.MatrixSpace,
+     *     R           = algebra.Real
+     *
+     * var R3x2 = MatrixSpace(R)(3, 2)
+     *
+     * var m = R3x2([1, 2,
+     *               3, 4,
+     *               5, 6]
+     * ```
+     *
+     * @param {Any} data
+     */
 
-      // If staticRightMultiplication does not throw it means that matrices can be multiplied.
-      var rightNumCols = rightData.length / leftNumCols,
-          rightNumRows = leftNumCols
+    class Matrix extends Vector {
+      constructor (data) {
+        super(data)
 
-      var leftIsVector  = (leftNumCols === 1),
-          rightIsVector = (rightNumCols === 1)
+        this.numCols = numCols
+        this.numRows = numRows
 
-      if (leftIsVector && rightIsVector)
-        return new Scalar(data[0])
+        Object.defineProperties(this, {
+          'numCols': { writable: false, value: numCols },
+          'numRows': { writable: false, value: numRows }
+        })
 
-      if (rightIsVector) {
+        function matrixDeterminant () {
+          var det = determinant(data, Scalar, numRows)
+
+          return new Scalar(det)
+        }
+
+        if (isSquare) {
+          Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
+        }
+      }
+
+
+      rightMultiplication (right) {
+        var left        = this.data,
+            leftNumCols = this.numCols,
+            leftNumRows = this.numRows,
+            rightData   = toData(right)
+
+        var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
+
+        // If staticRightMultiplication does not throw it means that matrices can be multiplied.
+        var rightNumCols = rightData.length / leftNumCols,
+            rightNumRows = leftNumCols
+
+        var leftIsVector  = (leftNumRows === 1),
+            rightIsVector = (rightNumCols === 1)
+
+        if (leftIsVector && rightIsVector)
+          return new Scalar(data[0])
+
         var VectorSpace = itemsPool.getVectorSpace()
 
-        var Vector = VectorSpace(Scalar)(leftNumRows)
+        if (leftIsVector) {
+          var LeftVector = VectorSpace(Scalar)(rightNumCols)
 
-        return new Vector(data)
-      }
-      else {
+          return new LeftVector(data)
+        }
+
+        if (rightIsVector) {
+          var RightVector = VectorSpace(Scalar)(leftNumRows)
+
+          return new RightVector(data)
+        }
+
         var MatrixSpace = itemsPool.getMatrixSpace()
 
         var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
@@ -186,7 +172,28 @@ function MatrixSpace (Scalar) {
       }
     }
 
-    Matrix.prototype.multiplication = rightMultiplication
+    // Static attributes.
+
+    if (isSquare) {
+      // TODO rank should be calculated depending on determinant
+      // if determinant is zero, rank < numRows, but this needs sub-matrix function
+      // which is in laplace-determinant package and should be placed in its own package
+      var rank = numRows
+
+      var identity = createIdentity(Scalar.zero, Scalar.one, rank)
+
+      Object.defineProperty(Matrix, 'identity', {
+        writable: false,
+        value: identity
+      })
+    }
+
+    Object.defineProperties(Matrix, {
+      'isSquare': { writable: false, value: isSquare },
+      'numCols': { writable: false, value: numCols },
+      'numRows': { writable: false, value: numRows },
+      'zero': { writable: false, value: Vector.zero }
+    })
 
     /**
      *
@@ -248,8 +255,8 @@ function MatrixSpace (Scalar) {
     Matrix.neg = Matrix.negation
     Matrix.sub = Matrix.subtraction
 
-    Matrix.prototype.mul = rightMultiplication
-    Matrix.prototype.o   = rightMultiplication
+    Matrix.prototype.multiplication = Matrix.prototype.rightMultiplication
+    Matrix.prototype.mul            = Matrix.prototype.rightMultiplication
 
     Matrix.prototype.tr = matrixTransposition
     Matrix.prototype.t  = matrixTransposition

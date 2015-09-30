@@ -3,6 +3,7 @@ var algebraRing = require('algebra-ring'),
     coerced     = require('./coerced'),
     comparison  = require('./comparison'),
     Element     = require('./Element'),
+    inherits    = require('inherits'),
     method      = require('./method')
 
 var nAryMethod  = method.nAry,
@@ -30,11 +31,11 @@ var nAryMethod  = method.nAry,
 function createScalar (identity, given) {
   var r = algebraRing(identity, given)
 
-  class Scalar extends Element {
-    constructor (data) {
-      super(data, given.contains)
-    }
+  function Scalar (data) {
+    Element.call(this, data, given.contains)
   }
+
+  inherits(Scalar, Element)
 
     // TODO questo codice dovrebbe stare in cayley-dickson
   if (typeof given.conjugation === 'undefined')

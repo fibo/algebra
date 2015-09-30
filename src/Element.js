@@ -8,10 +8,9 @@
  * @param {Function} check
  */
 
-class Element {
-  constructor (data, check) {
-    if (typeof data === 'undefined')
-      throw new TypeError('Undefined data')
+function Element (data, check) {
+  if (typeof data === 'undefined')
+    throw new TypeError('Undefined data')
 
   if (check(data))
     this.data = data
@@ -19,10 +18,11 @@ class Element {
     throw new TypeError('Invalid data = ' + data)
 }
 
-  valueOf () {
-    return this.data
-  }
+function valueOf () {
+  return this.data
 }
+
+Element.prototype.valueOf = valueOf
 
 module.exports = Element
 

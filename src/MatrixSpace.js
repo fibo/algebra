@@ -1,5 +1,6 @@
 
 var determinant               = require('laplace-determinant'),
+    inherits                  = require('inherits'),
     itemsPool                 = require('./itemsPool'),
     isInteger                 = require('is-integer'),
     matrixToArrayIndex        = require('./matrixToArrayIndex'),
@@ -100,77 +101,87 @@ function MatrixSpace (Scalar) {
      *
      * var R3x2 = MatrixSpace(R)(3, 2)
      *
-     * var m = R3x2([1, 2,
-     *               3, 4,
-     *               5, 6]
+     * var matrix = R3x2([1, 2,
+     *                    3, 4,
+     *                    5, 6])
      * ```
      *
      * @param {Any} data
      */
 
-    class Matrix extends Vector {
-      constructor (data) {
-        super(data)
+    function Matrix (data) {
+      Vector.call(this, data)
 
-        this.numCols = numCols
-        this.numRows = numRows
+      this.numCols = numCols
+      this.numRows = numRows
 
-        Object.defineProperties(this, {
-          'numCols': { writable: false, value: numCols },
-          'numRows': { writable: false, value: numRows }
-        })
+      Object.defineProperties(this, {
+        'numCols': { writable: false, value: numCols },
+        'numRows': { writable: false, value: numRows }
+      })
 
-        function matrixDeterminant () {
-          var det = determinant(data, Scalar, numRows)
+      function matrixDeterminant () {
+        var det = determinant(data, Scalar, numRows)
 
-          return new Scalar(det)
-        }
-
-        if (isSquare) {
-          Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
-        }
+        return new Scalar(det)
       }
 
-
-      rightMultiplication (right) {
-        var left        = this.data,
-            leftNumCols = this.numCols,
-            leftNumRows = this.numRows,
-            rightData   = toData(right)
-
-        var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
-
-        // If staticRightMultiplication does not throw it means that matrices can be multiplied.
-        var rightNumCols = rightData.length / leftNumCols,
-            rightNumRows = leftNumCols
-
-        var leftIsVector  = (leftNumRows === 1),
-            rightIsVector = (rightNumCols === 1)
-
-        if (leftIsVector && rightIsVector)
-          return new Scalar(data[0])
-
-        var VectorSpace = itemsPool.getVectorSpace()
-
-        if (leftIsVector) {
-          var LeftVector = VectorSpace(Scalar)(rightNumCols)
-
-          return new LeftVector(data)
-        }
-
-        if (rightIsVector) {
-          var RightVector = VectorSpace(Scalar)(leftNumRows)
-
-          return new RightVector(data)
-        }
-
-        var MatrixSpace = itemsPool.getMatrixSpace()
-
-        var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
-
-        return new Matrix(data)
+      if (isSquare) {
+        Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
       }
     }
+
+    inherits(Matrix, Vector)
+
+    /**
+     *
+     * @api private
+     *
+     * @param {right}
+     *
+     * @returns {Array} data
+     */
+
+    function rightMultiplication (right) {
+      var left        = this.data,
+          leftNumCols = this.numCols,
+          leftNumRows = this.numRows,
+          rightData   = toData(right)
+
+      var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
+
+      // If staticRightMultiplication does not throw it means that matrices can be multiplied.
+      var rightNumCols = rightData.length / leftNumCols,
+          rightNumRows = leftNumCols
+
+      var leftIsVector  = (leftNumRows === 1),
+          rightIsVector = (rightNumCols === 1)
+
+      if (leftIsVector && rightIsVector)
+        return new Scalar(data[0])
+
+      var VectorSpace = itemsPool.getVectorSpace()
+
+      if (leftIsVector) {
+        var LeftVector = VectorSpace(Scalar)(rightNumCols)
+
+        return new LeftVector(data)
+      }
+
+      if (rightIsVector) {
+        var RightVector = VectorSpace(Scalar)(leftNumRows)
+
+        return new RightVector(data)
+      }
+
+      var MatrixSpace = itemsPool.getMatrixSpace()
+
+      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+
+      return new Matrix(data)
+    }
+
+    Matrix.prototype.multiplication = rightMultiplication
 
     // Static attributes.
 
@@ -255,8 +266,7 @@ function MatrixSpace (Scalar) {
     Matrix.neg = Matrix.negation
     Matrix.sub = Matrix.subtraction
 
-    Matrix.prototype.multiplication = Matrix.prototype.rightMultiplication
-    Matrix.prototype.mul            = Matrix.prototype.rightMultiplication
+    Matrix.prototype.mul            = rightMultiplication
 
     Matrix.prototype.tr = matrixTransposition
     Matrix.prototype.t  = matrixTransposition

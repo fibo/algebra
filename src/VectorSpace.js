@@ -3,6 +3,7 @@ var algebraGroup              = require('algebra-group'),
     coerced                   = require('./coerced'),
     comparison                = require('./comparison'),
     Element                   = require('./Element'),
+    inherits                  = require('inherits'),
     itemsPool                 = require('./itemsPool'),
     method                    = require('./method'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
@@ -101,41 +102,48 @@ function VectorSpace (Scalar) {
         subtraction = coerced(g.subtraction)
 
     /**
-     * Vector
-     *
      * Inherits from [Element](#element).
      *
-     * @param {*} data
+     * ```
+     * var VectorSpace = algebra.VectorSpace,
+     *     R           = algebra.Real
+     *
+     * var R3 = VectorSpace(R)(3)
+     *
+     * var vector = R3([1, 2, 6]
+     * ```
+     *
+     * @param {Any} data
      */
 
-    class Vector extends Element {
-      constructor (data) {
-        super(data, contains)
+    function Vector (data) {
+      Element.call(this, data, contains)
 
-        /**
-         * Norm of a vector
-         *
-         * Given v = (x1, x2, ... xN)
-         *
-         * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
-         *
-         * @api private
-         *
-         * @returns {Scalar} result
-         */
+      /**
+       * Norm of a vector
+       *
+       * Given v = (x1, x2, ... xN)
+       *
+       * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
+       *
+       * @api private
+       *
+       * @returns {Scalar} result
+       */
 
-        function vectorNorm () {
-          var result = Scalar.multiplication(data[0], data[0])
+      function vectorNorm () {
+        var result = Scalar.multiplication(data[0], data[0])
 
-          for (var i = 1; i < dimension; i++)
-            result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))
+        for (var i = 1; i < dimension; i++)
+          result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))
 
-          return new Scalar(result)
-        }
-
-        Object.defineProperty(this, 'norm', {get: vectorNorm})
+        return new Scalar(result)
       }
+
+      Object.defineProperty(this, 'norm', {get: vectorNorm})
     }
+
+    inherits(Vector, Element)
 
     // Static attributes.
 

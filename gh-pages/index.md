@@ -49,9 +49,11 @@ $ bower install algebra
 
 ## Quick start
 
-This is a 60 seconds tutorial to get your hands dirty with *algebra*.
+> This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
-All code in the examples below is intended to be contained into a [single file](https://github.com/fibo/algebra/blob/master/test/synopsis.js).
+All code in the examples below is intended to be contained into a single file.
+
+[![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
 
 First of all, import *algebra* package.
 
@@ -84,7 +86,7 @@ var x = new R(2),
     y = new R(-2);
 ```
 
-Here, *r* value is the result of x multiplied by y.
+The value *r* is the result of x multiplied by y.
 
 ```
 var r = x.mul(y);

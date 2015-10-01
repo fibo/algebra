@@ -30,7 +30,6 @@ Many functionalities of previous versions are now in separated atomic packages:
 * [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#scalars), of course :).
 * Expressive syntax.
 * [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
-* Written in ES6; a transpiled to ES5 version is available for client side usage.
 * [math blog][1] with articles explaining algebra concepts and practical examples. I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning about the *Queen of Science*.
 
 ## Installation

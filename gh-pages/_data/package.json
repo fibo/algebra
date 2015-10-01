@@ -5,7 +5,7 @@
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
   },
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Vectors, Matrices, Real, Complex, Quaternion",
   "main": "index.js",
   "scripts": {

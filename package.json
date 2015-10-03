@@ -1,12 +1,14 @@
 {
   "name": "algebra",
+  "description": "Vectors, Matrices, Real, Complex, Quaternion",
+  "version": "0.6.2",
+  "engines": { "node": ">=4.0.0" },
   "homepage": "http://g14n.info/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
   },
-  "version": "0.6.2",
-  "description": "Vectors, Matrices, Real, Complex, Quaternion",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "_build": "npm test && npm run browserify && npm run tex && npm run jekyll; git status",
@@ -45,7 +47,6 @@
     "quaternion",
     "math"
   ],
-  "license": "MIT",
   "devDependencies": {
     "browserify": "^10.1.3",
     "coveralls": "^2.11.2",

@@ -4,6 +4,8 @@
 
 [![NPM version](https://badge.fury.io/js/algebra.png)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.png?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.png)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
 
+[![Whatchers](https://img.shields.io/github/watchers/fibo/algebra.svg?style=social&label=Watch)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://img.shields.io/github/stars/fibo/algebra.svg?style=social&label=Star)](https://github.com/fibo/algebra/stargazers) [![Forks](https://img.shields.io/github/forks/fibo/algebra.svg?style=social&label=Forks)](https://github.com/fibo/algebra/network/members)
+
 [![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)

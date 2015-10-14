@@ -14,7 +14,9 @@
     "_build": "npm test && npm run browserify && npm run tex && npm run jekyll; git status",
     "_pull": "git pull origin master && npm run gh-pages:pull",
     "_push": "git push origin master && npm run gh-pages:push",
-    "browserify": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
+    "browserify": "npm run browserify:dist; npm run browserify:test",
+    "browserify:dist": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
+    "browserify:test": "browserify test/*.js -o gh-pages/test/bundle.js",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "cp": "npm run cp:dist; npm run cp:package.json",
@@ -32,6 +34,7 @@
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
     "package.json": "cp package.json gh-pages/_data/",
+    "postversion": "git push origin v${npm_package_version}; npm publish",
     "test": "mocha --bail --require should --reporter min --recursive"
   },
   "repository": {

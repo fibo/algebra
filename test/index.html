@@ -2,6 +2,19 @@
 layout: page
 title: Mocha tests
 ---
+  <style>
+    /* fix mocha stats style */
+
+    #mocha-stats {
+      top: 55px !important;
+    }
+
+    #mocha-stats li.progress {
+      height: 40px;
+      width: 40px;
+    }
+  </style>
+
   <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
   <h1>{{ page.title }}</h1>
   <div id="mocha"></div>

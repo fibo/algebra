@@ -1,0 +1,30 @@
+{
+  "name": "algebra",
+  "main": "dist/algebra.js",
+  "version": "0.11.0",
+  "homepage": "http://g14n.info/algebra",
+  "authors": [
+    "Gianluca Casati"
+  ],
+  "description": "Vectors, Matrices, Real, Complex, Quaternion",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "dataflow",
+    "visual"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "bin",
+    "build",
+    "gh-pages",
+    "index.js",
+    "node_modules",
+    "npm-debug.log",
+    "package.json",
+    "src",
+    "test"
+  ]
+}

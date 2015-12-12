@@ -1,4 +1,3 @@
-
 require('strict-mode')(function () {
   var iterateCayleyDickson = require('cayley-dickson'),
       realField            = require('./src/realField'),
@@ -17,4 +16,3 @@ require('strict-mode')(function () {
   exports.VectorSpace = require('./src/VectorSpace')
   exports.MatrixSpace = require('./src/MatrixSpace')
 })
-

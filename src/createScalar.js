@@ -1,13 +1,12 @@
+var algebraRing = require('algebra-ring')
+var coerced = require('./coerced')
+var comparison = require('./comparison')
+var Element = require('./Element')
+var inherits = require('inherits')
+var method = require('./method')
 
-var algebraRing = require('algebra-ring'),
-    coerced     = require('./coerced'),
-    comparison  = require('./comparison'),
-    Element     = require('./Element'),
-    inherits    = require('inherits'),
-    method      = require('./method')
-
-var nAryMethod  = method.nAry,
-    unaryMethod = method.unary
+var nAryMethod = method.nAry
+var unaryMethod = method.unary
 
 /**
  * Create an algebra scalar.

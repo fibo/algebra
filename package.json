@@ -2,7 +2,7 @@
   "name": "algebra",
   "description": "Vectors, Matrices, Real, Complex, Quaternion",
   "version": "0.6.2",
-  "engines": { "node": ">=4.0.0" },
+  "engines": { "node": ">=4.2.2" },
   "homepage": "http://g14n.info/algebra",
   "author": {
     "name": "Gianluca Casati",

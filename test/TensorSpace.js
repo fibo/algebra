@@ -28,4 +28,13 @@ describe('TensorSpace', () => {
 
     Vector.addition([1, 0], [1, -1]).should.be.eql([2, -1])
   })
+
+  it('can create a Matrix'/*, () => {
+    var indices = [2, 2]
+    var rank = [1, 1]
+
+    var Matrix = TensorSpace(indices, rank)(ring)
+
+    Matrix.addition([1, 0, 0, 1], [1, -1, 0, 1]).should.be.eql([2, -1, 0, 2])
+  }*/)
 })

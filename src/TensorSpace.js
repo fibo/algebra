@@ -19,11 +19,13 @@ function TensorSpace (indices, rank) {
 
       static addition () {
         var isScalar = ((indices.length === 1) && (indices[0] === 1))
+        var isVector = ((indices.length === 1) && (indices[0] > 1))
 
         if (isScalar) {
           return coerced(ring.addition).apply(null, arguments)
         }
-        else {
+
+        if (isVector) {
           var args = [].slice.call(arguments, 0)
           var dimension = indices[0]
 

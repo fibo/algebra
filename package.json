@@ -2,7 +2,9 @@
   "name": "algebra",
   "description": "Vectors, Matrices, Real, Complex, Quaternion",
   "version": "0.6.2",
-  "engines": { "node": ">=4.2.2" },
+  "engines": {
+    "node": ">=4.2.2"
+  },
   "homepage": "http://g14n.info/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -18,8 +20,8 @@
     "bower.json:commit": "git commit -am 'sync with package.json'; git tag -f $npm_package_version",
     "bower.json:version": "perl -pi -w -e 's/\"version\": \"[\\d\\.]+\"/\"version\": \"$ENV{npm_package_version}\"/' bower.json",
     "browserify": "npm run browserify:dist; npm run browserify:test",
-    "browserify:dist": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
-    "browserify:test": "browserify test/*.js -o gh-pages/test/bundle.js",
+    "browserify:dist": "browserify -r ./index.js:${npm_package_name} -t babelify -o dist/${npm_package_name}.js",
+    "browserify:test": "browserify test/*.js -t babelify -o gh-pages/test/bundle.js",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "cp": "npm run cp:dist; npm run cp:package.json",
@@ -54,6 +56,7 @@
     "math"
   ],
   "devDependencies": {
+    "babelify": "^7.2.0",
     "browserify": "^10.1.3",
     "coveralls": "^2.11.2",
     "dox": "^0.7.1",

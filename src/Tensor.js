@@ -1,9 +1,6 @@
-var staticAttribute = require('./staticAttribute')
-
 class Tensor {
-  constructor (space, data) {
-    var staticAttr = staticAttribute.bind(this)
-
-    staticAttr('indices', space.getIndices)
+  constructor (indices, rank, ring, data) {
   }
 }
+
+module.exports = Tensor

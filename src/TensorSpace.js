@@ -1,7 +1,9 @@
 var AbstractTensor = require('./Tensor')
 var coerced = require('./coerced')
 
-function TensorSpace (indices, rank) {
+function TensorSpace (indices, type) {
+  var isScalar = ((indices.length === 1) && (indices[0] === 1))
+
   return function (ring) {
     // Create zero.
     var zero = indices.reduce((result, dim) => {
@@ -12,33 +14,51 @@ function TensorSpace (indices, rank) {
       return result
     }, [])
 
-    class Tensor extends AbstractTensor {
-      constructor (data) {
-        super(indices, rank, ring)
-      }
-
-      static addition () {
-        var isScalar = ((indices.length === 1) && (indices[0] === 1))
-        var isVector = ((indices.length === 1) && (indices[0] > 1))
+    function nAry (operator) {
+      return function () {
+        var op = coerced(operator)
 
         if (isScalar) {
-          return coerced(ring.addition).apply(null, arguments)
-        }
+          return op.apply(null, arguments)
+        } else {
+          var first = arguments[0]
+          var rest = [].slice.call(arguments, 1)
+          var dimension = indices.reduce((a, b) => {
+            return a * b
+          }, 1)
 
-        if (isVector) {
-          var args = [].slice.call(arguments, 0)
-          var dimension = indices[0]
-
-          return args.reduce((a, b) => {
+          return rest.reduce((a, b) => {
             var result = []
 
             for (var i = 0; i < dimension; i++) {
-              result.push(coerced(ring.addition)(a[i], b[i]))
+              result.push(op(a[i], b[i]))
             }
 
             return result
-          }, zero)
+          }, first)
         }
+      }
+    }
+
+    class Tensor extends AbstractTensor {
+      constructor (data) {
+        super(indices, type, ring)
+      }
+
+      static addition () {
+        return nAry(ring.addition).apply(null, arguments)
+      }
+
+      static add () {
+        return nAry(ring.addition).apply(null, arguments)
+      }
+
+      static subtraction () {
+        return nAry(ring.subtraction).apply(null, arguments)
+      }
+
+      static sub () {
+        return nAry(ring.subtraction).apply(null, arguments)
       }
     }
 

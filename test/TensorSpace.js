@@ -16,6 +16,8 @@ describe('TensorSpace', () => {
 
     var Scalar = TensorSpace(indices, type)(ring)
 
+    Scalar.zero.should.be.eql(0)
+
     Scalar.addition(1, 2).should.be.eql(3)
     Scalar.addition(1, 2, 3).should.be.eql(6)
 
@@ -28,6 +30,8 @@ describe('TensorSpace', () => {
     var type = [1, 0]
 
     var Vector = TensorSpace(indices, type)(ring)
+
+    Vector.zero.should.be.eql([0, 0])
 
     Vector.addition([1, 0], [1, -1]).should.be.eql([2, -1])
     Vector.addition([1, 0], [1, -1], [-1, 1]).should.be.eql([1, 0])
@@ -42,6 +46,9 @@ describe('TensorSpace', () => {
 
     var Matrix = TensorSpace(indices, type)(ring)
 
+    Matrix.zero.should.be.eql([0, 0,
+                               0, 0])
+
     Matrix.addition([1, 0,
                      0, 1],
                     [1, -1,
@@ -55,5 +62,19 @@ describe('TensorSpace', () => {
                     [2, 1,
                      1, 2]).should.be.eql([4, 0,
                                            1, 4])
+
+    Matrix.subtraction([1, 0,
+                        0, 1],
+                       [1, -1,
+                        0,  1]).should.be.eql([0, 1,
+                                               0, 0])
+
+    Matrix.subtraction([1, 0,
+                        0, 1],
+                       [1, -1,
+                        0,  1],
+                       [2, 1,
+                        1, 2]).should.be.eql([-2,  0,
+                                              -1, -2])
   })
 })

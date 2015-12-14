@@ -6,12 +6,16 @@ function TensorSpace (indices, type) {
 
   return function (ring) {
     // Create zero.
-    var zero = indices.reduce((result, dim) => {
-      for(var i = 0; i < dim; i++) {
-        result.push(ring.zero)
-      }
+    const zero = indices.reduce((result, dim) => {
+      if (isScalar) {
+        return ring.zero
+      } else {
+        for(var i = 0; i < dim; i++) {
+          result.push(ring.zero)
+        }
 
-      return result
+        return result
+      }
     }, [])
 
     function nAry (operator) {
@@ -43,6 +47,7 @@ function TensorSpace (indices, type) {
     class Tensor extends AbstractTensor {
       constructor (data) {
         super(indices, type, ring)
+
       }
 
       static addition () {
@@ -61,6 +66,11 @@ function TensorSpace (indices, type) {
         return nAry(ring.subtraction).apply(null, arguments)
       }
     }
+
+    Object.defineProperty(Tensor, 'zero', {
+      writable: false,
+      value: zero
+    })
 
     return Tensor
   }

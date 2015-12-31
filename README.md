@@ -193,7 +193,7 @@ console.log(m2.determinant.data); // 2
 
 ## License
 
-MIT
+[MIT](http://g14n.info/mit-license/)
 
   [1]: http://g14n.info/algebra/articles "algebra blog"
 

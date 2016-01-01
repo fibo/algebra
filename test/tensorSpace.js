@@ -1,5 +1,5 @@
-describe('TensorSpace', () => {
-  var TensorSpace = require('algebra').TensorSpace
+describe('tensorSpace', () => {
+  var tensorSpace = require('algebra').tensorSpace
 
   var ring = require('algebra-ring')([0, 1], {
     contains (a) { return (typeof a === 'number' && isFinite(a)) },
@@ -12,11 +12,12 @@ describe('TensorSpace', () => {
 
   it('can create a Scalar', () => {
     var indices = [1]
-    var type = [1, 0]
 
-    var Scalar = TensorSpace(indices, type)(ring)
+    var Scalar = tensorSpace(indices)(ring)
 
     Scalar.zero.should.be.eql(0)
+
+    Scalar.order.should.be.eql(0)
 
     Scalar.addition(1, 2).should.be.eql(3)
     Scalar.addition(1, 2, 3).should.be.eql(6)
@@ -32,11 +33,12 @@ describe('TensorSpace', () => {
 
   it('can create a Vector', () => {
     var indices = [2]
-    var type = [1, 0]
 
-    var Vector = TensorSpace(indices, type)(ring)
+    var Vector = tensorSpace(indices)(ring)
 
     Vector.zero.should.be.eql([0, 0])
+
+    Vector.order.should.be.eql(1)
 
     Vector.addition([1, 0], [1, -1]).should.be.eql([2, -1])
     Vector.addition([1, 0], [1, -1], [-1, 1]).should.be.eql([1, 0])
@@ -47,12 +49,13 @@ describe('TensorSpace', () => {
 
   it('can create a Matrix', () => {
     var indices = [2, 2]
-    var type = [1, 1]
 
-    var Matrix = TensorSpace(indices, type)(ring)
+    var Matrix = tensorSpace(indices)(ring)
 
     Matrix.zero.should.be.eql([0, 0,
                                0, 0])
+
+    Matrix.order.should.be.eql(2)
 
     Matrix.addition([1, 0,
                      0, 1],

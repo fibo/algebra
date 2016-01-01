@@ -1,7 +1,25 @@
 var nAry = require('./nAry')
 
-function TensorSpace (indices, type) {
-  var isScalar = ((indices.length === 1) && (indices[0] === 1))
+/**
+ * Creates a tensor space that is a class representing a tensor.
+ *
+ * @param {Array} indices
+ * @returns {Function}
+ */
+
+function tensorSpace (indices) {
+  // If dim equals 1 it is like a vector of dimension 1, that is a scalar.
+  // Only dim greater than 1, represents a varying index  increase order.
+  // A scalar has order 0.
+  // A vector has order 1.
+  // A matrix has order 2.
+  // Order is also called "rank" or "tensor rank", but, to avoid confusion with
+  // "matrix rank" it is better to call it "order".
+  const order = indices.filter((dim) => {
+    return dim > 1
+  }).length
+
+  const isScalar = (order === 0)
 
   return function (ring) {
     // Create zero.
@@ -17,6 +35,12 @@ function TensorSpace (indices, type) {
       }
     }, [])
 
+
+    /**
+     * Tensor
+     *
+     * @class
+     */
 
     class Tensor {
       constructor (data) {
@@ -62,8 +86,13 @@ function TensorSpace (indices, type) {
       value: zero
     })
 
+    Object.defineProperty(Tensor, 'order', {
+      writable: false,
+      value: order
+    })
+
     return Tensor
   }
 }
 
-module.exports = TensorSpace
+module.exports = tensorSpace

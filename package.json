@@ -27,6 +27,7 @@
     "cp": "npm run cp:dist; npm run cp:package.json",
     "cp:dist": "cp -r dist/ gh-pages/",
     "cp:package.json": "cp package.json gh-pages/_data/",
+    "decrypt:.coveralls.yml": "keybase decrypt -o .coveralls.yml .coveralls.yml.asc",
     "dox": "cat src/*.js | dox > gh-pages/_data/dox.json",
     "gh-pages:_data": "npm run package.json; npm run dox",
     "gh-pages:push": "git subtree --prefix gh-pages push origin gh-pages",

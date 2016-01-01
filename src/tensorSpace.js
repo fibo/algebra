@@ -51,7 +51,34 @@ function tensorSpace (indices) {
         var args = [].slice.call(arguments)
         var operands = [this.data].concat(args)
 
-        var data = nAry(indices, ring.addition).call(null, operands)
+        var data = Tensor.addition.apply(null, operands)
+
+        return new Tensor(data)
+      }
+
+      add () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
+
+        var data = Tensor.addition.apply(null, operands)
+
+        return new Tensor(data)
+      }
+
+      subtraction () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
+
+        var data = Tensor.subtraction.apply(null, operands)
+
+        return new Tensor(data)
+      }
+
+      sub () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
+
+        var data = Tensor.subtraction.apply(null, operands)
 
         return new Tensor(data)
       }

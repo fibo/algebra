@@ -28,7 +28,8 @@ describe('tensorSpace', () => {
     var x = new Scalar(1)
     x.data.should.be.eql(1)
 
-    // TODO x.addition(2, 3, 4).data.should.be.eql(10)
+    x.addition(2).data.should.be.eql(3)
+    //x.addition(2, 3, 4).data.should.be.eql(10)
   })
 
   it('can create a Vector', () => {

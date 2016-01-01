@@ -1,4 +1,5 @@
 var nAry = require('./nAry')
+var tensorProduct = require('tensor-product')
 
 /**
  * Creates a tensor space that is a class representing a tensor.
@@ -34,7 +35,6 @@ function tensorSpace (indices) {
         return result
       }
     }, [])
-
 
     /**
      * Tensor
@@ -105,6 +105,14 @@ function tensorSpace (indices) {
 
       static sub () {
         return nAry(indices, ring.subtraction).apply(null, arguments)
+      }
+
+      static product (leftData) {
+        return function (rightDim) {
+          return function (rightData) {
+            return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
+          }
+        }
       }
     }
 

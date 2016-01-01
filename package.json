@@ -83,6 +83,6 @@
     "laplace-determinant": "^0.1.0",
     "multidim-array-index": "^0.1.1",
     "strict-mode": "^0.4.1",
-    "tensor-product": "^0.1.0"
+    "tensor-product": "^0.2.0"
   }
 }

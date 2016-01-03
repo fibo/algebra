@@ -22,8 +22,11 @@ Many functionalities of previous versions are now in separated atomic packages:
 * [algebra-group](http://npm.im/algebra-group)
 * [algebra-ring](http://npm.im/algebra-ring)
 * [cayley-dickson](http://npm.im/cayley-dickson)
+* [indices-permutations](http://npm.im/indices-permutations)
 * [laplace-determinant](http://npm.im/laplace-determinant)
 * [multidim-array-index](http://npm.im/multidim-array-index)
+* [tensor-contraction](http://npm.im/tensor-contraction)
+* [tensor-permutation](http://npm.im/tensor-product)
 
 ## Features
 

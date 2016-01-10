@@ -1,7 +1,6 @@
 {
   "name": "algebra",
   "main": "dist/algebra.js",
-  "version": "0.11.0",
   "homepage": "http://g14n.info/algebra",
   "authors": [
     "Gianluca Casati"

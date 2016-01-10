@@ -62,7 +62,7 @@
   ],
   "devDependencies": {
     "babelify": "^7.2.0",
-    "browserify": "^12.0.1",
+    "browserify": "^13.0.0",
     "coveralls": "^2.11.6",
     "dox": "^0.8.0",
     "istanbul": "^0.4.1",
@@ -74,14 +74,14 @@
     "should": "^8.0.2"
   },
   "dependencies": {
-    "algebra-group": "^0.2.0",
-    "algebra-ring": "^0.2.0",
+    "algebra-group": "^0.3.0",
+    "algebra-ring": "^0.3.0",
     "cayley-dickson": "^0.1.0",
-    "indices-permutations": "^0.1.0",
+    "indices-permutations": "^0.2.0",
     "inherits": "^2.0.1",
     "is-integer": "^1.0.6",
     "laplace-determinant": "^0.1.0",
-    "multidim-array-index": "^0.1.1",
+    "multidim-array-index": "^0.2.0",
     "strict-mode": "^0.4.1",
     "tensor-contraction": "^0.1.0",
     "tensor-product": "^0.2.0"

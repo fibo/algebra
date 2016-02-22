@@ -4,8 +4,7 @@
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test)
 
-
-[![Whatchers](https://img.shields.io/github/watchers/fibo/algebra.svg?style=social&label=Watch)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://img.shields.io/github/stars/fibo/algebra.svg?style=social&label=Star)](https://github.com/fibo/algebra/stargazers) [![Forks](https://img.shields.io/github/forks/fibo/algebra.svg?style=social&label=Forks)](https://github.com/fibo/algebra/network/members)
+[![Whatchers](http://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](http://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](http://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
 [![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 

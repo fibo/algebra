@@ -2,6 +2,17 @@
 
 > Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
 
+**Table Of Contents:**
+
+* [Status](#status)
+* [Features](#features)
+* [Installation](#installation)
+* [Quick start](#quick-start)
+    - [Scalars](#scalars)
+    - [Vectors](#vectors)
+    - [Matrices](#matrices)
+* [License](#license)
+
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test)
 
 [![Whatchers](http://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](http://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](http://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
@@ -47,6 +58,11 @@ With [bower](http://bower.io/) do
 
 ```bash
 $ bower install algebra
+```
+or use a CDN adding this to your HTML page
+
+```
+<script src="https://cdn.rawgit.com/fibo/algebra/master/dist/algebra.min.js"></script>
 ```
 
 ## Quick start
@@ -197,5 +213,5 @@ console.log(m2.determinant.data); // 2
 
 [MIT](http://g14n.info/mit-license/)
 
-  [1]: http://g14n.info/algebra/articles "algebra blog"
+[1]: http://g14n.info/algebra/articles "algebra blog"
 

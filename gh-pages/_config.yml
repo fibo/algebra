@@ -8,8 +8,6 @@ gems:
 
 markdown: kramdown
 
-highlighter: rouge
-
 exclude:
   - npm-debug.log
   - node_modules/

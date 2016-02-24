@@ -13,7 +13,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "_build": "npm test && npm run browserify && npm run tex && npm run jekyll; git status",
+    "_build": "npm test && npm run browserify && && npm run minify && npm run tex && npm run jekyll; git status",
     "_pull": "git pull origin master && npm run gh-pages:pull",
     "_push": "git push origin master && npm run gh-pages:push",
     "browserify": "npm run browserify:dist; npm run browserify:test",
@@ -33,6 +33,7 @@
     "istanbul": "istanbul cover _mocha",
     "jekyll": "npm run homepage; npm run cp; npm run gh-pages:_data; cd gh-pages; jekyll build; cd ..",
     "lint": "jshint -c .jshintrc src/**.js test/**.js",
+    "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map ${npm_package_name}.map --output ${npm_package_name}.min.js --compress --mangle --preamble \"// ${npm_package_name}.js ${npm_package_homepage} \n// license ${npm_package_license}\"; cd -",
     "tex": "npm run tex:display; npm run tex:inline",
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
@@ -70,7 +71,8 @@
     "mocha": "^2.3.4",
     "mocha-lcov-reporter": "1.0.0",
     "pre-commit": "^1.1.2",
-    "should": "^8.0.2"
+    "should": "^8.0.2",
+    "uglify-js": "^2.6.2"
   },
   "dependencies": {
     "algebra-group": "^0.4.0",

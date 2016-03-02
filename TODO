@@ -1,11 +1,4 @@
 
-drop Tensor implementation, cause:
-    Generalize vectors and matrices as tensors is not as easy, as for the implementation (in particular for coercion) 
-    as for the final user who should deal with index gimnastic, covariant and controvariant indices, etc.
-    On the other side, generalize matrices as vector spaces, hence an additive group, that becomes a ring thanks to
-    row by column composition law, is far more easy to understand and use both for human and for a programming language.
-    Furthermore, many people will use matrices and vectors, few will need tensors.
-    
 use strings ℝ ℂ ℍ
 
 try ratio, rational numbers lib
@@ -24,6 +17,4 @@ be more semantic: transposition instead of transpose if it is static, transpose 
                   addition for the static operator, add for the mutator
                   subtraction for the static, subtract for the mutator
                   multiplication, multiply or better multiplyBy ... the alias is mul, that is the same
-
-write src/ in es6, then use esperanto and a transpiler
 

@@ -1,25 +1,25 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 require('strict-mode')(function () {
-  var iterateCayleyDickson = require('cayley-dickson');
-  var realField = require('./src/realField');
-  var createScalar = require('./src/createScalar');
+  var iterateCayleyDickson = require('cayley-dickson')
+  var realField = require('./src/realField')
+  var createScalar = require('./src/createScalar')
 
-  var K0 = iterateCayleyDickson(realField, 0);
-  var K1 = iterateCayleyDickson(realField, 1);
-  var K2 = iterateCayleyDickson(realField, 2);
-  var K3 = iterateCayleyDickson(realField, 3);
+  var K0 = iterateCayleyDickson(realField, 0)
+  var K1 = iterateCayleyDickson(realField, 1)
+  var K2 = iterateCayleyDickson(realField, 2)
+  var K3 = iterateCayleyDickson(realField, 3)
 
-  exports.Real = createScalar([K0.zero, K0.one], K0);
-  exports.Complex = createScalar([K1.zero, K1.one], K1);
-  exports.Quaternion = createScalar([K2.zero, K2.one], K2);
-  exports.Octonion = createScalar([K3.zero, K3.one], K3);
+  exports.Real = createScalar([K0.zero, K0.one], K0)
+  exports.Complex = createScalar([K1.zero, K1.one], K1)
+  exports.Quaternion = createScalar([K2.zero, K2.one], K2)
+  exports.Octonion = createScalar([K3.zero, K3.one], K3)
 
-  exports.VectorSpace = require('./src/VectorSpace');
-  exports.MatrixSpace = require('./src/MatrixSpace');
-  exports.tensorSpace = require('./src/tensorSpace');
-});
+  exports.VectorSpace = require('./src/VectorSpace')
+  exports.MatrixSpace = require('./src/MatrixSpace')
+  exports.tensorSpace = require('./src/tensorSpace')
+})
 
-},{"./src/MatrixSpace":39,"./src/VectorSpace":40,"./src/createScalar":43,"./src/realField":48,"./src/tensorSpace":50,"cayley-dickson":8,"strict-mode":34}],2:[function(require,module,exports){
+},{"./src/MatrixSpace":44,"./src/VectorSpace":45,"./src/createScalar":48,"./src/realField":53,"./src/tensorSpace":55,"cayley-dickson":7,"strict-mode":41}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -45,30 +45,37 @@ require('strict-mode')(function () {
 function algebraGroup (given, naming) {
   var group = {}
 
-  if (typeof given === 'undefined') given = {}
+  if (typeof given === 'undefined') {
+    given = {}
+  }
 
-  if (typeof naming === 'undefined') naming = {}
+  if (typeof naming === 'undefined') {
+    naming = {}
+  }
 
   // default attribute naming
 
   var defaultNaming = {
-    compositionLaw        : 'addition',
-    identity              : 'zero',
-    inverseCompositionLaw : 'subtraction',
-    inversion             : 'negation'
+    compositionLaw: 'addition',
+    identity: 'zero',
+    inverseCompositionLaw: 'subtraction',
+    inversion: 'negation'
   }
 
   function prop (name) {
-    if (typeof naming[name] === 'string')
+    if (typeof naming[name] === 'string') {
       return naming[name]
+    }
 
-    if (typeof defaultNaming[name] === 'string')
+    if (typeof defaultNaming[name] === 'string') {
       return defaultNaming[name]
+    }
 
     return name
   }
 
   // operators
+
   function compositionLaw () {
     return [].slice.call(arguments).reduce(given.compositionLaw)
   }
@@ -76,16 +83,18 @@ function algebraGroup (given, naming) {
   function contains () {
     var arg = [].slice.call(arguments)
 
-    for (var i in arg)
-      if (! given.contains(arg[i]))
+    for (var i in arg) {
+      if (!given.contains(arg[i])) {
         return false
+      }
+    }
 
-       return true
+    return true
   }
 
-  function notContains (a) { return ! contains(a) }
+  function notContains (a) { return !contains(a) }
 
-  function disequality (a, b) { return ! given.equality(a, b) }
+  function disequality (a, b) { return !given.equality(a, b) }
 
   function inverseCompositionLaw (a) {
     var rest = [].slice.call(arguments, 1)
@@ -93,23 +102,25 @@ function algebraGroup (given, naming) {
     return compositionLaw(a, rest.map(given.inversion).reduce(given.compositionLaw))
   }
 
-  group[prop('contains')]              = contains
-  group[prop('notContains')]           = notContains
-  group[prop('compositionLaw')]        = compositionLaw
-  group[prop('inversion')]             = given.inversion
+  group[prop('contains')] = contains
+  group[prop('notContains')] = notContains
+  group[prop('compositionLaw')] = compositionLaw
+  group[prop('inversion')] = given.inversion
   group[prop('inverseCompositionLaw')] = inverseCompositionLaw
-  group[prop('equality')]              = given.equality
-  group[prop('disequality')]           = disequality
+  group[prop('equality')] = given.equality
+  group[prop('disequality')] = disequality
 
   // identity element
   var e = given.identity
 
-  if (notContains(e))
-    throw new TypeError('"identity" must be contained in group set')
+  if (notContains(e)) {
+    throw new TypeError('algebra-group: "identity" must be contained in group set')
+  }
 
   // Check that e+e=e.
-  if (disequality(given.compositionLaw(e, e), e))
-    throw new TypeError('"identity" is not neutral')
+  if (disequality(given.compositionLaw(e, e), e)) {
+    throw new TypeError('algebra-group: "identity" is not neutral')
+  }
 
   group[prop('identity')] = e
 
@@ -118,9 +129,7 @@ function algebraGroup (given, naming) {
 
 module.exports = algebraGroup
 
-
 },{}],3:[function(require,module,exports){
-
 var group = require('algebra-group')
 
 /**
@@ -141,15 +150,14 @@ var group = require('algebra-group')
  */
 
 function algebraRing (identity, given) {
-
   // A ring is a group, with multiplication.
 
   var ring = group({
-    identity       : identity[0],
-    contains       : given.contains,
-    equality       : given.equality,
-    compositionLaw : given.addition,
-    inversion      : given.negation
+    identity: identity[0],
+    contains: given.contains,
+    equality: given.equality,
+    compositionLaw: given.addition,
+    inversion: given.negation
   })
 
   // operators
@@ -159,8 +167,9 @@ function algebraRing (identity, given) {
   }
 
   function inversion (a) {
-    if (ring.equality(a, ring.zero))
+    if (ring.equality(a, ring.zero)) {
       throw new TypeError('algebra-ring: Cannot divide by zero.')
+    }
 
     return given.inversion(a)
   }
@@ -172,22 +181,25 @@ function algebraRing (identity, given) {
   }
 
   ring.multiplication = multiplication
-  ring.inversion      = inversion
-  ring.division       = division
+  ring.inversion = inversion
+  ring.division = division
 
   // Multiplicative identity.
 
   var one = identity[1]
 
-  if (ring.notContains(one))
+  if (ring.notContains(one)) {
     throw new TypeError('algebra-ring: "identity" must be contained in ring set')
+  }
 
   // Check that one*one=one.
-  if (ring.disequality(given.multiplication(one, one), one))
+  if (ring.disequality(given.multiplication(one, one), one)) {
     throw new TypeError('algebra-ring: "identity" is not neutral')
+  }
 
-  if (ring.notContains(identity[1]))
+  if (ring.notContains(identity[1])) {
     throw new TypeError('algebra-ring:"identity" must be contained in ring set')
+  }
 
   ring.one = identity[1]
 
@@ -196,8 +208,123 @@ function algebraRing (identity, given) {
 
 module.exports = algebraRing
 
-
 },{"algebra-group":2}],4:[function(require,module,exports){
+'use strict'
+
+exports.toByteArray = toByteArray
+exports.fromByteArray = fromByteArray
+
+var lookup = []
+var revLookup = []
+var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
+
+function init () {
+  var i
+  var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+  var len = code.length
+
+  for (i = 0; i < len; i++) {
+    lookup[i] = code[i]
+  }
+
+  for (i = 0; i < len; ++i) {
+    revLookup[code.charCodeAt(i)] = i
+  }
+  revLookup['-'.charCodeAt(0)] = 62
+  revLookup['_'.charCodeAt(0)] = 63
+}
+
+init()
+
+function toByteArray (b64) {
+  var i, j, l, tmp, placeHolders, arr
+  var len = b64.length
+
+  if (len % 4 > 0) {
+    throw new Error('Invalid string. Length must be a multiple of 4')
+  }
+
+  // the number of equal signs (place holders)
+  // if there are two placeholders, than the two characters before it
+  // represent one byte
+  // if there is only one, then the three characters before it represent 2 bytes
+  // this is just a cheap hack to not do indexOf twice
+  placeHolders = b64[len - 2] === '=' ? 2 : b64[len - 1] === '=' ? 1 : 0
+
+  // base64 is 4/3 + up to two characters of the original data
+  arr = new Arr(len * 3 / 4 - placeHolders)
+
+  // if there are placeholders, only get up to the last complete 4 chars
+  l = placeHolders > 0 ? len - 4 : len
+
+  var L = 0
+
+  for (i = 0, j = 0; i < l; i += 4, j += 3) {
+    tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
+    arr[L++] = (tmp & 0xFF0000) >> 16
+    arr[L++] = (tmp & 0xFF00) >> 8
+    arr[L++] = tmp & 0xFF
+  }
+
+  if (placeHolders === 2) {
+    tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[L++] = tmp & 0xFF
+  } else if (placeHolders === 1) {
+    tmp = (revLookup[b64.charCodeAt(i)] << 10) | (revLookup[b64.charCodeAt(i + 1)] << 4) | (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[L++] = (tmp >> 8) & 0xFF
+    arr[L++] = tmp & 0xFF
+  }
+
+  return arr
+}
+
+function tripletToBase64 (num) {
+  return lookup[num >> 18 & 0x3F] + lookup[num >> 12 & 0x3F] + lookup[num >> 6 & 0x3F] + lookup[num & 0x3F]
+}
+
+function encodeChunk (uint8, start, end) {
+  var tmp
+  var output = []
+  for (var i = start; i < end; i += 3) {
+    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+    output.push(tripletToBase64(tmp))
+  }
+  return output.join('')
+}
+
+function fromByteArray (uint8) {
+  var tmp
+  var len = uint8.length
+  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
+  var output = ''
+  var parts = []
+  var maxChunkLength = 16383 // must be multiple of 3
+
+  // go through the array every three bytes, we'll deal with trailing stuff later
+  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+    parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)))
+  }
+
+  // pad the end with zeros, but make sure to not forget the extra bytes
+  if (extraBytes === 1) {
+    tmp = uint8[len - 1]
+    output += lookup[tmp >> 2]
+    output += lookup[(tmp << 4) & 0x3F]
+    output += '=='
+  } else if (extraBytes === 2) {
+    tmp = (uint8[len - 2] << 8) + (uint8[len - 1])
+    output += lookup[tmp >> 10]
+    output += lookup[(tmp >> 4) & 0x3F]
+    output += lookup[(tmp << 2) & 0x3F]
+    output += '='
+  }
+
+  parts.push(output)
+
+  return parts.join('')
+}
+
+},{}],5:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -236,9 +363,6 @@ var rootParent = {}
  *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
  *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
  *
- *   - Safari 5-7 lacks support for changing the `Object.prototype.constructor` property
- *     on objects.
- *
  *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
  *
  *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
@@ -252,13 +376,10 @@ Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
   : typedArraySupport()
 
 function typedArraySupport () {
-  function Bar () {}
   try {
     var arr = new Uint8Array(1)
     arr.foo = function () { return 42 }
-    arr.constructor = Bar
     return arr.foo() === 42 && // typed array instances can be augmented
-        arr.constructor === Bar && // constructor can be set
         typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
         arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
   } catch (e) {
@@ -273,16 +394,13 @@ function kMaxLength () {
 }
 
 /**
- * Class: Buffer
- * =============
+ * The Buffer constructor returns instances of `Uint8Array` that have their
+ * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
+ * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+ * and the `Uint8Array` methods. Square bracket notation works as expected -- it
+ * returns a single octet.
  *
- * The Buffer constructor returns instances of `Uint8Array` that are augmented
- * with function properties for all the node `Buffer` API functions. We use
- * `Uint8Array` so that square bracket notation works as expected -- it returns
- * a single octet.
- *
- * By augmenting the instances, we can avoid modifying the `Uint8Array`
- * prototype.
+ * The `Uint8Array` prototype remains unmodified.
  */
 function Buffer (arg) {
   if (!(this instanceof Buffer)) {
@@ -308,6 +426,12 @@ function Buffer (arg) {
 
   // Unusual.
   return fromObject(this, arg)
+}
+
+// TODO: Legacy, not needed anymore. Remove in next major version.
+Buffer._augment = function (arr) {
+  arr.__proto__ = Buffer.prototype
+  return arr
 }
 
 function fromNumber (that, length) {
@@ -384,10 +508,12 @@ function fromTypedArray (that, array) {
 }
 
 function fromArrayBuffer (that, array) {
+  array.byteLength // this throws if `array` is not a valid ArrayBuffer
+
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     // Return an augmented `Uint8Array` instance, for best performance
-    array.byteLength
-    that = Buffer._augment(new Uint8Array(array))
+    that = new Uint8Array(array)
+    that.__proto__ = Buffer.prototype
   } else {
     // Fallback: Return an object instance of the Buffer class
     that = fromTypedArray(that, new Uint8Array(array))
@@ -425,6 +551,14 @@ function fromJsonObject (that, object) {
 if (Buffer.TYPED_ARRAY_SUPPORT) {
   Buffer.prototype.__proto__ = Uint8Array.prototype
   Buffer.__proto__ = Uint8Array
+  if (typeof Symbol !== 'undefined' && Symbol.species &&
+      Buffer[Symbol.species] === Buffer) {
+    // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
+    Object.defineProperty(Buffer, Symbol.species, {
+      value: null,
+      configurable: true
+    })
+  }
 } else {
   // pre-set for values that may exist in the future
   Buffer.prototype.length = undefined
@@ -434,12 +568,11 @@ if (Buffer.TYPED_ARRAY_SUPPORT) {
 function allocate (that, length) {
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     // Return an augmented `Uint8Array` instance, for best performance
-    that = Buffer._augment(new Uint8Array(length))
+    that = new Uint8Array(length)
     that.__proto__ = Buffer.prototype
   } else {
     // Fallback: Return an object instance of the Buffer class
     that.length = length
-    that._isBuffer = true
   }
 
   var fromPool = length !== 0 && length <= Buffer.poolSize >>> 1
@@ -622,6 +755,10 @@ function slowToString (encoding, start, end) {
   }
 }
 
+// The property is used by `Buffer.isBuffer` and `is-buffer` (in Safari 5-7) to detect
+// Buffer instances.
+Buffer.prototype._isBuffer = true
+
 Buffer.prototype.toString = function toString () {
   var length = this.length | 0
   if (length === 0) return ''
@@ -690,18 +827,6 @@ Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
   }
 
   throw new TypeError('val must be string, number or Buffer')
-}
-
-// `get` is deprecated
-Buffer.prototype.get = function get (offset) {
-  console.log('.get() is deprecated. Access using array indexes instead.')
-  return this.readUInt8(offset)
-}
-
-// `set` is deprecated
-Buffer.prototype.set = function set (v, offset) {
-  console.log('.set() is deprecated. Access using array indexes instead.')
-  return this.writeUInt8(v, offset)
 }
 
 function hexWrite (buf, string, offset, length) {
@@ -999,7 +1124,8 @@ Buffer.prototype.slice = function slice (start, end) {
 
   var newBuf
   if (Buffer.TYPED_ARRAY_SUPPORT) {
-    newBuf = Buffer._augment(this.subarray(start, end))
+    newBuf = this.subarray(start, end)
+    newBuf.__proto__ = Buffer.prototype
   } else {
     var sliceLen = end - start
     newBuf = new Buffer(sliceLen, undefined)
@@ -1403,7 +1529,6 @@ Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) 
 }
 
 function checkIEEE754 (buf, value, offset, ext, max, min) {
-  if (value > max || value < min) throw new RangeError('value is out of bounds')
   if (offset + ext > buf.length) throw new RangeError('index out of range')
   if (offset < 0) throw new RangeError('index out of range')
 }
@@ -1479,7 +1604,11 @@ Buffer.prototype.copy = function copy (target, targetStart, start, end) {
       target[i + targetStart] = this[i + start]
     }
   } else {
-    target._set(this.subarray(start, start + len), targetStart)
+    Uint8Array.prototype.set.call(
+      target,
+      this.subarray(start, start + len),
+      targetStart
+    )
   }
 
   return len
@@ -1516,96 +1645,8 @@ Buffer.prototype.fill = function fill (value, start, end) {
   return this
 }
 
-/**
- * Creates a new `ArrayBuffer` with the *copied* memory of the buffer instance.
- * Added in Node 0.12. Only available in browsers that support ArrayBuffer.
- */
-Buffer.prototype.toArrayBuffer = function toArrayBuffer () {
-  if (typeof Uint8Array !== 'undefined') {
-    if (Buffer.TYPED_ARRAY_SUPPORT) {
-      return (new Buffer(this)).buffer
-    } else {
-      var buf = new Uint8Array(this.length)
-      for (var i = 0, len = buf.length; i < len; i += 1) {
-        buf[i] = this[i]
-      }
-      return buf.buffer
-    }
-  } else {
-    throw new TypeError('Buffer.toArrayBuffer not supported in this browser')
-  }
-}
-
 // HELPER FUNCTIONS
 // ================
-
-var BP = Buffer.prototype
-
-/**
- * Augment a Uint8Array *instance* (not the Uint8Array class!) with Buffer methods
- */
-Buffer._augment = function _augment (arr) {
-  arr.constructor = Buffer
-  arr._isBuffer = true
-
-  // save reference to original Uint8Array set method before overwriting
-  arr._set = arr.set
-
-  // deprecated
-  arr.get = BP.get
-  arr.set = BP.set
-
-  arr.write = BP.write
-  arr.toString = BP.toString
-  arr.toLocaleString = BP.toString
-  arr.toJSON = BP.toJSON
-  arr.equals = BP.equals
-  arr.compare = BP.compare
-  arr.indexOf = BP.indexOf
-  arr.copy = BP.copy
-  arr.slice = BP.slice
-  arr.readUIntLE = BP.readUIntLE
-  arr.readUIntBE = BP.readUIntBE
-  arr.readUInt8 = BP.readUInt8
-  arr.readUInt16LE = BP.readUInt16LE
-  arr.readUInt16BE = BP.readUInt16BE
-  arr.readUInt32LE = BP.readUInt32LE
-  arr.readUInt32BE = BP.readUInt32BE
-  arr.readIntLE = BP.readIntLE
-  arr.readIntBE = BP.readIntBE
-  arr.readInt8 = BP.readInt8
-  arr.readInt16LE = BP.readInt16LE
-  arr.readInt16BE = BP.readInt16BE
-  arr.readInt32LE = BP.readInt32LE
-  arr.readInt32BE = BP.readInt32BE
-  arr.readFloatLE = BP.readFloatLE
-  arr.readFloatBE = BP.readFloatBE
-  arr.readDoubleLE = BP.readDoubleLE
-  arr.readDoubleBE = BP.readDoubleBE
-  arr.writeUInt8 = BP.writeUInt8
-  arr.writeUIntLE = BP.writeUIntLE
-  arr.writeUIntBE = BP.writeUIntBE
-  arr.writeUInt16LE = BP.writeUInt16LE
-  arr.writeUInt16BE = BP.writeUInt16BE
-  arr.writeUInt32LE = BP.writeUInt32LE
-  arr.writeUInt32BE = BP.writeUInt32BE
-  arr.writeIntLE = BP.writeIntLE
-  arr.writeIntBE = BP.writeIntBE
-  arr.writeInt8 = BP.writeInt8
-  arr.writeInt16LE = BP.writeInt16LE
-  arr.writeInt16BE = BP.writeInt16BE
-  arr.writeInt32LE = BP.writeInt32LE
-  arr.writeInt32BE = BP.writeInt32BE
-  arr.writeFloatLE = BP.writeFloatLE
-  arr.writeFloatBE = BP.writeFloatBE
-  arr.writeDoubleLE = BP.writeDoubleLE
-  arr.writeDoubleBE = BP.writeDoubleBE
-  arr.fill = BP.fill
-  arr.inspect = BP.inspect
-  arr.toArrayBuffer = BP.toArrayBuffer
-
-  return arr
-}
 
 var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
 
@@ -1749,133 +1790,250 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":5,"ieee754":6,"isarray":7}],5:[function(require,module,exports){
-var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+},{"base64-js":4,"ieee754":8,"isarray":6}],6:[function(require,module,exports){
+var toString = {}.toString;
 
-;(function (exports) {
-	'use strict';
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
 
-  var Arr = (typeof Uint8Array !== 'undefined')
-    ? Uint8Array
-    : Array
+},{}],7:[function(require,module,exports){
+var ring = require('algebra-ring')
+var twoPow = Math.pow.bind(null, 2)
 
-	var PLUS   = '+'.charCodeAt(0)
-	var SLASH  = '/'.charCodeAt(0)
-	var NUMBER = '0'.charCodeAt(0)
-	var LOWER  = 'a'.charCodeAt(0)
-	var UPPER  = 'A'.charCodeAt(0)
-	var PLUS_URL_SAFE = '-'.charCodeAt(0)
-	var SLASH_URL_SAFE = '_'.charCodeAt(0)
+/**
+ * Turn unary operator on single value to operator on n values.
+ */
 
-	function decode (elt) {
-		var code = elt.charCodeAt(0)
-		if (code === PLUS ||
-		    code === PLUS_URL_SAFE)
-			return 62 // '+'
-		if (code === SLASH ||
-		    code === SLASH_URL_SAFE)
-			return 63 // '/'
-		if (code < NUMBER)
-			return -1 //no match
-		if (code < NUMBER + 10)
-			return code - NUMBER + 26 + 26
-		if (code < UPPER + 26)
-			return code - UPPER
-		if (code < LOWER + 26)
-			return code - LOWER + 26
-	}
+function arrayfy1 (operator, dim) {
+  return function (a) {
+    var b = []
 
-	function b64ToByteArray (b64) {
-		var i, j, l, tmp, placeHolders, arr
+    for (var i = 0; i < dim; i++) {
+      b.push(operator(a[i]))
+    }
 
-		if (b64.length % 4 > 0) {
-			throw new Error('Invalid string. Length must be a multiple of 4')
-		}
+    return b
+  }
+}
 
-		// the number of equal signs (place holders)
-		// if there are two placeholders, than the two characters before it
-		// represent one byte
-		// if there is only one, then the three characters before it represent 2 bytes
-		// this is just a cheap hack to not do indexOf twice
-		var len = b64.length
-		placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
+/**
+ * Turn binary operator on single value to operator on n values.
+ */
 
-		// base64 is 4/3 + up to two characters of the original data
-		arr = new Arr(b64.length * 3 / 4 - placeHolders)
+function arrayfy2 (operator, dim) {
+  return function (a, b) {
+    var c = []
 
-		// if there are placeholders, only get up to the last complete 4 chars
-		l = placeHolders > 0 ? b64.length - 4 : b64.length
+    for (var i = 0; i < dim; i++) {
+      c.push(operator(a[i], b[i]))
+    }
 
-		var L = 0
+    return c
+  }
+}
 
-		function push (v) {
-			arr[L++] = v
-		}
+/**
+ * Iterate Cayley-Disckson construction
+ *
+ * @params {Object} given field
+ * @params {*} given.zero
+ * @params {*} given.one
+ * @params {Function} given.equality
+ * @params {Function} given.contains
+ * @params {Function} given.addition
+ * @params {Function} given.negation
+ * @params {Function} given.multiplication
+ * @params {Function} given.inversion
+ * @params {Number} iterations
+ *
+ * @returns {Object} algebra
+ */
 
-		for (i = 0, j = 0; i < l; i += 4, j += 3) {
-			tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
-			push((tmp & 0xFF0000) >> 16)
-			push((tmp & 0xFF00) >> 8)
-			push(tmp & 0xFF)
-		}
+function iterateCayleyDickson (given, iterations) {
+  var field = ring([given.zero, given.one], given)
 
-		if (placeHolders === 2) {
-			tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
-			push(tmp & 0xFF)
-		} else if (placeHolders === 1) {
-			tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
-			push((tmp >> 8) & 0xFF)
-			push(tmp & 0xFF)
-		}
+  if (iterations === 0) {
+    return field
+  }
 
-		return arr
-	}
+  var fieldZero = field.zero
+  var fieldOne = field.one
+  var fieldAddition = field.addition
+  var fieldMultiplication = field.multiplication
+  var fieldNegation = field.negation
+  var fieldDisequality = field.disequality
+  var fieldNotContains = field.notContains
 
-	function uint8ToBase64 (uint8) {
-		var i,
-			extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
-			output = "",
-			temp, length
+  // identities
 
-		function encode (num) {
-			return lookup.charAt(num)
-		}
+  var one = []
+  var zero = []
+  var dim = twoPow(iterations)
 
-		function tripletToBase64 (num) {
-			return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
-		}
+  one.push(fieldOne)
+  zero.push(fieldZero)
 
-		// go through the array every three bytes, we'll deal with trailing stuff later
-		for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
-			temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
-			output += tripletToBase64(temp)
-		}
+  for (var i = 1; i < dim; i++) {
+    one.push(fieldZero)
+    zero.push(fieldZero)
+  }
 
-		// pad the end with zeros, but make sure to not forget the extra bytes
-		switch (extraBytes) {
-			case 1:
-				temp = uint8[uint8.length - 1]
-				output += encode(temp >> 2)
-				output += encode((temp << 4) & 0x3F)
-				output += '=='
-				break
-			case 2:
-				temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
-				output += encode(temp >> 10)
-				output += encode((temp >> 4) & 0x3F)
-				output += encode((temp << 2) & 0x3F)
-				output += '='
-				break
-		}
+  // operators
 
-		return output
-	}
+  function equality (a, b) {
+    for (var i = 0; i < dim; i++) {
+      if (fieldDisequality(a[i], b[i])) {
+        return false
+      }
+    }
 
-	exports.toByteArray = b64ToByteArray
-	exports.fromByteArray = uint8ToBase64
-}(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
+    return true
+  }
 
-},{}],6:[function(require,module,exports){
+  function contains (a) {
+    for (var i = 0; i < dim; i++) {
+      if (fieldNotContains(a[i])) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  function buildConjugation (fieldNegation, iterations) {
+    if (iterations === 0) {
+      return function (a) { return a }
+    }
+
+    var dim = twoPow(iterations)
+
+    // b -> p looks like complex conjugation simmetry (:
+    function conjugation (b) {
+      var p = [b[0]]
+
+      // First, copy half of b into q.
+      for (var i = 1; i < dim; i++) {
+        p.push(fieldNegation(b[i]))
+      }
+
+      return p
+    }
+
+    return conjugation
+  }
+
+  var conjugation = buildConjugation(fieldNegation, iterations)
+
+  function buildMultiplication (fieldAddition, fieldNegation, fieldMultiplication, iterations) {
+    if (iterations === 0) {
+      return function (a, b) { return [fieldMultiplication(a, b)] }
+    }
+
+    var dim = twoPow(iterations)
+    var halfDim = twoPow(iterations - 1)
+
+    var add = arrayfy2(fieldAddition, halfDim)
+    var conj = buildConjugation(fieldNegation, iterations - 1)
+    var mul = buildMultiplication(fieldAddition, fieldNegation, fieldMultiplication, iterations - 1)
+    var neg = arrayfy1(fieldNegation, halfDim)
+
+    function multiplication (a, b) {
+      var c = []
+
+      //         a = (p, q)
+      //         +    +  +
+      //         b = (r, s)
+      //         =    =  =
+      // a + b = c = (t, u)
+
+      var p = []
+      var q = []
+      var r = []
+      var s = []
+
+      for (var i1 = 0; i1 < halfDim; i1++) {
+        p.push(a[i1])
+        r.push(b[i1])
+      }
+
+      for (var i2 = halfDim; i2 < dim; i2++) {
+        q.push(a[i2])
+        s.push(b[i2])
+      }
+
+      // let denote conj(x) as x`
+      //
+      // Multiplication law is given by
+      //
+      // (p, q)(r, s) = (pr - s`q, sp + qr`)
+
+      var t = add(mul(p, r), neg(mul(conj(s), q)))
+      var u = add(mul(s, p), mul(q, conj(r)))
+
+      for (var i3 = 0; i3 < halfDim; i3++) {
+        c.push(t[i3])
+      }
+
+      for (var i4 = 0; i4 < halfDim; i4++) {
+        c.push(u[i4])
+      }
+
+      return c
+    }
+
+    return multiplication
+  }
+
+  var multiplication = buildMultiplication(fieldAddition, fieldNegation, fieldMultiplication, iterations)
+
+  function norm (a) {
+    var n = fieldZero
+    var squares = multiplication(a, conjugation(a))
+
+    for (var i = 0; i < dim; i++) {
+      n = fieldAddition(n, squares[i])
+    }
+
+    return n
+  }
+
+  function inversion (a) {
+    var n = norm(a)
+    var b = conjugation(a)
+
+    for (var i = 0; i < dim; i++) {
+      b[i] = field.division(b[i], n)
+    }
+
+    return b
+  }
+
+  var addition = arrayfy2(fieldAddition, dim)
+  var negation = arrayfy1(fieldNegation, dim)
+
+  // Cayley-Dickson construction take a field as input but the result can be often a ring,
+  // this means that it can be *not-commutative*.
+  // To elevate it to an algebra, we need a bilinear form wich is given by the norm.
+  var algebra = ring([zero, one], {
+    contains: contains,
+    equality: equality,
+    addition: addition,
+    negation: negation,
+    multiplication: multiplication,
+    inversion: inversion
+  })
+
+  algebra.conjugation = conjugation
+  algebra.norm = norm
+
+  return algebra
+}
+
+module.exports = iterateCayleyDickson
+
+
+},{"algebra-ring":3}],8:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -1961,239 +2119,36 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],7:[function(require,module,exports){
-var toString = {}.toString;
+},{}],9:[function(require,module,exports){
+function indicesPermutations (previousValue, currentValue, currentIndex, array) {
+  var result = []
 
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
+  if (array.length === 1) {
+    for (var i = 0; i < currentValue; i++) {
+      result.push([i])
+    }
+  } else {
+    var arrayWithoutLastElement = []
 
-},{}],8:[function(require,module,exports){
-
-var ring = require('algebra-ring')
-
-var twoPow = Math.pow.bind(null, 2)
-
-/**
- * Turn unary operator on single value to operator on n values.
- */
-
-function arrayfy1 (operator, dim) {
-   return function (a) {
-     var b = []
-
-     for (var i = 0; i < dim; i++)
-       b.push(operator(a[i]))
-
-     return b
-   }
-}
-
-/**
- * Turn binary operator on single value to operator on n values.
- */
-
-function arrayfy2 (operator, dim) {
-   return function (a, b) {
-
-     var c = []
-
-     for (var i = 0; i < dim; i++)
-       c.push(operator(a[i], b[i]))
-
-     return c
-   }
-}
-
-/**
- * Iterate Cayley-Disckson construction
- *
- * @params {Object} given field
- * @params {*} given.zero
- * @params {*} given.one
- * @params {Function} given.equality
- * @params {Function} given.contains
- * @params {Function} given.addition
- * @params {Function} given.negation
- * @params {Function} given.multiplication
- * @params {Function} given.inversion
- * @params {Number} iterations
- *
- * @returns {Object} algebra
- */
-
-function iterateCayleyDickson (given, iterations) {
-  var field = ring([given.zero, given.one], given)
-
-  if (iterations === 0)
-    return field
-
-   var fieldZero           = field.zero,
-       fieldOne            = field.one,
-       fieldAddition       = field.addition,
-       fieldMultiplication = field.multiplication,
-       fieldNegation       = field.negation,
-       fieldDisequality    = field.disequality,
-       fieldNotContains    = field.notContains
-
-  // identities
-
-  var one  = [],
-      zero = [],
-      dim  = twoPow(iterations)
-
-  one.push(fieldOne)
-  zero.push(fieldZero)
-
-  for (var i = 1; i < dim; i++) {
-    one.push(fieldZero)
-    zero.push(fieldZero)
-  }
-
-  // operators
-
-  function equality (a, b) {
-    for (var i = 0; i < dim; i++)
-      if (fieldDisequality(a[i], b[i]))
-        return false
-
-    return true
-  }
-
-  function contains (a) {
-    for (var i = 0; i < dim; i++)
-      if (fieldNotContains(a[i]))
-        return false
-
-    return true
-  }
-
-  function buildConjugation (fieldNegation, iterations) {
-    if (iterations === 0)
-      return function (a) { return a }
-
-    var dim = twoPow(iterations)
-
-    // b -> p looks like complex conjugation simmetry (:
-    function conjugation (b) {
-      var p = [b[0]],
-          i
-
-      // First, copy half of b into q.
-      for (i = 1; i < dim; i++)
-        p.push(fieldNegation(b[i]))
-
-      return p
+    for (var j = 0; j < array.length - 1; j++) {
+      arrayWithoutLastElement.push(array[j])
     }
 
-    return conjugation
-  }
+    var previousIteration = arrayWithoutLastElement.reduce(indicesPermutations, [])
 
-  var conjugation = buildConjugation(fieldNegation, iterations)
-
-  function buildMultiplication (fieldAddition, fieldNegation, fieldMultiplication, iterations) {
-    if (iterations === 0)
-      return function (a, b) { return [fieldMultiplication(a, b)] }
-
-    var dim     = twoPow(iterations),
-        halfDim = twoPow(iterations - 1)
-
-    var add  = arrayfy2(fieldAddition, halfDim),
-        conj = buildConjugation(fieldNegation, iterations -1),
-        mul  = buildMultiplication(fieldAddition, fieldNegation, fieldMultiplication, iterations - 1),
-        neg  = arrayfy1(fieldNegation, halfDim)
-
-    function multiplication (a, b) {
-      var c = []
-
-      //         a = (p, q)
-      //         +    +  +
-      //         b = (r, s)
-      //         =    =  =
-      // a + b = c = (t, u)
-
-      var p = [], q = [],
-          r = [], s = []
-
-      for (var i1 = 0; i1 < halfDim; i1++) {
-        p.push(a[i1])
-        r.push(b[i1])
+    for (var l = 0; l < previousIteration.length; l++) {
+      for (var k = 0; k < currentValue; k++) {
+        result.push(previousIteration[l].concat(k))
       }
-
-      for (var i2 = halfDim; i2 < dim; i2++) {
-        q.push(a[i2])
-        s.push(b[i2])
-      }
-
-      // let denote conj(x) as x`
-      //
-      // Multiplication law is given by
-      //
-      // (p, q)(r, s) = (pr - s`q, sp + qr`)
-
-      var t = add(mul(p, r), neg(mul(conj(s), q))),
-          u = add(mul(s, p), mul(q, conj(r)))
-
-      for (var i3 = 0; i3 < halfDim; i3++)
-        c.push(t[i3])
-
-      for (var i4 = 0; i4 < halfDim; i4++)
-        c.push(u[i4])
-
-      return c
     }
-
-    return multiplication
   }
 
-  var multiplication = buildMultiplication(fieldAddition, fieldNegation, fieldMultiplication, iterations)
-
-  function norm (a) {
-    var n       = fieldZero,
-        squares = multiplication(a, conjugation(a))
-
-    for (var i = 0; i < dim; i++)
-      n = fieldAddition(n, squares[i])
-
-    return n
-  }
-
-  function inversion (a) {
-    var n = norm(a)
-
-    var b = conjugation(a)
-
-    for (var i = 0; i < dim; i++)
-      b[i] = field.division(b[i], n)
-
-    return b
-  }
-
-  var addition = arrayfy2(fieldAddition, dim),
-      negation = arrayfy1(fieldNegation, dim)
-
-  // Cayley-Dickson construction take a field as input but the result can be often a ring,
-  // this means that it can be *not-commutative*.
-  // To elevate it to an algebra, we need a bilinear form wich is given by the norm.
-  var algebra = ring([zero, one], {
-    contains       : contains,
-    equality       : equality,
-    addition       : addition,
-    negation       : negation,
-    multiplication : multiplication,
-    inversion      : inversion
-  })
-
-  algebra.conjugation = conjugation
-  algebra.norm        = norm
-
-  return algebra
+  return result
 }
 
-module.exports = iterateCayleyDickson
+module.exports = indicesPermutations
 
-
-},{"algebra-ring":3}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2218,7 +2173,15 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+'use strict';
+var numberIsNan = require('number-is-nan');
+
+module.exports = Number.isFinite || function (val) {
+	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
+};
+
+},{"number-is-nan":15}],12:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -2228,21 +2191,7 @@ module.exports = Number.isInteger || function(val) {
     Math.floor(val) === val;
 };
 
-},{"is-finite":11}],11:[function(require,module,exports){
-'use strict';
-var numberIsNan = require('number-is-nan');
-
-module.exports = Number.isFinite || function (val) {
-	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
-};
-
-},{"number-is-nan":12}],12:[function(require,module,exports){
-'use strict';
-module.exports = Number.isNaN || function (x) {
-	return x !== x;
-};
-
-},{}],13:[function(require,module,exports){
+},{"is-finite":11}],13:[function(require,module,exports){
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -2357,8 +2306,1137 @@ module.exports = determinant
 
 
 },{}],14:[function(require,module,exports){
+/**
+ * maps multidimensional array indices to monodimensional array index
+ *
+ * Given
+ *
+ * dimensions d_1, d_2, d_3 .. d_n
+ * and
+ * indices i_1, i_2, i_3 .. i_n
+ *
+ * index is computed by formula
+ * index = i_n + i_(n-1) * d_n + i_(n-2) * d_n * d_(n-1) + ... + i_2 * d_n * d_(n-1) * ... * d_3 + i_1 * d_n * ... * d_2
+ *
+ * @function
+ *
+ * @param {Array} dimensions
+ * @param {Array} indices
+ * @returns {Number} index
+ */
+
+function multiDimArrayIndex (dimensions, indices) {
+    var len = dimensions.length - 1
+  var index = indices[len]
+  var factor = null
+
+  if (dimensions.length > 1) {
+    factor = dimensions[len - 1]
+
+    index += factor * indices[len - 1]
+  }
+
+  for (var i = 2; i < dimensions.length; i++) {
+    factor *= dimensions[len - i + 1]
+
+    index += factor * indices[len - i]
+  }
+
+  return index
+}
+
+module.exports = multiDimArrayIndex
+
+},{}],15:[function(require,module,exports){
+'use strict';
+module.exports = Number.isNaN || function (x) {
+	return x !== x;
+};
+
+},{}],16:[function(require,module,exports){
+module.exports = function format(msg) {
+  var args = arguments;
+  for(var i = 1, l = args.length; i < l; i++) {
+    msg = msg.replace(/%s/, args[i]);
+  }
+  return msg;
+}
+
+},{}],17:[function(require,module,exports){
+var getType = require('should-type');
+var format = require('./format');
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function makeResult(r, path, reason, a, b) {
+  var o = {result: r};
+  if(!r) {
+    o.path = path;
+    o.reason = reason;
+    o.a = a;
+    o.b = b;
+  }
+  return o;
+}
+
+var EQUALS = makeResult(true);
+
+function typeToString(t) {
+  return t.type + (t.cls ? '(' + t.cls + (t.sub ? ' ' + t.sub : '') + ')' : '');
+}
+
+
+
+var REASON = {
+  PLUS_0_AND_MINUS_0: '+0 is not equal to -0',
+  DIFFERENT_TYPES: 'A has type %s and B has type %s',
+  NAN_NUMBER: 'NaN is not equal to any number',
+  EQUALITY: 'A is not equal to B',
+  EQUALITY_PROTOTYPE: 'A and B have different prototypes',
+  WRAPPED_VALUE: 'A wrapped value is not equal to B wrapped value',
+  FUNCTION_SOURCES: 'function A is not equal to B by source code value (via .toString call)',
+  MISSING_KEY: '%s has no key %s',
+  CIRCULAR_VALUES: 'A has circular reference that was visited not in the same time as B',
+  SET_MAP_MISSING_KEY: 'Set/Map missing key',
+  MAP_VALUE_EQUALITY: 'Values of the same key in A and B is not equal'
+};
+
+
+function eqInternal(a, b, opts, stackA, stackB, path, fails) {
+  var r = EQUALS;
+
+  function result(comparison, reason) {
+    if(arguments.length > 2) {
+      var args = Array.prototype.slice.call(arguments, 2);
+      reason = format.apply(null, [reason].concat(args));
+    }
+    var res = makeResult(comparison, path, reason, a, b);
+    if(!comparison && opts.collectAllFails) {
+      fails.push(res);
+    }
+    return res;
+  }
+
+  function checkPropertyEquality(property) {
+    return eqInternal(a[property], b[property], opts, stackA, stackB, path.concat([property]), fails);
+  }
+
+  function checkAlso(a1, b1) {
+    return eqInternal(a1, b1, opts, stackA, stackB, path, fails);
+  }
+
+  // equal a and b exit early
+  if(a === b) {
+    // check for +0 !== -0;
+    return result(a !== 0 || (1 / a == 1 / b) || opts.plusZeroAndMinusZeroEqual, REASON.PLUS_0_AND_MINUS_0);
+  }
+
+  var l, p;
+
+  var typeA = getType(a),
+    typeB = getType(b);
+
+  var key;
+
+  // if objects has different types they are not equal
+  var typeDifferent = typeA.type !== typeB.type || typeA.cls !== typeB.cls;
+
+  if(typeDifferent || ((opts.checkSubType && typeA.sub !== typeB.sub) || !opts.checkSubType)) {
+    return result(false, REASON.DIFFERENT_TYPES, typeToString(typeA), typeToString(typeB));
+  }
+
+  //early checks for types
+  switch(typeA.type) {
+    case 'number':
+      // NaN !== NaN
+      return (a !== a) ? result(b !== b, REASON.NAN_NUMBER)
+        : result(a === b, REASON.EQUALITY);
+
+    case 'boolean':
+    case 'string':
+      return result(a === b, REASON.EQUALITY);
+
+    case 'function':
+      // functions are compared by their source code
+      r = checkAlso(a.toString(), b.toString());
+      if(!r.result) {
+        r.reason = REASON.FUNCTION_SOURCES;
+        if(!opts.collectAllFails) return r;
+      }
+
+      break;//check user properties
+
+    case 'object':
+      // additional checks for object instances
+      switch(typeA.cls) {
+        // check regexp flags
+        // TODO add es6 flags
+        case 'regexp':
+          p = ['source', 'global', 'multiline', 'lastIndex', 'ignoreCase'];
+          while(p.length) {
+            r = checkPropertyEquality(p.shift());
+            if(!r.result && !opts.collectAllFails) return r;
+          }
+          break;//check user properties
+
+        //check by timestamp only (using .valueOf)
+        case 'date':
+          if(+a !== +b) {
+            r = result(false, REASON.EQUALITY);
+            if(!r.result && !opts.collectAllFails) return r;
+          }
+          break;//check user properties
+
+        //primitive type wrappers
+        case 'number':
+        case 'boolean':
+        case 'string':
+          //check their internal value
+          r = checkAlso(a.valueOf(), b.valueOf());
+          if(!r.result) {
+            r.reason = REASON.WRAPPED_VALUE;
+            if(!opts.collectAllFails) return r;
+          }
+          break;//check user properties
+
+        //node buffer
+        case 'buffer':
+          //if length different it is obviously different
+          r = checkPropertyEquality('length');
+          if(!r.result && !opts.collectAllFails) return r;
+
+          l = a.length;
+          while(l--) {
+            r = checkPropertyEquality(l);
+            if(!r.result && !opts.collectAllFails) return r;
+          }
+
+          //we do not check for user properties because
+          //node Buffer have some strange hidden properties
+          return EQUALS;
+
+        case 'error':
+          //check defined properties
+          p = ['name', 'message'];
+          while(p.length) {
+            r = checkPropertyEquality(p.shift());
+            if(!r.result && !opts.collectAllFails) return r;
+          }
+
+          break;//check user properties
+
+        case 'array':
+        case 'arguments':
+        case 'typed-array':
+          r = checkPropertyEquality('length');
+          if(!r.result && !opts.collectAllFails) return r;
+
+          break;//check user properties
+
+        case 'array-buffer':
+          r = checkPropertyEquality('byteLength');
+          if(!r.result && !opts.collectAllFails) return r;
+
+          break;//check user properties
+
+        case 'map':
+        case 'set':
+          r = checkPropertyEquality('size');
+          if(!r.result && !opts.collectAllFails) return r;
+
+          stackA.push(a);
+          stackB.push(b);
+
+          var itA = a.entries();
+          var nextA = itA.next();
+
+          while(!nextA.done) {
+            key = nextA.value[0];
+            //first check for primitive key if we can do light check
+            //using .has and .get
+            if(getType(key).type != 'object') {
+              if(b.has(key)) {
+                if(typeA.cls == 'map') {
+                  //for map we also check its value to be equal
+                  var value = b.get(key);
+                  r = checkAlso(nextA.value[1], value);
+                  if(!r.result) {
+                    r.a = nextA.value;
+                    r.b = value;
+                    r.reason = REASON.MAP_VALUE_EQUALITY;
+
+                    if(!opts.collectAllFails) break;
+                  }
+                }
+
+              } else {
+                r = result(false, REASON.SET_MAP_MISSING_KEY);
+                r.a = key;
+                r.b = key;
+
+                if(!opts.collectAllFails) break;
+              }
+            } else {
+              //heavy check
+              //we search by iterator for key equality using equal
+              var itB = b.entries();
+              var nextB = itB.next();
+
+              while(!nextB.done) {
+                //first check for keys
+                r = checkAlso(nextA.value[0], nextB.value[0]);
+
+                if(!r.result) {
+                  r.reason = REASON.SET_MAP_MISSING_KEY;
+                  r.a = key;
+                  r.b = key;
+                } else {
+                  if(typeA.cls == 'map') {
+                    r = checkAlso(nextA.value[1], nextB.value[1]);
+
+                    if(!r.result) {
+                      r.a = nextA.value;
+                      r.b = nextB.value;
+                      r.reason = REASON.MAP_VALUE_EQUALITY;
+                    }
+                  }
+
+                  if(!opts.collectAllFails) break;
+                }
+
+                nextB = itB.next();
+              }
+            }
+
+            if(!r.result && !opts.collectAllFails) break;
+
+            nextA = itA.next();
+          }
+
+          stackA.pop();
+          stackB.pop();
+
+          if(!r.result) {
+            r.reason = REASON.SET_MAP_MISSING_ENTRY;
+            if(!opts.collectAllFails) return r;
+          }
+
+          break; //check user properties
+      }
+  }
+
+  // compare deep objects and arrays
+  // stacks contain references only
+  //
+
+  l = stackA.length;
+  while(l--) {
+    if(stackA[l] == a) {
+      return result(stackB[l] == b, REASON.CIRCULAR_VALUES);
+    }
+  }
+
+  // add `a` and `b` to the stack of traversed objects
+  stackA.push(a);
+  stackB.push(b);
+
+  for(key in b) {
+    if(hasOwnProperty.call(b, key)) {
+      r = result(hasOwnProperty.call(a, key), REASON.MISSING_KEY, 'A', key);
+      if(!r.result && !opts.collectAllFails) break;
+
+      if(r.result) {
+        r = checkPropertyEquality(key);
+        if(!r.result && !opts.collectAllFails) break;
+      }
+    }
+  }
+
+  if(r.result || opts.collectAllFails) {
+    // ensure both objects have the same number of properties
+    for(key in a) {
+      if(hasOwnProperty.call(a, key)) {
+        r = result(hasOwnProperty.call(b, key), REASON.MISSING_KEY, 'B', key);
+        if(!r.result && !opts.collectAllFails) return r;
+      }
+    }
+  }
+
+  stackA.pop();
+  stackB.pop();
+
+  if(!r.result && !opts.collectAllFails) return r;
+
+  var prototypesEquals = false, canComparePrototypes = false;
+
+  if(opts.checkProtoEql) {
+    if(Object.getPrototypeOf) {//TODO should i check prototypes for === or use eq?
+      prototypesEquals = Object.getPrototypeOf(a) === Object.getPrototypeOf(b);
+      canComparePrototypes = true;
+    }
+
+    if(canComparePrototypes && !prototypesEquals) {
+      r = result(prototypesEquals, REASON.EQUALITY_PROTOTYPE);
+      r.showReason = true;
+      if(!r.result && !opts.collectAllFails) {
+        return r;
+      }
+    }
+  }
+
+  return EQUALS;
+}
+
+var defaultOptions = {
+  checkProtoEql: true,
+  checkSubType: true,
+  plusZeroAndMinusZeroEqual: false
+};
+
+function eq(a, b, opts) {
+  opts = opts || {};
+  if(typeof opts.checkProtoEql !== 'boolean') {
+    opts.checkProtoEql = defaultOptions.checkProtoEql;
+  }
+  if(typeof opts.checkSubType !== 'boolean') {
+    opts.checkSubType = defaultOptions.checkSubType;
+  }
+  if(typeof opts.plusZeroAndMinusZeroEqual !== 'boolean') {
+    opts.plusZeroAndMinusZeroEqual = defaultOptions.plusZeroAndMinusZeroEqual;
+  }
+
+  var fails = [];
+  var r = eqInternal(a, b, opts, [], [], [], fails);
+  return opts.collectAllFails ? fails : r;
+}
+
+module.exports = eq;
+
+eq.r = REASON;
+
+},{"./format":16,"should-type":20}],18:[function(require,module,exports){
+var getType = require('should-type');
 var util = require('./util');
-var format = require('should-format');
+
+function genKeysFunc(f) {
+  return function(value) {
+    var k = f(value);
+    k.sort();
+    return k;
+  };
+}
+
+
+function Formatter(opts) {
+  opts = opts || {};
+
+  this.seen = [];
+  this.keys = genKeysFunc(opts.keys === false ? Object.getOwnPropertyNames : Object.keys);
+
+  this.maxLineLength = typeof opts.maxLineLength === 'number' ? opts.maxLineLength : 60;
+  this.propSep = opts.propSep || ',';
+
+  this.isUTCdate = !!opts.isUTCdate;
+}
+
+Formatter.prototype = {
+  constructor: Formatter,
+
+  format: function(value) {
+    var t = getType(value);
+    var name1 = t.type, name2 = t.type;
+    if(t.cls) {
+      name1 += '_' + t.cls;
+      name2 += '_' + t.cls;
+    }
+    if(t.sub) {
+      name2 += '_' + t.sub;
+    }
+    var f = this['_format_' + name2] || this['_format_' + name1] || this['_format_' + t.type] || this.defaultFormat;
+    return f.call(this, value).trim();
+  },
+
+  _formatObject: function(value, opts) {
+    opts = opts || {};
+    var mainKeys = opts.keys || this.keys(value);
+
+    var len = 0;
+
+    var formatPropertyValue = opts.formatPropertyValue || this.formatPropertyValue;
+    var formatPropertyName = opts.formatPropertyName || this.formatPropertyName;
+    var keyValueSep = opts.keyValueSep || ': ';
+    var keyFilter = opts.keyFilter || function() { return true; };
+
+    this.seen.push(value);
+    var keys = [];
+
+    mainKeys.forEach(function(key) {
+      if(!keyFilter(key)) return;
+
+      var fName = formatPropertyName.call(this, key);
+
+      var f = (fName ? fName + keyValueSep : '') + formatPropertyValue.call(this, value, key);
+      len += f.length;
+      keys.push(f);
+    }, this);
+    this.seen.pop();
+
+    (opts.additionalProperties || []).forEach(function(keyValue) {
+      var f = keyValue[0] + keyValueSep + this.format(keyValue[1]);
+      len += f.length;
+      keys.push(f);
+    }, this);
+
+    var prefix = opts.prefix || Formatter.constructorName(value) || '';
+    if(prefix.length > 0) prefix += ' ';
+
+    var lbracket, rbracket;
+    if(Array.isArray(opts.brackets)) {
+      lbracket = opts.brackets && opts.brackets[0];
+      rbracket = opts.brackets && opts.brackets[1];
+    } else {
+      lbracket = '{';
+      rbracket = '}';
+    }
+
+    var rootValue = opts.value || '';
+
+    if(keys.length === 0)
+      return rootValue || (prefix + lbracket + rbracket);
+
+    if(len <= this.maxLineLength) {
+      return prefix + lbracket + ' ' + (rootValue ? rootValue + ' ' : '') + keys.join(this.propSep + ' ') + ' ' + rbracket;
+    } else {
+      return prefix + lbracket + '\n' + (rootValue ? '  ' + rootValue + '\n' : '') + keys.map(util.addSpaces).join(this.propSep + '\n') + '\n' + rbracket;
+    }
+  },
+
+  formatObject: function(value, prefix, props) {
+    props = props || this.keys(value);
+
+    var len = 0;
+
+    this.seen.push(value);
+    props = props.map(function(prop) {
+      var f = this.formatProperty(value, prop);
+      len += f.length;
+      return f;
+    }, this);
+    this.seen.pop();
+
+    if(props.length === 0) return '{}';
+
+    if(len <= this.maxLineLength) {
+      return '{ ' + (prefix ? prefix + ' ' : '') + props.join(this.propSep + ' ') + ' }';
+    } else {
+      return '{' + '\n' + (prefix ? '  ' + prefix + '\n' : '') + props.map(util.addSpaces).join(this.propSep + '\n') + '\n' + '}';
+    }
+  },
+
+  formatPropertyName: function(name) {
+    return name.match(/^[a-zA-Z_$][a-zA-Z_$0-9]*$/) ? name : this.format(name);
+  },
+
+  formatProperty: function(value, prop) {
+    var desc = Formatter.getPropertyDescriptor(value, prop);
+
+    var propName = this.formatPropertyName(prop);
+
+    var propValue = desc.get && desc.set ?
+      '[Getter/Setter]' : desc.get ?
+      '[Getter]' : desc.set ?
+      '[Setter]' : this.seen.indexOf(desc.value) >= 0 ?
+      '[Circular]' :
+      this.format(desc.value);
+
+    return propName + ': ' + propValue;
+  },
+
+  formatPropertyValue: function(value, prop) {
+    var desc = Formatter.getPropertyDescriptor(value, prop);
+
+    var propValue = desc.get && desc.set ?
+      '[Getter/Setter]' : desc.get ?
+      '[Getter]' : desc.set ?
+      '[Setter]' : this.seen.indexOf(desc.value) >= 0 ?
+      '[Circular]' :
+      this.format(desc.value);
+
+    return propValue;
+  }
+};
+
+Formatter.add = function add(type, cls, sub, f) {
+  var args = Array.prototype.slice.call(arguments);
+  f = args.pop();
+  Formatter.prototype['_format_' + args.join('_')] = f;
+};
+
+Formatter.formatObjectWithPrefix = function formatObjectWithPrefix(f) {
+  return function(value) {
+    var prefix = f.call(this, value);
+    var props = this.keys(value);
+    if(props.length == 0) return prefix;
+    else return this.formatObject(value, prefix, props);
+  };
+};
+
+var functionNameRE = /^\s*function\s*(\S*)\s*\(/;
+
+Formatter.functionName = function functionName(f) {
+  if(f.name) {
+    return f.name;
+  }
+  var matches = f.toString().match(functionNameRE);
+  if (matches === null) {
+    // `functionNameRE` doesn't match arrow functions.
+    return '';
+  }
+  var name = matches[1];
+  return name;
+};
+
+Formatter.constructorName = function(obj) {
+  while (obj) {
+    var descriptor = Object.getOwnPropertyDescriptor(obj, 'constructor');
+    if (descriptor !== undefined &&
+        typeof descriptor.value === 'function') {
+
+        var name = Formatter.functionName(descriptor.value);
+        if(name !== '') {
+          return name;
+        }
+    }
+
+    obj = Object.getPrototypeOf(obj);
+  }
+};
+
+Formatter.getPropertyDescriptor = function(obj, value) {
+  var desc;
+  try {
+    desc = Object.getOwnPropertyDescriptor(obj, value) || {value: obj[value]};
+  } catch(e) {
+    desc = {value: e};
+  }
+  return desc;
+};
+
+Formatter.generateFunctionForIndexedArray = function generateFunctionForIndexedArray(lengthProp, name, padding) {
+  return function(value) {
+    var max = this.byteArrayMaxLength || 50;
+    var length = value[lengthProp];
+    var formattedValues = [];
+    var len = 0;
+    for(var i = 0; i < max && i < length; i++) {
+      var b = value[i] || 0;
+      var v = util.pad0(b.toString(16), padding);
+      len += v.length;
+      formattedValues.push(v);
+    }
+    var prefix = value.constructor.name || name || '';
+    if(prefix) prefix += ' ';
+
+    if(formattedValues.length === 0)
+      return prefix + '[]';
+
+    if(len <= this.maxLineLength) {
+      return prefix + '[ ' + formattedValues.join(this.propSep + ' ') + ' ' + ']';
+    } else {
+      return prefix + '[\n' + formattedValues.map(util.addSpaces).join(this.propSep + '\n') + '\n' + ']';
+    }
+  };
+};
+
+Formatter.add('undefined', function() { return 'undefined' });
+Formatter.add('null', function() { return 'null' });
+Formatter.add('boolean', function(value) { return value ? 'true': 'false' });
+Formatter.add('symbol', function(value) { return value.toString() });
+
+['number', 'boolean'].forEach(function(name) {
+  Formatter.add('object', name, function(value) {
+    return this._formatObject(value, {
+      additionalProperties: [['[[PrimitiveValue]]', value.valueOf()]]
+    });
+  });
+});
+
+Formatter.add('object', 'string', function(value) {
+  var realValue = value.valueOf();
+
+  return this._formatObject(value, {
+    keyFilter: function(key) {
+      //skip useless indexed properties
+      return !(key.match(/\d+/) && parseInt(key, 10) < realValue.length);
+    },
+    additionalProperties: [['[[PrimitiveValue]]', realValue]]
+  });
+});
+
+Formatter.add('object', 'regexp', function(value) {
+  return this._formatObject(value, {
+    value: String(value)
+  });
+});
+
+Formatter.add('number', function(value) {
+  if(value === 0 && 1 / value < 0) return '-0';
+  return String(value);
+});
+
+Formatter.add('string', function(value) {
+  return '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+      .replace(/'/g, "\\'")
+      .replace(/\\"/g, '"') + '\'';
+});
+
+Formatter.add('object', function(value) {
+  return this._formatObject(value);
+});
+
+Formatter.add('object', 'arguments', function(value) {
+  return this._formatObject(value, {
+    prefix: 'Arguments',
+    formatPropertyName: function(key) {
+      if(!key.match(/\d+/)) {
+        return this.formatPropertyName(key);
+      }
+    },
+    brackets: ['[', ']']
+  });
+});
+
+Formatter.add('object', 'array', function(value) {
+  return this._formatObject(value, {
+    formatPropertyName: function(key) {
+      if(!key.match(/\d+/)) {
+        return this.formatPropertyName(key);
+      }
+    },
+    brackets: ['[', ']']
+  });
+});
+
+
+function formatDate(value, isUTC) {
+  var prefix = isUTC ? 'UTC' : '';
+
+  var date = value['get' + prefix + 'FullYear']() +
+    '-' +
+    util.pad0(value['get' + prefix + 'Month']() + 1, 2) +
+    '-' +
+    util.pad0(value['get' + prefix + 'Date'](), 2);
+
+  var time = util.pad0(value['get' + prefix + 'Hours'](), 2) +
+    ':' +
+    util.pad0(value['get' + prefix + 'Minutes'](), 2) +
+    ':' +
+    util.pad0(value['get' + prefix + 'Seconds'](), 2) +
+    '.' +
+    util.pad0(value['get' + prefix + 'Milliseconds'](), 3);
+
+  var to = value.getTimezoneOffset();
+  var absTo = Math.abs(to);
+  var hours = Math.floor(absTo / 60);
+  var minutes = absTo - hours * 60;
+  var tzFormat = (to < 0 ? '+' : '-') + util.pad0(hours, 2) + util.pad0(minutes, 2);
+
+  return date + ' ' + time + (isUTC ? '' : ' ' + tzFormat);
+}
+
+Formatter.add('object', 'date', function(value) {
+  return this._formatObject(value, { value: formatDate(value, this.isUTCdate) });
+});
+
+Formatter.add('function', function(value) {
+  return this._formatObject(value, {
+    additionalProperties: [['name', Formatter.functionName(value)]]
+  });
+});
+
+Formatter.add('object', 'error', function(value) {
+  return this._formatObject(value, {
+    prefix: value.name,
+    additionalProperties: [['message', value.message]]
+  });
+});
+
+Formatter.add('object', 'buffer', Formatter.generateFunctionForIndexedArray('length', 'Buffer', 2));
+
+Formatter.add('object', 'array-buffer', Formatter.generateFunctionForIndexedArray('byteLength', 'ArrayBuffer', 2));
+
+Formatter.add('object', 'typed-array', 'int8', Formatter.generateFunctionForIndexedArray('length', 'Int8Array', 2));
+Formatter.add('object', 'typed-array', 'uint8', Formatter.generateFunctionForIndexedArray('length', 'Uint8Array', 2));
+Formatter.add('object', 'typed-array', 'uint8clamped', Formatter.generateFunctionForIndexedArray('length', 'Uint8ClampedArray', 2));
+
+Formatter.add('object', 'typed-array', 'int16', Formatter.generateFunctionForIndexedArray('length', 'Int16Array', 4));
+Formatter.add('object', 'typed-array', 'uint16', Formatter.generateFunctionForIndexedArray('length', 'Uint16Array', 4));
+
+Formatter.add('object', 'typed-array', 'int32', Formatter.generateFunctionForIndexedArray('length', 'Int32Array', 8));
+Formatter.add('object', 'typed-array', 'uint32', Formatter.generateFunctionForIndexedArray('length', 'Uint32Array', 8));
+
+//TODO add float32 and float64
+
+Formatter.add('object', 'promise', function() {
+  return '[Promise]';//TODO it could be nice to inspect its state and value
+});
+
+Formatter.add('object', 'xhr', function() {
+  return '[XMLHttpRequest]';//TODO it could be nice to inspect its state
+});
+
+Formatter.add('object', 'html-element', function(value) {
+  return value.outerHTML;
+});
+
+Formatter.add('object', 'html-element', '#text', function(value) {
+  return value.nodeValue;
+});
+
+Formatter.add('object', 'html-element', '#document', function(value) {
+  return value.documentElement.outerHTML;
+});
+
+Formatter.add('object', 'host', function() {
+  return '[Host]';
+});
+
+Formatter.add('object', 'set', function(value) {
+  var iter = value.values();
+  var len = 0;
+
+  this.seen.push(value);
+
+  var props = [];
+
+  var next = iter.next();
+  while(!next.done) {
+    var val = next.value;
+    var f = this.format(val);
+    len += f.length;
+    props.push(f);
+
+    next = iter.next();
+  }
+
+  this.seen.pop();
+
+  if(props.length === 0) return 'Set {}';
+
+  if(len <= this.maxLineLength) {
+    return 'Set { ' + props.join(this.propSep + ' ') + ' }';
+  } else {
+    return 'Set {\n' + props.map(util.addSpaces).join(this.propSep + '\n') + '\n' + '}';
+  }
+});
+
+Formatter.add('object', 'map', function(value) {
+  var iter = value.entries();
+  var len = 0;
+
+  this.seen.push(value);
+
+  var props = [];
+
+  var next = iter.next();
+  while(!next.done) {
+    var val = next.value;
+    var fK = this.format(val[0]);
+    var fV = this.format(val[1]);
+
+    var f;
+    if((fK.length + fV.length + 4) <= this.maxLineLength) {
+      f = fK + ' => ' + fV;
+    } else {
+      f = fK + ' =>\n' + fV;
+    }
+
+    len += fK.length + fV.length + 4;
+    props.push(f);
+
+    next = iter.next();
+  }
+
+  this.seen.pop();
+
+  if(props.length === 0) return 'Map {}';
+
+  if(len <= this.maxLineLength) {
+    return 'Map { ' + props.join(this.propSep + ' ') + ' }';
+  } else {
+    return 'Map {\n' + props.map(util.addSpaces).join(this.propSep + '\n') + '\n' + '}';
+  }
+});
+
+Formatter.prototype.defaultFormat = Formatter.prototype._format_object;
+
+function defaultFormat(value, opts) {
+  return new Formatter(opts).format(value);
+}
+
+defaultFormat.Formatter = Formatter;
+module.exports = defaultFormat;
+
+},{"./util":19,"should-type":20}],19:[function(require,module,exports){
+function addSpaces(v) {
+  return v.split('\n').map(function(vv) { return '  ' + vv; }).join('\n');
+}
+
+function pad(str, value, filler) {
+  str = String(str)
+  var isRight = false;
+
+  if(value < 0) {
+    isRight = true;
+    value = -value;
+  }
+
+  if(str.length < value) {
+    var padding = new Array(value - str.length + 1).join(filler);
+    return isRight ? str + padding : padding + str;
+  } else{
+    return str;
+  }
+}
+
+module.exports = {
+  addSpaces: addSpaces,
+  pad: pad,
+  pad0: function(str, value) {
+    return pad(str, value, '0');
+  }
+};
+
+},{}],20:[function(require,module,exports){
+(function (Buffer){
+var toString = Object.prototype.toString;
+
+var types = require('./types');
+
+/**
+ * Simple data function to store type information
+ * @param {string} type Usually what is returned from typeof
+ * @param {string} cls  Sanitized @Class via Object.prototype.toString
+ * @param {string} sub  If type and cls the same, and need to specify somehow
+ * @private
+ * @example
+ *
+ * //for null
+ * new Type('null');
+ *
+ * //for Date
+ * new Type('object', 'date');
+ *
+ * //for Uint8Array
+ *
+ * new Type('object', 'typed-array', 'uint8');
+ */
+function Type(type, cls, sub) {
+  this.type = type;
+  this.cls = cls;
+  this.sub = sub;
+}
+
+/**
+ * Function to store type checks
+ * @private
+ */
+function TypeChecker() {
+  this.checks = [];
+}
+
+TypeChecker.prototype = {
+  add: function(func) {
+    this.checks.push(func);
+    return this;
+  },
+
+  addTypeOf: function(type, res) {
+    return this.add(function(obj, tpeOf) {
+      if(tpeOf === type) {
+        return new Type(res);
+      }
+    });
+  },
+
+  addClass: function(cls, res, sub) {
+    return this.add(function(obj, tpeOf, objCls) {
+      if(objCls === cls) {
+        return new Type(types.OBJECT, res, sub);
+      }
+    });
+  },
+
+  getType: function(obj) {
+    var typeOf = typeof obj;
+    var cls = toString.call(obj);
+
+    for(var i = 0, l = this.checks.length; i < l; i++) {
+      var res = this.checks[i].call(this, obj, typeOf, cls);
+      if(typeof res !== 'undefined') return res;
+    }
+
+  }
+};
+
+var main = new TypeChecker();
+
+//TODO add iterators
+
+main
+  .addTypeOf(types.NUMBER, types.NUMBER)
+  .addTypeOf(types.UNDEFINED, types.UNDEFINED)
+  .addTypeOf(types.STRING, types.STRING)
+  .addTypeOf(types.BOOLEAN, types.BOOLEAN)
+  .addTypeOf(types.FUNCTION, types.FUNCTION)
+  .addTypeOf(types.SYMBOL, types.SYMBOL)
+  .add(function(obj, tpeOf) {
+    if(obj === null) return new Type(types.NULL);
+  })
+  .addClass('[object String]', types.STRING)
+  .addClass('[object Boolean]', types.BOOLEAN)
+  .addClass('[object Number]', types.NUMBER)
+  .addClass('[object Array]', types.ARRAY)
+  .addClass('[object RegExp]', types.REGEXP)
+  .addClass('[object Error]', types.ERROR)
+  .addClass('[object Date]', types.DATE)
+  .addClass('[object Arguments]', types.ARGUMENTS)
+  .addClass('[object Math]')
+  .addClass('[object JSON]')
+  .addClass('[object ArrayBuffer]', types.ARRAY_BUFFER)
+  .addClass('[object Int8Array]', types.TYPED_ARRAY, 'int8')
+  .addClass('[object Uint8Array]', types.TYPED_ARRAY, 'uint8')
+  .addClass('[object Uint8ClampedArray]', types.TYPED_ARRAY, 'uint8clamped')
+  .addClass('[object Int16Array]', types.TYPED_ARRAY, 'int16')
+  .addClass('[object Uint16Array]', types.TYPED_ARRAY, 'uint16')
+  .addClass('[object Int32Array]', types.TYPED_ARRAY, 'int32')
+  .addClass('[object Uint32Array]', types.TYPED_ARRAY, 'uint32')
+  .addClass('[object Float32Array]', types.TYPED_ARRAY, 'float32')
+  .addClass('[object Float64Array]', types.TYPED_ARRAY, 'float64')
+  .addClass('[object DataView]', types.DATA_VIEW)
+  .addClass('[object Map]', types.MAP)
+  .addClass('[object WeakMap]', types.WEAK_MAP)
+  .addClass('[object Set]', types.SET)
+  .addClass('[object WeakSet]', types.WEAK_SET)
+  .addClass('[object Promise]', types.PROMISE)
+  .addClass('[object Blob]', types.BLOB)
+  .addClass('[object File]', types.FILE)
+  .addClass('[object FileList]', types.FILE_LIST)
+  .addClass('[object XMLHttpRequest]', types.XHR)
+  .add(function(obj) {
+    if((typeof Promise === types.FUNCTION && obj instanceof Promise) ||
+        (typeof obj.then === types.FUNCTION)) {
+          return new Type(types.OBJECT, types.PROMISE);
+        }
+  })
+  .add(function(obj) {
+    if(typeof Buffer !== 'undefined' && obj instanceof Buffer) {
+      return new Type(types.OBJECT, types.BUFFER);
+    }
+  })
+  .add(function(obj) {
+    if(typeof Node !== 'undefined' && obj instanceof Node) {
+      return new Type(types.OBJECT, types.HTML_ELEMENT, obj.nodeName);
+    }
+  })
+  .add(function(obj) {
+    // probably at the begginging should be enough these checks
+    if(obj.Boolean === Boolean && obj.Number === Number && obj.String === String && obj.Date === Date) {
+      return new Type(types.OBJECT, types.HOST);
+    }
+  })
+  .add(function() {
+    return new Type(types.OBJECT);
+  });
+
+/**
+ * Get type information of anything
+ *
+ * @param  {any} obj Anything that could require type information
+ * @return {Type}    type info
+ */
+function getGlobalType(obj) {
+  return main.getType(obj);
+}
+
+getGlobalType.checker = main;
+getGlobalType.TypeChecker = TypeChecker;
+getGlobalType.Type = Type;
+
+Object.keys(types).forEach(function(typeName) {
+  getGlobalType[typeName] = types[typeName];
+});
+
+module.exports = getGlobalType;
+
+}).call(this,require("buffer").Buffer)
+},{"./types":21,"buffer":5}],21:[function(require,module,exports){
+var types = {
+  NUMBER: 'number',
+  UNDEFINED: 'undefined',
+  STRING: 'string',
+  BOOLEAN: 'boolean',
+  OBJECT: 'object',
+  FUNCTION: 'function',
+  NULL: 'null',
+  ARRAY: 'array',
+  REGEXP: 'regexp',
+  DATE: 'date',
+  ERROR: 'error',
+  ARGUMENTS: 'arguments',
+  SYMBOL: 'symbol',
+  ARRAY_BUFFER: 'array-buffer',
+  TYPED_ARRAY: 'typed-array',
+  DATA_VIEW: 'data-view',
+  MAP: 'map',
+  SET: 'set',
+  WEAK_SET: 'weak-set',
+  WEAK_MAP: 'weak-map',
+  PROMISE: 'promise',
+
+// node buffer
+  BUFFER: 'buffer',
+
+// dom html element
+  HTML_ELEMENT: 'html-element',
+  HTML_ELEMENT_TEXT: 'html-element-text',
+  DOCUMENT: 'document',
+  WINDOW: 'window',
+  FILE: 'file',
+  FILE_LIST: 'file-list',
+  BLOB: 'blob',
+
+  HOST: 'host',
+
+  XHR: 'xhr'
+};
+
+module.exports = types;
+
+},{}],22:[function(require,module,exports){
+var should = require('./lib/should');
+
+var defaultProto = Object.prototype;
+var defaultProperty = 'should';
+
+//Expose api via `Object#should`.
+try {
+  var prevShould = should.extend(defaultProperty, defaultProto);
+  should._prevShould = prevShould;
+} catch(e) {
+  //ignore errors
+}
+
+module.exports = should;
+
+},{"./lib/should":39}],23:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
+ * MIT Licensed
+ */
+
+var util = require('./util');
 
 /**
  * should AssertionError
@@ -2432,8 +3510,8 @@ AssertionError.prototype = Object.create(Error.prototype, {
       if(!this.operator && this.previous) {
         return this.previous.message;
       }
-      var actual = format(this.actual);
-      var expected = 'expected' in this ? ' ' + format(this.expected) : '';
+      var actual = util.format(this.actual);
+      var expected = 'expected' in this ? ' ' + util.format(this.expected) : '';
       var details = 'details' in this && this.details ? ' (' + this.details + ')' : '';
 
       var previous = this.previous ? '\n' + indentLines(this.previous.message) : '';
@@ -2445,9 +3523,15 @@ AssertionError.prototype = Object.create(Error.prototype, {
 
 module.exports = AssertionError;
 
-},{"./util":30,"should-format":32}],15:[function(require,module,exports){
+},{"./util":40}],24:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
+ * MIT Licensed
+ */
+
 var AssertionError = require('./assertion-error');
-var util = require('./util');
 
 /**
  * should Assertion
@@ -2465,112 +3549,13 @@ function Assertion(obj) {
   this.params = {actual: obj};
 }
 
-/**
- * Way to extend Assertion function. It uses some logic
- * to define only positive assertions and itself rule with negative assertion.
- *
- * All actions happen in subcontext and this method take care about negation.
- * Potentially we can add some more modifiers that does not depends from state of assertion.
- * @memberOf Assertion
- * @category assertion
- * @static
- * @param {String} name Name of assertion. It will be used for defining method or getter on Assertion.prototype
- * @param {Function} func Function that will be called on executing assertion
- * @param {Boolean} [isGetter] If this assertion is getter. By default it is false.
- * @example
- *
- * Assertion.add('asset', function() {
- *      this.params = { operator: 'to be asset' };
- *
- *      this.obj.should.have.property('id').which.is.a.Number;
- *      this.obj.should.have.property('path');
- * });
- */
-Assertion.add = function(name, func, isGetter) {
-  var prop = {enumerable: true, configurable: true};
-
-  isGetter = !!isGetter;
-
-  prop[isGetter ? 'get' : 'value'] = function() {
-    var context = new Assertion(this.obj, this, name);
-    context.anyOne = this.anyOne;
-
-    try {
-      func.apply(context, arguments);
-    } catch(e) {
-      //check for fail
-      if(e instanceof AssertionError) {
-        //negative fail
-        if(this.negate) {
-          this.obj = context.obj;
-          this.negate = false;
-          return this.proxied();
-        }
-
-        if(context !== e.assertion) {
-          context.params.previous = e;
-        }
-
-        //positive fail
-        context.negate = false;
-        context.fail();
-      }
-      // throw if it is another exception
-      throw e;
-    }
-
-    //negative pass
-    if(this.negate) {
-      context.negate = true;//because .fail will set negate
-      context.params.details = 'false negative fail';
-      context.fail();
-    }
-
-    //positive pass
-    if(!this.params.operator) this.params = context.params;//shortcut
-    this.obj = context.obj;
-    this.negate = false;
-    return this.proxied();
-  };
-
-  Object.defineProperty(Assertion.prototype, name, prop);
-};
-
-Assertion.addChain = function(name, onCall) {
-  onCall = onCall || function() {
-  };
-  Object.defineProperty(Assertion.prototype, name, {
-    get: function() {
-      onCall();
-      return this.proxied();
-    },
-    enumerable: true
-  });
-};
-
-/**
- * Create alias for some `Assertion` property
- *
- * @memberOf Assertion
- * @category assertion
- * @static
- * @param {String} from Name of to map
- * @param {String} to Name of alias
- * @example
- *
- * Assertion.alias('true', 'True');
- */
-Assertion.alias = function(from, to) {
-  var desc = Object.getOwnPropertyDescriptor(Assertion.prototype, from);
-  if(!desc) throw new Error('Alias ' + from + ' -> ' + to + ' could not be created as ' + from + ' not defined');
-  Object.defineProperty(Assertion.prototype, to, desc);
-};
-
 Assertion.prototype = {
   constructor: Assertion,
 
   /**
-   * Base method for assertions. Before calling this method need to fill Assertion#params object. This method usually called from other assertion methods.
+   * Base method for assertions.
+   *
+   * Before calling this method need to fill Assertion#params object. This method usually called from other assertion methods.
    * `Assertion#params` can contain such properties:
    * * `operator` - required string containing description of this assertion
    * * `obj` - optional replacement for this.obj, it usefull if you prepare more clear object then given
@@ -2593,7 +3578,9 @@ Assertion.prototype = {
    * //throws AssertionError: expected 42 to be magic number
    */
   assert: function(expr) {
-    if(expr) return this.proxied();
+    if(expr) {
+      return this;
+    }
 
     var params = this.params;
 
@@ -2629,55 +3616,214 @@ Assertion.prototype = {
    */
   fail: function() {
     return this.assert(false);
-  },
-
-  /**
-   * Negation modifier. Current assertion chain become negated. Each call invert negation on current assertion.
-   *
-   * @memberOf Assertion
-   * @category assertion
-   */
-  get not() {
-    this.negate = !this.negate;
-    return this.proxied();
-  },
-
-  /**
-   * Any modifier - it affect on execution of sequenced assertion to do not `check all`, but `check any of`.
-   *
-   * @memberOf Assertion
-   * @category assertion
-   */
-  get any() {
-    this.anyOne = true;
-    return this.proxied();
-  },
-
-  proxied: function() {
-    if(typeof Proxy == 'function') {
-      return new Proxy(this, {
-        get: function(target, name) {
-          if(name in target) {
-            return target[name];
-          } else {
-            throw new Error('Assertion has no property ' + util.formatProp(name));
-          }
-        }
-      });
-    }
-    return this;
   }
 };
 
-module.exports = Assertion;
 
-},{"./assertion-error":14,"./util":30}],16:[function(require,module,exports){
+
+/**
+ * Assertion used to delegate calls of Assertion methods inside of Promise.
+ * It has almost all methods of Assertion.prototype
+ *
+ * @param {Promise} obj
+ */
+function PromisedAssertion(/* obj */) {
+  Assertion.apply(this, arguments);
+}
+
+/**
+ * Make PromisedAssertion to look like promise. Delegate resolve and reject to given promise.
+ * 
+ * @private
+ * @returns {Promise}
+ */
+PromisedAssertion.prototype.then = function(resolve, reject) {
+  return this.obj.then(resolve, reject);
+};
+
+/**
+ * Way to extend Assertion function. It uses some logic
+ * to define only positive assertions and itself rule with negative assertion.
+ *
+ * All actions happen in subcontext and this method take care about negation.
+ * Potentially we can add some more modifiers that does not depends from state of assertion.
+ *
+ * @memberOf Assertion
+ * @static
+ * @param {String} name Name of assertion. It will be used for defining method or getter on Assertion.prototype
+ * @param {Function} func Function that will be called on executing assertion
+ * @example
+ *
+ * Assertion.add('asset', function() {
+ *      this.params = { operator: 'to be asset' }
+ *
+ *      this.obj.should.have.property('id').which.is.a.Number()
+ *      this.obj.should.have.property('path')
+ * })
+ */
+Assertion.add = function(name, func) {
+  Object.defineProperty(Assertion.prototype, name, {
+    enumerable: true,
+    configurable: true,
+    value: function() {
+      var context = new Assertion(this.obj, this, name);
+      context.anyOne = this.anyOne;
+
+      try {
+        func.apply(context, arguments);
+      } catch (e) {
+        // check for fail
+        if (e instanceof AssertionError) {
+          // negative fail
+          if (this.negate) {
+            this.obj = context.obj;
+            this.negate = false;
+            return this;
+          }
+
+          if (context !== e.assertion) {
+            context.params.previous = e;
+          }
+
+          // positive fail
+          context.negate = false;
+          context.fail();
+        }
+        // throw if it is another exception
+        throw e;
+      }
+
+      // negative pass
+      if (this.negate) {
+        context.negate = true; // because .fail will set negate
+        context.params.details = 'false negative fail';
+        context.fail();
+      }
+
+      // positive pass
+      if (!this.params.operator) {
+        this.params = context.params; // shortcut
+      }
+      this.obj = context.obj;
+      this.negate = false;
+      return this;
+    }
+  });
+
+  Object.defineProperty(PromisedAssertion.prototype, name, {
+    enumerable: true,
+    configurable: true,
+    value: function() {
+      var args = arguments;
+      this.obj = this.obj.then(function(a) {
+        return a[name].apply(a, args);
+      });
+
+      return this;
+    }
+  });
+};
+
+/**
+ * Add chaining getter to Assertion like .a, .which etc
+ * 
+ * @memberOf Assertion
+ * @static
+ * @param  {string} name   name of getter
+ * @param  {function} [onCall] optional function to call
+ */
+Assertion.addChain = function(name, onCall) {
+  onCall = onCall || function() {};
+  Object.defineProperty(Assertion.prototype, name, {
+    get: function() {
+      onCall.call(this);
+      return this;
+    },
+    enumerable: true
+  });
+
+  Object.defineProperty(PromisedAssertion.prototype, name, {
+    enumerable: true,
+    configurable: true,
+    get: function() {
+      this.obj = this.obj.then(function(a) {
+        return a[name];
+      });
+
+      return this;
+    }
+  });
+};
+
+/**
+ * Create alias for some `Assertion` property
+ *
+ * @memberOf Assertion
+ * @static
+ * @param {String} from Name of to map
+ * @param {String} to Name of alias
+ * @example
+ *
+ * Assertion.alias('true', 'True')
+ */
+Assertion.alias = function(from, to) {
+  var desc = Object.getOwnPropertyDescriptor(Assertion.prototype, from);
+  if (!desc) throw new Error('Alias ' + from + ' -> ' + to + ' could not be created as ' + from + ' not defined');
+  Object.defineProperty(Assertion.prototype, to, desc);
+
+  var desc2 = Object.getOwnPropertyDescriptor(PromisedAssertion.prototype, from);
+  if (desc2) {
+    Object.defineProperty(PromisedAssertion.prototype, to, desc2);
+  }
+};
+/**
+ * Negation modifier. Current assertion chain become negated. Each call invert negation on current assertion.
+ *
+ * @name not
+ * @property
+ * @memberOf Assertion
+ * @category assertion
+ */
+Assertion.addChain('not', function() {
+  this.negate = !this.negate;
+});
+
+/**
+ * Any modifier - it affect on execution of sequenced assertion to do not `check all`, but `check any of`.
+ *
+ * @name any
+ * @property
+ * @memberOf Assertion
+ * @category assertion
+ */
+Assertion.addChain('any', function() {
+  this.anyOne = true;
+});
+
+module.exports = Assertion;
+module.exports.PromisedAssertion = PromisedAssertion;
+
+},{"./assertion-error":23}],25:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
+ * MIT Licensed
+ */
+
+var Formatter = require('should-format').Formatter;
+
 var config = {
-  checkProtoEql: false
+  checkProtoEql: false,
+
+  getFormatter: function(opts) {
+    return new Formatter(opts || config);
+  }
 };
 
 module.exports = config;
-},{}],17:[function(require,module,exports){
+
+},{"should-format":18}],26:[function(require,module,exports){
 // implement assert interface using already written peaces of should.js
 
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
@@ -2707,7 +3853,6 @@ module.exports = config;
 // when used in node, this will actually load the util module we depend on
 // versus loading the builtin util module as happens otherwise
 // this is a bug in node module loading as far as I am concerned
-var util = require('./../util');
 var Assertion = require('./../assertion');
 
 var _deepEqual = require('should-equal');
@@ -2807,6 +3952,8 @@ assert.notEqual = function notEqual(actual, expected, message) {
 // assert.deepEqual(actual, expected, message_opt);
 /**
  * Node.js standard [`assert.deepEqual`](http://nodejs.org/api/assert.html#assert_assert_deepequal_actual_expected_message).
+ * But uses should.js .eql implementation instead of Node.js own deepEqual.
+ *
  * @static
  * @memberOf should
  * @category assertion assert
@@ -2825,6 +3972,8 @@ assert.deepEqual = function deepEqual(actual, expected, message) {
 // assert.notDeepEqual(actual, expected, message_opt);
 /**
  * Node.js standard [`assert.notDeepEqual`](http://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message).
+ * But uses should.js .eql implementation instead of Node.js own deepEqual.
+ *
  * @static
  * @memberOf should
  * @category assertion assert
@@ -2929,7 +4078,7 @@ function _throws(shouldThrow, block, expected, message) {
  * @param {Function} [error]
  * @param {String} [message]
  */
-assert.throws = function(block, /*optional*/error, /*optional*/message) {
+assert.throws = function(/*block, error, message*/) {
   _throws.apply(this, [true].concat(pSlice.call(arguments)));
 };
 
@@ -2942,7 +4091,7 @@ assert.throws = function(block, /*optional*/error, /*optional*/message) {
  * @param {Function} block
  * @param {String} [message]
  */
-assert.doesNotThrow = function(block, /*optional*/message) {
+assert.doesNotThrow = function(/*block, message*/) {
   _throws.apply(this, [false].concat(pSlice.call(arguments)));
 };
 
@@ -2959,16 +4108,17 @@ assert.ifError = function(err) {
   }
 };
 
-},{"./../assertion":15,"./../util":30,"should-equal":31}],18:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"./../assertion":24,"should-equal":17}],27:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
-var util = require('../util')
-  , assert = require('./_assert')
-  , AssertionError = require('../assertion-error');
+var util = require('../util');
+var assert = require('./_assert');
+var AssertionError = require('../assertion-error');
 
 module.exports = function(should) {
   var i = should.format;
@@ -3030,10 +4180,12 @@ module.exports = function(should) {
     }
   };
 };
-},{"../assertion-error":14,"../util":30,"./_assert":17}],19:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+
+},{"../assertion-error":23,"../util":40,"./_assert":26}],28:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -3047,14 +4199,14 @@ module.exports = function(should, Assertion) {
    * @alias Assertion#True
    * @example
    *
-   * (true).should.be.true;
-   * false.should.not.be.True;
+   * (true).should.be.true();
+   * false.should.not.be.true();
    *
-   * ({ a: 10}).should.not.be.true;
+   * ({ a: 10}).should.not.be.true();
    */
   Assertion.add('true', function() {
     this.is.exactly(true);
-  }, true);
+  });
 
   Assertion.alias('true', 'True');
 
@@ -3067,12 +4219,12 @@ module.exports = function(should, Assertion) {
    * @alias Assertion#False
    * @example
    *
-   * (true).should.not.be.false;
-   * false.should.be.False;
+   * (true).should.not.be.false();
+   * false.should.be.false();
    */
   Assertion.add('false', function() {
     this.is.exactly(false);
-  }, true);
+  });
 
   Assertion.alias('false', 'False');
 
@@ -3084,27 +4236,36 @@ module.exports = function(should, Assertion) {
    * @category assertion bool
    * @example
    *
-   * (true).should.be.ok;
-   * ''.should.not.be.ok;
-   * should(null).not.be.ok;
-   * should(void 0).not.be.ok;
+   * (true).should.be.ok();
+   * ''.should.not.be.ok();
+   * should(null).not.be.ok();
+   * should(void 0).not.be.ok();
    *
-   * (10).should.be.ok;
-   * (0).should.not.be.ok;
+   * (10).should.be.ok();
+   * (0).should.not.be.ok();
    */
   Assertion.add('ok', function() {
     this.params = { operator: 'to be truthy' };
 
     this.assert(this.obj);
-  }, true);
+  });
 };
-},{}],20:[function(require,module,exports){
+
+},{}],29:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
+ * MIT Licensed
+ */
+
 module.exports = function(should, Assertion) {
   /**
    * Simple chaining. It actually do nothing.
    *
    * @memberOf Assertion
    * @name be
+   * @property {should.Assertion} be
    * @alias Assertion#an
    * @alias Assertion#of
    * @alias Assertion#a
@@ -3123,10 +4284,11 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{}],21:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{}],30:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -3163,7 +4325,7 @@ module.exports = function(should, Assertion) {
   Assertion.add('containEql', function(other) {
     this.params = {operator: 'to contain ' + i(other)};
 
-    this.is.not.null.and.not.undefined;
+    this.is.not.null().and.not.undefined();
 
     var obj = this.obj;
 
@@ -3283,10 +4445,11 @@ module.exports = function(should, Assertion) {
 
 };
 
-},{"../util":30,"should-equal":31}],22:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"../util":40,"should-equal":17}],31:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -3294,10 +4457,10 @@ var eql = require('should-equal');
 var type = require('should-type');
 var util = require('../util');
 
-function formatEqlResult(r, a, b, format) {
+function formatEqlResult(r, a, b) {
   return ((r.path.length > 0 ? 'at ' + r.path.map(util.formatProp).join(' -> ') : '') +
-  (r.a === a ? '' : ', A has ' + format(r.a)) +
-  (r.b === b ? '' : ' and B has ' + format(r.b)) +
+  (r.a === a ? '' : ', A has ' + util.format(r.a)) +
+  (r.b === b ? '' : ' and B has ' + util.format(r.b)) +
   (r.showReason ? ' because ' + r.reason : '')).trim();
 }
 
@@ -3309,6 +4472,7 @@ module.exports = function(should, Assertion) {
    * @name eql
    * @memberOf Assertion
    * @category assertion equality
+   * @alias Assertion#deepEqual
    * @param {*} val Expected value
    * @param {string} [description] Optional message
    * @example
@@ -3325,12 +4489,12 @@ module.exports = function(should, Assertion) {
   Assertion.add('eql', function(val, description) {
     this.params = {operator: 'to equal', expected: val, message: description};
 
-    var strictResult = eql(this.obj, val, should.config);
-    this.params.details = strictResult.result ? '' : formatEqlResult(strictResult, this.obj, val, should.format);
+    var result = eql(this.obj, val, should.config);
+    this.params.details = result.result ? '' : formatEqlResult(result, this.obj, val);
 
-    this.params.showDiff = type(this.obj) === type(val);
+    this.params.showDiff = eql(type(this.obj), type(val)).result;
 
-    this.assert(strictResult.result);
+    this.assert(result.result);
   });
 
   /**
@@ -3352,18 +4516,79 @@ module.exports = function(should, Assertion) {
   Assertion.add('equal', function(val, description) {
     this.params = {operator: 'to be', expected: val, message: description};
 
-    this.params.showDiff = type(this.obj) == type(val);
+    this.params.showDiff = eql(type(this.obj), type(val)).result;
 
     this.assert(val === this.obj);
   });
 
   Assertion.alias('equal', 'exactly');
+  Assertion.alias('eql', 'deepEqual');
+
+  function addOneOf(name, message, method) {
+    Assertion.add(name, function(vals) {
+      if(arguments.length !== 1) {
+        vals = Array.prototype.slice.call(arguments);
+      } else {
+        should(vals).be.Array();
+      }
+
+      this.params = {operator: message, expected: vals};
+
+      var obj = this.obj;
+      var found = false;
+
+      util.forEach(vals, function(val) {
+        try {
+          should(val)[method](obj);
+          found = true;
+          return false;
+        } catch(e) {
+          if(e instanceof should.AssertionError) {
+            return;//do nothing
+          }
+          throw e;
+        }
+      });
+
+      this.assert(found);
+    });
+  }
+
+  /**
+   * Exact comparison using === to be one of supplied objects.
+   *
+   * @name equalOneOf
+   * @memberOf Assertion
+   * @category assertion equality
+   * @param {Array|*} vals Expected values
+   * @example
+   *
+   * 'ab'.should.be.equalOneOf('a', 10, 'ab');
+   * 'ab'.should.be.equalOneOf(['a', 10, 'ab']);
+   */
+  addOneOf('equalOneOf', 'to be equals one of', 'equal');
+
+  /**
+   * Exact comparison using .eql to be one of supplied objects.
+   *
+   * @name oneOf
+   * @memberOf Assertion
+   * @category assertion equality
+   * @param {Array|*} vals Expected values
+   * @example
+   *
+   * ({a: 10}).should.be.oneOf('a', 10, 'ab', {a: 10});
+   * ({a: 10}).should.be.oneOf(['a', 10, 'ab', {a: 10}]);
+   */
+  addOneOf('oneOf', 'to be one of', 'eql');
+
 };
 
-},{"../util":30,"should-equal":31,"should-type":33}],23:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"../util":40,"should-equal":17,"should-type":20}],32:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 var util = require('../util');
@@ -3396,10 +4621,10 @@ module.exports = function(should, Assertion) {
    * }).should.throw();
    */
   Assertion.add('throw', function(message, properties) {
-    var fn = this.obj
-      , err = {}
-      , errorInfo = ''
-      , thrown = false;
+    var fn = this.obj;
+    var err = {};
+    var errorInfo = '';
+    var thrown = false;
 
     if(util.isGeneratorFunction(fn)) {
       return should(fn()).throw(message, properties);
@@ -3407,7 +4632,7 @@ module.exports = function(should, Assertion) {
       return should(fn.next.bind(fn)).throw(message, properties);
     }
 
-    this.is.a.Function;
+    this.is.a.Function();
 
     var errorMatched = true;
 
@@ -3471,10 +4696,11 @@ module.exports = function(should, Assertion) {
   Assertion.alias('throw', 'throwError');
 };
 
-},{"../util":30}],24:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"../util":40}],33:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -3492,7 +4718,11 @@ module.exports = function(should, Assertion) {
    * If `other` is a regexp and given object is an object check values on matching regexp
    * If `other` is a function check if this function throws AssertionError on given object or return false - it will be assumed as not matched
    * If `other` is an object check if the same keys matched with above rules
-   * All other cases failed
+   * All other cases failed.
+   *
+   * Usually it is right idea to add pre type assertions, like `.String()` or `.Object()` to be sure assertions will do what you are expecting.
+   * Object iteration happen by keys (properties with enumerable: true), thus some objects can cause small pain. Typical example is js
+   * Error - it by default has 2 properties `name` and `message`, but they both non-enumerable. In this case make sure you specify checking props (see examples).
    *
    * @name match
    * @memberOf Assertion
@@ -3511,7 +4741,7 @@ module.exports = function(should, Assertion) {
    *   return n < 0;
    * });
    * (5).should.not.match(function(it) {
-   *    it.should.be.an.Array;
+   *    it.should.be.an.Array();
    * });
    * ({ a: 10, b: 'abc', c: { d: 10 }, d: 0 }).should
    * .match({ a: 10, b: /c$/, c: function(it) {
@@ -3522,6 +4752,19 @@ module.exports = function(should, Assertion) {
    * .match({ '0': 10, '1': /c$/, '2': function(it) {
    *    return it.should.have.property('d', 10);
    * }});
+   *
+   * var myString = 'abc';
+   *
+   * myString.should.be.a.String().and.match(/abc/);
+   *
+   * myString = {};
+   *
+   * myString.should.match(/abc/); //yes this will pass
+   * //better to do
+   * myString.should.be.an.Object().and.not.empty().and.match(/abc/);//fixed
+   *
+   * (new Error('boom')).should.match(/abc/);//passed because no keys
+   * (new Error('boom')).should.not.match({ message: /abc/ });//check specified property
    */
   Assertion.add('match', function(other, description) {
     this.params = {operator: 'to match ' + i(other), message: description};
@@ -3549,7 +4792,7 @@ module.exports = function(should, Assertion) {
           if(matchedProps.length)
             this.params.operator += '\n    matched properties: ' + matchedProps.join(', ');
 
-          this.assert(notMatchedProps.length == 0);
+          this.assert(notMatchedProps.length === 0);
         } // should we try to convert to String and exec?
       } else if(typeof other == 'function') {
         var res;
@@ -3564,13 +4807,13 @@ module.exports = function(should, Assertion) {
         if(typeof res == 'boolean') {
           this.assert(res); // if it is just boolean function assert on it
         }
-      } else if(other != null && typeof other == 'object') { // try to match properties (for Object and Array)
+      } else if(other != null && this.obj != null && typeof other == 'object' && typeof this.obj == 'object') { // try to match properties (for Object and Array)
         notMatchedProps = [];
         matchedProps = [];
 
         util.forEach(other, function(value, key) {
           try {
-            should(this.obj[key]).match(value);
+            should(this.obj).have.property(key).which.match(value);
             matchedProps.push(util.formatProp(key));
           } catch(e) {
             if(e instanceof should.AssertionError) {
@@ -3586,7 +4829,7 @@ module.exports = function(should, Assertion) {
         if(matchedProps.length)
           this.params.operator += '\n    matched properties: ' + matchedProps.join(', ');
 
-        this.assert(notMatchedProps.length == 0);
+        this.assert(notMatchedProps.length === 0);
       } else {
         this.assert(false);
       }
@@ -3603,6 +4846,7 @@ module.exports = function(should, Assertion) {
    * @name matchEach
    * @memberOf Assertion
    * @category assertion matching
+   * @alias Assertion#matchSome
    * @param {*} other Object to match
    * @param {string} [description] Optional message
    * @example
@@ -3616,24 +4860,8 @@ module.exports = function(should, Assertion) {
   Assertion.add('matchEach', function(other, description) {
     this.params = {operator: 'to match each ' + i(other), message: description};
 
-    var f = other;
-
-    if(other instanceof RegExp)
-      f = function(it) {
-        return !!other.exec(it);
-      };
-    else if(typeof other != 'function')
-      f = function(it) {
-        return eql(it, other).result;
-      };
-
-    util.forEach(this.obj, function(value, key) {
-      var res = f(value, key);
-
-      //if we throw exception ok - it is used .should inside
-      if(typeof res == 'boolean') {
-        this.assert(res); // if it is just boolean function assert on it
-      }
+    util.forEach(this.obj, function(value) {
+      should(value).match(other);
     }, this);
   });
 
@@ -3648,6 +4876,7 @@ module.exports = function(should, Assertion) {
   * @memberOf Assertion
   * @category assertion matching
   * @param {*} other Object to match
+  * @alias Assertion#matchEvery
   * @param {string} [description] Optional message
   * @example
   * [ 'a', 'b', 'c'].should.matchAny(/\w+/);
@@ -3658,46 +4887,31 @@ module.exports = function(should, Assertion) {
   * { a: 'a', b: 'b', c: 'c' }.should.matchAny(function(value) { value.should.be.eql('a') });
   */
   Assertion.add('matchAny', function(other, description) {
-      this.params = {operator: 'to match any ' + i(other), message: description};
+    this.params = {operator: 'to match any ' + i(other), message: description};
 
-      var f = other;
-
-      if(other instanceof RegExp) {
-          f = function(it) {
-              return !!other.exec(it);
-          };
-      } else if(typeof other != 'function') {
-          f = function(it) {
-              return eql(it, other).result;
-          };
+    this.assert(util.some(this.obj, function(value) {
+      try {
+        should(value).match(other);
+        return true;
+      } catch(e) {
+        if(e instanceof should.AssertionError) {
+          // Caught an AssertionError, return false to the iterator
+          return false;
+        }
+        throw e;
       }
-
-      this.assert(util.some(this.obj, function(value, key) {
-          try {
-              var result = f(value, key);
-
-              if(typeof result == 'boolean') {
-                  return result; // if it is just boolean, return it
-              }
-
-              // Else return true - no exception was thrown, so assume it succeeded
-              return true;
-          } catch(e) {
-              if(e instanceof should.AssertionError) {
-                  // Caught an AssertionError, return false to the iterator
-                  return false;
-              } else {
-                  throw e;
-              }
-          }
-      }, this));
+    }));
   });
+
+  Assertion.alias('matchAny', 'matchSome');
+  Assertion.alias('matchEach', 'matchEvery');
 };
 
-},{"../util":30,"should-equal":31}],25:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"../util":40,"should-equal":17}],34:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -3710,14 +4924,14 @@ module.exports = function(should, Assertion) {
    * @category assertion numbers
    * @example
    *
-   * (10).should.not.be.NaN;
-   * NaN.should.be.NaN;
+   * (10).should.not.be.NaN();
+   * NaN.should.be.NaN();
    */
   Assertion.add('NaN', function() {
     this.params = { operator: 'to be NaN' };
 
     this.assert(this.obj !== this.obj);
-  }, true);
+  });
 
   /**
    * Assert given object is not finite (positive or negative)
@@ -3727,16 +4941,16 @@ module.exports = function(should, Assertion) {
    * @category assertion numbers
    * @example
    *
-   * (10).should.not.be.Infinity;
-   * NaN.should.not.be.Infinity;
+   * (10).should.not.be.Infinity();
+   * NaN.should.not.be.Infinity();
    */
   Assertion.add('Infinity', function() {
     this.params = { operator: 'to be Infinity' };
 
-    this.is.a.Number
-      .and.not.a.NaN
+    this.is.a.Number()
+      .and.not.a.NaN()
       .and.assert(!isFinite(this.obj));
-  }, true);
+  });
 
   /**
    * Assert given number between `start` and `finish` or equal one of them.
@@ -3771,7 +4985,7 @@ module.exports = function(should, Assertion) {
    * (9.99).should.be.approximately(10, 0.1);
    */
   Assertion.add('approximately', function(value, delta, description) {
-    this.params = { operator: 'to be approximately ' + value + " ±" + delta, message: description };
+    this.params = { operator: 'to be approximately ' + value + ' ±' + delta, message: description };
 
     this.assert(Math.abs(this.obj - value) <= delta);
   });
@@ -3806,7 +5020,7 @@ module.exports = function(should, Assertion) {
    * @param {string} [description] Optional message
    * @example
    *
-   * (0).should.be.above(10);
+   * (0).should.be.below(10);
    */
   Assertion.add('below', function(n, description) {
     this.params = { operator: 'to be below ' + n, message: description };
@@ -3817,12 +5031,337 @@ module.exports = function(should, Assertion) {
   Assertion.alias('above', 'greaterThan');
   Assertion.alias('below', 'lessThan');
 
+  /**
+   * Assert given number above `n`.
+   *
+   * @name aboveOrEqual
+   * @alias Assertion#greaterThanOrEqual
+   * @memberOf Assertion
+   * @category assertion numbers
+   * @param {number} n Margin number
+   * @param {string} [description] Optional message
+   * @example
+   *
+   * (10).should.be.aboveOrEqual(0);
+   * (10).should.be.aboveOrEqual(10);
+   */
+  Assertion.add('aboveOrEqual', function(n, description) {
+    this.params = { operator: 'to be above or equal' + n, message: description };
+
+    this.assert(this.obj >= n);
+  });
+
+  /**
+   * Assert given number below `n`.
+   *
+   * @name belowOrEqual
+   * @alias Assertion#lessThanOrEqual
+   * @memberOf Assertion
+   * @category assertion numbers
+   * @param {number} n Margin number
+   * @param {string} [description] Optional message
+   * @example
+   *
+   * (0).should.be.belowOrEqual(10);
+   * (0).should.be.belowOrEqual(0);
+   */
+  Assertion.add('belowOrEqual', function(n, description) {
+    this.params = { operator: 'to be below or equal' + n, message: description };
+
+    this.assert(this.obj <= n);
+  });
+
+  Assertion.alias('aboveOrEqual', 'greaterThanOrEqual');
+  Assertion.alias('belowOrEqual', 'lessThanOrEqual');
+
 };
 
-},{}],26:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{}],35:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
+ * MIT Licensed
+ */
+
+var util = require('../util');
+var PromisedAssertion = require('../assertion').PromisedAssertion;
+var Assertion = require('../assertion');
+
+module.exports = function(should) {
+  /**
+   * Assert given object is a Promise
+   *
+   * @name Promise
+   * @memberOf Assertion
+   * @category assertion promises
+   * @example
+   *
+   * promise.should.be.Promise()
+   * (new Promise(function(resolve, reject) { resolve(10); })).should.be.a.Promise()
+   * (10).should.not.be.a.Promise()
+   */
+  Assertion.add('Promise', function() {
+    this.params = {operator: 'to be promise'};
+
+    var obj = this.obj;
+
+    should(obj).have.property('then')
+      .which.is.a.Function();
+  });
+
+  /**
+   * Assert given promise will be fulfilled. Result of assertion is still .thenable and should be handled accordingly.
+   *
+   * @name fulfilled
+   * @memberOf Assertion
+   * @returns {Promise}
+   * @category assertion promises
+   * @example
+   * 
+   * // don't forget to handle async nature
+   * (new Promise(function(resolve, reject) { resolve(10); })).should.be.fulfilled();
+   * 
+   * // test example with mocha it is possible to return promise
+   * it('is async', () => {
+   *    return new Promise(resolve => resolve(10))
+   *      .should.be.fulfilled();
+   * });
+   */
+  Assertion.prototype.fulfilled = function Assertion$fulfilled() {
+    this.params = {operator: 'to be fulfilled'};
+
+    should(this.obj).be.a.Promise();
+
+    var that = this;
+    return this.obj.then(function next$onResolve(value) {
+      if (that.negate) {
+        that.fail();
+      }
+      return value;
+    }, function next$onReject(err) {
+      if (!that.negate) {
+        that.fail();
+      }
+      return err;
+    });
+  };
+
+  /**
+   * Assert given promise will be rejected. Result of assertion is still .thenable and should be handled accordingly.
+   *
+   * @name rejected
+   * @memberOf Assertion
+   * @category assertion promises
+   * @returns {Promise}
+   * @example
+   * 
+   * // don't forget to handle async nature
+   * (new Promise(function(resolve, reject) { resolve(10); }))
+   *    .should.not.be.rejected();
+   * 
+   * // test example with mocha it is possible to return promise
+   * it('is async', () => {
+   *    return new Promise((resolve, reject) => reject(new Error('boom')))
+   *      .should.be.rejected();
+   * });
+   */
+  Assertion.prototype.rejected = function() {
+    this.params = {operator: 'to be rejected'};
+
+    should(this.obj).be.a.Promise();
+
+    var that = this;
+    return this.obj.then(function(value) {
+      if (!that.negate) {
+        that.fail();
+      }
+      return value;
+    }, function next$onError(err) {
+      if (that.negate) {
+        that.fail();
+      }
+      return err;
+    });
+  };
+
+  /**
+   * Assert given promise will be fulfilled with some expected value (value compared using .eql).
+   * Result of assertion is still .thenable and should be handled accordingly.
+   *
+   * @name fulfilledWith
+   * @memberOf Assertion
+   * @category assertion promises
+   * @returns {Promise}
+   * @example
+   * 
+   * // don't forget to handle async nature
+   * (new Promise(function(resolve, reject) { resolve(10); }))
+   *    .should.be.fulfilledWith(10);
+   * 
+   * // test example with mocha it is possible to return promise
+   * it('is async', () => {
+   *    return new Promise((resolve, reject) => resolve(10))
+   *       .should.be.fulfilledWith(10);
+   * });
+   */
+  Assertion.prototype.fulfilledWith = function(expectedValue) {
+    this.params = {operator: 'to be fulfilled'};
+
+    should(this.obj).be.a.Promise();
+
+    var that = this;
+    return this.obj.then(function(value) {
+      if (that.negate) {
+        that.fail();
+      }
+      should(value).eql(expectedValue);
+      return value;
+    }, function next$onError(err) {
+      if (!that.negate) {
+        that.fail();
+      }
+      return err;
+    });
+  };
+
+  /**
+   * Assert given promise will be rejected with some sort of error. Arguments is the same for Assertion#throw.
+   * Result of assertion is still .thenable and should be handled accordingly.
+   *
+   * @name rejectedWith
+   * @memberOf Assertion
+   * @category assertion promises
+   * @returns {Promise}
+   * @example
+   *
+   * function failedPromise() {
+   *   return new Promise(function(resolve, reject) {
+   *     reject(new Error('boom'))
+   *   })
+   * }
+   * failedPromise().should.be.rejectedWith(Error);
+   * failedPromise().should.be.rejectedWith('boom');
+   * failedPromise().should.be.rejectedWith(/boom/);
+   * failedPromise().should.be.rejectedWith(Error, { message: 'boom' });
+   * failedPromise().should.be.rejectedWith({ message: 'boom' });
+   * 
+   * // test example with mocha it is possible to return promise
+   * it('is async', () => {
+   *    return failedPromise().should.be.rejectedWith({ message: 'boom' });
+   * });
+   */
+  Assertion.prototype.rejectedWith = function(message, properties) {
+    this.params = {operator: 'to be rejected'};
+
+    should(this.obj).be.a.Promise();
+
+    var that = this;
+    return this.obj.then(function(value) {
+      if (!that.negate) {
+        that.fail();
+      }
+      return value;
+    }, function next$onError(err) {
+      if (that.negate) {
+        that.fail();
+      }
+
+      var errorMatched = true;
+      var errorInfo = '';
+
+      if ('string' === typeof message) {
+        errorMatched = message === err.message;
+      } else if (message instanceof RegExp) {
+        errorMatched = message.test(err.message);
+      } else if ('function' === typeof message) {
+        errorMatched = err instanceof message;
+      } else if (message !== null && typeof message === 'object') {
+        try {
+          should(err).match(message);
+        } catch (e) {
+          if (e instanceof should.AssertionError) {
+            errorInfo = ': ' + e.message;
+            errorMatched = false;
+          } else {
+            throw e;
+          }
+        }
+      }
+
+      if (!errorMatched) {
+        if ( typeof message === 'string' || message instanceof RegExp) {
+          errorInfo = ' with a message matching ' + should.format(message) + ", but got '" + err.message + "'";
+        } else if ('function' === typeof message) {
+          errorInfo = ' of type ' + util.functionName(message) + ', but got ' + util.functionName(err.constructor);
+        }
+      } else if ('function' === typeof message && properties) {
+        try {
+          should(err).match(properties);
+        } catch (e) {
+          if (e instanceof should.AssertionError) {
+            errorInfo = ': ' + e.message;
+            errorMatched = false;
+          } else {
+            throw e;
+          }
+        }
+      }
+
+      that.params.operator += errorInfo;
+
+      that.assert(errorMatched);
+
+      return err;
+    });
+  };
+
+  /**
+   * Assert given object is promise and wrap it in PromisedAssertion, which has all properties of Assertion. 
+   * That means you can chain as with usual Assertion.
+   * Result of assertion is still .thenable and should be handled accordingly.
+   *
+   * @name finally
+   * @memberOf Assertion
+   * @alias Assertion#eventually
+   * @category assertion promises
+   * @returns {PromisedAssertion} Like Assertion, but .then this.obj in Assertion
+   * @example
+   *
+   * (new Promise(function(resolve, reject) { resolve(10); }))
+   *    .should.be.eventually.equal(10);
+   * 
+   * // test example with mocha it is possible to return promise
+   * it('is async', () => {
+   *    return new Promise(resolve => resolve(10))
+   *      .should.be.finally.equal(10);
+   * });
+   */
+  Object.defineProperty(Assertion.prototype, 'finally', {
+    get: function() {
+      should(this.obj).be.a.Promise();
+
+      var that = this;
+
+      return new PromisedAssertion(this.obj.then(function(obj) {
+        var a = should(obj);
+
+        a.negate = that.negate;
+        a.anyOne = that.anyOne;
+
+        return a;
+      }));
+    }
+  });
+
+  Assertion.alias('finally', 'eventually');
+};
+
+},{"../assertion":24,"../util":40}],36:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -3858,8 +5397,7 @@ module.exports = function(should, Assertion) {
       args.names = aSlice.call(arguments);
     } else {
       var arg = arguments[0];
-      var t = should.type(arg);
-      if(t == should.type.STRING) {
+      if(typeof arg === 'string') {
         args.names = [arg];
       } else if(util.isIndexable(arg)) {
         args.names = arg;
@@ -3907,7 +5445,7 @@ module.exports = function(should, Assertion) {
    *
    * ({ a: 10, b: 10 }).should.have.enumerables('a');
    */
-  Assertion.add('enumerables', function(names) {
+  Assertion.add('enumerables', function(/*names*/) {
     var args = processPropsArgs.apply(null, arguments);
 
     this.params = {
@@ -4083,9 +5621,9 @@ module.exports = function(should, Assertion) {
    * @category assertion property
    * @example
    *
-   * ''.should.be.empty;
-   * [].should.be.empty;
-   * ({}).should.be.empty;
+   * ''.should.be.empty();
+   * [].should.be.empty();
+   * ({}).should.be.empty();
    */
   Assertion.add('empty', function() {
     this.params = {operator: 'to be empty'};
@@ -4117,7 +5655,7 @@ module.exports = function(should, Assertion) {
    */
   Assertion.add('keys', function(keys) {
     if(arguments.length > 1) keys = aSlice.call(arguments);
-    else if(arguments.length === 1 && should.type(keys) == should.type.STRING) keys = [keys];
+    else if(arguments.length === 1 && typeof keys === 'string') keys = [keys];
     else if(arguments.length === 0) keys = [];
 
     keys = keys.map(String);
@@ -4180,7 +5718,8 @@ module.exports = function(should, Assertion) {
     var foundProperties = [];
 
     var currentProperty;
-    while(currentProperty = properties.shift()) {
+    while(properties.length) {
+      currentProperty = properties.shift();
       this.params = {operator: 'to have property by path ' + allProps.join(', ') + ' - failed on ' + util.formatProp(currentProperty)};
       obj = obj.have.property(currentProperty);
       foundProperties.push(currentProperty);
@@ -4192,10 +5731,11 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{"../util":30,"should-equal":31}],27:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"../util":40,"should-equal":17}],37:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -4218,7 +5758,7 @@ module.exports = function(should, Assertion) {
   });
 
   /**
-   * Assert given string starts with prefix
+   * Assert given string ends with prefix
    * @name endWith
    * @memberOf Assertion
    * @category assertion strings
@@ -4234,10 +5774,12 @@ module.exports = function(should, Assertion) {
     this.assert(this.obj.indexOf(str, this.obj.length - str.length) >= 0);
   });
 };
-},{}],28:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+
+},{}],38:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -4254,7 +5796,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be a number'};
 
     this.have.type('number');
-  }, true);
+  });
 
   /**
    * Assert given object is arguments
@@ -4267,7 +5809,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be arguments'};
 
     this.have.class('Arguments');
-  }, true);
+  });
 
   Assertion.alias('arguments', 'Arguments');
 
@@ -4312,7 +5854,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be a function'};
 
     this.have.type('function');
-  }, true);
+  });
 
   /**
    * Assert given object is object
@@ -4323,8 +5865,8 @@ module.exports = function(should, Assertion) {
   Assertion.add('Object', function() {
     this.params = {operator: 'to be an object'};
 
-    this.is.not.null.and.have.type('object');
-  }, true);
+    this.is.not.null().and.have.type('object');
+  });
 
   /**
    * Assert given object is string
@@ -4336,7 +5878,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be a string'};
 
     this.have.type('string');
-  }, true);
+  });
 
   /**
    * Assert given object is array
@@ -4348,7 +5890,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be an array'};
 
     this.have.class('Array');
-  }, true);
+  });
 
   /**
    * Assert given object is boolean
@@ -4360,7 +5902,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be a boolean'};
 
     this.have.type('boolean');
-  }, true);
+  });
 
   /**
    * Assert given object is error
@@ -4372,7 +5914,19 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be an error'};
 
     this.have.instanceOf(Error);
-  }, true);
+  });
+
+  /**
+   * Assert given object is a date
+   * @name Date
+   * @memberOf Assertion
+   * @category assertion types
+   */
+  Assertion.add('Date', function() {
+    this.params = {operator: 'to be a date'};
+
+    this.have.instanceOf(Date);
+  });
 
   /**
    * Assert given object is null
@@ -4385,7 +5939,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be null'};
 
     this.assert(this.obj === null);
-  }, true);
+  });
 
   Assertion.alias('null', 'Null');
 
@@ -4415,7 +5969,7 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to be undefined'};
 
     this.assert(this.obj === void 0);
-  }, true);
+  });
 
   Assertion.alias('undefined', 'Undefined');
 
@@ -4429,8 +5983,8 @@ module.exports = function(should, Assertion) {
   Assertion.add('iterable', function() {
     this.params = {operator: 'to be iterable'};
 
-    should(this.obj).have.property(Symbol.iterator).which.is.a.Function;
-  }, true);
+    should(this.obj).have.property(Symbol.iterator).which.is.a.Function();
+  });
 
   /**
    * Assert given object supports es6 iterator protocol (just check
@@ -4442,8 +5996,8 @@ module.exports = function(should, Assertion) {
   Assertion.add('iterator', function() {
     this.params = {operator: 'to be iterator'};
 
-    should(this.obj).have.property('next').which.is.a.Function;
-  }, true);
+    should(this.obj).have.property('next').which.is.a.Function();
+  });
 
   /**
    * Assert given object is a generator object
@@ -4457,13 +6011,14 @@ module.exports = function(should, Assertion) {
     should(this.obj).be.iterable
       .and.iterator
       .and.it.is.equal(this.obj[Symbol.iterator]());
-  }, true);
+  });
 };
 
-},{"../util":30}],29:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"../util":40}],39:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
@@ -4478,16 +6033,16 @@ var util = require('./util');
  * @example
  *
  * var should = require('should');
- * should('abc').be.a.String;
+ * should('abc').be.a.String();
  */
-var should = function should(obj) {
-  return (new should.Assertion(obj)).proxied();
-};
+function should(obj) {
+  return (new should.Assertion(obj));
+}
 
 should.AssertionError = require('./assertion-error');
 should.Assertion = require('./assertion');
 
-should.format = require('should-format');
+should.format = util.format;
 should.type = require('should-type');
 should.util = util;
 
@@ -4495,7 +6050,8 @@ should.util = util;
  * Object with configuration.
  * It contains such properties:
  * * `checkProtoEql` boolean - Affect if `.eql` will check objects prototypes
- * * `useOldDeepEqual` boolean - Use old deepEqual implementation, that was copied from node's assert.deepEqual (will be removed in 5.x)
+ * * `plusZeroAndMinusZeroEqual` boolean - Affect if `.eql` will treat +0 and -0 as equal
+ * Also it can contain options for should-format.
  *
  * @type {Object}
  * @memberOf should
@@ -4514,12 +6070,14 @@ should.util = util;
  */
 should.config = require('./config');
 
-//Expose should to external world.
+// Expose should to external world.
 exports = module.exports = should;
 
 /**
  * Allow to extend given prototype with should property using given name. This getter will **unwrap** all standard wrappers like `Number`, `Boolean`, `String`.
  * Using `should(obj)` is the equivalent of using `obj.should` with known issues (like nulls and method calls etc).
+ *
+ * To add new assertions, need to use Assertion.add method.
  *
  * @param {string} [propertyName] Name of property to add. Default is `'should'`.
  * @param {Object} [proto] Prototype to extend with. Default is `Object.prototype`.
@@ -4573,7 +6131,7 @@ should.extend = function(propertyName, proto) {
  * should(Object.prototype).not.have.property('must');
  */
 should.noConflict = function(desc) {
-  desc = desc || prevShould;
+  desc = desc || should._prevShould;
 
   if(desc) {
     delete desc.proto[desc.name];
@@ -4597,7 +6155,7 @@ should.noConflict = function(desc) {
  *   Assertion.add('asset', function() {
  *      this.params = { operator: 'to be asset' };
  *
- *      this.obj.should.have.property('id').which.is.a.Number;
+ *      this.obj.should.have.property('id').which.is.a.Number();
  *      this.obj.should.have.property('path');
  *  })
  * })
@@ -4618,23 +6176,19 @@ should
   .use(require('./ext/property'))
   .use(require('./ext/error'))
   .use(require('./ext/match'))
-  .use(require('./ext/contain'));
+  .use(require('./ext/contain'))
+  .use(require('./ext/promise'));
 
-
-var defaultProto = Object.prototype;
-var defaultProperty = 'should';
-
-//Expose api via `Object#should`.
-var prevShould = should.extend(defaultProperty, defaultProto);
-
-},{"./assertion":15,"./assertion-error":14,"./config":16,"./ext/assert":18,"./ext/bool":19,"./ext/chain":20,"./ext/contain":21,"./ext/eql":22,"./ext/error":23,"./ext/match":24,"./ext/number":25,"./ext/property":26,"./ext/string":27,"./ext/type":28,"./util":30,"should-format":32,"should-type":33}],30:[function(require,module,exports){
-/*!
- * Should
- * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+},{"./assertion":24,"./assertion-error":23,"./config":25,"./ext/assert":27,"./ext/bool":28,"./ext/chain":29,"./ext/contain":30,"./ext/eql":31,"./ext/error":32,"./ext/match":33,"./ext/number":34,"./ext/promise":35,"./ext/property":36,"./ext/string":37,"./ext/type":38,"./util":40,"should-type":20}],40:[function(require,module,exports){
+/*
+ * should.js - assertion library
+ * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
+ * Copyright(c) 2013-2016 Denis Bardadym <bardadymchik@gmail.com>
  * MIT Licensed
  */
 
 var type = require('should-type');
+var config = require('./config');
 
 /**
  * Check if given obj just a primitive type wrapper
@@ -4688,23 +6242,6 @@ exports.some = function(obj, f, context) {
   return res;
 };
 
-var functionNameRE = /^\s*function\s*(\S*)\s*\(/;
-
-exports.functionName = function(f) {
-  if(f.name) {
-    return f.name;
-  }
-  var name = f.toString().match(functionNameRE)[1];
-  return name;
-};
-
-var formatPropertyName = require('should-format').formatPropertyName;
-
-exports.formatProp = function(value) {
-  return formatPropertyName(String(value));
-};
-
-
 exports.isEmptyObject = function(obj) {
   for(var prop in obj) {
     if(hasOwnProperty.call(obj, prop)) {
@@ -4716,28 +6253,34 @@ exports.isEmptyObject = function(obj) {
 
 exports.isIndexable = function(obj) {
   var t = type(obj);
-  return t == type.ARRAY ||
-    t == type.BUFFER ||
-    t == type.ARGUMENTS ||
-    t == type.ARRAY_BUFFER ||
-    t == type.TYPED_ARRAY ||
-    t == type.DATA_VIEW ||
-    t == type.STRING;
+  return (t.type === type.OBJECT && t.cls === type.ARRAY) ||
+   (t.type === type.OBJECT && t.cls === type.BUFFER) ||
+   (t.type === type.OBJECT && t.cls === type.ARGUMENTS) ||
+   (t.type === type.OBJECT && t.cls === type.ARRAY_BUFFER) ||
+   (t.type === type.OBJECT && t.cls === type.TYPED_ARRAY) ||
+   (t.type === type.OBJECT && t.cls === type.DATA_VIEW) ||
+   (t.type === type.OBJECT && t.cls === type.STRING) ||
+   (t.type === type.STRING);
 };
 
 exports.length = function(obj) {
-  switch(type(obj)) {
-    case type.ARRAY_BUFFER:
-    case type.TYPED_ARRAY:
-    case type.DATA_VIEW:
-      return obj.byteLength;
-
-    case type.ARRAY:
-    case type.BUFFER:
-    case type.ARGUMENTS:
-    case type.FUNCTION:
+  var t = type(obj);
+  switch(t.type) {
     case type.STRING:
       return obj.length;
+    case type.OBJECT:
+      switch(t.cls) {
+        case type.ARRAY_BUFFER:
+        case type.TYPED_ARRAY:
+        case type.DATA_VIEW:
+          return obj.byteLength;
+
+        case type.ARRAY:
+        case type.BUFFER:
+        case type.ARGUMENTS:
+        case type.FUNCTION:
+          return obj.length;
+      }
   }
 };
 
@@ -4762,654 +6305,23 @@ exports.isGeneratorFunction = function(f) {
   if(typeof f != 'function') return false;
 
   return /^function\s*\*\s*/.test(f.toString());
-}
-
-},{"should-format":32,"should-type":33}],31:[function(require,module,exports){
-var getType = require('should-type');
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function makeResult(r, path, reason, a, b) {
-  var o = {result: r};
-  if(!r) {
-    o.path = path;
-    o.reason = reason;
-    o.a = a;
-    o.b = b;
-  }
-  return o;
-}
-
-var EQUALS = makeResult(true);
-
-function format(msg) {
-  var args = arguments;
-  for(var i = 1, l = args.length; i < l; i++) {
-    msg = msg.replace(/%s/, args[i]);
-  }
-  return msg;
-}
-
-var REASON = {
-  PLUS_0_AND_MINUS_0: '+0 is not equal to -0',
-  DIFFERENT_TYPES: 'A has type %s and B has type %s',
-  NAN_NUMBER: 'NaN is not equal to any number',
-  EQUALITY: 'A is not equal to B',
-  EQUALITY_PROTOTYPE: 'A and B have different prototypes',
-  WRAPPED_VALUE: 'A wrapped value is not equal to B wrapped value',
-  FUNCTION_SOURCES: 'function A is not equal to B by source code value (via .toString call)',
-  MISSING_KEY: '%s has no key %s',
-  CIRCULAR_VALUES: 'A has circular reference that was visited not in the same time as B'
 };
 
-function eqInternal(a, b, opts, stackA, stackB, path, fails) {
-  var r = EQUALS;
-
-  function result(comparison, reason) {
-    var res = makeResult(comparison, path, reason, a, b);
-    if(!comparison && opts.collectAllFails) {
-      fails.push(res);
-    }
-    return res;
-  }
-
-  function checkPropertyEquality(property) {
-    return eqInternal(a[property], b[property], opts, stackA, stackB, path.concat([property]), fails);
-  }
-
-  // equal a and b exit early
-  if(a === b) {
-    // check for +0 !== -0;
-    return result(a !== 0 || (1 / a == 1 / b), REASON.PLUS_0_AND_MINUS_0);
-  }
-
-  var l, p;
-
-  var typeA = getType(a),
-    typeB = getType(b);
-
-  // if objects has different types they are not equals
-  if(typeA !== typeB) return result(false, format(REASON.DIFFERENT_TYPES, typeA, typeB));
-
-  switch(typeA) {
-    case 'number':
-      return (a !== a) ? result(b !== b, REASON.NAN_NUMBER)
-        // but treat `+0` vs. `-0` as not equal
-        : (a === 0 ? result(1 / a === 1 / b, REASON.PLUS_0_AND_MINUS_0) : result(a === b, REASON.EQUALITY));
-
-    case 'regexp':
-      p = ['source', 'global', 'multiline', 'lastIndex', 'ignoreCase'];
-      while(p.length) {
-        r = checkPropertyEquality(p.shift());
-        if(!opts.collectAllFails && !r.result) return r;
-      }
-      break;
-
-    case 'boolean':
-    case 'string':
-      return result(a === b, REASON.EQUALITY);
-
-    case 'date':
-      if(+a !== +b && !opts.collectAllFails) {
-        return result(false, REASON.EQUALITY);
-      }
-      break;
-
-    case 'object-number':
-    case 'object-boolean':
-    case 'object-string':
-      r = eqInternal(a.valueOf(), b.valueOf(), opts, stackA, stackB, path, fails);
-      if(!r.result && !opts.collectAllFails) {
-        r.reason = REASON.WRAPPED_VALUE;
-        return r;
-      }
-      break;
-
-    case 'buffer':
-      r = checkPropertyEquality('length');
-      if(!opts.collectAllFails && !r.result) return r;
-
-      l = a.length;
-      while(l--) {
-        r = checkPropertyEquality(l);
-        if(!opts.collectAllFails && !r.result) return r;
-      }
-
-      return EQUALS;
-
-    case 'error':
-      p = ['name', 'message'];
-      while(p.length) {
-        r = checkPropertyEquality(p.shift());
-        if(!opts.collectAllFails && !r.result) return r;
-      }
-
-      break;
-  }
-
-  // compare deep objects and arrays
-  // stacks contain references only
-  stackA || (stackA = []);
-  stackB || (stackB = []);
-
-  l = stackA.length;
-  while(l--) {
-    if(stackA[l] == a) {
-      return result(stackB[l] == b, REASON.CIRCULAR_VALUES);
-    }
-  }
-
-  // add `a` and `b` to the stack of traversed objects
-  stackA.push(a);
-  stackB.push(b);
-
-  var hasProperty,
-    keysComparison,
-    key;
-
-  if(typeA === 'array' || typeA === 'arguments' || typeA === 'typed-array') {
-    r = checkPropertyEquality('length');
-    if(!opts.collectAllFails && !r.result) return r;
-  }
-
-  if(typeA === 'array-buffer' || typeA === 'typed-array') {
-    r = checkPropertyEquality('byteLength');
-    if(!opts.collectAllFails && !r.result) return r;
-  }
-
-  if(typeB === 'function') {
-    var fA = a.toString(), fB = b.toString();
-    r = eqInternal(fA, fB, opts, stackA, stackB, path, fails);
-    r.reason = REASON.FUNCTION_SOURCES;
-    if(!opts.collectAllFails && !r.result) return r;
-  }
-
-  for(key in b) {
-    if(hasOwnProperty.call(b, key)) {
-      r = result(hasOwnProperty.call(a, key), format(REASON.MISSING_KEY, 'A', key));
-      if(!r.result && !opts.collectAllFails) {
-        return r;
-      }
-
-      if(r.result) {
-        r = checkPropertyEquality(key);
-        if(!r.result && !opts.collectAllFails) {
-          return r;
-        }
-      }
-    }
-  }
-
-  // ensure both objects have the same number of properties
-  for(key in a) {
-    if(hasOwnProperty.call(a, key)) {
-      r = result(hasOwnProperty.call(b, key), format(REASON.MISSING_KEY, 'B', key));
-      if(!r.result && !opts.collectAllFails) {
-        return r;
-      }
-    }
-  }
-
-  stackA.pop();
-  stackB.pop();
-
-  var prototypesEquals = false, canComparePrototypes = false;
-
-  if(opts.checkProtoEql) {
-    if(Object.getPrototypeOf) {
-      prototypesEquals = Object.getPrototypeOf(a) === Object.getPrototypeOf(b);
-      canComparePrototypes = true;
-    } else if(a.__proto__ && b.__proto__) {
-      prototypesEquals = a.__proto__ === b.__proto__;
-      canComparePrototypes = true;
-    }
-
-    if(canComparePrototypes && !prototypesEquals && !opts.collectAllFails) {
-      r = result(prototypesEquals, REASON.EQUALITY_PROTOTYPE);
-      r.showReason = true;
-      if(!r.result && !opts.collectAllFails) {
-        return r;
-      }
-    }
-  }
-
-  if(typeB === 'function') {
-    r = checkPropertyEquality('prototype');
-    if(!r.result && !opts.collectAllFails) return r;
-  }
-
-  return EQUALS;
-}
-
-var defaultOptions = {checkProtoEql: true, collectAllFails: false};
-
-function eq(a, b, opts) {
-  opts = opts || defaultOptions;
-  var fails = [];
-  var r = eqInternal(a, b, opts || defaultOptions, [], [], [], fails);
-  return opts.collectAllFails ? fails : r;
-}
-
-module.exports = eq;
-
-eq.r = REASON;
-
-},{"should-type":33}],32:[function(require,module,exports){
-var getType = require('should-type');
-
-function genKeysFunc(f) {
-  return function(value) {
-    var k = f(value);
-    k.sort();
-    return k;
-  }
-}
-
-//XXX add ability to only inspect some paths
-var format = function(value, opts) {
-  opts = opts || {};
-
-  if(!('seen' in opts)) opts.seen = [];
-  opts.keys = genKeysFunc('keys' in opts && opts.keys === false ? Object.getOwnPropertyNames : Object.keys);
-
-  if(!('maxLineLength' in opts)) opts.maxLineLength = 60;
-  if(!('propSep' in opts)) opts.propSep = ',';
-
-  var type = getType(value);
-  return (format.formats[type] || format.formats['object'])(value, opts);
+exports.format = function(value, opts) {
+  return config.getFormatter(opts).format(value);
 };
 
-module.exports = format;
+exports.functionName = require('should-format').Formatter.functionName;
 
-format.formats = {};
-
-function add(t, f) {
-  format.formats[t] = f;
-}
-
-[ 'undefined',  'boolean',  'null'].forEach(function(name) {
-  add(name, String);
-});
-
-['number', 'boolean'].forEach(function(name) {
-  var capName = name.substring(0, 1).toUpperCase() + name.substring(1);
-  add('object-' + name, formatObjectWithPrefix(function(value) {
-    return '[' + capName + ': ' + format(value.valueOf()) + ']';
-  }));
-});
-
-add('object-string', function(value, opts) {
-  var realValue = value.valueOf();
-  var prefix = '[String: ' + format(realValue) + ']';
-  var props = opts.keys(value);
-  props = props.filter(function(p) {
-    return !(p.match(/\d+/) && parseInt(p, 10) < realValue.length);
-  });
-
-  if(props.length == 0) return prefix;
-  else return formatObject(value, opts, prefix, props);
-});
-
-add('regexp', formatObjectWithPrefix(String));
-
-add('number', function(value) {
-  if(value === 0 && 1 / value < 0) return '-0';
-  return String(value);
-});
-
-add('string', function(value) {
-  return '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-      .replace(/'/g, "\\'")
-      .replace(/\\"/g, '"') + '\'';
-});
-
-add('object', formatObject);
-
-add('array', function(value, opts) {
-  var keys = opts.keys(value);
-  var len = 0;
-
-  opts.seen.push(value);
-
-  var props = keys.map(function(prop) {
-    var desc;
-    try {
-      desc = Object.getOwnPropertyDescriptor(value, prop) || {value: value[prop]};
-    } catch(e) {
-      desc = {value: e};
-    }
-
-    var f;
-    if(prop.match(/\d+/)) {
-      f = format(desc.value, opts);
-    } else {
-      f = formatProperty(desc.value, opts, prop)
-    }
-    len += f.length;
-    return f;
-  });
-
-  opts.seen.pop();
-
-  if(props.length === 0) return '[]';
-
-  if(len <= opts.maxLineLength) {
-    return '[ ' + props.join(opts.propSep + ' ') + ' ]';
-  } else {
-    return '[' + '\n' + props.map(addSpaces).join(opts.propSep + '\n') + '\n' + ']';
-  }
-});
-
-function addSpaces(v) {
-  return v.split('\n').map(function(vv) { return '  ' + vv; }).join('\n');
-}
-
-function formatObject(value, opts, prefix, props) {
-  props = props || opts.keys(value);
-
-  var len = 0;
-
-  opts.seen.push(value);
-  props = props.map(function(prop) {
-    var f = formatProperty(value, opts, prop);
-    len += f.length;
-    return f;
-  });
-  opts.seen.pop();
-
-  if(props.length === 0) return '{}';
-
-  if(len <= opts.maxLineLength) {
-    return '{ ' + (prefix ? prefix + ' ' : '') + props.join(opts.propSep + ' ') + ' }';
-  } else {
-    return '{' + '\n' + (prefix ? prefix + '\n' : '') + props.map(addSpaces).join(opts.propSep + '\n') + '\n' + '}';
-  }
-}
-
-format.formatPropertyName = function(name, opts) {
-  return name.match(/^[a-zA-Z_$][a-zA-Z_$0-9]*$/) ? name : format(name, opts)
+exports.formatProp = function(value) {
+  return config.getFormatter().formatPropertyName(String(value));
 };
 
-
-function formatProperty(value, opts, prop) {
-  var desc;
-  try {
-    desc = Object.getOwnPropertyDescriptor(value, prop) || {value: value[prop]};
-  } catch(e) {
-    desc = {value: e};
-  }
-
-  var propName = format.formatPropertyName(prop, opts);
-
-  var propValue = desc.get && desc.set ?
-    '[Getter/Setter]' : desc.get ?
-    '[Getter]' : desc.set ?
-    '[Setter]' : opts.seen.indexOf(desc.value) >= 0 ?
-    '[Circular]' :
-    format(desc.value, opts);
-
-  return propName + ': ' + propValue;
-}
-
-
-function pad2Zero(n) {
-  return n < 10 ? '0' + n : '' + n;
-}
-
-function pad3Zero(n) {
-  return n < 100 ? '0' + pad2Zero(n) : '' + n;
-}
-
-function formatDate(value) {
-  var to = value.getTimezoneOffset();
-  var absTo = Math.abs(to);
-  var hours = Math.floor(absTo / 60);
-  var minutes = absTo - hours * 60;
-  var tzFormat = 'GMT' + (to < 0 ? '+' : '-') + pad2Zero(hours) + pad2Zero(minutes);
-  return value.toLocaleDateString() + ' ' + value.toLocaleTimeString() + '.' + pad3Zero(value.getMilliseconds()) + ' ' + tzFormat;
-}
-
-function formatObjectWithPrefix(f) {
-  return function(value, opts) {
-    var prefix = f(value);
-    var props = opts.keys(value);
-    if(props.length == 0) return prefix;
-    else return formatObject(value, opts, prefix, props);
-  }
-}
-
-add('date', formatObjectWithPrefix(formatDate));
-
-var functionNameRE = /^\s*function\s*(\S*)\s*\(/;
-
-function functionName(f) {
-  if(f.name) {
-    return f.name;
-  }
-  var name = f.toString().match(functionNameRE)[1];
-  return name;
-}
-
-add('function', formatObjectWithPrefix(function(value) {
-  var name = functionName(value);
-  return '[Function' + (name ? ': ' + name : '') + ']';
-}));
-
-add('error', formatObjectWithPrefix(function(value) {
-  var name = value.name;
-  var message = value.message;
-  return '[' + name + (message ? ': ' + message : '') + ']';
-}));
-
-function generateFunctionForIndexedArray(lengthProp, name) {
-  return function(value) {
-    var str = '';
-    var max = 50;
-    var len = value[lengthProp];
-    if(len > 0) {
-      for(var i = 0; i < max && i < len; i++) {
-        var b = value[i] || 0;
-        str += ' ' + pad2Zero(b.toString(16));
-      }
-      if(len > max)
-        str += ' ... ';
-    }
-    return '[' + (value.constructor.name || name) + (str ? ':' + str : '') + ']';
-  }
-}
-
-add('buffer', generateFunctionForIndexedArray('length', 'Buffer'));
-
-add('array-buffer', generateFunctionForIndexedArray('byteLength'));
-
-add('typed-array', generateFunctionForIndexedArray('byteLength'));
-
-add('promise', function(value) {
-  return '[Promise]';
-});
-
-add('xhr', function(value) {
-  return '[XMLHttpRequest]';
-});
-
-add('html-element', function(value) {
-  return value.outerHTML;
-});
-
-add('html-element-text', function(value) {
-  return value.nodeValue;
-});
-
-add('document', function(value) {
-  return value.documentElement.outerHTML;
-});
-
-add('window', function(value) {
-  return '[Window]';
-});
-},{"should-type":33}],33:[function(require,module,exports){
-(function (Buffer){
-var toString = Object.prototype.toString;
-
-var types = {
-  NUMBER: 'number',
-  UNDEFINED: 'undefined',
-  STRING: 'string',
-  BOOLEAN: 'boolean',
-  OBJECT: 'object',
-  FUNCTION: 'function',
-  NULL: 'null',
-  ARRAY: 'array',
-  REGEXP: 'regexp',
-  DATE: 'date',
-  ERROR: 'error',
-  ARGUMENTS: 'arguments',
-  SYMBOL: 'symbol',
-  ARRAY_BUFFER: 'array-buffer',
-  TYPED_ARRAY: 'typed-array',
-  DATA_VIEW: 'data-view',
-  MAP: 'map',
-  SET: 'set',
-  WEAK_SET: 'weak-set',
-  WEAK_MAP: 'weak-map',
-  PROMISE: 'promise',
-
-  WRAPPER_NUMBER: 'object-number',
-  WRAPPER_BOOLEAN: 'object-boolean',
-  WRAPPER_STRING: 'object-string',
-
-// node buffer
-  BUFFER: 'buffer',
-
-// dom html element
-  HTML_ELEMENT: 'html-element',
-  HTML_ELEMENT_TEXT: 'html-element-text',
-  DOCUMENT: 'document',
-  WINDOW: 'window',
-  FILE: 'file',
-  FILE_LIST: 'file-list',
-  BLOB: 'blob',
-
-  XHR: 'xhr'
-};
-
-module.exports = function getType(instance) {
-  var type = typeof instance;
-
-  switch(type) {
-    case types.NUMBER:
-      return types.NUMBER;
-    case types.UNDEFINED:
-      return types.UNDEFINED;
-    case types.STRING:
-      return types.STRING;
-    case types.BOOLEAN:
-      return types.BOOLEAN;
-    case types.FUNCTION:
-      return types.FUNCTION;
-    case types.SYMBOL:
-      return types.SYMBOL;
-    case types.OBJECT:
-      if(instance === null) return types.NULL;
-
-      var clazz = toString.call(instance);
-
-      switch(clazz) {
-        case '[object String]':
-          return types.WRAPPER_STRING;
-        case '[object Boolean]':
-          return types.WRAPPER_BOOLEAN;
-        case '[object Number]':
-          return types.WRAPPER_NUMBER;
-        case '[object Array]':
-          return types.ARRAY;
-        case '[object RegExp]':
-          return types.REGEXP;
-        case '[object Error]':
-          return types.ERROR;
-        case '[object Date]':
-          return types.DATE;
-        case '[object Arguments]':
-          return types.ARGUMENTS;
-        case '[object Math]':
-          return types.OBJECT;
-        case '[object JSON]':
-          return types.OBJECT;
-        case '[object ArrayBuffer]':
-          return types.ARRAY_BUFFER;
-        case '[object Int8Array]':
-          return types.TYPED_ARRAY;
-        case '[object Uint8Array]':
-          return types.TYPED_ARRAY;
-        case '[object Uint8ClampedArray]':
-          return types.TYPED_ARRAY;
-        case '[object Int16Array]':
-          return types.TYPED_ARRAY;
-        case '[object Uint16Array]':
-          return types.TYPED_ARRAY;
-        case '[object Int32Array]':
-          return types.TYPED_ARRAY;
-        case '[object Uint32Array]':
-          return types.TYPED_ARRAY;
-        case '[object Float32Array]':
-          return types.TYPED_ARRAY;
-        case '[object Float64Array]':
-          return types.TYPED_ARRAY;
-        case '[object DataView]':
-          return types.DATA_VIEW;
-        case '[object Map]':
-          return types.MAP;
-        case '[object WeakMap]':
-          return types.WEAK_MAP;
-        case '[object Set]':
-          return types.SET;
-        case '[object WeakSet]':
-          return types.WEAK_SET;
-        case '[object Promise]':
-          return types.PROMISE;
-        case '[object Window]':
-          return types.WINDOW;
-        case '[object HTMLDocument]':
-          return types.DOCUMENT;
-        case '[object Blob]':
-          return types.BLOB;
-        case '[object File]':
-          return types.FILE;
-        case '[object FileList]':
-          return types.FILE_LIST;
-        case '[object XMLHttpRequest]':
-          return types.XHR;
-        case '[object Text]':
-          return types.HTML_ELEMENT_TEXT;
-        default:
-          if((typeof Promise === types.FUNCTION && instance instanceof Promise) || (getType(instance.then) === types.FUNCTION && instance.then.length >= 2)) {
-            return types.PROMISE;
-          }
-
-          if(typeof Buffer !== 'undefined' && instance instanceof Buffer) {
-            return types.BUFFER;
-          }
-
-          if(/^\[object HTML\w+Element\]$/.test(clazz)) {
-            return types.HTML_ELEMENT;
-          }
-
-          if(clazz === '[object Object]') {
-            return types.OBJECT;
-          }
-      }
-  }
-};
-
-Object.keys(types).forEach(function(typeName) {
-  module.exports[typeName] = types[typeName];
-});
-
-}).call(this,require("buffer").Buffer)
-},{"buffer":4}],34:[function(require,module,exports){
+},{"./config":25,"should-format":18,"should-type":20}],41:[function(require,module,exports){
 // In browserify context, *strict-mode* fall back to a no op.
 module.exports = function (cb) { cb() }
 
-},{}],35:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -5448,78 +6360,8 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 
 module.exports = tensorProduct
 
-},{"indices-permutations":36,"multidim-array-index":37}],36:[function(require,module,exports){
-function indicesPermutations (previousValue, currentValue, currentIndex, array) {
-  var result = []
-
-  if (array.length === 1) {
-    for (var i = 0; i < currentValue; i++) {
-      result.push([i])
-    }
-  } else {
-    var arrayWithoutLastElement = []
-
-    for (var j = 0; j < array.length - 1; j++) {
-      arrayWithoutLastElement.push(array[j])
-    }
-
-    var previousIteration = arrayWithoutLastElement.reduce(indicesPermutations, [])
-
-    for (var l = 0; l < previousIteration.length; l++) {
-      for (var k = 0; k < currentValue; k++) {
-        result.push(previousIteration[l].concat(k))
-      }
-    }
-  }
-
-  return result
-}
-
-module.exports = indicesPermutations
-
-},{}],37:[function(require,module,exports){
-/**
- * maps multidimensional array indices to monodimensional array index
- *
- * Given
- *
- * dimensions d_1, d_2, d_3 .. d_n
- * and
- * indices i_1, i_2, i_3 .. i_n
- *
- * index is computed by formula
- * index = i_n + i_(n-1) * d_n + i_(n-2) * d_n * d_(n-1) + ... + i_2 * d_n * d_(n-1) * ... * d_3 + i_1 * d_n * ... * d_2
- *
- * @function
- *
- * @param {Array} dimensions
- * @param {Array} indices
- * @returns {Number} index
- */
-
-function multiDimArrayIndex (dimensions, indices) {
-    var len = dimensions.length - 1
-  var index = indices[len]
-  var factor = null
-
-  if (dimensions.length > 1) {
-    factor = dimensions[len - 1]
-
-    index += factor * indices[len - 1]
-  }
-
-  for (var i = 2; i < dimensions.length; i++) {
-    factor *= dimensions[len - i + 1]
-
-    index += factor * indices[len - i]
-  }
-
-  return index
-}
-
-module.exports = multiDimArrayIndex
-
-},{}],38:[function(require,module,exports){
+},{"indices-permutations":9,"multidim-array-index":14}],43:[function(require,module,exports){
+'use strict';
 
 /**
  * Abstract element
@@ -5544,16 +6386,16 @@ Element.prototype.valueOf = valueOf;
 
 module.exports = Element;
 
-},{}],39:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 
-var determinant = require('laplace-determinant'),
-    inherits = require('inherits'),
-    itemsPool = require('./itemsPool'),
-    isInteger = require('is-integer'),
-    matrixToArrayIndex = require('./matrixToArrayIndex'),
+var determinant               = require('laplace-determinant'),
+    inherits                  = require('inherits'),
+    itemsPool                 = require('./itemsPool'),
+    isInteger                 = require('is-integer'),
+    matrixToArrayIndex        = require('./matrixToArrayIndex'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication'),
-    toData = require('./toData'),
-    VectorSpace = require('./VectorSpace');
+    toData                    = require('./toData'),
+    VectorSpace               = require('./VectorSpace')
 
 /**
  * Space of m x n matrices
@@ -5569,7 +6411,7 @@ var determinant = require('laplace-determinant'),
  * @returns {Function} anonymous with signature (numRows[, numCols])
  */
 
-function MatrixSpace(Scalar) {
+function MatrixSpace (Scalar) {
 
   /**
    * @api private
@@ -5582,20 +6424,26 @@ function MatrixSpace(Scalar) {
 
   return function (numRows, numCols) {
 
-    function createIdentity(scalarZero, scalarOne, rank) {
-      var identity = [];
+    function createIdentity (scalarZero, scalarOne, rank) {
+      var identity = []
 
-      for (var i = 0; i < rank; i++) for (var j = 0; j < rank; j++) if (i === j) identity.push(scalarOne);else identity.push(scalarZero);
+      for (var i = 0; i < rank; i++)
+        for (var j = 0; j < rank; j++)
+          if (i === j)
+            identity.push(scalarOne)
+          else
+            identity.push(scalarZero)
 
-      return identity;
+     return identity
     }
 
     // numCols defaults to numRows
-    if (typeof numCols === 'undefined') numCols = numRows;
+    if (typeof numCols === 'undefined')
+      numCols = numRows
 
     var dimension = numRows * numCols,
-        indices = [numRows, numCols],
-        isSquare = numRows === numCols;
+        indices   = [numRows, numCols],
+        isSquare  = (numRows === numCols)
 
     /**
      * @api private
@@ -5603,7 +6451,7 @@ function MatrixSpace(Scalar) {
      * Row by column multiplication at right side
      */
 
-    function staticRightMultiplication(leftNumRows, leftNumCols, left, right) {
+    function staticRightMultiplication (leftNumRows, leftNumCols, left, right) {
       // Multiplication is possible only if
       //
       //     left num cols = right num rows
@@ -5619,18 +6467,19 @@ function MatrixSpace(Scalar) {
 
       // leftNumRows, leftNumCols = rightNumRows, rightNumCols
 
-      var leftData = toData(left),
+      var leftData  = toData(left),
           rightData = toData(right),
-          rightNumCols = rightData.length / leftNumCols;
+          rightNumCols = rightData.length / leftNumCols
 
       // Check if rightNumCols results to be an integer: it means matrices can be multiplied.
-      if (!isInteger(rightNumCols)) throw new TypeError('left num cols != right num rows');
+      if (! isInteger(rightNumCols))
+        throw new TypeError('left num cols != right num rows')
 
-      return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols);
+      return rowByColumnMultiplication(Scalar, leftData, leftNumRows, rightData, rightNumCols)
     }
 
     // MatrixSpace mxn is a VectorSpace with dim=m*n
-    var Vector = VectorSpace(Scalar)(dimension);
+    var Vector = VectorSpace(Scalar)(dimension)
 
     /**
      * Inherits from [Element](#element).
@@ -5649,29 +6498,29 @@ function MatrixSpace(Scalar) {
      * @param {Any} data
      */
 
-    function Matrix(data) {
-      Vector.call(this, data);
+    function Matrix (data) {
+      Vector.call(this, data)
 
-      this.numCols = numCols;
-      this.numRows = numRows;
+      this.numCols = numCols
+      this.numRows = numRows
 
       Object.defineProperties(this, {
         'numCols': { writable: false, value: numCols },
         'numRows': { writable: false, value: numRows }
-      });
+      })
 
-      function matrixDeterminant() {
-        var det = determinant(data, Scalar, numRows);
+      function matrixDeterminant () {
+        var det = determinant(data, Scalar, numRows)
 
-        return new Scalar(det);
+        return new Scalar(det)
       }
 
       if (isSquare) {
-        Object.defineProperty(this, 'determinant', { get: matrixDeterminant });
+        Object.defineProperty(this, 'determinant', {get: matrixDeterminant})
       }
     }
 
-    inherits(Matrix, Vector);
+    inherits(Matrix, Vector)
 
     /**
      *
@@ -5682,45 +6531,46 @@ function MatrixSpace(Scalar) {
      * @returns {Array} data
      */
 
-    function rightMultiplication(right) {
-      var left = this.data,
+    function rightMultiplication (right) {
+      var left        = this.data,
           leftNumCols = this.numCols,
           leftNumRows = this.numRows,
-          rightData = toData(right);
+          rightData   = toData(right)
 
-      var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right);
+      var data = staticRightMultiplication(leftNumRows, leftNumCols, left, right)
 
       // If staticRightMultiplication does not throw it means that matrices can be multiplied.
       var rightNumCols = rightData.length / leftNumCols,
-          rightNumRows = leftNumCols;
+          rightNumRows = leftNumCols
 
-      var leftIsVector = leftNumRows === 1,
-          rightIsVector = rightNumCols === 1;
+      var leftIsVector  = (leftNumRows === 1),
+          rightIsVector = (rightNumCols === 1)
 
-      if (leftIsVector && rightIsVector) return new Scalar(data[0]);
+      if (leftIsVector && rightIsVector)
+        return new Scalar(data[0])
 
-      var VectorSpace = itemsPool.getVectorSpace();
+      var VectorSpace = itemsPool.getVectorSpace()
 
       if (leftIsVector) {
-        var LeftVector = VectorSpace(Scalar)(rightNumCols);
+        var LeftVector = VectorSpace(Scalar)(rightNumCols)
 
-        return new LeftVector(data);
+        return new LeftVector(data)
       }
 
       if (rightIsVector) {
-        var RightVector = VectorSpace(Scalar)(leftNumRows);
+        var RightVector = VectorSpace(Scalar)(leftNumRows)
 
-        return new RightVector(data);
+        return new RightVector(data)
       }
 
-      var MatrixSpace = itemsPool.getMatrixSpace();
+      var MatrixSpace = itemsPool.getMatrixSpace()
 
-      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols);
+      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
 
-      return new Matrix(data);
+      return new Matrix(data)
     }
 
-    Matrix.prototype.multiplication = rightMultiplication;
+    Matrix.prototype.multiplication = rightMultiplication
 
     // Static attributes.
 
@@ -5728,14 +6578,14 @@ function MatrixSpace(Scalar) {
       // TODO rank should be calculated depending on determinant
       // if determinant is zero, rank < numRows, but this needs sub-matrix function
       // which is in laplace-determinant package and should be placed in its own package
-      var rank = numRows;
+      var rank = numRows
 
-      var identity = createIdentity(Scalar.zero, Scalar.one, rank);
+      var identity = createIdentity(Scalar.zero, Scalar.one, rank)
 
       Object.defineProperty(Matrix, 'identity', {
         writable: false,
         value: identity
-      });
+      })
     }
 
     Object.defineProperties(Matrix, {
@@ -5743,7 +6593,7 @@ function MatrixSpace(Scalar) {
       'numCols': { writable: false, value: numCols },
       'numRows': { writable: false, value: numRows },
       'zero': { writable: false, value: Vector.zero }
-    });
+    })
 
     /**
      *
@@ -5756,15 +6606,16 @@ function MatrixSpace(Scalar) {
      * @returns {Array} transposedData
      */
 
-    function transpose(numRows, numCols, matrix) {
-      var data = toData(matrix),
-          transposedData = [];
+    function transpose (numRows, numCols, matrix) {
+      var data           = toData(matrix),
+          transposedData = []
 
-      for (var i = 0; i < numRows; i++) for (var j = 0; j < numCols; j++) {
-        transposedData[matrixToArrayIndex(j, i, numRows)] = data[matrixToArrayIndex(i, j, numCols)];
-      }
+      for (var i = 0; i < numRows; i++)
+        for (var j = 0; j < numCols; j++) {
+          transposedData[matrixToArrayIndex(j, i, numRows)] = data[matrixToArrayIndex(i, j, numCols)]
+        }
 
-      return transposedData;
+      return transposedData
     }
 
     /**
@@ -5774,65 +6625,66 @@ function MatrixSpace(Scalar) {
      * @returns {Object} transposed matrix
      */
 
-    function matrixTransposition() {
-      var data = this.data,
+    function matrixTransposition () {
+      var data    = this.data,
           numCols = this.numCols,
-          numRows = this.numRows;
+          numRows = this.numRows
 
-      var transposedData = transpose(numRows, numCols, data);
+      var transposedData = transpose(numRows, numCols, data)
 
-      // +--------+-- Transposed indices here.
-      // ↓        ↓
-      var TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows);
-      return new TransposedMatrix(transposedData);
+                                              // +--------+-- Transposed indices here.
+                                              // ↓        ↓
+      var TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows)
+      return new TransposedMatrix(transposedData)
     }
 
-    Matrix.prototype.transpose = matrixTransposition;
+    Matrix.prototype.transpose = matrixTransposition
 
     // Static operators.
 
-    Matrix.addition = Vector.addition;
-    Matrix.multiplication = staticRightMultiplication.bind(null, numRows, numCols);
-    Matrix.negation = Vector.negation;
-    Matrix.subtraction = Vector.subtraction;
-    Matrix.transpose = transpose.bind(null, numRows, numCols);
+    Matrix.addition       = Vector.addition
+    Matrix.multiplication = staticRightMultiplication.bind(null, numRows, numCols)
+    Matrix.negation       = Vector.negation
+    Matrix.subtraction    = Vector.subtraction
+    Matrix.transpose      = transpose.bind(null, numRows, numCols)
 
     // Aliases.
 
-    Matrix.add = Matrix.addition;
-    Matrix.mul = Matrix.multiplication;
-    Matrix.neg = Matrix.negation;
-    Matrix.sub = Matrix.subtraction;
+    Matrix.add = Matrix.addition
+    Matrix.mul = Matrix.multiplication
+    Matrix.neg = Matrix.negation
+    Matrix.sub = Matrix.subtraction
 
-    Matrix.prototype.mul = rightMultiplication;
+    Matrix.prototype.mul            = rightMultiplication
 
-    Matrix.prototype.tr = matrixTransposition;
-    Matrix.prototype.t = matrixTransposition;
+    Matrix.prototype.tr = matrixTransposition
+    Matrix.prototype.t  = matrixTransposition
 
-    Matrix.tr = Matrix.transpose;
+    Matrix.tr = Matrix.transpose
 
-    return Matrix;
-  };
+    return Matrix
+  }
 }
 
-itemsPool.setMatrixSpace(MatrixSpace);
+itemsPool.setMatrixSpace(MatrixSpace)
 
-module.exports = MatrixSpace;
+module.exports = MatrixSpace
 
-},{"./VectorSpace":40,"./itemsPool":44,"./matrixToArrayIndex":45,"./rowByColumnMultiplication":49,"./toData":51,"inherits":9,"is-integer":10,"laplace-determinant":13}],40:[function(require,module,exports){
 
-var algebraGroup = require('algebra-group'),
-    coerced = require('./coerced'),
-    comparison = require('./comparison'),
-    Element = require('./Element'),
-    inherits = require('inherits'),
-    itemsPool = require('./itemsPool'),
-    method = require('./method'),
+},{"./VectorSpace":45,"./itemsPool":49,"./matrixToArrayIndex":50,"./rowByColumnMultiplication":54,"./toData":56,"inherits":10,"is-integer":12,"laplace-determinant":13}],45:[function(require,module,exports){
+
+var algebraGroup              = require('algebra-group'),
+    coerced                   = require('./coerced'),
+    comparison                = require('./comparison'),
+    Element                   = require('./Element'),
+    inherits                  = require('inherits'),
+    itemsPool                 = require('./itemsPool'),
+    method                    = require('./method'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
-    toData = require('./toData');
+    toData                    = require('./toData')
 
-var nAryMethod = method.nAry,
-    unaryMethod = method.unary;
+var nAryMethod  = method.nAry,
+    unaryMethod = method.unary
 
 /**
  * Space of vectors
@@ -5848,7 +6700,7 @@ var nAryMethod = method.nAry,
  * @returns {Function} anonymous with signature (dimension)
  */
 
-function VectorSpace(Scalar) {
+function VectorSpace (Scalar) {
 
   /**
    * @api private
@@ -5860,61 +6712,68 @@ function VectorSpace(Scalar) {
 
   return function (dimension) {
 
-    function createZero(scalarZero, dimension) {
-      var vectorZero = [];
+    function createZero (scalarZero, dimension) {
+      var vectorZero = []
 
-      for (var i = 0; i < dimension; i++) vectorZero.push(scalarZero);
+      for (var i = 0; i < dimension; i++)
+        vectorZero.push(scalarZero)
 
-      return vectorZero;
+     return vectorZero
     }
 
-    var zero = createZero(Scalar.zero, dimension);
+    var zero = createZero(Scalar.zero, dimension)
 
-    function _contains(a) {
-      if (a.length !== dimension) return false;
+    function _contains (a) {
+      if (a.length !== dimension) return false
 
-      for (var i = 0; i < dimension; i++) if (!Scalar.contains(a[i])) return false;
+      for (var i = 0; i < dimension; i++)
+        if (! Scalar.contains(a[i]))
+          return false
 
-      return true;
+      return true
     }
 
-    function _equality(a, b) {
-      for (var i = 0; i < dimension; i++) if (!Scalar.equality(a[i], b[i])) return false;
+    function _equality (a, b) {
+      for (var i = 0; i < dimension; i++)
+        if (! Scalar.equality(a[i], b[i]))
+          return false
 
-      return true;
+      return true
     }
 
-    function _addition(a, b) {
-      var c = [];
+    function _addition (a, b) {
+      var c = []
 
-      for (var i = 0; i < dimension; i++) c.push(Scalar.addition(a[i], b[i]));
+      for (var i = 0; i < dimension; i++)
+        c.push(Scalar.addition(a[i], b[i]))
 
-      return c;
+      return c
     }
 
-    function _negation(a) {
-      var b = [];
+    function _negation (a) {
+      var b = []
 
-      for (var i = 0; i < dimension; i++) b.push(Scalar.negation(a[i]));
+      for (var i = 0; i < dimension; i++)
+        b.push(Scalar.negation(a[i]))
 
-      return b;
+      return b
     }
 
     var g = algebraGroup({
-      identity: zero,
-      contains: _contains,
-      equality: _equality,
-      compositionLaw: _addition,
-      inversion: _negation
-    });
+      identity       : zero,
+      contains       : _contains,
+      equality       : _equality,
+      compositionLaw : _addition,
+      inversion      : _negation
+    })
 
-    var addition = coerced(g.addition),
-        contains = coerced(g.contains),
+    var addition    = coerced(g.addition),
+        contains    = coerced(g.contains),
         disequality = coerced(g.disequality),
-        equality = coerced(g.equality),
-        negation = coerced(g.negation),
+        equality    = coerced(g.equality),
+        negation    = coerced(g.negation),
         notContains = coerced(g.notContains),
-        subtraction = coerced(g.subtraction);
+        subtraction = coerced(g.subtraction)
 
     /**
      * Inherits from [Element](#element).
@@ -5931,8 +6790,8 @@ function VectorSpace(Scalar) {
      * @param {Any} data
      */
 
-    function Vector(data) {
-      Element.call(this, data, contains);
+    function Vector (data) {
+      Element.call(this, data, contains)
 
       /**
        * Norm of a vector
@@ -5946,92 +6805,95 @@ function VectorSpace(Scalar) {
        * @returns {Scalar} result
        */
 
-      function vectorNorm() {
-        var result = Scalar.multiplication(data[0], data[0]);
+      function vectorNorm () {
+        var result = Scalar.multiplication(data[0], data[0])
 
-        for (var i = 1; i < dimension; i++) result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]));
+        for (var i = 1; i < dimension; i++)
+          result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))
 
-        return new Scalar(result);
+        return new Scalar(result)
       }
 
-      Object.defineProperty(this, 'norm', { get: vectorNorm });
+      Object.defineProperty(this, 'norm', {get: vectorNorm})
     }
 
-    inherits(Vector, Element);
+    inherits(Vector, Element)
 
     // Static attributes.
 
     Object.defineProperty(Vector, 'zero', {
       writable: false,
       value: zero
-    });
+    })
 
     /**
      * @api private
      */
 
-    function crossProduct(right) {
-      var rightData = toData(right);
+    function crossProduct (right) {
+      var rightData      = toData(right)
 
-      // TODO complete cross product
+            // TODO complete cross product
     }
 
     // Cross product is defined only in dimension 3.
     if (dimension === 3) {
-      Vector.prototype.crossProduct = crossProduct;
-      Vector.prototype.cross = crossProduct;
-      Vector.prototype.x = crossProduct;
+      Vector.prototype.crossProduct = crossProduct
+      Vector.prototype.cross        = crossProduct
+      Vector.prototype.x            = crossProduct
     }
 
-    // TODO staticRightMultiplication by a matrix
+  // TODO staticRightMultiplication by a matrix
 
     /**
      * @api private
      */
 
-    function scalarProduct(vector1, vector2) {
-      var vectorData1 = toData(vector1),
-          vectorData2 = toData(vector2);
+    function scalarProduct (vector1, vector2) {
+      var vectorData1    = toData(vector1),
+          vectorData2    = toData(vector2)
 
-      if (vectorData1.length !== vectorData2.length) throw new TypeError('Vectors has not the same dimension');
+      if (vectorData1.length !== vectorData2.length)
+        throw new TypeError('Vectors has not the same dimension')
 
-      var result = Scalar.multiplication(vectorData1[0], vectorData2[0]);
+      var result = Scalar.multiplication(vectorData1[0], vectorData2[0])
 
       for (var i = 1; i < dimension; i++) {
-        result = Scalar.addition(result, Scalar.multiplication(vectorData1[i], vectorData2[i]));
+        result = Scalar.addition(result, Scalar.multiplication(vectorData1[i], vectorData2[i]))
       }
 
-      return result;
+      return result
     }
 
     /**
      * @api private
      */
 
-    function vectorScalarProduct(vector) {
-      var result = scalarProduct(this.data, vector);
+    function vectorScalarProduct (vector) {
+      var result = scalarProduct(this.data, vector)
 
-      return new Scalar(result);
+      return new Scalar(result)
     }
 
-    Vector.prototype.scalarProduct = vectorScalarProduct;
+    Vector.prototype.scalarProduct = vectorScalarProduct
 
     /**
      * @api private
      */
 
-    function perScalarProduct(Scalar) {
-      var data = this.data,
-          ScalarData = toData(Scalar);
+    function perScalarProduct (Scalar) {
+      var data       = this.data,
+          ScalarData = toData(Scalar)
 
-      for (var i = 0; i < dimension; i++) data[i] = Scalar.mul(data[i], ScalarData);
+      for (var i = 0; i < dimension; i++)
+        data[i] = Scalar.mul(data[i], ScalarData)
 
-      this.data = data;
+      this.data = data
 
-      return this;
+      return this
     }
 
-    Vector.prototype.perScalarProduct = perScalarProduct;
+    Vector.prototype.perScalarProduct = perScalarProduct
 
     /**
      * Transpose a column-vector to a row-vector
@@ -6043,71 +6905,73 @@ function VectorSpace(Scalar) {
      * @returns {Object} Matrix
      */
 
-    function transpose() {
-      var data = this.data;
+    function transpose () {
+      var data   = this.data
 
-      var MatrixSpace = itemsPool.getMatrixSpace();
+      var MatrixSpace = itemsPool.getMatrixSpace()
 
-      var Matrix = MatrixSpace(Scalar)(1, dimension);
+      var Matrix = MatrixSpace(Scalar)(1, dimension)
 
-      return new Matrix(data);
+      return new Matrix(data)
     }
 
-    Vector.prototype.transpose = transpose;
+    Vector.prototype.transpose = transpose
 
     // Comparison operators.
 
-    Vector.prototype.equality = comparison(equality);
-    Vector.prototype.disequality = comparison(disequality);
+    Vector.prototype.equality    = comparison(equality)
+    Vector.prototype.disequality = comparison(disequality)
 
     // Chainable class methods.
 
-    Vector.prototype.addition = nAryMethod(addition, Vector);
-    Vector.prototype.subtraction = nAryMethod(subtraction, Vector);
-    Vector.prototype.negation = unaryMethod(negation, Vector);
+    Vector.prototype.addition    = nAryMethod(addition, Vector)
+    Vector.prototype.subtraction = nAryMethod(subtraction, Vector)
+    Vector.prototype.negation    = unaryMethod(negation, Vector)
 
     // Static operators.
 
-    Vector.contains = contains;
-    Vector.disequality = disequality;
-    Vector.equality = equality;
-    Vector.notContains = notContains;
+    Vector.contains    = contains
+    Vector.disequality = disequality
+    Vector.equality    = equality
+    Vector.notContains = notContains
 
-    Vector.addition = addition;
-    Vector.subtraction = subtraction;
-    Vector.negation = negation;
+    Vector.addition    = addition
+    Vector.subtraction = subtraction
+    Vector.negation    = negation
 
-    Vector.scalarProduct = scalarProduct;
+    Vector.scalarProduct = scalarProduct
 
     // Aliases
 
-    Vector.eq = Vector.equality;
-    Vector.ne = Vector.disequality;
+    Vector.eq = Vector.equality
+    Vector.ne = Vector.disequality
 
-    Vector.equal = Vector.equality;
-    Vector.notEqual = Vector.disequality;
-    Vector.notEq = Vector.disequality;
+    Vector.equal    = Vector.equality
+    Vector.notEqual = Vector.disequality
+    Vector.notEq    = Vector.disequality
 
-    Vector.add = Vector.addition;
-    Vector.neg = Vector.negation;
-    Vector.sub = Vector.subtraction;
+    Vector.add = Vector.addition
+    Vector.neg = Vector.negation
+    Vector.sub = Vector.subtraction
 
-    Vector.prototype.add = Vector.prototype.addition;
-    Vector.prototype.neg = Vector.prototype.negation;
-    Vector.prototype.sub = Vector.prototype.subtraction;
+    Vector.prototype.add = Vector.prototype.addition
+    Vector.prototype.neg = Vector.prototype.negation
+    Vector.prototype.sub = Vector.prototype.subtraction
 
-    Vector.prototype.dotProduct = vectorScalarProduct;
-    Vector.prototype.dot = vectorScalarProduct;
+    Vector.prototype.dotProduct = vectorScalarProduct
+    Vector.prototype.dot        = vectorScalarProduct
 
-    return Vector;
-  };
+    return Vector
+  }
 }
 
-itemsPool.setVectorSpace(VectorSpace);
+itemsPool.setVectorSpace(VectorSpace)
 
-module.exports = VectorSpace;
+module.exports = VectorSpace
 
-},{"./Element":38,"./coerced":41,"./comparison":42,"./itemsPool":44,"./method":46,"./rowByColumnMultiplication.js":49,"./toData":51,"algebra-group":2,"inherits":9}],41:[function(require,module,exports){
+
+},{"./Element":43,"./coerced":46,"./comparison":47,"./itemsPool":49,"./method":51,"./rowByColumnMultiplication.js":54,"./toData":56,"algebra-group":2,"inherits":10}],46:[function(require,module,exports){
+'use strict';
 
 var toData = require('./toData');
 
@@ -6129,7 +6993,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":51}],42:[function(require,module,exports){
+},{"./toData":56}],47:[function(require,module,exports){
 
 /**
  * Comparison operator for group and ring classes
@@ -6141,24 +7005,25 @@ module.exports = coerced;
  * @returns {Function} anonymous accessor
  */
 
-function comparison(operator) {
+function comparison (operator) {
   return function () {
-    return operator.bind(null, this.data).apply(null, arguments);
-  };
+    return operator.bind(null, this.data).apply(null, arguments)
+  }
 }
 
-module.exports = comparison;
+module.exports = comparison
 
-},{}],43:[function(require,module,exports){
-var algebraRing = require('algebra-ring');
-var coerced = require('./coerced');
-var comparison = require('./comparison');
-var Element = require('./Element');
-var inherits = require('inherits');
-var method = require('./method');
 
-var nAryMethod = method.nAry;
-var unaryMethod = method.unary;
+},{}],48:[function(require,module,exports){
+var algebraRing = require('algebra-ring')
+var coerced = require('./coerced')
+var comparison = require('./comparison')
+var Element = require('./Element')
+var inherits = require('inherits')
+var method = require('./method')
+
+var nAryMethod = method.nAry
+var unaryMethod = method.unary
 
 /**
  * Create an algebra scalar.
@@ -6179,151 +7044,160 @@ var unaryMethod = method.unary;
  * @returns {Function} Scalar that implements an algebra scalar as a class
  */
 
-function createScalar(identity, given) {
-  var r = algebraRing(identity, given);
+function createScalar (identity, given) {
+  var r = algebraRing(identity, given)
 
-  function Scalar(data) {
-    Element.call(this, data, given.contains);
+  function Scalar (data) {
+    Element.call(this, data, given.contains)
   }
 
-  inherits(Scalar, Element);
+  inherits(Scalar, Element)
 
-  // TODO questo codice dovrebbe stare in cayley-dickson
-  if (typeof given.conjugation === 'undefined') given.conjugation = function (a) {
-    return a;
-  };
+    // TODO questo codice dovrebbe stare in cayley-dickson
+  if (typeof given.conjugation === 'undefined')
+    given.conjugation = function (a) { return a }
 
-  var addition = coerced(given.addition),
-      contains = coerced(given.contains),
+  var addition    = coerced(given.addition),
+      contains    = coerced(given.contains),
       conjugation = coerced(given.conjugation),
       disequality = coerced(given.disequality),
-      equality = coerced(given.equality),
-      negation = coerced(given.negation),
+      equality    = coerced(given.equality),
+      negation    = coerced(given.negation),
       notContains = coerced(given.notContains),
-      subtraction = coerced(given.subtraction);
+      subtraction = coerced(given.subtraction)
 
   var multiplication = coerced(given.multiplication),
-      division = coerced(given.division),
-      inversion = coerced(given.inversion);
+      division       = coerced(given.division),
+      inversion      = coerced(given.inversion)
 
   // Comparison operators.
 
-  Scalar.prototype.equality = comparison(equality);
-  Scalar.prototype.disequality = comparison(disequality);
+  Scalar.prototype.equality    = comparison(equality)
+  Scalar.prototype.disequality = comparison(disequality)
 
   // Chainable class methods.
 
   Scalar.prototype.addition = function () {
-    var data = addition.bind(null, this.data).apply(null, arguments);
-    return new Scalar(data);
-  };
+    var data = addition.bind(null, this.data).apply(null, arguments)
+    return new Scalar(data)
+  }
 
-  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar);
-  Scalar.prototype.negation = unaryMethod(negation, Scalar);
-  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar);
+  Scalar.prototype.subtraction = nAryMethod(subtraction, Scalar)
+  Scalar.prototype.negation    = unaryMethod(negation, Scalar)
+  Scalar.prototype.conjugation = unaryMethod(conjugation, Scalar)
 
-  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar);
-  Scalar.prototype.division = nAryMethod(division, Scalar);
-  Scalar.prototype.inversion = unaryMethod(inversion, Scalar);
+  Scalar.prototype.multiplication = nAryMethod(multiplication, Scalar)
+  Scalar.prototype.division       = nAryMethod(division, Scalar)
+  Scalar.prototype.inversion      = unaryMethod(inversion, Scalar)
 
   // Static operators.
 
-  Scalar.addition = addition;
-  Scalar.contains = contains;
-  Scalar.conjugation = conjugation;
-  Scalar.disequality = disequality;
-  Scalar.equality = equality;
-  Scalar.negation = negation;
-  Scalar.notContains = notContains;
-  Scalar.subtraction = subtraction;
+  Scalar.addition    = addition
+  Scalar.contains    = contains
+  Scalar.conjugation = conjugation
+  Scalar.disequality = disequality
+  Scalar.equality    = equality
+  Scalar.negation    = negation
+  Scalar.notContains = notContains
+  Scalar.subtraction = subtraction
 
-  Scalar.multiplication = multiplication;
-  Scalar.division = division;
-  Scalar.inversion = inversion;
+  Scalar.multiplication = multiplication
+  Scalar.division       = division
+  Scalar.inversion      = inversion
 
   // Aliases.
 
-  Scalar.eq = Scalar.equality;
-  Scalar.ne = Scalar.disequality;
+  Scalar.eq = Scalar.equality
+  Scalar.ne = Scalar.disequality
 
-  Scalar.equal = Scalar.equality;
-  Scalar.notEqual = Scalar.disequality;
-  Scalar.notEq = Scalar.disequality;
+  Scalar.equal    = Scalar.equality
+  Scalar.notEqual = Scalar.disequality
+  Scalar.notEq    = Scalar.disequality
 
-  Scalar.add = Scalar.addition;
-  Scalar.neg = Scalar.negation;
-  Scalar.sub = Scalar.subtraction;
+  Scalar.add = Scalar.addition
+  Scalar.neg = Scalar.negation
+  Scalar.sub = Scalar.subtraction
 
-  Scalar.div = Scalar.division;
-  Scalar.inv = Scalar.inversion;
-  Scalar.mul = Scalar.multiplication;
+  Scalar.div = Scalar.division
+  Scalar.inv = Scalar.inversion
+  Scalar.mul = Scalar.multiplication
 
-  Scalar.conj = Scalar.conj;
+  Scalar.conj = Scalar.conj
 
-  Scalar.prototype.eq = Scalar.prototype.equality;
-  Scalar.prototype.ne = Scalar.prototype.disequality;
+  Scalar.prototype.eq = Scalar.prototype.equality
+  Scalar.prototype.ne = Scalar.prototype.disequality
 
-  Scalar.prototype.equal = Scalar.prototype.equality;
-  Scalar.prototype.notEqual = Scalar.prototype.disequality;
-  Scalar.prototype.notEq = Scalar.prototype.disequality;
+  Scalar.prototype.equal = Scalar.prototype.equality
+  Scalar.prototype.notEqual = Scalar.prototype.disequality
+  Scalar.prototype.notEq    = Scalar.prototype.disequality
 
-  Scalar.prototype.add = Scalar.prototype.addition;
-  Scalar.prototype.neg = Scalar.prototype.negation;
-  Scalar.prototype.sub = Scalar.prototype.subtraction;
+  Scalar.prototype.add = Scalar.prototype.addition
+  Scalar.prototype.neg = Scalar.prototype.negation
+  Scalar.prototype.sub = Scalar.prototype.subtraction
 
-  Scalar.prototype.mul = Scalar.prototype.multiplication;
-  Scalar.prototype.div = Scalar.prototype.division;
-  Scalar.prototype.inv = Scalar.prototype.inversion;
+  Scalar.prototype.mul = Scalar.prototype.multiplication
+  Scalar.prototype.div = Scalar.prototype.division
+  Scalar.prototype.inv = Scalar.prototype.inversion
 
-  Scalar.prototype.conj = Scalar.prototype.conjugation;
+  Scalar.prototype.conj = Scalar.prototype.conjugation
 
   // Identities.
 
-  Scalar.zero = new Scalar(identity[0]);
-  Scalar.one = new Scalar(identity[1]);
+  Scalar.zero = new Scalar(identity[0])
+  Scalar.one  = new Scalar(identity[1])
 
-  return Scalar;
+  return Scalar
 }
 
-module.exports = createScalar;
+module.exports = createScalar
 
-},{"./Element":38,"./coerced":41,"./comparison":42,"./method":46,"algebra-ring":3,"inherits":9}],44:[function(require,module,exports){
 
-function itemsPool() {
-  var MatrixSpace, VectorSpace;
+},{"./Element":43,"./coerced":46,"./comparison":47,"./method":51,"algebra-ring":3,"inherits":10}],49:[function(require,module,exports){
 
-  function getMatrixSpace() {
-    if (typeof MatrixSpace === 'undefined') throw new Error('MatrixSpace not yet in items pool');
+function itemsPool () {
+  var MatrixSpace,
+      VectorSpace
 
-    return MatrixSpace;
+  function getMatrixSpace () {
+    if (typeof MatrixSpace === 'undefined')
+      throw new Error('MatrixSpace not yet in items pool')
+
+    return MatrixSpace
   }
 
-  this.getMatrixSpace = getMatrixSpace;
+  this.getMatrixSpace = getMatrixSpace
 
-  function setMatrixSpace(item) {
-    if (typeof MatrixSpace === 'undefined') MatrixSpace = item;else throw new Error('MatrixSpace already in items pool');
+  function setMatrixSpace (item) {
+    if (typeof MatrixSpace === 'undefined')
+      MatrixSpace = item
+    else throw new Error('MatrixSpace already in items pool')
   }
 
-  this.setMatrixSpace = setMatrixSpace;
+  this.setMatrixSpace = setMatrixSpace
 
-  function getVectorSpace() {
-    if (typeof VectorSpace === 'undefined') throw new Error('VectorSpace not yet in items pool');
+  function getVectorSpace () {
+    if (typeof VectorSpace === 'undefined')
+      throw new Error('VectorSpace not yet in items pool')
 
-    return VectorSpace;
+    return VectorSpace
   }
 
-  this.getVectorSpace = getVectorSpace;
+  this.getVectorSpace = getVectorSpace
 
-  function setVectorSpace(item) {
-    if (typeof VectorSpace === 'undefined') VectorSpace = item;else throw new Error('VectorSpace already in items pool');
+  function setVectorSpace (item) {
+    if (typeof VectorSpace === 'undefined')
+      VectorSpace = item
+    else throw new Error('VectorSpace already in items pool')
   }
 
-  this.setVectorSpace = setVectorSpace;
+  this.setVectorSpace = setVectorSpace
 }
 
-module.exports = new itemsPool();
+module.exports = new itemsPool()
 
-},{}],45:[function(require,module,exports){
+
+},{}],50:[function(require,module,exports){
+"use strict";
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -6343,87 +7217,79 @@ function matrixToArrayIndex(i, j, numCols) {
 
 module.exports = matrixToArrayIndex;
 
-},{}],46:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 
-function unaryMethod(operator, Scalar) {
+function unaryMethod (operator, Scalar) {
   return function () {
-    var data = operator(this.data);
-    return new Scalar(data);
-  };
+    var data = operator(this.data)
+    return new Scalar(data)
+  }
 }
 
-exports.unary = unaryMethod;
+exports.unary = unaryMethod
 
-function nAryMethod(operator, Scalar) {
+function nAryMethod (operator, Scalar) {
   return function () {
-    var data = operator.bind(null, this.data).apply(null, arguments);
-    return new Scalar(data);
-  };
+    var data = operator.bind(null, this.data).apply(null, arguments)
+    return new Scalar(data)
+  }
 }
 
-exports.nAry = nAryMethod;
+exports.nAry = nAryMethod
 
-},{}],47:[function(require,module,exports){
-var coerced = require('./coerced');
 
-function nAry(indices, operator) {
-  var isScalar = indices.length === 1 && indices[0] === 1;
+},{}],52:[function(require,module,exports){
+var coerced = require('./coerced')
+
+function nAry (indices, operator) {
+  var isScalar = ((indices.length === 1) && (indices[0] === 1))
 
   return function () {
-    var op = coerced(operator);
+    var op = coerced(operator)
 
     if (isScalar) {
-      return op.apply(null, arguments);
+      return op.apply(null, arguments)
     } else {
-      var first = arguments[0];
-      var rest = [].slice.call(arguments, 1);
+      var first = arguments[0]
+      var rest = [].slice.call(arguments, 1)
       var dimension = indices.reduce((a, b) => {
-        return a * b;
-      }, 1);
+        return a * b
+      }, 1)
 
       return rest.reduce((a, b) => {
-        var result = [];
+        var result = []
 
         for (var i = 0; i < dimension; i++) {
-          result.push(op(a[i], b[i]));
+          result.push(op(a[i], b[i]))
         }
 
-        return result;
-      }, first);
+        return result
+      }, first)
     }
-  };
+  }
 }
 
-module.exports = nAry;
+module.exports = nAry
 
-},{"./coerced":41}],48:[function(require,module,exports){
+},{"./coerced":46}],53:[function(require,module,exports){
 var realField = {
   zero: 0,
   one: 1,
   contains: (a, b) => {
     // NaN, Infinity and -Infinity are not allowed.
-    return typeof a === 'number' && isFinite(a);
+    return (typeof a === 'number' && isFinite(a))
   },
-  equality: (a, b) => {
-    return a === b;
-  },
-  addition: (a, b) => {
-    return a + b;
-  },
-  negation: a => {
-    return -a;
-  },
-  multiplication: (a, b) => {
-    return a * b;
-  },
-  inversion: a => {
-    return 1 / a;
-  }
-};
+  equality: (a, b) => { return a === b },
+  addition: (a, b) => { return a + b },
+  negation: (a) => { return -a },
+  multiplication: (a, b) => { return a * b },
+  inversion: (a) => { return 1 / a }
+}
 
-module.exports = realField;
+module.exports = realField
 
-},{}],49:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
+'use strict';
 
 var isInteger = require('is-integer'),
     matrixToArrayIndex = require('./matrixToArrayIndex');
@@ -6489,9 +7355,9 @@ function rowByColumnMultiplication(scalar, leftMatrix, leftNumRows, rightMatrix,
 
 module.exports = rowByColumnMultiplication;
 
-},{"./matrixToArrayIndex":45,"is-integer":10}],50:[function(require,module,exports){
-var nAry = require('./nAry');
-var tensorProduct = require('tensor-product');
+},{"./matrixToArrayIndex":50,"is-integer":12}],55:[function(require,module,exports){
+var nAry = require('./nAry')
+var tensorProduct = require('tensor-product')
 
 /**
  * Creates a tensor space that is a class representing a tensor.
@@ -6500,7 +7366,7 @@ var tensorProduct = require('tensor-product');
  * @returns {Function}
  */
 
-function tensorSpace(indices) {
+function tensorSpace (indices) {
   // If dim equals 1 it is like a vector of dimension 1, that is a scalar.
   // Only dim greater than 1, represents a varying index  increase order.
   // A scalar has order 0.
@@ -6508,25 +7374,25 @@ function tensorSpace(indices) {
   // A matrix has order 2.
   // Order is also called "rank" or "tensor rank", but, to avoid confusion with
   // "matrix rank" it is better to call it "order".
-  const order = indices.filter(dim => {
-    return dim > 1;
-  }).length;
+  const order = indices.filter((dim) => {
+    return dim > 1
+  }).length
 
-  const isScalar = order === 0;
+  const isScalar = (order === 0)
 
   return function (ring) {
     // Create zero.
     const zero = indices.reduce((result, dim) => {
       if (isScalar) {
-        return ring.zero;
+        return ring.zero
       } else {
-        for (var i = 0; i < dim; i++) {
-          result.push(ring.zero);
+        for(var i = 0; i < dim; i++) {
+          result.push(ring.zero)
         }
 
-        return result;
+        return result
       }
-    }, []);
+    }, [])
 
     /**
      * Tensor
@@ -6535,96 +7401,97 @@ function tensorSpace(indices) {
      */
 
     class Tensor {
-      constructor(data) {
-        this.data = data;
+      constructor (data) {
+        this.data = data
       }
 
-      addition() {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
+      addition () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
 
-        var data = Tensor.addition.apply(null, operands);
+        var data = Tensor.addition.apply(null, operands)
 
-        return new Tensor(data);
+        return new Tensor(data)
       }
 
-      add() {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
+      add () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
 
-        var data = Tensor.addition.apply(null, operands);
+        var data = Tensor.addition.apply(null, operands)
 
-        return new Tensor(data);
+        return new Tensor(data)
       }
 
-      subtraction() {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
+      subtraction () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
 
-        var data = Tensor.subtraction.apply(null, operands);
+        var data = Tensor.subtraction.apply(null, operands)
 
-        return new Tensor(data);
+        return new Tensor(data)
       }
 
-      sub() {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
+      sub () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
 
-        var data = Tensor.subtraction.apply(null, operands);
+        var data = Tensor.subtraction.apply(null, operands)
 
-        return new Tensor(data);
+        return new Tensor(data)
       }
 
-      static equality() {
-        return nAry(indices, ring.equality).apply(null, arguments);
+      static equality () {
+        return nAry(indices, ring.equality).apply(null, arguments)
       }
 
-      static eq() {
-        return nAry(indices, ring.equality).apply(null, arguments);
+      static eq () {
+        return nAry(indices, ring.equality).apply(null, arguments)
       }
 
-      static addition() {
-        return nAry(indices, ring.addition).apply(null, arguments);
+      static addition () {
+        return nAry(indices, ring.addition).apply(null, arguments)
       }
 
-      static add() {
-        return nAry(indices, ring.addition).apply(null, arguments);
+      static add () {
+        return nAry(indices, ring.addition).apply(null, arguments)
       }
 
-      static subtraction() {
-        return nAry(indices, ring.subtraction).apply(null, arguments);
+      static subtraction () {
+        return nAry(indices, ring.subtraction).apply(null, arguments)
       }
 
-      static sub() {
-        return nAry(indices, ring.subtraction).apply(null, arguments);
+      static sub () {
+        return nAry(indices, ring.subtraction).apply(null, arguments)
       }
 
-      static product(leftData) {
+      static product (leftData) {
         return function (rightDim) {
           return function (rightData) {
-            return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData);
-          };
-        };
+            return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
+          }
+        }
       }
     }
 
     Object.defineProperty(Tensor, 'zero', {
       writable: false,
       value: zero
-    });
+    })
 
     Object.defineProperty(Tensor, 'order', {
       writable: false,
       value: order
-    });
+    })
 
-    return Tensor;
-  };
+    return Tensor
+  }
 }
 
-module.exports = tensorSpace;
+module.exports = tensorSpace
 
-},{"./nAry":47,"tensor-product":35}],51:[function(require,module,exports){
+},{"./nAry":52,"tensor-product":42}],56:[function(require,module,exports){
+'use strict';
 
 /**
  * Extract data attribute, if any, and check it
@@ -6648,7 +7515,8 @@ function toData(arg) {
 
 module.exports = toData;
 
-},{}],52:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
+'use strict';
 
 var algebra = require('algebra'),
     should = require('should');
@@ -6724,7 +7592,8 @@ describe('Complex', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":59,"./features/methodUnaryOperator":60,"./features/staticBinaryOperator":62,"./features/staticUnaryOperator":63,"algebra":65,"should":29}],53:[function(require,module,exports){
+},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],58:[function(require,module,exports){
+'use strict';
 
 require('strict-mode')(function () {
 
@@ -6747,7 +7616,8 @@ require('strict-mode')(function () {
   });
 });
 
-},{"../src/Element":38,"should":29,"strict-mode":34}],54:[function(require,module,exports){
+},{"../src/Element":43,"should":22,"strict-mode":41}],59:[function(require,module,exports){
+'use strict';
 
 var algebra = require('algebra'),
     should = require('should');
@@ -6860,7 +7730,8 @@ describe('MatrixSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":59,"./features/methodUnaryOperator":60,"./features/staticBinaryOperator":62,"./features/staticUnaryOperator":63,"algebra":65,"should":29}],55:[function(require,module,exports){
+},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],60:[function(require,module,exports){
+'use strict';
 
 var algebra = require('algebra'),
     should = require('should');
@@ -6996,7 +7867,8 @@ describe('Real', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":59,"./features/methodUnaryOperator":60,"./features/multiArgumentOperator":61,"./features/staticBinaryOperator":62,"./features/staticUnaryOperator":63,"algebra":65,"should":29}],56:[function(require,module,exports){
+},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/multiArgumentOperator":66,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],61:[function(require,module,exports){
+'use strict';
 
 var algebra = require('algebra'),
     should = require('should');
@@ -7087,7 +7959,7 @@ describe('VectorSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":59,"./features/methodUnaryOperator":60,"./features/staticBinaryOperator":62,"./features/staticUnaryOperator":63,"algebra":65,"should":29}],57:[function(require,module,exports){
+},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],62:[function(require,module,exports){
 /*
 var algebra = require('algebra'),
     should  = require('should')
@@ -7297,8 +8169,10 @@ describe('buildCyclicSpaceOf', function () {
   })
 })
 */
+"use strict";
 
-},{}],58:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
+'use strict';
 
 var coerced = require('../src/coerced'),
     should = require('should');
@@ -7316,7 +8190,8 @@ describe('coerced', function () {
   });
 });
 
-},{"../src/coerced":41,"should":29}],59:[function(require,module,exports){
+},{"../src/coerced":46,"should":22}],64:[function(require,module,exports){
+'use strict';
 
 var should = require('should');
 
@@ -7346,7 +8221,8 @@ function mutatorBinaryOperator(Scalar, operator, operand1, operand2, resultData)
 
 module.exports = mutatorBinaryOperator;
 
-},{"should":29}],60:[function(require,module,exports){
+},{"should":22}],65:[function(require,module,exports){
+'use strict';
 
 var should = require('should');
 
@@ -7375,13 +8251,15 @@ function mutatorUnaryOperator(Scalar, operator, operand, resultData) {
 
 module.exports = mutatorUnaryOperator;
 
-},{"should":29}],61:[function(require,module,exports){
+},{"should":22}],66:[function(require,module,exports){
+"use strict";
 
 function multiArgumentOperator() {}
 
 module.exports = multiArgumentOperator;
 
-},{}],62:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
+'use strict';
 
 var should = require('should');
 
@@ -7405,7 +8283,8 @@ function staticBinaryOperator(Scalar, operator, operand1, operand2, result) {
 
 module.exports = staticBinaryOperator;
 
-},{"should":29}],63:[function(require,module,exports){
+},{"should":22}],68:[function(require,module,exports){
+'use strict';
 
 var should = require('should');
 
@@ -7428,7 +8307,8 @@ function staticUnaryOperator(Scalar, operator, operand, result) {
 
 module.exports = staticUnaryOperator;
 
-},{"should":29}],64:[function(require,module,exports){
+},{"should":22}],69:[function(require,module,exports){
+'use strict';
 
 var matrixToArrayIndex = require('../src/matrixToArrayIndex'),
     should = require('should');
@@ -7467,13 +8347,14 @@ describe('matrixToArrayIndex', function () {
         });
 });
 
-},{"../src/matrixToArrayIndex":45,"should":29}],65:[function(require,module,exports){
+},{"../src/matrixToArrayIndex":50,"should":22}],70:[function(require,module,exports){
 
 // Cheating npm require.
 module.exports = require('../../..')
 
 
-},{"../../..":1}],66:[function(require,module,exports){
+},{"../../..":1}],71:[function(require,module,exports){
+'use strict';
 
 var algebra = require('algebra'),
     should = require('should');
@@ -7528,7 +8409,8 @@ describe('Synopsis', function () {
   });
 });
 
-},{"algebra":65,"should":29}],67:[function(require,module,exports){
+},{"algebra":70,"should":22}],72:[function(require,module,exports){
+'use strict';
 
 var algebra = require('algebra'),
     should = require('should');
@@ -7536,10 +8418,10 @@ var algebra = require('algebra'),
 var mul = require('../src/rowByColumnMultiplication');
 
 var real = {
-               addition: function (a, b) {
+               addition: function addition(a, b) {
                               return a + b;
                },
-               multiplication: function (a, b) {
+               multiplication: function multiplication(a, b) {
                               return a * b;
                }
 };
@@ -7571,32 +8453,35 @@ describe('rowByColumnMultiplication', function () {
                });
 });
 
-},{"../src/rowByColumnMultiplication":49,"algebra":65,"should":29}],68:[function(require,module,exports){
-describe('tensorSpace', () => {
+},{"../src/rowByColumnMultiplication":54,"algebra":70,"should":22}],73:[function(require,module,exports){
+'use strict';
+
+describe('tensorSpace', function () {
   var tensorSpace = require('algebra').tensorSpace;
 
   var ring = require('algebra-ring')([0, 1], {
-    contains(a) {
+    contains: function contains(a) {
       return typeof a === 'number' && isFinite(a);
     },
-    equality: (a, b) => {
+
+    equality: function equality(a, b) {
       return a === b;
     },
-    addition: (a, b) => {
+    addition: function addition(a, b) {
       return a + b;
     },
-    negation: a => {
+    negation: function negation(a) {
       return -a;
     },
-    multiplication: (a, b) => {
+    multiplication: function multiplication(a, b) {
       return a * b;
     },
-    inversion: a => {
+    inversion: function inversion(a) {
       return 1 / a;
     }
   });
 
-  it('can create a Scalar', () => {
+  it('can create a Scalar', function () {
     var indices = [1];
 
     var Scalar = tensorSpace(indices)(ring);
@@ -7621,7 +8506,7 @@ describe('tensorSpace', () => {
     x.subtraction(2, 3, 4).data.should.be.eql(-8);
   });
 
-  it('can create a Vector', () => {
+  it('can create a Vector', function () {
     var indices = [2];
 
     var Vector = tensorSpace(indices)(ring);
@@ -7646,7 +8531,7 @@ describe('tensorSpace', () => {
     v.subtraction([2, 1], [1, -1]).data.should.be.eql([-2, 2]);
   });
 
-  it('can create a Matrix', () => {
+  it('can create a Matrix', function () {
     var indices = [2, 2];
 
     var Matrix = tensorSpace(indices)(ring);
@@ -7673,4 +8558,4 @@ describe('tensorSpace', () => {
   });
 });
 
-},{"algebra":65,"algebra-ring":3}]},{},[52,53,54,55,56,57,58,64,66,67,68]);
+},{"algebra":70,"algebra-ring":3}]},{},[57,58,59,60,61,62,63,69,71,72,73]);

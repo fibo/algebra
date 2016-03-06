@@ -5,10 +5,20 @@ title: algebra
 
 > Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
 
-[![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.png)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.png?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.png)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test)
+**Table Of Contents:**
 
+* [Status](#status)
+* [Features](#features)
+* [Installation](#installation)
+* [Quick start](#quick-start)
+    - [Scalars](#scalars)
+    - [Vectors](#vectors)
+    - [Matrices](#matrices)
+* [License](#license)
 
-[![Whatchers](https://img.shields.io/github/watchers/fibo/algebra.svg?style=social&label=Watch)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://img.shields.io/github/stars/fibo/algebra.svg?style=social&label=Star)](https://github.com/fibo/algebra/stargazers) [![Forks](https://img.shields.io/github/forks/fibo/algebra.svg?style=social&label=Forks)](https://github.com/fibo/algebra/network/members)
+[![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](https://github.com/fibo/algebra/blob/master/CHANGELOG.md)
+
+[![Whatchers](http://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](http://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](http://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
 [![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 
@@ -25,8 +35,11 @@ Many functionalities of previous versions are now in separated atomic packages:
 * [algebra-group](http://npm.im/algebra-group)
 * [algebra-ring](http://npm.im/algebra-ring)
 * [cayley-dickson](http://npm.im/cayley-dickson)
+* [indices-permutations](http://npm.im/indices-permutations)
 * [laplace-determinant](http://npm.im/laplace-determinant)
 * [multidim-array-index](http://npm.im/multidim-array-index)
+* [tensor-contraction](http://npm.im/tensor-contraction)
+* [tensor-permutation](http://npm.im/tensor-product)
 
 ## Features
 
@@ -48,6 +61,11 @@ With [bower](http://bower.io/) do
 
 ```bash
 $ bower install algebra
+```
+or use a CDN adding this to your HTML page
+
+```
+<script src="https://cdn.rawgit.com/fibo/algebra/master/dist/algebra.min.js"></script>
 ```
 
 ## Quick start
@@ -198,5 +216,5 @@ console.log(m2.determinant.data); // 2
 
 [MIT](http://g14n.info/mit-license/)
 
-  [1]: http://g14n.info/algebra/articles "algebra blog"
+[1]: http://g14n.info/algebra/articles "algebra blog"
 

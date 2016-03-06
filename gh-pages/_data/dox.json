@@ -55,7 +55,7 @@
     "tags": [
       {
         "type": "param",
-        "string": "{Object} Scalar\n",
+        "string": "{Object} Scalar",
         "name": "Scalar",
         "description": "",
         "types": [
@@ -105,7 +105,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -126,9 +126,9 @@
       },
       {
         "type": "param",
-        "string": "{Number} [numCols] defaults to a square matrix.\n",
+        "string": "{Number} [numCols] defaults to a square matrix.",
         "name": "[numCols]",
-        "description": "<p>defaults to a square matrix. </p>",
+        "description": "<p>defaults to a square matrix.</p>",
         "types": [
           "Number"
         ],
@@ -240,13 +240,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{right}\n",
+        "string": "{right}",
         "name": "",
         "description": "",
         "types": [
@@ -296,7 +296,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -332,7 +332,7 @@
       },
       {
         "type": "param",
-        "string": "{Object|Array} matrix\n",
+        "string": "{Object|Array} matrix",
         "name": "matrix",
         "description": "",
         "types": [
@@ -383,7 +383,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -424,9 +424,9 @@
     "tags": [
       {
         "type": "param",
-        "string": "{Object} Scalar class\n",
+        "string": "{Object} Scalar class",
         "name": "Scalar",
-        "description": "<p>class </p>",
+        "description": "<p>class</p>",
         "types": [
           "Object"
         ],
@@ -473,13 +473,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{Number} dimension\n",
+        "string": "{Number} dimension",
         "name": "dimension",
         "description": "",
         "types": [
@@ -566,7 +566,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -719,7 +719,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -760,13 +760,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{Number} n\n",
+        "string": "{Number} n",
         "name": "n",
         "description": "",
         "types": [
@@ -817,13 +817,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{Array} elements\n",
+        "string": "{Array} elements",
         "name": "elements",
         "description": "",
         "types": [
@@ -874,13 +874,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{Array|String} elements\n",
+        "string": "{Array|String} elements",
         "name": "elements",
         "description": "",
         "types": [
@@ -931,13 +931,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{Function} operator\n",
+        "string": "{Function} operator",
         "name": "operator",
         "description": "",
         "types": [
@@ -987,13 +987,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{Function} operator\n",
+        "string": "{Function} operator",
         "name": "operator",
         "description": "",
         "types": [
@@ -1043,7 +1043,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -1181,7 +1181,7 @@
       },
       {
         "type": "param",
-        "string": "{Function} given.inversion\n",
+        "string": "{Function} given.inversion",
         "name": "given.inversion",
         "description": "",
         "types": [
@@ -1231,7 +1231,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -1429,7 +1429,7 @@
       },
       {
         "type": "param",
-        "string": "{String} [naming.notContains=notContains]\n",
+        "string": "{String} [naming.notContains=notContains]",
         "name": "[naming.notContains=notContains]",
         "description": "",
         "types": [
@@ -1479,7 +1479,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -1513,7 +1513,7 @@
       },
       {
         "type": "param",
-        "string": "{Number} numCols\n",
+        "string": "{Number} numCols",
         "name": "numCols",
         "description": "",
         "types": [
@@ -1563,7 +1563,7 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
@@ -1659,7 +1659,7 @@
       },
       {
         "type": "param",
-        "string": "{Array} rightNumCols\n",
+        "string": "{Array} rightNumCols",
         "name": "rightNumCols",
         "description": "",
         "types": [
@@ -1790,13 +1790,13 @@
     "tags": [
       {
         "type": "api",
-        "string": "private\n",
+        "string": "private",
         "visibility": "private",
         "html": "<p>private</p>"
       },
       {
         "type": "param",
-        "string": "{*} arg\n",
+        "string": "{*} arg",
         "name": "arg",
         "description": "",
         "types": [],

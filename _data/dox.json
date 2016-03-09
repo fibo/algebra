@@ -1749,7 +1749,7 @@
     "ignore": false,
     "line": 1240,
     "codeStart": 1247,
-    "code": "function tensorSpace (indices) {\n  // If dim equals 1 it is like a vector of dimension 1, that is a scalar.\n  // Only dim greater than 1, represents a varying index  increase order.\n  // A scalar has order 0.\n  // A vector has order 1.\n  // A matrix has order 2.\n  // Order is also called \"rank\" or \"tensor rank\", but, to avoid confusion with\n  // \"matrix rank\" it is better to call it \"order\".\n  const order = indices.filter((dim) => {\n    return dim > 1\n  }).length\n\n  const isScalar = (order === 0)\n\n  return function (ring) {\n    // Create zero.\n    const zero = indices.reduce((result, dim) => {\n      if (isScalar) {\n        return ring.zero\n      } else {\n        for(var i = 0; i < dim; i++) {\n          result.push(ring.zero)\n        }\n\n        return result\n      }\n    }, [])",
+    "code": "function tensorSpace (indices) {\n  // If dim equals 1 it is like a vector of dimension 1, that is a scalar.\n  // Only dim greater than 1, represents a varying index  increase order.\n  // A scalar has order 0.\n  // A vector has order 1.\n  // A matrix has order 2.\n  // Order is also called \"rank\" or \"tensor rank\", but, to avoid confusion with\n  // \"matrix rank\" it is better to call it \"order\".\n  var order = indices.filter((dim) => {\n    return dim > 1\n  }).length\n\n  var isScalar = (order === 0)\n\n  return function (ring) {\n    // Create zero.\n    var zero = indices.reduce((result, dim) => {\n      if (isScalar) {\n        return ring.zero\n      } else {\n        for(var i = 0; i < dim; i++) {\n          result.push(ring.zero)\n        }\n\n        return result\n      }\n    }, [])",
     "ctx": {
       "type": "function",
       "name": "tensorSpace",
@@ -1776,14 +1776,11 @@
     "ignore": false,
     "line": 1275,
     "codeStart": 1281,
-    "code": "class Tensor {\n  constructor (data) {\n    this.data = data\n  }\n\n  addition () {\n    var args = [].slice.call(arguments)\n    var operands = [this.data].concat(args)\n\n    var data = Tensor.addition.apply(null, operands)\n\n    return new Tensor(data)\n  }\n\n  add () {\n    var args = [].slice.call(arguments)\n    var operands = [this.data].concat(args)\n\n    var data = Tensor.addition.apply(null, operands)\n\n    return new Tensor(data)\n  }\n\n  subtraction () {\n    var args = [].slice.call(arguments)\n    var operands = [this.data].concat(args)\n\n    var data = Tensor.subtraction.apply(null, operands)\n\n    return new Tensor(data)\n  }\n\n  sub () {\n    var args = [].slice.call(arguments)\n    var operands = [this.data].concat(args)\n\n    var data = Tensor.subtraction.apply(null, operands)\n\n    return new Tensor(data)\n  }\n\n  static equality () {\n    return nAry(indices, ring.equality).apply(null, arguments)\n  }\n\n  static eq () {\n    return nAry(indices, ring.equality).apply(null, arguments)\n  }\n\n  static addition () {\n    return nAry(indices, ring.addition).apply(null, arguments)\n  }\n\n  static add () {\n    return nAry(indices, ring.addition).apply(null, arguments)\n  }\n\n  static subtraction () {\n    return nAry(indices, ring.subtraction).apply(null, arguments)\n  }\n\n  static sub () {\n    return nAry(indices, ring.subtraction).apply(null, arguments)\n  }\n\n  static product (leftData) {\n    return function (rightDim) {\n      return function (rightData) {\n        return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)\n      }\n    }\n  }\n}\n\nObject.defineProperty(Tensor, 'zero', {\n  writable: false,\n  value: zero\n})\n\nObject.defineProperty(Tensor, 'order', {\n  writable: false,\n  value: order\n})\n\nreturn Tensor\n  }\n}\n\nmodule.exports = tensorSpace",
+    "code": "function Tensor (data) {\n  this.data = data\n}\n\nTensor.prototype.addition = function () {\n  var args = [].slice.call(arguments)\n  var operands = [this.data].concat(args)\n\n  var data = Tensor.addition.apply(null, operands)\n\n  return new Tensor(data)\n}\n\nTensor.prototype.add = function () {\n  var args = [].slice.call(arguments)\n  var operands = [this.data].concat(args)\n\n  var data = Tensor.addition.apply(null, operands)\n\n  return new Tensor(data)\n}\n\nTensor.prototype.subtraction = function () {\n  var args = [].slice.call(arguments)\n  var operands = [this.data].concat(args)\n\n  var data = Tensor.subtraction.apply(null, operands)\n\n  return new Tensor(data)\n}\n\nTensor.prototype.sub = function () {\n  var args = [].slice.call(arguments)\n  var operands = [this.data].concat(args)\n\n  var data = Tensor.subtraction.apply(null, operands)\n\n  return new Tensor(data)\n}\n\nTensor.equality = function () {\n  return nAry(indices, ring.equality).apply(null, arguments)\n}\n\nTensor.eq = function () {\n  return nAry(indices, ring.equality).apply(null, arguments)\n}\n\nTensor.addition = function () {\n  return nAry(indices, ring.addition).apply(null, arguments)\n}\n\nTensor.add = function () {\n  return nAry(indices, ring.addition).apply(null, arguments)\n}\n\nTensor.subtraction = function () {\n  return nAry(indices, ring.subtraction).apply(null, arguments)\n}\n\nTensor.sub = function () {\n  return nAry(indices, ring.subtraction).apply(null, arguments)\n}\n\nTensor.product = function (leftData) {\n  return function (rightDim) {\n    return function (rightData) {\n      return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)\n    }\n  }\n}\n\nObject.defineProperty(Tensor, 'zero', {\n  writable: false,\n  value: zero\n})\n\nObject.defineProperty(Tensor, 'order', {\n  writable: false,\n  value: order\n})\n\nreturn Tensor\n  }\n}\n\nmodule.exports = tensorSpace",
     "ctx": {
-      "type": "class",
-      "constructor": "Tensor",
-      "cons": "Tensor",
+      "type": "function",
       "name": "Tensor",
-      "extends": "",
-      "string": "new Tensor()"
+      "string": "Tensor()"
     }
   },
   {
@@ -1829,8 +1826,8 @@
     "isClass": false,
     "isEvent": false,
     "ignore": false,
-    "line": 1371,
-    "codeStart": 1381,
+    "line": 1369,
+    "codeStart": 1379,
     "code": "function toData (arg) {\n  var data\n\n  if (typeof arg.data === 'undefined')\n    data = arg\n  else\n    data = arg.data\n\n  if (typeof data === 'undefined')\n    throw new TypeError('No data')\n\n  return data\n}\n\nmodule.exports = toData",
     "ctx": {
       "type": "function",

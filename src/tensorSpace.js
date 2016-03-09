@@ -16,15 +16,15 @@ function tensorSpace (indices) {
   // A matrix has order 2.
   // Order is also called "rank" or "tensor rank", but, to avoid confusion with
   // "matrix rank" it is better to call it "order".
-  const order = indices.filter((dim) => {
+  var order = indices.filter((dim) => {
     return dim > 1
   }).length
 
-  const isScalar = (order === 0)
+  var isScalar = (order === 0)
 
   return function (ring) {
     // Create zero.
-    const zero = indices.reduce((result, dim) => {
+    var zero = indices.reduce((result, dim) => {
       if (isScalar) {
         return ring.zero
       } else {
@@ -42,76 +42,74 @@ function tensorSpace (indices) {
      * @class
      */
 
-    class Tensor {
-      constructor (data) {
-        this.data = data
-      }
+    function Tensor (data) {
+      this.data = data
+    }
 
-      addition () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.addition = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.addition.apply(null, operands)
+      var data = Tensor.addition.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      add () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.add = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.addition.apply(null, operands)
+      var data = Tensor.addition.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      subtraction () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.subtraction = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.subtraction.apply(null, operands)
+      var data = Tensor.subtraction.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      sub () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.sub = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.subtraction.apply(null, operands)
+      var data = Tensor.subtraction.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      static equality () {
-        return nAry(indices, ring.equality).apply(null, arguments)
-      }
+    Tensor.equality = function () {
+      return nAry(indices, ring.equality).apply(null, arguments)
+    }
 
-      static eq () {
-        return nAry(indices, ring.equality).apply(null, arguments)
-      }
+    Tensor.eq = function () {
+      return nAry(indices, ring.equality).apply(null, arguments)
+    }
 
-      static addition () {
-        return nAry(indices, ring.addition).apply(null, arguments)
-      }
+    Tensor.addition = function () {
+      return nAry(indices, ring.addition).apply(null, arguments)
+    }
 
-      static add () {
-        return nAry(indices, ring.addition).apply(null, arguments)
-      }
+    Tensor.add = function () {
+      return nAry(indices, ring.addition).apply(null, arguments)
+    }
 
-      static subtraction () {
-        return nAry(indices, ring.subtraction).apply(null, arguments)
-      }
+    Tensor.subtraction = function () {
+      return nAry(indices, ring.subtraction).apply(null, arguments)
+    }
 
-      static sub () {
-        return nAry(indices, ring.subtraction).apply(null, arguments)
-      }
+    Tensor.sub = function () {
+      return nAry(indices, ring.subtraction).apply(null, arguments)
+    }
 
-      static product (leftData) {
-        return function (rightDim) {
-          return function (rightData) {
-            return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
-          }
+    Tensor.product = function (leftData) {
+      return function (rightDim) {
+        return function (rightData) {
+          return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
         }
       }
     }

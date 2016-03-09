@@ -6361,7 +6361,6 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 module.exports = tensorProduct
 
 },{"indices-permutations":9,"multidim-array-index":14}],43:[function(require,module,exports){
-'use strict';
 
 /**
  * Abstract element
@@ -6372,19 +6371,24 @@ module.exports = tensorProduct
  * @param {Function} check
  */
 
-function Element(data, check) {
-  if (typeof data === 'undefined') throw new TypeError('Undefined data');
+function Element (data, check) {
+  if (typeof data === 'undefined')
+    throw new TypeError('Undefined data')
 
-  if (check(data)) this.data = data;else throw new TypeError('Invalid data = ' + data);
+  if (check(data))
+    this.data = data
+  else
+    throw new TypeError('Invalid data = ' + data)
 }
 
-function valueOf() {
-  return this.data;
+function valueOf () {
+  return this.data
 }
 
-Element.prototype.valueOf = valueOf;
+Element.prototype.valueOf = valueOf
 
-module.exports = Element;
+module.exports = Element
+
 
 },{}],44:[function(require,module,exports){
 
@@ -6971,9 +6975,8 @@ module.exports = VectorSpace
 
 
 },{"./Element":43,"./coerced":46,"./comparison":47,"./itemsPool":49,"./method":51,"./rowByColumnMultiplication.js":54,"./toData":56,"algebra-group":2,"inherits":10}],46:[function(require,module,exports){
-'use strict';
 
-var toData = require('./toData');
+var toData = require('./toData')
 
 /**
  * Get an operator that coerces arguments to data.
@@ -6985,13 +6988,14 @@ var toData = require('./toData');
  * @returns {Function} anonymous coerced operator
  */
 
-function coerced(operator) {
+function coerced (operator) {
   return function () {
-    return operator.apply(null, [].slice.call(arguments).map(toData));
-  };
+    return operator.apply(null, [].slice.call(arguments).map(toData))
+  }
 }
 
-module.exports = coerced;
+module.exports = coerced
+
 
 },{"./toData":56}],47:[function(require,module,exports){
 
@@ -7197,7 +7201,6 @@ module.exports = new itemsPool()
 
 
 },{}],50:[function(require,module,exports){
-"use strict";
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -7211,11 +7214,12 @@ module.exports = new itemsPool()
  * @returns {Number} index
  */
 
-function matrixToArrayIndex(i, j, numCols) {
-  return j + i * numCols;
+function matrixToArrayIndex (i, j, numCols) {
+  return j + i * numCols
 }
 
-module.exports = matrixToArrayIndex;
+module.exports = matrixToArrayIndex
+
 
 },{}],51:[function(require,module,exports){
 
@@ -7289,10 +7293,9 @@ var realField = {
 module.exports = realField
 
 },{}],54:[function(require,module,exports){
-'use strict';
 
-var isInteger = require('is-integer'),
-    matrixToArrayIndex = require('./matrixToArrayIndex');
+var isInteger          = require('is-integer'),
+    matrixToArrayIndex = require('./matrixToArrayIndex')
 
 /**
  * Multiply two matrices, row by column.
@@ -7310,50 +7313,54 @@ var isInteger = require('is-integer'),
  * @returns {Array} data
  */
 
-function rowByColumnMultiplication(scalar, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
-  var leftNumCols = leftMatrix.length / leftNumRows,
-      rightNumRows = rightMatrix.length / rightNumCols;
+function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
+  var leftNumCols  = leftMatrix.length / leftNumRows,
+      rightNumRows = rightMatrix.length / rightNumCols
 
-  if (!isInteger(leftNumCols)) throw new TypeError('leftNumCols does not divide leftMatrix.length');
+  if (! isInteger(leftNumCols))
+    throw new TypeError('leftNumCols does not divide leftMatrix.length')
 
-  if (!isInteger(rightNumRows)) throw new TypeError('rightNumRows does not divide rightMatrix.length');
+  if (! isInteger(rightNumRows))
+    throw new TypeError('rightNumRows does not divide rightMatrix.length')
 
   // Check if matrices can be multiplied.
-  if (leftNumCols !== rightNumRows) throw new TypeError('Left num cols != right num rows');
+  if (leftNumCols !== rightNumRows)
+    throw new TypeError('Left num cols != right num rows')
 
   var commonIndex = leftNumCols,
-      data = [],
-      rows = leftNumRows,
-      cols = rightNumCols;
+      data        = [],
+      rows        = leftNumRows,
+      cols        = rightNumCols
 
   for (var i = 0; i < rows; i++) {
     for (var j = 0; j < cols; j++) {
-      var leftIndex = matrixToArrayIndex(i, 0, commonIndex),
-          rightIndex = matrixToArrayIndex(0, j, cols);
+      var leftIndex  = matrixToArrayIndex(i, 0, commonIndex),
+          rightIndex = matrixToArrayIndex(0, j, cols)
 
       var rightElement = rightMatrix[rightIndex],
-          leftElement = leftMatrix[leftIndex];
+          leftElement  = leftMatrix[leftIndex]
 
-      var element = scalar.multiplication(leftElement, rightElement);
+      var element = scalar.multiplication(leftElement, rightElement)
 
       for (var k = 1; k < commonIndex; k++) {
-        leftIndex = matrixToArrayIndex(i, k, commonIndex);
-        rightIndex = matrixToArrayIndex(k, j, cols);
+        leftIndex = matrixToArrayIndex(i, k, commonIndex)
+        rightIndex = matrixToArrayIndex(k, j, cols)
 
-        rightElement = rightMatrix[rightIndex];
-        leftElement = leftMatrix[leftIndex];
+        rightElement = rightMatrix[rightIndex]
+        leftElement = leftMatrix[leftIndex]
 
-        element = scalar.addition(element, scalar.multiplication(rightElement, leftElement));
+        element = scalar.addition(element, scalar.multiplication(rightElement, leftElement))
       }
 
-      data.push(element);
+      data.push(element)
     }
   }
 
-  return data;
+  return data
 }
 
-module.exports = rowByColumnMultiplication;
+module.exports = rowByColumnMultiplication
+
 
 },{"./matrixToArrayIndex":50,"is-integer":12}],55:[function(require,module,exports){
 var nAry = require('./nAry')
@@ -7374,15 +7381,15 @@ function tensorSpace (indices) {
   // A matrix has order 2.
   // Order is also called "rank" or "tensor rank", but, to avoid confusion with
   // "matrix rank" it is better to call it "order".
-  const order = indices.filter((dim) => {
+  var order = indices.filter((dim) => {
     return dim > 1
   }).length
 
-  const isScalar = (order === 0)
+  var isScalar = (order === 0)
 
   return function (ring) {
     // Create zero.
-    const zero = indices.reduce((result, dim) => {
+    var zero = indices.reduce((result, dim) => {
       if (isScalar) {
         return ring.zero
       } else {
@@ -7400,76 +7407,74 @@ function tensorSpace (indices) {
      * @class
      */
 
-    class Tensor {
-      constructor (data) {
-        this.data = data
-      }
+    function Tensor (data) {
+      this.data = data
+    }
 
-      addition () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.addition = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.addition.apply(null, operands)
+      var data = Tensor.addition.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      add () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.add = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.addition.apply(null, operands)
+      var data = Tensor.addition.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      subtraction () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.subtraction = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.subtraction.apply(null, operands)
+      var data = Tensor.subtraction.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      sub () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+    Tensor.prototype.sub = function () {
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-        var data = Tensor.subtraction.apply(null, operands)
+      var data = Tensor.subtraction.apply(null, operands)
 
-        return new Tensor(data)
-      }
+      return new Tensor(data)
+    }
 
-      static equality () {
-        return nAry(indices, ring.equality).apply(null, arguments)
-      }
+    Tensor.equality = function () {
+      return nAry(indices, ring.equality).apply(null, arguments)
+    }
 
-      static eq () {
-        return nAry(indices, ring.equality).apply(null, arguments)
-      }
+    Tensor.eq = function () {
+      return nAry(indices, ring.equality).apply(null, arguments)
+    }
 
-      static addition () {
-        return nAry(indices, ring.addition).apply(null, arguments)
-      }
+    Tensor.addition = function () {
+      return nAry(indices, ring.addition).apply(null, arguments)
+    }
 
-      static add () {
-        return nAry(indices, ring.addition).apply(null, arguments)
-      }
+    Tensor.add = function () {
+      return nAry(indices, ring.addition).apply(null, arguments)
+    }
 
-      static subtraction () {
-        return nAry(indices, ring.subtraction).apply(null, arguments)
-      }
+    Tensor.subtraction = function () {
+      return nAry(indices, ring.subtraction).apply(null, arguments)
+    }
 
-      static sub () {
-        return nAry(indices, ring.subtraction).apply(null, arguments)
-      }
+    Tensor.sub = function () {
+      return nAry(indices, ring.subtraction).apply(null, arguments)
+    }
 
-      static product (leftData) {
-        return function (rightDim) {
-          return function (rightData) {
-            return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
-          }
+    Tensor.product = function (leftData) {
+      return function (rightDim) {
+        return function (rightData) {
+          return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
         }
       }
     }
@@ -7491,7 +7496,6 @@ function tensorSpace (indices) {
 module.exports = tensorSpace
 
 },{"./nAry":52,"tensor-product":42}],56:[function(require,module,exports){
-'use strict';
 
 /**
  * Extract data attribute, if any, and check it
@@ -7503,461 +7507,522 @@ module.exports = tensorSpace
  * @returns {*} data
  */
 
-function toData(arg) {
-  var data;
+function toData (arg) {
+  var data
 
-  if (typeof arg.data === 'undefined') data = arg;else data = arg.data;
+  if (typeof arg.data === 'undefined')
+    data = arg
+  else
+    data = arg.data
 
-  if (typeof data === 'undefined') throw new TypeError('No data');
+  if (typeof data === 'undefined')
+    throw new TypeError('No data')
 
-  return data;
+  return data
 }
 
-module.exports = toData;
+module.exports = toData
+
 
 },{}],57:[function(require,module,exports){
-'use strict';
 
 var algebra = require('algebra'),
-    should = require('should');
+    should  = require('should')
 
-var C = algebra.Complex;
+var C = algebra.Complex
 
 var methodBinaryOperator = require('./features/methodBinaryOperator'),
-    methodUnaryOperator = require('./features/methodUnaryOperator'),
-    staticBinaryOperator = require('./features/staticBinaryOperator'),
-    staticUnaryOperator = require('./features/staticUnaryOperator');
+    methodUnaryOperator  = require('./features/methodUnaryOperator'),
+    staticBinaryOperator  = require('./features/staticBinaryOperator'),
+    staticUnaryOperator   = require('./features/staticUnaryOperator')
 
 describe('Complex', function () {
-  var operator;
+  var operator
 
   describe('zero', function () {
     it('is static', function () {
-      C.zero.data.should.eql([0, 0]);
-    });
-  });
+      C.zero.data.should.eql([0, 0])
+    })
+  })
 
   describe('one', function () {
     it('is static', function () {
-      C.one.data.should.eql([1, 0]);
-    });
-  });
+      C.one.data.should.eql([1, 0])
+    })
+  })
 
   describe('addition', function () {
-    operator = 'addition';
+    operator = 'addition'
 
-    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [4, 4]));
+    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [4, 4]))
 
-    it('is a class method', methodBinaryOperator(C, operator, [1, 2], [1, -1], [2, 1]));
-  });
+    it('is a class method', methodBinaryOperator(C, operator, [1, 2], [1, -1], [2, 1]))
+  })
 
   describe('subtraction', function () {
-    operator = 'subtraction';
+    operator = 'subtraction'
 
-    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [0, -2]));
+    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [0, -2]))
 
-    it('is a class method', methodBinaryOperator(C, operator, [0, 2], [1, -2], [-1, 4]));
-  });
+    it('is a class method', methodBinaryOperator(C, operator, [0, 2], [1, -2], [-1, 4]))
+  })
 
   describe('multiplication', function () {
-    operator = 'multiplication';
+    operator = 'multiplication'
 
-    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, -1], [5, 0]));
+    it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, -1], [5, 0]))
 
-    it('is a class method', methodBinaryOperator(C, operator, [1, 2], [-1, 2], [-5, 0]));
-  });
+    it('is a class method', methodBinaryOperator(C, operator, [1, 2], [-1, 2], [-5, 0]))
+  })
 
   describe('division', function () {
-    operator = 'division';
+    operator = 'division'
 
-    it('is a static method', staticBinaryOperator(C, operator, [2, 4], [2, 0], [1, 2]));
+    it('is a static method', staticBinaryOperator(C, operator, [2, 4], [2, 0], [1, 2]))
 
-    it('is a class method', methodBinaryOperator(C, operator, [5, 0], [2, -1], [2, 1]));
-  });
+    it('is a class method', methodBinaryOperator(C, operator, [5, 0], [2, -1], [2, 1]))
+  })
 
   describe('negation', function () {
-    operator = 'negation';
+    operator = 'negation'
 
-    it('is a static method', staticUnaryOperator(C, operator, [-2, 1], [2, -1]));
+    it('is a static method', staticUnaryOperator(C, operator, [-2, 1], [2, -1]))
 
-    it('is a class method', methodUnaryOperator(C, operator, [1, 8], [-1, -8]));
-  });
+    it('is a class method', methodUnaryOperator(C, operator, [1, 8], [-1, -8]))
+  })
 
   describe('conjugation', function () {
-    operator = 'conjugation';
+    operator = 'conjugation'
 
-    it('is a static method', staticUnaryOperator(C, operator, [2, 1], [2, -1]));
+    it('is a static method', staticUnaryOperator(C, operator, [2, 1], [2, -1]))
 
-    it('is a class method', methodUnaryOperator(C, operator, [1, 7], [1, -7]));
-  });
-});
+    it('is a class method', methodUnaryOperator(C, operator, [1, 7], [1, -7]))
+  })
+})
+
 
 },{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],58:[function(require,module,exports){
-'use strict';
 
 require('strict-mode')(function () {
 
-  var Element = require('../src/Element'),
-      should = require('should');
+var Element = require('../src/Element'),
+    should  = require('should')
 
-  describe('Element', function () {
-    it('has signature (data, check)', function () {
-      var check = isFinite,
-          data = 1;
+describe('Element', function () {
+  it('has signature (data, check)', function () {
+    var check = isFinite,
+        data  = 1
 
-      var e = new Element(data, check);
-    });
+    var e = new Element(data, check)
+  })
 
-    it('throws if no data is given', function () {
-      ;(function () {
-        var e = new Element();
-      }).should.throwError(/Undefined data/);
-    });
-  });
-});
+  it('throws if no data is given', function () {
+    ;(function () {
+        var e = new Element()
+      }).should.throwError(/Undefined data/)
+  })
+})
+
+})
+
 
 },{"../src/Element":43,"should":22,"strict-mode":41}],59:[function(require,module,exports){
-'use strict';
 
-var algebra = require('algebra'),
-    should = require('should');
+  var algebra = require('algebra'),
+     should   = require('should')
 
 var MatrixSpace = algebra.MatrixSpace,
-    Real = algebra.Real;
+    Real        = algebra.Real
 
 var methodBinaryOperator = require('./features/methodBinaryOperator'),
-    methodUnaryOperator = require('./features/methodUnaryOperator'),
+    methodUnaryOperator  = require('./features/methodUnaryOperator'),
     staticBinaryOperator = require('./features/staticBinaryOperator'),
-    staticUnaryOperator = require('./features/staticUnaryOperator');
+    staticUnaryOperator  = require('./features/staticUnaryOperator')
 
 describe('MatrixSpace', function () {
   var R2x3 = MatrixSpace(Real)(2, 3),
       R2x2 = MatrixSpace(Real)(2),
-      R3x2 = MatrixSpace(Real)(3, 2);
+      R3x2 = MatrixSpace(Real)(3, 2)
 
   it('has signature (Scalar)(numRows, numCols)', function () {
-    R2x3.numRows.should.be.eql(2);
-    R2x3.numCols.should.be.eql(3);
-    R2x3.isSquare.should.be.not.ok;
-  });
+    R2x3.numRows.should.be.eql(2)
+    R2x3.numCols.should.be.eql(3)
+    R2x3.isSquare.should.be.not.ok
+  })
 
   it('has signature (Scalar)(numRows) and numCols defaults to numRows', function () {
-    R2x2.numRows.should.be.eql(2);
-    R2x2.numCols.should.be.eql(2);
-    R2x2.isSquare.should.be.ok;
-  });
+    R2x2.numRows.should.be.eql(2)
+    R2x2.numCols.should.be.eql(2)
+    R2x2.isSquare.should.be.ok
+  })
 
-  var matrix1 = new R2x2([2, 3, 1, 1]),
-      matrix2 = new R2x2([0, 1, -1, 0]);
-  matrix3 = new R2x3([0, 1, 2, -2, 1, 0]);
+  var matrix1  = new R2x2([ 2, 3,
+                            1, 1 ]),
+      matrix2  = new R2x2([ 0, 1,
+                           -1, 0 ])
+      matrix3  = new R2x3([ 0, 1, 2,
+                           -2, 1, 0 ])
 
   describe('numRows', function () {
     it('returns the number of rows', function () {
-      matrix1.numRows.should.be.eql(2);
-      matrix2.numRows.should.be.eql(2);
-      matrix3.numRows.should.be.eql(2);
-    });
-  });
+      matrix1.numRows.should.be.eql(2)
+      matrix2.numRows.should.be.eql(2)
+      matrix3.numRows.should.be.eql(2)
+    })
+  })
 
   describe('numCols', function () {
     it('returns the number of cols', function () {
-      matrix1.numCols.should.be.eql(2);
-      matrix2.numCols.should.be.eql(2);
-      matrix3.numCols.should.be.eql(3);
-    });
-  });
+      matrix1.numCols.should.be.eql(2)
+      matrix2.numCols.should.be.eql(2)
+      matrix3.numCols.should.be.eql(3)
+    })
+  })
 
   describe('determinant', function () {
     it('returns a Scalar', function () {
-      matrix1.determinant.should.be.instanceOf(Real);
-      matrix2.determinant.should.be.instanceOf(Real);
+      matrix1.determinant.should.be.instanceOf(Real)
+      matrix2.determinant.should.be.instanceOf(Real)
 
-      matrix1.determinant.data.should.be.eql(-1);
-      matrix2.determinant.data.should.be.eql(1);
-    });
-  });
+      matrix1.determinant.data.should.be.eql(-1)
+      matrix2.determinant.data.should.be.eql(1)
+    })
+  })
 
   describe('addition()', function () {
-    operator = 'addition';
+    operator = 'addition'
 
-    it('is a static method', staticBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 4, 0, 1]));
+    it('is a static method', staticBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 4,
+          0, 1 ]
+    ))
 
-    it('is a class method', methodBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 4, 0, 1]));
-  });
+    it('is a class method', methodBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 4,
+          0, 1 ]
+    ))
+  })
 
   describe('subtraction()', function () {
-    operator = 'subtraction';
+    operator = 'subtraction'
 
-    it('is a static method', staticBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 2, 2, 1]));
+    it('is a static method', staticBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 2,
+          2, 1 ]
+    ))
 
-    it('is a class method', methodBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 2, 2, 1]));
-  });
+    it('is a class method', methodBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ 2, 2,
+          2, 1 ]
+    ))
+  })
 
   describe('multiplication()', function () {
-    operator = 'multiplication';
+    operator = 'multiplication'
 
-    it('is a static method', staticBinaryOperator(R3x2, operator, [2, 3, 1, 1, 1, 1], [0, 1, 1, 1, -1, 0, 2, 3], [-3, 2, 8, 11, -1, 1, 3, 4, -1, 1, 3, 4]));
+    it('is a static method', staticBinaryOperator(R3x2, operator,
+        [ 2, 3,
+          1, 1,
+          1, 1 ],
+        [ 0, 1, 1, 1,
+         -1, 0, 2, 3 ],
+        [ -3, 2, 8, 11,
+          -1, 1, 3, 4,
+          -1, 1, 3, 4 ]
+    ))
 
-    it('is a class method for square matrices', methodBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [-3, 2, -1, 1]));
-  });
+    it('is a class method for square matrices', methodBinaryOperator(R2x2, operator,
+        [ 2, 3,
+          1, 1 ],
+        [ 0, 1,
+         -1, 0 ],
+        [ -3, 2,
+          -1, 1 ]
+    ))
+  })
 
   describe('transpose()', function () {
 
     it('is a static operator', function () {
-      var matrix3x2a = new R3x2([1, 2, 3, 4, 5, 6]);
+      var matrix3x2a  = new R3x2([1, 2,
+                                  3, 4,
+                                  5, 6])
 
-      should.deepEqual(R3x2.transpose(matrix3x2a), [1, 3, 5, 2, 4, 6]);
-    });
+      should.deepEqual(R3x2.transpose(matrix3x2a), [1, 3, 5,
+                                                    2, 4, 6])
+    })
 
     it('returns a transposed matrix', function () {
-      var matrix2x3a = new R2x3([1, 2, 3, 4, 5, 6]);
+      var matrix2x3a  = new R2x3([1, 2, 3,
+                                  4, 5, 6])
 
-      var matrixTransposed = matrix2x3a.transpose();
+      var matrixTransposed = matrix2x3a.transpose()
 
-      should.deepEqual(matrixTransposed.data, [1, 4, 2, 5, 3, 6]);
+      should.deepEqual(matrixTransposed.data, [1, 4,
+                                               2, 5,
+                                               3, 6])
 
-      matrix2x3a.numRows.should.be.eql(matrixTransposed.numCols);
-      matrix2x3a.numCols.should.be.eql(matrixTransposed.numRows);
-    });
+      matrix2x3a.numRows.should.be.eql(matrixTransposed.numCols)
+      matrix2x3a.numCols.should.be.eql(matrixTransposed.numRows)
+    })
 
     it('is chainable for square matrices', function () {
-      var matrix2x2a = new R2x2([1, 2, 3, 4]);
+      var matrix2x2a  = new R2x2([1, 2,
+                                  3, 4])
 
-      var matrix2x2b = matrix2x2a.transpose().transpose();
+      var matrix2x2b = matrix2x2a.transpose().transpose()
 
-      should.deepEqual(matrix2x2a.data, matrix2x2b.data);
-    });
-  });
-});
+      should.deepEqual(matrix2x2a.data, matrix2x2b.data)
+    })
+  })
+})
 
 },{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],60:[function(require,module,exports){
-'use strict';
 
 var algebra = require('algebra'),
-    should = require('should');
+    should  = require('should')
 
-var R = algebra.Real;
+var R = algebra.Real
 
-var methodBinaryOperator = require('./features/methodBinaryOperator'),
-    methodUnaryOperator = require('./features/methodUnaryOperator'),
+var methodBinaryOperator  = require('./features/methodBinaryOperator'),
+    methodUnaryOperator   = require('./features/methodUnaryOperator'),
     multiArgumentOperator = require('./features/multiArgumentOperator'),
-    staticBinaryOperator = require('./features/staticBinaryOperator'),
-    staticUnaryOperator = require('./features/staticUnaryOperator');
+    staticBinaryOperator  = require('./features/staticBinaryOperator'),
+    staticUnaryOperator   = require('./features/staticUnaryOperator')
 
 describe('Real', function () {
-  var operator, x;
+  var operator,
+      x
 
   describe('zero', function () {
     it('is static', function () {
-      R.zero.data.should.eql(0);
-    });
-  });
+      R.zero.data.should.eql(0)
+    })
+  })
 
   describe('one', function () {
     it('is static', function () {
-      R.one.data.should.eql(1);
-    });
-  });
+      R.one.data.should.eql(1)
+    })
+  })
 
   describe('addition', function () {
-    operator = 'addition';
+    operator = 'addition'
 
-    it('is a static method', staticBinaryOperator(R, operator, 2, 3, 5));
+    it('is a static method', staticBinaryOperator(R, operator, 2, 3, 5))
 
-    it('is a class method', methodBinaryOperator(R, operator, 1, 2, 3));
+    it('is a class method', methodBinaryOperator(R, operator, 1, 2, 3))
 
     // TODO
     //it('accepts many arguments', multiArgumentOperator(R, operator, 1, [2, 3, 4], 10))
 
     it('accepts many arguments', function () {
-      x = new R(1);
-      x = x.addition(2, 3, 4);
-      x.data.should.eql(10);
-    });
-  });
+      x = new R(1)
+      x = x.addition(2, 3, 4)
+      x.data.should.eql(10)
+    })
+  })
 
   describe('subtraction', function () {
-    operator = 'subtraction';
+    operator = 'subtraction'
 
-    it('is a static method', staticBinaryOperator(R, operator, 2, 3, -1));
+    it('is a static method', staticBinaryOperator(R, operator, 2, 3, -1))
 
-    it('is a class method', methodBinaryOperator(R, operator, -1, -4, 3));
+    it('is a class method', methodBinaryOperator(R, operator, -1, -4, 3))
 
     it('accepts many arguments', function () {
-      x = new R(10);
-      x = x.subtraction(1, 2, 3);
-      x.data.should.eql(4);
-    });
-  });
+      x = new R(10)
+      x = x.subtraction(1, 2, 3)
+      x.data.should.eql(4)
+    })
+  })
 
   describe('multiplication', function () {
-    operator = 'multiplication';
+    operator = 'multiplication'
 
-    it('is a static method', staticBinaryOperator(R, operator, 8, -2, -16));
+    it('is a static method', staticBinaryOperator(R, operator, 8, -2, -16))
 
-    it('is a class method', methodBinaryOperator(R, operator, 2, 2, 4));
+    it('is a class method', methodBinaryOperator(R, operator, 2, 2, 4))
 
     it('accepts many arguments', function () {
-      x = new R(2);
-      x = x.multiplication(3, 4, 5);
-      x.data.should.eql(120);
-    });
-  });
+      x = new R(2)
+      x = x.multiplication(3, 4, 5)
+      x.data.should.eql(120)
+    })
+  })
 
   describe('division', function () {
-    operator = 'division';
+    operator = 'division'
 
-    it('is a static method', staticBinaryOperator(R, operator, 8, 2, 4));
+    it('is a static method', staticBinaryOperator(R, operator, 8, 2, 4))
 
-    it('is a class method', methodBinaryOperator(R, operator, -2, 4, -0.5));
+    it('is a class method', methodBinaryOperator(R, operator, -2, 4, -0.5))
 
     it('accepts many arguments', function () {
-      x = new R(120);
-      x = x.division(3, 4, 5);
-      x.data.should.eql(2);
-    });
-  });
+      x = new R(120)
+      x = x.division(3, 4, 5)
+      x.data.should.eql(2)
+    })
+  })
 
   describe('equality', function () {
-    operator = 'equality';
+    operator = 'equality'
 
-    it('is a static method', staticBinaryOperator(R, operator, 10, 10, true));
+    it('is a static method', staticBinaryOperator(R, operator, 10, 10, true))
 
     it('is a class method', function () {
-      x = new R(10);
-      x.equality(10).should.be.true;
-    });
-  });
+      x = new R(10)
+      x.equality(10).should.be.true
+    })
+  })
 
   describe('disequality', function () {
-    operator = 'disequality';
+    operator = 'disequality'
 
-    it('is a static method', staticBinaryOperator(R, operator, 10, 20, true));
+    it('is a static method', staticBinaryOperator(R, operator, 10, 20, true))
 
     it('is a class method', function () {
-      x = new R(10);
-      x.disequality(20).should.be.true;
-    });
-  });
+      x = new R(10)
+      x.disequality(20).should.be.true
+    })
+  })
 
   describe('negation', function () {
-    operator = 'negation';
+    operator = 'negation'
 
-    it('is a static method', staticUnaryOperator(R, operator, -2, 2));
+    it('is a static method', staticUnaryOperator(R, operator, -2, 2))
 
-    it('is a class method', methodUnaryOperator(R, operator, 8, -8));
+    it('is a class method', methodUnaryOperator(R, operator, 8, -8))
 
     it('is an involution', function () {
-      x = new R(10);
-      x.negation().negation().data.should.be.eql(10);
-    });
-  });
+      x = new R(10)
+      x.negation().negation().data.should.be.eql(10)
+    })
+  })
 
   describe('inversion', function () {
-    operator = 'inversion';
+    operator = 'inversion'
 
-    it('is a static method', staticUnaryOperator(R, operator, 2, 0.5));
+    it('is a static method', staticUnaryOperator(R, operator, 2, 0.5))
 
-    it('is a class method', methodUnaryOperator(R, operator, -4, -0.25));
+    it('is a class method', methodUnaryOperator(R, operator, -4, -0.25))
 
     it('is an involution', function () {
-      x = new R(10);
-      x.inversion().inversion().data.should.be.eql(10);
-    });
-  });
-});
+      x = new R(10)
+      x.inversion().inversion().data.should.be.eql(10)
+    })
+  })
+})
+
 
 },{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/multiArgumentOperator":66,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],61:[function(require,module,exports){
-'use strict';
 
 var algebra = require('algebra'),
-    should = require('should');
+    should  = require('should')
 
 var MatrixSpace = algebra.MatrixSpace,
-    Real = algebra.Real,
-    VectorSpace = algebra.VectorSpace;
+    Real        = algebra.Real,
+    VectorSpace = algebra.VectorSpace
 
 var methodBinaryOperator = require('./features/methodBinaryOperator'),
-    methodUnaryOperator = require('./features/methodUnaryOperator'),
-    staticBinaryOperator = require('./features/staticBinaryOperator'),
-    staticUnaryOperator = require('./features/staticUnaryOperator');
+    methodUnaryOperator  = require('./features/methodUnaryOperator'),
+    staticBinaryOperator  = require('./features/staticBinaryOperator'),
+    staticUnaryOperator   = require('./features/staticUnaryOperator')
 
 var R2 = VectorSpace(Real)(2),
-    R3 = VectorSpace(Real)(3);
+    R3 = VectorSpace(Real)(3)
 
-var R2x2 = MatrixSpace(Real)(2, 2);
+var R2x2 = MatrixSpace(Real)(2, 2)
 
 describe('VectorSpace', function () {
-  var operator;
+  var operator
 
   describe('addition()', function () {
-    operator = 'addition';
+    operator = 'addition'
 
-    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]));
+    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
 
-    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]));
-  });
+    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
+  })
 
   describe('subtraction()', function () {
-    operator = 'subtraction';
+    operator = 'subtraction'
 
-    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]));
+    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
 
-    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]));
-  });
+    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
+  })
 
   describe('scalarProduct()', function () {
     var vector1 = new R2([0, 1]),
-        vector2 = new R2([1, 1]);
+        vector2 = new R2([1, 1])
 
     it('is a static operator', function () {
-      var data = R2.scalarProduct([0, 1], [1, 1]);
+      var data = R2.scalarProduct([0, 1], [1, 1])
 
-      data.should.eql(1);
-    });
+      data.should.eql(1)
+    })
 
     it('is returns a scalar', function () {
-      var scalar = vector1.scalarProduct(vector2);
+      var scalar = vector1.scalarProduct(vector2)
 
-      scalar.should.be.instanceOf(Real);
+      scalar.should.be.instanceOf(Real)
 
-      scalar.data.should.be.eql(1);
-    });
-  });
+      scalar.data.should.be.eql(1)
+    })
+  })
 
   describe('transpose()', function () {
     it('returns a row-vector (as a matrix)', function () {
-      var vector1 = new R3([0, 1, 0]);
+      var vector1 = new R3([0, 1, 0])
 
-      var transposed = vector1.transpose();
+      var transposed = vector1.transpose()
 
-      should.deepEqual(transposed.data, vector1.data);
-      transposed.numCols.should.be.eql(3);
-      transposed.numRows.should.be.eql(1);
-    });
+      should.deepEqual(transposed.data, vector1.data)
+      transposed.numCols.should.be.eql(3)
+      transposed.numRows.should.be.eql(1)
+    })
 
     it('is used to right multiply a vector by a matrix', function () {
-      var matrix = new R2x2([0, 1, 1, 0]),
-          vector1 = new R2([0, 1]);
+      var matrix  = new R2x2([0, 1,
+                              1, 0]),
+          vector1 = new R2([0, 1])
 
       // tr | 0 | | 0 1 | = | 0 1 | | 0 1 | = | 1 |
       //    | 1 | | 1 0 |           | 1 0 |   | 0 |
-      var vector2 = vector1.transpose().multiplication(matrix);
+      var vector2 = vector1.transpose().multiplication(matrix)
 
-      should.deepEqual(vector2.data, [1, 0]);
-    });
-  });
+      should.deepEqual(vector2.data, [1, 0])
+    })
+  })
 
   describe('norm', function () {
     var vector1 = new R2([0, 1]),
-        vector2 = new R2([1, 1]);
+        vector2 = new R2([1, 1])
 
     it('is a scalar', function () {
-      vector1.norm.data.should.be.eql(1);
-      vector2.norm.data.should.be.eql(2);
-    });
-  });
-});
+      vector1.norm.data.should.be.eql(1)
+      vector2.norm.data.should.be.eql(2)
+    })
+  })
+
+})
 
 },{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":67,"./features/staticUnaryOperator":68,"algebra":70,"should":22}],62:[function(require,module,exports){
 /*
@@ -8169,31 +8234,27 @@ describe('buildCyclicSpaceOf', function () {
   })
 })
 */
-"use strict";
 
 },{}],63:[function(require,module,exports){
-'use strict';
 
 var coerced = require('../src/coerced'),
-    should = require('should');
+    should  = require('should')
 
-var add = coerced(function (a, b) {
-  return a + b;
-});
+var add = coerced(function (a, b) { return a + b })
 
 describe('coerced', function () {
   it('means to extract "data" property, if any', function () {
-    add(1, 2).should.eql(3);
-    add({ data: 1 }, 2).should.eql(3);
-    add({ data: 1 }, 2).should.eql(3);
-    add({ data: 1 }, { data: 2 }).should.eql(3);
-  });
-});
+    add(1, 2).should.eql(3)
+    add({ data: 1 }, 2).should.eql(3)
+    add({ data: 1 }, 2).should.eql(3)
+    add({ data: 1 }, { data: 2 }).should.eql(3)
+  })
+})
+
 
 },{"../src/coerced":46,"should":22}],64:[function(require,module,exports){
-'use strict';
 
-var should = require('should');
+var should = require('should')
 
 /**
  * Check if binary operator is a mutator
@@ -8209,22 +8270,22 @@ var should = require('should');
  * @returns {Function} mutatorBinaryOperatorTest
  */
 
-function mutatorBinaryOperator(Scalar, operator, operand1, operand2, resultData) {
-  return function mutatorBinaryOperatorTest() {
-    var scalar = new Scalar(operand1);
+function mutatorBinaryOperator (Scalar, operator, operand1, operand2, resultData) {
+  return function mutatorBinaryOperatorTest () {
+    var scalar = new Scalar(operand1)
 
-    var result = scalar[operator](operand2);
+    var result = scalar[operator](operand2)
 
-    result.data.should.eql(resultData);
-  };
+    result.data.should.eql(resultData)
+  }
 }
 
-module.exports = mutatorBinaryOperator;
+module.exports = mutatorBinaryOperator
+
 
 },{"should":22}],65:[function(require,module,exports){
-'use strict';
 
-var should = require('should');
+var should = require('should')
 
 /**
  * Check if unary operator is a mutator
@@ -8239,29 +8300,31 @@ var should = require('should');
  * @returns {Function} mutatorUnaryOperatorTest
  */
 
-function mutatorUnaryOperator(Scalar, operator, operand, resultData) {
-  return function mutatorUnaryOperatorTest() {
-    var scalar = new Scalar(operand);
+function mutatorUnaryOperator (Scalar, operator, operand, resultData) {
+  return function mutatorUnaryOperatorTest () {
+    var scalar = new Scalar(operand)
 
-    var result = scalar[operator]();
+    var result = scalar[operator]()
 
-    result.data.should.eql(resultData);
-  };
+    result.data.should.eql(resultData)
+  }
 }
 
-module.exports = mutatorUnaryOperator;
+module.exports = mutatorUnaryOperator
+
 
 },{"should":22}],66:[function(require,module,exports){
-"use strict";
 
-function multiArgumentOperator() {}
+function multiArgumentOperator () {
 
-module.exports = multiArgumentOperator;
+}
+
+module.exports = multiArgumentOperator
+
 
 },{}],67:[function(require,module,exports){
-'use strict';
 
-var should = require('should');
+var should = require('should')
 
 /*!
  * Check if binary operator is static
@@ -8275,18 +8338,18 @@ var should = require('should');
  * @returns {Function} staticBinaryOperatorTest
  */
 
-function staticBinaryOperator(Scalar, operator, operand1, operand2, result) {
-  return function staticBinaryOperatorTest() {
-    Scalar[operator](operand1, operand2).should.eql(result);
-  };
+function staticBinaryOperator (Scalar, operator, operand1, operand2, result) {
+  return function staticBinaryOperatorTest () {
+    Scalar[operator](operand1, operand2).should.eql(result)
+  }
 }
 
-module.exports = staticBinaryOperator;
+module.exports = staticBinaryOperator
+
 
 },{"should":22}],68:[function(require,module,exports){
-'use strict';
 
-var should = require('should');
+var should = require('should')
 
 /*!
  * Check if unary operator is static
@@ -8299,53 +8362,59 @@ var should = require('should');
  * @returns {Function} staticUnaryOperatorTest
  */
 
-function staticUnaryOperator(Scalar, operator, operand, result) {
-  return function staticUnaryOperatorTest() {
-    Scalar[operator](operand).should.eql(result);
-  };
+function staticUnaryOperator (Scalar, operator, operand, result) {
+  return function staticUnaryOperatorTest () {
+    Scalar[operator](operand).should.eql(result)
+  }
 }
 
-module.exports = staticUnaryOperator;
+module.exports = staticUnaryOperator
+
 
 },{"should":22}],69:[function(require,module,exports){
-'use strict';
 
 var matrixToArrayIndex = require('../src/matrixToArrayIndex'),
-    should = require('should');
+    should             = require('should')
 
-var data, numCols;
+var data,
+    numCols
 
 describe('matrixToArrayIndex', function () {
-        it('converts 2dim array index into 1dim index', function () {
-                data = ['a', 'b', 'c', 'd'];
-                numCols = 2;
+  it('converts 2dim array index into 1dim index', function () {
+    data = ['a', 'b',
+            'c', 'd']
+    numCols = 2
 
-                data[matrixToArrayIndex(0, 0, numCols)].should.eql('a');
-                data[matrixToArrayIndex(0, 1, numCols)].should.eql('b');
-                data[matrixToArrayIndex(1, 0, numCols)].should.eql('c');
-                data[matrixToArrayIndex(1, 1, numCols)].should.eql('d');
+    data[matrixToArrayIndex(0, 0, numCols)].should.eql('a')
+    data[matrixToArrayIndex(0, 1, numCols)].should.eql('b')
+    data[matrixToArrayIndex(1, 0, numCols)].should.eql('c')
+    data[matrixToArrayIndex(1, 1, numCols)].should.eql('d')
 
-                data = [0, 1, 2, 3, 4, 5];
-                numCols = 3;
+    data = [0, 1, 2,
+            3, 4, 5]
+    numCols = 3
 
-                data[matrixToArrayIndex(0, 0, numCols)].should.eql(0);
-                data[matrixToArrayIndex(0, 1, numCols)].should.eql(1);
-                data[matrixToArrayIndex(0, 2, numCols)].should.eql(2);
-                data[matrixToArrayIndex(1, 0, numCols)].should.eql(3);
-                data[matrixToArrayIndex(1, 1, numCols)].should.eql(4);
-                data[matrixToArrayIndex(1, 2, numCols)].should.eql(5);
+    data[matrixToArrayIndex(0, 0, numCols)].should.eql(0)
+    data[matrixToArrayIndex(0, 1, numCols)].should.eql(1)
+    data[matrixToArrayIndex(0, 2, numCols)].should.eql(2)
+    data[matrixToArrayIndex(1, 0, numCols)].should.eql(3)
+    data[matrixToArrayIndex(1, 1, numCols)].should.eql(4)
+    data[matrixToArrayIndex(1, 2, numCols)].should.eql(5)
 
-                data = [0, 1, 2, 3, 4, 5];
-                numCols = 2;
+    data = [0, 1,
+            2, 3,
+            4, 5]
+    numCols = 2
 
-                data[matrixToArrayIndex(0, 0, numCols)].should.eql(0);
-                data[matrixToArrayIndex(0, 1, numCols)].should.eql(1);
-                data[matrixToArrayIndex(1, 0, numCols)].should.eql(2);
-                data[matrixToArrayIndex(1, 1, numCols)].should.eql(3);
-                data[matrixToArrayIndex(2, 0, numCols)].should.eql(4);
-                data[matrixToArrayIndex(2, 1, numCols)].should.eql(5);
-        });
-});
+    data[matrixToArrayIndex(0, 0, numCols)].should.eql(0)
+    data[matrixToArrayIndex(0, 1, numCols)].should.eql(1)
+    data[matrixToArrayIndex(1, 0, numCols)].should.eql(2)
+    data[matrixToArrayIndex(1, 1, numCols)].should.eql(3)
+    data[matrixToArrayIndex(2, 0, numCols)].should.eql(4)
+    data[matrixToArrayIndex(2, 1, numCols)].should.eql(5)
+  })
+})
+
 
 },{"../src/matrixToArrayIndex":50,"should":22}],70:[function(require,module,exports){
 
@@ -8354,208 +8423,229 @@ module.exports = require('../../..')
 
 
 },{"../../..":1}],71:[function(require,module,exports){
-'use strict';
 
 var algebra = require('algebra'),
-    should = require('should');
+    should  = require('should')
 
 describe('Synopsis', function () {
   it('works', function () {
-    var R = algebra.Real;
+    var R = algebra.Real
 
-    R.add(1, 2, 3).should.eql(6);
+    R.add(1, 2, 3).should.eql(6)
 
     var x = new R(2),
-        y = new R(-2);
+        y = new R(-2)
 
-    var r = x.mul(y);
-    r.data.should.eql(-4);
-    x.data.should.eql(2);
+    var r = x.mul(y)
+    r.data.should.eql(-4)
+    x.data.should.eql(2)
 
-    x = x.add(3).mul(2).inv();
+    x = x.add(3).mul(2).inv()
 
-    x.data.should.eql(0.1);
+    x.data.should.eql(0.1)
 
-    x.equal(0.1).should.be.ok;
-    x.notEqual(Math.PI).should.be.ok;
+    x.equal(0.1).should.be.ok
+    x.notEqual(Math.PI).should.be.ok
 
-    var R2 = algebra.VectorSpace(R)(2);
+    var R2 = algebra.VectorSpace(R)(2)
 
-    var v1 = new R2([0, 1]);
-    var v2 = new R2([1, -2]);
+    var v1 = new R2([0, 1])
+    var v2 = new R2([1, -2])
 
-    v1 = v1.add(v2);
+    v1 = v1.add(v2)
 
-    v1.data.should.eql([1, -1]);
+    v1.data.should.eql([1, -1])
 
-    var R3x2 = algebra.MatrixSpace(R)(3, 2);
+    var R3x2 = algebra.MatrixSpace(R)(3, 2)
 
-    var m1 = new R3x2([1, 1, 0, 1, 1, 0]);
+    var m1 = new R3x2([1, 1,
+                       0, 1,
+                       1, 0])
 
-    var v3 = m1.mul(v1);
+    var v3 = m1.mul(v1)
 
-    should.deepEqual(v3.data, [0, -1, 1]);
+    should.deepEqual(v3.data, [0, -1, 1])
 
-    var R2x2 = algebra.MatrixSpace(R)(2);
+    var R2x2 = algebra.MatrixSpace(R)(2)
 
-    var m2 = new R2x2([1, 0, 0, 2]),
-        m3 = new R2x2([0, -1, 1, 0]);
+    var m2 = new R2x2([1, 0,
+                       0, 2]),
+        m3 = new R2x2([0, -1,
+                       1, 0])
 
-    m2 = m2.mul(m3);
+    m2 = m2.mul(m3)
 
-    should.deepEqual(m2.data, [0, -1, 2, 0]);
+    should.deepEqual(m2.data, [0, -1, 2,  0])
 
-    m2.determinant.data.should.be.eql(2);
-  });
-});
+    m2.determinant.data.should.be.eql(2)
+  })
+})
 
 },{"algebra":70,"should":22}],72:[function(require,module,exports){
-'use strict';
 
 var algebra = require('algebra'),
-    should = require('should');
+    should  = require('should')
 
-var mul = require('../src/rowByColumnMultiplication');
+var mul = require('../src/rowByColumnMultiplication')
 
 var real = {
-               addition: function addition(a, b) {
-                              return a + b;
-               },
-               multiplication: function multiplication(a, b) {
-                              return a * b;
-               }
-};
+  addition      : function (a, b) { return a + b },
+  multiplication: function (a, b) { return a * b }
+}
 
-var scalar, leftMatrix, leftIndices, rightMatrix, rightIndices, data;
+var scalar,
+    leftMatrix,
+    leftIndices,
+    rightMatrix,
+    rightIndices,
+    data
 
 describe('rowByColumnMultiplication', function () {
-               it('implements row by column multiplication', function () {
-                              scalar = real;
-                              leftMatrix = [1, 0, 0, 1];
-                              rightMatrix = [1, 0, 0, 1];
+  it('implements row by column multiplication', function () {
+    scalar       = real
+    leftMatrix   = [1, 0,
+                    0, 1]
+    rightMatrix  = [1, 0,
+                    0, 1]
 
-                              data = mul(scalar, leftMatrix, 2, rightMatrix, 2);
+    data = mul(scalar, leftMatrix, 2, rightMatrix, 2)
 
-                              data.should.eql([1, 0, 0, 1]);
+    data.should.eql([1, 0,
+                     0, 1])
 
-                              leftMatrix = [2, 3, 1, 1, 1, 1], rightMatrix = [0, 1, 1, 1, -1, 0, 2, 3];
+    leftMatrix = [ 2, 3,
+                   1, 1,
+                   1, 1 ],
+    rightMatrix = [ 0, 1, 1, 1,
+                   -1, 0, 2, 3 ]
 
-                              data = mul(scalar, leftMatrix, 3, rightMatrix, 4);
+    data = mul(scalar, leftMatrix, 3, rightMatrix, 4)
 
-                              data.should.eql([-3, 2, 8, 11, -1, 1, 3, 4, -1, 1, 3, 4]);
+    data.should.eql([ -3, 2, 8, 11,
+                      -1, 1, 3, 4,
+                      -1, 1, 3, 4 ])
 
-                              leftMatrix = [2, 3, 1, 1];
-                              rightMatrix = [0, 1, -1, 0];
+    leftMatrix = [ 2, 3,
+                   1, 1 ]
+    rightMatrix = [ 0, 1,
+                   -1, 0 ]
 
-                              data = mul(scalar, leftMatrix, 2, rightMatrix, 2);
+    data = mul(scalar, leftMatrix, 2, rightMatrix, 2)
 
-                              data.should.eql([-3, 2, -1, 1]);
-               });
-});
+    data.should.eql([ -3, 2,
+                      -1, 1 ])
+  })
+})
 
 },{"../src/rowByColumnMultiplication":54,"algebra":70,"should":22}],73:[function(require,module,exports){
-'use strict';
-
-describe('tensorSpace', function () {
-  var tensorSpace = require('algebra').tensorSpace;
+describe('tensorSpace', () => {
+  var tensorSpace = require('algebra').tensorSpace
 
   var ring = require('algebra-ring')([0, 1], {
-    contains: function contains(a) {
-      return typeof a === 'number' && isFinite(a);
-    },
+    contains (a) { return (typeof a === 'number' && isFinite(a)) },
+    equality: (a, b) => { return a === b },
+    addition: (a, b) => { return a + b },
+    negation: (a) => { return -a },
+    multiplication: (a, b) => { return a * b },
+    inversion: (a) => { return 1 / a },
+  })
 
-    equality: function equality(a, b) {
-      return a === b;
-    },
-    addition: function addition(a, b) {
-      return a + b;
-    },
-    negation: function negation(a) {
-      return -a;
-    },
-    multiplication: function multiplication(a, b) {
-      return a * b;
-    },
-    inversion: function inversion(a) {
-      return 1 / a;
-    }
-  });
+  it('can create a Scalar', () => {
+    var indices = [1]
 
-  it('can create a Scalar', function () {
-    var indices = [1];
+    var Scalar = tensorSpace(indices)(ring)
 
-    var Scalar = tensorSpace(indices)(ring);
+    Scalar.zero.should.be.eql(0)
 
-    Scalar.zero.should.be.eql(0);
+    Scalar.order.should.be.eql(0)
 
-    Scalar.order.should.be.eql(0);
+    Scalar.addition(1, 2).should.be.eql(3)
+    Scalar.addition(1, 2, 3).should.be.eql(6)
 
-    Scalar.addition(1, 2).should.be.eql(3);
-    Scalar.addition(1, 2, 3).should.be.eql(6);
+    Scalar.subtraction(1, 2).should.be.eql(-1)
+    Scalar.subtraction(1, 2, 3).should.be.eql(-4)
 
-    Scalar.subtraction(1, 2).should.be.eql(-1);
-    Scalar.subtraction(1, 2, 3).should.be.eql(-4);
+    var x = new Scalar(1)
+    x.data.should.be.eql(1)
 
-    var x = new Scalar(1);
-    x.data.should.be.eql(1);
+    x.addition(2).data.should.be.eql(3)
+    x.addition(2, 3, 4).data.should.be.eql(10)
 
-    x.addition(2).data.should.be.eql(3);
-    x.addition(2, 3, 4).data.should.be.eql(10);
+    x.subtraction(2).data.should.be.eql(-1)
+    x.subtraction(2, 3, 4).data.should.be.eql(-8)
+  })
 
-    x.subtraction(2).data.should.be.eql(-1);
-    x.subtraction(2, 3, 4).data.should.be.eql(-8);
-  });
+  it('can create a Vector', () => {
+    var indices = [2]
 
-  it('can create a Vector', function () {
-    var indices = [2];
+    var Vector = tensorSpace(indices)(ring)
 
-    var Vector = tensorSpace(indices)(ring);
+    Vector.zero.should.be.eql([0, 0])
 
-    Vector.zero.should.be.eql([0, 0]);
+    Vector.order.should.be.eql(1)
 
-    Vector.order.should.be.eql(1);
+    Vector.addition([1, 0], [1, -1]).should.be.eql([2, -1])
+    Vector.addition([1, 0], [1, -1], [-1, 1]).should.be.eql([1, 0])
 
-    Vector.addition([1, 0], [1, -1]).should.be.eql([2, -1]);
-    Vector.addition([1, 0], [1, -1], [-1, 1]).should.be.eql([1, 0]);
+    Vector.subtraction([2, -1], [1, -1]).should.be.eql([1, 0])
+    Vector.subtraction([1, -1], [2, -2], [3, -3]).should.be.eql([-4, 4])
 
-    Vector.subtraction([2, -1], [1, -1]).should.be.eql([1, 0]);
-    Vector.subtraction([1, -1], [2, -2], [3, -3]).should.be.eql([-4, 4]);
+    var v = new Vector([1, 2])
+    v.data.should.be.eql([1, 2])
 
-    var v = new Vector([1, 2]);
-    v.data.should.be.eql([1, 2]);
+    v.addition([4, -1]).data.should.be.eql([5, 1])
+    v.addition([4, -1], [-1, 1]).data.should.be.eql([4, 2])
 
-    v.addition([4, -1]).data.should.be.eql([5, 1]);
-    v.addition([4, -1], [-1, 1]).data.should.be.eql([4, 2]);
+    v.subtraction([2, 1]).data.should.be.eql([-1, 1])
+    v.subtraction([2, 1], [1, -1]).data.should.be.eql([-2, 2])
+  })
 
-    v.subtraction([2, 1]).data.should.be.eql([-1, 1]);
-    v.subtraction([2, 1], [1, -1]).data.should.be.eql([-2, 2]);
-  });
+  it('can create a Matrix', () => {
+    var indices = [2, 2]
 
-  it('can create a Matrix', function () {
-    var indices = [2, 2];
+    var Matrix = tensorSpace(indices)(ring)
 
-    var Matrix = tensorSpace(indices)(ring);
+    Matrix.zero.should.be.eql([0, 0,
+                               0, 0])
 
-    Matrix.zero.should.be.eql([0, 0, 0, 0]);
+    Matrix.order.should.be.eql(2)
 
-    Matrix.order.should.be.eql(2);
+    Matrix.addition([1, 0,
+                     0, 1], [1, -1,
+                             0,  1]).should.be.eql([2, -1,
+                                                    0,  2])
 
-    Matrix.addition([1, 0, 0, 1], [1, -1, 0, 1]).should.be.eql([2, -1, 0, 2]);
+    Matrix.addition([1, 0,
+                     0, 1], [1, -1,
+                             0,  1], [2, 1,
+                                      1, 2]).should.be.eql([4, 0,
+                                                            1, 4])
 
-    Matrix.addition([1, 0, 0, 1], [1, -1, 0, 1], [2, 1, 1, 2]).should.be.eql([4, 0, 1, 4]);
+    Matrix.subtraction([1, 0,
+                        0, 1], [1, -1,
+                                0,  1]).should.be.eql([0, 1,
+                                                       0, 0])
 
-    Matrix.subtraction([1, 0, 0, 1], [1, -1, 0, 1]).should.be.eql([0, 1, 0, 0]);
+    Matrix.subtraction([1, 0,
+                        0, 1], [1, -1,
+                                0,  1], [2, 1,
+                                         1, 2]).should.be.eql([-2,  0,
+                                                               -1, -2])
 
-    Matrix.subtraction([1, 0, 0, 1], [1, -1, 0, 1], [2, 1, 1, 2]).should.be.eql([-2, 0, -1, -2]);
+    var m = new Matrix([1, 2,
+                        3, 4])
 
-    var m = new Matrix([1, 2, 3, 4]);
+    m.data.should.be.eql([1, 2,
+                          3, 4])
 
-    m.data.should.be.eql([1, 2, 3, 4]);
+    m.addition([1, 0,
+                0, 1]).data.should.be.eql([2, 2,
+                                           3, 5])
 
-    m.addition([1, 0, 0, 1]).data.should.be.eql([2, 2, 3, 5]);
-
-    m.subtraction([1, 0, 0, 1]).data.should.be.eql([0, 2, 3, 3]);
-  });
-});
+    m.subtraction([1, 0,
+                   0, 1]).data.should.be.eql([0, 2,
+                                              3, 3])
+  })
+})
 
 },{"algebra":70,"algebra-ring":3}]},{},[57,58,59,60,61,62,63,69,71,72,73]);

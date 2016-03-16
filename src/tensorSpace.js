@@ -1,4 +1,5 @@
 var nAry = require('./nAry')
+var staticProps = require('static-props')
 var tensorProduct = require('tensor-product')
 
 /**
@@ -16,7 +17,7 @@ function tensorSpace (indices) {
   // A matrix has order 2.
   // Order is also called "rank" or "tensor rank", but, to avoid confusion with
   // "matrix rank" it is better to call it "order".
-  var order = indices.filter((dim) => {
+  const order = indices.filter((dim) => {
     return dim > 1
   }).length
 
@@ -24,7 +25,7 @@ function tensorSpace (indices) {
 
   return function (ring) {
     // Create zero.
-    var zero = indices.reduce((result, dim) => {
+    const zero = indices.reduce((result, dim) => {
       if (isScalar) {
         return ring.zero
       } else {
@@ -114,15 +115,7 @@ function tensorSpace (indices) {
       }
     }
 
-    Object.defineProperty(Tensor, 'zero', {
-      writable: false,
-      value: zero
-    })
-
-    Object.defineProperty(Tensor, 'order', {
-      writable: false,
-      value: order
-    })
+    staticProps(Tensor)({zero, order})
 
     return Tensor
   }

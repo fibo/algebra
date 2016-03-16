@@ -1,4 +1,3 @@
-
 /**
  * Extract data attribute, if any, and check it
  *
@@ -24,4 +23,3 @@ function toData (arg) {
 }
 
 module.exports = toData
-

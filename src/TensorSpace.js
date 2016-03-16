@@ -17,15 +17,13 @@ function tensorSpace (indices) {
   // A matrix has order 2.
   // Order is also called "rank" or "tensor rank", but, to avoid confusion with
   // "matrix rank" it is better to call it "order".
-  const order = indices.filter((dim) => {
-    return dim > 1
-  }).length
+  var order = indices.filter(dim => dim > 1).length
 
   var isScalar = (order === 0)
 
   return function (ring) {
     // Create zero.
-    const zero = indices.reduce((result, dim) => {
+    var zero = indices.reduce((result, dim) => {
       if (isScalar) {
         return ring.zero
       } else {
@@ -115,7 +113,10 @@ function tensorSpace (indices) {
       }
     }
 
-    staticProps(Tensor)({zero, order})
+    staticProps(Tensor)({
+      order: order,
+      zero: zero
+    })
 
     return Tensor
   }

@@ -8,6 +8,9 @@ var algebraGroup              = require('algebra-group'),
     method                    = require('./method'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
+var TensorSpace = require('./TensorSpace')
+
+var operators = require('./operators.json')
 
 var nAryMethod  = method.nAry,
     unaryMethod = method.unary
@@ -21,103 +24,39 @@ var nAryMethod  = method.nAry,
  * var v = new V([1, 2])
  * ```
  *
- * @param {Object} Scalar class
+ * @param {Object} field
  *
  * @returns {Function} anonymous with signature (dimension)
  */
 
-function VectorSpace (Scalar) {
+function VectorSpace (field) {
 
   /**
    * @api private
    *
    * @param {Number} dimension
    *
-   * @returns {Constructor} Vector
+   * @returns {Function} Vector
    */
 
   return function (dimension) {
-
-    function createZero (scalarZero, dimension) {
-      var vectorZero = []
-
-      for (var i = 0; i < dimension; i++)
-        vectorZero.push(scalarZero)
-
-     return vectorZero
-    }
-
-    var zero = createZero(Scalar.zero, dimension)
-
-    function _contains (a) {
-      if (a.length !== dimension) return false
-
-      for (var i = 0; i < dimension; i++)
-        if (! Scalar.contains(a[i]))
-          return false
-
-      return true
-    }
-
-    function _equality (a, b) {
-      for (var i = 0; i < dimension; i++)
-        if (! Scalar.equality(a[i], b[i]))
-          return false
-
-      return true
-    }
-
-    function _addition (a, b) {
-      var c = []
-
-      for (var i = 0; i < dimension; i++)
-        c.push(Scalar.addition(a[i], b[i]))
-
-      return c
-    }
-
-    function _negation (a) {
-      var b = []
-
-      for (var i = 0; i < dimension; i++)
-        b.push(Scalar.negation(a[i]))
-
-      return b
-    }
-
-    var g = algebraGroup({
-      identity       : zero,
-      contains       : _contains,
-      equality       : _equality,
-      compositionLaw : _addition,
-      inversion      : _negation
-    })
-
-    var addition    = coerced(g.addition),
-        contains    = coerced(g.contains),
-        disequality = coerced(g.disequality),
-        equality    = coerced(g.equality),
-        negation    = coerced(g.negation),
-        notContains = coerced(g.notContains),
-        subtraction = coerced(g.subtraction)
-
-    /**
-     * Inherits from [Element](#element).
-     *
-     * ```
-     * var VectorSpace = algebra.VectorSpace,
-     *     R           = algebra.Real
-     *
-     * var R3 = VectorSpace(R)(3)
-     *
-     * var vector = R3([1, 2, 6]
-     * ```
-     *
-     * @param {Any} data
-     */
+    var AbstractVector = TensorSpace([dimension])(field)
 
     function Vector (data) {
-      Element.call(this, data, contains)
+      AbstractVector.call(this, data)
+    }
+
+    inherits(Vector, AbstractVector)
+
+    operators.forEach((operator) => {
+      Vector[operator] = AbstractVector[operator]
+    })
+
+    return Vector
+  }
+}
+
+module.exports = VectorSpace
 
       /**
        * Norm of a vector
@@ -129,7 +68,6 @@ function VectorSpace (Scalar) {
        * @api private
        *
        * @returns {Scalar} result
-       */
 
       function vectorNorm () {
         var result = Scalar.multiplication(data[0], data[0])
@@ -141,20 +79,10 @@ function VectorSpace (Scalar) {
       }
 
       Object.defineProperty(this, 'norm', {get: vectorNorm})
-    }
-
-    inherits(Vector, Element)
-
-    // Static attributes.
-
-    Object.defineProperty(Vector, 'zero', {
-      writable: false,
-      value: zero
-    })
+       */
 
     /**
      * @api private
-     */
 
     function crossProduct (right) {
       var rightData      = toData(right)
@@ -168,12 +96,10 @@ function VectorSpace (Scalar) {
       Vector.prototype.cross        = crossProduct
       Vector.prototype.x            = crossProduct
     }
-
-  // TODO staticRightMultiplication by a matrix
+     */
 
     /**
      * @api private
-     */
 
     function scalarProduct (vector1, vector2) {
       var vectorData1    = toData(vector1),
@@ -190,10 +116,10 @@ function VectorSpace (Scalar) {
 
       return result
     }
+     */
 
     /**
      * @api private
-     */
 
     function vectorScalarProduct (vector) {
       var result = scalarProduct(this.data, vector)
@@ -202,10 +128,10 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.scalarProduct = vectorScalarProduct
+     */
 
     /**
      * @api private
-     */
 
     function perScalarProduct (Scalar) {
       var data       = this.data,
@@ -220,6 +146,7 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.perScalarProduct = perScalarProduct
+     */
 
     /**
      * Transpose a column-vector to a row-vector
@@ -229,7 +156,6 @@ function VectorSpace (Scalar) {
      * @api private
      *
      * @returns {Object} Matrix
-     */
 
     function transpose () {
       var data   = this.data
@@ -242,56 +168,4 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.transpose = transpose
-
-    // Comparison operators.
-
-    Vector.prototype.equality    = comparison(equality)
-    Vector.prototype.disequality = comparison(disequality)
-
-    // Chainable class methods.
-
-    Vector.prototype.addition    = nAryMethod(addition, Vector)
-    Vector.prototype.subtraction = nAryMethod(subtraction, Vector)
-    Vector.prototype.negation    = unaryMethod(negation, Vector)
-
-    // Static operators.
-
-    Vector.contains    = contains
-    Vector.disequality = disequality
-    Vector.equality    = equality
-    Vector.notContains = notContains
-
-    Vector.addition    = addition
-    Vector.subtraction = subtraction
-    Vector.negation    = negation
-
-    Vector.scalarProduct = scalarProduct
-
-    // Aliases
-
-    Vector.eq = Vector.equality
-    Vector.ne = Vector.disequality
-
-    Vector.equal    = Vector.equality
-    Vector.notEqual = Vector.disequality
-    Vector.notEq    = Vector.disequality
-
-    Vector.add = Vector.addition
-    Vector.neg = Vector.negation
-    Vector.sub = Vector.subtraction
-
-    Vector.prototype.add = Vector.prototype.addition
-    Vector.prototype.neg = Vector.prototype.negation
-    Vector.prototype.sub = Vector.prototype.subtraction
-
-    Vector.prototype.dotProduct = vectorScalarProduct
-    Vector.prototype.dot        = vectorScalarProduct
-
-    return Vector
-  }
-}
-
-itemsPool.setVectorSpace(VectorSpace)
-
-module.exports = VectorSpace
-
+     */

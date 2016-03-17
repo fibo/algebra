@@ -1,5 +1,6 @@
-var algebra = require('algebra'),
-     should   = require('should')
+var algebra = require('algebra')
+
+var notDefined = require('not-defined')
 
 var MatrixSpace = algebra.MatrixSpace
 var Real = algebra.Real
@@ -9,44 +10,42 @@ var methodUnaryOperator = require('./features/methodUnaryOperator')
 var staticBinaryOperator = require('./features/staticBinaryOperator')
 var staticUnaryOperator = require('./features/staticUnaryOperator')
 
-describe('MatrixSpace', function () {
-  var R2x3 = MatrixSpace(Real)(2, 3),
-      R2x2 = MatrixSpace(Real)(2),
-      R3x2 = MatrixSpace(Real)(3, 2)
+describe('MatrixSpace', () => {
+  var R2x3 = MatrixSpace(Real)(2, 3)
+  var R2x2 = MatrixSpace(Real)(2)
+  var R3x2 = MatrixSpace(Real)(3, 2)
 
-  it('has signature (Scalar)(numRows, numCols)'/*, function () {
+  it('has signature (Scalar)(numRows, numCols)', () => {
     R2x3.numRows.should.be.eql(2)
     R2x3.numCols.should.be.eql(3)
-    R2x3.isSquare.should.be.not.ok
-  }*/)
+  })
 
-  it('has signature (Scalar)(numRows) and numCols defaults to numRows'/*, function () {
+  it('has signature (Scalar)(numRows) and numCols defaults to numRows', () => {
     R2x2.numRows.should.be.eql(2)
     R2x2.numCols.should.be.eql(2)
-    R2x2.isSquare.should.be.ok
-  }*/)
+  })
 
   var matrix1  = new R2x2([ 2, 3,
-                            1, 1 ]),
-      matrix2  = new R2x2([ 0, 1,
+                            1, 1 ])
+  var matrix2  = new R2x2([ 0, 1,
                            -1, 0 ])
-      matrix3  = new R2x3([ 0, 1, 2,
+  var matrix3  = new R2x3([ 0, 1, 2,
                            -2, 1, 0 ])
 
   describe('numRows', function () {
-    it('returns the number of rows'/*, function () {
+    it('returns the number of rows', function () {
       matrix1.numRows.should.be.eql(2)
       matrix2.numRows.should.be.eql(2)
       matrix3.numRows.should.be.eql(2)
-    }*/)
+    })
   })
 
   describe('numCols', function () {
-    it('returns the number of cols'/*, function () {
+    it('returns the number of cols', function () {
       matrix1.numCols.should.be.eql(2)
       matrix2.numCols.should.be.eql(2)
       matrix3.numCols.should.be.eql(3)
-    }*/)
+    })
   })
 
   describe('determinant', function () {
@@ -127,8 +126,36 @@ describe('MatrixSpace', function () {
     )*/)
   })
 
-  describe('transpose()', function () {
-    it('is a static operator'/*, function () {
+  describe('trace()', () => {
+    it('is a static method', () => {
+      R2x2.trace([1, 2,
+                  5, 6]).should.be.eql(7)
+    })
+
+    it('is not available for no square matrices', () => {
+      notDefined(R3x2.trace).should.be.true
+    })
+  })
+
+  describe('trace', () => {
+    it('is a static attribute', () => {
+      var matrix2x2  = new R2x2([1, 2,
+                                 5, 6])
+
+      matrix2x2.trace.should.be.eql(7)
+    })
+
+    it('is not available for no square matrices', () => {
+      var matrix3x2 = new R3x2([1, 2,
+                                3, 4,
+                                5, 6])
+
+      notDefined(matrix3x2.trace).should.be.true
+    })
+  })
+
+  describe('transpose()', () => {
+    it('is a static operator'/*, () => {
       var matrix3x2a  = new R3x2([1, 2,
                                   3, 4,
                                   5, 6])
@@ -137,7 +164,7 @@ describe('MatrixSpace', function () {
                                                     2, 4, 6])
     }*/)
 
-    it('returns a transposed matrix'/*, function () {
+    it('returns a transposed matrix'/*, () => {
       var matrix2x3a  = new R2x3([1, 2, 3,
                                   4, 5, 6])
 
@@ -151,7 +178,9 @@ describe('MatrixSpace', function () {
       matrix2x3a.numCols.should.be.eql(matrixTransposed.numRows)
     }*/)
 
-    it('is chainable for square matrices'/*, function () {
+    it('is a class method')
+
+    it('is chainable for square matrices'/*, () => {
       var matrix2x2a  = new R2x2([1, 2,
                                   3, 4])
 

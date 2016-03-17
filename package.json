@@ -83,9 +83,8 @@
     "laplace-determinant": "^0.1.0",
     "multidim-array-index": "^0.2.0",
     "not-defined": "^1.0.0",
-    "static-props": "^0.2.0",
     "strict-mode": "^0.5.0",
-    "tensor-contraction": "^0.1.0",
+    "tensor-contraction": "^0.1.1",
     "tensor-product": "^0.2.0"
   }
 }

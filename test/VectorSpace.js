@@ -103,12 +103,19 @@ describe('VectorSpace', function () {
   })
 
   describe('norm', function () {
-    var vector1 = new R2([0, 1]),
-        vector2 = new R2([1, 1])
+    it('is an attribute holding a scalar', function () {
+      var vector1 = new R2([0, 1])
+      var vector2 = new R3([1, 1, 2])
 
-    it('is a scalar'/*, function () {
       vector1.norm.data.should.be.eql(1)
-      vector2.norm.data.should.be.eql(2)
-    }*/)
+      vector2.norm.data.should.be.eql(6)
+    })
+  })
+
+  describe('norm()', function () {
+    it('is a static method', function () {
+      R2.norm([0, 1]).data.should.be.eql(1)
+      R3.norm([1, 1, 2]).data.should.be.eql(6)
+    })
   })
 })

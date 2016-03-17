@@ -1,5 +1,6 @@
 var inherits  = require('inherits')
 var operators = require('./operators.json')
+var staticProps = require('static-props')
 var TensorSpace = require('./TensorSpace')
 var toData = require('./toData')
 
@@ -18,6 +19,8 @@ var toData = require('./toData')
  */
 
 function VectorSpace (field) {
+  var addition = field.addition
+  var multiplication = field.multiplication
 
   /**
    * @api private
@@ -30,6 +33,30 @@ function VectorSpace (field) {
   return function (dimension) {
     var AbstractVector = TensorSpace([dimension])(field)
     var Scalar = TensorSpace([1])(field)
+
+    /**
+     * Norm of a vector
+     *
+     * Given v = (x1, x2, ... xN)
+     *
+     * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
+     *
+     * @param {Object|Array} vector
+     *
+     * @returns {Object} scalar
+     */
+
+    function norm (vector) {
+      var data = toData(vector)
+
+      var value = multiplication(data[0], data[0])
+
+      for (var i = 1; i < dimension; i++) {
+        value = addition(value, multiplication(data[i], data[i]))
+      }
+
+      return new Scalar(value)
+    }
 
     /**
      * Scalar product
@@ -65,6 +92,10 @@ function VectorSpace (field) {
 
     function Vector (data) {
       AbstractVector.call(this, data)
+
+      staticProps(this)({
+        norm: norm(data)
+      })
     }
 
     inherits(Vector, AbstractVector)
@@ -79,6 +110,7 @@ function VectorSpace (field) {
 
     // Static operators.
 
+    Vector.norm = norm
     Vector.scalarProduct = scalarProduct
 
     operators.group.forEach((operator) => {
@@ -101,29 +133,6 @@ function VectorSpace (field) {
 }
 
 module.exports = VectorSpace
-
-      /**
-       * Norm of a vector
-       *
-       * Given v = (x1, x2, ... xN)
-       *
-       * norm is defined as n = x1 * x1 + x2 * x2 + ... + xN * xN
-       *
-       * @api private
-       *
-       * @returns {Scalar} result
-
-      function vectorNorm () {
-        var result = Scalar.multiplication(data[0], data[0])
-
-        for (var i = 1; i < dimension; i++)
-          result = Scalar.addition(result, Scalar.multiplication(data[i], data[i]))
-
-        return new Scalar(result)
-      }
-
-      Object.defineProperty(this, 'norm', {get: vectorNorm})
-       */
 
     /**
      * @api private

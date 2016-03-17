@@ -4,7 +4,6 @@ var algebraGroup              = require('algebra-group'),
     comparison                = require('./comparison'),
     Element                   = require('./Element'),
     inherits                  = require('inherits'),
-    itemsPool                 = require('./itemsPool'),
     method                    = require('./method'),
     rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
     toData                    = require('./toData')
@@ -48,7 +47,7 @@ function VectorSpace (field) {
 
     inherits(Vector, AbstractVector)
 
-    operators.forEach((operator) => {
+    operators.group.forEach((operator) => {
       Vector[operator] = AbstractVector[operator]
     })
 

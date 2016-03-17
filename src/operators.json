@@ -1,8 +1,12 @@
-[
-  "addition",
-  "add",
-  "subtraction",
-  "sub",
-  "multiplication",
-  "mul"
-]
+{
+  "group": [
+    "addition",
+    "add",
+    "subtraction",
+    "sub"
+  ],
+  "ring": [
+    "multiplication",
+    "mul"
+  ]
+}

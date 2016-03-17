@@ -48,7 +48,7 @@ function MatrixSpace (field) {
 
     inherits(Matrix, AbstractMatrix)
 
-    operators.forEach((operator) => {
+    operators.group.forEach((operator) => {
       Matrix[operator] = AbstractMatrix[operator]
     })
 

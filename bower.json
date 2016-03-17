@@ -3,10 +3,7 @@
   "main": [
     "dist/algebra.js",
     "dist/algebra.map",
-    "dist/algebra.min.js",
-    "dist/algebra.es6.js",
-    "dist/algebra.es6.map",
-    "dist/algebra.es6.min.js"
+    "dist/algebra.min.js"
   ],
   "homepage": "http://g14n.info/algebra",
   "authors": [

@@ -2,16 +2,14 @@
 var algebra = require('algebra'),
     should  = require('should')
 
-var MatrixSpace = algebra.MatrixSpace,
-    Real        = algebra.Real,
-    VectorSpace = algebra.VectorSpace
+var MatrixSpace = algebra.MatrixSpace
+var Real = algebra.Real
+var VectorSpace = algebra.VectorSpace
 
-    var indices = [2]
-
-var methodBinaryOperator = require('./features/methodBinaryOperator'),
-    methodUnaryOperator  = require('./features/methodUnaryOperator'),
-    staticBinaryOperator  = require('./features/staticBinaryOperator'),
-    staticUnaryOperator   = require('./features/staticUnaryOperator')
+var methodBinaryOperator = require('./features/methodBinaryOperator')
+var methodUnaryOperator = require('./features/methodUnaryOperator')
+var staticBinaryOperator = require('./features/staticBinaryOperator')
+var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 var R2 = VectorSpace(Real)(2),
     R3 = VectorSpace(Real)(3)
@@ -37,23 +35,47 @@ describe('VectorSpace', function () {
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
   })
 
-  describe('scalarProduct()', function () {
-    var vector1 = new R2([0, 1]),
-        vector2 = new R2([1, 1])
-
-    it('is a static operator'/*, function () {
+  describe('scalarProduct()', () => {
+    it('is a static operator', () => {
       var data = R2.scalarProduct([0, 1], [1, 1])
 
       data.should.eql(1)
-    }*/)
+    })
 
-    it('is returns a scalar'/*, function () {
+    it('is a class method', () => {
+      var vector1 = new R2([0, 1])
+      var vector2 = new R2([1, 1])
+
+      var scalar = vector1.scalarProduct(vector2)
+
+      scalar.data.should.be.eql(1)
+    })
+
+    it('is returns a scalar'/*, () => {
       var scalar = vector1.scalarProduct(vector2)
 
       scalar.should.be.instanceOf(Real)
 
       scalar.data.should.be.eql(1)
     }*/)
+  })
+
+  describe('dotProduct()', () => {
+    it('is an alias of scalarProduct()', () => {
+      R2.scalarProduct.should.be.eql(R2.dotProduct)
+
+      var vector = new R2([0, 1])
+      vector.scalarProduct.should.be.eql(vector.dotProduct)
+    })
+  })
+
+  describe('dot()', () => {
+    it('is an alias of scalarProduct()', () => {
+      R2.scalarProduct.should.be.eql(R2.dot)
+
+      var vector = new R2([0, 1])
+      vector.scalarProduct.should.be.eql(vector.dot)
+    })
   })
 
   describe('transpose()', function () {
@@ -67,7 +89,7 @@ describe('VectorSpace', function () {
       transposed.numRows.should.be.eql(1)
     }*/)
 
-    it('is used to right multiply a vector by a matrix'/*, function () {
+    it('can be used to right multiply a vector by a matrix'/*, function () {
       var matrix  = new R2x2([0, 1,
                               1, 0]),
           vector1 = new R2([0, 1])

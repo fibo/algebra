@@ -1,14 +1,13 @@
-
-  var algebra = require('algebra'),
+var algebra = require('algebra'),
      should   = require('should')
 
-var MatrixSpace = algebra.MatrixSpace,
-    Real        = algebra.Real
+var MatrixSpace = algebra.MatrixSpace
+var Real = algebra.Real
 
-var methodBinaryOperator = require('./features/methodBinaryOperator'),
-    methodUnaryOperator  = require('./features/methodUnaryOperator'),
-    staticBinaryOperator = require('./features/staticBinaryOperator'),
-    staticUnaryOperator  = require('./features/staticUnaryOperator')
+var methodBinaryOperator = require('./features/methodBinaryOperator')
+var methodUnaryOperator = require('./features/methodUnaryOperator')
+var staticBinaryOperator = require('./features/staticBinaryOperator')
+var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('MatrixSpace', function () {
   var R2x3 = MatrixSpace(Real)(2, 3),
@@ -129,7 +128,6 @@ describe('MatrixSpace', function () {
   })
 
   describe('transpose()', function () {
-
     it('is a static operator'/*, function () {
       var matrix3x2a  = new R3x2([1, 2,
                                   3, 4,
@@ -161,5 +159,7 @@ describe('MatrixSpace', function () {
 
       should.deepEqual(matrix2x2a.data, matrix2x2b.data)
     }*/)
+
+    it('returns a vector if the Matrix has one column')
   })
 })

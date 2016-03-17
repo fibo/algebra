@@ -1,18 +1,7 @@
-
-var algebraGroup              = require('algebra-group'),
-    coerced                   = require('./coerced'),
-    comparison                = require('./comparison'),
-    Element                   = require('./Element'),
-    inherits                  = require('inherits'),
-    method                    = require('./method'),
-    rowByColumnMultiplication = require('./rowByColumnMultiplication.js'),
-    toData                    = require('./toData')
-var TensorSpace = require('./TensorSpace')
-
+var inherits  = require('inherits')
 var operators = require('./operators.json')
-
-var nAryMethod  = method.nAry,
-    unaryMethod = method.unary
+var TensorSpace = require('./TensorSpace')
+var toData = require('./toData')
 
 /**
  * Space of vectors
@@ -40,6 +29,39 @@ function VectorSpace (field) {
 
   return function (dimension) {
     var AbstractVector = TensorSpace([dimension])(field)
+    var Scalar = TensorSpace([1])(field)
+
+    /**
+     * Scalar product
+     *
+     * https://en.wikipedia.org/wiki/Dot_product
+     *
+     * @param {Object|Array} vector1
+     * @param {Object|Array} vector2
+     *
+     * @returns {*} scalar
+     */
+
+    function scalarProduct (vector1, vector2) {
+      // TODO use tensor product and then contraction (trace)
+      var vectorData1 = toData(vector1)
+      var vectorData2 = toData(vector2)
+
+      if (vectorData1.length !== vectorData2.length)
+        throw new TypeError('Vectors have not the same dimension')
+
+      var result = field.multiplication(vectorData1[0], vectorData2[0])
+
+      for (var i = 1; i < dimension; i++) {
+        result = field.addition(result, field.multiplication(vectorData1[i], vectorData2[i]))
+      }
+
+      return result
+    }
+
+    /**
+     * @class
+     */
 
     function Vector (data) {
       AbstractVector.call(this, data)
@@ -47,8 +69,31 @@ function VectorSpace (field) {
 
     inherits(Vector, AbstractVector)
 
+    Vector.prototype.scalarProduct = function (vector2) {
+      var data = this.data
+
+      var result = scalarProduct(data, vector2)
+
+      return new Scalar(result)
+    }
+
+    // Static operators.
+
+    Vector.scalarProduct = scalarProduct
+
     operators.group.forEach((operator) => {
       Vector[operator] = AbstractVector[operator]
+    })
+
+    // Aliases
+
+    var myOperators = ['scalarProduct'].concat(operators.group)
+
+    myOperators.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Vector[alias] = Vector[operator]
+        Vector.prototype[alias] = Vector.prototype[operator]
+      })
     })
 
     return Vector
@@ -97,25 +142,6 @@ module.exports = VectorSpace
     }
      */
 
-    /**
-     * @api private
-
-    function scalarProduct (vector1, vector2) {
-      var vectorData1    = toData(vector1),
-          vectorData2    = toData(vector2)
-
-      if (vectorData1.length !== vectorData2.length)
-        throw new TypeError('Vectors has not the same dimension')
-
-      var result = Scalar.multiplication(vectorData1[0], vectorData2[0])
-
-      for (var i = 1; i < dimension; i++) {
-        result = Scalar.addition(result, Scalar.multiplication(vectorData1[i], vectorData2[i]))
-      }
-
-      return result
-    }
-     */
 
     /**
      * @api private

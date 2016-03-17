@@ -1,12 +1,24 @@
 {
   "group": [
     "addition",
-    "add",
-    "subtraction",
-    "sub"
+    "subtraction"
   ],
   "ring": [
-    "multiplication",
-    "mul"
-  ]
+    "multiplication"
+  ],
+  "aliasesOf": {
+    "addition": [
+      "add"
+    ],
+    "multiplication": [
+      "mul"
+    ],
+    "scalarProduct": [
+      "dotProduct",
+      "dot"
+    ],
+    "subtraction": [
+      "sub"
+    ]
+  }
 }

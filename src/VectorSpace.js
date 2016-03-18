@@ -35,6 +35,13 @@ function VectorSpace (field) {
     var Scalar = TensorSpace([1])(field)
 
     /**
+     */
+
+    function crossProduct () {
+      // TODO complete cross product
+    }
+
+    /**
      * Norm of a vector
      *
      * Given v = (x1, x2, ... xN)
@@ -100,12 +107,28 @@ function VectorSpace (field) {
 
     inherits(Vector, AbstractVector)
 
-    Vector.prototype.scalarProduct = function (vector2) {
+    Vector.prototype.scalarProduct = function (vector) {
       var data = this.data
 
-      var result = scalarProduct(data, vector2)
+      var result = scalarProduct(data, vector)
 
       return new Scalar(result)
+    }
+
+    // Cross product is defined only in dimension 3.
+    function crossProductMethod (vector) {
+      var data = this.data
+
+      var result = crossProduct(data, vector)
+
+      return new Vector(result)
+    }
+
+    if (dimension === 3) {
+      Vector.crossProduct = crossProduct
+
+      Vector.prototype.crossProduct = crossProductMethod
+      Vector.prototype.cross = crossProductMethod
     }
 
     // Static operators.
@@ -128,41 +151,15 @@ function VectorSpace (field) {
       })
     })
 
+    if (dimension === 3) {
+      Vector.cross = crossProduct
+    }
+
     return Vector
   }
 }
 
 module.exports = VectorSpace
-
-    /**
-     * @api private
-
-    function crossProduct (right) {
-      var rightData      = toData(right)
-
-            // TODO complete cross product
-    }
-
-    // Cross product is defined only in dimension 3.
-    if (dimension === 3) {
-      Vector.prototype.crossProduct = crossProduct
-      Vector.prototype.cross        = crossProduct
-      Vector.prototype.x            = crossProduct
-    }
-     */
-
-
-    /**
-     * @api private
-
-    function vectorScalarProduct (vector) {
-      var result = scalarProduct(this.data, vector)
-
-      return new Scalar(result)
-    }
-
-    Vector.prototype.scalarProduct = vectorScalarProduct
-     */
 
     /**
      * @api private

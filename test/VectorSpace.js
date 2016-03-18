@@ -16,10 +16,10 @@ var R2 = VectorSpace(Real)(2),
 
 var R2x2 = MatrixSpace(Real)(2, 2)
 
-describe('VectorSpace', function () {
+describe('VectorSpace', () => {
   var operator
 
-  describe('addition()', function () {
+  describe('addition()', () => {
     operator = 'addition'
 
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
@@ -27,7 +27,7 @@ describe('VectorSpace', function () {
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
   })
 
-  describe('subtraction()', function () {
+  describe('subtraction()', () => {
     operator = 'subtraction'
 
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
@@ -78,8 +78,8 @@ describe('VectorSpace', function () {
     })
   })
 
-  describe('transpose()', function () {
-    it('returns a row-vector (as a matrix)'/*, function () {
+  describe('transpose()', () => {
+    it('returns a row-vector (as a matrix)'/*, () => {
       var vector1 = new R3([0, 1, 0])
 
       var transposed = vector1.transpose()
@@ -89,7 +89,7 @@ describe('VectorSpace', function () {
       transposed.numRows.should.be.eql(1)
     }*/)
 
-    it('can be used to right multiply a vector by a matrix'/*, function () {
+    it('can be used to right multiply a vector by a matrix'/*, () => {
       var matrix  = new R2x2([0, 1,
                               1, 0]),
           vector1 = new R2([0, 1])
@@ -102,8 +102,8 @@ describe('VectorSpace', function () {
     }*/)
   })
 
-  describe('norm', function () {
-    it('is an attribute holding a scalar', function () {
+  describe('norm', () => {
+    it('is an attribute holding a scalar', () => {
       var vector1 = new R2([0, 1])
       var vector2 = new R3([1, 1, 2])
 
@@ -112,10 +112,34 @@ describe('VectorSpace', function () {
     })
   })
 
-  describe('norm()', function () {
-    it('is a static method', function () {
+  describe('norm()', () => {
+    it('is a static method', () => {
       R2.norm([0, 1]).data.should.be.eql(1)
       R3.norm([1, 1, 2]).data.should.be.eql(6)
+    })
+  })
+
+  describe('crossProduct()', () => {
+    it('is a static method'/*, () => {
+      R3.crossProduct([1, 0, 0], [0, 1, 0]).data.should.be.eql([0, 0, 1])
+    }*/)
+
+    it('is a class method'/*, () => {
+      var vector1 = new R3([1, 0, 0])
+      var vector2 = new R3([0, 1, 0])
+
+      vector1.crossProduct(vector2).data.should.be.eql([0, 0, 1])
+    }*/)
+
+    it('is defined only in dimension 3')
+  })
+
+  describe('cross()', () => {
+    it('is an alias of crossProduct()', () => {
+      R3.crossProduct.should.be.eql(R3.cross)
+
+      var vector = new R3([1, 0, 1])
+      vector.crossProduct.should.be.eql(vector.cross)
     })
   })
 })

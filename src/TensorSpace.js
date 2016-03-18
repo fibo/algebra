@@ -1,4 +1,5 @@
 var nAry = require('./nAry')
+var operators = require('./operators.json')
 var staticProps = require('static-props')
 var tensorProduct = require('tensor-product')
 
@@ -54,25 +55,7 @@ function tensorSpace (indices) {
       return new Tensor(data)
     }
 
-    Tensor.prototype.add = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
-
-      var data = Tensor.addition.apply(null, operands)
-
-      return new Tensor(data)
-    }
-
     Tensor.prototype.subtraction = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
-
-      var data = Tensor.subtraction.apply(null, operands)
-
-      return new Tensor(data)
-    }
-
-    Tensor.prototype.sub = function () {
       var args = [].slice.call(arguments)
       var operands = [this.data].concat(args)
 
@@ -85,23 +68,11 @@ function tensorSpace (indices) {
       return nAry(indices, ring.equality).apply(null, arguments)
     }
 
-    Tensor.eq = function () {
-      return nAry(indices, ring.equality).apply(null, arguments)
-    }
-
     Tensor.addition = function () {
       return nAry(indices, ring.addition).apply(null, arguments)
     }
 
-    Tensor.add = function () {
-      return nAry(indices, ring.addition).apply(null, arguments)
-    }
-
     Tensor.subtraction = function () {
-      return nAry(indices, ring.subtraction).apply(null, arguments)
-    }
-
-    Tensor.sub = function () {
       return nAry(indices, ring.subtraction).apply(null, arguments)
     }
 
@@ -116,6 +87,13 @@ function tensorSpace (indices) {
     staticProps(Tensor)({
       order: order,
       zero: zero
+    })
+
+    operators.group.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Tensor[alias] = Tensor[operator]
+        Tensor.prototype[alias] = Tensor.prototype[operator]
+      })
     })
 
     return Tensor

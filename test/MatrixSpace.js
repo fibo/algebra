@@ -11,6 +11,7 @@ var staticBinaryOperator = require('./features/staticBinaryOperator')
 var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('MatrixSpace', () => {
+  var R1x4 = MatrixSpace(Real)(1, 4)
   var R2x3 = MatrixSpace(Real)(2, 3)
   var R2x2 = MatrixSpace(Real)(2)
   var R3x2 = MatrixSpace(Real)(3, 2)
@@ -155,40 +156,71 @@ describe('MatrixSpace', () => {
   })
 
   describe('transpose()', () => {
-    it('is a static operator'/*, () => {
-      var matrix3x2a  = new R3x2([1, 2,
-                                  3, 4,
-                                  5, 6])
+    it('is a static operator', () => {
+      var matrix3x2 = new R3x2([1, 2,
+                                3, 4,
+                                5, 6])
 
-      should.deepEqual(R3x2.transpose(matrix3x2a), [1, 3, 5,
-                                                    2, 4, 6])
-    }*/)
+      var transposed = R3x2.transpose(matrix3x2)
 
-    it('returns a transposed matrix'/*, () => {
-      var matrix2x3a  = new R2x3([1, 2, 3,
+      transposed.should.deepEqual([1, 3, 5,
+                                   2, 4, 6])
+    })
+  })
+
+  describe('transposed', () => {
+    it('is a class attribute', () => {
+      var matrix3x2 = new R3x2([1, 2,
+                                3, 4,
+                                5, 6])
+
+      var transposed = matrix3x2.transposed
+
+      transposed.data.should.deepEqual([1, 3, 5,
+                                        2, 4, 6])
+    })
+
+    it('holds a transposed matrix', () => {
+      var matrix2x3  = new R2x3([1, 2, 3,
                                   4, 5, 6])
 
-      var matrixTransposed = matrix2x3a.transpose()
+      matrix2x3.transposed.data.should.deepEqual([1, 4,
+                                                  2, 5,
+                                                  3, 6])
 
-      should.deepEqual(matrixTransposed.data, [1, 4,
-                                               2, 5,
-                                               3, 6])
+      matrix2x3.numRows.should.be.eql(matrix2x3.transposed.numCols)
+      matrix2x3.numCols.should.be.eql(matrix2x3.transposed.numRows)
+    })
 
-      matrix2x3a.numRows.should.be.eql(matrixTransposed.numCols)
-      matrix2x3a.numCols.should.be.eql(matrixTransposed.numRows)
-    }*/)
-
-    it('is a class method')
-
-    it('is chainable for square matrices'/*, () => {
+    it('is an involution', () => {
       var matrix2x2a  = new R2x2([1, 2,
                                   3, 4])
 
-      var matrix2x2b = matrix2x2a.transpose().transpose()
+      var matrix2x2b = matrix2x2a.transposed.transposed
 
-      should.deepEqual(matrix2x2a.data, matrix2x2b.data)
-    }*/)
+      matrix2x2a.data.should.deepEqual(matrix2x2b.data)
+    })
 
-    it('returns a vector if the Matrix has one column')
+    it('returns a vector if the Matrix has one row', () => {
+      var matrix1x4  = new R1x4([1, 2, 3, 4])
+
+      var vector = matrix1x4.transposed
+
+      matrix1x4.data.should.deepEqual(vector.data)
+      // TODO vector.dimension.should.be.eql(4)
+    })
   })
+
+  describe('tr()', () => {
+    it('is an alias of transpose()', () => {
+      R2x2.tr.should.be.eql(R2x2.tr)
+
+      /*
+      var matrix = new R2x2([0, 1,
+                             1, 0])
+      vector.scalarProduct.should.be.eql(vector.dotProduct)
+      */
+    })
+  })
+
 })

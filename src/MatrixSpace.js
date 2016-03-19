@@ -1,5 +1,7 @@
 var inherits = require('inherits')
 var no = require('not-defined')
+var matrixToArrayIndex = require('./matrixToArrayIndex')
+var multiDimArrayIndex = require('multidim-array-index')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
 var TensorSpace = require('./TensorSpace')
@@ -42,10 +44,46 @@ function MatrixSpace (field) {
 
     var indices = [numRows, numCols]
 
+    /**
+     * Calculates the matrix trace.
+     *
+     * https://en.wikipedia.org/wiki/Trace_(linear_algebra)
+     *
+     * @param {Object|Array} matrix
+     *
+     * @returns {Object} scalar
+     */
+
     function trace (matrix) {
       var matrixData = toData(matrix)
 
       return contraction([0, 1], indices, matrixData)
+    }
+
+    /**
+     * Calculates the matrix trace.
+     *
+     * https://en.wikipedia.org/wiki/Trace_(linear_algebra)
+     *
+     * @param {Object|Array} matrix
+     *
+     * @returns {Object} scalar
+     */
+
+    function transpose (matrix) {
+      var matrixData = toData(matrix)
+      var transposedData = []
+
+      for (var i = 0; i < numRows; i++) {
+        for (var j = 0; j < numCols; j++) {
+          var index = matrixToArrayIndex(i, j, numCols)
+          var transposedIndex = matrixToArrayIndex(j, i, numRows)
+
+          transposedData[transposedIndex] = matrixData[index]
+        }
+      }
+
+      return transposedData
     }
 
     /**
@@ -65,6 +103,22 @@ function MatrixSpace (field) {
           trace: trace(data)
         })
       }
+
+      Object.defineProperties(this, {
+        'transposed': {
+          get: () => {
+            var result = transpose(data)
+
+            if (numCols === 1) {
+              var Vector = VectorSpace(field)(numRows)
+              return new Vector(result)
+            } else {
+              var Matrix = MatrixSpace(field)(numCols, numRows)
+              return new Matrix(result)
+            }
+          }
+        }
+      })
     }
 
     inherits(Matrix, AbstractMatrix)
@@ -72,6 +126,23 @@ function MatrixSpace (field) {
     if (isSquare) {
       Matrix.trace = trace
     }
+
+    // Static operators.
+
+    Matrix.transpose = transpose
+
+    // Aliases
+
+    Matrix.prototype.tr = Matrix.prototype.transposed
+
+    Matrix.tr = Matrix.transpose
+
+    operators.group.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Matrix[alias] = Matrix[operator]
+        Matrix.prototype[alias] = Matrix.prototype[operator]
+      })
+    })
 
     operators.group.forEach((operator) => {
       Matrix[operator] = AbstractMatrix[operator]

@@ -3,7 +3,7 @@
   "description": "Vectors, Matrices, Real, Complex, Quaternion",
   "version": "0.7.0",
   "engines": {
-    "node": ">= 4"
+    "node": ">= 4.4.0"
   },
   "homepage": "http://g14n.info/algebra",
   "author": {

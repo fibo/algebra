@@ -19,6 +19,9 @@
     ],
     "subtraction": [
       "sub"
+    ],
+    "transpose": [
+      "tr"
     ]
   }
 }

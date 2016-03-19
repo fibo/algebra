@@ -1,9 +1,8 @@
 
-var matrixToArrayIndex = require('../src/matrixToArrayIndex'),
-    should             = require('should')
+var matrixToArrayIndex = require('../src/matrixToArrayIndex')
 
-var data,
-    numCols
+var data
+var numCols
 
 describe('matrixToArrayIndex', function () {
   it('converts 2dim array index into 1dim index', function () {

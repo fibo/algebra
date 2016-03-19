@@ -1,4 +1,3 @@
-
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
@@ -11,9 +10,10 @@
  * @returns {Number} index
  */
 
+var multiDimArrayIndex = require('multidim-array-index')
+
 function matrixToArrayIndex (i, j, numCols) {
-  return j + i * numCols
+  return multiDimArrayIndex([numCols, numCols], [i, j])
 }
 
 module.exports = matrixToArrayIndex
-

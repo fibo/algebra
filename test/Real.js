@@ -61,11 +61,11 @@ describe('Real', function () {
 
     it('is a class method', methodBinaryOperator(R, operator, 2, 2, 4))
 
-    it('accepts many arguments'/*, function () {
+    it('accepts many arguments', function () {
       x = new R(2)
       x = x.multiplication(3, 4, 5)
       x.data.should.eql(120)
-    }*/)
+    })
   })
 
   describe('division', function () {

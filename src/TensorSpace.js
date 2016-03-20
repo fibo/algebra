@@ -46,34 +46,27 @@ function tensorSpace (indices) {
       this.data = data
     }
 
-    Tensor.prototype.addition = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
+    function binary (operator) {
+      Tensor[operator] = function () {
+        return nAry(indices, ring[operator]).apply(null, arguments)
+      }
 
-      var data = Tensor.addition.apply(null, operands)
+      Tensor.prototype[operator] = function () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
 
-      return new Tensor(data)
+        var data = Tensor[operator].apply(null, operands)
+
+        return new Tensor(data)
+      }
     }
 
-    Tensor.prototype.subtraction = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
+    var myBinaryOperators = ['addition', 'subtraction']
 
-      var data = Tensor.subtraction.apply(null, operands)
-
-      return new Tensor(data)
-    }
+    myBinaryOperators.forEach(binary)
 
     Tensor.equality = function () {
       return nAry(indices, ring.equality).apply(null, arguments)
-    }
-
-    Tensor.addition = function () {
-      return nAry(indices, ring.addition).apply(null, arguments)
-    }
-
-    Tensor.subtraction = function () {
-      return nAry(indices, ring.subtraction).apply(null, arguments)
     }
 
     Tensor.product = function (leftData) {

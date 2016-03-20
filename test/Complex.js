@@ -1,6 +1,4 @@
-/*
-var algebra = require('algebra'),
-    should  = require('should')
+var algebra = require('algebra')
 
 var C = algebra.Complex
 
@@ -14,13 +12,13 @@ describe('Complex', function () {
 
   describe('zero', function () {
     it('is static', function () {
-      C.zero.data.should.eql([0, 0])
+      C.zero.should.eql([0, 0])
     })
   })
 
   describe('one', function () {
     it('is static', function () {
-      C.one.data.should.eql([1, 0])
+      C.one.should.eql([1, 0])
     })
   })
 
@@ -72,4 +70,3 @@ describe('Complex', function () {
     it('is a class method', methodUnaryOperator(C, operator, [1, 7], [1, -7]))
   })
 })
-*/

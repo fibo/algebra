@@ -44,62 +44,33 @@ function CompositionAlgebra (field) {
       one: K.one
     })
 
-    operators.group.forEach((operator) => {
-      Scalar[operator] = AbstractScalar[operator]
+    var myBinaryOperators = operators.group.concat(['equality', 'disequality', 'multiplication', 'division'])
+
+    if (num > 0) {
+      myBinaryOperators.push('conjugation')
+    }
+
+    myBinaryOperators.forEach((operator) => {
+      Scalar[operator] = function () {
+        var operands = [].slice.call(arguments).map(toData)
+        return K[operator].apply(null, operands)
+      }
+
+      Scalar.prototype[operator] = function () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
+
+        var data = Scalar[operator].apply(null, operands)
+
+        return new Scalar(data)
+      }
     })
-
-    Scalar.multiplication = function () {
-      var operands = [].slice.call(arguments).map(toData)
-      var operator = K.multiplication
-      return operator.apply(null, operands)
-    }
-
-    Scalar.prototype.multiplication = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
-
-      var data = Scalar.multiplication.apply(null, operands)
-
-      return new Scalar(data)
-    }
 
     Scalar.prototype.mul = Scalar.prototype.multiplication
 
     Scalar.mul = Scalar.multiplication
 
-    Scalar.division = function () {
-      var operands = [].slice.call(arguments).map(toData)
-      var operator = K.division
-      return operator.apply(null, operands)
-    }
-
-    Scalar.prototype.division = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
-
-      var data = Scalar.division.apply(null, operands)
-
-      return new Scalar(data)
-    }
-
-    Scalar.prototype.div = Scalar.prototype.division
-
     Scalar.div = Scalar.division
-
-    Scalar.equality = function () {
-      var operands = [].slice.call(arguments).map(toData)
-      var operator = K.equality
-      return operator.apply(null, operands)
-    }
-
-    Scalar.prototype.equality = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
-
-      var data = Scalar.equality.apply(null, operands)
-
-      return new Scalar(data)
-    }
 
     Scalar.prototype.eq = Scalar.prototype.equality
 

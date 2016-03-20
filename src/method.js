@@ -1,4 +1,3 @@
-
 function unaryMethod (operator, Scalar) {
   return function () {
     var data = operator(this.data)
@@ -16,4 +15,3 @@ function nAryMethod (operator, Scalar) {
 }
 
 exports.nAry = nAryMethod
-

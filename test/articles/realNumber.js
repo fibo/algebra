@@ -1,4 +1,4 @@
-
+/*
 var algebra = require('algebra')
   , should  = require('should')
 
@@ -32,4 +32,4 @@ describe('Real number example', function () {
     x1.data.should.be.eql(3)
   })
 })
-
+*/

@@ -1,37 +1,55 @@
-
-var isInteger          = require('is-integer'),
-    matrixToArrayIndex = require('./matrixToArrayIndex')
+var isInteger = require('is-integer')
+var matrixToArrayIndex = require('./matrixToArrayIndex')
+/* TODO
+var tensorContraction = require('tensor-contraction')
+var tensorProduct = require('tensor-product')
+*/
+var toData = require('./toData')
 
 /**
  * Multiply two matrices, row by column.
  *
  * @api private
  *
- * @param {Object}   scalar
- * @param {Function} scalar.addition
- * @param {Function} scalar.multiplication
- * @param {Array} leftMatrix
+ * @param {Object} field
+ * @param {Function} field.addition
+ * @param {Function} field.multiplication
+ * @param {Object|Array} leftMatrix
  * @param {Array} leftNumRows
- * @param {Array} rightMatrix
+ * @param {Object|Array} rightMatrix
  * @param {Array} rightNumCols
  *
- * @returns {Array} data
+ * @returns {Array} matrix
  */
 
-function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
-  var leftNumCols  = leftMatrix.length / leftNumRows,
-      rightNumRows = rightMatrix.length / rightNumCols
+function rowByColumnMultiplication (field, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
+  var leftMatrixData = toData(leftMatrix)
+  var rightMatrixData = toData(rightMatrix)
 
-  if (! isInteger(leftNumCols))
+  var leftNumCols = leftMatrix.length / leftNumRows
+  var rightNumRows = rightMatrix.length / rightNumCols
+
+  if (! isInteger(leftNumCols)) {
     throw new TypeError('leftNumCols does not divide leftMatrix.length')
+  }
 
-  if (! isInteger(rightNumRows))
+  if (! isInteger(rightNumRows)) {
     throw new TypeError('rightNumRows does not divide rightMatrix.length')
+  }
 
   // Check if matrices can be multiplied.
-  if (leftNumCols !== rightNumRows)
+  if (leftNumCols !== rightNumRows) {
     throw new TypeError('Left num cols != right num rows')
+  }
 
+  /*
+   * TODO try with tensor product and contraction.
+  var tensorIndices = [leftNumRows, leftNumCols, rightNumRows, rightNumCols]
+
+  var tensorProductData = tensorProduct(field.multiplication, [leftNumRows, leftNumCols], [rightNumRows, rightNumCols], leftMatrixData, rightMatrixData)
+
+  return tensorContraction(field.addition, [1, 2], tensorIndices, tensorProductData)
+  */
   var commonIndex = leftNumCols,
       data        = [],
       rows        = leftNumRows,
@@ -45,7 +63,7 @@ function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix
       var rightElement = rightMatrix[rightIndex],
           leftElement  = leftMatrix[leftIndex]
 
-      var element = scalar.multiplication(leftElement, rightElement)
+      var element = field.multiplication(leftElement, rightElement)
 
       for (var k = 1; k < commonIndex; k++) {
         leftIndex = matrixToArrayIndex(i, k, commonIndex)
@@ -54,7 +72,7 @@ function rowByColumnMultiplication (scalar, leftMatrix, leftNumRows, rightMatrix
         rightElement = rightMatrix[rightIndex]
         leftElement = leftMatrix[leftIndex]
 
-        element = scalar.addition(element, scalar.multiplication(rightElement, leftElement))
+        element = field.addition(element, field.multiplication(rightElement, leftElement))
       }
 
       data.push(element)

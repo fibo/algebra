@@ -1,6 +1,7 @@
 
-var algebra = require('algebra'),
-    should  = require('should')
+var algebra = require('algebra')
+var notDefined = require('not-defined')
+var should = require('should')
 
 var MatrixSpace = algebra.MatrixSpace
 var Real = algebra.Real
@@ -11,8 +12,8 @@ var methodUnaryOperator = require('./features/methodUnaryOperator')
 var staticBinaryOperator = require('./features/staticBinaryOperator')
 var staticUnaryOperator = require('./features/staticUnaryOperator')
 
-var R2 = VectorSpace(Real)(2),
-    R3 = VectorSpace(Real)(3)
+var R2 = VectorSpace(Real)(2)
+var R3 = VectorSpace(Real)(3)
 
 var R2x2 = MatrixSpace(Real)(2, 2)
 
@@ -25,6 +26,8 @@ describe('VectorSpace', () => {
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
 
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
+
+    it('accepts multiple arguments')
   })
 
   describe('subtraction()', () => {
@@ -33,6 +36,8 @@ describe('VectorSpace', () => {
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
 
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
+
+    it('accepts multiple arguments')
   })
 
   describe('scalarProduct()', () => {
@@ -51,13 +56,14 @@ describe('VectorSpace', () => {
       scalar.data.should.be.eql(1)
     })
 
-    it('is returns a scalar'/*, () => {
+    it('is returns a scalar', () => {
+      var vector1 = new R2([0, 1])
+      var vector2 = new R2([1, 1])
+
       var scalar = vector1.scalarProduct(vector2)
 
-      scalar.should.be.instanceOf(Real)
-
       scalar.data.should.be.eql(1)
-    }*/)
+    })
   })
 
   describe('dotProduct()', () => {
@@ -131,7 +137,12 @@ describe('VectorSpace', () => {
       vector1.crossProduct(vector2).data.should.be.eql([0, 0, 1])
     }*/)
 
-    it('is defined only in dimension 3')
+    it('is defined only in dimension 3', () => {
+      notDefined(R2.cross).should.be.ok
+
+      var vector = new R2([1, 0])
+      notDefined(vector.cross).should.be.ok
+    })
   })
 
   describe('cross()', () => {

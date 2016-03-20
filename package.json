@@ -76,7 +76,7 @@
   "dependencies": {
     "algebra-group": "^0.4.0",
     "algebra-ring": "^0.4.0",
-    "cayley-dickson": "^0.2.0",
+    "cayley-dickson": "^0.3.0",
     "indices-permutations": "^0.2.0",
     "inherits": "^2.0.1",
     "is-integer": "^1.0.6",

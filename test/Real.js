@@ -1,14 +1,11 @@
-
-var algebra = require('algebra'),
-    should  = require('should')
+var algebra = require('algebra')
 
 var R = algebra.Real
 
-var methodBinaryOperator  = require('./features/methodBinaryOperator'),
-    methodUnaryOperator   = require('./features/methodUnaryOperator'),
-    multiArgumentOperator = require('./features/multiArgumentOperator'),
-    staticBinaryOperator  = require('./features/staticBinaryOperator'),
-    staticUnaryOperator   = require('./features/staticUnaryOperator')
+var methodBinaryOperator = require('./features/methodBinaryOperator')
+var methodUnaryOperator = require('./features/methodUnaryOperator')
+var staticBinaryOperator = require('./features/staticBinaryOperator')
+var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('Real', function () {
   var operator,
@@ -16,13 +13,13 @@ describe('Real', function () {
 
   describe('zero', function () {
     it('is static', function () {
-      R.zero.data.should.eql(0)
+      R.zero.should.eql(0)
     })
   })
 
   describe('one', function () {
     it('is static', function () {
-      R.one.data.should.eql(1)
+      R.one.should.eql(1)
     })
   })
 
@@ -92,7 +89,7 @@ describe('Real', function () {
 
     it('is a class method', function () {
       x = new R(10)
-      x.equality(10).should.be.true
+      x.equality(10).should.be.ok
     })
   })
 
@@ -103,7 +100,7 @@ describe('Real', function () {
 
     it('is a class method', function () {
       x = new R(10)
-      x.disequality(20).should.be.true
+      x.disequality(20).should.be.ok
     })
   })
 
@@ -133,4 +130,3 @@ describe('Real', function () {
     })
   })
 })
-

@@ -1,9 +1,7 @@
+describe('Quick start', () => {
+  var algebra = require('algebra')
 
-var algebra = require('algebra'),
-    should  = require('should')
-
-describe('Synopsis', function () {
-  it('works'/*, function () {
+  it('works', () => {
     var R = algebra.Real
 
     R.add(1, 2, 3).should.eql(6)
@@ -39,7 +37,7 @@ describe('Synopsis', function () {
 
     var v3 = m1.mul(v1)
 
-    should.deepEqual(v3.data, [0, -1, 1])
+    v3.data.should.deepEqual([0, -1, 1])
 
     var R2x2 = algebra.MatrixSpace(R)(2)
 
@@ -50,8 +48,8 @@ describe('Synopsis', function () {
 
     m2 = m2.mul(m3)
 
-    should.deepEqual(m2.data, [0, -1, 2,  0])
+    m2.data.should.deepEqual([0, -1, 2,  0])
 
     m2.determinant.data.should.be.eql(2)
-  }*/)
+  })
 })

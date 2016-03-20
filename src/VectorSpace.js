@@ -13,14 +13,14 @@ var toData = require('./toData')
  * var v = new V([1, 2])
  * ```
  *
- * @param {Object} field
+ * @param {Object} Scalar
  *
  * @returns {Function} anonymous with signature (dimension)
  */
 
-function VectorSpace (field) {
-  var addition = field.addition
-  var multiplication = field.multiplication
+function VectorSpace (Scalar) {
+  var addition = Scalar.addition
+  var multiplication = Scalar.multiplication
 
   /**
    * @api private
@@ -31,8 +31,9 @@ function VectorSpace (field) {
    */
 
   return function (dimension) {
-    var AbstractVector = TensorSpace([dimension])(field)
-    var Scalar = TensorSpace([1])(field)
+    var indices = [dimension]
+
+    var AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
      */
@@ -81,13 +82,14 @@ function VectorSpace (field) {
       var vectorData1 = toData(vector1)
       var vectorData2 = toData(vector2)
 
-      if (vectorData1.length !== vectorData2.length)
+      if (vectorData1.length !== vectorData2.length) {
         throw new TypeError('Vectors have not the same dimension')
+      }
 
-      var result = field.multiplication(vectorData1[0], vectorData2[0])
+      var result = multiplication(vectorData1[0], vectorData2[0])
 
       for (var i = 1; i < dimension; i++) {
-        result = field.addition(result, field.multiplication(vectorData1[i], vectorData2[i]))
+        result = addition(result, multiplication(vectorData1[i], vectorData2[i]))
       }
 
       return result
@@ -101,7 +103,8 @@ function VectorSpace (field) {
       AbstractVector.call(this, data)
 
       staticProps(this)({
-        norm: norm(data)
+        norm: norm(data),
+        dimension: dimension
       })
     }
 
@@ -122,7 +125,7 @@ function VectorSpace (field) {
       var result = crossProduct(data, vector)
 
       return new Vector(result)
-    }
+ n   }
 
     if (dimension === 3) {
       Vector.crossProduct = crossProduct

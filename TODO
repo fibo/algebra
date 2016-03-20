@@ -1,9 +1,7 @@
 
-use strings ℝ ℂ ℍ
+Real and Complex Float32Array based: create a realFieldFload32Array.js
 
 try ratio, rational numbers lib
-
-matrix calculator with angular
 
 docco like layout for examples, see http://g14n.info/algebra/examples/real-vector.html
 

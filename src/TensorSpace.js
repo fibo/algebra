@@ -1,35 +1,49 @@
-var nAry = require('./nAry')
+var coerced = require('./coerced')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
+var toData = require('./toData')
 var tensorProduct = require('tensor-product')
 
 /**
  * Creates a tensor space that is a class representing a tensor.
  *
- * @param {Array} indices
- * @returns {Function}
+ * @param {Object} Scalar
+ *
+ * @returns {Function} anonymous with signature (indices)
  */
 
-function tensorSpace (indices) {
-  // If dim equals 1 it is like a vector of dimension 1, that is a scalar.
-  // Only dim greater than 1, represents a varying index  increase order.
-  // A scalar has order 0.
-  // A vector has order 1.
-  // A matrix has order 2.
-  // Order is also called "rank" or "tensor rank", but, to avoid confusion with
-  // "matrix rank" it is better to call it "order".
-  var order = indices.filter(dim => dim > 1).length
+function TensorSpace (Scalar) {
+  /**
+   * @param {Array} indices
+   */
 
-  var isScalar = (order === 0)
+  return function (indices) {
+    // If dim equals 1 it is like a vector of dimension 1, that is a scalar.
+    // Only dim greater than 1, represents a varying index  increase order.
+    // A scalar has order 0.
+    // A vector has order 1.
+    // A matrix has order 2.
+    // Order is also called "rank" or "tensor rank", but, to avoid confusion with
+    // "matrix rank" it is better to call it "order".
+    var order = indices.filter(dim => dim > 1).length
 
-  return function (ring) {
+    // TODO if it is a scalar, return the Scalar
+    // which should be a composition algebra
+    // Then add product tensor to composition algebras.
+    // Finally, a tensor i,j,k should be constructed as the
+    // tensor product of a scalar i,j,k times.
+    var isScalar = (order === 0)
+
+    var dimension = indices.reduce((a, b) => a * b, 1)
+
+    // TODO create one
     // Create zero.
     var zero = indices.reduce((result, dim) => {
       if (isScalar) {
-        return ring.zero
+        return Scalar.zero
       } else {
         for(var i = 0; i < dim; i++) {
-          result.push(ring.zero)
+          result.push(Scalar.zero)
         }
 
         return result
@@ -43,43 +57,57 @@ function tensorSpace (indices) {
      */
 
     function Tensor (data) {
+      function check (item) {
+        if (Scalar.notContains(item)) {
+          throw new TypeError('Invalid data = ' + item)
+        }
+      }
+
+      if (isScalar) check(data)
+      else data.forEach(check)
+
       this.data = data
     }
 
-    Tensor.prototype.addition = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
+    function staticBinary (operator) {
+      Tensor[operator] = function () {
+        var result = []
 
-      var data = Tensor.addition.apply(null, operands)
+        for (var i = 0; i < dimension; i++) {
+          var operands = []
 
-      return new Tensor(data)
+          for (var j = 0; j < arguments.length; j++) {
+            operands.push(toData(arguments[j])[i])
+          }
+
+          result.push(Scalar[operator].apply(null, operands))
+        }
+
+        return result
+      }
     }
 
-    Tensor.prototype.subtraction = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
+    var myBinaryOperators = ['addition', 'subtraction']
 
-      var data = Tensor.subtraction.apply(null, operands)
+    myBinaryOperators.forEach((operator) => {
+      staticBinary(operator)
 
-      return new Tensor(data)
-    }
+      Tensor.prototype[operator] = function () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
 
-    Tensor.equality = function () {
-      return nAry(indices, ring.equality).apply(null, arguments)
-    }
+        var data = Tensor[operator].apply(null, operands)
 
-    Tensor.addition = function () {
-      return nAry(indices, ring.addition).apply(null, arguments)
-    }
+        var tensor = new Tensor(data)
 
-    Tensor.subtraction = function () {
-      return nAry(indices, ring.subtraction).apply(null, arguments)
-    }
+        return tensor
+      }
+    })
 
     Tensor.product = function (leftData) {
       return function (rightDim) {
         return function (rightData) {
-          return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
+          return tensorProduct(Scalar.multiplication, indices, rightDim, leftData, rightData)
         }
       }
     }
@@ -89,7 +117,9 @@ function tensorSpace (indices) {
       zero: zero
     })
 
-    operators.group.forEach((operator) => {
+    var myOperators = operators.group
+
+    myOperators.forEach((operator) => {
       operators.aliasesOf[operator].forEach((alias) => {
         Tensor[alias] = Tensor[operator]
         Tensor.prototype[alias] = Tensor.prototype[operator]
@@ -100,4 +130,4 @@ function tensorSpace (indices) {
   }
 }
 
-module.exports = tensorSpace
+module.exports = TensorSpace

@@ -1,6 +1,7 @@
-var nAry = require('./nAry')
+var coerced = require('./coerced')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
+var toData = require('./toData')
 var tensorProduct = require('tensor-product')
 
 /**
@@ -30,6 +31,8 @@ function TensorSpace (indices) {
   // TODO signature is (indices)(Scalar) it should be (Scalar)(indices
   // ) like Matrix and Vector space.
   return function (Scalar) {
+    var dimension = indices.reduce((a, b) => a * b, 1)
+
     // TODO create one
     // Create zero.
     var zero = indices.reduce((result, dim) => {
@@ -57,19 +60,32 @@ function TensorSpace (indices) {
         }
       }
 
-      if (isScalar) {
-        check(data)
-      } else {
-        data.forEach(check)
-      }
+      if (isScalar) check(data)
+      else data.forEach(check)
 
-      staticProps(this)({data: data})
+      this.data = data
     }
 
-    function binary (operator) {
-      Tensor[operator] = function () {
-        return nAry(indices, Scalar[operator]).apply(null, arguments)
+    function staticBinary (operator) {
+      Tensor[operator] = function (a, b) {
+        a = toData(a)
+          b= toData(b)
+        var result = []
+
+        var op = Scalar[operator]
+
+        for (var i = 0; i < dimension; i++) {
+          result.push(op(a[i], b[i]))
+        }
+
+        return result
       }
+    }
+
+    var myBinaryOperators = ['addition', 'subtraction']
+
+    myBinaryOperators.forEach((operator) => {
+      staticBinary(operator)
 
       Tensor.prototype[operator] = function () {
         var args = [].slice.call(arguments)
@@ -77,17 +93,11 @@ function TensorSpace (indices) {
 
         var data = Tensor[operator].apply(null, operands)
 
-        return new Tensor(data)
+        var tensor = new Tensor(data)
+
+        return tensor
       }
-    }
-
-    var myBinaryOperators = ['addition', 'subtraction']
-
-    myBinaryOperators.forEach(binary)
-
-    Tensor.equality = function () {
-      return nAry(indices, Scalar.equality).apply(null, arguments)
-    }
+    })
 
     Tensor.product = function (leftData) {
       return function (rightDim) {
@@ -102,7 +112,9 @@ function TensorSpace (indices) {
       zero: zero
     })
 
-    operators.group.forEach((operator) => {
+    var myOperators = operators.group
+
+    myOperators.forEach((operator) => {
       operators.aliasesOf[operator].forEach((alias) => {
         Tensor[alias] = Tensor[operator]
         Tensor.prototype[alias] = Tensor.prototype[operator]

@@ -7,11 +7,21 @@
     "multiplication"
   ],
   "aliasesOf": {
+    "equality": [
+      "equal",
+      "eq"
+    ],
+    "disequality": [
+      "notEqual"
+    ],
     "addition": [
       "add"
     ],
     "multiplication": [
       "mul"
+    ],
+    "division": [
+      "div"
     ],
     "scalarProduct": [
       "dotProduct",

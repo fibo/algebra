@@ -52,13 +52,13 @@ describe('MatrixSpace', () => {
   })
 
   describe('determinant', () => {
-    it('returns a scalar'/*, () => {
+    it('returns a scalar', () => {
       matrix1.determinant.should.be.instanceOf(Real)
       matrix2.determinant.should.be.instanceOf(Real)
 
       matrix1.determinant.data.should.be.eql(-1)
       matrix2.determinant.data.should.be.eql(1)
-    }*/)
+    })
   })
 
   describe('addition()', () => {
@@ -81,6 +81,8 @@ describe('MatrixSpace', () => {
         [ 2, 4,
           0, 1 ]
     ))
+
+    it('accepts multiple arguments')
   })
 
   describe('subtraction()', () => {
@@ -103,6 +105,8 @@ describe('MatrixSpace', () => {
         [ 2, 2,
           2, 1 ]
     ))
+
+    it('accepts multiple arguments')
   })
 
   describe('multiplication()', () => {
@@ -127,6 +131,8 @@ describe('MatrixSpace', () => {
         [ -3, 2,
           -1, 1 ]
     ))
+
+    it('accepts multiple arguments')
   })
 
   describe('trace()', () => {

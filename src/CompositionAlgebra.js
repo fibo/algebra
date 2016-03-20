@@ -26,18 +26,14 @@ function CompositionAlgebra (ring) {
     var K = CayleyDickson(ring, num)
     var indices = [1]
 
-    var AbstractScalar = TensorSpace(indices)(K)
-
     function Scalar (data) {
-      AbstractScalar.call(this, data)
+      this.data = data
 
       staticProps(this)({
         zero: K.zero,
         one: K.one
       })
     }
-
-    inherits(Scalar, AbstractScalar)
 
     staticProps(Scalar)({
       zero: K.zero,
@@ -51,7 +47,7 @@ function CompositionAlgebra (ring) {
     function staticNary (operator) {
       Scalar[operator] = function () {
         var operands = [].slice.call(arguments).map(toData)
-        return K[operator].apply(null, operands)
+        return coerced(K[operator]).apply(null, operands)
       }
     }
 
@@ -116,6 +112,18 @@ function CompositionAlgebra (ring) {
 
         return new Scalar(data)
       }
+    })
+
+    // Aliases
+
+    var myOperators = binaryOperators.concat(comparisonOperators)
+
+      // TODO this aliasify function can be in common with Vector and Matrix
+    myOperators.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Scalar[alias] = Scalar[operator]
+        Scalar.prototype[alias] = Scalar.prototype[operator]
+      })
     })
 
     Scalar.prototype.ne = Scalar.prototype.negation

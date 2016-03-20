@@ -1,3 +1,4 @@
+var determinant = require('laplace-determinant')
 var inherits = require('inherits')
 var no = require('not-defined')
 var matrixToArrayIndex = require('./matrixToArrayIndex')
@@ -118,9 +119,20 @@ function MatrixSpace (Scalar) {
         numRows: numRows
       })
 
+      function computeDeterminant () {
+         var det = determinant(data, Scalar, numRows)
+
+         return new Scalar(det)
+      }
+
       if (isSquare) {
         staticProps(this)({
           trace: trace(data)
+        })
+
+        Object.defineProperties(this, {
+          determinant: { get: computeDeterminant },
+          det: { get: computeDeterminant }
         })
       }
 

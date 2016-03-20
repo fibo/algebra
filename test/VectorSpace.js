@@ -26,6 +26,8 @@ describe('VectorSpace', () => {
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
 
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
+
+    it('accepts multiple arguments')
   })
 
   describe('subtraction()', () => {
@@ -34,6 +36,8 @@ describe('VectorSpace', () => {
     it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
 
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
+
+    it('accepts multiple arguments')
   })
 
   describe('scalarProduct()', () => {

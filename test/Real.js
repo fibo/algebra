@@ -1,4 +1,3 @@
-/*
 var algebra = require('algebra')
 
 var R = algebra.Real
@@ -14,13 +13,13 @@ describe('Real', function () {
 
   describe('zero', function () {
     it('is static', function () {
-      R.zero.data.should.eql(0)
+      R.zero.should.eql(0)
     })
   })
 
   describe('one', function () {
     it('is static', function () {
-      R.one.data.should.eql(1)
+      R.one.should.eql(1)
     })
   })
 
@@ -62,11 +61,11 @@ describe('Real', function () {
 
     it('is a class method', methodBinaryOperator(R, operator, 2, 2, 4))
 
-    it('accepts many arguments', function () {
+    it('accepts many arguments'/*, function () {
       x = new R(2)
       x = x.multiplication(3, 4, 5)
       x.data.should.eql(120)
-    })
+    }*/)
   })
 
   describe('division', function () {
@@ -131,4 +130,3 @@ describe('Real', function () {
     })
   })
 })
-*/

@@ -46,6 +46,7 @@ Many functionalities of previous versions are now in separated atomic packages:
 * Real, Complex, Quaternion, Octonion numbers.
 * [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#scalars), of course :).
 * Expressive syntax.
+* Everything is a Tensor.
 * [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
 * [math blog][1] with articles explaining algebra concepts and practical examples. I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning about the *Queen of Science*.
 
@@ -72,7 +73,7 @@ or use a CDN adding this to your HTML page
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
-All code in the examples below is intended to be contained into a single file.
+All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
 
 [![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
 
@@ -129,6 +130,23 @@ Comparison operators *equal* and *notEqual* are available, but they cannot be ch
 ```
 x.equal(0.1) // true
 x.notEqual(Math.PI) // true
+```
+
+You can also play with Complexes.
+
+```
+var C = algebra.Complex
+
+var z1 = new C([1, 2])
+var z2 = new C([3, 4])
+
+z1 = z1.mul(z2)
+
+console.log(z1.data) // [-5, 10]
+
+z1 = z1.conj().mul([2, 0])
+
+console.log(z1.data) // [-10, -20]
 ```
 
 ### Vectors

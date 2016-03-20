@@ -124,7 +124,7 @@ function VectorSpace (field) {
       var result = crossProduct(data, vector)
 
       return new Vector(result)
-    }
+ n   }
 
     if (dimension === 3) {
       Vector.crossProduct = crossProduct

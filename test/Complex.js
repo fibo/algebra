@@ -4,10 +4,10 @@ var algebra = require('algebra'),
 
 var C = algebra.Complex
 
-var methodBinaryOperator = require('./features/methodBinaryOperator'),
-    methodUnaryOperator  = require('./features/methodUnaryOperator'),
-    staticBinaryOperator  = require('./features/staticBinaryOperator'),
-    staticUnaryOperator   = require('./features/staticUnaryOperator')
+var methodBinaryOperator = require('./features/methodBinaryOperator')
+var methodUnaryOperator = require('./features/methodUnaryOperator')
+var staticBinaryOperator = require('./features/staticBinaryOperator')
+var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('Complex', function () {
   var operator
@@ -72,4 +72,3 @@ describe('Complex', function () {
     it('is a class method', methodUnaryOperator(C, operator, [1, 7], [1, -7]))
   })
 })
-

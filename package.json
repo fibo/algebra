@@ -38,7 +38,7 @@
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
     "package.json": "cp package.json gh-pages/_data/",
     "postversion": "git push origin v${npm_package_version}; npm publish; npm run _push",
-    "test": "#TODO mocha --bail --require should --reporter min --recursive"
+    "test": "mocha --bail --require should --reporter min --recursive"
   },
   "pre-commit": [
     "lint",

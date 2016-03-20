@@ -1,4 +1,4 @@
-
+/*
 var algebra = require('algebra')
 
 var R = algebra.Real
@@ -131,4 +131,4 @@ describe('Real', function () {
     })
   })
 })
-
+*/

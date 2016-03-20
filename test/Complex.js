@@ -1,4 +1,4 @@
-
+/*
 var algebra = require('algebra'),
     should  = require('should')
 
@@ -72,3 +72,4 @@ describe('Complex', function () {
     it('is a class method', methodUnaryOperator(C, operator, [1, 7], [1, -7]))
   })
 })
+*/

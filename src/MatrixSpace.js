@@ -3,10 +3,10 @@ var no = require('not-defined')
 var matrixToArrayIndex = require('./matrixToArrayIndex')
 var multiDimArrayIndex = require('multidim-array-index')
 var operators = require('./operators.json')
+var rowByColumnMultiplication = require('./rowByColumnMultiplication')
 var staticProps = require('static-props')
 var TensorSpace = require('./TensorSpace')
 var tensorContraction = require('tensor-contraction')
-var tensorProduct = require('tensor-product')
 var toData = require('./toData')
 var VectorSpace = require('./VectorSpace')
 
@@ -62,13 +62,33 @@ function MatrixSpace (field) {
     }
 
     /**
-     * Calculates the matrix trace.
+     * Multiplies row by column to the right.
      *
-     * https://en.wikipedia.org/wiki/Trace_(linear_algebra)
+     * @param {Object|Array} rightMatrix
+     *
+     * @returns {Object} matrix
+     */
+
+    function multiplication (leftMatrix, rightMatrix) {
+      var leftMatrixData = toData(leftMatrix)
+      var rightMatrixData = toData(rightMatrix)
+
+      // For this static version, it is assumed that leftMatrix is numRows by numCols.
+      var leftNumRows = numRows
+      var leftNumCols = numCols
+
+      var rightNumRows = leftNumCols
+      var rightNumCols = rightMatrixData.length / rightNumRows
+
+      return rowByColumnMultiplication(field, leftMatrixData, leftNumRows, rightMatrixData, rightNumCols)
+    }
+
+    /**
+     * Calculates the transpose of a matrix.
      *
      * @param {Object|Array} matrix
      *
-     * @returns {Object} scalar
+     * @returns {Array} matrix
      */
 
     function transpose (matrix) {
@@ -118,8 +138,8 @@ function MatrixSpace (field) {
       }
 
       Object.defineProperties(this, {
-        transposed: {get: transposed },
-        tr: {get: transposed }
+        transposed: { get: transposed },
+        tr: { get: transposed }
       })
     }
 
@@ -129,13 +149,29 @@ function MatrixSpace (field) {
       Matrix.trace = trace
     }
 
+    Matrix.prototype.multiplication = function (rightMatrix) {
+      var leftMatrixData = this.data
+      var result = multiplication(leftMatrixData, rightMatrix)
+
+      var rightNumRows = numCols
+      var rightNumCols = result.length / rightNumRows
+
+      var Matrix = MatrixSpace(field)(rightNumRows, rightNumCols)
+
+      return new Matrix(result)
+    }
+
     // Static operators.
 
+    Matrix.multiplication = multiplication
     Matrix.transpose = transpose
 
     // Aliases
 
     Matrix.tr = Matrix.transpose
+    Matrix.mul = Matrix.multiplication
+
+    Matrix.prototype.mul = Matrix.prototype.multiplication
 
     operators.group.forEach((operator) => {
       operators.aliasesOf[operator].forEach((alias) => {

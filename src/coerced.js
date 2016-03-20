@@ -1,4 +1,3 @@
-
 var toData = require('./toData')
 
 /**
@@ -18,4 +17,3 @@ function coerced (operator) {
 }
 
 module.exports = coerced
-

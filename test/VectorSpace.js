@@ -1,6 +1,7 @@
 
-var algebra = require('algebra'),
-    should  = require('should')
+var algebra = require('algebra')
+var notDefined = require('not-defined')
+var should = require('should')
 
 var MatrixSpace = algebra.MatrixSpace
 var Real = algebra.Real
@@ -11,8 +12,8 @@ var methodUnaryOperator = require('./features/methodUnaryOperator')
 var staticBinaryOperator = require('./features/staticBinaryOperator')
 var staticUnaryOperator = require('./features/staticUnaryOperator')
 
-var R2 = VectorSpace(Real)(2),
-    R3 = VectorSpace(Real)(3)
+var R2 = VectorSpace(Real)(2)
+var R3 = VectorSpace(Real)(3)
 
 var R2x2 = MatrixSpace(Real)(2, 2)
 
@@ -131,7 +132,12 @@ describe('VectorSpace', () => {
       vector1.crossProduct(vector2).data.should.be.eql([0, 0, 1])
     }*/)
 
-    it('is defined only in dimension 3')
+    it('is defined only in dimension 3', () => {
+      notDefined(R2.cross).should.be.ok
+
+      var vector = new R2([1, 0])
+      notDefined(vector.cross).should.be.ok
+    })
   })
 
   describe('cross()', () => {

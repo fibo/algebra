@@ -4,6 +4,7 @@ var notDefined = require('not-defined')
 
 var MatrixSpace = algebra.MatrixSpace
 var Real = algebra.Real
+var VectorSpace = algebra.VectorSpace
 
 var methodBinaryOperator = require('./features/methodBinaryOperator')
 var methodUnaryOperator = require('./features/methodUnaryOperator')
@@ -15,6 +16,7 @@ describe('MatrixSpace', () => {
   var R2x3 = MatrixSpace(Real)(2, 3)
   var R2x2 = MatrixSpace(Real)(2)
   var R3x2 = MatrixSpace(Real)(3, 2)
+  var R4 = VectorSpace(Real)(4)
 
   it('has signature (Scalar)(numRows, numCols)', () => {
     R2x3.numRows.should.be.eql(2)
@@ -207,20 +209,22 @@ describe('MatrixSpace', () => {
       var vector = matrix1x4.transposed
 
       matrix1x4.data.should.deepEqual(vector.data)
-      // TODO vector.dimension.should.be.eql(4)
+      vector.dimension.should.be.eql(matrix1x4.numCols)
     })
   })
 
   describe('tr()', () => {
     it('is an alias of transpose()', () => {
-      R2x2.tr.should.be.eql(R2x2.tr)
-
-      /*
-      var matrix = new R2x2([0, 1,
-                             1, 0])
-      vector.scalarProduct.should.be.eql(vector.dotProduct)
-      */
+      R2x2.tr.should.be.eql(R2x2.transpose)
     })
   })
 
+  describe('tr', () => {
+    it('is an alias of transposed', () => {
+      var matrix = new R2x2([0, 1,
+                             1, 0])
+
+      matrix.tr.should.be.eql(matrix.transposed)
+    })
+  })
 })

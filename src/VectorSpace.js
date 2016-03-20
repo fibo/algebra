@@ -81,8 +81,9 @@ function VectorSpace (field) {
       var vectorData1 = toData(vector1)
       var vectorData2 = toData(vector2)
 
-      if (vectorData1.length !== vectorData2.length)
+      if (vectorData1.length !== vectorData2.length) {
         throw new TypeError('Vectors have not the same dimension')
+      }
 
       var result = field.multiplication(vectorData1[0], vectorData2[0])
 
@@ -101,7 +102,8 @@ function VectorSpace (field) {
       AbstractVector.call(this, data)
 
       staticProps(this)({
-        norm: norm(data)
+        norm: norm(data),
+        dimension: dimension
       })
     }
 

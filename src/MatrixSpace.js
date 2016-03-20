@@ -8,6 +8,7 @@ var TensorSpace = require('./TensorSpace')
 var tensorContraction = require('tensor-contraction')
 var tensorProduct = require('tensor-product')
 var toData = require('./toData')
+var VectorSpace = require('./VectorSpace')
 
 /**
  * Space of m x n matrices
@@ -104,20 +105,21 @@ function MatrixSpace (field) {
         })
       }
 
-      Object.defineProperties(this, {
-        'transposed': {
-          get: () => {
-            var result = transpose(data)
+      function transposed () {
+        var result = transpose(data)
 
-            if (numCols === 1) {
-              var Vector = VectorSpace(field)(numRows)
-              return new Vector(result)
-            } else {
-              var Matrix = MatrixSpace(field)(numCols, numRows)
-              return new Matrix(result)
-            }
-          }
+        if (numRows === 1) {
+          var Vector = VectorSpace(field)(numCols)
+          return new Vector(result)
+        } else {
+          var Matrix = MatrixSpace(field)(numCols, numRows)
+          return new Matrix(result)
         }
+      }
+
+      Object.defineProperties(this, {
+        transposed: {get: transposed },
+        tr: {get: transposed }
       })
     }
 
@@ -132,8 +134,6 @@ function MatrixSpace (field) {
     Matrix.transpose = transpose
 
     // Aliases
-
-    Matrix.prototype.tr = Matrix.prototype.transposed
 
     Matrix.tr = Matrix.transpose
 

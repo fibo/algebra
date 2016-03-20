@@ -65,7 +65,6 @@
     "browserify": "^13.0.0",
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.1",
-    "jshint": "^2.8.0",
     "katex": "^0.5.1",
     "mocha": "^2.3.4",
     "mocha-lcov-reporter": "1.2.0",

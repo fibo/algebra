@@ -70,7 +70,7 @@ or use a CDN adding this to your HTML page
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
-All code in the examples below is intended to be contained into a single file.
+All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
 
 [![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
 
@@ -127,6 +127,23 @@ Comparison operators *equal* and *notEqual* are available, but they cannot be ch
 ```
 x.equal(0.1) // true
 x.notEqual(Math.PI) // true
+```
+
+You can also play with Complexes.
+
+```
+var C = algebra.Complex
+
+var z1 = new C([1, 2])
+var z2 = new C([3, 4])
+
+z1 = z1.mul(z2)
+
+console.log(z1.data) // [-5, 10]
+
+z1 = z1.conj().mul([2, 0])
+
+console.log(z1.data) // [-10, -20]
 ```
 
 ### Vectors

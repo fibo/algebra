@@ -7,6 +7,9 @@
     "multiplication"
   ],
   "aliasesOf": {
+    "conjugation": [
+      "conj"
+    ],
     "equality": [
       "equal",
       "eq"
@@ -29,6 +32,12 @@
     ],
     "subtraction": [
       "sub"
+    ],
+    "inversion": [
+      "inv"
+    ],
+    "negation": [
+      "neg"
     ],
     "transpose": [
       "tr"

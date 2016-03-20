@@ -6566,7 +6566,7 @@ function CompositionAlgebra(ring) {
 
     Scalar.ne = Scalar.disequality;
 
-    var unaryOperators = ['inversion', 'negation', 'inversion', 'negation'];
+    var unaryOperators = ['inversion', 'negation'];
 
     if (num > 0) unaryOperators.push('conjugation');
 
@@ -6585,7 +6585,7 @@ function CompositionAlgebra(ring) {
 
     // Aliases
 
-    var myOperators = binaryOperators.concat(comparisonOperators);
+    var myOperators = binaryOperators.concat(comparisonOperators).concat(unaryOperators);
 
     // TODO this aliasify function can be in common with Vector and Matrix
     myOperators.forEach(function (operator) {
@@ -7213,6 +7213,9 @@ module.exports={
     "multiplication"
   ],
   "aliasesOf": {
+    "conjugation": [
+      "conj"
+    ],
     "equality": [
       "equal",
       "eq"
@@ -7235,6 +7238,12 @@ module.exports={
     ],
     "subtraction": [
       "sub"
+    ],
+    "inversion": [
+      "inv"
+    ],
+    "negation": [
+      "neg"
     ],
     "transpose": [
       "tr"
@@ -8437,6 +8446,19 @@ describe('Quick start', function () {
 
     x.equal(0.1).should.be.ok;
     x.notEqual(Math.PI).should.be.ok;
+
+    var C = algebra.Complex;
+
+    var z1 = new C([1, 2]);
+    var z2 = new C([3, 4]);
+
+    z1 = z1.mul(z2);
+
+    z1.data.should.eql([-5, 10]);
+
+    z1 = z1.conj().mul([2, 0]);
+
+    z1.data.should.eql([-10, -20]);
 
     var R2 = algebra.VectorSpace(R)(2);
 

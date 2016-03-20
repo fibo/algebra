@@ -20,6 +20,19 @@ describe('Quick start', () => {
     x.equal(0.1).should.be.ok
     x.notEqual(Math.PI).should.be.ok
 
+    var C = algebra.Complex
+
+    var z1 = new C([1, 2])
+    var z2 = new C([3, 4])
+
+    z1 = z1.mul(z2)
+
+    z1.data.should.eql([-5, 10])
+
+    z1 = z1.conj().mul([2, 0])
+
+    z1.data.should.eql([-10, -20])
+
     var R2 = algebra.VectorSpace(R)(2)
 
     var v1 = new R2([0, 1])

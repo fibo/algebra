@@ -912,7 +912,7 @@ function CompositionAlgebra(ring) {
 
     Scalar.ne = Scalar.disequality;
 
-    var unaryOperators = ['inversion', 'negation', 'inversion', 'negation'];
+    var unaryOperators = ['inversion', 'negation'];
 
     if (num > 0) unaryOperators.push('conjugation');
 
@@ -931,7 +931,7 @@ function CompositionAlgebra(ring) {
 
     // Aliases
 
-    var myOperators = binaryOperators.concat(comparisonOperators);
+    var myOperators = binaryOperators.concat(comparisonOperators).concat(unaryOperators);
 
     // TODO this aliasify function can be in common with Vector and Matrix
     myOperators.forEach(function (operator) {
@@ -1550,6 +1550,9 @@ module.exports={
     "multiplication"
   ],
   "aliasesOf": {
+    "conjugation": [
+      "conj"
+    ],
     "equality": [
       "equal",
       "eq"
@@ -1572,6 +1575,12 @@ module.exports={
     ],
     "subtraction": [
       "sub"
+    ],
+    "inversion": [
+      "inv"
+    ],
+    "negation": [
+      "neg"
     ],
     "transpose": [
       "tr"

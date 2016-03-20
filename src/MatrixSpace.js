@@ -19,13 +19,13 @@ var VectorSpace = require('./VectorSpace')
  * var R2x2 = algebra.MatrixSpace(R)(2)
  * ```
  *
- * @param {Object} field
+ * @param {Object} Scalar
  *
  * @returns {Function} anonymous with signature (numRows[, numCols])
  */
 
-function MatrixSpace (field) {
-  var contraction = tensorContraction.bind(null, field.addition)
+function MatrixSpace (Scalar) {
+  var contraction = tensorContraction.bind(null, Scalar.addition)
 
   /**
    *
@@ -39,11 +39,10 @@ function MatrixSpace (field) {
     // numCols defaults to numRows
     if (no(numCols)) numCols = numRows
 
-    var isSquare  = (numRows === numCols)
-
-    var AbstractMatrix = TensorSpace([numRows, numCols])(field)
-
+    var isSquare = (numRows === numCols)
     var indices = [numRows, numCols]
+
+    var AbstractMatrix = TensorSpace(indices)(Scalar)
 
     /**
      * Calculates the matrix trace.
@@ -80,7 +79,7 @@ function MatrixSpace (field) {
       var rightNumRows = leftNumCols
       var rightNumCols = rightMatrixData.length / rightNumRows
 
-      return rowByColumnMultiplication(field, leftMatrixData, leftNumRows, rightMatrixData, rightNumCols)
+      return rowByColumnMultiplication(Scalar, leftMatrixData, leftNumRows, rightMatrixData, rightNumCols)
     }
 
     /**
@@ -129,10 +128,10 @@ function MatrixSpace (field) {
         var result = transpose(data)
 
         if (numRows === 1) {
-          var Vector = VectorSpace(field)(numCols)
+          var Vector = VectorSpace(Scalar)(numCols)
           return new Vector(result)
         } else {
-          var Matrix = MatrixSpace(field)(numCols, numRows)
+          var Matrix = MatrixSpace(Scalar)(numCols, numRows)
           return new Matrix(result)
         }
       }
@@ -156,7 +155,7 @@ function MatrixSpace (field) {
       var rightNumRows = numCols
       var rightNumCols = result.length / rightNumRows
 
-      var Matrix = MatrixSpace(field)(rightNumRows, rightNumCols)
+      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
 
       return new Matrix(result)
     }

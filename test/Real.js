@@ -89,7 +89,7 @@ describe('Real', function () {
 
     it('is a class method', function () {
       x = new R(10)
-      x.equality(10).should.be.true
+      x.equality(10).should.be.ok
     })
   })
 
@@ -100,7 +100,7 @@ describe('Real', function () {
 
     it('is a class method', function () {
       x = new R(10)
-      x.disequality(20).should.be.true
+      x.disequality(20).should.be.ok
     })
   })
 

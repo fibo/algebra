@@ -41,7 +41,6 @@ describe('rowByColumnMultiplication', function () {
                       -1, 1, 3, 4,
                       -1, 1, 3, 4 ])
 
-    /*
     leftMatrix = [ 2, 3,
                    1, 1 ]
     rightMatrix = [ 0, 1,
@@ -51,6 +50,5 @@ describe('rowByColumnMultiplication', function () {
 
     data.should.eql([ -3, 2,
                       -1, 1 ])
-                      */
   })
 })

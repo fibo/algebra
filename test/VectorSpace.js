@@ -52,13 +52,14 @@ describe('VectorSpace', () => {
       scalar.data.should.be.eql(1)
     })
 
-    it('is returns a scalar'/*, () => {
+    it('is returns a scalar', () => {
+      var vector1 = new R2([0, 1])
+      var vector2 = new R2([1, 1])
+
       var scalar = vector1.scalarProduct(vector2)
 
-      scalar.should.be.instanceOf(Real)
-
       scalar.data.should.be.eql(1)
-    }*/)
+    })
   })
 
   describe('dotProduct()', () => {

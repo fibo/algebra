@@ -13,14 +13,14 @@ var toData = require('./toData')
  * var v = new V([1, 2])
  * ```
  *
- * @param {Object} field
+ * @param {Object} Scalar
  *
  * @returns {Function} anonymous with signature (dimension)
  */
 
-function VectorSpace (field) {
-  var addition = field.addition
-  var multiplication = field.multiplication
+function VectorSpace (Scalar) {
+  var addition = Scalar.addition
+  var multiplication = Scalar.multiplication
 
   /**
    * @api private
@@ -31,8 +31,7 @@ function VectorSpace (field) {
    */
 
   return function (dimension) {
-    var AbstractVector = TensorSpace([dimension])(field)
-    var Scalar = TensorSpace([1])(field)
+    var AbstractVector = TensorSpace([dimension])(Scalar)
 
     /**
      */
@@ -85,10 +84,10 @@ function VectorSpace (field) {
         throw new TypeError('Vectors have not the same dimension')
       }
 
-      var result = field.multiplication(vectorData1[0], vectorData2[0])
+      var result = multiplication(vectorData1[0], vectorData2[0])
 
       for (var i = 1; i < dimension; i++) {
-        result = field.addition(result, field.multiplication(vectorData1[i], vectorData2[i]))
+        result = addition(result, multiplication(vectorData1[i], vectorData2[i]))
       }
 
       return result

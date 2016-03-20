@@ -10,7 +10,7 @@ var tensorProduct = require('tensor-product')
  * @returns {Function}
  */
 
-function tensorSpace (indices) {
+function TensorSpace (indices) {
   // If dim equals 1 it is like a vector of dimension 1, that is a scalar.
   // Only dim greater than 1, represents a varying index  increase order.
   // A scalar has order 0.
@@ -20,16 +20,24 @@ function tensorSpace (indices) {
   // "matrix rank" it is better to call it "order".
   var order = indices.filter(dim => dim > 1).length
 
+    // TODO if it is a scalar, return the Scalar
+    // which should be a composition algebra
+    // Then add product tensor to composition algebras.
+    // Finally, a tensor i,j,k should be constructed as the
+    // tensor product of a scalar i,j,k times.
   var isScalar = (order === 0)
 
-  return function (ring) {
+  // TODO signature is (indices)(Scalar) it should be (Scalar)(indices
+  // ) like Matrix and Vector space.
+  return function (Scalar) {
+    // TODO create one
     // Create zero.
     var zero = indices.reduce((result, dim) => {
       if (isScalar) {
-        return ring.zero
+        return Scalar.zero
       } else {
         for(var i = 0; i < dim; i++) {
-          result.push(ring.zero)
+          result.push(Scalar.zero)
         }
 
         return result
@@ -43,12 +51,24 @@ function tensorSpace (indices) {
      */
 
     function Tensor (data) {
-      this.data = data
+      function check (item) {
+        if (Scalar.notContains(item)) {
+          throw new TypeError('Invalid data = ' + item)
+        }
+      }
+
+      if (isScalar) {
+        check(data)
+      } else {
+        data.forEach(check)
+      }
+
+      staticProps(this)({data: data})
     }
 
     function binary (operator) {
       Tensor[operator] = function () {
-        return nAry(indices, ring[operator]).apply(null, arguments)
+        return nAry(indices, Scalar[operator]).apply(null, arguments)
       }
 
       Tensor.prototype[operator] = function () {
@@ -66,13 +86,13 @@ function tensorSpace (indices) {
     myBinaryOperators.forEach(binary)
 
     Tensor.equality = function () {
-      return nAry(indices, ring.equality).apply(null, arguments)
+      return nAry(indices, Scalar.equality).apply(null, arguments)
     }
 
     Tensor.product = function (leftData) {
       return function (rightDim) {
         return function (rightData) {
-          return tensorProduct(ring.multiplication, indices, rightDim, leftData, rightData)
+          return tensorProduct(Scalar.multiplication, indices, rightDim, leftData, rightData)
         }
       }
     }
@@ -93,4 +113,4 @@ function tensorSpace (indices) {
   }
 }
 
-module.exports = tensorSpace
+module.exports = TensorSpace

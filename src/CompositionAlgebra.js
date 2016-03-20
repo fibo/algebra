@@ -12,18 +12,18 @@ var toData = require('./toData')
  *
  * https://en.wikipedia.org/wiki/Composition_algebra
  *
- * @param {Object} field
+ * @param {Object} ring
  *
  * @returns {Function} anonymous with signature (numOfCayleyDicksonConstructionIteration)
  */
 
-function CompositionAlgebra (field) {
+function CompositionAlgebra (ring) {
   /**
    * @param {Number} num of CayleyDickson construction iterations
    */
 
   return function (num) {
-    var K = CayleyDickson(field, num)
+    var K = CayleyDickson(ring, num)
     var indices = [1]
 
     var AbstractScalar = TensorSpace(indices)(K)
@@ -44,17 +44,19 @@ function CompositionAlgebra (field) {
       one: K.one
     })
 
-    var myBinaryOperators = operators.group.concat(['equality', 'disequality', 'multiplication', 'division'])
+    var comparisonOperators = ['equality', 'disequality']
 
-    if (num > 0) {
-      myBinaryOperators.push('conjugation')
-    }
+    var binaryOperators = operators.group.concat(['multiplication', 'division'])
 
-    myBinaryOperators.forEach((operator) => {
+    function staticNary (operator) {
       Scalar[operator] = function () {
         var operands = [].slice.call(arguments).map(toData)
         return K[operator].apply(null, operands)
       }
+    }
+
+    binaryOperators.forEach((operator) => {
+      staticNary(operator)
 
       Scalar.prototype[operator] = function () {
         var args = [].slice.call(arguments)
@@ -62,10 +64,29 @@ function CompositionAlgebra (field) {
 
         var data = Scalar[operator].apply(null, operands)
 
-        return new Scalar(data)
+        var scalar = new Scalar(data)
+
+        return scalar
       }
     })
 
+    comparisonOperators.forEach((operator) => {
+      staticNary(operator)
+
+      Scalar.prototype[operator] = function () {
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
+
+        var bool = Scalar[operator].apply(null, operands)
+
+        return bool
+      }
+    })
+
+    Scalar.contains = K.contains
+    Scalar.notContains = K.notContains
+
+    Scalar.prototype.add = Scalar.prototype.addition
     Scalar.prototype.mul = Scalar.prototype.multiplication
 
     Scalar.mul = Scalar.multiplication
@@ -76,42 +97,26 @@ function CompositionAlgebra (field) {
 
     Scalar.eq = Scalar.equality
 
-    Scalar.disequality = function () {
-      var operands = [].slice.call(arguments).map(toData)
-      var operator = K.disequality
-      return operator.apply(null, operands)
-    }
-
-    Scalar.prototype.disequality = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
-
-      var data = Scalar.disequality.apply(null, operands)
-
-      return new Scalar(data)
-    }
-
     Scalar.prototype.ne = Scalar.prototype.disequality
 
     Scalar.ne = Scalar.disequality
 
-    // TODO refactor all binary operators in a functionally way
+    var unaryOperators = ['inversion', 'negation', 'inversion', 'negation']
 
-    function unary (operator) {
+    if (num > 0) unaryOperators.push('conjugation')
+
+    unaryOperators.forEach((operator) => {
       Scalar[operator] = function (operand) {
         return K[operator](toData(operand))
       }
 
       Scalar.prototype[operator] = function () {
+
         var data = Scalar[operator](this.data)
 
         return new Scalar(data)
       }
-    }
-
-    var unaryOperators = ['inversion', 'negation']
-
-    unaryOperators.forEach(unary)
+    })
 
     Scalar.prototype.ne = Scalar.prototype.negation
     Scalar.prototype.inv = Scalar.prototype.inversion

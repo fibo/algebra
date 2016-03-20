@@ -6,8 +6,8 @@ describe('Quick start', () => {
 
     R.add(1, 2, 3).should.eql(6)
 
-    var x = new R(2),
-        y = new R(-2)
+    var x = new R(2)
+    var y = new R(-2)
 
     var r = x.mul(y)
     r.data.should.eql(-4)
@@ -55,13 +55,13 @@ describe('Quick start', () => {
     var R2x2 = algebra.MatrixSpace(R)(2)
 
     var m2 = new R2x2([1, 0,
-                       0, 2]),
-        m3 = new R2x2([0, -1,
+                       0, 2])
+    var m3 = new R2x2([0, -1,
                        1, 0])
 
     m2 = m2.mul(m3)
 
-    m2.data.should.deepEqual([0, -1, 2,  0])
+    m2.data.should.deepEqual([0, -1, 2, 0])
 
     m2.determinant.data.should.be.eql(2)
   })

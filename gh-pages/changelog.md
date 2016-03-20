@@ -14,6 +14,10 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 ### Added
+- Replaced jshint with standardjs
+
+## [0.8.0] - 2016-03-20
+### Added
 - Everything is a Tensor
 - Composition algebra class
 
@@ -25,5 +29,6 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - first tensro implementation
 - minified code and source map
 
-[Unreleased]: https://github.com/fibo/{{ package.name }}/compare/v0.6.2...HEAD
+[Unreleased]: https://github.com/fibo/{{ package.name }}/compare/v{{ package.version }}...HEAD
+[0.8.0]: https://github.com/fibo/{{ package.name }}/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/fibo/algebra/{{ package.name }}/v0.6.2...v0.7.0

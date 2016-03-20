@@ -77,7 +77,7 @@ All code in the examples below should be contained into a single file, like [tes
 First of all, import *algebra* package.
 
 ```
-var algebra = require('algebra');
+var algebra = require('algebra')
 ```
 
 ### Scalars
@@ -85,7 +85,7 @@ var algebra = require('algebra');
 Use the Real numbers as scalars.
 
 ```
-var R = algebra.Real;
+var R = algebra.Real
 ```
 
 Every operator is implemented both as a static function and as an object method.
@@ -95,31 +95,31 @@ Static operators return raw data, while class methods return object instances.
 Use static addition operator to add three numbers.
 
 ```
-console.log(R.add(1, 2, 3)); // 1 + 2 + 3 = 6
+console.log(R.add(1, 2, 3)) // 1 + 2 + 3 = 6
 ```
 
 Create two real number objects: x = 2, y = -2
 
 ```
-var x = new R(2),
-    y = new R(-2);
+var x = new R(2)
+var y = new R(-2)
 ```
 
 The value *r* is the result of x multiplied by y.
 
 ```
-var r = x.mul(y);
-console.log(r.data); // 2 * (-2) = -4
-console.log(x.data); // still 2
-console.log(y.data); // still -2
+var r = x.mul(y)
+console.log(r.data) // 2 * (-2) = -4
+console.log(x.data) // still 2
+console.log(y.data) // still -2
 ```
 
 Raw numbers are coerced, operators can be chained when it makes sense.
 Of course you can reassign x, for example, x value will be 0.1: x -> x + 3 -> x * 2 -> x ^-1
 
 ```
-x = x.add(3).mul(2).inv();
-console.log(x.data); // ((2 + 3) * 2)^(-1) = 0.1
+x = x.add(3).mul(2).inv()
+console.log(x.data) // ((2 + 3) * 2)^(-1) = 0.1
 ```
 
 Comparison operators *equal* and *notEqual* are available, but they cannot be chained.
@@ -151,19 +151,19 @@ console.log(z1.data) // [-10, -20]
 Create vector space of dimension 2 over Reals.
 
 ```
-var R2 = algebra.VectorSpace(R)(2);
+var R2 = algebra.VectorSpace(R)(2)
 ```
 
 Create two vectors and add them.
 
 ```
-var v1 = new R2([0, 1]);
-var v2 = new R2([1, -2]);
+var v1 = new R2([0, 1])
+var v2 = new R2([1, -2])
 
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
-v1 = v1.add(v2);
+v1 = v1.add(v2)
 
-console.log(v1.data); // [1, -1]
+console.log(v1.data) // [1, -1]
 ```
 
 ### Matrices
@@ -171,7 +171,7 @@ console.log(v1.data); // [1, -1]
 Create space of matrices 3 x 2 over Reals.
 
 ```
-var R3x2 = algebra.MatrixSpace(R)(3, 2);
+var R3x2 = algebra.MatrixSpace(R)(3, 2)
 ```
 
 Create a matrix.
@@ -183,7 +183,7 @@ Create a matrix.
 //
 var m1 = new R3x2([1, 1,
                    0, 1,
-                   1, 0]);
+                   1, 0])
 ```
 
 Multiply m1 by v1, the result is a vector v3 with dimension 3.
@@ -200,31 +200,31 @@ Then, following the row by column multiplication law we have
 //    v3 = m1 * v1 = | 0 1 | * [1 , -1] = [0, -1, 1]
 //                   | 1 0 |
 
-var v3 = m1.mul(v1);
+var v3 = m1.mul(v1)
 
-console.log(v3.data); // [0, -1, 1]
+console.log(v3.data) // [0, -1, 1]
 ```
 
 Let's try with two square matrices 2 x 2.
 
 ```
-var R2x2 = algebra.MatrixSpace(R)(2, 2);
+var R2x2 = algebra.MatrixSpace(R)(2, 2)
 
 var m2 = new R2x2([1, 0,
-                   0, 2]),
-    m3 = new R2x2([0, -1,
-                   1, 0]);
+                   0, 2])
+var m3 = new R2x2([0, -1,
+                   1, 0])
 
-m2 = m2.mul(m3);
+m2 = m2.mul(m3)
 
-console.log(m2.data); // [0, -1,
+console.log(m2.data) // [0, -1,
                       //  2,  0]
 ```
 
 Since m2 is a square matrix we can calculate its determinant.
 
 ```
-console.log(m2.determinant.data); // 2
+console.log(m2.determinant.data) // 2
 ```
 
 ## License

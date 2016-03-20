@@ -31,7 +31,7 @@ describe('TensorSpace', () => {
   it('can create a Vector', () => {
     var indices = [2]
 
-    var Vector = TensorSpace(indices)(Real)
+    var Vector = TensorSpace(Real)(indices)
 
     Vector.zero.should.be.eql([0, 0])
 
@@ -56,7 +56,7 @@ describe('TensorSpace', () => {
   it('can create a Matrix', () => {
     var indices = [2, 2]
 
-    var Matrix = TensorSpace(indices)(Real)
+    var Matrix = TensorSpace(Real)(indices)
 
     Matrix.zero.should.be.eql([0, 0,
                                0, 0])

@@ -31,7 +31,9 @@ function VectorSpace (Scalar) {
    */
 
   return function (dimension) {
-    var AbstractVector = TensorSpace([dimension])(Scalar)
+    var indices = [dimension]
+
+    var AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
      */

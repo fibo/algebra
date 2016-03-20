@@ -43,7 +43,7 @@ function MatrixSpace (Scalar) {
     var isSquare = (numRows === numCols)
     var indices = [numRows, numCols]
 
-    var AbstractMatrix = TensorSpace(indices)(Scalar)
+    var AbstractMatrix = TensorSpace(Scalar)(indices)
 
     /**
      * Calculates the matrix trace.

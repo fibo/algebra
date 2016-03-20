@@ -7,30 +7,33 @@ var tensorProduct = require('tensor-product')
 /**
  * Creates a tensor space that is a class representing a tensor.
  *
- * @param {Array} indices
- * @returns {Function}
+ * @param {Object} Scalar
+ *
+ * @returns {Function} anonymous with signature (indices)
  */
 
-function TensorSpace (indices) {
-  // If dim equals 1 it is like a vector of dimension 1, that is a scalar.
-  // Only dim greater than 1, represents a varying index  increase order.
-  // A scalar has order 0.
-  // A vector has order 1.
-  // A matrix has order 2.
-  // Order is also called "rank" or "tensor rank", but, to avoid confusion with
-  // "matrix rank" it is better to call it "order".
-  var order = indices.filter(dim => dim > 1).length
+function TensorSpace (Scalar) {
+  /**
+   * @param {Array} indices
+   */
+
+  return function (indices) {
+    // If dim equals 1 it is like a vector of dimension 1, that is a scalar.
+    // Only dim greater than 1, represents a varying index  increase order.
+    // A scalar has order 0.
+    // A vector has order 1.
+    // A matrix has order 2.
+    // Order is also called "rank" or "tensor rank", but, to avoid confusion with
+    // "matrix rank" it is better to call it "order".
+    var order = indices.filter(dim => dim > 1).length
 
     // TODO if it is a scalar, return the Scalar
     // which should be a composition algebra
     // Then add product tensor to composition algebras.
     // Finally, a tensor i,j,k should be constructed as the
     // tensor product of a scalar i,j,k times.
-  var isScalar = (order === 0)
+    var isScalar = (order === 0)
 
-  // TODO signature is (indices)(Scalar) it should be (Scalar)(indices
-  // ) like Matrix and Vector space.
-  return function (Scalar) {
     var dimension = indices.reduce((a, b) => a * b, 1)
 
     // TODO create one

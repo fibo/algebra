@@ -1,5 +1,5 @@
 describe('TensorSpace', () => {
-  var algebra = require('algebra').TensorSpace
+  var algebra = require('algebra')
   var TensorSpace = algebra.TensorSpace
   var Real = algebra.Real
 
@@ -28,10 +28,10 @@ describe('TensorSpace', () => {
     x.subtraction(2, 3, 4).data.should.be.eql(-8)
   }*/)
 
-  it('can create a Vector'/*, () => {
+  it('can create a Vector', () => {
     var indices = [2]
 
-    var Vector = TensorSpace(indices)(ring)
+    var Vector = TensorSpace(indices)(Real)
 
     Vector.zero.should.be.eql([0, 0])
 
@@ -51,12 +51,12 @@ describe('TensorSpace', () => {
 
     v.subtraction([2, 1]).data.should.be.eql([-1, 1])
     v.subtraction([2, 1], [1, -1]).data.should.be.eql([-2, 2])
-  }*/)
+  })
 
-  it('can create a Matrix'/*, () => {
+  it('can create a Matrix', () => {
     var indices = [2, 2]
 
-    var Matrix = TensorSpace(indices)(ring)
+    var Matrix = TensorSpace(indices)(Real)
 
     Matrix.zero.should.be.eql([0, 0,
                                0, 0])
@@ -98,5 +98,5 @@ describe('TensorSpace', () => {
     m.subtraction([1, 0,
                    0, 1]).data.should.be.eql([0, 2,
                                               3, 3])
-  }*/)
+  })
 })

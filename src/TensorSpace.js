@@ -67,15 +67,17 @@ function TensorSpace (indices) {
     }
 
     function staticBinary (operator) {
-      Tensor[operator] = function (a, b) {
-        a = toData(a)
-          b= toData(b)
+      Tensor[operator] = function () {
         var result = []
 
-        var op = Scalar[operator]
-
         for (var i = 0; i < dimension; i++) {
-          result.push(op(a[i], b[i]))
+          var operands = []
+
+          for (var j = 0; j < arguments.length; j++) {
+            operands.push(toData(arguments[j])[i])
+          }
+
+          result.push(Scalar[operator].apply(null, operands))
         }
 
         return result

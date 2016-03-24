@@ -11,6 +11,7 @@
     - [Scalars](#scalars)
     - [Vectors](#vectors)
     - [Matrices](#matrices)
+* [API](#api)
 * [License](#license)
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
@@ -226,6 +227,22 @@ Since m2 is a square matrix we can calculate its determinant.
 ```
 console.log(m2.determinant.data) // 2
 ```
+
+## API
+
+### Real
+
+### Complex
+
+### Quaternion
+
+### Octonion
+
+### VectorSpace
+
+### MatrixSpace
+
+### TensorSpace
 
 ## License
 

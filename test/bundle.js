@@ -7364,6 +7364,8 @@ function rowByColumnMultiplication(field, leftMatrix, leftNumRows, rightMatrix, 
 module.exports = rowByColumnMultiplication;
 
 },{"./matrixToArrayIndex":51,"./toData":55,"is-integer":12}],55:[function(require,module,exports){
+var no = require('not-defined');
+
 /**
  * Extract data attribute, if any, and check it
  *
@@ -7377,16 +7379,16 @@ module.exports = rowByColumnMultiplication;
 function toData(arg) {
   var data;
 
-  if (typeof arg.data === 'undefined') data = arg;else data = arg.data;
+  if (no(arg.data)) data = arg;else data = arg.data;
 
-  if (typeof data === 'undefined') throw new TypeError('No data');
+  if (no(data)) throw new TypeError('No data');
 
   return data;
 }
 
 module.exports = toData;
 
-},{}],56:[function(require,module,exports){
+},{"not-defined":15}],56:[function(require,module,exports){
 var algebra = require('algebra');
 
 var C = algebra.Complex;
@@ -7565,7 +7567,12 @@ describe('MatrixSpace', function () {
 
     it('is a class method', methodBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 4, 0, 1]));
 
-    it('accepts multiple arguments');
+    it('accepts multiple arguments', function () {
+      R2x2.addition([2, 3, 1, 1], [0, 1, -1, 0], [-2, -4, 0, -1]).should.deepEqual([0, 0, 0, 0]);
+
+      var matrix = new R2x2([2, 3, 1, 1]);
+      matrix.addition([0, 1, -1, 0], [-2, -4, 0, -1]).data.should.deepEqual([0, 0, 0, 0]);
+    });
   });
 
   describe('subtraction()', function () {
@@ -7892,10 +7899,8 @@ describe('TensorSpace', function () {
 });
 
 },{"algebra":69}],61:[function(require,module,exports){
-
 var algebra = require('algebra');
 var notDefined = require('not-defined');
-var should = require('should');
 
 var MatrixSpace = algebra.MatrixSpace;
 var Real = algebra.Real;
@@ -7921,7 +7926,12 @@ describe('VectorSpace', function () {
 
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]));
 
-    it('accepts multiple arguments');
+    it('accepts multiple arguments', function () {
+      R2.addition([1, -1], [2, -2], [3, -3]).should.deepEqual([6, -6]);
+
+      var vector = new R2([1, -1]);
+      vector.addition([2, -2], [3, -3]).data.should.eql([6, -6]);
+    });
   });
 
   describe('subtraction()', function () {
@@ -7931,7 +7941,12 @@ describe('VectorSpace', function () {
 
     it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]));
 
-    it('accepts multiple arguments');
+    it('accepts multiple arguments', function () {
+      R2.subtraction([6, -6], [2, -2], [3, -3]).should.deepEqual([1, -1]);
+
+      var vector = new R2([6, -6]);
+      vector.subtraction([2, -2], [3, -3]).data.should.eql([1, -1]);
+    });
   });
 
   describe('scalarProduct()', function () {
@@ -8044,7 +8059,7 @@ describe('VectorSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":66,"./features/staticUnaryOperator":67,"algebra":69,"not-defined":15,"should":23}],62:[function(require,module,exports){
+},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":66,"./features/staticUnaryOperator":67,"algebra":69,"not-defined":15}],62:[function(require,module,exports){
 /*
 var algebra = require('algebra'),
     should  = require('should')
@@ -8426,68 +8441,68 @@ module.exports = require('../../..')
 
 },{"../../..":1}],70:[function(require,module,exports){
 describe('Quick start', function () {
-  var algebra = require('algebra');
+                   var algebra = require('algebra');
 
-  it('works', function () {
-    var R = algebra.Real;
+                   it('works', function () {
+                                      var R = algebra.Real;
 
-    R.add(1, 2, 3).should.eql(6);
+                                      R.add(1, 2, 3).should.eql(6);
 
-    var x = new R(2),
-        y = new R(-2);
+                                      var x = new R(2);
+                                      var y = new R(-2);
 
-    var r = x.mul(y);
-    r.data.should.eql(-4);
-    x.data.should.eql(2);
+                                      var r = x.mul(y);
+                                      r.data.should.eql(-4);
+                                      x.data.should.eql(2);
 
-    x = x.add(3).mul(2).inv();
+                                      x = x.add(3).mul(2).inv();
 
-    x.data.should.eql(0.1);
+                                      x.data.should.eql(0.1);
 
-    x.equal(0.1).should.be.ok;
-    x.notEqual(Math.PI).should.be.ok;
+                                      x.equal(0.1).should.be.ok;
+                                      x.notEqual(Math.PI).should.be.ok;
 
-    var C = algebra.Complex;
+                                      var C = algebra.Complex;
 
-    var z1 = new C([1, 2]);
-    var z2 = new C([3, 4]);
+                                      var z1 = new C([1, 2]);
+                                      var z2 = new C([3, 4]);
 
-    z1 = z1.mul(z2);
+                                      z1 = z1.mul(z2);
 
-    z1.data.should.eql([-5, 10]);
+                                      z1.data.should.eql([-5, 10]);
 
-    z1 = z1.conj().mul([2, 0]);
+                                      z1 = z1.conj().mul([2, 0]);
 
-    z1.data.should.eql([-10, -20]);
+                                      z1.data.should.eql([-10, -20]);
 
-    var R2 = algebra.VectorSpace(R)(2);
+                                      var R2 = algebra.VectorSpace(R)(2);
 
-    var v1 = new R2([0, 1]);
-    var v2 = new R2([1, -2]);
+                                      var v1 = new R2([0, 1]);
+                                      var v2 = new R2([1, -2]);
 
-    v1 = v1.add(v2);
+                                      v1 = v1.add(v2);
 
-    v1.data.should.eql([1, -1]);
+                                      v1.data.should.eql([1, -1]);
 
-    var R3x2 = algebra.MatrixSpace(R)(3, 2);
+                                      var R3x2 = algebra.MatrixSpace(R)(3, 2);
 
-    var m1 = new R3x2([1, 1, 0, 1, 1, 0]);
+                                      var m1 = new R3x2([1, 1, 0, 1, 1, 0]);
 
-    var v3 = m1.mul(v1);
+                                      var v3 = m1.mul(v1);
 
-    v3.data.should.deepEqual([0, -1, 1]);
+                                      v3.data.should.deepEqual([0, -1, 1]);
 
-    var R2x2 = algebra.MatrixSpace(R)(2);
+                                      var R2x2 = algebra.MatrixSpace(R)(2);
 
-    var m2 = new R2x2([1, 0, 0, 2]),
-        m3 = new R2x2([0, -1, 1, 0]);
+                                      var m2 = new R2x2([1, 0, 0, 2]);
+                                      var m3 = new R2x2([0, -1, 1, 0]);
 
-    m2 = m2.mul(m3);
+                                      m2 = m2.mul(m3);
 
-    m2.data.should.deepEqual([0, -1, 2, 0]);
+                                      m2.data.should.deepEqual([0, -1, 2, 0]);
 
-    m2.determinant.data.should.be.eql(2);
-  });
+                                      m2.determinant.data.should.be.eql(2);
+                   });
 });
 
 },{"algebra":69}],71:[function(require,module,exports){

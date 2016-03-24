@@ -82,7 +82,23 @@ describe('MatrixSpace', () => {
           0, 1 ]
     ))
 
-    it('accepts multiple arguments')
+    it('accepts multiple arguments', () => {
+      R2x2.addition([ 2, 3,
+                      1, 1 ],
+                    [ 0, 1,
+                     -1, 0 ],
+                    [ -2, -4,
+                      0, -1 ]).should.deepEqual([0, 0,
+                                                 0, 0])
+
+      var matrix = new R2x2([ 2, 3,
+                              1, 1 ])
+      matrix.addition([ 0, 1,
+                       -1, 0 ],
+                      [ -2, -4,
+                         0, -1 ]).data.should.deepEqual([0, 0,
+                                                       0, 0])
+    })
   })
 
   describe('subtraction()', () => {

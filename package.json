@@ -1,6 +1,6 @@
 {
   "name": "algebra",
-  "description": "Vectors, Matrices, Real, Complex, Quaternion",
+  "description": "means completeness and balancing, from the Arabic word الجبر",
   "version": "0.8.0",
   "engines": {
     "node": ">= 4.4.0"

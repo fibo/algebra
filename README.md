@@ -230,6 +230,21 @@ console.log(m2.determinant.data) // 2
 
 ## API
 
+### `Scalar(field[, n])`
+
+```
+var Scalar = require('algebra').Scalar
+var ring = require('algebra-ring')
+
+// A field is a commutative ring
+
+var boolean = ring({ /* TODO boolean operators */ })
+var Bool = Scalar(boolean)
+
+// n must be a power of two
+var Byte = Scalar(boolean, 8)
+```
+
 ### Real
 
 ### Complex

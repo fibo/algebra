@@ -1,11 +1,13 @@
 require('strict-mode')(function () {
-  var realField = require('./src/realField')
-  var CompositionAlgebra = require('./src/CompositionAlgebra')
+  var Scalar = require('./src/Scalar')
+  exports.Scalar = Scalar
 
-  exports.Real = CompositionAlgebra(realField)(0)
-  exports.Complex = CompositionAlgebra(realField)(1)
-  exports.Quaternion = CompositionAlgebra(realField)(2)
-  exports.Octonion = CompositionAlgebra(realField)(3)
+  var field = require('./src/realField')
+
+  exports.Real = Scalar(field, 1)
+  exports.Complex = Scalar(field, 2)
+  exports.Quaternion = Scalar(field, 3)
+  exports.Octonion = Scalar(field, 4)
 
   exports.VectorSpace = require('./src/VectorSpace')
   exports.MatrixSpace = require('./src/MatrixSpace')

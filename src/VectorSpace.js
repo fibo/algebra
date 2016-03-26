@@ -36,10 +36,22 @@ function VectorSpace (Scalar) {
     var AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
+     * Computes the cross product of two vectors.
+     *
+     * It is defined only in dimension 3.
+     *
+     * @param {Object|Array} vector1
+     * @param {Object|Array} vector2
+     *
+     * @returns {Array} vector
      */
 
-    function crossProduct () {
+    function crossProduct (vector1, vector2) {
       // TODO complete cross product
+      var vector1 = toData(vector1)
+      var vector2 = toData(vector2)
+
+      return vector
     }
 
     /**

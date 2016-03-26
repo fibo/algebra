@@ -232,7 +232,7 @@ console.log(m2.determinant.data) // 2
 
 ### `Scalar(field[, n])`
 
-Let's use for example the [src/booleanField](https://github.com/fibo/algebra/blob/master/src/booleanField.js) which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
+Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```
 var Scalar = require('algebra').Scalar
@@ -241,12 +241,17 @@ var ring = require('algebra-ring')
 var booleanField = require('algebra/src/booleanField')
 
 // A field is a commutative ring.
-var boolean = ring(booleanField)
+var booleanRing = ring(booleanField)
 
-var Bool = Scalar(boolean)
+var Bool = Scalar(booleanRing)
+
+console.log(Bool.contains(true)) // true
+console.log(Bool.contains(1)) // false
+
+console.log(Bool.addition(true, false)) // true
 
 var t = new Bool(true)
-console.log(t.negation()) // false
+console.log(t.negation().data) // false
 ```
 
 Not so exciting, let's build something more interesting.
@@ -308,3 +313,5 @@ Inherits everything from Scalar.
 [blog]: http://g14n.info/algebra/articles "algebra blog"
 [algebra-ring]: http://npm.im/algebra-ring "algebra-ring"
 composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
+[booleanField]: https://github.com/fibo/algebra/blob/master/src/booleanField.js "boolean field"
+[realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"

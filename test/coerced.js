@@ -10,4 +10,3 @@ describe('coerced', () => {
     add({ data: 1 }, { data: 2 }).should.eql(3)
   })
 })
-

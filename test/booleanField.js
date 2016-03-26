@@ -1,23 +1,28 @@
-var booleanField = require('../src/booleanField')
-
 describe('booleanField', () => {
+  // Don't know why *should* has strange behaviour here.
+  var assert = require('assert')
+  var bool = require('../src/booleanField')
+
+  describe('contains', () => {
+    it('ok for booleans, otherwise false', () => {
+      assert.ok(bool.contains(false))
+      assert.ok(bool.contains(true))
+      assert.ok(!bool.contains(1))
+      assert.ok(!bool.contains('true'))
+    })
+  })
+
   describe('negation', () => {
     it('works', () => {
-      booleanField.negation(false).should.eql(true)
-      booleanField.negation(true).should.eql(false)
-    })
-  })
-  describe('addition', () => {
-    it('has false as neutral element', () => {
-      booleanField.addition(true, false).should.eql(true)
-      booleanField.addition(false, false).should.eql(false)
+      assert.equal(bool.negation(false), true)
+      assert.equal(bool.negation(true), false)
     })
   })
 
-  describe('subtraction', () => {
+  describe('addition', () => {
     it('has false as neutral element', () => {
-      booleanField.subtraction(true, false).should.eql(true)
-      booleanField.subtraction(false, false).should.eql(false)
+      assert.equal(bool.addition(true, false), true)
+      assert.equal(bool.addition(false, false), false)
     })
   })
 })

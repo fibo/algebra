@@ -1,9 +1,7 @@
 var CayleyDickson = require('cayley-dickson')
 var coerced = require('./coerced')
-var inherits  = require('inherits')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
-var TensorSpace = require('./TensorSpace')
 var toData = require('./toData')
 
 /**
@@ -24,7 +22,6 @@ function CompositionAlgebra (ring) {
 
   return function (num) {
     var K = CayleyDickson(ring, num)
-    var indices = [1]
 
     function Scalar (data) {
       this.data = data
@@ -107,7 +104,6 @@ function CompositionAlgebra (ring) {
       }
 
       Scalar.prototype[operator] = function () {
-
         var data = Scalar[operator](this.data)
 
         return new Scalar(data)

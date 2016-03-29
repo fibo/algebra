@@ -815,10 +815,8 @@ module.exports = tensorProduct
 },{"indices-permutations":4,"multidim-array-index":9}],16:[function(require,module,exports){
 var CayleyDickson = require('cayley-dickson');
 var coerced = require('./coerced');
-var inherits = require('inherits');
 var operators = require('./operators.json');
 var staticProps = require('static-props');
-var TensorSpace = require('./TensorSpace');
 var toData = require('./toData');
 
 /**
@@ -839,7 +837,6 @@ function CompositionAlgebra(ring) {
 
   return function (num) {
     var K = CayleyDickson(ring, num);
-    var indices = [1];
 
     function Scalar(data) {
       this.data = data;
@@ -922,7 +919,6 @@ function CompositionAlgebra(ring) {
       };
 
       Scalar.prototype[operator] = function () {
-
         var data = Scalar[operator](this.data);
 
         return new Scalar(data);
@@ -953,7 +949,7 @@ function CompositionAlgebra(ring) {
 
 module.exports = CompositionAlgebra;
 
-},{"./TensorSpace":18,"./coerced":20,"./operators.json":22,"./toData":25,"cayley-dickson":3,"inherits":5,"static-props":12}],17:[function(require,module,exports){
+},{"./coerced":21,"./operators.json":23,"./toData":26,"cayley-dickson":3,"static-props":12}],17:[function(require,module,exports){
 var determinant = require('laplace-determinant');
 var inherits = require('inherits');
 var no = require('not-defined');
@@ -1162,7 +1158,32 @@ function MatrixSpace(Scalar) {
 
 module.exports = MatrixSpace;
 
-},{"./TensorSpace":18,"./VectorSpace":19,"./matrixToArrayIndex":21,"./operators.json":22,"./rowByColumnMultiplication":24,"./toData":25,"inherits":5,"laplace-determinant":8,"multidim-array-index":9,"not-defined":10,"static-props":12,"tensor-contraction":14}],18:[function(require,module,exports){
+},{"./TensorSpace":19,"./VectorSpace":20,"./matrixToArrayIndex":22,"./operators.json":23,"./rowByColumnMultiplication":25,"./toData":26,"inherits":5,"laplace-determinant":8,"multidim-array-index":9,"not-defined":10,"static-props":12,"tensor-contraction":14}],18:[function(require,module,exports){
+var CompositionAlgebra = require('./CompositionAlgebra');
+var no = require('not-defined');
+
+/**
+ * Create a Scalar that belongs to a composition algebra.
+ *
+ * @param {Object} field
+ * @param {Number} [n] must be 1, 2, 4 or 8.
+ */
+
+function Scalar(field, n) {
+  if (no(n)) n = 1;
+
+  var logBase2 = [1, 2, 4, 8].indexOf(n);
+
+  if (logBase2 === -1) {
+    throw new TypeError('Argument n must be 1, 2, 4 or 8');
+  }
+
+  return CompositionAlgebra(field)(logBase2);
+}
+
+module.exports = Scalar;
+
+},{"./CompositionAlgebra":16,"not-defined":10}],19:[function(require,module,exports){
 var coerced = require('./coerced');
 var operators = require('./operators.json');
 var staticProps = require('static-props');
@@ -1300,7 +1321,7 @@ function TensorSpace(Scalar) {
 
 module.exports = TensorSpace;
 
-},{"./coerced":20,"./operators.json":22,"./toData":25,"static-props":12,"tensor-product":15}],19:[function(require,module,exports){
+},{"./coerced":21,"./operators.json":23,"./toData":26,"static-props":12,"tensor-product":15}],20:[function(require,module,exports){
 var inherits = require('inherits');
 var operators = require('./operators.json');
 var staticProps = require('static-props');
@@ -1339,11 +1360,23 @@ function VectorSpace(Scalar) {
     var AbstractVector = TensorSpace(Scalar)(indices);
 
     /**
+     * Computes the cross product of two vectors.
+     *
+     * It is defined only in dimension 3.
+     *
+     * @param {Object|Array} vector1
+     * @param {Object|Array} vector2
+     *
+     * @returns {Array} vector
      */
 
-    function crossProduct() {}
-    // TODO complete cross product
+    function crossProduct(vector1, vector2) {
+      // TODO complete cross product
+      var vector1 = toData(vector1);
+      var vector2 = toData(vector2);
 
+      return vector;
+    }
 
     /**
      * Norm of a vector
@@ -1498,7 +1531,7 @@ module.exports = VectorSpace;
  Vector.prototype.transpose = transpose
  */
 
-},{"./TensorSpace":18,"./operators.json":22,"./toData":25,"inherits":5,"static-props":12}],20:[function(require,module,exports){
+},{"./TensorSpace":19,"./operators.json":23,"./toData":26,"inherits":5,"static-props":12}],21:[function(require,module,exports){
 var toData = require('./toData');
 
 /**
@@ -1519,7 +1552,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":25}],21:[function(require,module,exports){
+},{"./toData":26}],22:[function(require,module,exports){
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
@@ -1540,7 +1573,7 @@ function matrixToArrayIndex(i, j, numCols) {
 
 module.exports = matrixToArrayIndex;
 
-},{"multidim-array-index":9}],22:[function(require,module,exports){
+},{"multidim-array-index":9}],23:[function(require,module,exports){
 module.exports={
   "group": [
     "addition",
@@ -1588,11 +1621,11 @@ module.exports={
   }
 }
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var realField = {
   zero: 0,
   one: 1,
-  contains: function (a, b) {
+  contains: function (a) {
     // NaN, Infinity and -Infinity are not allowed.
     return typeof a === 'number' && isFinite(a);
   },
@@ -1615,7 +1648,7 @@ var realField = {
 
 module.exports = realField;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 var isInteger = require('is-integer');
 var matrixToArrayIndex = require('./matrixToArrayIndex');
 /* TODO
@@ -1700,7 +1733,7 @@ function rowByColumnMultiplication(field, leftMatrix, leftNumRows, rightMatrix, 
 
 module.exports = rowByColumnMultiplication;
 
-},{"./matrixToArrayIndex":21,"./toData":25,"is-integer":7}],25:[function(require,module,exports){
+},{"./matrixToArrayIndex":22,"./toData":26,"is-integer":7}],26:[function(require,module,exports){
 var no = require('not-defined');
 
 /**
@@ -1727,17 +1760,19 @@ module.exports = toData;
 
 },{"not-defined":10}],"algebra":[function(require,module,exports){
 require('strict-mode')(function () {
-  var realField = require('./src/realField');
-  var CompositionAlgebra = require('./src/CompositionAlgebra');
+  var Scalar = require('./src/Scalar');
+  exports.Scalar = Scalar;
 
-  exports.Real = CompositionAlgebra(realField)(0);
-  exports.Complex = CompositionAlgebra(realField)(1);
-  exports.Quaternion = CompositionAlgebra(realField)(2);
-  exports.Octonion = CompositionAlgebra(realField)(3);
+  var field = require('./src/realField');
+
+  exports.Real = Scalar(field, 1);
+  exports.Complex = Scalar(field, 2);
+  exports.Quaternion = Scalar(field, 4);
+  exports.Octonion = Scalar(field, 8);
 
   exports.VectorSpace = require('./src/VectorSpace');
   exports.MatrixSpace = require('./src/MatrixSpace');
   exports.TensorSpace = require('./src/TensorSpace');
 });
 
-},{"./src/CompositionAlgebra":16,"./src/MatrixSpace":17,"./src/TensorSpace":18,"./src/VectorSpace":19,"./src/realField":23,"strict-mode":13}]},{},[]);
+},{"./src/MatrixSpace":17,"./src/Scalar":18,"./src/TensorSpace":19,"./src/VectorSpace":20,"./src/realField":24,"strict-mode":13}]},{},[]);

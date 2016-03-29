@@ -27,6 +27,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 - Everything is a Tensor
 - Composition algebra class
+- dynamic changelog
 
 ## [v0.7.0] - 2016-03-09
 

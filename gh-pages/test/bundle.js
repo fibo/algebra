@@ -1,19 +1,21 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 require('strict-mode')(function () {
-  var realField = require('./src/realField')
-  var CompositionAlgebra = require('./src/CompositionAlgebra')
+  var Scalar = require('./src/Scalar')
+  exports.Scalar = Scalar
 
-  exports.Real = CompositionAlgebra(realField)(0)
-  exports.Complex = CompositionAlgebra(realField)(1)
-  exports.Quaternion = CompositionAlgebra(realField)(2)
-  exports.Octonion = CompositionAlgebra(realField)(3)
+  var field = require('./src/realField')
+
+  exports.Real = Scalar(field, 1)
+  exports.Complex = Scalar(field, 2)
+  exports.Quaternion = Scalar(field, 4)
+  exports.Octonion = Scalar(field, 8)
 
   exports.VectorSpace = require('./src/VectorSpace')
   exports.MatrixSpace = require('./src/MatrixSpace')
   exports.TensorSpace = require('./src/TensorSpace')
 })
 
-},{"./src/CompositionAlgebra":46,"./src/MatrixSpace":47,"./src/TensorSpace":48,"./src/VectorSpace":49,"./src/realField":53,"strict-mode":43}],2:[function(require,module,exports){
+},{"./src/MatrixSpace":51,"./src/Scalar":52,"./src/TensorSpace":53,"./src/VectorSpace":54,"./src/realField":59,"strict-mode":45}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -203,6 +205,367 @@ function algebraRing (identity, given) {
 module.exports = algebraRing
 
 },{"algebra-group":2}],4:[function(require,module,exports){
+// http://wiki.commonjs.org/wiki/Unit_Testing/1.0
+//
+// THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
+//
+// Originally from narwhal.js (http://narwhaljs.org)
+// Copyright (c) 2009 Thomas Robinson <280north.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the 'Software'), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// when used in node, this will actually load the util module we depend on
+// versus loading the builtin util module as happens otherwise
+// this is a bug in node module loading as far as I am concerned
+var util = require('util/');
+
+var pSlice = Array.prototype.slice;
+var hasOwn = Object.prototype.hasOwnProperty;
+
+// 1. The assert module provides functions that throw
+// AssertionError's when particular conditions are not met. The
+// assert module must conform to the following interface.
+
+var assert = module.exports = ok;
+
+// 2. The AssertionError is defined in assert.
+// new assert.AssertionError({ message: message,
+//                             actual: actual,
+//                             expected: expected })
+
+assert.AssertionError = function AssertionError(options) {
+  this.name = 'AssertionError';
+  this.actual = options.actual;
+  this.expected = options.expected;
+  this.operator = options.operator;
+  if (options.message) {
+    this.message = options.message;
+    this.generatedMessage = false;
+  } else {
+    this.message = getMessage(this);
+    this.generatedMessage = true;
+  }
+  var stackStartFunction = options.stackStartFunction || fail;
+
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, stackStartFunction);
+  }
+  else {
+    // non v8 browsers so we can have a stacktrace
+    var err = new Error();
+    if (err.stack) {
+      var out = err.stack;
+
+      // try to strip useless frames
+      var fn_name = stackStartFunction.name;
+      var idx = out.indexOf('\n' + fn_name);
+      if (idx >= 0) {
+        // once we have located the function frame
+        // we need to strip out everything before it (and its line)
+        var next_line = out.indexOf('\n', idx + 1);
+        out = out.substring(next_line + 1);
+      }
+
+      this.stack = out;
+    }
+  }
+};
+
+// assert.AssertionError instanceof Error
+util.inherits(assert.AssertionError, Error);
+
+function replacer(key, value) {
+  if (util.isUndefined(value)) {
+    return '' + value;
+  }
+  if (util.isNumber(value) && !isFinite(value)) {
+    return value.toString();
+  }
+  if (util.isFunction(value) || util.isRegExp(value)) {
+    return value.toString();
+  }
+  return value;
+}
+
+function truncate(s, n) {
+  if (util.isString(s)) {
+    return s.length < n ? s : s.slice(0, n);
+  } else {
+    return s;
+  }
+}
+
+function getMessage(self) {
+  return truncate(JSON.stringify(self.actual, replacer), 128) + ' ' +
+         self.operator + ' ' +
+         truncate(JSON.stringify(self.expected, replacer), 128);
+}
+
+// At present only the three keys mentioned above are used and
+// understood by the spec. Implementations or sub modules can pass
+// other keys to the AssertionError's constructor - they will be
+// ignored.
+
+// 3. All of the following functions must throw an AssertionError
+// when a corresponding condition is not met, with a message that
+// may be undefined if not provided.  All assertion methods provide
+// both the actual and expected values to the assertion error for
+// display purposes.
+
+function fail(actual, expected, message, operator, stackStartFunction) {
+  throw new assert.AssertionError({
+    message: message,
+    actual: actual,
+    expected: expected,
+    operator: operator,
+    stackStartFunction: stackStartFunction
+  });
+}
+
+// EXTENSION! allows for well behaved errors defined elsewhere.
+assert.fail = fail;
+
+// 4. Pure assertion tests whether a value is truthy, as determined
+// by !!guard.
+// assert.ok(guard, message_opt);
+// This statement is equivalent to assert.equal(true, !!guard,
+// message_opt);. To test strictly for the value true, use
+// assert.strictEqual(true, guard, message_opt);.
+
+function ok(value, message) {
+  if (!value) fail(value, true, message, '==', assert.ok);
+}
+assert.ok = ok;
+
+// 5. The equality assertion tests shallow, coercive equality with
+// ==.
+// assert.equal(actual, expected, message_opt);
+
+assert.equal = function equal(actual, expected, message) {
+  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
+};
+
+// 6. The non-equality assertion tests for whether two objects are not equal
+// with != assert.notEqual(actual, expected, message_opt);
+
+assert.notEqual = function notEqual(actual, expected, message) {
+  if (actual == expected) {
+    fail(actual, expected, message, '!=', assert.notEqual);
+  }
+};
+
+// 7. The equivalence assertion tests a deep equality relation.
+// assert.deepEqual(actual, expected, message_opt);
+
+assert.deepEqual = function deepEqual(actual, expected, message) {
+  if (!_deepEqual(actual, expected)) {
+    fail(actual, expected, message, 'deepEqual', assert.deepEqual);
+  }
+};
+
+function _deepEqual(actual, expected) {
+  // 7.1. All identical values are equivalent, as determined by ===.
+  if (actual === expected) {
+    return true;
+
+  } else if (util.isBuffer(actual) && util.isBuffer(expected)) {
+    if (actual.length != expected.length) return false;
+
+    for (var i = 0; i < actual.length; i++) {
+      if (actual[i] !== expected[i]) return false;
+    }
+
+    return true;
+
+  // 7.2. If the expected value is a Date object, the actual value is
+  // equivalent if it is also a Date object that refers to the same time.
+  } else if (util.isDate(actual) && util.isDate(expected)) {
+    return actual.getTime() === expected.getTime();
+
+  // 7.3 If the expected value is a RegExp object, the actual value is
+  // equivalent if it is also a RegExp object with the same source and
+  // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
+  } else if (util.isRegExp(actual) && util.isRegExp(expected)) {
+    return actual.source === expected.source &&
+           actual.global === expected.global &&
+           actual.multiline === expected.multiline &&
+           actual.lastIndex === expected.lastIndex &&
+           actual.ignoreCase === expected.ignoreCase;
+
+  // 7.4. Other pairs that do not both pass typeof value == 'object',
+  // equivalence is determined by ==.
+  } else if (!util.isObject(actual) && !util.isObject(expected)) {
+    return actual == expected;
+
+  // 7.5 For all other Object pairs, including Array objects, equivalence is
+  // determined by having the same number of owned properties (as verified
+  // with Object.prototype.hasOwnProperty.call), the same set of keys
+  // (although not necessarily the same order), equivalent values for every
+  // corresponding key, and an identical 'prototype' property. Note: this
+  // accounts for both named and indexed properties on Arrays.
+  } else {
+    return objEquiv(actual, expected);
+  }
+}
+
+function isArguments(object) {
+  return Object.prototype.toString.call(object) == '[object Arguments]';
+}
+
+function objEquiv(a, b) {
+  if (util.isNullOrUndefined(a) || util.isNullOrUndefined(b))
+    return false;
+  // an identical 'prototype' property.
+  if (a.prototype !== b.prototype) return false;
+  // if one is a primitive, the other must be same
+  if (util.isPrimitive(a) || util.isPrimitive(b)) {
+    return a === b;
+  }
+  var aIsArgs = isArguments(a),
+      bIsArgs = isArguments(b);
+  if ((aIsArgs && !bIsArgs) || (!aIsArgs && bIsArgs))
+    return false;
+  if (aIsArgs) {
+    a = pSlice.call(a);
+    b = pSlice.call(b);
+    return _deepEqual(a, b);
+  }
+  var ka = objectKeys(a),
+      kb = objectKeys(b),
+      key, i;
+  // having the same number of owned properties (keys incorporates
+  // hasOwnProperty)
+  if (ka.length != kb.length)
+    return false;
+  //the same set of keys (although not necessarily the same order),
+  ka.sort();
+  kb.sort();
+  //~~~cheap key test
+  for (i = ka.length - 1; i >= 0; i--) {
+    if (ka[i] != kb[i])
+      return false;
+  }
+  //equivalent values for every corresponding key, and
+  //~~~possibly expensive deep test
+  for (i = ka.length - 1; i >= 0; i--) {
+    key = ka[i];
+    if (!_deepEqual(a[key], b[key])) return false;
+  }
+  return true;
+}
+
+// 8. The non-equivalence assertion tests for any deep inequality.
+// assert.notDeepEqual(actual, expected, message_opt);
+
+assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
+  if (_deepEqual(actual, expected)) {
+    fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
+  }
+};
+
+// 9. The strict equality assertion tests strict equality, as determined by ===.
+// assert.strictEqual(actual, expected, message_opt);
+
+assert.strictEqual = function strictEqual(actual, expected, message) {
+  if (actual !== expected) {
+    fail(actual, expected, message, '===', assert.strictEqual);
+  }
+};
+
+// 10. The strict non-equality assertion tests for strict inequality, as
+// determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
+
+assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
+  if (actual === expected) {
+    fail(actual, expected, message, '!==', assert.notStrictEqual);
+  }
+};
+
+function expectedException(actual, expected) {
+  if (!actual || !expected) {
+    return false;
+  }
+
+  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
+    return expected.test(actual);
+  } else if (actual instanceof expected) {
+    return true;
+  } else if (expected.call({}, actual) === true) {
+    return true;
+  }
+
+  return false;
+}
+
+function _throws(shouldThrow, block, expected, message) {
+  var actual;
+
+  if (util.isString(expected)) {
+    message = expected;
+    expected = null;
+  }
+
+  try {
+    block();
+  } catch (e) {
+    actual = e;
+  }
+
+  message = (expected && expected.name ? ' (' + expected.name + ').' : '.') +
+            (message ? ' ' + message : '.');
+
+  if (shouldThrow && !actual) {
+    fail(actual, expected, 'Missing expected exception' + message);
+  }
+
+  if (!shouldThrow && expectedException(actual, expected)) {
+    fail(actual, expected, 'Got unwanted exception' + message);
+  }
+
+  if ((shouldThrow && actual && expected &&
+      !expectedException(actual, expected)) || (!shouldThrow && actual)) {
+    throw actual;
+  }
+}
+
+// 11. Expected to throw an error:
+// assert.throws(block, Error_opt, message_opt);
+
+assert.throws = function(block, /*optional*/error, /*optional*/message) {
+  _throws.apply(this, [true].concat(pSlice.call(arguments)));
+};
+
+// EXTENSION! This is annoying to write outside this module.
+assert.doesNotThrow = function(block, /*optional*/message) {
+  _throws.apply(this, [false].concat(pSlice.call(arguments)));
+};
+
+assert.ifError = function(err) { if (err) {throw err;}};
+
+var objectKeys = Object.keys || function (obj) {
+  var keys = [];
+  for (var key in obj) {
+    if (hasOwn.call(obj, key)) keys.push(key);
+  }
+  return keys;
+};
+
+},{"util/":49}],5:[function(require,module,exports){
 'use strict'
 
 exports.toByteArray = toByteArray
@@ -213,17 +576,12 @@ var revLookup = []
 var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
 
 function init () {
-  var i
   var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-  var len = code.length
-
-  for (i = 0; i < len; i++) {
+  for (var i = 0, len = code.length; i < len; ++i) {
     lookup[i] = code[i]
-  }
-
-  for (i = 0; i < len; ++i) {
     revLookup[code.charCodeAt(i)] = i
   }
+
   revLookup['-'.charCodeAt(0)] = 62
   revLookup['_'.charCodeAt(0)] = 63
 }
@@ -255,8 +613,8 @@ function toByteArray (b64) {
 
   for (i = 0, j = 0; i < l; i += 4, j += 3) {
     tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
-    arr[L++] = (tmp & 0xFF0000) >> 16
-    arr[L++] = (tmp & 0xFF00) >> 8
+    arr[L++] = (tmp >> 16) & 0xFF
+    arr[L++] = (tmp >> 8) & 0xFF
     arr[L++] = tmp & 0xFF
   }
 
@@ -318,7 +676,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -607,17 +965,12 @@ Buffer.compare = function compare (a, b) {
   var x = a.length
   var y = b.length
 
-  var i = 0
-  var len = Math.min(x, y)
-  while (i < len) {
-    if (a[i] !== b[i]) break
-
-    ++i
-  }
-
-  if (i !== len) {
-    x = a[i]
-    y = b[i]
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i]
+      y = b[i]
+      break
+    }
   }
 
   if (x < y) return -1
@@ -778,7 +1131,6 @@ Buffer.prototype.inspect = function inspect () {
 
 Buffer.prototype.compare = function compare (b) {
   if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
-  if (this === b) return 0
   return Buffer.compare(this, b)
 }
 
@@ -1784,14 +2136,14 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":4,"ieee754":8,"isarray":6}],6:[function(require,module,exports){
+},{"base64-js":5,"ieee754":9,"isarray":7}],7:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var ring = require('algebra-ring')
 var twoPow = Math.pow.bind(null, 2)
 
@@ -2027,7 +2379,7 @@ function iterateCayleyDickson (given, iterations) {
 module.exports = iterateCayleyDickson
 
 
-},{"algebra-ring":3}],8:[function(require,module,exports){
+},{"algebra-ring":3}],9:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -2113,7 +2465,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 function indicesPermutations (previousValue, currentValue, currentIndex, array) {
   var result = []
 
@@ -2142,7 +2494,7 @@ function indicesPermutations (previousValue, currentValue, currentIndex, array) 
 
 module.exports = indicesPermutations
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2167,7 +2519,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 var numberIsNan = require('number-is-nan');
 
@@ -2175,7 +2527,7 @@ module.exports = Number.isFinite || function (val) {
 	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
 };
 
-},{"number-is-nan":16}],12:[function(require,module,exports){
+},{"number-is-nan":17}],13:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -2185,7 +2537,7 @@ module.exports = Number.isInteger || function(val) {
     Math.floor(val) === val;
 };
 
-},{"is-finite":11}],13:[function(require,module,exports){
+},{"is-finite":12}],14:[function(require,module,exports){
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -2299,7 +2651,7 @@ function determinant (data, scalar, order) {
 module.exports = determinant
 
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * maps multidimensional array indices to monodimensional array index
  *
@@ -2341,16 +2693,109 @@ function multiDimArrayIndex (dimensions, indices) {
 
 module.exports = multiDimArrayIndex
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports=function(x){return typeof x==='undefined'}
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 module.exports = Number.isNaN || function (x) {
 	return x !== x;
 };
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = setTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    clearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],19:[function(require,module,exports){
 module.exports = function format(msg) {
   var args = arguments;
   for(var i = 1, l = args.length; i < l; i++) {
@@ -2359,7 +2804,7 @@ module.exports = function format(msg) {
   return msg;
 }
 
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var getType = require('should-type');
 var format = require('./format');
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -2710,7 +3155,7 @@ module.exports = eq;
 
 eq.r = REASON;
 
-},{"./format":17,"should-type":21}],19:[function(require,module,exports){
+},{"./format":19,"should-type":23}],21:[function(require,module,exports){
 var getType = require('should-type');
 var util = require('./util');
 
@@ -3173,7 +3618,7 @@ function defaultFormat(value, opts) {
 defaultFormat.Formatter = Formatter;
 module.exports = defaultFormat;
 
-},{"./util":20,"should-type":21}],20:[function(require,module,exports){
+},{"./util":22,"should-type":23}],22:[function(require,module,exports){
 function addSpaces(v) {
   return v.split('\n').map(function(vv) { return '  ' + vv; }).join('\n');
 }
@@ -3203,7 +3648,7 @@ module.exports = {
   }
 };
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function (Buffer){
 var toString = Object.prototype.toString;
 
@@ -3366,7 +3811,7 @@ Object.keys(types).forEach(function(typeName) {
 module.exports = getGlobalType;
 
 }).call(this,require("buffer").Buffer)
-},{"./types":22,"buffer":5}],22:[function(require,module,exports){
+},{"./types":24,"buffer":6}],24:[function(require,module,exports){
 var types = {
   NUMBER: 'number',
   UNDEFINED: 'undefined',
@@ -3409,7 +3854,7 @@ var types = {
 
 module.exports = types;
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 var should = require('./lib/should');
 
 var defaultProto = Object.prototype;
@@ -3425,7 +3870,7 @@ try {
 
 module.exports = should;
 
-},{"./lib/should":40}],24:[function(require,module,exports){
+},{"./lib/should":42}],26:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -3445,10 +3890,10 @@ var util = require('./util');
 var AssertionError = function AssertionError(options) {
   util.merge(this, options);
 
-  if(!options.message) {
+  if (!options.message) {
     Object.defineProperty(this, 'message', {
         get: function() {
-          if(!this._message) {
+          if (!this._message) {
             this._message = this.generateMessage();
             this.generatedMessage = true;
           }
@@ -3460,19 +3905,19 @@ var AssertionError = function AssertionError(options) {
     );
   }
 
-  if(Error.captureStackTrace) {
+  if (Error.captureStackTrace) {
     Error.captureStackTrace(this, this.stackStartFunction);
   } else {
     // non v8 browsers so we can have a stacktrace
     var err = new Error();
-    if(err.stack) {
+    if (err.stack) {
       var out = err.stack;
 
-      if(this.stackStartFunction) {
+      if (this.stackStartFunction) {
         // try to strip useless frames
         var fn_name = util.functionName(this.stackStartFunction);
         var idx = out.indexOf('\n' + fn_name);
-        if(idx >= 0) {
+        if (idx >= 0) {
           // once we have located the function frame
           // we need to strip out everything before it (and its line)
           var next_line = out.indexOf('\n', idx + 1);
@@ -3504,7 +3949,7 @@ AssertionError.prototype = Object.create(Error.prototype, {
 
   generateMessage: {
     value: function() {
-      if(!this.operator && this.previous) {
+      if (!this.operator && this.previous) {
         return this.previous.message;
       }
       var actual = util.format(this.actual);
@@ -3520,7 +3965,7 @@ AssertionError.prototype = Object.create(Error.prototype, {
 
 module.exports = AssertionError;
 
-},{"./util":41}],25:[function(require,module,exports){
+},{"./util":43}],27:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -3575,15 +4020,15 @@ Assertion.prototype = {
    * //throws AssertionError: expected 42 to be magic number
    */
   assert: function(expr) {
-    if(expr) {
+    if (expr) {
       return this;
     }
 
     var params = this.params;
 
-    if('obj' in params && !('actual' in params)) {
+    if ('obj' in params && !('actual' in params)) {
       params.actual = params.obj;
-    } else if(!('obj' in params) && !('actual' in params)) {
+    } else if (!('obj' in params) && !('actual' in params)) {
       params.actual = this.obj;
     }
 
@@ -3630,7 +4075,7 @@ function PromisedAssertion(/* obj */) {
 
 /**
  * Make PromisedAssertion to look like promise. Delegate resolve and reject to given promise.
- * 
+ *
  * @private
  * @returns {Promise}
  */
@@ -3723,7 +4168,7 @@ Assertion.add = function(name, func) {
 
 /**
  * Add chaining getter to Assertion like .a, .which etc
- * 
+ *
  * @memberOf Assertion
  * @static
  * @param  {string} name   name of getter
@@ -3800,7 +4245,7 @@ Assertion.addChain('any', function() {
 module.exports = Assertion;
 module.exports.PromisedAssertion = PromisedAssertion;
 
-},{"./assertion-error":24}],26:[function(require,module,exports){
+},{"./assertion-error":26}],28:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -3820,7 +4265,7 @@ var config = {
 
 module.exports = config;
 
-},{"should-format":19}],27:[function(require,module,exports){
+},{"should-format":21}],29:[function(require,module,exports){
 // implement assert interface using already written peaces of should.js
 
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
@@ -3907,7 +4352,7 @@ assert.fail = fail;
  * @param {string} [message]
  */
 function ok(value, message) {
-  if(!value) fail(value, true, message, '==', assert.ok);
+  if (!value) fail(value, true, message, '==', assert.ok);
 }
 assert.ok = ok;
 
@@ -3925,7 +4370,7 @@ assert.ok = ok;
  * @param {string} [message]
  */
 assert.equal = function equal(actual, expected, message) {
-  if(actual != expected) fail(actual, expected, message, '==', assert.equal);
+  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
 };
 
 // 6. The non-equality assertion tests for whether two objects are not equal
@@ -3940,7 +4385,7 @@ assert.equal = function equal(actual, expected, message) {
  * @param {string} [message]
  */
 assert.notEqual = function notEqual(actual, expected, message) {
-  if(actual == expected) {
+  if (actual == expected) {
     fail(actual, expected, message, '!=', assert.notEqual);
   }
 };
@@ -3959,7 +4404,7 @@ assert.notEqual = function notEqual(actual, expected, message) {
  * @param {string} [message]
  */
 assert.deepEqual = function deepEqual(actual, expected, message) {
-  if(!_deepEqual(actual, expected).result) {
+  if (!_deepEqual(actual, expected).result) {
     fail(actual, expected, message, 'deepEqual', assert.deepEqual);
   }
 };
@@ -3979,7 +4424,7 @@ assert.deepEqual = function deepEqual(actual, expected, message) {
  * @param {string} [message]
  */
 assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
-  if(_deepEqual(actual, expected).result) {
+  if (_deepEqual(actual, expected).result) {
     fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
   }
 };
@@ -3996,7 +4441,7 @@ assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
  * @param {string} [message]
  */
 assert.strictEqual = function strictEqual(actual, expected, message) {
-  if(actual !== expected) {
+  if (actual !== expected) {
     fail(actual, expected, message, '===', assert.strictEqual);
   }
 };
@@ -4013,21 +4458,21 @@ assert.strictEqual = function strictEqual(actual, expected, message) {
  * @param {string} [message]
  */
 assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
-  if(actual === expected) {
+  if (actual === expected) {
     fail(actual, expected, message, '!==', assert.notStrictEqual);
   }
 };
 
 function expectedException(actual, expected) {
-  if(!actual || !expected) {
+  if (!actual || !expected) {
     return false;
   }
 
-  if(Object.prototype.toString.call(expected) == '[object RegExp]') {
+  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
     return expected.test(actual);
-  } else if(actual instanceof expected) {
+  } else if (actual instanceof expected) {
     return true;
-  } else if(expected.call({}, actual) === true) {
+  } else if (expected.call({}, actual) === true) {
     return true;
   }
 
@@ -4037,29 +4482,29 @@ function expectedException(actual, expected) {
 function _throws(shouldThrow, block, expected, message) {
   var actual;
 
-  if(typeof expected == 'string') {
+  if (typeof expected == 'string') {
     message = expected;
     expected = null;
   }
 
   try {
     block();
-  } catch(e) {
+  } catch (e) {
     actual = e;
   }
 
   message = (expected && expected.name ? ' (' + expected.name + ')' : '.') +
   (message ? ' ' + message : '.');
 
-  if(shouldThrow && !actual) {
+  if (shouldThrow && !actual) {
     fail(actual, expected, 'Missing expected exception' + message);
   }
 
-  if(!shouldThrow && expectedException(actual, expected)) {
+  if (!shouldThrow && expectedException(actual, expected)) {
     fail(actual, expected, 'Got unwanted exception' + message);
   }
 
-  if((shouldThrow && actual && expected && !expectedException(actual, expected)) || (!shouldThrow && actual)) {
+  if ((shouldThrow && actual && expected && !expectedException(actual, expected)) || (!shouldThrow && actual)) {
     throw actual;
   }
 }
@@ -4100,12 +4545,12 @@ assert.doesNotThrow = function(/*block, message*/) {
  * @param {Error} err
  */
 assert.ifError = function(err) {
-  if(err) {
+  if (err) {
     throw err;
   }
 };
 
-},{"./../assertion":25,"should-equal":18}],28:[function(require,module,exports){
+},{"./../assertion":27,"should-equal":20}],30:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4146,7 +4591,7 @@ module.exports = function(should) {
    * should.exist(new Date());
    */
   should.exist = should.exists = function(obj, msg) {
-    if(null == obj) {
+    if (null == obj) {
       throw new AssertionError({
         message: msg || ('expected ' + i(obj) + ' to exist'), stackStartFunction: should.exist
       });
@@ -4170,7 +4615,7 @@ module.exports = function(should) {
    * should.not.exist(void 0);
    */
   should.not.exist = should.not.exists = function(obj, msg) {
-    if(null != obj) {
+    if (null != obj) {
       throw new AssertionError({
         message: msg || ('expected ' + i(obj) + ' to not exist'), stackStartFunction: should.not.exist
       });
@@ -4178,7 +4623,7 @@ module.exports = function(should) {
   };
 };
 
-},{"../assertion-error":24,"../util":41,"./_assert":27}],29:[function(require,module,exports){
+},{"../assertion-error":26,"../util":43,"./_assert":29}],31:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4194,6 +4639,7 @@ module.exports = function(should, Assertion) {
    * @memberOf Assertion
    * @category assertion bool
    * @alias Assertion#True
+   * @param {string} [message] Optional message
    * @example
    *
    * (true).should.be.true();
@@ -4201,8 +4647,8 @@ module.exports = function(should, Assertion) {
    *
    * ({ a: 10}).should.not.be.true();
    */
-  Assertion.add('true', function() {
-    this.is.exactly(true);
+  Assertion.add('true', function(message) {
+    this.is.exactly(true, message);
   });
 
   Assertion.alias('true', 'True');
@@ -4214,13 +4660,14 @@ module.exports = function(should, Assertion) {
    * @memberOf Assertion
    * @category assertion bool
    * @alias Assertion#False
+   * @param {string} [message] Optional message
    * @example
    *
    * (true).should.not.be.false();
    * false.should.be.false();
    */
-  Assertion.add('false', function() {
-    this.is.exactly(false);
+  Assertion.add('false', function(message) {
+    this.is.exactly(false, message);
   });
 
   Assertion.alias('false', 'False');
@@ -4248,7 +4695,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4281,7 +4728,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4326,9 +4773,9 @@ module.exports = function(should, Assertion) {
 
     var obj = this.obj;
 
-    if(typeof obj == 'string') {
+    if (typeof obj == 'string') {
       this.assert(obj.indexOf(String(other)) >= 0);
-    } else if(util.isIndexable(obj)) {
+    } else if (util.isIndexable(obj)) {
       this.assert(util.some(obj, function(v) {
         return eql(v, other).result;
       }));
@@ -4360,15 +4807,15 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to contain ' + i(other)};
 
     var obj = this.obj;
-    if(typeof obj == 'string') {// expect other to be string
+    if (typeof obj == 'string') {// expect other to be string
       this.is.equal(String(other));
-    } else if(util.isIndexable(obj) && util.isIndexable(other)) {
-      for(var objIdx = 0, otherIdx = 0, objLength = util.length(obj), otherLength = util.length(other); objIdx < objLength && otherIdx < otherLength; objIdx++) {
+    } else if (util.isIndexable(obj) && util.isIndexable(other)) {
+      for (var objIdx = 0, otherIdx = 0, objLength = util.length(obj), otherLength = util.length(other); objIdx < objLength && otherIdx < otherLength; objIdx++) {
         try {
           should(obj[objIdx]).containDeepOrdered(other[otherIdx]);
           otherIdx++;
-        } catch(e) {
-          if(e instanceof should.AssertionError) {
+        } catch (e) {
+          if (e instanceof should.AssertionError) {
             continue;
           }
           throw e;
@@ -4376,13 +4823,13 @@ module.exports = function(should, Assertion) {
       }
 
       this.assert(otherIdx === otherLength);
-    } else if(obj != null && other != null && typeof obj == 'object' && typeof other == 'object') {// object contains object case
+    } else if (obj != null && other != null && typeof obj == 'object' && typeof other == 'object') {// object contains object case
       util.forEach(other, function(value, key) {
         should(obj[key]).containDeepOrdered(value);
       });
 
       // if both objects is empty means we finish traversing - and we need to compare for hidden values
-      if(util.isEmptyObject(other)) {
+      if (util.isEmptyObject(other)) {
         this.eql(other);
       }
     } else {
@@ -4406,33 +4853,33 @@ module.exports = function(should, Assertion) {
     this.params = {operator: 'to contain ' + i(other)};
 
     var obj = this.obj;
-    if(typeof obj == 'string') {// expect other to be string
+    if (typeof obj == 'string') {// expect other to be string
       this.is.equal(String(other));
-    } else if(util.isIndexable(obj) && util.isIndexable(other)) {
+    } else if (util.isIndexable(obj) && util.isIndexable(other)) {
       var usedKeys = {};
       util.forEach(other, function(otherItem) {
         this.assert(util.some(obj, function(item, index) {
-          if(index in usedKeys) return false;
+          if (index in usedKeys) return false;
 
           try {
             should(item).containDeep(otherItem);
             usedKeys[index] = true;
             return true;
-          } catch(e) {
-            if(e instanceof should.AssertionError) {
+          } catch (e) {
+            if (e instanceof should.AssertionError) {
               return false;
             }
             throw e;
           }
         }));
       }, this);
-    } else if(obj != null && other != null && typeof obj == 'object' && typeof other == 'object') {// object contains object case
+    } else if (obj != null && other != null && typeof obj == 'object' && typeof other == 'object') {// object contains object case
       util.forEach(other, function(value, key) {
         should(obj[key]).containDeep(value);
       });
 
       // if both objects is empty means we finish traversing - and we need to compare for hidden values
-      if(util.isEmptyObject(other)) {
+      if (util.isEmptyObject(other)) {
         this.eql(other);
       }
     } else {
@@ -4442,7 +4889,7 @@ module.exports = function(should, Assertion) {
 
 };
 
-},{"../util":41,"should-equal":18}],32:[function(require,module,exports){
+},{"../util":43,"should-equal":20}],34:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4523,7 +4970,7 @@ module.exports = function(should, Assertion) {
 
   function addOneOf(name, message, method) {
     Assertion.add(name, function(vals) {
-      if(arguments.length !== 1) {
+      if (arguments.length !== 1) {
         vals = Array.prototype.slice.call(arguments);
       } else {
         should(vals).be.Array();
@@ -4539,8 +4986,8 @@ module.exports = function(should, Assertion) {
           should(val)[method](obj);
           found = true;
           return false;
-        } catch(e) {
-          if(e instanceof should.AssertionError) {
+        } catch (e) {
+          if (e instanceof should.AssertionError) {
             return;//do nothing
           }
           throw e;
@@ -4581,7 +5028,7 @@ module.exports = function(should, Assertion) {
 
 };
 
-},{"../util":41,"should-equal":18,"should-type":21}],33:[function(require,module,exports){
+},{"../util":43,"should-equal":20,"should-type":23}],35:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4623,9 +5070,9 @@ module.exports = function(should, Assertion) {
     var errorInfo = '';
     var thrown = false;
 
-    if(util.isGeneratorFunction(fn)) {
+    if (util.isGeneratorFunction(fn)) {
       return should(fn()).throw(message, properties);
-    } else if(util.isGeneratorObject(fn)) {
+    } else if (util.isGeneratorObject(fn)) {
       return should(fn.next.bind(fn)).throw(message, properties);
     }
 
@@ -4635,24 +5082,24 @@ module.exports = function(should, Assertion) {
 
     try {
       fn();
-    } catch(e) {
+    } catch (e) {
       thrown = true;
       err = e;
     }
 
-    if(thrown) {
-      if(message) {
-        if('string' == typeof message) {
+    if (thrown) {
+      if (message) {
+        if ('string' == typeof message) {
           errorMatched = message == err.message;
-        } else if(message instanceof RegExp) {
+        } else if (message instanceof RegExp) {
           errorMatched = message.test(err.message);
-        } else if('function' == typeof message) {
+        } else if ('function' == typeof message) {
           errorMatched = err instanceof message;
-        } else if(null != message) {
+        } else if (null != message) {
           try {
             should(err).match(message);
-          } catch(e) {
-            if(e instanceof should.AssertionError) {
+          } catch (e) {
+            if (e instanceof should.AssertionError) {
               errorInfo = ": " + e.message;
               errorMatched = false;
             } else {
@@ -4661,17 +5108,17 @@ module.exports = function(should, Assertion) {
           }
         }
 
-        if(!errorMatched) {
-          if('string' == typeof message || message instanceof RegExp) {
+        if (!errorMatched) {
+          if ('string' == typeof message || message instanceof RegExp) {
             errorInfo = " with a message matching " + i(message) + ", but got '" + err.message + "'";
-          } else if('function' == typeof message) {
+          } else if ('function' == typeof message) {
             errorInfo = " of type " + util.functionName(message) + ", but got " + util.functionName(err.constructor);
           }
-        } else if('function' == typeof message && properties) {
+        } else if ('function' == typeof message && properties) {
           try {
             should(err).match(properties);
-          } catch(e) {
-            if(e instanceof should.AssertionError) {
+          } catch (e) {
+            if (e instanceof should.AssertionError) {
               errorInfo = ": " + e.message;
               errorMatched = false;
             } else {
@@ -4693,7 +5140,7 @@ module.exports = function(should, Assertion) {
   Assertion.alias('throw', 'throwError');
 };
 
-},{"../util":41}],34:[function(require,module,exports){
+},{"../util":43}],36:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4766,32 +5213,32 @@ module.exports = function(should, Assertion) {
   Assertion.add('match', function(other, description) {
     this.params = {operator: 'to match ' + i(other), message: description};
 
-    if(!eql(this.obj, other).result) {
-      if(other instanceof RegExp) { // something - regex
+    if (!eql(this.obj, other).result) {
+      if (other instanceof RegExp) { // something - regex
 
-        if(typeof this.obj == 'string') {
+        if (typeof this.obj == 'string') {
 
           this.assert(other.exec(this.obj));
-        } else if(util.isIndexable(this.obj)) {
+        } else if (util.isIndexable(this.obj)) {
           util.forEach(this.obj, function(item) {
             this.assert(other.exec(item));// should we try to convert to String and exec?
           }, this);
-        } else if(null != this.obj && typeof this.obj == 'object') {
+        } else if (null != this.obj && typeof this.obj == 'object') {
 
           var notMatchedProps = [], matchedProps = [];
           util.forEach(this.obj, function(value, name) {
-            if(other.exec(value)) matchedProps.push(util.formatProp(name));
+            if (other.exec(value)) matchedProps.push(util.formatProp(name));
             else notMatchedProps.push(util.formatProp(name) + ' (' + i(value) + ')');
           }, this);
 
-          if(notMatchedProps.length)
+          if (notMatchedProps.length)
             this.params.operator += '\n    not matched properties: ' + notMatchedProps.join(', ');
-          if(matchedProps.length)
+          if (matchedProps.length)
             this.params.operator += '\n    matched properties: ' + matchedProps.join(', ');
 
           this.assert(notMatchedProps.length === 0);
         } // should we try to convert to String and exec?
-      } else if(typeof other == 'function') {
+      } else if (typeof other == 'function') {
         var res;
 
         res = other(this.obj);
@@ -4801,10 +5248,10 @@ module.exports = function(should, Assertion) {
         //}
 
         //if we throw exception ok - it is used .should inside
-        if(typeof res == 'boolean') {
+        if (typeof res == 'boolean') {
           this.assert(res); // if it is just boolean function assert on it
         }
-      } else if(other != null && this.obj != null && typeof other == 'object' && typeof this.obj == 'object') { // try to match properties (for Object and Array)
+      } else if (other != null && this.obj != null && typeof other == 'object' && typeof this.obj == 'object') { // try to match properties (for Object and Array)
         notMatchedProps = [];
         matchedProps = [];
 
@@ -4812,8 +5259,8 @@ module.exports = function(should, Assertion) {
           try {
             should(this.obj).have.property(key).which.match(value);
             matchedProps.push(util.formatProp(key));
-          } catch(e) {
-            if(e instanceof should.AssertionError) {
+          } catch (e) {
+            if (e instanceof should.AssertionError) {
               notMatchedProps.push(util.formatProp(key) + ' (' + i(this.obj[key]) + ')');
             } else {
               throw e;
@@ -4821,9 +5268,9 @@ module.exports = function(should, Assertion) {
           }
         }, this);
 
-        if(notMatchedProps.length)
+        if (notMatchedProps.length)
           this.params.operator += '\n    not matched properties: ' + notMatchedProps.join(', ');
-        if(matchedProps.length)
+        if (matchedProps.length)
           this.params.operator += '\n    matched properties: ' + matchedProps.join(', ');
 
         this.assert(notMatchedProps.length === 0);
@@ -4890,8 +5337,8 @@ module.exports = function(should, Assertion) {
       try {
         should(value).match(other);
         return true;
-      } catch(e) {
-        if(e instanceof should.AssertionError) {
+      } catch (e) {
+        if (e instanceof should.AssertionError) {
           // Caught an AssertionError, return false to the iterator
           return false;
         }
@@ -4904,7 +5351,7 @@ module.exports = function(should, Assertion) {
   Assertion.alias('matchEach', 'matchEvery');
 };
 
-},{"../util":41,"should-equal":18}],35:[function(require,module,exports){
+},{"../util":43,"should-equal":20}],37:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5073,7 +5520,7 @@ module.exports = function(should, Assertion) {
 
 };
 
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5115,10 +5562,10 @@ module.exports = function(should) {
    * @returns {Promise}
    * @category assertion promises
    * @example
-   * 
+   *
    * // don't forget to handle async nature
    * (new Promise(function(resolve, reject) { resolve(10); })).should.be.fulfilled();
-   * 
+   *
    * // test example with mocha it is possible to return promise
    * it('is async', () => {
    *    return new Promise(resolve => resolve(10))
@@ -5138,6 +5585,7 @@ module.exports = function(should) {
       return value;
     }, function next$onReject(err) {
       if (!that.negate) {
+        that.params.operator += ', but it was rejected with ' + should.format(err);
         that.fail();
       }
       return err;
@@ -5152,11 +5600,11 @@ module.exports = function(should) {
    * @category assertion promises
    * @returns {Promise}
    * @example
-   * 
+   *
    * // don't forget to handle async nature
    * (new Promise(function(resolve, reject) { resolve(10); }))
    *    .should.not.be.rejected();
-   * 
+   *
    * // test example with mocha it is possible to return promise
    * it('is async', () => {
    *    return new Promise((resolve, reject) => reject(new Error('boom')))
@@ -5171,6 +5619,10 @@ module.exports = function(should) {
     var that = this;
     return this.obj.then(function(value) {
       if (!that.negate) {
+        that.params.operator += ', but it was fulfilled';
+        if (arguments.length != 0) {
+          that.params.operator += ' with ' + should.format(value);
+        }
         that.fail();
       }
       return value;
@@ -5191,11 +5643,11 @@ module.exports = function(should) {
    * @category assertion promises
    * @returns {Promise}
    * @example
-   * 
+   *
    * // don't forget to handle async nature
    * (new Promise(function(resolve, reject) { resolve(10); }))
    *    .should.be.fulfilledWith(10);
-   * 
+   *
    * // test example with mocha it is possible to return promise
    * it('is async', () => {
    *    return new Promise((resolve, reject) => resolve(10))
@@ -5203,7 +5655,7 @@ module.exports = function(should) {
    * });
    */
   Assertion.prototype.fulfilledWith = function(expectedValue) {
-    this.params = {operator: 'to be fulfilled'};
+    this.params = {operator: 'to be fulfilled with ' + should.format(expectedValue)};
 
     should(this.obj).be.a.Promise();
 
@@ -5216,6 +5668,7 @@ module.exports = function(should) {
       return value;
     }, function next$onError(err) {
       if (!that.negate) {
+        that.params.operator += ', but it was rejected with ' + should.format(err);
         that.fail();
       }
       return err;
@@ -5242,7 +5695,7 @@ module.exports = function(should) {
    * failedPromise().should.be.rejectedWith(/boom/);
    * failedPromise().should.be.rejectedWith(Error, { message: 'boom' });
    * failedPromise().should.be.rejectedWith({ message: 'boom' });
-   * 
+   *
    * // test example with mocha it is possible to return promise
    * it('is async', () => {
    *    return failedPromise().should.be.rejectedWith({ message: 'boom' });
@@ -5314,7 +5767,7 @@ module.exports = function(should) {
   };
 
   /**
-   * Assert given object is promise and wrap it in PromisedAssertion, which has all properties of Assertion. 
+   * Assert given object is promise and wrap it in PromisedAssertion, which has all properties of Assertion.
    * That means you can chain as with usual Assertion.
    * Result of assertion is still .thenable and should be handled accordingly.
    *
@@ -5327,7 +5780,7 @@ module.exports = function(should) {
    *
    * (new Promise(function(resolve, reject) { resolve(10); }))
    *    .should.be.eventually.equal(10);
-   * 
+   *
    * // test example with mocha it is possible to return promise
    * it('is async', () => {
    *    return new Promise(resolve => resolve(10))
@@ -5354,7 +5807,7 @@ module.exports = function(should) {
   Assertion.alias('finally', 'eventually');
 };
 
-},{"../assertion":25,"../util":41}],37:[function(require,module,exports){
+},{"../assertion":27,"../util":43}],39:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5390,13 +5843,13 @@ module.exports = function(should, Assertion) {
 
   function processPropsArgs() {
     var args = {};
-    if(arguments.length > 1) {
+    if (arguments.length > 1) {
       args.names = aSlice.call(arguments);
     } else {
       var arg = arguments[0];
-      if(typeof arg === 'string') {
+      if (typeof arg === 'string') {
         args.names = [arg];
-      } else if(util.isIndexable(arg)) {
+      } else if (util.isIndexable(arg)) {
         args.names = arg;
       } else {
         args.names = Object.keys(arg);
@@ -5427,7 +5880,7 @@ module.exports = function(should, Assertion) {
     };
 
     var desc = { enumerable: true };
-    if(arguments.length > 1) desc.value = val;
+    if (arguments.length > 1) desc.value = val;
     this.have.propertyWithDescriptor(name, desc);
   });
 
@@ -5469,7 +5922,7 @@ module.exports = function(should, Assertion) {
    */
   Assertion.add('property', function(name, val) {
     name = util.convertPropertyName(name);
-    if(arguments.length > 1) {
+    if (arguments.length > 1) {
       var p = {};
       p[name] = val;
       this.have.properties(p);
@@ -5494,10 +5947,10 @@ module.exports = function(should, Assertion) {
    */
   Assertion.add('properties', function(names) {
     var values = {};
-    if(arguments.length > 1) {
+    if (arguments.length > 1) {
       names = aSlice.call(arguments);
-    } else if(!Array.isArray(names)) {
-      if(typeof names == 'string' || typeof names == 'symbol') {
+    } else if (!Array.isArray(names)) {
+      if (typeof names == 'string' || typeof names == 'symbol') {
         names = [names];
       } else {
         values = names;
@@ -5509,13 +5962,13 @@ module.exports = function(should, Assertion) {
 
     //just enumerate properties and check if they all present
     names.forEach(function(name) {
-      if(!(name in obj)) missingProperties.push(util.formatProp(name));
+      if (!(name in obj)) missingProperties.push(util.formatProp(name));
     });
 
     var props = missingProperties;
-    if(props.length === 0) {
+    if (props.length === 0) {
       props = names.map(util.formatProp);
-    } else if(this.anyOne) {
+    } else if (this.anyOne) {
       props = names.filter(function(name) {
         return missingProperties.indexOf(util.formatProp(name)) < 0;
       }).map(util.formatProp);
@@ -5532,21 +5985,21 @@ module.exports = function(should, Assertion) {
 
     // check if values in object matched expected
     var valueCheckNames = Object.keys(values);
-    if(valueCheckNames.length) {
+    if (valueCheckNames.length) {
       var wrongValues = [];
       props = [];
 
       // now check values, as there we have all properties
       valueCheckNames.forEach(function(name) {
         var value = values[name];
-        if(!eql(obj[name], value).result) {
+        if (!eql(obj[name], value).result) {
           wrongValues.push(util.formatProp(name) + ' of ' + i(value) + ' (got ' + i(obj[name]) + ')');
         } else {
           props.push(util.formatProp(name) + ' of ' + i(value));
         }
       });
 
-      if((wrongValues.length !== 0 && !this.anyOne) || (this.anyOne && props.length === 0)) {
+      if ((wrongValues.length !== 0 && !this.anyOne) || (this.anyOne && props.length === 0)) {
         props = wrongValues;
       }
 
@@ -5625,11 +6078,11 @@ module.exports = function(should, Assertion) {
   Assertion.add('empty', function() {
     this.params = {operator: 'to be empty'};
 
-    if(util.length(this.obj) !== void 0) {
+    if (util.length(this.obj) !== void 0) {
       should(this.obj).have.property('length', 0);
     } else {
       var obj = Object(this.obj); // wrap to reference for booleans and numbers
-      for(var prop in obj) {
+      for (var prop in obj) {
         should(this.obj).not.have.ownProperty(prop);
       }
     }
@@ -5651,9 +6104,9 @@ module.exports = function(should, Assertion) {
    * ({}).should.have.keys();
    */
   Assertion.add('keys', function(keys) {
-    if(arguments.length > 1) keys = aSlice.call(arguments);
-    else if(arguments.length === 1 && typeof keys === 'string') keys = [keys];
-    else if(arguments.length === 0) keys = [];
+    if (arguments.length > 1) keys = aSlice.call(arguments);
+    else if (arguments.length === 1 && typeof keys === 'string') keys = [keys];
+    else if (arguments.length === 0) keys = [];
 
     keys = keys.map(String);
 
@@ -5662,14 +6115,14 @@ module.exports = function(should, Assertion) {
     // first check if some keys are missing
     var missingKeys = [];
     keys.forEach(function(key) {
-      if(!hasOwnProperty.call(this.obj, key))
+      if (!hasOwnProperty.call(this.obj, key))
         missingKeys.push(util.formatProp(key));
     }, this);
 
     // second check for extra keys
     var extraKeys = [];
     Object.keys(obj).forEach(function(key) {
-      if(keys.indexOf(key) < 0) {
+      if (keys.indexOf(key) < 0) {
         extraKeys.push(util.formatProp(key));
       }
     });
@@ -5679,10 +6132,10 @@ module.exports = function(should, Assertion) {
 
     this.params = {operator: verb + keys.map(util.formatProp).join(', ')};
 
-    if(missingKeys.length > 0)
+    if (missingKeys.length > 0)
       this.params.operator += '\n\tmissing keys: ' + missingKeys.join(', ');
 
-    if(extraKeys.length > 0)
+    if (extraKeys.length > 0)
       this.params.operator += '\n\textra keys: ' + extraKeys.join(', ');
 
     this.assert(missingKeys.length === 0 && extraKeys.length === 0);
@@ -5702,9 +6155,9 @@ module.exports = function(should, Assertion) {
    * ({ a: {b: 10}}).should.have.propertyByPath('a', 'b').eql(10);
    */
   Assertion.add('propertyByPath', function(properties) {
-    if(arguments.length > 1) properties = aSlice.call(arguments);
-    else if(arguments.length === 1 && typeof properties == 'string') properties = [properties];
-    else if(arguments.length === 0) properties = [];
+    if (arguments.length > 1) properties = aSlice.call(arguments);
+    else if (arguments.length === 1 && typeof properties == 'string') properties = [properties];
+    else if (arguments.length === 0) properties = [];
 
     var allProps = properties.map(util.formatProp);
 
@@ -5715,7 +6168,7 @@ module.exports = function(should, Assertion) {
     var foundProperties = [];
 
     var currentProperty;
-    while(properties.length) {
+    while (properties.length) {
       currentProperty = properties.shift();
       this.params = {operator: 'to have property by path ' + allProps.join(', ') + ' - failed on ' + util.formatProp(currentProperty)};
       obj = obj.have.property(currentProperty);
@@ -5728,7 +6181,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{"../util":41,"should-equal":18}],38:[function(require,module,exports){
+},{"../util":43,"should-equal":20}],40:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5772,7 +6225,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6011,7 +6464,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{"../util":41}],40:[function(require,module,exports){
+},{"../util":43}],42:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6130,10 +6583,10 @@ should.extend = function(propertyName, proto) {
 should.noConflict = function(desc) {
   desc = desc || should._prevShould;
 
-  if(desc) {
+  if (desc) {
     delete desc.proto[desc.name];
 
-    if(desc.descriptor) {
+    if (desc.descriptor) {
       Object.defineProperty(desc.proto, desc.name, desc.descriptor);
     }
   }
@@ -6176,7 +6629,7 @@ should
   .use(require('./ext/contain'))
   .use(require('./ext/promise'));
 
-},{"./assertion":25,"./assertion-error":24,"./config":26,"./ext/assert":28,"./ext/bool":29,"./ext/chain":30,"./ext/contain":31,"./ext/eql":32,"./ext/error":33,"./ext/match":34,"./ext/number":35,"./ext/promise":36,"./ext/property":37,"./ext/string":38,"./ext/type":39,"./util":41,"should-type":21}],41:[function(require,module,exports){
+},{"./assertion":27,"./assertion-error":26,"./config":28,"./ext/assert":30,"./ext/bool":31,"./ext/chain":32,"./ext/contain":33,"./ext/eql":34,"./ext/error":35,"./ext/match":36,"./ext/number":37,"./ext/promise":38,"./ext/property":39,"./ext/string":40,"./ext/type":41,"./util":43,"should-type":23}],43:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6198,8 +6651,8 @@ exports.isWrapperType = function(obj) {
 };
 
 exports.merge = function(a, b) {
-  if(a && b) {
-    for(var key in b) {
+  if (a && b) {
+    for (var key in b) {
       a[key] = b[key];
     }
   }
@@ -6209,19 +6662,19 @@ exports.merge = function(a, b) {
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 exports.forEach = function forEach(obj, f, context) {
-  if(exports.isGeneratorFunction(obj)) {
+  if (exports.isGeneratorFunction(obj)) {
     return forEach(obj(), f, context);
   } else if (exports.isGeneratorObject(obj)) {
     var value = obj.next();
-    while(!value.done) {
-      if(f.call(context, value.value, 'value', obj) === false)
+    while (!value.done) {
+      if (f.call(context, value.value, 'value', obj) === false)
         return;
       value = obj.next();
     }
   } else {
-    for(var prop in obj) {
-      if(hasOwnProperty.call(obj, prop)) {
-        if(f.call(context, obj[prop], prop, obj) === false)
+    for (var prop in obj) {
+      if (hasOwnProperty.call(obj, prop)) {
+        if (f.call(context, obj[prop], prop, obj) === false)
           return;
       }
     }
@@ -6231,7 +6684,7 @@ exports.forEach = function forEach(obj, f, context) {
 exports.some = function(obj, f, context) {
   var res = false;
   exports.forEach(obj, function(value, key) {
-    if(f.call(context, value, key, obj)) {
+    if (f.call(context, value, key, obj)) {
       res = true;
       return false;
     }
@@ -6240,8 +6693,8 @@ exports.some = function(obj, f, context) {
 };
 
 exports.isEmptyObject = function(obj) {
-  for(var prop in obj) {
-    if(hasOwnProperty.call(obj, prop)) {
+  for (var prop in obj) {
+    if (hasOwnProperty.call(obj, prop)) {
       return false;
     }
   }
@@ -6262,11 +6715,11 @@ exports.isIndexable = function(obj) {
 
 exports.length = function(obj) {
   var t = type(obj);
-  switch(t.type) {
+  switch (t.type) {
     case type.STRING:
       return obj.length;
     case type.OBJECT:
-      switch(t.cls) {
+      switch (t.cls) {
         case type.ARRAY_BUFFER:
         case type.TYPED_ARRAY:
         case type.DATA_VIEW:
@@ -6282,7 +6735,7 @@ exports.length = function(obj) {
 };
 
 exports.convertPropertyName = function(name) {
-  if(typeof name == 'symbol') {
+  if (typeof name == 'symbol') {
     return name;
   } else {
     return String(name);
@@ -6290,7 +6743,7 @@ exports.convertPropertyName = function(name) {
 };
 
 exports.isGeneratorObject = function(obj) {
-  if(!obj) return false;
+  if (!obj) return false;
 
   return typeof obj.next == 'function' &&
           typeof obj[Symbol.iterator] == 'function' &&
@@ -6299,7 +6752,7 @@ exports.isGeneratorObject = function(obj) {
 
 //TODO find better way
 exports.isGeneratorFunction = function(f) {
-  if(typeof f != 'function') return false;
+  if (typeof f != 'function') return false;
 
   return /^function\s*\*\s*/.test(f.toString());
 };
@@ -6314,7 +6767,7 @@ exports.formatProp = function(value) {
   return config.getFormatter().formatPropertyName(String(value));
 };
 
-},{"./config":26,"should-format":19,"should-type":21}],42:[function(require,module,exports){
+},{"./config":28,"should-format":21,"should-type":23}],44:[function(require,module,exports){
 function staticProps (obj) {
   return function (props) {
     var statik = {}
@@ -6336,11 +6789,11 @@ function staticProps (obj) {
 
 module.exports = staticProps
 
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 // In browserify context, *strict-mode* fall back to a no op.
 module.exports = function (cb) { cb() }
 
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -6427,7 +6880,7 @@ function tensorContraction (addition, indicesPair, tensorDim, tensorData) {
 
 module.exports = tensorContraction
 
-},{"indices-permutations":9,"multidim-array-index":14}],45:[function(require,module,exports){
+},{"indices-permutations":10,"multidim-array-index":15}],47:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -6466,13 +6919,608 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 
 module.exports = tensorProduct
 
-},{"indices-permutations":9,"multidim-array-index":14}],46:[function(require,module,exports){
+},{"indices-permutations":10,"multidim-array-index":15}],48:[function(require,module,exports){
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+},{}],49:[function(require,module,exports){
+(function (process,global){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var formatRegExp = /%[sdj%]/g;
+exports.format = function(f) {
+  if (!isString(f)) {
+    var objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function(x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s': return String(args[i++]);
+      case '%d': return Number(args[i++]);
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
+        }
+      default:
+        return x;
+    }
+  });
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
+    }
+  }
+  return str;
+};
+
+
+// Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+exports.deprecate = function(fn, msg) {
+  // Allow for deprecating things in the process of starting up.
+  if (isUndefined(global.process)) {
+    return function() {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
+
+  if (process.noDeprecation === true) {
+    return fn;
+  }
+
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+
+var debugs = {};
+var debugEnviron;
+exports.debuglog = function(set) {
+  if (isUndefined(debugEnviron))
+    debugEnviron = process.env.NODE_DEBUG || '';
+  set = set.toUpperCase();
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+      debugs[set] = function() {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function() {};
+    }
+  }
+  return debugs[set];
+};
+
+
+/**
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
+/* legacy: obj, showHidden, depth, colors*/
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  };
+  // legacy...
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  }
+  // set default options
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+exports.inspect = inspect;
+
+
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+inspect.colors = {
+  'bold' : [1, 22],
+  'italic' : [3, 23],
+  'underline' : [4, 24],
+  'inverse' : [7, 27],
+  'white' : [37, 39],
+  'grey' : [90, 39],
+  'black' : [30, 39],
+  'blue' : [34, 39],
+  'cyan' : [36, 39],
+  'green' : [32, 39],
+  'magenta' : [35, 39],
+  'red' : [31, 39],
+  'yellow' : [33, 39]
+};
+
+// Don't use 'blue' not visible on cmd.exe
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+           '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+
+function arrayToHash(array) {
+  var hash = {};
+
+  array.forEach(function(val, idx) {
+    hash[val] = true;
+  });
+
+  return hash;
+}
+
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect &&
+      value &&
+      isFunction(value.inspect) &&
+      // Filter out the util module, it's inspect function is special
+      value.inspect !== exports.inspect &&
+      // Also filter out any prototype objects using the circular check.
+      !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
+    }
+    return ret;
+  }
+
+  // Primitive types cannot have properties
+  var primitive = formatPrimitive(ctx, value);
+  if (primitive) {
+    return primitive;
+  }
+
+  // Look up the keys of the object.
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  }
+
+  // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  if (isError(value)
+      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  }
+
+  // Some type of object without properties can be shortcutted.
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
+    }
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    }
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+    }
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '', array = false, braces = ['{', '}'];
+
+  // Make Array say that they are Array
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  }
+
+  // Make functions say that they are functions
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  }
+
+  // Make RegExps say that they are RegExps
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  }
+
+  // Make dates with properties first say the date
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  }
+
+  // Make error with message first say the error
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+
+  var output;
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function(key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+
+  return reduceToSingleString(output, base, braces);
+}
+
+
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value))
+    return ctx.stylize('undefined', 'undefined');
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+                                             .replace(/'/g, "\\'")
+                                             .replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+  if (isNumber(value))
+    return ctx.stylize('' + value, 'number');
+  if (isBoolean(value))
+    return ctx.stylize('' + value, 'boolean');
+  // For some reason typeof null is "object", so special case here.
+  if (isNull(value))
+    return ctx.stylize('null', 'null');
+}
+
+
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
+
+
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+  keys.forEach(function(key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          key, true));
+    }
+  });
+  return output;
+}
+
+
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function(line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
+        } else {
+          str = '\n' + str.split('\n').map(function(line) {
+            return '   ' + line;
+          }).join('\n');
+        }
+      }
+    } else {
+      str = ctx.stylize('[Circular]', 'special');
+    }
+  }
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
+    }
+    name = JSON.stringify('' + key);
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
+    } else {
+      name = name.replace(/'/g, "\\'")
+                 .replace(/\\"/g, '"')
+                 .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
+    }
+  }
+
+  return name + ': ' + str;
+}
+
+
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function(prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] +
+           (base === '' ? '' : base + '\n ') +
+           ' ' +
+           output.join(',\n  ') +
+           ' ' +
+           braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+}
+
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = require('./support/isBuffer');
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+              'Oct', 'Nov', 'Dec'];
+
+// 26 Feb 16:19:34
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+}
+
+
+// log is just a thin wrapper to console.log that prepends a timestamp
+exports.log = function() {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
+
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
+exports.inherits = require('inherits');
+
+exports._extend = function(origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+
+  var keys = Object.keys(add);
+  var i = keys.length;
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":48,"_process":18,"inherits":11}],50:[function(require,module,exports){
 var CayleyDickson = require('cayley-dickson');
 var coerced = require('./coerced');
-var inherits = require('inherits');
 var operators = require('./operators.json');
 var staticProps = require('static-props');
-var TensorSpace = require('./TensorSpace');
 var toData = require('./toData');
 
 /**
@@ -6493,7 +7541,6 @@ function CompositionAlgebra(ring) {
 
   return function (num) {
     var K = CayleyDickson(ring, num);
-    var indices = [1];
 
     function Scalar(data) {
       this.data = data;
@@ -6576,7 +7623,6 @@ function CompositionAlgebra(ring) {
       };
 
       Scalar.prototype[operator] = function () {
-
         var data = Scalar[operator](this.data);
 
         return new Scalar(data);
@@ -6607,7 +7653,7 @@ function CompositionAlgebra(ring) {
 
 module.exports = CompositionAlgebra;
 
-},{"./TensorSpace":48,"./coerced":50,"./operators.json":52,"./toData":55,"cayley-dickson":7,"inherits":10,"static-props":42}],47:[function(require,module,exports){
+},{"./coerced":56,"./operators.json":58,"./toData":61,"cayley-dickson":8,"static-props":44}],51:[function(require,module,exports){
 var determinant = require('laplace-determinant')
 var inherits = require('inherits')
 var no = require('not-defined')
@@ -6816,12 +7862,37 @@ function MatrixSpace (Scalar) {
 
 module.exports = MatrixSpace
 
-},{"./TensorSpace":48,"./VectorSpace":49,"./matrixToArrayIndex":51,"./operators.json":52,"./rowByColumnMultiplication":54,"./toData":55,"inherits":10,"laplace-determinant":13,"multidim-array-index":14,"not-defined":15,"static-props":42,"tensor-contraction":44}],48:[function(require,module,exports){
-var coerced = require('./coerced');
-var operators = require('./operators.json');
-var staticProps = require('static-props');
-var toData = require('./toData');
-var tensorProduct = require('tensor-product');
+},{"./TensorSpace":53,"./VectorSpace":54,"./matrixToArrayIndex":57,"./operators.json":58,"./rowByColumnMultiplication":60,"./toData":61,"inherits":11,"laplace-determinant":14,"multidim-array-index":15,"not-defined":16,"static-props":44,"tensor-contraction":46}],52:[function(require,module,exports){
+var CompositionAlgebra = require('./CompositionAlgebra')
+var no = require('not-defined')
+
+/**
+ * Create a Scalar that belongs to a composition algebra.
+ *
+ * @param {Object} field
+ * @param {Number} [n] must be 1, 2, 4 or 8.
+ */
+
+function Scalar (field, n) {
+  if (no(n)) n = 1
+
+  var logBase2 = [1, 2, 4, 8].indexOf(n)
+
+  if (logBase2 === -1) {
+    throw new TypeError('Argument n must be 1, 2, 4 or 8')
+  }
+
+  return CompositionAlgebra(field)(logBase2)
+}
+
+module.exports = Scalar
+
+},{"./CompositionAlgebra":50,"not-defined":16}],53:[function(require,module,exports){
+var coerced = require('./coerced')
+var operators = require('./operators.json')
+var staticProps = require('static-props')
+var toData = require('./toData')
+var tensorProduct = require('tensor-product')
 
 /**
  * Creates a tensor space that is a class representing a tensor.
@@ -6831,7 +7902,7 @@ var tensorProduct = require('tensor-product');
  * @returns {Function} anonymous with signature (indices)
  */
 
-function TensorSpace(Scalar) {
+function TensorSpace (Scalar) {
   /**
    * @param {Array} indices
    */
@@ -6844,34 +7915,30 @@ function TensorSpace(Scalar) {
     // A matrix has order 2.
     // Order is also called "rank" or "tensor rank", but, to avoid confusion with
     // "matrix rank" it is better to call it "order".
-    var order = indices.filter(function (dim) {
-      return dim > 1;
-    }).length;
+    var order = indices.filter(dim => dim > 1).length
 
     // TODO if it is a scalar, return the Scalar
     // which should be a composition algebra
     // Then add product tensor to composition algebras.
     // Finally, a tensor i,j,k should be constructed as the
     // tensor product of a scalar i,j,k times.
-    var isScalar = order === 0;
+    var isScalar = (order === 0)
 
-    var dimension = indices.reduce(function (a, b) {
-      return a * b;
-    }, 1);
+    var dimension = indices.reduce((a, b) => a * b, 1)
 
     // TODO create one
     // Create zero.
-    var zero = indices.reduce(function (result, dim) {
+    var zero = indices.reduce((result, dim) => {
       if (isScalar) {
-        return Scalar.zero;
+        return Scalar.zero
       } else {
-        for (var i = 0; i < dim; i++) {
-          result.push(Scalar.zero);
+        for(var i = 0; i < dim; i++) {
+          result.push(Scalar.zero)
         }
 
-        return result;
+        return result
       }
-    }, []);
+    }, [])
 
     /**
      * Tensor
@@ -6879,82 +7946,83 @@ function TensorSpace(Scalar) {
      * @class
      */
 
-    function Tensor(data) {
-      function check(item) {
+    function Tensor (data) {
+      function check (item) {
         if (Scalar.notContains(item)) {
-          throw new TypeError('Invalid data = ' + item);
+          throw new TypeError('Invalid data = ' + item)
         }
       }
 
-      if (isScalar) check(data);else data.forEach(check);
+      if (isScalar) check(data)
+      else data.forEach(check)
 
-      this.data = data;
+      this.data = data
     }
 
-    function staticBinary(operator) {
+    function staticBinary (operator) {
       Tensor[operator] = function () {
-        var result = [];
+        var result = []
 
         for (var i = 0; i < dimension; i++) {
-          var operands = [];
+          var operands = []
 
           for (var j = 0; j < arguments.length; j++) {
-            operands.push(toData(arguments[j])[i]);
+            operands.push(toData(arguments[j])[i])
           }
 
-          result.push(Scalar[operator].apply(null, operands));
+          result.push(Scalar[operator].apply(null, operands))
         }
 
-        return result;
-      };
+        return result
+      }
     }
 
-    var myBinaryOperators = ['addition', 'subtraction'];
+    var myBinaryOperators = ['addition', 'subtraction']
 
-    myBinaryOperators.forEach(function (operator) {
-      staticBinary(operator);
+    myBinaryOperators.forEach((operator) => {
+      staticBinary(operator)
 
       Tensor.prototype[operator] = function () {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
+        var args = [].slice.call(arguments)
+        var operands = [this.data].concat(args)
 
-        var data = Tensor[operator].apply(null, operands);
+        var data = Tensor[operator].apply(null, operands)
 
-        var tensor = new Tensor(data);
+        var tensor = new Tensor(data)
 
-        return tensor;
-      };
-    });
+        return tensor
+      }
+    })
 
     Tensor.product = function (leftData) {
       return function (rightDim) {
         return function (rightData) {
-          return tensorProduct(Scalar.multiplication, indices, rightDim, leftData, rightData);
-        };
-      };
-    };
+          return tensorProduct(Scalar.multiplication, indices, rightDim, leftData, rightData)
+        }
+      }
+    }
 
     staticProps(Tensor)({
       order: order,
       zero: zero
-    });
+    })
 
-    var myOperators = operators.group;
+    var myOperators = operators.group
 
-    myOperators.forEach(function (operator) {
-      operators.aliasesOf[operator].forEach(function (alias) {
-        Tensor[alias] = Tensor[operator];
-        Tensor.prototype[alias] = Tensor.prototype[operator];
-      });
-    });
+    myOperators.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Tensor[alias] = Tensor[operator]
+        Tensor.prototype[alias] = Tensor.prototype[operator]
+      })
+    })
 
-    return Tensor;
-  };
+    return Tensor
+  }
 }
 
-module.exports = TensorSpace;
+module.exports = TensorSpace
 
-},{"./coerced":50,"./operators.json":52,"./toData":55,"static-props":42,"tensor-product":45}],49:[function(require,module,exports){
+},{"./coerced":56,"./operators.json":58,"./toData":61,"static-props":44,"tensor-product":47}],54:[function(require,module,exports){
 var inherits  = require('inherits')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
@@ -6993,10 +8061,22 @@ function VectorSpace (Scalar) {
     var AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
+     * Computes the cross product of two vectors.
+     *
+     * It is defined only in dimension 3.
+     *
+     * @param {Object|Array} vector1
+     * @param {Object|Array} vector2
+     *
+     * @returns {Array} vector
      */
 
-    function crossProduct () {
+    function crossProduct (vector1, vector2) {
       // TODO complete cross product
+      var vector1 = toData(vector1)
+      var vector2 = toData(vector2)
+
+      return vector
     }
 
     /**
@@ -7161,7 +8241,33 @@ module.exports = VectorSpace
     Vector.prototype.transpose = transpose
      */
 
-},{"./TensorSpace":48,"./operators.json":52,"./toData":55,"inherits":10,"static-props":42}],50:[function(require,module,exports){
+},{"./TensorSpace":53,"./operators.json":58,"./toData":61,"inherits":11,"static-props":44}],55:[function(require,module,exports){
+var booleanField = {
+  zero: false,
+  one: true,
+  contains: function (a) {
+    return a === true || a === false;
+  },
+  addition: function (a, b) {
+    return a || b;
+  },
+  equality: function (a, b) {
+    return a === b;
+  },
+  negation: function (a) {
+    return !a;
+  },
+  multiplication: function (a, b) {
+    return a || b;
+  },
+  inversion: function (a) {
+    return a;
+  }
+};
+
+module.exports = booleanField;
+
+},{}],56:[function(require,module,exports){
 var toData = require('./toData');
 
 /**
@@ -7182,7 +8288,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":55}],51:[function(require,module,exports){
+},{"./toData":61}],57:[function(require,module,exports){
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
@@ -7203,7 +8309,7 @@ function matrixToArrayIndex(i, j, numCols) {
 
 module.exports = matrixToArrayIndex;
 
-},{"multidim-array-index":14}],52:[function(require,module,exports){
+},{"multidim-array-index":15}],58:[function(require,module,exports){
 module.exports={
   "group": [
     "addition",
@@ -7251,11 +8357,11 @@ module.exports={
   }
 }
 
-},{}],53:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 var realField = {
   zero: 0,
   one: 1,
-  contains: function (a, b) {
+  contains: function (a) {
     // NaN, Infinity and -Infinity are not allowed.
     return typeof a === 'number' && isFinite(a);
   },
@@ -7278,7 +8384,7 @@ var realField = {
 
 module.exports = realField;
 
-},{}],54:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 var isInteger = require('is-integer');
 var matrixToArrayIndex = require('./matrixToArrayIndex');
 /* TODO
@@ -7363,7 +8469,7 @@ function rowByColumnMultiplication(field, leftMatrix, leftNumRows, rightMatrix, 
 
 module.exports = rowByColumnMultiplication;
 
-},{"./matrixToArrayIndex":51,"./toData":55,"is-integer":12}],55:[function(require,module,exports){
+},{"./matrixToArrayIndex":57,"./toData":61,"is-integer":13}],61:[function(require,module,exports){
 var no = require('not-defined');
 
 /**
@@ -7388,7 +8494,7 @@ function toData(arg) {
 
 module.exports = toData;
 
-},{"not-defined":15}],56:[function(require,module,exports){
+},{"not-defined":16}],62:[function(require,module,exports){
 var algebra = require('algebra');
 
 var C = algebra.Complex;
@@ -7462,7 +8568,7 @@ describe('Complex', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":66,"./features/staticUnaryOperator":67,"algebra":69}],57:[function(require,module,exports){
+},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78}],63:[function(require,module,exports){
 var CompositionAlgebra = require('../src/CompositionAlgebra');
 var realField = require('../src/realField');
 
@@ -7499,7 +8605,7 @@ describe('CompositionAlgebra', function () {
   });
 });
 
-},{"../src/CompositionAlgebra":46,"../src/realField":53}],58:[function(require,module,exports){
+},{"../src/CompositionAlgebra":50,"../src/realField":59}],64:[function(require,module,exports){
 var algebra = require('algebra');
 
 var notDefined = require('not-defined');
@@ -7690,7 +8796,7 @@ describe('MatrixSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":66,"./features/staticUnaryOperator":67,"algebra":69,"not-defined":15}],59:[function(require,module,exports){
+},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78,"not-defined":16}],65:[function(require,module,exports){
 var algebra = require('algebra');
 
 var R = algebra.Real;
@@ -7823,7 +8929,19 @@ describe('Real', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":66,"./features/staticUnaryOperator":67,"algebra":69}],60:[function(require,module,exports){
+},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78}],66:[function(require,module,exports){
+var Scalar = require('algebra').Scalar;
+var realField = require('../src/realField');
+
+describe('Scalar', function () {
+  it('checks n is 1, 2, 4 or 8' /*, () => {
+                                ;(() => {
+                                Scalar(realField, 3)
+                                }).should.throw()
+                                }*/);
+});
+
+},{"../src/realField":59,"algebra":78}],67:[function(require,module,exports){
 describe('TensorSpace', function () {
   var algebra = require('algebra');
   var TensorSpace = algebra.TensorSpace;
@@ -7898,7 +9016,7 @@ describe('TensorSpace', function () {
   });
 });
 
-},{"algebra":69}],61:[function(require,module,exports){
+},{"algebra":78}],68:[function(require,module,exports){
 var algebra = require('algebra');
 var notDefined = require('not-defined');
 
@@ -8059,7 +9177,66 @@ describe('VectorSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":64,"./features/methodUnaryOperator":65,"./features/staticBinaryOperator":66,"./features/staticUnaryOperator":67,"algebra":69,"not-defined":15}],62:[function(require,module,exports){
+},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78,"not-defined":16}],69:[function(require,module,exports){
+describe('API', function () {
+  var assert = require('assert');
+  var Scalar = require('algebra').Scalar;
+  var ring = require('algebra-ring');
+
+  var booleanField = require('../src/booleanField');
+
+  describe('Bool', function () {
+    var Bool = Scalar(booleanField);
+
+    it('works' /*, () => {
+               assert.equal(Bool.contains(true), true)
+               assert.equal(Bool.contains(1), false)
+               assert.equal(Bool.addition(true, false), false)
+               var t = new Bool(true)
+               assert.equal(t.negation().data, false)
+               }*/);
+  });
+
+  describe('Byte', function () {
+
+    it('is an octionion of booleans' /*, () => {
+                                     var Byte = Scalar(booleanRing, 8)
+                                     var byte1 = new Byte([1, 0, 0, 0, 0, 0, 0, 0])
+                                     }*/);
+  });
+});
+
+},{"../src/booleanField":55,"algebra":78,"algebra-ring":3,"assert":4}],70:[function(require,module,exports){
+describe('booleanField', function () {
+  // Don't know why *should* has strange behaviour here.
+  var assert = require('assert');
+  var bool = require('../src/booleanField');
+
+  describe('contains', function () {
+    it('ok for booleans, otherwise false', function () {
+      assert.ok(bool.contains(false));
+      assert.ok(bool.contains(true));
+      assert.ok(!bool.contains(1));
+      assert.ok(!bool.contains('true'));
+    });
+  });
+
+  describe('negation', function () {
+    it('works', function () {
+      assert.equal(bool.negation(false), true);
+      assert.equal(bool.negation(true), false);
+    });
+  });
+
+  describe('addition', function () {
+    it('has false as neutral element', function () {
+      assert.equal(bool.addition(true, false), true);
+      assert.equal(bool.addition(false, false), false);
+    });
+  });
+});
+
+},{"../src/booleanField":55,"assert":4}],71:[function(require,module,exports){
 /*
 var algebra = require('algebra'),
     should  = require('should')
@@ -8270,10 +9447,8 @@ describe('buildCyclicSpaceOf', function () {
 })
 */
 
-},{}],63:[function(require,module,exports){
-
-var coerced = require('../src/coerced'),
-    should = require('should');
+},{}],72:[function(require,module,exports){
+var coerced = require('../src/coerced');
 
 var add = coerced(function (a, b) {
   return a + b;
@@ -8288,7 +9463,7 @@ describe('coerced', function () {
   });
 });
 
-},{"../src/coerced":50,"should":23}],64:[function(require,module,exports){
+},{"../src/coerced":56}],73:[function(require,module,exports){
 
 var should = require('should');
 
@@ -8318,7 +9493,7 @@ function mutatorBinaryOperator(Scalar, operator, operand1, operand2, resultData)
 
 module.exports = mutatorBinaryOperator;
 
-},{"should":23}],65:[function(require,module,exports){
+},{"should":25}],74:[function(require,module,exports){
 
 var should = require('should');
 
@@ -8347,7 +9522,7 @@ function mutatorUnaryOperator(Scalar, operator, operand, resultData) {
 
 module.exports = mutatorUnaryOperator;
 
-},{"should":23}],66:[function(require,module,exports){
+},{"should":25}],75:[function(require,module,exports){
 
 var should = require('should');
 
@@ -8371,7 +9546,7 @@ function staticBinaryOperator(Scalar, operator, operand1, operand2, result) {
 
 module.exports = staticBinaryOperator;
 
-},{"should":23}],67:[function(require,module,exports){
+},{"should":25}],76:[function(require,module,exports){
 
 var should = require('should');
 
@@ -8394,7 +9569,7 @@ function staticUnaryOperator(Scalar, operator, operand, result) {
 
 module.exports = staticUnaryOperator;
 
-},{"should":23}],68:[function(require,module,exports){
+},{"should":25}],77:[function(require,module,exports){
 
 var matrixToArrayIndex = require('../src/matrixToArrayIndex');
 
@@ -8433,13 +9608,13 @@ describe('matrixToArrayIndex', function () {
         });
 });
 
-},{"../src/matrixToArrayIndex":51}],69:[function(require,module,exports){
+},{"../src/matrixToArrayIndex":57}],78:[function(require,module,exports){
 
 // Cheating npm require.
 module.exports = require('../../..')
 
 
-},{"../../..":1}],70:[function(require,module,exports){
+},{"../../..":1}],79:[function(require,module,exports){
 describe('Quick start', function () {
                    var algebra = require('algebra');
 
@@ -8505,7 +9680,7 @@ describe('Quick start', function () {
                    });
 });
 
-},{"algebra":69}],71:[function(require,module,exports){
+},{"algebra":78}],80:[function(require,module,exports){
 
 var algebra = require('algebra'),
     should = require('should');
@@ -8548,4 +9723,4 @@ describe('rowByColumnMultiplication', function () {
                });
 });
 
-},{"../src/rowByColumnMultiplication":54,"algebra":69,"should":23}]},{},[56,57,58,59,60,61,62,63,68,70,71]);
+},{"../src/rowByColumnMultiplication":60,"algebra":78,"should":25}]},{},[62,63,64,65,66,67,68,69,70,71,72,77,79,80]);

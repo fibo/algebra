@@ -34,7 +34,7 @@ I am currently adding more tests and examples to achieve a stable version.
 Many functionalities of previous versions are now in separated atomic packages:
 
 * [algebra-group](http://npm.im/algebra-group)
-* [algebra-ring](http://npm.im/algebra-ring)
+* [algebra-ring][algebra-ring]
 * [cayley-dickson](http://npm.im/cayley-dickson)
 * [indices-permutations](http://npm.im/indices-permutations)
 * [laplace-determinant](http://npm.im/laplace-determinant)
@@ -49,7 +49,7 @@ Many functionalities of previous versions are now in separated atomic packages:
 * Expressive syntax.
 * Everything is a Tensor.
 * [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
-* [math blog][1] with articles explaining algebra concepts and practical examples. I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning about the *Queen of Science*.
+* [math blog][blog] with articles explaining algebra concepts and practical examples. I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning about the *Queen of Science*.
 
 ## Installation
 
@@ -233,23 +233,88 @@ console.log(m2.determinant.data) // 2
 
 ## API
 
+### `Scalar(field[, n])`
+
+Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
+
+```
+var Scalar = require('algebra').Scalar
+var ring = require('algebra-ring')
+
+var booleanField = require('algebra/src/booleanField')
+
+// A field is a commutative ring.
+var booleanRing = ring(booleanField)
+
+var Bool = Scalar(booleanRing)
+
+console.log(Bool.contains(true)) // true
+console.log(Bool.contains(1)) // false
+
+console.log(Bool.addition(true, false)) // true
+
+var t = new Bool(true)
+console.log(t.negation().data) // false
+```
+
+Not so exciting, let's build something more interesting.
+Scalar accepts a second parameter, that is used to build a [Composition algebra][composition-algebra] over the given field.
+It is something experimental also for me, right now I am writing this but I still do not know how it will behave.
+My idea is that
+
+> A byte is an octonion of booleans
+
+Maybe we can discover some new byte operator, taken from octonion rich algebra structure.
+
+```
+// n must be a power of two
+var Byte = Scalar(boolean, 8)
+```
+
+### `Scalar.addition(x1, x2[, x3, …, xn])`
+
+### `scalar.addition(x1[, x2, …, xn])`
+
+### `Scalar.subtraction(x1, x2[, x3, …, xn])`
+
+### `scalar.subtraction(x1[, x2, …, xn])`
+
+### `Scalar.addition(x1, x2[, x3, …, xn])`
+
+### `scalar.addition(x1[, x2, …, xn])`
+
 ### Real
+
+Inherits everything from Scalar.
 
 ### Complex
 
+Inherits everything from Scalar.
+
 ### Quaternion
+
+Inherits everything from Scalar.
 
 ### Octonion
 
-### VectorSpace
+Inherits everything from Scalar.
 
-### MatrixSpace
+### `VectorSpace(field)(dimension)`
 
-### TensorSpace
+### `Vector.crossProduct(vector1, vector2)`
+
+### `vector1.crossProduct(vector2)`
+
+### `MatrixSpace(field)(numRows[, numCols])`
+
+### `TensorSpace(field)(indices)`
 
 ## License
 
 [MIT](http://g14n.info/mit-license/)
 
-[1]: http://g14n.info/algebra/articles "algebra blog"
-
+[blog]: http://g14n.info/algebra/articles "algebra blog"
+[algebra-ring]: http://npm.im/algebra-ring "algebra-ring"
+composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
+[booleanField]: https://github.com/fibo/algebra/blob/master/src/booleanField.js "boolean field"
+[realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"

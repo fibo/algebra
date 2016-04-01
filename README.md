@@ -240,10 +240,7 @@ var ring = require('algebra-ring')
 
 var booleanField = require('algebra/src/booleanField')
 
-// A field is a commutative ring.
-var booleanRing = ring(booleanField)
-
-var Bool = Scalar(booleanRing)
+var Bool = Scalar(booleanField)
 
 console.log(Bool.contains(true)) // true
 console.log(Bool.contains(1)) // false
@@ -265,7 +262,7 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 ```
 // n must be a power of two
-var Byte = Scalar(boolean, 8)
+// TODO var Byte = Scalar(boolean, 8)
 ```
 
 ### `Scalar.addition(x1, x2[, x3, …, xn])`

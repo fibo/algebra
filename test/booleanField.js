@@ -1,28 +1,42 @@
 describe('booleanField', () => {
-  // Don't know why *should* has strange behaviour here.
-  var assert = require('assert')
   var bool = require('../src/booleanField')
 
   describe('contains', () => {
     it('ok for booleans, otherwise false', () => {
-      assert.ok(bool.contains(false))
-      assert.ok(bool.contains(true))
-      assert.ok(!bool.contains(1))
-      assert.ok(!bool.contains('true'))
+      bool.contains(false).should.be.ok
+      bool.contains(true).should.be.ok
+      bool.contains(1).should.be.ko
+      bool.contains('true').should.be.ko
+    })
+  })
+
+  describe('equality', () => {
+    it('works', () => {
+      bool.equality(false, false).should.be.ok
+      bool.equality(true, true).should.be.ok
+      bool.equality(true, false).should.be.ko
+      bool.equality(false, true).should.be.ko
     })
   })
 
   describe('negation', () => {
     it('works', () => {
-      assert.equal(bool.negation(false), true)
-      assert.equal(bool.negation(true), false)
+      bool.negation(false).should.eql(true)
+      bool.negation(true).should.eql(false)
     })
   })
 
   describe('addition', () => {
     it('has false as neutral element', () => {
-      assert.equal(bool.addition(true, false), true)
-      assert.equal(bool.addition(false, false), false)
+      bool.addition(true, false).should.eql(true)
+      bool.addition(false, false).should.eql(false)
+    })
+  })
+
+  describe('multiplication', () => {
+    it('has true as neutral element', () => {
+      bool.multiplication(true, true).should.eql(true)
+      bool.multiplication(false, true).should.eql(false)
     })
   })
 })

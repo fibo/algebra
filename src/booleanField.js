@@ -1,14 +1,12 @@
 var booleanField = {
   zero: false,
   one: true,
-  contains: function (a) {
-    return (a === true) || (a === false)
-  },
-  addition: function (a, b) { return a || b },
-  equality: function (a, b) { return a === b },
-  negation: function (a) { return !a },
-  multiplication: function (a, b) { return a || b },
-  inversion: function (a) { return a }
+  contains: (a) => (a === true) || (a === false),
+  addition: (a, b) => a || b,
+  equality: (a, b) => a === b,
+  negation: (a) => !a,
+  multiplication: (a, b) => a && b,
+  inversion: (a) => a
 }
 
 module.exports = booleanField

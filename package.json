@@ -39,7 +39,7 @@
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
     "postversion": "git push origin v${npm_package_version}; npm publish; npm run _push",
-    "test": "mocha --bail --require should --reporter min --recursive"
+    "test": "mocha --reporter min"
   },
   "pre-commit": [
     "lint",

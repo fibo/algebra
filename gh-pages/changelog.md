@@ -20,6 +20,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - Replaced jshint with standardjs
 - algebra-cyclic
 - Scalar
+- generate tag links in changelog
 
 ## [v0.8.0] - 2016-03-20
 
@@ -40,13 +41,9 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - minified code and source map
 
 [Unreleased]: https://github.com/fibo/{{ package.name }}/compare/v{{ package.version }}...HEAD
-[v0.8.0]: https://github.com/fibo/{{ package.name }}/compare/v0.7.0...v0.8.0
-[v0.7.0]: https://github.com/fibo/algebra/{{ package.name }}/v0.6.2...v0.7.0
 
-## TODO
-
-dynamic changelog
-
-{% for tag in tags %}
-* {{ tag.name }}
+{% for tag in tags offset:2 %}
+  {% assign current = tags[forloop.index0].name %}
+  {% assign previous = tags[forloop.index].name %}
+  [{{ current }}]: https://github.com/fibo/{{ package.name }}/compare/{{ previous }}...{{ current }}
 {% endfor %}

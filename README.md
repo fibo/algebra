@@ -12,6 +12,14 @@
     - [Vectors](#vectors)
     - [Matrices](#matrices)
 * [API](#api)
+    - [Scalar](#scalar)
+    - [Real](#real)
+    - [Complex](#complex)
+    - [Quaternion](#quaternion)
+    - [Octonion](#octonion)
+    - [Vector](#vector)
+    - [Matrix](#matrix)
+    - [Tensor](#tensor)
 * [License](#license)
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
@@ -230,6 +238,8 @@ console.log(m2.determinant.data) // 2
 
 ## API
 
+### Scalar
+
 ### `Scalar(field[, n])`
 
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
@@ -265,6 +275,24 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 // TODO var Byte = Scalar(boolean, 8)
 ```
 
+### scalar neutral elements
+
+### `Scalar.one`
+
+### `Scalar.zero`
+
+### scalar operators
+
+### `Scalar.contains(x1, x2[, x3, …, xn])`
+
+### `Scalar.equality(x1, x2)`
+
+### `scalar.equality(x1)`
+
+### `Scalar.disequality(x1, x2)`
+
+### `scalar.disequality(x1)`
+
 ### `Scalar.addition(x1, x2[, x3, …, xn])`
 
 ### `scalar.addition(x1[, x2, …, xn])`
@@ -273,35 +301,113 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 ### `scalar.subtraction(x1[, x2, …, xn])`
 
-### `Scalar.addition(x1, x2[, x3, …, xn])`
+### `Scalar.multiplication(x1, x2[, x3, …, xn])`
 
-### `scalar.addition(x1[, x2, …, xn])`
+### `scalar.multiplication(x1[, x2, …, xn])`
+
+### `Scalar.division(x1, x2[, x3, …, xn])`
+
+### `scalar.division(x1[, x2, …, xn])`
+
+### `Scalar.negation(x1)`
+
+### `scalar.negation()`
+
+### `Scalar.inversion(x1)`
+
+### `scalar.inversion()`
 
 ### Real
 
-Inherits everything from Scalar.
+Inherits everything from [Scalar](#scalar).
 
 ### Complex
 
-Inherits everything from Scalar.
+Inherits everything from [Scalar](#scalar).
 
 ### Quaternion
 
-Inherits everything from Scalar.
+Inherits everything from [Scalar](#scalar).
 
 ### Octonion
 
-Inherits everything from Scalar.
+Inherits everything from [Scalar](#scalar).
 
-### `VectorSpace(field)(dimension)`
+### Vector
+
+Inherits everything from [Tensor](#tensor).
+
+### `VectorSpace(Scalar)(dimension)`
 
 ### `Vector.crossProduct(vector1, vector2)`
 
 ### `vector1.crossProduct(vector2)`
 
-### `MatrixSpace(field)(numRows[, numCols])`
+### Matrix
 
-### `TensorSpace(field)(indices)`
+Inherits everything from [Tensor](#tensor).
+
+### `MatrixSpace(Scalar)(numRows[, numCols])`
+
+### `Matrix.multiplication(matrix1, matrix2)`
+
+### matrix inversion
+
+It is defined only for square matrices which determinant is not zero.
+
+### `Matrix.inversion(matrix)`
+
+### `matrix.inversion()`
+
+### matrix determinant
+
+It is defined only for square matrices.
+
+### `Matrix.determinant(matrix)`
+
+### `matrix.determinant()`
+
+### Tensor
+
+### `TensorSpace(Scalar)(indices)`
+
+### tensor neutral elements
+
+### `Tensor.one`
+
+### `Tensor.zero`
+
+### tensor operators
+
+### `Tensor.contains(x1, x2[, x3, …, xn])`
+
+### `Tensor.equality(x1, x2)`
+
+### `tensor.equality(x1)`
+
+### `Tensor.disequality(x1, x2)`
+
+### `tensor.disequality(x1)`
+
+### `Tensor.addition(x1, x2[, x3, …, xn])`
+
+### `tensor.addition(x1[, x2, …, xn])`
+
+### `Tensor.subtraction(x1, x2[, x3, …, xn])`
+
+### `tensor.subtraction(x1[, x2, …, xn])`
+
+### `Tensor.product()`
+
+### `tensor.product()`
+
+### `Tensor.contraction()`
+
+### `tensor.contraction()`
+
+### `Tensor.negation(tensor1)`
+
+### `tensor.negation()`
 
 ## License
 

@@ -15,7 +15,7 @@ require('strict-mode')(function () {
   exports.TensorSpace = require('./src/TensorSpace')
 })
 
-},{"./src/MatrixSpace":51,"./src/Scalar":52,"./src/TensorSpace":53,"./src/VectorSpace":54,"./src/realField":59,"strict-mode":45}],2:[function(require,module,exports){
+},{"./src/MatrixSpace":47,"./src/Scalar":48,"./src/TensorSpace":49,"./src/VectorSpace":50,"./src/realField":55,"strict-mode":43}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -205,367 +205,6 @@ function algebraRing (identity, given) {
 module.exports = algebraRing
 
 },{"algebra-group":2}],4:[function(require,module,exports){
-// http://wiki.commonjs.org/wiki/Unit_Testing/1.0
-//
-// THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
-//
-// Originally from narwhal.js (http://narwhaljs.org)
-// Copyright (c) 2009 Thomas Robinson <280north.com>
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the 'Software'), to
-// deal in the Software without restriction, including without limitation the
-// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-// sell copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// when used in node, this will actually load the util module we depend on
-// versus loading the builtin util module as happens otherwise
-// this is a bug in node module loading as far as I am concerned
-var util = require('util/');
-
-var pSlice = Array.prototype.slice;
-var hasOwn = Object.prototype.hasOwnProperty;
-
-// 1. The assert module provides functions that throw
-// AssertionError's when particular conditions are not met. The
-// assert module must conform to the following interface.
-
-var assert = module.exports = ok;
-
-// 2. The AssertionError is defined in assert.
-// new assert.AssertionError({ message: message,
-//                             actual: actual,
-//                             expected: expected })
-
-assert.AssertionError = function AssertionError(options) {
-  this.name = 'AssertionError';
-  this.actual = options.actual;
-  this.expected = options.expected;
-  this.operator = options.operator;
-  if (options.message) {
-    this.message = options.message;
-    this.generatedMessage = false;
-  } else {
-    this.message = getMessage(this);
-    this.generatedMessage = true;
-  }
-  var stackStartFunction = options.stackStartFunction || fail;
-
-  if (Error.captureStackTrace) {
-    Error.captureStackTrace(this, stackStartFunction);
-  }
-  else {
-    // non v8 browsers so we can have a stacktrace
-    var err = new Error();
-    if (err.stack) {
-      var out = err.stack;
-
-      // try to strip useless frames
-      var fn_name = stackStartFunction.name;
-      var idx = out.indexOf('\n' + fn_name);
-      if (idx >= 0) {
-        // once we have located the function frame
-        // we need to strip out everything before it (and its line)
-        var next_line = out.indexOf('\n', idx + 1);
-        out = out.substring(next_line + 1);
-      }
-
-      this.stack = out;
-    }
-  }
-};
-
-// assert.AssertionError instanceof Error
-util.inherits(assert.AssertionError, Error);
-
-function replacer(key, value) {
-  if (util.isUndefined(value)) {
-    return '' + value;
-  }
-  if (util.isNumber(value) && !isFinite(value)) {
-    return value.toString();
-  }
-  if (util.isFunction(value) || util.isRegExp(value)) {
-    return value.toString();
-  }
-  return value;
-}
-
-function truncate(s, n) {
-  if (util.isString(s)) {
-    return s.length < n ? s : s.slice(0, n);
-  } else {
-    return s;
-  }
-}
-
-function getMessage(self) {
-  return truncate(JSON.stringify(self.actual, replacer), 128) + ' ' +
-         self.operator + ' ' +
-         truncate(JSON.stringify(self.expected, replacer), 128);
-}
-
-// At present only the three keys mentioned above are used and
-// understood by the spec. Implementations or sub modules can pass
-// other keys to the AssertionError's constructor - they will be
-// ignored.
-
-// 3. All of the following functions must throw an AssertionError
-// when a corresponding condition is not met, with a message that
-// may be undefined if not provided.  All assertion methods provide
-// both the actual and expected values to the assertion error for
-// display purposes.
-
-function fail(actual, expected, message, operator, stackStartFunction) {
-  throw new assert.AssertionError({
-    message: message,
-    actual: actual,
-    expected: expected,
-    operator: operator,
-    stackStartFunction: stackStartFunction
-  });
-}
-
-// EXTENSION! allows for well behaved errors defined elsewhere.
-assert.fail = fail;
-
-// 4. Pure assertion tests whether a value is truthy, as determined
-// by !!guard.
-// assert.ok(guard, message_opt);
-// This statement is equivalent to assert.equal(true, !!guard,
-// message_opt);. To test strictly for the value true, use
-// assert.strictEqual(true, guard, message_opt);.
-
-function ok(value, message) {
-  if (!value) fail(value, true, message, '==', assert.ok);
-}
-assert.ok = ok;
-
-// 5. The equality assertion tests shallow, coercive equality with
-// ==.
-// assert.equal(actual, expected, message_opt);
-
-assert.equal = function equal(actual, expected, message) {
-  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
-};
-
-// 6. The non-equality assertion tests for whether two objects are not equal
-// with != assert.notEqual(actual, expected, message_opt);
-
-assert.notEqual = function notEqual(actual, expected, message) {
-  if (actual == expected) {
-    fail(actual, expected, message, '!=', assert.notEqual);
-  }
-};
-
-// 7. The equivalence assertion tests a deep equality relation.
-// assert.deepEqual(actual, expected, message_opt);
-
-assert.deepEqual = function deepEqual(actual, expected, message) {
-  if (!_deepEqual(actual, expected)) {
-    fail(actual, expected, message, 'deepEqual', assert.deepEqual);
-  }
-};
-
-function _deepEqual(actual, expected) {
-  // 7.1. All identical values are equivalent, as determined by ===.
-  if (actual === expected) {
-    return true;
-
-  } else if (util.isBuffer(actual) && util.isBuffer(expected)) {
-    if (actual.length != expected.length) return false;
-
-    for (var i = 0; i < actual.length; i++) {
-      if (actual[i] !== expected[i]) return false;
-    }
-
-    return true;
-
-  // 7.2. If the expected value is a Date object, the actual value is
-  // equivalent if it is also a Date object that refers to the same time.
-  } else if (util.isDate(actual) && util.isDate(expected)) {
-    return actual.getTime() === expected.getTime();
-
-  // 7.3 If the expected value is a RegExp object, the actual value is
-  // equivalent if it is also a RegExp object with the same source and
-  // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
-  } else if (util.isRegExp(actual) && util.isRegExp(expected)) {
-    return actual.source === expected.source &&
-           actual.global === expected.global &&
-           actual.multiline === expected.multiline &&
-           actual.lastIndex === expected.lastIndex &&
-           actual.ignoreCase === expected.ignoreCase;
-
-  // 7.4. Other pairs that do not both pass typeof value == 'object',
-  // equivalence is determined by ==.
-  } else if (!util.isObject(actual) && !util.isObject(expected)) {
-    return actual == expected;
-
-  // 7.5 For all other Object pairs, including Array objects, equivalence is
-  // determined by having the same number of owned properties (as verified
-  // with Object.prototype.hasOwnProperty.call), the same set of keys
-  // (although not necessarily the same order), equivalent values for every
-  // corresponding key, and an identical 'prototype' property. Note: this
-  // accounts for both named and indexed properties on Arrays.
-  } else {
-    return objEquiv(actual, expected);
-  }
-}
-
-function isArguments(object) {
-  return Object.prototype.toString.call(object) == '[object Arguments]';
-}
-
-function objEquiv(a, b) {
-  if (util.isNullOrUndefined(a) || util.isNullOrUndefined(b))
-    return false;
-  // an identical 'prototype' property.
-  if (a.prototype !== b.prototype) return false;
-  // if one is a primitive, the other must be same
-  if (util.isPrimitive(a) || util.isPrimitive(b)) {
-    return a === b;
-  }
-  var aIsArgs = isArguments(a),
-      bIsArgs = isArguments(b);
-  if ((aIsArgs && !bIsArgs) || (!aIsArgs && bIsArgs))
-    return false;
-  if (aIsArgs) {
-    a = pSlice.call(a);
-    b = pSlice.call(b);
-    return _deepEqual(a, b);
-  }
-  var ka = objectKeys(a),
-      kb = objectKeys(b),
-      key, i;
-  // having the same number of owned properties (keys incorporates
-  // hasOwnProperty)
-  if (ka.length != kb.length)
-    return false;
-  //the same set of keys (although not necessarily the same order),
-  ka.sort();
-  kb.sort();
-  //~~~cheap key test
-  for (i = ka.length - 1; i >= 0; i--) {
-    if (ka[i] != kb[i])
-      return false;
-  }
-  //equivalent values for every corresponding key, and
-  //~~~possibly expensive deep test
-  for (i = ka.length - 1; i >= 0; i--) {
-    key = ka[i];
-    if (!_deepEqual(a[key], b[key])) return false;
-  }
-  return true;
-}
-
-// 8. The non-equivalence assertion tests for any deep inequality.
-// assert.notDeepEqual(actual, expected, message_opt);
-
-assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
-  if (_deepEqual(actual, expected)) {
-    fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
-  }
-};
-
-// 9. The strict equality assertion tests strict equality, as determined by ===.
-// assert.strictEqual(actual, expected, message_opt);
-
-assert.strictEqual = function strictEqual(actual, expected, message) {
-  if (actual !== expected) {
-    fail(actual, expected, message, '===', assert.strictEqual);
-  }
-};
-
-// 10. The strict non-equality assertion tests for strict inequality, as
-// determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
-
-assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
-  if (actual === expected) {
-    fail(actual, expected, message, '!==', assert.notStrictEqual);
-  }
-};
-
-function expectedException(actual, expected) {
-  if (!actual || !expected) {
-    return false;
-  }
-
-  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
-    return expected.test(actual);
-  } else if (actual instanceof expected) {
-    return true;
-  } else if (expected.call({}, actual) === true) {
-    return true;
-  }
-
-  return false;
-}
-
-function _throws(shouldThrow, block, expected, message) {
-  var actual;
-
-  if (util.isString(expected)) {
-    message = expected;
-    expected = null;
-  }
-
-  try {
-    block();
-  } catch (e) {
-    actual = e;
-  }
-
-  message = (expected && expected.name ? ' (' + expected.name + ').' : '.') +
-            (message ? ' ' + message : '.');
-
-  if (shouldThrow && !actual) {
-    fail(actual, expected, 'Missing expected exception' + message);
-  }
-
-  if (!shouldThrow && expectedException(actual, expected)) {
-    fail(actual, expected, 'Got unwanted exception' + message);
-  }
-
-  if ((shouldThrow && actual && expected &&
-      !expectedException(actual, expected)) || (!shouldThrow && actual)) {
-    throw actual;
-  }
-}
-
-// 11. Expected to throw an error:
-// assert.throws(block, Error_opt, message_opt);
-
-assert.throws = function(block, /*optional*/error, /*optional*/message) {
-  _throws.apply(this, [true].concat(pSlice.call(arguments)));
-};
-
-// EXTENSION! This is annoying to write outside this module.
-assert.doesNotThrow = function(block, /*optional*/message) {
-  _throws.apply(this, [false].concat(pSlice.call(arguments)));
-};
-
-assert.ifError = function(err) { if (err) {throw err;}};
-
-var objectKeys = Object.keys || function (obj) {
-  var keys = [];
-  for (var key in obj) {
-    if (hasOwn.call(obj, key)) keys.push(key);
-  }
-  return keys;
-};
-
-},{"util/":49}],5:[function(require,module,exports){
 'use strict'
 
 exports.toByteArray = toByteArray
@@ -576,12 +215,17 @@ var revLookup = []
 var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
 
 function init () {
+  var i
   var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-  for (var i = 0, len = code.length; i < len; ++i) {
+  var len = code.length
+
+  for (i = 0; i < len; i++) {
     lookup[i] = code[i]
-    revLookup[code.charCodeAt(i)] = i
   }
 
+  for (i = 0; i < len; ++i) {
+    revLookup[code.charCodeAt(i)] = i
+  }
   revLookup['-'.charCodeAt(0)] = 62
   revLookup['_'.charCodeAt(0)] = 63
 }
@@ -613,8 +257,8 @@ function toByteArray (b64) {
 
   for (i = 0, j = 0; i < l; i += 4, j += 3) {
     tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
-    arr[L++] = (tmp >> 16) & 0xFF
-    arr[L++] = (tmp >> 8) & 0xFF
+    arr[L++] = (tmp & 0xFF0000) >> 16
+    arr[L++] = (tmp & 0xFF00) >> 8
     arr[L++] = tmp & 0xFF
   }
 
@@ -676,7 +320,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -965,12 +609,17 @@ Buffer.compare = function compare (a, b) {
   var x = a.length
   var y = b.length
 
-  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
-    if (a[i] !== b[i]) {
-      x = a[i]
-      y = b[i]
-      break
-    }
+  var i = 0
+  var len = Math.min(x, y)
+  while (i < len) {
+    if (a[i] !== b[i]) break
+
+    ++i
+  }
+
+  if (i !== len) {
+    x = a[i]
+    y = b[i]
   }
 
   if (x < y) return -1
@@ -1131,6 +780,7 @@ Buffer.prototype.inspect = function inspect () {
 
 Buffer.prototype.compare = function compare (b) {
   if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return 0
   return Buffer.compare(this, b)
 }
 
@@ -2136,14 +1786,14 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":5,"ieee754":9,"isarray":7}],7:[function(require,module,exports){
+},{"base64-js":4,"ieee754":8,"isarray":6}],6:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var ring = require('algebra-ring')
 var twoPow = Math.pow.bind(null, 2)
 
@@ -2379,7 +2029,7 @@ function iterateCayleyDickson (given, iterations) {
 module.exports = iterateCayleyDickson
 
 
-},{"algebra-ring":3}],9:[function(require,module,exports){
+},{"algebra-ring":3}],8:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -2465,7 +2115,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 function indicesPermutations (previousValue, currentValue, currentIndex, array) {
   var result = []
 
@@ -2494,7 +2144,7 @@ function indicesPermutations (previousValue, currentValue, currentIndex, array) 
 
 module.exports = indicesPermutations
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2519,7 +2169,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 var numberIsNan = require('number-is-nan');
 
@@ -2527,7 +2177,7 @@ module.exports = Number.isFinite || function (val) {
 	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
 };
 
-},{"number-is-nan":17}],13:[function(require,module,exports){
+},{"number-is-nan":16}],12:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -2537,7 +2187,7 @@ module.exports = Number.isInteger || function(val) {
     Math.floor(val) === val;
 };
 
-},{"is-finite":12}],14:[function(require,module,exports){
+},{"is-finite":11}],13:[function(require,module,exports){
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -2651,7 +2301,7 @@ function determinant (data, scalar, order) {
 module.exports = determinant
 
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * maps multidimensional array indices to monodimensional array index
  *
@@ -2693,109 +2343,16 @@ function multiDimArrayIndex (dimensions, indices) {
 
 module.exports = multiDimArrayIndex
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports=function(x){return typeof x==='undefined'}
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 module.exports = Number.isNaN || function (x) {
 	return x !== x;
 };
 
-},{}],18:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = setTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    clearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}],19:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = function format(msg) {
   var args = arguments;
   for(var i = 1, l = args.length; i < l; i++) {
@@ -2804,7 +2361,7 @@ module.exports = function format(msg) {
   return msg;
 }
 
-},{}],20:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var getType = require('should-type');
 var format = require('./format');
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -3155,7 +2712,7 @@ module.exports = eq;
 
 eq.r = REASON;
 
-},{"./format":19,"should-type":23}],21:[function(require,module,exports){
+},{"./format":17,"should-type":21}],19:[function(require,module,exports){
 var getType = require('should-type');
 var util = require('./util');
 
@@ -3618,7 +3175,7 @@ function defaultFormat(value, opts) {
 defaultFormat.Formatter = Formatter;
 module.exports = defaultFormat;
 
-},{"./util":22,"should-type":23}],22:[function(require,module,exports){
+},{"./util":20,"should-type":21}],20:[function(require,module,exports){
 function addSpaces(v) {
   return v.split('\n').map(function(vv) { return '  ' + vv; }).join('\n');
 }
@@ -3648,7 +3205,7 @@ module.exports = {
   }
 };
 
-},{}],23:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 (function (Buffer){
 var toString = Object.prototype.toString;
 
@@ -3811,7 +3368,7 @@ Object.keys(types).forEach(function(typeName) {
 module.exports = getGlobalType;
 
 }).call(this,require("buffer").Buffer)
-},{"./types":24,"buffer":6}],24:[function(require,module,exports){
+},{"./types":22,"buffer":5}],22:[function(require,module,exports){
 var types = {
   NUMBER: 'number',
   UNDEFINED: 'undefined',
@@ -3854,7 +3411,7 @@ var types = {
 
 module.exports = types;
 
-},{}],25:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var should = require('./lib/should');
 
 var defaultProto = Object.prototype;
@@ -3870,7 +3427,7 @@ try {
 
 module.exports = should;
 
-},{"./lib/should":42}],26:[function(require,module,exports){
+},{"./lib/should":40}],24:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -3965,7 +3522,7 @@ AssertionError.prototype = Object.create(Error.prototype, {
 
 module.exports = AssertionError;
 
-},{"./util":43}],27:[function(require,module,exports){
+},{"./util":41}],25:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4245,7 +3802,7 @@ Assertion.addChain('any', function() {
 module.exports = Assertion;
 module.exports.PromisedAssertion = PromisedAssertion;
 
-},{"./assertion-error":26}],28:[function(require,module,exports){
+},{"./assertion-error":24}],26:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4265,7 +3822,7 @@ var config = {
 
 module.exports = config;
 
-},{"should-format":21}],29:[function(require,module,exports){
+},{"should-format":19}],27:[function(require,module,exports){
 // implement assert interface using already written peaces of should.js
 
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
@@ -4550,7 +4107,7 @@ assert.ifError = function(err) {
   }
 };
 
-},{"./../assertion":27,"should-equal":20}],30:[function(require,module,exports){
+},{"./../assertion":25,"should-equal":18}],28:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4623,7 +4180,7 @@ module.exports = function(should) {
   };
 };
 
-},{"../assertion-error":26,"../util":43,"./_assert":29}],31:[function(require,module,exports){
+},{"../assertion-error":24,"../util":41,"./_assert":27}],29:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4695,7 +4252,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{}],32:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4728,7 +4285,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{}],33:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -4889,7 +4446,7 @@ module.exports = function(should, Assertion) {
 
 };
 
-},{"../util":43,"should-equal":20}],34:[function(require,module,exports){
+},{"../util":41,"should-equal":18}],32:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5028,7 +4585,7 @@ module.exports = function(should, Assertion) {
 
 };
 
-},{"../util":43,"should-equal":20,"should-type":23}],35:[function(require,module,exports){
+},{"../util":41,"should-equal":18,"should-type":21}],33:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5140,7 +4697,7 @@ module.exports = function(should, Assertion) {
   Assertion.alias('throw', 'throwError');
 };
 
-},{"../util":43}],36:[function(require,module,exports){
+},{"../util":41}],34:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5351,7 +4908,7 @@ module.exports = function(should, Assertion) {
   Assertion.alias('matchEach', 'matchEvery');
 };
 
-},{"../util":43,"should-equal":20}],37:[function(require,module,exports){
+},{"../util":41,"should-equal":18}],35:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5520,7 +5077,7 @@ module.exports = function(should, Assertion) {
 
 };
 
-},{}],38:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -5807,7 +5364,7 @@ module.exports = function(should) {
   Assertion.alias('finally', 'eventually');
 };
 
-},{"../assertion":27,"../util":43}],39:[function(require,module,exports){
+},{"../assertion":25,"../util":41}],37:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6181,7 +5738,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{"../util":43,"should-equal":20}],40:[function(require,module,exports){
+},{"../util":41,"should-equal":18}],38:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6225,7 +5782,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{}],41:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6464,7 +6021,7 @@ module.exports = function(should, Assertion) {
   });
 };
 
-},{"../util":43}],42:[function(require,module,exports){
+},{"../util":41}],40:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6629,7 +6186,7 @@ should
   .use(require('./ext/contain'))
   .use(require('./ext/promise'));
 
-},{"./assertion":27,"./assertion-error":26,"./config":28,"./ext/assert":30,"./ext/bool":31,"./ext/chain":32,"./ext/contain":33,"./ext/eql":34,"./ext/error":35,"./ext/match":36,"./ext/number":37,"./ext/promise":38,"./ext/property":39,"./ext/string":40,"./ext/type":41,"./util":43,"should-type":23}],43:[function(require,module,exports){
+},{"./assertion":25,"./assertion-error":24,"./config":26,"./ext/assert":28,"./ext/bool":29,"./ext/chain":30,"./ext/contain":31,"./ext/eql":32,"./ext/error":33,"./ext/match":34,"./ext/number":35,"./ext/promise":36,"./ext/property":37,"./ext/string":38,"./ext/type":39,"./util":41,"should-type":21}],41:[function(require,module,exports){
 /*
  * should.js - assertion library
  * Copyright(c) 2010-2013 TJ Holowaychuk <tj@vision-media.ca>
@@ -6767,7 +6324,7 @@ exports.formatProp = function(value) {
   return config.getFormatter().formatPropertyName(String(value));
 };
 
-},{"./config":28,"should-format":21,"should-type":23}],44:[function(require,module,exports){
+},{"./config":26,"should-format":19,"should-type":21}],42:[function(require,module,exports){
 function staticProps (obj) {
   return function (props) {
     var statik = {}
@@ -6789,11 +6346,11 @@ function staticProps (obj) {
 
 module.exports = staticProps
 
-},{}],45:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 // In browserify context, *strict-mode* fall back to a no op.
 module.exports = function (cb) { cb() }
 
-},{}],46:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -6880,7 +6437,7 @@ function tensorContraction (addition, indicesPair, tensorDim, tensorData) {
 
 module.exports = tensorContraction
 
-},{"indices-permutations":10,"multidim-array-index":15}],47:[function(require,module,exports){
+},{"indices-permutations":9,"multidim-array-index":14}],45:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -6919,604 +6476,7 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 
 module.exports = tensorProduct
 
-},{"indices-permutations":10,"multidim-array-index":15}],48:[function(require,module,exports){
-module.exports = function isBuffer(arg) {
-  return arg && typeof arg === 'object'
-    && typeof arg.copy === 'function'
-    && typeof arg.fill === 'function'
-    && typeof arg.readUInt8 === 'function';
-}
-},{}],49:[function(require,module,exports){
-(function (process,global){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var formatRegExp = /%[sdj%]/g;
-exports.format = function(f) {
-  if (!isString(f)) {
-    var objects = [];
-    for (var i = 0; i < arguments.length; i++) {
-      objects.push(inspect(arguments[i]));
-    }
-    return objects.join(' ');
-  }
-
-  var i = 1;
-  var args = arguments;
-  var len = args.length;
-  var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
-    if (i >= len) return x;
-    switch (x) {
-      case '%s': return String(args[i++]);
-      case '%d': return Number(args[i++]);
-      case '%j':
-        try {
-          return JSON.stringify(args[i++]);
-        } catch (_) {
-          return '[Circular]';
-        }
-      default:
-        return x;
-    }
-  });
-  for (var x = args[i]; i < len; x = args[++i]) {
-    if (isNull(x) || !isObject(x)) {
-      str += ' ' + x;
-    } else {
-      str += ' ' + inspect(x);
-    }
-  }
-  return str;
-};
-
-
-// Mark that a method should not be used.
-// Returns a modified function which warns once by default.
-// If --no-deprecation is set, then it is a no-op.
-exports.deprecate = function(fn, msg) {
-  // Allow for deprecating things in the process of starting up.
-  if (isUndefined(global.process)) {
-    return function() {
-      return exports.deprecate(fn, msg).apply(this, arguments);
-    };
-  }
-
-  if (process.noDeprecation === true) {
-    return fn;
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (process.throwDeprecation) {
-        throw new Error(msg);
-      } else if (process.traceDeprecation) {
-        console.trace(msg);
-      } else {
-        console.error(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-};
-
-
-var debugs = {};
-var debugEnviron;
-exports.debuglog = function(set) {
-  if (isUndefined(debugEnviron))
-    debugEnviron = process.env.NODE_DEBUG || '';
-  set = set.toUpperCase();
-  if (!debugs[set]) {
-    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
-      var pid = process.pid;
-      debugs[set] = function() {
-        var msg = exports.format.apply(exports, arguments);
-        console.error('%s %d: %s', set, pid, msg);
-      };
-    } else {
-      debugs[set] = function() {};
-    }
-  }
-  return debugs[set];
-};
-
-
-/**
- * Echos the value of a value. Trys to print the value out
- * in the best way possible given the different types.
- *
- * @param {Object} obj The object to print out.
- * @param {Object} opts Optional options object that alters the output.
- */
-/* legacy: obj, showHidden, depth, colors*/
-function inspect(obj, opts) {
-  // default options
-  var ctx = {
-    seen: [],
-    stylize: stylizeNoColor
-  };
-  // legacy...
-  if (arguments.length >= 3) ctx.depth = arguments[2];
-  if (arguments.length >= 4) ctx.colors = arguments[3];
-  if (isBoolean(opts)) {
-    // legacy...
-    ctx.showHidden = opts;
-  } else if (opts) {
-    // got an "options" object
-    exports._extend(ctx, opts);
-  }
-  // set default options
-  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-  if (isUndefined(ctx.depth)) ctx.depth = 2;
-  if (isUndefined(ctx.colors)) ctx.colors = false;
-  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-  if (ctx.colors) ctx.stylize = stylizeWithColor;
-  return formatValue(ctx, obj, ctx.depth);
-}
-exports.inspect = inspect;
-
-
-// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-inspect.colors = {
-  'bold' : [1, 22],
-  'italic' : [3, 23],
-  'underline' : [4, 24],
-  'inverse' : [7, 27],
-  'white' : [37, 39],
-  'grey' : [90, 39],
-  'black' : [30, 39],
-  'blue' : [34, 39],
-  'cyan' : [36, 39],
-  'green' : [32, 39],
-  'magenta' : [35, 39],
-  'red' : [31, 39],
-  'yellow' : [33, 39]
-};
-
-// Don't use 'blue' not visible on cmd.exe
-inspect.styles = {
-  'special': 'cyan',
-  'number': 'yellow',
-  'boolean': 'yellow',
-  'undefined': 'grey',
-  'null': 'bold',
-  'string': 'green',
-  'date': 'magenta',
-  // "name": intentionally not styling
-  'regexp': 'red'
-};
-
-
-function stylizeWithColor(str, styleType) {
-  var style = inspect.styles[styleType];
-
-  if (style) {
-    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
-           '\u001b[' + inspect.colors[style][1] + 'm';
-  } else {
-    return str;
-  }
-}
-
-
-function stylizeNoColor(str, styleType) {
-  return str;
-}
-
-
-function arrayToHash(array) {
-  var hash = {};
-
-  array.forEach(function(val, idx) {
-    hash[val] = true;
-  });
-
-  return hash;
-}
-
-
-function formatValue(ctx, value, recurseTimes) {
-  // Provide a hook for user-specified inspect functions.
-  // Check that value is an object with an inspect function on it
-  if (ctx.customInspect &&
-      value &&
-      isFunction(value.inspect) &&
-      // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)) {
-    var ret = value.inspect(recurseTimes, ctx);
-    if (!isString(ret)) {
-      ret = formatValue(ctx, ret, recurseTimes);
-    }
-    return ret;
-  }
-
-  // Primitive types cannot have properties
-  var primitive = formatPrimitive(ctx, value);
-  if (primitive) {
-    return primitive;
-  }
-
-  // Look up the keys of the object.
-  var keys = Object.keys(value);
-  var visibleKeys = arrayToHash(keys);
-
-  if (ctx.showHidden) {
-    keys = Object.getOwnPropertyNames(value);
-  }
-
-  // IE doesn't make error fields non-enumerable
-  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
-  if (isError(value)
-      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
-    return formatError(value);
-  }
-
-  // Some type of object without properties can be shortcutted.
-  if (keys.length === 0) {
-    if (isFunction(value)) {
-      var name = value.name ? ': ' + value.name : '';
-      return ctx.stylize('[Function' + name + ']', 'special');
-    }
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    }
-    if (isDate(value)) {
-      return ctx.stylize(Date.prototype.toString.call(value), 'date');
-    }
-    if (isError(value)) {
-      return formatError(value);
-    }
-  }
-
-  var base = '', array = false, braces = ['{', '}'];
-
-  // Make Array say that they are Array
-  if (isArray(value)) {
-    array = true;
-    braces = ['[', ']'];
-  }
-
-  // Make functions say that they are functions
-  if (isFunction(value)) {
-    var n = value.name ? ': ' + value.name : '';
-    base = ' [Function' + n + ']';
-  }
-
-  // Make RegExps say that they are RegExps
-  if (isRegExp(value)) {
-    base = ' ' + RegExp.prototype.toString.call(value);
-  }
-
-  // Make dates with properties first say the date
-  if (isDate(value)) {
-    base = ' ' + Date.prototype.toUTCString.call(value);
-  }
-
-  // Make error with message first say the error
-  if (isError(value)) {
-    base = ' ' + formatError(value);
-  }
-
-  if (keys.length === 0 && (!array || value.length == 0)) {
-    return braces[0] + base + braces[1];
-  }
-
-  if (recurseTimes < 0) {
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    } else {
-      return ctx.stylize('[Object]', 'special');
-    }
-  }
-
-  ctx.seen.push(value);
-
-  var output;
-  if (array) {
-    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
-  } else {
-    output = keys.map(function(key) {
-      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
-    });
-  }
-
-  ctx.seen.pop();
-
-  return reduceToSingleString(output, base, braces);
-}
-
-
-function formatPrimitive(ctx, value) {
-  if (isUndefined(value))
-    return ctx.stylize('undefined', 'undefined');
-  if (isString(value)) {
-    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-                                             .replace(/'/g, "\\'")
-                                             .replace(/\\"/g, '"') + '\'';
-    return ctx.stylize(simple, 'string');
-  }
-  if (isNumber(value))
-    return ctx.stylize('' + value, 'number');
-  if (isBoolean(value))
-    return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
-  if (isNull(value))
-    return ctx.stylize('null', 'null');
-}
-
-
-function formatError(value) {
-  return '[' + Error.prototype.toString.call(value) + ']';
-}
-
-
-function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
-  var output = [];
-  for (var i = 0, l = value.length; i < l; ++i) {
-    if (hasOwnProperty(value, String(i))) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          String(i), true));
-    } else {
-      output.push('');
-    }
-  }
-  keys.forEach(function(key) {
-    if (!key.match(/^\d+$/)) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          key, true));
-    }
-  });
-  return output;
-}
-
-
-function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-  var name, str, desc;
-  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
-  if (desc.get) {
-    if (desc.set) {
-      str = ctx.stylize('[Getter/Setter]', 'special');
-    } else {
-      str = ctx.stylize('[Getter]', 'special');
-    }
-  } else {
-    if (desc.set) {
-      str = ctx.stylize('[Setter]', 'special');
-    }
-  }
-  if (!hasOwnProperty(visibleKeys, key)) {
-    name = '[' + key + ']';
-  }
-  if (!str) {
-    if (ctx.seen.indexOf(desc.value) < 0) {
-      if (isNull(recurseTimes)) {
-        str = formatValue(ctx, desc.value, null);
-      } else {
-        str = formatValue(ctx, desc.value, recurseTimes - 1);
-      }
-      if (str.indexOf('\n') > -1) {
-        if (array) {
-          str = str.split('\n').map(function(line) {
-            return '  ' + line;
-          }).join('\n').substr(2);
-        } else {
-          str = '\n' + str.split('\n').map(function(line) {
-            return '   ' + line;
-          }).join('\n');
-        }
-      }
-    } else {
-      str = ctx.stylize('[Circular]', 'special');
-    }
-  }
-  if (isUndefined(name)) {
-    if (array && key.match(/^\d+$/)) {
-      return str;
-    }
-    name = JSON.stringify('' + key);
-    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-      name = name.substr(1, name.length - 2);
-      name = ctx.stylize(name, 'name');
-    } else {
-      name = name.replace(/'/g, "\\'")
-                 .replace(/\\"/g, '"')
-                 .replace(/(^"|"$)/g, "'");
-      name = ctx.stylize(name, 'string');
-    }
-  }
-
-  return name + ': ' + str;
-}
-
-
-function reduceToSingleString(output, base, braces) {
-  var numLinesEst = 0;
-  var length = output.reduce(function(prev, cur) {
-    numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
-    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
-  }, 0);
-
-  if (length > 60) {
-    return braces[0] +
-           (base === '' ? '' : base + '\n ') +
-           ' ' +
-           output.join(',\n  ') +
-           ' ' +
-           braces[1];
-  }
-
-  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
-}
-
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-function isArray(ar) {
-  return Array.isArray(ar);
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return isObject(re) && objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return isObject(d) && objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-
-function isError(e) {
-  return isObject(e) &&
-      (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = require('./support/isBuffer');
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-
-function pad(n) {
-  return n < 10 ? '0' + n.toString(10) : n.toString(10);
-}
-
-
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-              'Oct', 'Nov', 'Dec'];
-
-// 26 Feb 16:19:34
-function timestamp() {
-  var d = new Date();
-  var time = [pad(d.getHours()),
-              pad(d.getMinutes()),
-              pad(d.getSeconds())].join(':');
-  return [d.getDate(), months[d.getMonth()], time].join(' ');
-}
-
-
-// log is just a thin wrapper to console.log that prepends a timestamp
-exports.log = function() {
-  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
-};
-
-
-/**
- * Inherit the prototype methods from one constructor into another.
- *
- * The Function.prototype.inherits from lang.js rewritten as a standalone
- * function (not on Function.prototype). NOTE: If this file is to be loaded
- * during bootstrapping this function needs to be rewritten using some native
- * functions as prototype setup using normal JavaScript does not work as
- * expected during bootstrapping (see mirror.js in r114903).
- *
- * @param {function} ctor Constructor function which needs to inherit the
- *     prototype.
- * @param {function} superCtor Constructor function to inherit prototype from.
- */
-exports.inherits = require('inherits');
-
-exports._extend = function(origin, add) {
-  // Don't do anything if add isn't an object
-  if (!add || !isObject(add)) return origin;
-
-  var keys = Object.keys(add);
-  var i = keys.length;
-  while (i--) {
-    origin[keys[i]] = add[keys[i]];
-  }
-  return origin;
-};
-
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":48,"_process":18,"inherits":11}],50:[function(require,module,exports){
+},{"indices-permutations":9,"multidim-array-index":14}],46:[function(require,module,exports){
 var CayleyDickson = require('cayley-dickson');
 var coerced = require('./coerced');
 var operators = require('./operators.json');
@@ -7653,7 +6613,7 @@ function CompositionAlgebra(ring) {
 
 module.exports = CompositionAlgebra;
 
-},{"./coerced":56,"./operators.json":58,"./toData":61,"cayley-dickson":8,"static-props":44}],51:[function(require,module,exports){
+},{"./coerced":52,"./operators.json":54,"./toData":57,"cayley-dickson":7,"static-props":42}],47:[function(require,module,exports){
 var determinant = require('laplace-determinant')
 var inherits = require('inherits')
 var no = require('not-defined')
@@ -7862,7 +6822,7 @@ function MatrixSpace (Scalar) {
 
 module.exports = MatrixSpace
 
-},{"./TensorSpace":53,"./VectorSpace":54,"./matrixToArrayIndex":57,"./operators.json":58,"./rowByColumnMultiplication":60,"./toData":61,"inherits":11,"laplace-determinant":14,"multidim-array-index":15,"not-defined":16,"static-props":44,"tensor-contraction":46}],52:[function(require,module,exports){
+},{"./TensorSpace":49,"./VectorSpace":50,"./matrixToArrayIndex":53,"./operators.json":54,"./rowByColumnMultiplication":56,"./toData":57,"inherits":10,"laplace-determinant":13,"multidim-array-index":14,"not-defined":15,"static-props":42,"tensor-contraction":44}],48:[function(require,module,exports){
 var CompositionAlgebra = require('./CompositionAlgebra')
 var no = require('not-defined')
 
@@ -7887,7 +6847,7 @@ function Scalar (field, n) {
 
 module.exports = Scalar
 
-},{"./CompositionAlgebra":50,"not-defined":16}],53:[function(require,module,exports){
+},{"./CompositionAlgebra":46,"not-defined":15}],49:[function(require,module,exports){
 var coerced = require('./coerced')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
@@ -7926,18 +6886,20 @@ function TensorSpace (Scalar) {
 
     var dimension = indices.reduce((a, b) => a * b, 1)
 
+    if (isScalar) {
+      staticProps(Scalar)({order: order})
+
+      return Scalar
+    }
+    
     // TODO create one
     // Create zero.
     var zero = indices.reduce((result, dim) => {
-      if (isScalar) {
-        return Scalar.zero
-      } else {
-        for(var i = 0; i < dim; i++) {
-          result.push(Scalar.zero)
-        }
-
-        return result
+      for(var i = 0; i < dim; i++) {
+        result.push(Scalar.zero)
       }
+
+      return result
     }, [])
 
     /**
@@ -8022,7 +6984,7 @@ function TensorSpace (Scalar) {
 
 module.exports = TensorSpace
 
-},{"./coerced":56,"./operators.json":58,"./toData":61,"static-props":44,"tensor-product":47}],54:[function(require,module,exports){
+},{"./coerced":52,"./operators.json":54,"./toData":57,"static-props":42,"tensor-product":45}],50:[function(require,module,exports){
 var inherits  = require('inherits')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
@@ -8241,7 +7203,7 @@ module.exports = VectorSpace
     Vector.prototype.transpose = transpose
      */
 
-},{"./TensorSpace":53,"./operators.json":58,"./toData":61,"inherits":11,"static-props":44}],55:[function(require,module,exports){
+},{"./TensorSpace":49,"./operators.json":54,"./toData":57,"inherits":10,"static-props":42}],51:[function(require,module,exports){
 var booleanField = {
   zero: false,
   one: true,
@@ -8258,7 +7220,7 @@ var booleanField = {
     return !a;
   },
   multiplication: function (a, b) {
-    return a || b;
+    return a && b;
   },
   inversion: function (a) {
     return a;
@@ -8267,7 +7229,7 @@ var booleanField = {
 
 module.exports = booleanField;
 
-},{}],56:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 var toData = require('./toData');
 
 /**
@@ -8288,7 +7250,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":61}],57:[function(require,module,exports){
+},{"./toData":57}],53:[function(require,module,exports){
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
@@ -8309,7 +7271,7 @@ function matrixToArrayIndex(i, j, numCols) {
 
 module.exports = matrixToArrayIndex;
 
-},{"multidim-array-index":15}],58:[function(require,module,exports){
+},{"multidim-array-index":14}],54:[function(require,module,exports){
 module.exports={
   "group": [
     "addition",
@@ -8357,7 +7319,7 @@ module.exports={
   }
 }
 
-},{}],59:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var realField = {
   zero: 0,
   one: 1,
@@ -8384,7 +7346,7 @@ var realField = {
 
 module.exports = realField;
 
-},{}],60:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 var isInteger = require('is-integer');
 var matrixToArrayIndex = require('./matrixToArrayIndex');
 /* TODO
@@ -8469,7 +7431,7 @@ function rowByColumnMultiplication(field, leftMatrix, leftNumRows, rightMatrix, 
 
 module.exports = rowByColumnMultiplication;
 
-},{"./matrixToArrayIndex":57,"./toData":61,"is-integer":13}],61:[function(require,module,exports){
+},{"./matrixToArrayIndex":53,"./toData":57,"is-integer":12}],57:[function(require,module,exports){
 var no = require('not-defined');
 
 /**
@@ -8494,7 +7456,7 @@ function toData(arg) {
 
 module.exports = toData;
 
-},{"not-defined":16}],62:[function(require,module,exports){
+},{"not-defined":15}],58:[function(require,module,exports){
 var algebra = require('algebra');
 
 var C = algebra.Complex;
@@ -8568,7 +7530,7 @@ describe('Complex', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78}],63:[function(require,module,exports){
+},{"./features/methodBinaryOperator":69,"./features/methodUnaryOperator":70,"./features/staticBinaryOperator":71,"./features/staticUnaryOperator":72,"algebra":74}],59:[function(require,module,exports){
 var CompositionAlgebra = require('../src/CompositionAlgebra');
 var realField = require('../src/realField');
 
@@ -8605,7 +7567,7 @@ describe('CompositionAlgebra', function () {
   });
 });
 
-},{"../src/CompositionAlgebra":50,"../src/realField":59}],64:[function(require,module,exports){
+},{"../src/CompositionAlgebra":46,"../src/realField":55}],60:[function(require,module,exports){
 var algebra = require('algebra');
 
 var notDefined = require('not-defined');
@@ -8667,7 +7629,7 @@ describe('MatrixSpace', function () {
   });
 
   describe('addition()', function () {
-    operator = 'addition';
+    var operator = 'addition';
 
     it('is a static method', staticBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 4, 0, 1]));
 
@@ -8682,17 +7644,22 @@ describe('MatrixSpace', function () {
   });
 
   describe('subtraction()', function () {
-    operator = 'subtraction';
+    var operator = 'subtraction';
 
     it('is a static method', staticBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 2, 2, 1]));
 
     it('is a class method', methodBinaryOperator(R2x2, operator, [2, 3, 1, 1], [0, 1, -1, 0], [2, 2, 2, 1]));
 
-    it('accepts multiple arguments');
+    it('accepts multiple arguments', function () {
+      R2x2.subtraction([2, 3, 1, 1], [0, 1, -1, 0], [2, 4, 0, 1]).should.deepEqual([0, -2, 2, 0]);
+
+      var matrix = new R2x2([2, 3, 1, 1]);
+      matrix.subtraction([0, 1, -1, 0], [2, 4, 0, 1]).data.should.deepEqual([0, -2, 2, 0]);
+    });
   });
 
   describe('multiplication()', function () {
-    operator = 'multiplication';
+    var operator = 'multiplication';
 
     it('is a static method', staticBinaryOperator(R3x2, operator, [2, 3, 1, 1, 1, 1], [0, 1, 1, 1, -1, 0, 2, 3], [-3, 2, 8, 11, -1, 1, 3, 4, -1, 1, 3, 4]));
 
@@ -8796,7 +7763,7 @@ describe('MatrixSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78,"not-defined":16}],65:[function(require,module,exports){
+},{"./features/methodBinaryOperator":69,"./features/methodUnaryOperator":70,"./features/staticBinaryOperator":71,"./features/staticUnaryOperator":72,"algebra":74,"not-defined":15}],61:[function(require,module,exports){
 var algebra = require('algebra');
 
 var R = algebra.Real;
@@ -8929,40 +7896,48 @@ describe('Real', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78}],66:[function(require,module,exports){
+},{"./features/methodBinaryOperator":69,"./features/methodUnaryOperator":70,"./features/staticBinaryOperator":71,"./features/staticUnaryOperator":72,"algebra":74}],62:[function(require,module,exports){
 var Scalar = require('algebra').Scalar;
 var realField = require('../src/realField');
 
 describe('Scalar', function () {
-  it('checks n is 1, 2, 4 or 8' /*, () => {
-                                ;(() => {
-                                Scalar(realField, 3)
-                                }).should.throw()
-                                }*/);
+  it('checks n is 1, 2, 4 or 8', function () {
+    ;(function () {
+      Scalar(realField, 3);
+    }).should.throw();
+  });
 });
 
-},{"../src/realField":59,"algebra":78}],67:[function(require,module,exports){
+},{"../src/realField":55,"algebra":74}],63:[function(require,module,exports){
 describe('TensorSpace', function () {
   var algebra = require('algebra');
   var TensorSpace = algebra.TensorSpace;
   var Real = algebra.Real;
 
-  it('can create a Scalar' /*, () => {
-                           var indices = [1]
-                           var Scalar = TensorSpace(indices)(ring)
-                           Scalar.zero.should.be.eql(0)
-                           Scalar.order.should.be.eql(0)
-                           Scalar.addition(1, 2).should.be.eql(3)
-                           Scalar.addition(1, 2, 3).should.be.eql(6)
-                           Scalar.subtraction(1, 2).should.be.eql(-1)
-                           Scalar.subtraction(1, 2, 3).should.be.eql(-4)
-                           var x = new Scalar(1)
-                           x.data.should.be.eql(1)
-                           x.addition(2).data.should.be.eql(3)
-                           x.addition(2, 3, 4).data.should.be.eql(10)
-                           x.subtraction(2).data.should.be.eql(-1)
-                           x.subtraction(2, 3, 4).data.should.be.eql(-8)
-                           }*/);
+  it('can create a Scalar', function () {
+    var indices = [1];
+
+    var Scalar = TensorSpace(Real)(indices);
+
+    Scalar.zero.should.be.eql(0);
+
+    Scalar.order.should.be.eql(0);
+
+    Scalar.addition(1, 2).should.be.eql(3);
+    Scalar.addition(1, 2, 3).should.be.eql(6);
+
+    Scalar.subtraction(1, 2).should.be.eql(-1);
+    Scalar.subtraction(1, 2, 3).should.be.eql(-4);
+
+    var x = new Scalar(1);
+    x.data.should.be.eql(1);
+
+    x.addition(2).data.should.be.eql(3);
+    x.addition(2, 3, 4).data.should.be.eql(10);
+
+    x.subtraction(2).data.should.be.eql(-1);
+    x.subtraction(2, 3, 4).data.should.be.eql(-8);
+  });
 
   it('can create a Vector', function () {
     var indices = [2];
@@ -9016,7 +7991,7 @@ describe('TensorSpace', function () {
   });
 });
 
-},{"algebra":78}],68:[function(require,module,exports){
+},{"algebra":74}],64:[function(require,module,exports){
 var algebra = require('algebra');
 var notDefined = require('not-defined');
 
@@ -9177,10 +8152,10 @@ describe('VectorSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":73,"./features/methodUnaryOperator":74,"./features/staticBinaryOperator":75,"./features/staticUnaryOperator":76,"algebra":78,"not-defined":16}],69:[function(require,module,exports){
+},{"./features/methodBinaryOperator":69,"./features/methodUnaryOperator":70,"./features/staticBinaryOperator":71,"./features/staticUnaryOperator":72,"algebra":74,"not-defined":15}],65:[function(require,module,exports){
 describe('API', function () {
-  var assert = require('assert');
-  var Scalar = require('algebra').Scalar;
+  var algebra = require('algebra');
+  var Scalar = algebra.Scalar;
   var ring = require('algebra-ring');
 
   var booleanField = require('../src/booleanField');
@@ -9188,55 +8163,84 @@ describe('API', function () {
   describe('Bool', function () {
     var Bool = Scalar(booleanField);
 
-    it('works' /*, () => {
-               assert.equal(Bool.contains(true), true)
-               assert.equal(Bool.contains(1), false)
-               assert.equal(Bool.addition(true, false), false)
-               var t = new Bool(true)
-               assert.equal(t.negation().data, false)
-               }*/);
+    it('works', function () {
+      Bool.contains(true).should.be.ok;
+      Bool.contains(1).should.be.ko;
+
+      Bool.addition(true, false).should.eql(true);
+
+      var t = new Bool(true);
+      t.negation().data.should.eql(false);
+    });
   });
 
   describe('Byte', function () {
-
     it('is an octionion of booleans' /*, () => {
-                                     var Byte = Scalar(booleanRing, 8)
-                                     var byte1 = new Byte([1, 0, 0, 0, 0, 0, 0, 0])
+                                     var f = false
+                                     var t = true
+                                     var Byte = Scalar(booleanField, 8)
+                                     var byte1 = new Byte([t, f, f, f, f, f, f, f])
                                      }*/);
+  });
+
+  describe('Real', function () {
+    it('works', function () {
+      var Real = algebra.Real;
+    });
+  });
+
+  describe('Complex', function () {
+    it('works', function () {
+      var Complex = algebra.Complex;
+    });
   });
 });
 
-},{"../src/booleanField":55,"algebra":78,"algebra-ring":3,"assert":4}],70:[function(require,module,exports){
+},{"../src/booleanField":51,"algebra":74,"algebra-ring":3}],66:[function(require,module,exports){
 describe('booleanField', function () {
-  // Don't know why *should* has strange behaviour here.
-  var assert = require('assert');
   var bool = require('../src/booleanField');
 
   describe('contains', function () {
     it('ok for booleans, otherwise false', function () {
-      assert.ok(bool.contains(false));
-      assert.ok(bool.contains(true));
-      assert.ok(!bool.contains(1));
-      assert.ok(!bool.contains('true'));
+      bool.contains(false).should.be.ok;
+      bool.contains(true).should.be.ok;
+      bool.contains(1).should.be.ko;
+      bool.contains('true').should.be.ko;
+    });
+  });
+
+  describe('equality', function () {
+    it('works', function () {
+      bool.equality(false, false).should.be.ok;
+      bool.equality(true, true).should.be.ok;
+      bool.equality(true, false).should.be.ko;
+      bool.equality(false, true).should.be.ko;
     });
   });
 
   describe('negation', function () {
     it('works', function () {
-      assert.equal(bool.negation(false), true);
-      assert.equal(bool.negation(true), false);
+      bool.negation(false).should.eql(true);
+      bool.negation(true).should.eql(false);
     });
   });
 
   describe('addition', function () {
     it('has false as neutral element', function () {
-      assert.equal(bool.addition(true, false), true);
-      assert.equal(bool.addition(false, false), false);
+      bool.addition(true, false).should.eql(true);
+      bool.addition(false, false).should.eql(false);
+    });
+  });
+
+  describe('multiplication', function () {
+    it('has true as neutral element', function () {
+      bool.multiplication(true, true).should.eql(true);
+      bool.multiplication(false, true).should.eql(false);
     });
   });
 });
 
-},{"../src/booleanField":55,"assert":4}],71:[function(require,module,exports){
+},{"../src/booleanField":51}],67:[function(require,module,exports){
 /*
 var algebra = require('algebra'),
     should  = require('should')
@@ -9447,7 +8451,7 @@ describe('buildCyclicSpaceOf', function () {
 })
 */
 
-},{}],72:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var coerced = require('../src/coerced');
 
 var add = coerced(function (a, b) {
@@ -9463,7 +8467,7 @@ describe('coerced', function () {
   });
 });
 
-},{"../src/coerced":56}],73:[function(require,module,exports){
+},{"../src/coerced":52}],69:[function(require,module,exports){
 
 var should = require('should');
 
@@ -9493,7 +8497,7 @@ function mutatorBinaryOperator(Scalar, operator, operand1, operand2, resultData)
 
 module.exports = mutatorBinaryOperator;
 
-},{"should":25}],74:[function(require,module,exports){
+},{"should":23}],70:[function(require,module,exports){
 
 var should = require('should');
 
@@ -9522,7 +8526,7 @@ function mutatorUnaryOperator(Scalar, operator, operand, resultData) {
 
 module.exports = mutatorUnaryOperator;
 
-},{"should":25}],75:[function(require,module,exports){
+},{"should":23}],71:[function(require,module,exports){
 
 var should = require('should');
 
@@ -9546,7 +8550,7 @@ function staticBinaryOperator(Scalar, operator, operand1, operand2, result) {
 
 module.exports = staticBinaryOperator;
 
-},{"should":25}],76:[function(require,module,exports){
+},{"should":23}],72:[function(require,module,exports){
 
 var should = require('should');
 
@@ -9569,7 +8573,7 @@ function staticUnaryOperator(Scalar, operator, operand, result) {
 
 module.exports = staticUnaryOperator;
 
-},{"should":25}],77:[function(require,module,exports){
+},{"should":23}],73:[function(require,module,exports){
 
 var matrixToArrayIndex = require('../src/matrixToArrayIndex');
 
@@ -9608,13 +8612,13 @@ describe('matrixToArrayIndex', function () {
         });
 });
 
-},{"../src/matrixToArrayIndex":57}],78:[function(require,module,exports){
+},{"../src/matrixToArrayIndex":53}],74:[function(require,module,exports){
 
 // Cheating npm require.
 module.exports = require('../../..')
 
 
-},{"../../..":1}],79:[function(require,module,exports){
+},{"../../..":1}],75:[function(require,module,exports){
 describe('Quick start', function () {
                    var algebra = require('algebra');
 
@@ -9680,7 +8684,7 @@ describe('Quick start', function () {
                    });
 });
 
-},{"algebra":78}],80:[function(require,module,exports){
+},{"algebra":74}],76:[function(require,module,exports){
 
 var algebra = require('algebra'),
     should = require('should');
@@ -9723,4 +8727,4 @@ describe('rowByColumnMultiplication', function () {
                });
 });
 
-},{"../src/rowByColumnMultiplication":60,"algebra":78,"should":25}]},{},[62,63,64,65,66,67,68,69,70,71,72,77,79,80]);
+},{"../src/rowByColumnMultiplication":56,"algebra":74,"should":23}]},{},[58,59,60,61,62,63,64,65,66,67,68,73,75,76]);

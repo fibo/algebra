@@ -1226,18 +1226,20 @@ function TensorSpace(Scalar) {
       return a * b;
     }, 1);
 
+    if (isScalar) {
+      staticProps(Scalar)({ order: order });
+
+      return Scalar;
+    }
+
     // TODO create one
     // Create zero.
     var zero = indices.reduce(function (result, dim) {
-      if (isScalar) {
-        return Scalar.zero;
-      } else {
-        for (var i = 0; i < dim; i++) {
-          result.push(Scalar.zero);
-        }
-
-        return result;
+      for (var i = 0; i < dim; i++) {
+        result.push(Scalar.zero);
       }
+
+      return result;
     }, []);
 
     /**

@@ -245,7 +245,8 @@ console.log(m2.determinant.data) // 2
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```
-var Scalar = require('algebra').Scalar
+var algebra = require('algebra')
+var Scalar = algebra.Scalar
 var ring = require('algebra-ring')
 
 var booleanField = require('algebra/src/booleanField')
@@ -321,9 +322,17 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 Inherits everything from [Scalar](#scalar).
 
+```
+var Real = algebra.Real
+```
+
 ### Complex
 
 Inherits everything from [Scalar](#scalar).
+
+```
+var Complex = algebra.Complex
+```
 
 ### Quaternion
 
@@ -339,9 +348,13 @@ Inherits everything from [Tensor](#tensor).
 
 ### `VectorSpace(Scalar)(dimension)`
 
+### `Vector.dimension`
+
+### vector operators
+
 ### `Vector.crossProduct(vector1, vector2)`
 
-### `vector1.crossProduct(vector2)`
+### `vector.crossProduct(vector2)`
 
 ### Matrix
 
@@ -349,7 +362,19 @@ Inherits everything from [Tensor](#tensor).
 
 ### `MatrixSpace(Scalar)(numRows[, numCols])`
 
+### `Matrix.numCols`
+
+### `Matrix.numRows`
+
+### `Matrix.isSquare`
+
+### matrix operators
+
+### matrix multiplication
+
 ### `Matrix.multiplication(matrix1, matrix2)`
+
+### `matrix.multiplication(matrix2)`
 
 ### matrix inversion
 
@@ -365,7 +390,13 @@ It is defined only for square matrices.
 
 ### `Matrix.determinant(matrix)`
 
-### `matrix.determinant()`
+### `matrix.determinant`
+
+### matrix adjoint
+
+### `Matrix.adjoint(matrix1)`
+
+### `matrix.adjoint()`
 
 ### Tensor
 

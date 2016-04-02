@@ -28,12 +28,12 @@ describe('MatrixSpace', () => {
     R2x2.numCols.should.be.eql(2)
   })
 
-  var matrix1  = new R2x2([ 2, 3,
-                            1, 1 ])
-  var matrix2  = new R2x2([ 0, 1,
-                           -1, 0 ])
-  var matrix3  = new R2x3([ 0, 1, 2,
-                           -2, 1, 0 ])
+  var matrix1 = new R2x2([ 2, 3,
+                           1, 1 ])
+  var matrix2 = new R2x2([ 0, 1,
+                          -1, 0 ])
+  var matrix3 = new R2x3([ 0, 1, 2,
+                          -2, 1, 0 ])
 
   describe('numRows', () => {
     it('returns the number of rows', () => {
@@ -62,7 +62,7 @@ describe('MatrixSpace', () => {
   })
 
   describe('addition()', () => {
-    operator = 'addition'
+    var operator = 'addition'
 
     it('is a static method', staticBinaryOperator(R2x2, operator,
         [ 2, 3,
@@ -102,31 +102,47 @@ describe('MatrixSpace', () => {
   })
 
   describe('subtraction()', () => {
-    operator = 'subtraction'
+    var operator = 'subtraction'
 
     it('is a static method', staticBinaryOperator(R2x2, operator,
-        [ 2, 3,
-          1, 1 ],
-        [ 0, 1,
-         -1, 0 ],
-        [ 2, 2,
-          2, 1 ]
+        [2, 3,
+         1, 1],
+        [0, 1,
+        -1, 0],
+        [2, 2,
+         2, 1]
     ))
 
     it('is a class method', methodBinaryOperator(R2x2, operator,
-        [ 2, 3,
-          1, 1 ],
-        [ 0, 1,
-         -1, 0 ],
-        [ 2, 2,
-          2, 1 ]
+        [2, 3,
+         1, 1],
+        [0, 1,
+        -1, 0],
+        [2, 2,
+         2, 1]
     ))
 
-    it('accepts multiple arguments')
+    it('accepts multiple arguments', () => {
+      R2x2.subtraction([2, 3,
+                        1, 1],
+                       [0, 1,
+                       -1, 0],
+                       [2, 4,
+                        0, 1]).should.deepEqual([0, -2,
+                                                 2, 0])
+
+      var matrix = new R2x2([2, 3,
+                             1, 1])
+      matrix.subtraction([0, 1,
+                          -1, 0],
+                         [2, 4,
+                          0, 1]).data.should.deepEqual([0, -2,
+                                                        2, 0])
+    })
   })
 
   describe('multiplication()', () => {
-    operator = 'multiplication'
+    var operator = 'multiplication'
 
     it('is a static method', staticBinaryOperator(R3x2, operator,
         [ 2, 3,
@@ -164,8 +180,8 @@ describe('MatrixSpace', () => {
 
   describe('trace', () => {
     it('is a static attribute', () => {
-      var matrix2x2  = new R2x2([1, 2,
-                                 5, 6])
+      var matrix2x2 = new R2x2([1, 2,
+                                5, 6])
 
       matrix2x2.trace.should.be.eql(7)
     })
@@ -205,7 +221,7 @@ describe('MatrixSpace', () => {
     })
 
     it('holds a transposed matrix', () => {
-      var matrix2x3  = new R2x3([1, 2, 3,
+      var matrix2x3 = new R2x3([1, 2, 3,
                                   4, 5, 6])
 
       matrix2x3.transposed.data.should.deepEqual([1, 4,
@@ -226,7 +242,7 @@ describe('MatrixSpace', () => {
     })
 
     it('returns a vector if the Matrix has one row', () => {
-      var matrix1x4  = new R1x4([1, 2, 3, 4])
+      var matrix1x4 = new R1x4([1, 2, 3, 4])
 
       var vector = matrix1x4.transposed
 
@@ -243,7 +259,6 @@ describe('MatrixSpace', () => {
                                 3, 4])
 
       matrix2x2.multiplication.should.be.eql(matrix2x2.mul)
-
     })
   })
 

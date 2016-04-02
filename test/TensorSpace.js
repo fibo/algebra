@@ -3,10 +3,10 @@ describe('TensorSpace', () => {
   var TensorSpace = algebra.TensorSpace
   var Real = algebra.Real
 
-  it('can create a Scalar'/*, () => {
+  it('can create a Scalar', () => {
     var indices = [1]
 
-    var Scalar = TensorSpace(indices)(ring)
+    var Scalar = TensorSpace(Real)(indices)
 
     Scalar.zero.should.be.eql(0)
 
@@ -26,7 +26,7 @@ describe('TensorSpace', () => {
 
     x.subtraction(2).data.should.be.eql(-1)
     x.subtraction(2, 3, 4).data.should.be.eql(-8)
-  }*/)
+  })
 
   it('can create a Vector', () => {
     var indices = [2]
@@ -65,25 +65,25 @@ describe('TensorSpace', () => {
 
     Matrix.addition([1, 0,
                      0, 1], [1, -1,
-                             0,  1]).should.be.eql([2, -1,
-                                                    0,  2])
+                             0, 1]).should.be.eql([2, -1,
+                                                    0, 2])
 
     Matrix.addition([1, 0,
                      0, 1], [1, -1,
-                             0,  1], [2, 1,
+                             0, 1], [2, 1,
                                       1, 2]).should.be.eql([4, 0,
                                                             1, 4])
 
     Matrix.subtraction([1, 0,
                         0, 1], [1, -1,
-                                0,  1]).should.be.eql([0, 1,
-                                                       0, 0])
+                                0, 1]).should.be.eql([0, 1,
+                                                      0, 0])
 
     Matrix.subtraction([1, 0,
                         0, 1], [1, -1,
-                                0,  1], [2, 1,
-                                         1, 2]).should.be.eql([-2,  0,
-                                                               -1, -2])
+                                0, 1], [2, 1,
+                                        1, 2]).should.be.eql([-2, 0,
+                                                              -1, -2])
 
     var m = new Matrix([1, 2,
                         3, 4])

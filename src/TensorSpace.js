@@ -36,18 +36,20 @@ function TensorSpace (Scalar) {
 
     var dimension = indices.reduce((a, b) => a * b, 1)
 
+    if (isScalar) {
+      staticProps(Scalar)({order: order})
+
+      return Scalar
+    }
+    
     // TODO create one
     // Create zero.
     var zero = indices.reduce((result, dim) => {
-      if (isScalar) {
-        return Scalar.zero
-      } else {
-        for(var i = 0; i < dim; i++) {
-          result.push(Scalar.zero)
-        }
-
-        return result
+      for(var i = 0; i < dim; i++) {
+        result.push(Scalar.zero)
       }
+
+      return result
     }, [])
 
     /**

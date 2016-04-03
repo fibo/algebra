@@ -134,16 +134,16 @@ describe('VectorSpace', () => {
   })
 
   describe('crossProduct()', () => {
-    it('is a static method'/*, () => {
-      R3.crossProduct([1, 0, 0], [0, 1, 0]).data.should.be.eql([0, 0, 1])
-    }*/)
+    it('is a static method', () => {
+      R3.crossProduct([3, -3, 1], [4, 9, 2]).should.be.eql([-15, -2, 39])
+    })
 
-    it('is a class method'/*, () => {
-      var vector1 = new R3([1, 0, 0])
-      var vector2 = new R3([0, 1, 0])
+    it('is a class method', () => {
+      var vector1 = new R3([3, -3, 1])
+      var vector2 = new R3([-12, 12, -4])
 
-      vector1.crossProduct(vector2).data.should.be.eql([0, 0, 1])
-    }*/)
+      vector1.crossProduct(vector2).data.should.be.eql([0, 0, 0])
+    })
 
     it('is defined only in dimension 3', () => {
       notDefined(R2.cross).should.be.ok

@@ -21,6 +21,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - algebra-cyclic
 - Scalar
 - generate tag links in changelog
+- crossProduct
 
 ## [v0.8.0] - 2016-03-20
 

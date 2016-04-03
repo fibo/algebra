@@ -17,6 +17,7 @@
     - [Complex](#complex)
     - [Quaternion](#quaternion)
     - [Octonion](#octonion)
+    - [Common spaces](#common-spaces)
     - [Vector](#vector)
     - [Matrix](#matrix)
     - [Tensor](#tensor)
@@ -288,37 +289,37 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 ##### `Scalar.equality(scalar1, scalar2)`
 
-##### `scalar.equality(scalar1)`
+##### `scalar1.equality(scalar2)`
 
 ##### `Scalar.disequality(scalar1, scalar2)`
 
-##### `scalar.disequality(scalar1)`
+##### `scalar1.disequality(scalar2)`
 
 ##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
 
-##### `scalar.addition(scalar1[, scalar2, …, scalarn])`
+##### `scalar1.addition(scalar2[, scalar3, … ])`
 
-##### `Scalar.subtraction(scalar1, scalar2[, scalar3, … ])`
+##### `Scalar.subtraction(scalar1, scalar2[, … ])`
 
-##### `scalar.subtraction(scalar1[, scalar2, … ])`
+##### `scalar1.subtraction(scalar2[, scalar3, … ])`
 
 ##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
 
-##### `scalar.multiplication(scalar1[, scalar2, … ])`
+##### `scalar1.multiplication(scalar2[, scalar3, … ])`
 
 ##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
 
-##### `scalar.division(scalar1[, scalar2, … ])`
+##### `scalar1.division(scalar2[, scalar3, … ])`
 
-##### `Scalar.negation(scalar1)`
+##### `Scalar.negation(scalar)`
 
 ##### `scalar.negation()`
 
-##### `Scalar.inversion(scalar1)`
+##### `Scalar.inversion(scalar)`
 
 ##### `scalar.inversion()`
 
-##### `Scalar.conjugation(scalar1)`
+##### `Scalar.conjugation(scalar)`
 
 ##### `scalar.conjugation()`
 
@@ -348,6 +349,28 @@ Inherits everything from [Scalar](#scalar).
 
 Inherits everything from [Scalar](#scalar).
 
+### Common spaces
+
+#### R2
+
+The real plane.
+
+```
+var R2 = algebra.R2
+```
+
+It is in alias of `VectorSpace(Real)(2)`.
+
+#### R3
+
+The real space.
+
+```
+var R3 = algebra.R3
+```
+
+It is in alias of `VectorSpace(Real)(3)`.
+
 ### Vector
 
 Inherits everything from [Tensor](#tensor).
@@ -358,9 +381,26 @@ Inherits everything from [Tensor](#tensor).
 
 ### vector operators
 
+#### Cross product
+
+It is defined only in dimension three. See [Cross product on wikipedia](https://en.wikipedia.org/wiki/Cross_product).
+
 ##### `Vector.crossProduct(vector1, vector2)`
 
-##### `vector.crossProduct(vector2)`
+```
+R3.crossProduct([3, -3, 1], [4, 9, 2]) // [-15, 2, 39]
+```
+
+##### `vector1.crossProduct(vector2)`
+
+```
+var vector1 = new R3([3, -3, 1])
+var vector2 = new R3([4, 9, 2])
+
+var vector3 = vector1.crossProduct(vector2)
+
+console.log(vector3.data) // [-15, 2, 39]
+```
 
 ### Matrix
 
@@ -380,7 +420,7 @@ Inherits everything from [Tensor](#tensor).
 
 ##### `Matrix.multiplication(matrix1, matrix2)`
 
-##### `matrix.multiplication(matrix2)`
+##### `matrix1.multiplication(matrix2)`
 
 ### matrix inversion
 
@@ -420,23 +460,23 @@ It is defined only for square matrices.
 
 ##### `Tensor.equality(tensor1, tensor2)`
 
-##### `tensor.equality(tensor1)`
+##### `tensor1.equality(tensor2)`
 
 ##### `Tensor.disequality(tensor1, tensor2)`
 
-##### `tensor.disequality(tensor1)`
+##### `tensor1.disequality(tensor2)`
 
 ##### `Tensor.addition(tensor1, tensor2[, tensor3, … ])`
 
-##### `tensor.addition(tensor1[, tensor2, … ])`
+##### `tensor1.addition(tensor2[, tensor3, … ])`
 
 ##### `Tensor.subtraction(tensor1, tensor2[, tensor3, … ])`
 
-##### `tensor.subtraction(tensor1[, tensor2, … ])`
+##### `tensor1.subtraction(tensor2[, tensor3, … ])`
 
 ##### `Tensor.product(tensor1, tensor2)`
 
-##### `tensor.product(tensor2)`
+##### `tensor1.product(tensor2)`
 
 ##### `Tensor.contraction()`
 

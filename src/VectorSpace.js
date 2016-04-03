@@ -21,6 +21,7 @@ var toData = require('./toData')
 function VectorSpace (Scalar) {
   var addition = Scalar.addition
   var multiplication = Scalar.multiplication
+  var subtraction = Scalar.subtraction
 
   /**
    * @api private
@@ -47,9 +48,22 @@ function VectorSpace (Scalar) {
      */
 
     function crossProduct (vector1, vector2) {
-      // TODO complete cross product
       var vector1 = toData(vector1)
       var vector2 = toData(vector2)
+
+      var ux = vector1[0]
+      var uy = vector1[1]
+      var uz = vector1[2]
+
+      var vx = vector2[0]
+      var vy = vector2[1]
+      var vz = vector2[2]
+
+      var vector = []
+
+      vector.push(subtraction(multiplication(uy, vz), multiplication(uz, vy)))
+      vector.push(subtraction(multiplication(uz, vx), multiplication(ux, vz)))
+      vector.push(subtraction(multiplication(ux, vy), multiplication(uy, vx)))
 
       return vector
     }
@@ -137,7 +151,7 @@ function VectorSpace (Scalar) {
       var result = crossProduct(data, vector)
 
       return new Vector(result)
- n   }
+    }
 
     if (dimension === 3) {
       Vector.crossProduct = crossProduct

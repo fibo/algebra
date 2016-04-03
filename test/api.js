@@ -3,6 +3,9 @@ describe('API', () => {
   var Scalar = algebra.Scalar
   var ring = require('algebra-ring')
 
+  var R2 = algebra.R2
+  var R3 = algebra.R3
+
   var booleanField = require('../src/booleanField')
 
   describe('Bool', () => {
@@ -39,6 +42,19 @@ describe('API', () => {
     it('works', () => {
       var Complex = algebra.Complex
       var complex1 = new Complex([1, 2])
+    })
+  })
+
+  describe('cross product', () => {
+    it('works', () => {
+      R3.crossProduct([3, -3, 1], [4, 9, 2]).should.deepEqual([-15, -2, 39])
+
+      var vector1 = new R3([3, -3, 1])
+      var vector2 = new R3([4, 9, 2])
+
+      var vector3 = vector1.crossProduct(vector2)
+
+      vector3.data.should.deepEqual([-15, -2, 39])
     })
   })
 })

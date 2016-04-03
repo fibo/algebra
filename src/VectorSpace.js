@@ -1,4 +1,4 @@
-var inherits  = require('inherits')
+var inherits = require('inherits')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
 var TensorSpace = require('./TensorSpace')
@@ -46,16 +46,16 @@ function VectorSpace (Scalar) {
      */
 
     function crossProduct (vector1, vector2) {
-      var vector1 = toData(vector1)
-      var vector2 = toData(vector2)
+      var vectorData1 = toData(vector1)
+      var vectorData2 = toData(vector2)
 
-      var ux = vector1[0]
-      var uy = vector1[1]
-      var uz = vector1[2]
+      var ux = vectorData1[0]
+      var uy = vectorData1[1]
+      var uz = vectorData1[2]
 
-      var vx = vector2[0]
-      var vy = vector2[1]
-      var vz = vector2[2]
+      var vx = vectorData2[0]
+      var vy = vectorData2[1]
+      var vz = vectorData2[2]
 
       var vector = []
 

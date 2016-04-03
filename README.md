@@ -14,6 +14,11 @@
 * [API](#api)
   - [About operators](#about-operators)
   - [Scalar](#scalar)
+    - [attributes](#scalar-attributes)
+      - [one](#scalarone)
+      - [zero](#scalarzero)
+      - [data](#scalardata)
+      - [order](#scalar-order)
     - [operators](#scalar-operators)
   - [Cyclic](#cyclic)
   - [Real](#real)
@@ -24,17 +29,29 @@
     - [R2](#r2)
     - [R3](#r3)
   - [Vector](#vector)
+    - [attributes](#vector-attributes)
     - [operators](#vector-operators)
       - [cross product](#cross-product)
   - [Matrix](#matrix)
+    - [attributes](#matrix-attributes)
+      - [isSquare](#matrixissquare)
+      - [numCols](#matrixnumcols)
+      - [numRows](#matrixnumrows)
     - [operators](#matrix-operators)
       - [multiplication](#matrix-multiplication)
       - [inversion](#matrix-inversion)
       - [determinant](#matrix-determinant)
       - [adjoint](#matrix-adjoint)
   - [Tensor](#tensor)
+    - [attributes](#tensor-attributes)
+      - [one](#tensorone)
+      - [zero](#tensorzero)
+      - [data](#tensordata)
+      - [indices](#tensor-indices)
+      - [order](#tensor-order)
     - [operators](#tensor-operators)
       - [equality](#tensor-equality)
+      - [scalarMultiplication](#scalar-multiplication)
 * [License](#license)
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
@@ -332,11 +349,21 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 // TODO var Byte = Scalar(boolean, 8)
 ```
 
-### Scalar constants
+### Scalar attributes
 
 ##### `Scalar.one`
 
 ##### `Scalar.zero`
+
+#### Scalar order
+
+It is always 0.
+
+##### `Scalar.order`
+
+##### `scalar.order`
+
+##### `scalar.data`
 
 ### Scalar operators
 
@@ -432,7 +459,7 @@ Inherits everything from [Tensor](#tensor).
 
 ##### `VectorSpace(Scalar)(dimension)`
 
-### Vector constants
+### Vector attributes
 
 ##### `Vector.dimension`
 
@@ -463,15 +490,15 @@ console.log(vector3.data) // [-15, 2, 39]
 
 Inherits everything from [Tensor](#tensor).
 
-#### Matrix constants
-
 ##### `MatrixSpace(Scalar)(numRows[, numCols])`
+
+#### Matrix attributes
+
+##### `Matrix.isSquare`
 
 ##### `Matrix.numCols`
 
 ##### `Matrix.numRows`
-
-##### `Matrix.isSquare`
 
 #### Matrix operators
 
@@ -487,7 +514,7 @@ It is defined only for square matrices which determinant is not zero.
 
 ##### `Matrix.inversion(matrix)`
 
-##### `matrix.inversion()`
+##### `matrix.inversion`
 
 #### Matrix determinant
 
@@ -501,17 +528,31 @@ It is defined only for square matrices.
 
 ##### `Matrix.adjoint(matrix1)`
 
-##### `matrix.adjoint()`
+##### `matrix.adjoint`
 
 ### Tensor
 
 ##### `TensorSpace(Scalar)(indices)`
 
-### Tensor constants
+### Tensor attributes
 
 ##### `Tensor.one`
 
 ##### `Tensor.zero`
+
+##### `tensor.data`
+
+#### Tensor indices
+
+##### `Tensor.indices`
+
+##### `tensor.indices`
+
+#### Tensor order
+
+##### `Tensor.order`
+
+##### `tensor.order`
 
 ### Tensor operators
 
@@ -562,6 +603,12 @@ tensor2.equality(tensor2) // false
 ##### `Tensor.negation(tensor1)`
 
 ##### `tensor.negation()`
+
+#### Scalar multiplication
+
+##### `Tensor.scalarMultiplication(tensor, scalar)`
+
+##### `tensor.scalarMultiplication(scalar)`
 
 ## License
 

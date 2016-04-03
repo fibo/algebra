@@ -24,11 +24,17 @@ function CompositionAlgebra (ring) {
     var K = CayleyDickson(ring, num)
 
     function Scalar (data) {
-      this.data = data
+      // validate data
+
+      if (K.notContains(data)) {
+        throw new TypeError('Invalid data = ' + data)
+      }
 
       staticProps(this)({
+        data: data,
         zero: K.zero,
-        one: K.one
+        one: K.one,
+	order: 0
       })
     }
 

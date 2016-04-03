@@ -12,6 +12,8 @@ var tensorProduct = require('tensor-product')
  */
 
 function TensorSpace (Scalar) {
+  var multiplication = Scalar.multiplication
+
   /**
    * @param {Array} indices
    */
@@ -41,7 +43,7 @@ function TensorSpace (Scalar) {
       return Scalar
     }
 
-    // TODO create one
+    // TODO create one for square matrices
     // Create zero.
     var zero = indices.reduce((result, dim) => {
       for (var i = 0; i < dim; i++) {
@@ -58,16 +60,20 @@ function TensorSpace (Scalar) {
      */
 
     function Tensor (data) {
-      function check (item) {
+      // validate data
+
+      function validate (item) {
         if (Scalar.notContains(item)) {
           throw new TypeError('Invalid data = ' + item)
         }
       }
 
-      if (isScalar) check(data)
-      else data.forEach(check)
+      data.forEach(validate)
 
-      this.data = data
+      staticProps(this)({
+        data: data,
+        order: order
+      })
     }
 
     function staticBinary (operator) {
@@ -105,6 +111,26 @@ function TensorSpace (Scalar) {
       }
     })
 
+    function scalarMultiplication (tensor, scalar) {
+      var tensorData = toData(tensor)
+
+      var result = []
+
+      for (var i = 0; i < dimension; i++) {
+        result.push(multiplication(tensorData[i], scalar))
+      }
+
+      return result
+    }
+
+    Tensor.scalarMultiplication = scalarMultiplication
+
+    Tensor.prototype.scalarMultiplication = function (scalar) {
+      var data = scalarMultiplication(this, scalar)
+
+      return new Tensor(data)
+    }
+
     Tensor.equality = function (tensor1, tensor2) {
       var tensorData1 = toData(tensor1)
       var tensorData2 = toData(tensor2)
@@ -125,7 +151,7 @@ function TensorSpace (Scalar) {
     Tensor.product = function (leftData) {
       return function (rightDim) {
         return function (rightData) {
-          return tensorProduct(Scalar.multiplication, indices, rightDim, leftData, rightData)
+          return tensorProduct(multiplication, indices, rightDim, leftData, rightData)
         }
       }
     }

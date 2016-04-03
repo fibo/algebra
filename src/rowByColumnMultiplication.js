@@ -3,8 +3,8 @@ var matrixToArrayIndex = require('./matrixToArrayIndex')
 /* TODO
 var tensorContraction = require('tensor-contraction')
 var tensorProduct = require('tensor-product')
-*/
 var toData = require('./toData')
+*/
 
 /**
  * Multiply two matrices, row by column.
@@ -23,17 +23,14 @@ var toData = require('./toData')
  */
 
 function rowByColumnMultiplication (field, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
-  var leftMatrixData = toData(leftMatrix)
-  var rightMatrixData = toData(rightMatrix)
-
   var leftNumCols = leftMatrix.length / leftNumRows
   var rightNumRows = rightMatrix.length / rightNumCols
 
-  if (! isInteger(leftNumCols)) {
+  if (!isInteger(leftNumCols)) {
     throw new TypeError('leftNumCols does not divide leftMatrix.length')
   }
 
-  if (! isInteger(rightNumRows)) {
+  if (!isInteger(rightNumRows)) {
     throw new TypeError('rightNumRows does not divide rightMatrix.length')
   }
 
@@ -44,24 +41,27 @@ function rowByColumnMultiplication (field, leftMatrix, leftNumRows, rightMatrix,
 
   /*
    * TODO try with tensor product and contraction.
+  var leftMatrixData = toData(leftMatrix)
+  var rightMatrixData = toData(rightMatrix)
+
   var tensorIndices = [leftNumRows, leftNumCols, rightNumRows, rightNumCols]
 
   var tensorProductData = tensorProduct(field.multiplication, [leftNumRows, leftNumCols], [rightNumRows, rightNumCols], leftMatrixData, rightMatrixData)
 
   return tensorContraction(field.addition, [1, 2], tensorIndices, tensorProductData)
   */
-  var commonIndex = leftNumCols,
-      data        = [],
-      rows        = leftNumRows,
-      cols        = rightNumCols
+  var commonIndex = leftNumCols
+  var data = []
+  var rows = leftNumRows
+  var cols = rightNumCols
 
   for (var i = 0; i < rows; i++) {
     for (var j = 0; j < cols; j++) {
-      var leftIndex  = matrixToArrayIndex(i, 0, commonIndex),
-          rightIndex = matrixToArrayIndex(0, j, cols)
+      var leftIndex = matrixToArrayIndex(i, 0, commonIndex)
+      var rightIndex = matrixToArrayIndex(0, j, cols)
 
-      var rightElement = rightMatrix[rightIndex],
-          leftElement  = leftMatrix[leftIndex]
+      var rightElement = rightMatrix[rightIndex]
+      var leftElement = leftMatrix[leftIndex]
 
       var element = field.multiplication(leftElement, rightElement)
 
@@ -83,4 +83,3 @@ function rowByColumnMultiplication (field, leftMatrix, leftNumRows, rightMatrix,
 }
 
 module.exports = rowByColumnMultiplication
-

@@ -8,19 +8,28 @@
 * [Features](#features)
 * [Installation](#installation)
 * [Quick start](#quick-start)
-    - [Scalars](#scalars)
-    - [Vectors](#vectors)
-    - [Matrices](#matrices)
+  1. [Scalars](#scalars)
+  2. [Vectors](#vectors)
+  3. [Matrices](#matrices)
 * [API](#api)
-    - [Scalar](#scalar)
-    - [Real](#real)
-    - [Complex](#complex)
-    - [Quaternion](#quaternion)
-    - [Octonion](#octonion)
-    - [Common spaces](#common-spaces)
-    - [Vector](#vector)
-    - [Matrix](#matrix)
-    - [Tensor](#tensor)
+  - [Scalar](#scalar)
+  - [Real](#real)
+  - [Complex](#complex)
+  - [Quaternion](#quaternion)
+  - [Octonion](#octonion)
+  - [Common spaces](#common-spaces)
+    - [R2](#r2)
+    - [R3](#r3)
+  - [Vector](#vector)
+    - [operators](#vector-operators)
+      - [cross product](#cross-product)
+  - [Matrix](#matrix)
+    - [operators](#matrix-operators)
+      - [multiplication](#matrix-multiplication)
+      - [inversion](#matrix-inversion)
+      - [determinant](#matrix-determinant)
+      - [adjoint](#matrix-adjoint)
+  - [Tensor](#tensor)
 * [License](#license)
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
@@ -283,7 +292,7 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 ##### `Scalar.zero`
 
-### scalar operators
+### Scalar operators
 
 ##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
 
@@ -379,7 +388,7 @@ Inherits everything from [Tensor](#tensor).
 
 ##### `Vector.dimension`
 
-### vector operators
+### Vector operators
 
 #### Cross product
 
@@ -414,15 +423,15 @@ Inherits everything from [Tensor](#tensor).
 
 ##### `Matrix.isSquare`
 
-### matrix operators
+### Matrix operators
 
-### matrix multiplication
+### Matrix multiplication
 
 ##### `Matrix.multiplication(matrix1, matrix2)`
 
 ##### `matrix1.multiplication(matrix2)`
 
-### matrix inversion
+### Matrix inversion
 
 It is defined only for square matrices which determinant is not zero.
 
@@ -430,7 +439,7 @@ It is defined only for square matrices which determinant is not zero.
 
 ##### `matrix.inversion()`
 
-### matrix determinant
+### Matrix determinant
 
 It is defined only for square matrices.
 
@@ -438,7 +447,7 @@ It is defined only for square matrices.
 
 ##### `matrix.determinant`
 
-### matrix adjoint
+### Matrix adjoint
 
 ##### `Matrix.adjoint(matrix1)`
 
@@ -454,7 +463,7 @@ It is defined only for square matrices.
 
 ##### `Tensor.zero`
 
-### tensor operators
+### Tensor operators
 
 ##### `Tensor.contains(tensor1, tensor2[, tensor3, … ])`
 

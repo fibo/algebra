@@ -38,6 +38,7 @@ describe('API', () => {
   describe('Complex', () => {
     it('works', () => {
       var Complex = algebra.Complex
+      var complex1 = new Complex([1, 2])
     })
   })
 })

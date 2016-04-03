@@ -240,7 +240,7 @@ console.log(m2.determinant.data) // 2
 
 ### Scalar
 
-### `Scalar(field[, n])`
+##### `Scalar(field[, n])`
 
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
@@ -278,45 +278,49 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 ### scalar neutral elements
 
-### `Scalar.one`
+##### `Scalar.one`
 
-### `Scalar.zero`
+##### `Scalar.zero`
 
 ### scalar operators
 
-### `Scalar.contains(x1, x2[, x3, …, xn])`
+##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
 
-### `Scalar.equality(x1, x2)`
+##### `Scalar.equality(scalar1, scalar2)`
 
-### `scalar.equality(x1)`
+##### `scalar.equality(scalar1)`
 
-### `Scalar.disequality(x1, x2)`
+##### `Scalar.disequality(scalar1, scalar2)`
 
-### `scalar.disequality(x1)`
+##### `scalar.disequality(scalar1)`
 
-### `Scalar.addition(x1, x2[, x3, …, xn])`
+##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
 
-### `scalar.addition(x1[, x2, …, xn])`
+##### `scalar.addition(scalar1[, scalar2, …, scalarn])`
 
-### `Scalar.subtraction(x1, x2[, x3, …, xn])`
+##### `Scalar.subtraction(scalar1, scalar2[, scalar3, … ])`
 
-### `scalar.subtraction(x1[, x2, …, xn])`
+##### `scalar.subtraction(scalar1[, scalar2, … ])`
 
-### `Scalar.multiplication(x1, x2[, x3, …, xn])`
+##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
 
-### `scalar.multiplication(x1[, x2, …, xn])`
+##### `scalar.multiplication(scalar1[, scalar2, … ])`
 
-### `Scalar.division(x1, x2[, x3, …, xn])`
+##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
 
-### `scalar.division(x1[, x2, …, xn])`
+##### `scalar.division(scalar1[, scalar2, … ])`
 
-### `Scalar.negation(x1)`
+##### `Scalar.negation(scalar1)`
 
-### `scalar.negation()`
+##### `scalar.negation()`
 
-### `Scalar.inversion(x1)`
+##### `Scalar.inversion(scalar1)`
 
-### `scalar.inversion()`
+##### `scalar.inversion()`
+
+##### `Scalar.conjugation(scalar1)`
+
+##### `scalar.conjugation()`
 
 ### Real
 
@@ -332,6 +336,8 @@ Inherits everything from [Scalar](#scalar).
 
 ```
 var Complex = algebra.Complex
+
+var complex1 = new Complex([1, 2])
 ```
 
 ### Quaternion
@@ -346,99 +352,99 @@ Inherits everything from [Scalar](#scalar).
 
 Inherits everything from [Tensor](#tensor).
 
-### `VectorSpace(Scalar)(dimension)`
+##### `VectorSpace(Scalar)(dimension)`
 
-### `Vector.dimension`
+##### `Vector.dimension`
 
 ### vector operators
 
-### `Vector.crossProduct(vector1, vector2)`
+##### `Vector.crossProduct(vector1, vector2)`
 
-### `vector.crossProduct(vector2)`
+##### `vector.crossProduct(vector2)`
 
 ### Matrix
 
 Inherits everything from [Tensor](#tensor).
 
-### `MatrixSpace(Scalar)(numRows[, numCols])`
+##### `MatrixSpace(Scalar)(numRows[, numCols])`
 
-### `Matrix.numCols`
+##### `Matrix.numCols`
 
-### `Matrix.numRows`
+##### `Matrix.numRows`
 
-### `Matrix.isSquare`
+##### `Matrix.isSquare`
 
 ### matrix operators
 
 ### matrix multiplication
 
-### `Matrix.multiplication(matrix1, matrix2)`
+##### `Matrix.multiplication(matrix1, matrix2)`
 
-### `matrix.multiplication(matrix2)`
+##### `matrix.multiplication(matrix2)`
 
 ### matrix inversion
 
 It is defined only for square matrices which determinant is not zero.
 
-### `Matrix.inversion(matrix)`
+##### `Matrix.inversion(matrix)`
 
-### `matrix.inversion()`
+##### `matrix.inversion()`
 
 ### matrix determinant
 
 It is defined only for square matrices.
 
-### `Matrix.determinant(matrix)`
+##### `Matrix.determinant(matrix)`
 
-### `matrix.determinant`
+##### `matrix.determinant`
 
 ### matrix adjoint
 
-### `Matrix.adjoint(matrix1)`
+##### `Matrix.adjoint(matrix1)`
 
-### `matrix.adjoint()`
+##### `matrix.adjoint()`
 
 ### Tensor
 
-### `TensorSpace(Scalar)(indices)`
+##### `TensorSpace(Scalar)(indices)`
 
 ### tensor neutral elements
 
-### `Tensor.one`
+##### `Tensor.one`
 
-### `Tensor.zero`
+##### `Tensor.zero`
 
 ### tensor operators
 
-### `Tensor.contains(x1, x2[, x3, …, xn])`
+##### `Tensor.contains(tensor1, tensor2[, tensor3, … ])`
 
-### `Tensor.equality(x1, x2)`
+##### `Tensor.equality(tensor1, tensor2)`
 
-### `tensor.equality(x1)`
+##### `tensor.equality(tensor1)`
 
-### `Tensor.disequality(x1, x2)`
+##### `Tensor.disequality(tensor1, tensor2)`
 
-### `tensor.disequality(x1)`
+##### `tensor.disequality(tensor1)`
 
-### `Tensor.addition(x1, x2[, x3, …, xn])`
+##### `Tensor.addition(tensor1, tensor2[, tensor3, … ])`
 
-### `tensor.addition(x1[, x2, …, xn])`
+##### `tensor.addition(tensor1[, tensor2, … ])`
 
-### `Tensor.subtraction(x1, x2[, x3, …, xn])`
+##### `Tensor.subtraction(tensor1, tensor2[, tensor3, … ])`
 
-### `tensor.subtraction(x1[, x2, …, xn])`
+##### `tensor.subtraction(tensor1[, tensor2, … ])`
 
-### `Tensor.product()`
+##### `Tensor.product(tensor1, tensor2)`
 
-### `tensor.product()`
+##### `tensor.product(tensor2)`
 
-### `Tensor.contraction()`
+##### `Tensor.contraction()`
 
-### `tensor.contraction()`
+##### `tensor.contraction()`
 
-### `Tensor.negation(tensor1)`
+##### `Tensor.negation(tensor1)`
 
-### `tensor.negation()`
+##### `tensor.negation()`
 
 ## License
 
@@ -446,6 +452,6 @@ It is defined only for square matrices.
 
 [blog]: http://g14n.info/algebra/articles "algebra blog"
 [algebra-ring]: http://npm.im/algebra-ring "algebra-ring"
-composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
+[composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
 [booleanField]: https://github.com/fibo/algebra/blob/master/src/booleanField.js "boolean field"
 [realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"

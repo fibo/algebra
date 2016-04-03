@@ -1,4 +1,3 @@
-var coerced = require('./coerced')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
 var toData = require('./toData')
@@ -25,7 +24,7 @@ function TensorSpace (Scalar) {
     // A matrix has order 2.
     // Order is also called "rank" or "tensor rank", but, to avoid confusion with
     // "matrix rank" it is better to call it "order".
-    var order = indices.filter(dim => dim > 1).length
+    var order = indices.filter((dim) => dim > 1).length
 
     // TODO if it is a scalar, return the Scalar
     // which should be a composition algebra
@@ -41,11 +40,11 @@ function TensorSpace (Scalar) {
 
       return Scalar
     }
-    
+
     // TODO create one
     // Create zero.
     var zero = indices.reduce((result, dim) => {
-      for(var i = 0; i < dim; i++) {
+      for (var i = 0; i < dim; i++) {
         result.push(Scalar.zero)
       }
 
@@ -105,6 +104,23 @@ function TensorSpace (Scalar) {
         return tensor
       }
     })
+
+    Tensor.equality = function (tensor1, tensor2) {
+      var tensorData1 = toData(tensor1)
+      var tensorData2 = toData(tensor2)
+
+      for (var i = 0; i < dimension; i++) {
+        if (Scalar.disequality(tensorData1[i], tensorData2[i])) {
+          return false
+        }
+      }
+
+      return true
+    }
+
+    Tensor.prototype.equality = function (tensor2) {
+      return Tensor.equality(this, tensor2)
+    }
 
     Tensor.product = function (leftData) {
       return function (rightDim) {

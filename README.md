@@ -12,7 +12,10 @@
   2. [Vectors](#vectors)
   3. [Matrices](#matrices)
 * [API](#api)
+  - [About operators](#about-operators)
   - [Scalar](#scalar)
+    - [operators](#scalar-operators)
+  - [Cyclic](#cyclic)
   - [Real](#real)
   - [Complex](#complex)
   - [Quaternion](#quaternion)
@@ -30,6 +33,8 @@
       - [determinant](#matrix-determinant)
       - [adjoint](#matrix-adjoint)
   - [Tensor](#tensor)
+    - [operators](#tensor-operators)
+      - [equality](#tensor-equality)
 * [License](#license)
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
@@ -48,6 +53,7 @@ I am currently adding more tests and examples to achieve a stable version.
 
 Many functionalities of previous versions are now in separated atomic packages:
 
+* [algebra-cyclic](http://npm.im/algebra-cyclic)
 * [algebra-group](http://npm.im/algebra-group)
 * [algebra-ring][algebra-ring]
 * [cayley-dickson](http://npm.im/cayley-dickson)
@@ -248,6 +254,46 @@ console.log(m2.determinant.data) // 2
 
 ## API
 
+### About operators
+
+All operators are implemented as static methods and as object methods.
+In both cases, operands are coerced to raw data.
+As an example, consider addition of vectors in a plane.
+
+```
+var R2 = algebra.R2
+
+var vector1 = new R2([1, 2])
+var vector2 = new R2([3, 4])
+```
+
+The following static methods, give the same result: `[4, 6]`.
+
+```
+R2.addition(vector1, [3, 4])
+R2.addition([1, 2], vector2)
+R2.addition(vector1, vector2)
+```
+
+The following object methods, give the same result: a vector instance with data `[4, 6]`.
+
+```
+var vector3 = vector1.addition([3, 4])
+var vector4 = vector1.addition(vector2)
+```
+
+Operators can be chained and accept multiple arguments when it makes sense.
+
+```
+vector1.addition(vector1, vector1).equality([4, 6]) // true
+```
+
+Objects are immutable
+
+```
+console.log(vector1.data) // still [1, 2]
+```
+
 ### Scalar
 
 ##### `Scalar(field[, n])`
@@ -286,7 +332,7 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 // TODO var Byte = Scalar(boolean, 8)
 ```
 
-### scalar neutral elements
+### Scalar constants
 
 ##### `Scalar.one`
 
@@ -386,6 +432,8 @@ Inherits everything from [Tensor](#tensor).
 
 ##### `VectorSpace(Scalar)(dimension)`
 
+### Vector constants
+
 ##### `Vector.dimension`
 
 ### Vector operators
@@ -415,6 +463,8 @@ console.log(vector3.data) // [-15, 2, 39]
 
 Inherits everything from [Tensor](#tensor).
 
+#### Matrix constants
+
 ##### `MatrixSpace(Scalar)(numRows[, numCols])`
 
 ##### `Matrix.numCols`
@@ -423,15 +473,15 @@ Inherits everything from [Tensor](#tensor).
 
 ##### `Matrix.isSquare`
 
-### Matrix operators
+#### Matrix operators
 
-### Matrix multiplication
+#### Matrix multiplication
 
 ##### `Matrix.multiplication(matrix1, matrix2)`
 
 ##### `matrix1.multiplication(matrix2)`
 
-### Matrix inversion
+#### Matrix inversion
 
 It is defined only for square matrices which determinant is not zero.
 
@@ -439,7 +489,7 @@ It is defined only for square matrices which determinant is not zero.
 
 ##### `matrix.inversion()`
 
-### Matrix determinant
+#### Matrix determinant
 
 It is defined only for square matrices.
 
@@ -447,7 +497,7 @@ It is defined only for square matrices.
 
 ##### `matrix.determinant`
 
-### Matrix adjoint
+#### Matrix adjoint
 
 ##### `Matrix.adjoint(matrix1)`
 
@@ -457,7 +507,7 @@ It is defined only for square matrices.
 
 ##### `TensorSpace(Scalar)(indices)`
 
-### tensor neutral elements
+### Tensor constants
 
 ##### `Tensor.one`
 
@@ -467,9 +517,27 @@ It is defined only for square matrices.
 
 ##### `Tensor.contains(tensor1, tensor2[, tensor3, … ])`
 
+#### Tensor equality
+
+```
+var T2x2x2 = TensorSpace(Real)([2, 2, 2])
+var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
+var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
+```
+
 ##### `Tensor.equality(tensor1, tensor2)`
 
+```
+T2x2x2.equality(tensor1, tensor1) // true
+T2x2x2.equality(tensor1, tensor2) // false
+```
+
 ##### `tensor1.equality(tensor2)`
+
+```
+tensor1.equality(tensor1) // true
+tensor2.equality(tensor2) // false
+```
 
 ##### `Tensor.disequality(tensor1, tensor2)`
 

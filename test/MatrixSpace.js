@@ -145,26 +145,42 @@ describe('MatrixSpace', () => {
     var operator = 'multiplication'
 
     it('is a static method', staticBinaryOperator(R3x2, operator,
-        [ 2, 3,
-          1, 1,
-          1, 1 ],
-        [ 0, 1, 1, 1,
-         -1, 0, 2, 3 ],
-        [ -3, 2, 8, 11,
-          -1, 1, 3, 4,
-          -1, 1, 3, 4 ]
+        [2, 3,
+         1, 1,
+         1, 1],
+        [0, 1, 1, 1,
+        -1, 0, 2, 3],
+        [-3, 2, 8, 11,
+         -1, 1, 3, 4,
+         -1, 1, 3, 4]
     ))
 
     it('is a class method', methodBinaryOperator(R2x2, operator,
-        [ 2, 3,
-          1, 1 ],
-        [ 0, 1,
-         -1, 0 ],
-        [ -3, 2,
-          -1, 1 ]
+        [2, 3,
+         1, 1],
+        [0, 1,
+        -1, 0],
+        [-3, 2,
+         -1, 1]
     ))
 
-    it('accepts multiple arguments')
+    it('accepts multiple arguments', () => {
+      R2x2.multiplication([1, 2,
+                           3, 4],
+                          [0, 1,
+                          -1, 0],
+                          [-1, 0,
+                            0, 1]).should.deepEqual([-2, 1,
+                                                     -4, 3])
+
+      var matrix = new R2x2([1, 2,
+                             3, 4])
+      matrix.multiplication([0, 1,
+                            -1, 0],
+                           [-1, 0,
+                             0, 1]).data.should.deepEqual([-2, 1,
+                                                           -4, 3])
+    })
   })
 
   describe('trace()', () => {

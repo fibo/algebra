@@ -11,18 +11,50 @@ title: algebra
 * [Features](#features)
 * [Installation](#installation)
 * [Quick start](#quick-start)
-    - [Scalars](#scalars)
-    - [Vectors](#vectors)
-    - [Matrices](#matrices)
+  1. [Scalars](#scalars)
+  2. [Vectors](#vectors)
+  3. [Matrices](#matrices)
 * [API](#api)
-    - [Scalar](#scalar)
-    - [Real](#real)
-    - [Complex](#complex)
-    - [Quaternion](#quaternion)
-    - [Octonion](#octonion)
-    - [Vector](#vector)
-    - [Matrix](#matrix)
-    - [Tensor](#tensor)
+  - [About operators](#about-operators)
+  - [Scalar](#scalar)
+    - [attributes](#scalar-attributes)
+      - [one](#scalarone)
+      - [zero](#scalarzero)
+      - [data](#scalardata)
+      - [order](#scalar-order)
+    - [operators](#scalar-operators)
+  - [Cyclic](#cyclic)
+  - [Real](#real)
+  - [Complex](#complex)
+  - [Quaternion](#quaternion)
+  - [Octonion](#octonion)
+  - [Common spaces](#common-spaces)
+    - [R2](#r2)
+    - [R3](#r3)
+  - [Vector](#vector)
+    - [attributes](#vector-attributes)
+    - [operators](#vector-operators)
+      - [cross product](#cross-product)
+  - [Matrix](#matrix)
+    - [attributes](#matrix-attributes)
+      - [isSquare](#matrixissquare)
+      - [numCols](#matrixnumcols)
+      - [numRows](#matrixnumrows)
+    - [operators](#matrix-operators)
+      - [multiplication](#matrix-multiplication)
+      - [inversion](#matrix-inversion)
+      - [determinant](#matrix-determinant)
+      - [adjoint](#matrix-adjoint)
+  - [Tensor](#tensor)
+    - [attributes](#tensor-attributes)
+      - [one](#tensorone)
+      - [zero](#tensorzero)
+      - [data](#tensordata)
+      - [indices](#tensor-indices)
+      - [order](#tensor-order)
+    - [operators](#tensor-operators)
+      - [equality](#tensor-equality)
+      - [scalarMultiplication](#scalar-multiplication)
 * [License](#license)
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
@@ -41,6 +73,7 @@ I am currently adding more tests and examples to achieve a stable version.
 
 Many functionalities of previous versions are now in separated atomic packages:
 
+* [algebra-cyclic](http://npm.im/algebra-cyclic)
 * [algebra-group](http://npm.im/algebra-group)
 * [algebra-ring][algebra-ring]
 * [cayley-dickson](http://npm.im/cayley-dickson)
@@ -241,9 +274,49 @@ console.log(m2.determinant.data) // 2
 
 ## API
 
+### About operators
+
+All operators are implemented as static methods and as object methods.
+In both cases, operands are coerced to raw data.
+As an example, consider addition of vectors in a plane.
+
+```
+var R2 = algebra.R2
+
+var vector1 = new R2([1, 2])
+var vector2 = new R2([3, 4])
+```
+
+The following static methods, give the same result: `[4, 6]`.
+
+```
+R2.addition(vector1, [3, 4])
+R2.addition([1, 2], vector2)
+R2.addition(vector1, vector2)
+```
+
+The following object methods, give the same result: a vector instance with data `[4, 6]`.
+
+```
+var vector3 = vector1.addition([3, 4])
+var vector4 = vector1.addition(vector2)
+```
+
+Operators can be chained and accept multiple arguments when it makes sense.
+
+```
+vector1.addition(vector1, vector1).equality([4, 6]) // true
+```
+
+Objects are immutable
+
+```
+console.log(vector1.data) // still [1, 2]
+```
+
 ### Scalar
 
-### `Scalar(field[, n])`
+##### `Scalar(field[, n])`
 
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
@@ -279,47 +352,61 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 // TODO var Byte = Scalar(boolean, 8)
 ```
 
-### scalar neutral elements
+### Scalar attributes
 
-### `Scalar.one`
+##### `Scalar.one`
 
-### `Scalar.zero`
+##### `Scalar.zero`
 
-### scalar operators
+#### Scalar order
 
-### `Scalar.contains(x1, x2[, x3, …, xn])`
+It is always 0.
 
-### `Scalar.equality(x1, x2)`
+##### `Scalar.order`
 
-### `scalar.equality(x1)`
+##### `scalar.order`
 
-### `Scalar.disequality(x1, x2)`
+##### `scalar.data`
 
-### `scalar.disequality(x1)`
+### Scalar operators
 
-### `Scalar.addition(x1, x2[, x3, …, xn])`
+##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
 
-### `scalar.addition(x1[, x2, …, xn])`
+##### `Scalar.equality(scalar1, scalar2)`
 
-### `Scalar.subtraction(x1, x2[, x3, …, xn])`
+##### `scalar1.equality(scalar2)`
 
-### `scalar.subtraction(x1[, x2, …, xn])`
+##### `Scalar.disequality(scalar1, scalar2)`
 
-### `Scalar.multiplication(x1, x2[, x3, …, xn])`
+##### `scalar1.disequality(scalar2)`
 
-### `scalar.multiplication(x1[, x2, …, xn])`
+##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
 
-### `Scalar.division(x1, x2[, x3, …, xn])`
+##### `scalar1.addition(scalar2[, scalar3, … ])`
 
-### `scalar.division(x1[, x2, …, xn])`
+##### `Scalar.subtraction(scalar1, scalar2[, … ])`
 
-### `Scalar.negation(x1)`
+##### `scalar1.subtraction(scalar2[, scalar3, … ])`
 
-### `scalar.negation()`
+##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
 
-### `Scalar.inversion(x1)`
+##### `scalar1.multiplication(scalar2[, scalar3, … ])`
 
-### `scalar.inversion()`
+##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
+
+##### `scalar1.division(scalar2[, scalar3, … ])`
+
+##### `Scalar.negation(scalar)`
+
+##### `scalar.negation()`
+
+##### `Scalar.inversion(scalar)`
+
+##### `scalar.inversion()`
+
+##### `Scalar.conjugation(scalar)`
+
+##### `scalar.conjugation()`
 
 ### Real
 
@@ -335,6 +422,8 @@ Inherits everything from [Scalar](#scalar).
 
 ```
 var Complex = algebra.Complex
+
+var complex1 = new Complex([1, 2])
 ```
 
 ### Quaternion
@@ -345,103 +434,184 @@ Inherits everything from [Scalar](#scalar).
 
 Inherits everything from [Scalar](#scalar).
 
+### Common spaces
+
+#### R2
+
+The real plane.
+
+```
+var R2 = algebra.R2
+```
+
+It is in alias of `VectorSpace(Real)(2)`.
+
+#### R3
+
+The real space.
+
+```
+var R3 = algebra.R3
+```
+
+It is in alias of `VectorSpace(Real)(3)`.
+
 ### Vector
 
 Inherits everything from [Tensor](#tensor).
 
-### `VectorSpace(Scalar)(dimension)`
+##### `VectorSpace(Scalar)(dimension)`
 
-### `Vector.dimension`
+### Vector attributes
 
-### vector operators
+##### `Vector.dimension`
 
-### `Vector.crossProduct(vector1, vector2)`
+### Vector operators
 
-### `vector.crossProduct(vector2)`
+#### Cross product
+
+It is defined only in dimension three. See [Cross product on wikipedia](https://en.wikipedia.org/wiki/Cross_product).
+
+##### `Vector.crossProduct(vector1, vector2)`
+
+```
+R3.crossProduct([3, -3, 1], [4, 9, 2]) // [-15, 2, 39]
+```
+
+##### `vector1.crossProduct(vector2)`
+
+```
+var vector1 = new R3([3, -3, 1])
+var vector2 = new R3([4, 9, 2])
+
+var vector3 = vector1.crossProduct(vector2)
+
+console.log(vector3.data) // [-15, 2, 39]
+```
 
 ### Matrix
 
 Inherits everything from [Tensor](#tensor).
 
-### `MatrixSpace(Scalar)(numRows[, numCols])`
+##### `MatrixSpace(Scalar)(numRows[, numCols])`
 
-### `Matrix.numCols`
+#### Matrix attributes
 
-### `Matrix.numRows`
+##### `Matrix.isSquare`
 
-### `Matrix.isSquare`
+##### `Matrix.numCols`
 
-### matrix operators
+##### `Matrix.numRows`
 
-### matrix multiplication
+#### Matrix operators
 
-### `Matrix.multiplication(matrix1, matrix2)`
+#### Matrix multiplication
 
-### `matrix.multiplication(matrix2)`
+##### `Matrix.multiplication(matrix1, matrix2)`
 
-### matrix inversion
+##### `matrix1.multiplication(matrix2)`
+
+#### Matrix inversion
 
 It is defined only for square matrices which determinant is not zero.
 
-### `Matrix.inversion(matrix)`
+##### `Matrix.inversion(matrix)`
 
-### `matrix.inversion()`
+##### `matrix.inversion`
 
-### matrix determinant
+#### Matrix determinant
 
 It is defined only for square matrices.
 
-### `Matrix.determinant(matrix)`
+##### `Matrix.determinant(matrix)`
 
-### `matrix.determinant`
+##### `matrix.determinant`
 
-### matrix adjoint
+#### Matrix adjoint
 
-### `Matrix.adjoint(matrix1)`
+##### `Matrix.adjoint(matrix1)`
 
-### `matrix.adjoint()`
+##### `matrix.adjoint`
 
 ### Tensor
 
-### `TensorSpace(Scalar)(indices)`
+##### `TensorSpace(Scalar)(indices)`
 
-### tensor neutral elements
+### Tensor attributes
 
-### `Tensor.one`
+##### `Tensor.one`
 
-### `Tensor.zero`
+##### `Tensor.zero`
 
-### tensor operators
+##### `tensor.data`
 
-### `Tensor.contains(x1, x2[, x3, …, xn])`
+#### Tensor indices
 
-### `Tensor.equality(x1, x2)`
+##### `Tensor.indices`
 
-### `tensor.equality(x1)`
+##### `tensor.indices`
 
-### `Tensor.disequality(x1, x2)`
+#### Tensor order
 
-### `tensor.disequality(x1)`
+##### `Tensor.order`
 
-### `Tensor.addition(x1, x2[, x3, …, xn])`
+##### `tensor.order`
 
-### `tensor.addition(x1[, x2, …, xn])`
+### Tensor operators
 
-### `Tensor.subtraction(x1, x2[, x3, …, xn])`
+##### `Tensor.contains(tensor1, tensor2[, tensor3, … ])`
 
-### `tensor.subtraction(x1[, x2, …, xn])`
+#### Tensor equality
 
-### `Tensor.product()`
+```
+var T2x2x2 = TensorSpace(Real)([2, 2, 2])
+var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
+var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
+```
 
-### `tensor.product()`
+##### `Tensor.equality(tensor1, tensor2)`
 
-### `Tensor.contraction()`
+```
+T2x2x2.equality(tensor1, tensor1) // true
+T2x2x2.equality(tensor1, tensor2) // false
+```
 
-### `tensor.contraction()`
+##### `tensor1.equality(tensor2)`
 
-### `Tensor.negation(tensor1)`
+```
+tensor1.equality(tensor1) // true
+tensor2.equality(tensor2) // false
+```
 
-### `tensor.negation()`
+##### `Tensor.disequality(tensor1, tensor2)`
+
+##### `tensor1.disequality(tensor2)`
+
+##### `Tensor.addition(tensor1, tensor2[, tensor3, … ])`
+
+##### `tensor1.addition(tensor2[, tensor3, … ])`
+
+##### `Tensor.subtraction(tensor1, tensor2[, tensor3, … ])`
+
+##### `tensor1.subtraction(tensor2[, tensor3, … ])`
+
+##### `Tensor.product(tensor1, tensor2)`
+
+##### `tensor1.product(tensor2)`
+
+##### `Tensor.contraction()`
+
+##### `tensor.contraction()`
+
+##### `Tensor.negation(tensor1)`
+
+##### `tensor.negation()`
+
+#### Scalar multiplication
+
+##### `Tensor.scalarMultiplication(tensor, scalar)`
+
+##### `tensor.scalarMultiplication(scalar)`
 
 ## License
 
@@ -449,6 +619,6 @@ It is defined only for square matrices.
 
 [blog]: http://g14n.info/algebra/articles "algebra blog"
 [algebra-ring]: http://npm.im/algebra-ring "algebra-ring"
-composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
+[composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
 [booleanField]: https://github.com/fibo/algebra/blob/master/src/booleanField.js "boolean field"
 [realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"

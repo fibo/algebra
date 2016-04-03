@@ -357,7 +357,7 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 #### Scalar order
 
-It is always 0.
+It is always 0 for scalars, see also [tensor order](#tensor-order).
 
 ##### `Scalar.order`
 
@@ -549,6 +549,12 @@ It is defined only for square matrices.
 ##### `tensor.indices`
 
 #### Tensor order
+
+It represents the number of varying indices.
+
+A scalar has order 0.
+A vector has order 1.
+A matrix has order 2.
 
 ##### `Tensor.order`
 

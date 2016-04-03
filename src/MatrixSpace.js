@@ -2,7 +2,6 @@ var determinant = require('laplace-determinant')
 var inherits = require('inherits')
 var no = require('not-defined')
 var matrixToArrayIndex = require('./matrixToArrayIndex')
-var multiDimArrayIndex = require('multidim-array-index')
 var operators = require('./operators.json')
 var rowByColumnMultiplication = require('./rowByColumnMultiplication')
 var staticProps = require('static-props')
@@ -120,9 +119,9 @@ function MatrixSpace (Scalar) {
       })
 
       function computeDeterminant () {
-         var det = determinant(data, Scalar, numRows)
+        var det = determinant(data, Scalar, numRows)
 
-         return new Scalar(det)
+        return new Scalar(det)
       }
 
       if (isSquare) {

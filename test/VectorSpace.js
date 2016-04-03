@@ -92,30 +92,6 @@ describe('VectorSpace', () => {
     })
   })
 
-  describe('transpose()', () => {
-    it('returns a row-vector (as a matrix)'/*, () => {
-      var vector1 = new R3([0, 1, 0])
-
-      var transposed = vector1.transpose()
-
-      should.deepEqual(transposed.data, vector1.data)
-      transposed.numCols.should.be.eql(3)
-      transposed.numRows.should.be.eql(1)
-    }*/)
-
-    it('can be used to right multiply a vector by a matrix'/*, () => {
-      var matrix  = new R2x2([0, 1,
-                              1, 0]),
-          vector1 = new R2([0, 1])
-
-      // tr | 0 | | 0 1 | = | 0 1 | | 0 1 | = | 1 |
-      //    | 1 | | 1 0 |           | 1 0 |   | 0 |
-      var vector2 = vector1.transpose().multiplication(matrix)
-
-      should.deepEqual(vector2.data, [1, 0])
-    }*/)
-  })
-
   describe('norm', () => {
     it('is an attribute holding a scalar', () => {
       var vector1 = new R2([0, 1])

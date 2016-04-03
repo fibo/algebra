@@ -24,8 +24,6 @@ function VectorSpace (Scalar) {
   var subtraction = Scalar.subtraction
 
   /**
-   * @api private
-   *
    * @param {Number} dimension
    *
    * @returns {Function} Vector
@@ -189,43 +187,3 @@ function VectorSpace (Scalar) {
 }
 
 module.exports = VectorSpace
-
-    /**
-     * @api private
-
-    function perScalarProduct (Scalar) {
-      var data       = this.data,
-          ScalarData = toData(Scalar)
-
-      for (var i = 0; i < dimension; i++)
-        data[i] = Scalar.mul(data[i], ScalarData)
-
-      this.data = data
-
-      return this
-    }
-
-    Vector.prototype.perScalarProduct = perScalarProduct
-     */
-
-    /**
-     * Transpose a column-vector to a row-vector
-     *
-     * If you want to multiply at right a vector by a matrix you need to transpose it.
-     *
-     * @api private
-     *
-     * @returns {Object} Matrix
-
-    function transpose () {
-      var data   = this.data
-
-      var MatrixSpace = itemsPool.getMatrixSpace()
-
-      var Matrix = MatrixSpace(Scalar)(1, dimension)
-
-      return new Matrix(data)
-    }
-
-    Vector.prototype.transpose = transpose
-     */

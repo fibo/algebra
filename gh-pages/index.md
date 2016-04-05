@@ -5,6 +5,14 @@ title: algebra
 
 > Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
 
+[![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
+
+[![Whatchers](http://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](http://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](http://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
+
+[![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
+
+![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
+
 **Table Of Contents:**
 
 * [Status](#status)
@@ -57,14 +65,6 @@ title: algebra
       - [scalarMultiplication](#scalar-multiplication)
 * [License](#license)
 
-[![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
-
-[![Whatchers](http://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](http://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](http://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
-
-[![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
-
-![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
-
 ## Status
 
 *algebra* is under development, but API should not change until version **1.0**.
@@ -97,13 +97,13 @@ Many functionalities of previous versions are now in separated atomic packages:
 With [npm](https://npmjs.org/) do
 
 ```bash
-$ npm install algebra
+npm install algebra
 ```
 
 With [bower](http://bower.io/) do
 
 ```bash
-$ bower install algebra
+bower install algebra
 ```
 or use a CDN adding this to your HTML page
 
@@ -129,7 +129,7 @@ var algebra = require('algebra')
 
 Use the Real numbers as scalars.
 
-```
+```javascript
 var R = algebra.Real
 ```
 
@@ -139,20 +139,20 @@ Static operators return raw data, while class methods return object instances.
 
 Use static addition operator to add three numbers.
 
-```
+```javascript
 console.log(R.add(1, 2, 3)) // 1 + 2 + 3 = 6
 ```
 
 Create two real number objects: x = 2, y = -2
 
-```
+```javascript
 var x = new R(2)
 var y = new R(-2)
 ```
 
 The value *r* is the result of x multiplied by y.
 
-```
+```javascript
 var r = x.mul(y)
 console.log(r.data) // 2 * (-2) = -4
 console.log(x.data) // still 2
@@ -162,21 +162,21 @@ console.log(y.data) // still -2
 Raw numbers are coerced, operators can be chained when it makes sense.
 Of course you can reassign x, for example, x value will be 0.1: x -> x + 3 -> x * 2 -> x ^-1
 
-```
+```javascript
 x = x.add(3).mul(2).inv()
 console.log(x.data) // ((2 + 3) * 2)^(-1) = 0.1
 ```
 
 Comparison operators *equal* and *notEqual* are available, but they cannot be chained.
 
-```
+```javascript
 x.equal(0.1) // true
 x.notEqual(Math.PI) // true
 ```
 
 You can also play with Complexes.
 
-```
+```javascript
 var C = algebra.Complex
 
 var z1 = new C([1, 2])
@@ -195,13 +195,13 @@ console.log(z1.data) // [-10, -20]
 
 Create vector space of dimension 2 over Reals.
 
-```
+```javascript
 var R2 = algebra.VectorSpace(R)(2)
 ```
 
 Create two vectors and add them.
 
-```
+```javascript
 var v1 = new R2([0, 1])
 var v2 = new R2([1, -2])
 
@@ -215,7 +215,7 @@ console.log(v1.data) // [1, -1]
 
 Create space of matrices 3 x 2 over Reals.
 
-```
+```javascript
 var R3x2 = algebra.MatrixSpace(R)(3, 2)
 ```
 
@@ -236,7 +236,7 @@ In fact we are multiplying a 3 x 2 matrix by a 2 dimensional vector, but v1 is t
 
 Then, following the row by column multiplication law we have
 
-```
+```javascript
 //  3 x 2  by  2 x 1  which gives a   3 x 1
 //      ↑      ↑
 //      +------+----→  by removing the middle indices.
@@ -268,7 +268,7 @@ console.log(m2.data) // [0, -1,
 
 Since m2 is a square matrix we can calculate its determinant.
 
-```
+```javascript
 console.log(m2.determinant.data) // 2
 ```
 
@@ -280,7 +280,7 @@ All operators are implemented as static methods and as object methods.
 In both cases, operands are coerced to raw data.
 As an example, consider addition of vectors in a plane.
 
-```
+```javascript
 var R2 = algebra.R2
 
 var vector1 = new R2([1, 2])
@@ -289,7 +289,7 @@ var vector2 = new R2([3, 4])
 
 The following static methods, give the same result: `[4, 6]`.
 
-```
+```javascript
 R2.addition(vector1, [3, 4])
 R2.addition([1, 2], vector2)
 R2.addition(vector1, vector2)
@@ -297,20 +297,20 @@ R2.addition(vector1, vector2)
 
 The following object methods, give the same result: a vector instance with data `[4, 6]`.
 
-```
+```javascript
 var vector3 = vector1.addition([3, 4])
 var vector4 = vector1.addition(vector2)
 ```
 
 Operators can be chained and accept multiple arguments when it makes sense.
 
-```
+```javascript
 vector1.addition(vector1, vector1).equality([4, 6]) // true
 ```
 
 Objects are immutable
 
-```
+```javascript
 console.log(vector1.data) // still [1, 2]
 ```
 
@@ -320,7 +320,7 @@ console.log(vector1.data) // still [1, 2]
 
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
-```
+```javascript
 var algebra = require('algebra')
 var Scalar = algebra.Scalar
 var ring = require('algebra-ring')
@@ -360,7 +360,7 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 #### Scalar order
 
-It is always 0.
+It is always 0 for scalars, see also [tensor order](#tensor-order).
 
 ##### `Scalar.order`
 
@@ -412,7 +412,7 @@ It is always 0.
 
 Inherits everything from [Scalar](#scalar).
 
-```
+```javascript
 var Real = algebra.Real
 ```
 
@@ -420,7 +420,7 @@ var Real = algebra.Real
 
 Inherits everything from [Scalar](#scalar).
 
-```
+```javascript
 var Complex = algebra.Complex
 
 var complex1 = new Complex([1, 2])
@@ -440,7 +440,7 @@ Inherits everything from [Scalar](#scalar).
 
 The real plane.
 
-```
+```javascript
 var R2 = algebra.R2
 ```
 
@@ -450,7 +450,7 @@ It is in alias of `VectorSpace(Real)(2)`.
 
 The real space.
 
-```
+```javascript
 var R3 = algebra.R3
 ```
 
@@ -474,13 +474,13 @@ It is defined only in dimension three. See [Cross product on wikipedia](https://
 
 ##### `Vector.crossProduct(vector1, vector2)`
 
-```
+```javascript
 R3.crossProduct([3, -3, 1], [4, 9, 2]) // [-15, 2, 39]
 ```
 
 ##### `vector1.crossProduct(vector2)`
 
-```
+```javascript
 var vector1 = new R3([3, -3, 1])
 var vector2 = new R3([4, 9, 2])
 
@@ -553,6 +553,12 @@ It is defined only for square matrices.
 
 #### Tensor order
 
+It represents the number of varying indices.
+
+A scalar has order 0.
+A vector has order 1.
+A matrix has order 2.
+
 ##### `Tensor.order`
 
 ##### `tensor.order`
@@ -563,7 +569,7 @@ It is defined only for square matrices.
 
 #### Tensor equality
 
-```
+```javascript
 var T2x2x2 = TensorSpace(Real)([2, 2, 2])
 var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
 var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
@@ -571,14 +577,14 @@ var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 
 ##### `Tensor.equality(tensor1, tensor2)`
 
-```
+```javascript
 T2x2x2.equality(tensor1, tensor1) // true
 T2x2x2.equality(tensor1, tensor2) // false
 ```
 
 ##### `tensor1.equality(tensor2)`
 
-```
+```javascript
 tensor1.equality(tensor1) // true
 tensor2.equality(tensor2) // false
 ```

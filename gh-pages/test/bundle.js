@@ -23,6 +23,85 @@ require('strict-mode')(() => {
 })
 
 },{"./src/MatrixSpace":47,"./src/Scalar":48,"./src/TensorSpace":49,"./src/VectorSpace":50,"./src/realField":55,"strict-mode":43}],2:[function(require,module,exports){
+var group = require('algebra-group')
+
+/**
+ * Define an algebra ring structure
+ *
+ * @param {Array} identity
+ * @param {*}     identity[0] a.k.a zero
+ * @param {*}     identity[1] a.k.a uno
+ * @param {Object}   given operator functions
+ * @param {Function} given.contains
+ * @param {Function} given.equality
+ * @param {Function} given.addition
+ * @param {Function} given.negation
+ * @param {Function} given.multiplication
+ * @param {Function} given.inversion
+ *
+ * @returns {Object} ring
+ */
+
+function algebraRing (identity, given) {
+  // A ring is a group, with multiplication.
+
+  var ring = group({
+    identity: identity[0],
+    contains: given.contains,
+    equality: given.equality,
+    compositionLaw: given.addition,
+    inversion: given.negation
+  })
+
+  // operators
+
+  function multiplication () {
+    return [].slice.call(arguments).reduce(given.multiplication)
+  }
+
+  function inversion (a) {
+    if (ring.equality(a, ring.zero)) {
+      throw new TypeError('algebra-ring: Cannot divide by zero.')
+    }
+
+    return given.inversion(a)
+  }
+
+  function division (a) {
+    var rest = [].slice.call(arguments, 1)
+
+    return given.multiplication(a, rest.map(given.inversion).reduce(given.multiplication))
+  }
+
+  ring.multiplication = multiplication
+  ring.inversion = inversion
+  ring.division = division
+
+  // Multiplicative identity.
+
+  var one = identity[1]
+
+  if (ring.notContains(one)) {
+    throw new TypeError('algebra-ring: "identity" must be contained in ring set')
+  }
+
+  // Check that one*one=one.
+  if (ring.disequality(given.multiplication(one, one), one)) {
+    throw new TypeError('algebra-ring: "identity" is not neutral')
+  }
+
+  if (ring.notContains(identity[1])) {
+    throw new TypeError('algebra-ring:"identity" must be contained in ring set')
+  }
+
+  ring.one = identity[1]
+
+  return ring
+}
+
+module.exports = algebraRing
+
+},{"algebra-group":3}],3:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -132,86 +211,7 @@ function algebraGroup (given, naming) {
 
 module.exports = algebraGroup
 
-},{}],3:[function(require,module,exports){
-var group = require('algebra-group')
-
-/**
- * Define an algebra ring structure
- *
- * @param {Array} identity
- * @param {*}     identity[0] a.k.a zero
- * @param {*}     identity[1] a.k.a uno
- * @param {Object}   given operator functions
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.addition
- * @param {Function} given.negation
- * @param {Function} given.multiplication
- * @param {Function} given.inversion
- *
- * @returns {Object} ring
- */
-
-function algebraRing (identity, given) {
-  // A ring is a group, with multiplication.
-
-  var ring = group({
-    identity: identity[0],
-    contains: given.contains,
-    equality: given.equality,
-    compositionLaw: given.addition,
-    inversion: given.negation
-  })
-
-  // operators
-
-  function multiplication () {
-    return [].slice.call(arguments).reduce(given.multiplication)
-  }
-
-  function inversion (a) {
-    if (ring.equality(a, ring.zero)) {
-      throw new TypeError('algebra-ring: Cannot divide by zero.')
-    }
-
-    return given.inversion(a)
-  }
-
-  function division (a) {
-    var rest = [].slice.call(arguments, 1)
-
-    return given.multiplication(a, rest.map(given.inversion).reduce(given.multiplication))
-  }
-
-  ring.multiplication = multiplication
-  ring.inversion = inversion
-  ring.division = division
-
-  // Multiplicative identity.
-
-  var one = identity[1]
-
-  if (ring.notContains(one)) {
-    throw new TypeError('algebra-ring: "identity" must be contained in ring set')
-  }
-
-  // Check that one*one=one.
-  if (ring.disequality(given.multiplication(one, one), one)) {
-    throw new TypeError('algebra-ring: "identity" is not neutral')
-  }
-
-  if (ring.notContains(identity[1])) {
-    throw new TypeError('algebra-ring:"identity" must be contained in ring set')
-  }
-
-  ring.one = identity[1]
-
-  return ring
-}
-
-module.exports = algebraRing
-
-},{"algebra-group":2}],4:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict'
 
 exports.toByteArray = toByteArray
@@ -222,17 +222,12 @@ var revLookup = []
 var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
 
 function init () {
-  var i
   var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-  var len = code.length
-
-  for (i = 0; i < len; i++) {
+  for (var i = 0, len = code.length; i < len; ++i) {
     lookup[i] = code[i]
-  }
-
-  for (i = 0; i < len; ++i) {
     revLookup[code.charCodeAt(i)] = i
   }
+
   revLookup['-'.charCodeAt(0)] = 62
   revLookup['_'.charCodeAt(0)] = 63
 }
@@ -264,8 +259,8 @@ function toByteArray (b64) {
 
   for (i = 0, j = 0; i < l; i += 4, j += 3) {
     tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
-    arr[L++] = (tmp & 0xFF0000) >> 16
-    arr[L++] = (tmp & 0xFF00) >> 8
+    arr[L++] = (tmp >> 16) & 0xFF
+    arr[L++] = (tmp >> 8) & 0xFF
     arr[L++] = tmp & 0xFF
   }
 
@@ -616,17 +611,12 @@ Buffer.compare = function compare (a, b) {
   var x = a.length
   var y = b.length
 
-  var i = 0
-  var len = Math.min(x, y)
-  while (i < len) {
-    if (a[i] !== b[i]) break
-
-    ++i
-  }
-
-  if (i !== len) {
-    x = a[i]
-    y = b[i]
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i]
+      y = b[i]
+      break
+    }
   }
 
   if (x < y) return -1
@@ -787,7 +777,6 @@ Buffer.prototype.inspect = function inspect () {
 
 Buffer.prototype.compare = function compare (b) {
   if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
-  if (this === b) return 0
   return Buffer.compare(this, b)
 }
 
@@ -2036,7 +2025,7 @@ function iterateCayleyDickson (given, iterations) {
 module.exports = iterateCayleyDickson
 
 
-},{"algebra-ring":3}],8:[function(require,module,exports){
+},{"algebra-ring":2}],8:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -8325,7 +8314,7 @@ describe('API', function () {
   });
 });
 
-},{"../src/booleanField":51,"algebra":74,"algebra-ring":3}],66:[function(require,module,exports){
+},{"../src/booleanField":51,"algebra":74,"algebra-ring":2}],66:[function(require,module,exports){
 describe('booleanField', function () {
   var bool = require('../src/booleanField');
 

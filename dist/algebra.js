@@ -1,4 +1,83 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var group = require('algebra-group')
+
+/**
+ * Define an algebra ring structure
+ *
+ * @param {Array} identity
+ * @param {*}     identity[0] a.k.a zero
+ * @param {*}     identity[1] a.k.a uno
+ * @param {Object}   given operator functions
+ * @param {Function} given.contains
+ * @param {Function} given.equality
+ * @param {Function} given.addition
+ * @param {Function} given.negation
+ * @param {Function} given.multiplication
+ * @param {Function} given.inversion
+ *
+ * @returns {Object} ring
+ */
+
+function algebraRing (identity, given) {
+  // A ring is a group, with multiplication.
+
+  var ring = group({
+    identity: identity[0],
+    contains: given.contains,
+    equality: given.equality,
+    compositionLaw: given.addition,
+    inversion: given.negation
+  })
+
+  // operators
+
+  function multiplication () {
+    return [].slice.call(arguments).reduce(given.multiplication)
+  }
+
+  function inversion (a) {
+    if (ring.equality(a, ring.zero)) {
+      throw new TypeError('algebra-ring: Cannot divide by zero.')
+    }
+
+    return given.inversion(a)
+  }
+
+  function division (a) {
+    var rest = [].slice.call(arguments, 1)
+
+    return given.multiplication(a, rest.map(given.inversion).reduce(given.multiplication))
+  }
+
+  ring.multiplication = multiplication
+  ring.inversion = inversion
+  ring.division = division
+
+  // Multiplicative identity.
+
+  var one = identity[1]
+
+  if (ring.notContains(one)) {
+    throw new TypeError('algebra-ring: "identity" must be contained in ring set')
+  }
+
+  // Check that one*one=one.
+  if (ring.disequality(given.multiplication(one, one), one)) {
+    throw new TypeError('algebra-ring: "identity" is not neutral')
+  }
+
+  if (ring.notContains(identity[1])) {
+    throw new TypeError('algebra-ring:"identity" must be contained in ring set')
+  }
+
+  ring.one = identity[1]
+
+  return ring
+}
+
+module.exports = algebraRing
+
+},{"algebra-group":2}],2:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -108,86 +187,7 @@ function algebraGroup (given, naming) {
 
 module.exports = algebraGroup
 
-},{}],2:[function(require,module,exports){
-var group = require('algebra-group')
-
-/**
- * Define an algebra ring structure
- *
- * @param {Array} identity
- * @param {*}     identity[0] a.k.a zero
- * @param {*}     identity[1] a.k.a uno
- * @param {Object}   given operator functions
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.addition
- * @param {Function} given.negation
- * @param {Function} given.multiplication
- * @param {Function} given.inversion
- *
- * @returns {Object} ring
- */
-
-function algebraRing (identity, given) {
-  // A ring is a group, with multiplication.
-
-  var ring = group({
-    identity: identity[0],
-    contains: given.contains,
-    equality: given.equality,
-    compositionLaw: given.addition,
-    inversion: given.negation
-  })
-
-  // operators
-
-  function multiplication () {
-    return [].slice.call(arguments).reduce(given.multiplication)
-  }
-
-  function inversion (a) {
-    if (ring.equality(a, ring.zero)) {
-      throw new TypeError('algebra-ring: Cannot divide by zero.')
-    }
-
-    return given.inversion(a)
-  }
-
-  function division (a) {
-    var rest = [].slice.call(arguments, 1)
-
-    return given.multiplication(a, rest.map(given.inversion).reduce(given.multiplication))
-  }
-
-  ring.multiplication = multiplication
-  ring.inversion = inversion
-  ring.division = division
-
-  // Multiplicative identity.
-
-  var one = identity[1]
-
-  if (ring.notContains(one)) {
-    throw new TypeError('algebra-ring: "identity" must be contained in ring set')
-  }
-
-  // Check that one*one=one.
-  if (ring.disequality(given.multiplication(one, one), one)) {
-    throw new TypeError('algebra-ring: "identity" is not neutral')
-  }
-
-  if (ring.notContains(identity[1])) {
-    throw new TypeError('algebra-ring:"identity" must be contained in ring set')
-  }
-
-  ring.one = identity[1]
-
-  return ring
-}
-
-module.exports = algebraRing
-
-},{"algebra-group":1}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var ring = require('algebra-ring')
 var twoPow = Math.pow.bind(null, 2)
 
@@ -423,7 +423,7 @@ function iterateCayleyDickson (given, iterations) {
 module.exports = iterateCayleyDickson
 
 
-},{"algebra-ring":2}],4:[function(require,module,exports){
+},{"algebra-ring":1}],4:[function(require,module,exports){
 function indicesPermutations (previousValue, currentValue, currentIndex, array) {
   var result = []
 

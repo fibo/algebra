@@ -34,7 +34,7 @@ function CompositionAlgebra (ring) {
         data: data,
         zero: K.zero,
         one: K.one,
-	order: 0
+        order: 0
       })
     }
 

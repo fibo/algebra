@@ -19,9 +19,13 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 - Replaced jshint with standardjs
 - algebra-cyclic
+
+## [v0.9.0] - 2016-04-05
+
+- crossProduct
 - Scalar
 - generate tag links in changelog
-- crossProduct
+- 99% tests passing again, after Tensor refactoring
 
 ## [v0.8.0] - 2016-03-20
 

@@ -76,6 +76,7 @@ Many functionalities of previous versions are now in separated atomic packages:
 * [cayley-dickson](http://npm.im/cayley-dickson)
 * [indices-permutations](http://npm.im/indices-permutations)
 * [laplace-determinant](http://npm.im/laplace-determinant)
+* [matrix-multiplication](http://npm.im/matrix-multiplication)
 * [multidim-array-index](http://npm.im/multidim-array-index)
 * [tensor-contraction](http://npm.im/tensor-contraction)
 * [tensor-permutation](http://npm.im/tensor-product)

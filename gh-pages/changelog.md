@@ -22,6 +22,9 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [v0.9.0] - 2016-04-05
 
+### Added
+
+- new cool description: algebra means completeness and balancing
 - crossProduct
 - Scalar
 - generate tag links in changelog

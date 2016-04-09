@@ -1,7 +1,4 @@
-
-var should = require('should')
-
-/*!
+/**
  * Check if binary operator is static
  *
  * @param {Object} Scalar
@@ -20,4 +17,3 @@ function staticBinaryOperator (Scalar, operator, operand1, operand2, result) {
 }
 
 module.exports = staticBinaryOperator
-

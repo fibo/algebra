@@ -1,6 +1,3 @@
-
-var should = require('should')
-
 /**
  * Check if unary operator is a mutator
  *
@@ -25,4 +22,3 @@ function mutatorUnaryOperator (Scalar, operator, operand, resultData) {
 }
 
 module.exports = mutatorUnaryOperator
-

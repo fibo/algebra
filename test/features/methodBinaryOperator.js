@@ -1,6 +1,3 @@
-
-var should = require('should')
-
 /**
  * Check if binary operator is a mutator
  *
@@ -26,4 +23,3 @@ function mutatorBinaryOperator (Scalar, operator, operand1, operand2, resultData
 }
 
 module.exports = mutatorBinaryOperator
-

@@ -1,7 +1,4 @@
-
-var should = require('should')
-
-/*!
+/**
  * Check if unary operator is static
  *
  * @param {Object} Scalar
@@ -19,4 +16,3 @@ function staticUnaryOperator (Scalar, operator, operand, result) {
 }
 
 module.exports = staticUnaryOperator
-

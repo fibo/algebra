@@ -19,6 +19,8 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 - Replaced jshint with standardjs
 - algebra-cyclic
+- using matrix-multiplication package
+- removed console.log from README.md examples
 
 ## [v0.9.0] - 2016-04-05
 

@@ -1,9 +1,9 @@
 var determinant = require('laplace-determinant')
 var inherits = require('inherits')
 var no = require('not-defined')
+var matrixMultiplication = require('matrix-multiplication')
 var matrixToArrayIndex = require('./matrixToArrayIndex')
 var operators = require('./operators.json')
-var rowByColumnMultiplication = require('./rowByColumnMultiplication')
 var staticProps = require('static-props')
 var TensorSpace = require('./TensorSpace')
 var tensorContraction = require('tensor-contraction')
@@ -72,14 +72,9 @@ function MatrixSpace (Scalar) {
       var leftMatrixData = toData(leftMatrix)
       var rightMatrixData = toData(rightMatrix)
 
-      // For this static version, it is assumed that leftMatrix is numRows by numCols.
-      var leftNumRows = numRows
-      var leftNumCols = numCols
+      var rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols)
 
-      var rightNumRows = leftNumCols
-      var rightNumCols = rightMatrixData.length / rightNumRows
-
-      return rowByColumnMultiplication(Scalar, leftMatrixData, leftNumRows, rightMatrixData, rightNumCols)
+      return rowByColumnMultiplication(leftMatrixData, rightMatrixData)
     }
 
     /**

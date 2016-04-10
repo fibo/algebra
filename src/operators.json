@@ -1,4 +1,10 @@
 {
+  "set": [
+    "equality",
+    "disequality",
+    "contains",
+    "notContains"
+  ],
   "group": [
     "addition",
     "subtraction"

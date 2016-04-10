@@ -298,6 +298,8 @@ The following object methods, give the same result: a vector instance with data 
 ```javascript
 var vector3 = vector1.addition([3, 4])
 var vector4 = vector1.addition(vector2)
+
+R2.equal(vector3, vector4) // true
 ```
 
 Operators can be chained and accept multiple arguments when it makes sense.
@@ -422,6 +424,8 @@ Inherits everything from [Scalar](#scalar).
 var Complex = algebra.Complex
 
 var complex1 = new Complex([1, 2])
+
+complex1.conjugation().data // [1, -2]
 ```
 
 ### Quaternion

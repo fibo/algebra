@@ -163,6 +163,10 @@ function VectorSpace (Scalar) {
     Vector.norm = norm
     Vector.scalarProduct = scalarProduct
 
+    operators.set.forEach((operator) => {
+      Vector[operator] = AbstractVector[operator]
+    })
+
     operators.group.forEach((operator) => {
       Vector[operator] = AbstractVector[operator]
     })

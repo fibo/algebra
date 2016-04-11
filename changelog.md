@@ -21,6 +21,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - algebra-cyclic
 - using matrix-multiplication package
 - removed console.log from README.md examples
+- data prop is enumerable
 
 ## [v0.9.0] - 2016-04-05
 

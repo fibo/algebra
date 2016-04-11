@@ -34,8 +34,12 @@
   - [Quaternion](#quaternion)
   - [Octonion](#octonion)
   - [Common spaces](#common-spaces)
+    - [R](#r)
     - [R2](#r2)
     - [R3](#r3)
+    - [R2x2](#r2x2)
+    - [C](#c)
+    - [H](#h)
   - [Vector](#vector)
     - [attributes](#vector-attributes)
     - [operators](#vector-operators)
@@ -151,18 +155,24 @@ var y = new R(-2)
 The value *r* is the result of x multiplied by y.
 
 ```javascript
+// 2 * (-2) = -4
 var r = x.mul(y)
-r.data // 2 * (-2) = -4
-x.data // still 2
-y.data // still -2
+
+r // Scalar { data: -4 }
+
+// x and y are not changed
+x.data // 2
+y.data // -2
 ```
 
 Raw numbers are coerced, operators can be chained when it makes sense.
 Of course you can reassign x, for example, x value will be 0.1: x -> x + 3 -> x * 2 -> x ^-1
 
 ```javascript
+// ((2 + 3) * 2)^(-1) = 0.1
 x = x.add(3).mul(2).inv()
-x.data // ((2 + 3) * 2)^(-1) = 0.1
+
+x // Scalar { data: 0.1 }
 ```
 
 Comparison operators *equal* and *notEqual* are available, but they cannot be chained.
@@ -182,7 +192,7 @@ var z2 = new C([3, 4])
 
 z1 = z1.mul(z2)
 
-z1.data // [-5, 10]
+z1 // Scalar { data: [-5, 10] }
 
 z1 = z1.conj().mul([2, 0])
 
@@ -206,7 +216,7 @@ var v2 = new R2([1, -2])
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
 v1 = v1.add(v2)
 
-v1.data // [1, -1]
+v1 // Vector { data: [1, -1] }
 ```
 
 ### Matrices
@@ -255,19 +265,19 @@ var R2x2 = algebra.MatrixSpace(R)(2, 2)
 
 var m2 = new R2x2([1, 0,
                    0, 2])
+
 var m3 = new R2x2([0, -1,
                    1, 0])
 
 m2 = m2.mul(m3)
 
-m2.data // [0, -1,
-        //  2,  0]
+m2 // Matrix { data: [0, -1, 2, 0] }
 ```
 
 Since m2 is a square matrix we can calculate its determinant.
 
 ```javascript
-m2.determinant.data // 2
+m2.determinant // Scalar { data: 2 }
 ```
 
 ## API
@@ -323,7 +333,6 @@ Let's use for example the [src/booleanField][booleanField] which exports an obje
 ```javascript
 var algebra = require('algebra')
 var Scalar = algebra.Scalar
-var ring = require('algebra-ring')
 
 var booleanField = require('algebra/src/booleanField')
 
@@ -414,6 +423,13 @@ Inherits everything from [Scalar](#scalar).
 
 ```javascript
 var Real = algebra.Real
+
+Real.addition(1, 2) // 3
+
+var pi = new Real(Math.PI)
+var twoPi = pi.mul(2)
+
+Real.subtraction(twoPi, 2 * Math.PI) // 0
 ```
 
 ### Complex
@@ -425,7 +441,7 @@ var Complex = algebra.Complex
 
 var complex1 = new Complex([1, 2])
 
-complex1.conjugation().data // [1, -2]
+complex1.conjugation() // Complex { data: [1, -2] }
 ```
 
 ### Quaternion
@@ -437,6 +453,16 @@ Inherits everything from [Scalar](#scalar).
 Inherits everything from [Scalar](#scalar).
 
 ### Common spaces
+
+#### R
+
+The real line.
+
+It is in alias of [Real](#real).
+
+```javascript
+var R = algebra.R
+```
 
 #### R2
 
@@ -457,6 +483,36 @@ var R3 = algebra.R3
 ```
 
 It is in alias of `VectorSpace(Real)(3)`.
+
+#### R2x2
+
+Real square matrices of rank 2.
+
+```javascript
+var R2x2 = algebra.R2x2
+```
+
+It is in alias of `MatrixSpace(Real)(2)`.
+
+#### C
+
+The complex numbers.
+
+It is in alias of [Complex](#complex).
+
+```javascript
+var C = algebra.C
+```
+
+#### H
+
+Usually it is used the **H** in honour of [Sir Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton).
+
+It is in alias of [Quaternion](#quaternion).
+
+```javascript
+var H = algebra.H
+```
 
 ### Vector
 
@@ -488,7 +544,7 @@ var vector2 = new R3([4, 9, 2])
 
 var vector3 = vector1.crossProduct(vector2)
 
-vector3.data // [-15, 2, 39]
+vector3 // Vector { data: [-15, 2, 39] }
 ```
 
 ### Matrix
@@ -557,9 +613,9 @@ It is defined only for square matrices.
 
 It represents the number of varying indices.
 
-A scalar has order 0.
-A vector has order 1.
-A matrix has order 2.
+* A scalar has order 0.
+* A vector has order 1.
+* A matrix has order 2.
 
 ##### `Tensor.order`
 
@@ -573,6 +629,7 @@ A matrix has order 2.
 
 ```javascript
 var T2x2x2 = TensorSpace(Real)([2, 2, 2])
+
 var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
 var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 ```

@@ -485,7 +485,7 @@ module.exports = Number.isFinite || function (val) {
 	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
 };
 
-},{"number-is-nan":11}],7:[function(require,module,exports){
+},{"number-is-nan":13}],7:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -610,6 +610,221 @@ module.exports = determinant
 
 
 },{}],9:[function(require,module,exports){
+var isInteger = require('is-integer')
+var no = require('not-defined')
+var staticProps = require('static-props')
+
+var pkg = require('./package.json')
+
+/**
+ * Prepend package name to error message
+ */
+
+function msg (str) {
+  return pkg.name + ': ' + str
+}
+
+var error = {}
+
+staticProps(error)({
+  leftMatrixNotCompatible: msg('Cannot multiply matrix at left side'),
+  rightMatrixNotCompatible: msg('Cannot multiply matrix at right side')
+})
+
+function matrixToArrayIndex (i, j, numCols) {
+  return j + i * numCols
+}
+
+function realAddition (a, b) { return a + b }
+
+function realMultiplication (a, b) { return a * b }
+
+/**
+ * Multiply two matrices, row by column.
+ *
+ * @param {Number} customOperator
+ * @param {Function} [customOperator.addition]
+ * @param {Function} [customOperator.multiplication]
+ *
+ * @returns {Function} operator
+ */
+
+function matrixMultiplication (customOperator) {
+  // operators
+
+  var op = {}
+
+  if (no(customOperator)) customOperator = {}
+
+  var customAdd = customOperator.addition
+  var customMul = customOperator.multiplication
+
+  if (no(customAdd)) op.add = realAddition
+  else op.add = customAdd
+
+  if (no(customMul)) op.mul = realMultiplication
+  else op.mul = customMul
+
+ /**
+  * @param {Number} middle
+  *
+  * @returns {Function} mul
+  */
+
+  return function (middle) {
+   /**
+    * @param {Array} leftMatrix
+    * @param {Array} rightMatrix
+    *
+    * @returns {Array} matrix
+    */
+
+    return function (leftMatrix, rightMatrix) {
+      // Left num rows
+      var rows = leftMatrix.length / middle
+      // Right num cols
+      var cols = rightMatrix.length / middle
+
+      if (!isInteger(rows)) {
+        throw new TypeError(error.leftMatrixNotCompatible)
+      }
+
+      if (!isInteger(cols)) {
+        throw new TypeError(error.rightMatrixNotCompatible)
+      }
+
+      var data = []
+
+      for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < cols; j++) {
+          var leftIndex = matrixToArrayIndex(i, 0, middle)
+          var rightIndex = matrixToArrayIndex(0, j, cols)
+
+          var rightElement = rightMatrix[rightIndex]
+          var leftElement = leftMatrix[leftIndex]
+
+          var element = op.mul(leftElement, rightElement)
+
+          for (var k = 1; k < middle; k++) {
+            leftIndex = matrixToArrayIndex(i, k, middle)
+            rightIndex = matrixToArrayIndex(k, j, cols)
+
+            rightElement = rightMatrix[rightIndex]
+            leftElement = leftMatrix[leftIndex]
+
+            element = op.add(element, op.mul(rightElement, leftElement))
+          }
+
+          data.push(element)
+        }
+      }
+
+      return data
+    }
+  }
+}
+
+staticProps(matrixMultiplication)({ error: error })
+
+module.exports = matrixMultiplication
+
+},{"./package.json":10,"is-integer":7,"not-defined":12,"static-props":14}],10:[function(require,module,exports){
+module.exports={
+  "_args": [
+    [
+      "matrix-multiplication@^0.4.0",
+      "/home/io/github.com/fibo/algebra"
+    ]
+  ],
+  "_from": "matrix-multiplication@>=0.4.0 <0.5.0",
+  "_id": "matrix-multiplication@0.4.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/matrix-multiplication",
+  "_nodeVersion": "4.2.2",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/matrix-multiplication-0.4.0.tgz_1460154669918_0.5360936403740197"
+  },
+  "_npmUser": {
+    "email": "casati_gianluca@yahoo.it",
+    "name": "fibo"
+  },
+  "_npmVersion": "3.7.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "matrix-multiplication",
+    "raw": "matrix-multiplication@^0.4.0",
+    "rawSpec": "^0.4.0",
+    "scope": null,
+    "spec": ">=0.4.0 <0.5.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_shasum": "d63c0885ecd788fa9290c16f483ef50fa16c13a1",
+  "_shrinkwrap": null,
+  "_spec": "matrix-multiplication@^0.4.0",
+  "_where": "/home/io/github.com/fibo/algebra",
+  "author": {
+    "name": "Gianluca Casati",
+    "url": "http://g14n.info"
+  },
+  "bugs": {
+    "url": "https://github.com/fibo/matrix-multiplication/issues"
+  },
+  "dependencies": {
+    "is-integer": "^1.0.6",
+    "not-defined": "^1.0.0",
+    "static-props": "^0.2.0"
+  },
+  "description": "implements row by column multiplication",
+  "devDependencies": {
+    "pre-commit": "^1.1.2",
+    "standard": "^6.0.4",
+    "tape": "^4.2.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "d63c0885ecd788fa9290c16f483ef50fa16c13a1",
+    "tarball": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.4.0.tgz"
+  },
+  "gitHead": "a641d34ec6993e1f276e62e15258f009e185f2b4",
+  "homepage": "http://npm.im/matrix-multiplication",
+  "keywords": [
+    "algebra"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "email": "casati_gianluca@yahoo.it",
+      "name": "fibo"
+    }
+  ],
+  "name": "matrix-multiplication",
+  "optionalDependencies": {},
+  "pre-commit": [
+    "lint",
+    "test",
+    "check-deps"
+  ],
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fibo/matrix-multiplication.git"
+  },
+  "scripts": {
+    "check-deps": "npm outdated",
+    "lint": "standard",
+    "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
+    "test": "tape test.js"
+  },
+  "version": "0.4.0"
+}
+
+},{}],11:[function(require,module,exports){
 /**
  * maps multidimensional array indices to monodimensional array index
  *
@@ -651,18 +866,18 @@ function multiDimArrayIndex (dimensions, indices) {
 
 module.exports = multiDimArrayIndex
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports=function(x){return typeof x==='undefined'}
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 module.exports = Number.isNaN || function (x) {
 	return x !== x;
 };
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 function staticProps (obj) {
-  return function (props) {
+  return function (props, enumerable) {
     var statik = {}
 
     for (var propName in props) {
@@ -671,7 +886,7 @@ function staticProps (obj) {
       statik[propName] = {
         value: propValue,
         configurable: false,
-        enumerable: false,
+        enumerable: enumerable,
         writable: false
       }
     }
@@ -682,11 +897,11 @@ function staticProps (obj) {
 
 module.exports = staticProps
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 // In browserify context, *strict-mode* fall back to a no op.
 module.exports = function (cb) { cb() }
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -773,7 +988,7 @@ function tensorContraction (addition, indicesPair, tensorDim, tensorData) {
 
 module.exports = tensorContraction
 
-},{"indices-permutations":4,"multidim-array-index":9}],15:[function(require,module,exports){
+},{"indices-permutations":4,"multidim-array-index":11}],17:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -812,7 +1027,7 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 
 module.exports = tensorProduct
 
-},{"indices-permutations":4,"multidim-array-index":9}],16:[function(require,module,exports){
+},{"indices-permutations":4,"multidim-array-index":11}],18:[function(require,module,exports){
 var CayleyDickson = require('cayley-dickson');
 var coerced = require('./coerced');
 var operators = require('./operators.json');
@@ -845,8 +1060,10 @@ function CompositionAlgebra(ring) {
         throw new TypeError('Invalid data = ' + data);
       }
 
+      var enumerable = true;
+      staticProps(this)({ data }, enumerable);
+
       staticProps(this)({
-        data: data,
         zero: K.zero,
         one: K.one,
         order: 0
@@ -955,13 +1172,13 @@ function CompositionAlgebra(ring) {
 
 module.exports = CompositionAlgebra;
 
-},{"./coerced":21,"./operators.json":23,"./toData":26,"cayley-dickson":3,"static-props":12}],17:[function(require,module,exports){
+},{"./coerced":23,"./operators.json":25,"./toData":27,"cayley-dickson":3,"static-props":14}],19:[function(require,module,exports){
 var determinant = require('laplace-determinant');
 var inherits = require('inherits');
 var no = require('not-defined');
+var matrixMultiplication = require('matrix-multiplication');
 var matrixToArrayIndex = require('./matrixToArrayIndex');
 var operators = require('./operators.json');
-var rowByColumnMultiplication = require('./rowByColumnMultiplication');
 var staticProps = require('static-props');
 var TensorSpace = require('./TensorSpace');
 var tensorContraction = require('tensor-contraction');
@@ -1030,14 +1247,9 @@ function MatrixSpace(Scalar) {
       var leftMatrixData = toData(leftMatrix);
       var rightMatrixData = toData(rightMatrix);
 
-      // For this static version, it is assumed that leftMatrix is numRows by numCols.
-      var leftNumRows = numRows;
-      var leftNumCols = numCols;
+      var rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols);
 
-      var rightNumRows = leftNumCols;
-      var rightNumCols = rightMatrixData.length / rightNumRows;
-
-      return rowByColumnMultiplication(Scalar, leftMatrixData, leftNumRows, rightMatrixData, rightNumCols);
+      return rowByColumnMultiplication(leftMatrixData, rightMatrixData);
     }
 
     /**
@@ -1163,7 +1375,7 @@ function MatrixSpace(Scalar) {
 
 module.exports = MatrixSpace;
 
-},{"./TensorSpace":19,"./VectorSpace":20,"./matrixToArrayIndex":22,"./operators.json":23,"./rowByColumnMultiplication":25,"./toData":26,"inherits":5,"laplace-determinant":8,"not-defined":10,"static-props":12,"tensor-contraction":14}],18:[function(require,module,exports){
+},{"./TensorSpace":21,"./VectorSpace":22,"./matrixToArrayIndex":24,"./operators.json":25,"./toData":27,"inherits":5,"laplace-determinant":8,"matrix-multiplication":9,"not-defined":12,"static-props":14,"tensor-contraction":16}],20:[function(require,module,exports){
 var CompositionAlgebra = require('./CompositionAlgebra');
 var no = require('not-defined');
 
@@ -1188,7 +1400,7 @@ function Scalar(field, n) {
 
 module.exports = Scalar;
 
-},{"./CompositionAlgebra":16,"not-defined":10}],19:[function(require,module,exports){
+},{"./CompositionAlgebra":18,"not-defined":12}],21:[function(require,module,exports){
 var operators = require('./operators.json');
 var staticProps = require('static-props');
 var toData = require('./toData');
@@ -1265,10 +1477,10 @@ function TensorSpace(Scalar) {
 
       data.forEach(validate);
 
-      staticProps(this)({
-        data: data,
-        order: order
-      });
+      var enumerable = true;
+      staticProps(this)({ data }, enumerable);
+
+      staticProps(this)({ order });
     }
 
     function staticBinary(operator) {
@@ -1371,7 +1583,7 @@ function TensorSpace(Scalar) {
 
 module.exports = TensorSpace;
 
-},{"./operators.json":23,"./toData":26,"static-props":12,"tensor-product":15}],20:[function(require,module,exports){
+},{"./operators.json":25,"./toData":27,"static-props":14,"tensor-product":17}],22:[function(require,module,exports){
 var inherits = require('inherits');
 var operators = require('./operators.json');
 var staticProps = require('static-props');
@@ -1537,6 +1749,10 @@ function VectorSpace(Scalar) {
     Vector.norm = norm;
     Vector.scalarProduct = scalarProduct;
 
+    operators.set.forEach(function (operator) {
+      Vector[operator] = AbstractVector[operator];
+    });
+
     operators.group.forEach(function (operator) {
       Vector[operator] = AbstractVector[operator];
     });
@@ -1562,7 +1778,7 @@ function VectorSpace(Scalar) {
 
 module.exports = VectorSpace;
 
-},{"./TensorSpace":19,"./operators.json":23,"./toData":26,"inherits":5,"static-props":12}],21:[function(require,module,exports){
+},{"./TensorSpace":21,"./operators.json":25,"./toData":27,"inherits":5,"static-props":14}],23:[function(require,module,exports){
 var toData = require('./toData');
 
 /**
@@ -1583,7 +1799,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":26}],22:[function(require,module,exports){
+},{"./toData":27}],24:[function(require,module,exports){
 /**
  * Convert a pair of indices to a 1-dimensional index
  *
@@ -1604,8 +1820,14 @@ function matrixToArrayIndex(i, j, numCols) {
 
 module.exports = matrixToArrayIndex;
 
-},{"multidim-array-index":9}],23:[function(require,module,exports){
+},{"multidim-array-index":11}],25:[function(require,module,exports){
 module.exports={
+  "set": [
+    "equality",
+    "disequality",
+    "contains",
+    "notContains"
+  ],
   "group": [
     "addition",
     "subtraction"
@@ -1652,7 +1874,7 @@ module.exports={
   }
 }
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 var realField = {
   zero: 0,
   one: 1,
@@ -1679,91 +1901,7 @@ var realField = {
 
 module.exports = realField;
 
-},{}],25:[function(require,module,exports){
-var isInteger = require('is-integer');
-var matrixToArrayIndex = require('./matrixToArrayIndex');
-/* TODO
-var tensorContraction = require('tensor-contraction')
-var tensorProduct = require('tensor-product')
-var toData = require('./toData')
-*/
-
-/**
- * Multiply two matrices, row by column.
- *
- * @api private
- *
- * @param {Object} field
- * @param {Function} field.addition
- * @param {Function} field.multiplication
- * @param {Object|Array} leftMatrix
- * @param {Array} leftNumRows
- * @param {Object|Array} rightMatrix
- * @param {Array} rightNumCols
- *
- * @returns {Array} matrix
- */
-
-function rowByColumnMultiplication(field, leftMatrix, leftNumRows, rightMatrix, rightNumCols) {
-  var leftNumCols = leftMatrix.length / leftNumRows;
-  var rightNumRows = rightMatrix.length / rightNumCols;
-
-  if (!isInteger(leftNumCols)) {
-    throw new TypeError('leftNumCols does not divide leftMatrix.length');
-  }
-
-  if (!isInteger(rightNumRows)) {
-    throw new TypeError('rightNumRows does not divide rightMatrix.length');
-  }
-
-  // Check if matrices can be multiplied.
-  if (leftNumCols !== rightNumRows) {
-    throw new TypeError('Left num cols != right num rows');
-  }
-
-  /*
-   * TODO try with tensor product and contraction.
-  var leftMatrixData = toData(leftMatrix)
-  var rightMatrixData = toData(rightMatrix)
-   var tensorIndices = [leftNumRows, leftNumCols, rightNumRows, rightNumCols]
-   var tensorProductData = tensorProduct(field.multiplication, [leftNumRows, leftNumCols], [rightNumRows, rightNumCols], leftMatrixData, rightMatrixData)
-   return tensorContraction(field.addition, [1, 2], tensorIndices, tensorProductData)
-  */
-  var commonIndex = leftNumCols;
-  var data = [];
-  var rows = leftNumRows;
-  var cols = rightNumCols;
-
-  for (var i = 0; i < rows; i++) {
-    for (var j = 0; j < cols; j++) {
-      var leftIndex = matrixToArrayIndex(i, 0, commonIndex);
-      var rightIndex = matrixToArrayIndex(0, j, cols);
-
-      var rightElement = rightMatrix[rightIndex];
-      var leftElement = leftMatrix[leftIndex];
-
-      var element = field.multiplication(leftElement, rightElement);
-
-      for (var k = 1; k < commonIndex; k++) {
-        leftIndex = matrixToArrayIndex(i, k, commonIndex);
-        rightIndex = matrixToArrayIndex(k, j, cols);
-
-        rightElement = rightMatrix[rightIndex];
-        leftElement = leftMatrix[leftIndex];
-
-        element = field.addition(element, field.multiplication(rightElement, leftElement));
-      }
-
-      data.push(element);
-    }
-  }
-
-  return data;
-}
-
-module.exports = rowByColumnMultiplication;
-
-},{"./matrixToArrayIndex":22,"is-integer":7}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var no = require('not-defined');
 
 /**
@@ -1788,7 +1926,7 @@ function toData(arg) {
 
 module.exports = toData;
 
-},{"not-defined":10}],"algebra":[function(require,module,exports){
+},{"not-defined":12}],"algebra":[function(require,module,exports){
 require('strict-mode')(function () {
   var Scalar = require('./src/Scalar');
   exports.Scalar = Scalar;
@@ -1796,14 +1934,20 @@ require('strict-mode')(function () {
   var field = require('./src/realField');
 
   var Real = Scalar(field, 1);
+  var Complex = Scalar(field, 2);
+  var Quaternion = Scalar(field, 4);
+  var Octonion = Scalar(field, 8);
 
   exports.Real = Real;
-  exports.Complex = Scalar(field, 2);
-  exports.Quaternion = Scalar(field, 4);
-  exports.Octonion = Scalar(field, 8);
+  exports.Complex = Complex;
+  exports.Quaternion = Quaternion;
+  exports.Octonion = Octonion;
 
   var VectorSpace = require('./src/VectorSpace');
 
+  exports.C = Complex;
+  exports.H = Quaternion;
+  exports.R = Real;
   exports.R2 = VectorSpace(Real)(2);
   exports.R3 = VectorSpace(Real)(3);
 
@@ -1812,4 +1956,4 @@ require('strict-mode')(function () {
   exports.TensorSpace = require('./src/TensorSpace');
 });
 
-},{"./src/MatrixSpace":17,"./src/Scalar":18,"./src/TensorSpace":19,"./src/VectorSpace":20,"./src/realField":24,"strict-mode":13}]},{},[]);
+},{"./src/MatrixSpace":19,"./src/Scalar":20,"./src/TensorSpace":21,"./src/VectorSpace":22,"./src/realField":26,"strict-mode":15}]},{},[]);

@@ -35,6 +35,20 @@ describe('MatrixSpace', () => {
   var matrix3 = new R2x3([ 0, 1, 2,
                           -2, 1, 0 ])
 
+  describe('data', () => {
+    it('is enumerable', () => {
+      matrix1.propertyIsEnumerable('data').should.be.ok
+    })
+
+    it('is immutable', () => {
+      ;(() => {
+        'use strict'
+        matrix1.data = [2, 1,
+                        5, 4]
+      }).should.throwError()
+    })
+  })
+
   describe('numRows', () => {
     it('returns the number of rows', () => {
       matrix1.numRows.should.be.eql(2)

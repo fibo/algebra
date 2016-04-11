@@ -70,10 +70,10 @@ function TensorSpace (Scalar) {
 
       data.forEach(validate)
 
-      staticProps(this)({
-        data: data,
-        order: order
-      })
+      var enumerable = true
+      staticProps(this)({ data }, enumerable)
+
+      staticProps(this)({ order })
     }
 
     function staticBinary (operator) {

@@ -1,7 +1,11 @@
 describe('API', () => {
   var algebra = require('algebra')
-  var ring = require('algebra-ring')
 
+  var C = algebra.C
+  var Complex = algebra.Complex
+  var H = algebra.H
+  var Quaternion = algebra.Quaternion
+  var R = algebra.R
   var R2 = algebra.R2
   var R3 = algebra.R3
   var Real = algebra.Real
@@ -56,6 +60,13 @@ describe('API', () => {
   describe('Real', () => {
     it('works', () => {
       var Real = algebra.Real
+
+      Real.addition(1, 2).should.eql(3)
+
+      var pi = new Real(Math.PI)
+      var twoPi = pi.mul(2)
+
+      Real.subtraction(twoPi, 2 * Math.PI).should.eql(0)
     })
   })
 
@@ -65,6 +76,41 @@ describe('API', () => {
       var complex1 = new Complex([1, 2])
 
       complex1.conjugation().data.should.deepEqual([1, -2])
+    })
+  })
+
+  describe('Common spaces', () => {
+    describe('R', () => {
+      it('is an alias', () => {
+        R.should.be.eql(Real)
+      })
+    })
+
+    describe('R2', () => {
+      it(/* 'is an alias', () => {
+      }*/)
+    })
+
+    describe('R3', () => {
+      it(/* 'is an alias', () => {
+      }*/)
+    })
+
+    describe('R2x2', () => {
+      it(/* 'is an alias', () => {
+      }*/)
+    })
+
+    describe('C', () => {
+      it('is an alias', () => {
+        C.should.be.eql(Complex)
+      })
+    })
+
+    describe('H', () => {
+      it('is an alias', () => {
+        H.should.be.eql(Quaternion)
+      })
     })
   })
 

@@ -18,6 +18,21 @@ var R2x2 = MatrixSpace(Real)(2, 2)
 describe('VectorSpace', () => {
   var operator
 
+  describe('data', () => {
+    var v = new R2([0, 1])
+
+    it('is enumerable', () => {
+      v.propertyIsEnumerable('data').should.be.ok
+    })
+
+    it('is immutable', () => {
+      ;(() => {
+        'use strict'
+        v.data = [2, 1]
+      }).should.throwError()
+    })
+  })
+
   describe('addition()', () => {
     operator = 'addition'
 

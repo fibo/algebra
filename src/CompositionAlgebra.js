@@ -30,8 +30,10 @@ function CompositionAlgebra (ring) {
         throw new TypeError('Invalid data = ' + data)
       }
 
+      var enumerable = true
+      staticProps(this)({ data }, enumerable)
+
       staticProps(this)({
-        data: data,
         zero: K.zero,
         one: K.one,
         order: 0

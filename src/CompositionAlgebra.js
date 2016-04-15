@@ -42,7 +42,8 @@ function CompositionAlgebra (ring) {
 
     staticProps(Scalar)({
       zero: K.zero,
-      one: K.one
+      one: K.one,
+      order: 0
     })
 
     var comparisonOperators = ['equality', 'disequality']
@@ -84,8 +85,10 @@ function CompositionAlgebra (ring) {
       }
     })
 
-    Scalar.contains = K.contains
-    Scalar.notContains = K.notContains
+    staticProps(Scalar)({
+      contains: K.contains,
+      notContains: K.notContains
+    })
 
     Scalar.prototype.add = Scalar.prototype.addition
     Scalar.prototype.mul = Scalar.prototype.multiplication

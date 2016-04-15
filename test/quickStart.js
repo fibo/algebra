@@ -1,5 +1,5 @@
 describe('Quick start', () => {
-  var algebra = require('algebra')
+  var algebra = require('../index')
 
   it('works', () => {
     var R = algebra.Real

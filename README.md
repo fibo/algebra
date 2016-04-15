@@ -29,6 +29,15 @@
       - [data](#scalardata)
       - [order](#scalar-order)
     - [operators](#scalar-operators)
+      - [equality](#scalar-equality)
+      - [disequality](#scalar-disequality)
+      - [addition](#scalar-addition)
+      - [subtraction](#scalar-subtraction)
+      - [multiplication](#scalar-multiplication)
+      - [division](#scalar-division)
+      - [negation](#scalar-negation)
+      - [inversion](#scalar-inversion)
+      - [conjugation](#scalar-conjugation)
   - [Cyclic](#cyclic)
   - [Real](#real)
   - [Complex](#complex)
@@ -118,15 +127,21 @@ or use a CDN adding this to your HTML page
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
-All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
-
-[![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
-
 First of all, import *algebra* package.
 
 ```
 var algebra = require('algebra')
 ```
+
+### Try it out
+
+All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
+
+<ul class="box">
+<li class="tonicdev"><a href="https://tonicdev.com/fibo/algebra-quick-start" target="_blank">Test algebra <em>quick start</em> in your browser.</a></li>
+</ul>
+
+[![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
 
 ### Scalars
 
@@ -395,39 +410,61 @@ It is always 0 for scalars, see also [tensor order](#tensor-order).
 
 ### Scalar operators
 
+#### Scalar set operators
+
 ##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
+
+##### `scalar1.belongsTo(Scalar)`
+
+#### Scalar equality
 
 ##### `Scalar.equality(scalar1, scalar2)`
 
 ##### `scalar1.equality(scalar2)`
 
+#### Scalar disequality
+
 ##### `Scalar.disequality(scalar1, scalar2)`
 
 ##### `scalar1.disequality(scalar2)`
+
+#### Scalar addition
 
 ##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
 
 ##### `scalar1.addition(scalar2[, scalar3, … ])`
 
+#### Scalar subtraction
+
 ##### `Scalar.subtraction(scalar1, scalar2[, … ])`
 
 ##### `scalar1.subtraction(scalar2[, scalar3, … ])`
+
+#### Scalar multiplication
 
 ##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
 
 ##### `scalar1.multiplication(scalar2[, scalar3, … ])`
 
+#### Scalar division
+
 ##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
 
 ##### `scalar1.division(scalar2[, scalar3, … ])`
+
+#### Scalar negation
 
 ##### `Scalar.negation(scalar)`
 
 ##### `scalar.negation()`
 
+#### Scalar inversion
+
 ##### `Scalar.inversion(scalar)`
 
 ##### `scalar.inversion()`
+
+#### Scalar conjugation
 
 ##### `Scalar.conjugation(scalar)`
 

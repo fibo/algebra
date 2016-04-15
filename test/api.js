@@ -57,6 +57,19 @@ describe('API', () => {
     }*/)
   })
 
+  describe('Cyclic', () => {
+    it('works'/*, () => {
+      var Cyclic = algebra.Cyclic
+
+      var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+
+      var Alphanum = Cyclic(elements)
+
+      var a = new Alphanum('a')
+      a.data.should.eql('a')
+    }*/)
+  })
+
   describe('Real', () => {
     it('works', () => {
       var Real = algebra.Real

@@ -1,4 +1,7 @@
 require('strict-mode')(() => {
+  var Cyclic = require('./src/Cyclic')
+  exports.Cyclic = Cyclic
+
   var Scalar = require('./src/Scalar')
   exports.Scalar = Scalar
 

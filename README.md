@@ -4,7 +4,7 @@
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
-[![Whatchers](http://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](http://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](http://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
+[![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
 [![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 
@@ -21,6 +21,7 @@
   3. [Matrices](#matrices)
 * [API](#api)
   - [About operators](#about-operators)
+  - [Cyclic](#cyclic)
   - [Scalar](#scalar)
     - [attributes](#scalar-attributes)
       - [one](#scalarone)
@@ -324,6 +325,22 @@ Objects are immutable
 vector1.data // still [1, 2]
 ```
 
+### Cyclic
+
+##### `Cyclic(elements)`
+
+```javascript
+var Cyclic = algebra.Cyclic
+
+// The elements String or Array length must be prime.
+var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+
+var Alphanum = Cyclic(elements)
+
+var a = new Alphanum('a')
+a.data.should.eql('a')
+```
+
 ### Scalar
 
 ##### `Scalar(field[, n])`
@@ -331,7 +348,6 @@ vector1.data // still [1, 2]
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```javascript
-var algebra = require('algebra')
 var Scalar = algebra.Scalar
 
 var booleanField = require('algebra/src/booleanField')

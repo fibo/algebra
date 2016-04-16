@@ -38,7 +38,6 @@
       - [negation](#scalar-negation)
       - [inversion](#scalar-inversion)
       - [conjugation](#scalar-conjugation)
-  - [Cyclic](#cyclic)
   - [Real](#real)
   - [Complex](#complex)
   - [Quaternion](#quaternion)
@@ -350,10 +349,9 @@ var Cyclic = algebra.Cyclic
 // The elements String or Array length must be prime.
 var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
-var Alphanum = Cyclic(elements)
-
-var a = new Alphanum('a')
-a.data.should.eql('a')
+// TODO var Alphanum = Cyclic(elements)
+// TODO var a = new Alphanum('a')
+// TODO a.data.should.eql('a')
 ```
 
 ### Scalar

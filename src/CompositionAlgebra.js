@@ -86,8 +86,8 @@ function CompositionAlgebra (ring) {
     })
 
     staticProps(Scalar)({
-      contains: K.contains,
-      notContains: K.notContains
+      contains: () => K.contains,
+      notContains: () => K.notContains
     })
 
     Scalar.prototype.add = Scalar.prototype.addition

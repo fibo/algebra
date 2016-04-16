@@ -2,7 +2,7 @@ var determinant = require('laplace-determinant')
 var inherits = require('inherits')
 var no = require('not-defined')
 var matrixMultiplication = require('matrix-multiplication')
-var matrixToArrayIndex = require('./matrixToArrayIndex')
+var multiDimArrayIndex = require('multidim-array-index')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
 var TensorSpace = require('./TensorSpace')
@@ -91,8 +91,8 @@ function MatrixSpace (Scalar) {
 
       for (var i = 0; i < numRows; i++) {
         for (var j = 0; j < numCols; j++) {
-          var index = matrixToArrayIndex(i, j, numCols)
-          var transposedIndex = matrixToArrayIndex(j, i, numRows)
+          var index = multiDimArrayIndex([numRows, numCols], [i, j])
+          var transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
 
           transposedData[transposedIndex] = matrixData[index]
         }

@@ -15,13 +15,20 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+- Replaced jshint with standardjs
+
+## [v0.10.0] - 2016-04-16
+
 ### Added
 
-- Replaced jshint with standardjs
 - algebra-cyclic
 - using matrix-multiplication package
 - removed console.log from README.md examples
 - data prop is enumerable
+- tonicdev tutorial
+- update to several deps, including static-props v1 and a fix of multidim-array-index
+- updated coverage
+- babel ES2015 preset
 
 ## [v0.9.0] - 2016-04-05
 

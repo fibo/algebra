@@ -7,7 +7,7 @@ title: algebra
 
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
-[![Whatchers](http://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](http://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](http://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
+[![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
 [![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 
@@ -24,6 +24,7 @@ title: algebra
   3. [Matrices](#matrices)
 * [API](#api)
   - [About operators](#about-operators)
+  - [Cyclic](#cyclic)
   - [Scalar](#scalar)
     - [attributes](#scalar-attributes)
       - [one](#scalarone)
@@ -31,7 +32,15 @@ title: algebra
       - [data](#scalardata)
       - [order](#scalar-order)
     - [operators](#scalar-operators)
-  - [Cyclic](#cyclic)
+      - [equality](#scalar-equality)
+      - [disequality](#scalar-disequality)
+      - [addition](#scalar-addition)
+      - [subtraction](#scalar-subtraction)
+      - [multiplication](#scalar-multiplication)
+      - [division](#scalar-division)
+      - [negation](#scalar-negation)
+      - [inversion](#scalar-inversion)
+      - [conjugation](#scalar-conjugation)
   - [Real](#real)
   - [Complex](#complex)
   - [Quaternion](#quaternion)
@@ -40,7 +49,9 @@ title: algebra
     - [R](#r)
     - [R2](#r2)
     - [R3](#r3)
+    - [R2x2](#r2x2)
     - [C](#c)
+    - [H](#h)
   - [Vector](#vector)
     - [attributes](#vector-attributes)
     - [operators](#vector-operators)
@@ -118,15 +129,21 @@ or use a CDN adding this to your HTML page
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
-All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
-
-[![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
-
 First of all, import *algebra* package.
 
 ```
 var algebra = require('algebra')
 ```
+
+### Try it out
+
+All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
+
+<ul class="box">
+<li class="tonicdev"><a href="https://tonicdev.com/fibo/algebra-quick-start" target="_blank">Test algebra <em>quick start</em> in your browser.</a></li>
+</ul>
+
+[![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
 
 ### Scalars
 
@@ -156,18 +173,24 @@ var y = new R(-2)
 The value *r* is the result of x multiplied by y.
 
 ```javascript
+// 2 * (-2) = -4
 var r = x.mul(y)
-r.data // 2 * (-2) = -4
-x.data // still 2
-y.data // still -2
+
+r // Scalar { data: -4 }
+
+// x and y are not changed
+x.data // 2
+y.data // -2
 ```
 
 Raw numbers are coerced, operators can be chained when it makes sense.
 Of course you can reassign x, for example, x value will be 0.1: x -> x + 3 -> x * 2 -> x ^-1
 
 ```javascript
+// ((2 + 3) * 2)^(-1) = 0.1
 x = x.add(3).mul(2).inv()
-x.data // ((2 + 3) * 2)^(-1) = 0.1
+
+x // Scalar { data: 0.1 }
 ```
 
 Comparison operators *equal* and *notEqual* are available, but they cannot be chained.
@@ -187,7 +210,7 @@ var z2 = new C([3, 4])
 
 z1 = z1.mul(z2)
 
-z1.data // [-5, 10]
+z1 // Scalar { data: [-5, 10] }
 
 z1 = z1.conj().mul([2, 0])
 
@@ -211,7 +234,7 @@ var v2 = new R2([1, -2])
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
 v1 = v1.add(v2)
 
-v1.data // [1, -1]
+v1 // Vector { data: [1, -1] }
 ```
 
 ### Matrices
@@ -260,19 +283,19 @@ var R2x2 = algebra.MatrixSpace(R)(2, 2)
 
 var m2 = new R2x2([1, 0,
                    0, 2])
+
 var m3 = new R2x2([0, -1,
                    1, 0])
 
 m2 = m2.mul(m3)
 
-m2.data // [0, -1,
-        //  2,  0]
+m2 // Matrix { data: [0, -1, 2, 0] }
 ```
 
 Since m2 is a square matrix we can calculate its determinant.
 
 ```javascript
-m2.determinant.data // 2
+m2.determinant // Scalar { data: 2 }
 ```
 
 ## API
@@ -319,6 +342,21 @@ Objects are immutable
 vector1.data // still [1, 2]
 ```
 
+### Cyclic
+
+##### `Cyclic(elements)`
+
+```javascript
+var Cyclic = algebra.Cyclic
+
+// The elements String or Array length must be prime.
+var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+
+// TODO var Alphanum = Cyclic(elements)
+// TODO var a = new Alphanum('a')
+// TODO a.data.should.eql('a')
+```
+
 ### Scalar
 
 ##### `Scalar(field[, n])`
@@ -326,7 +364,6 @@ vector1.data // still [1, 2]
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```javascript
-var algebra = require('algebra')
 var Scalar = algebra.Scalar
 
 var booleanField = require('algebra/src/booleanField')
@@ -374,39 +411,61 @@ It is always 0 for scalars, see also [tensor order](#tensor-order).
 
 ### Scalar operators
 
+#### Scalar set operators
+
 ##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
+
+##### `scalar1.belongsTo(Scalar)`
+
+#### Scalar equality
 
 ##### `Scalar.equality(scalar1, scalar2)`
 
 ##### `scalar1.equality(scalar2)`
 
+#### Scalar disequality
+
 ##### `Scalar.disequality(scalar1, scalar2)`
 
 ##### `scalar1.disequality(scalar2)`
+
+#### Scalar addition
 
 ##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
 
 ##### `scalar1.addition(scalar2[, scalar3, … ])`
 
+#### Scalar subtraction
+
 ##### `Scalar.subtraction(scalar1, scalar2[, … ])`
 
 ##### `scalar1.subtraction(scalar2[, scalar3, … ])`
+
+#### Scalar multiplication
 
 ##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
 
 ##### `scalar1.multiplication(scalar2[, scalar3, … ])`
 
+#### Scalar division
+
 ##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
 
 ##### `scalar1.division(scalar2[, scalar3, … ])`
+
+#### Scalar negation
 
 ##### `Scalar.negation(scalar)`
 
 ##### `scalar.negation()`
 
+#### Scalar inversion
+
 ##### `Scalar.inversion(scalar)`
 
 ##### `scalar.inversion()`
+
+#### Scalar conjugation
 
 ##### `Scalar.conjugation(scalar)`
 
@@ -436,7 +495,7 @@ var Complex = algebra.Complex
 
 var complex1 = new Complex([1, 2])
 
-complex1.conjugation().data // [1, -2]
+complex1.conjugation() // Complex { data: [1, -2] }
 ```
 
 ### Quaternion
@@ -478,6 +537,16 @@ var R3 = algebra.R3
 ```
 
 It is in alias of `VectorSpace(Real)(3)`.
+
+#### R2x2
+
+Real square matrices of rank 2.
+
+```javascript
+var R2x2 = algebra.R2x2
+```
+
+It is in alias of `MatrixSpace(Real)(2)`.
 
 #### C
 
@@ -529,7 +598,7 @@ var vector2 = new R3([4, 9, 2])
 
 var vector3 = vector1.crossProduct(vector2)
 
-vector3.data // [-15, 2, 39]
+vector3 // Vector { data: [-15, 2, 39] }
 ```
 
 ### Matrix
@@ -598,9 +667,9 @@ It is defined only for square matrices.
 
 It represents the number of varying indices.
 
-A scalar has order 0.
-A vector has order 1.
-A matrix has order 2.
+* A scalar has order 0.
+* A vector has order 1.
+* A matrix has order 2.
 
 ##### `Tensor.order`
 
@@ -614,6 +683,7 @@ A matrix has order 2.
 
 ```javascript
 var T2x2x2 = TensorSpace(Real)([2, 2, 2])
+
 var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
 var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 ```

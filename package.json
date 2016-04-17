@@ -80,7 +80,6 @@
     "cayley-dickson": "^0.3.0",
     "indices-permutations": "^0.2.0",
     "inherits": "^2.0.1",
-    "is-integer": "^1.0.6",
     "laplace-determinant": "^0.1.0",
     "matrix-multiplication": "^0.4.0",
     "multidim-array-index": "^0.5.0",

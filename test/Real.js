@@ -8,8 +8,8 @@ var staticBinaryOperator = require('./features/staticBinaryOperator')
 var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('Real', function () {
-  var operator,
-      x
+  var operator
+  var x
 
   describe('zero', function () {
     it('is static', function () {
@@ -29,9 +29,6 @@ describe('Real', function () {
     it('is a static method', staticBinaryOperator(R, operator, 2, 3, 5))
 
     it('is a class method', methodBinaryOperator(R, operator, 1, 2, 3))
-
-    // TODO
-    //it('accepts many arguments', multiArgumentOperator(R, operator, 1, [2, 3, 4], 10))
 
     it('accepts many arguments', function () {
       x = new R(1)

@@ -1,19 +1,15 @@
 var algebra = require('algebra')
 var notDefined = require('not-defined')
 
-var MatrixSpace = algebra.MatrixSpace
 var Real = algebra.Real
 var VectorSpace = algebra.VectorSpace
 
 var methodBinaryOperator = require('./features/methodBinaryOperator')
-var methodUnaryOperator = require('./features/methodUnaryOperator')
 var staticBinaryOperator = require('./features/staticBinaryOperator')
 var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 var R2 = VectorSpace(Real)(2)
 var R3 = VectorSpace(Real)(3)
-
-var R2x2 = MatrixSpace(Real)(2, 2)
 
 describe('VectorSpace', () => {
   var operator
@@ -118,22 +114,23 @@ describe('VectorSpace', () => {
   })
 
   describe('norm()', () => {
+    var operator = 'norm'
+
     it('is a static method', () => {
-      R2.norm([0, 1]).data.should.be.eql(1)
-      R3.norm([1, 1, 2]).data.should.be.eql(6)
+      staticUnaryOperator(R2, operator, [0, 1], 1)
+      staticUnaryOperator(R3, operator, [1, 1, 2], 6)
     })
   })
 
   describe('crossProduct()', () => {
+    var operator = 'crossProduct'
+
     it('is a static method', () => {
-      R3.crossProduct([3, -3, 1], [4, 9, 2]).should.be.eql([-15, -2, 39])
+      staticBinaryOperator(R3, operator, [3, -3, 1], [4, 9, 2], [-15, -2, 39])
     })
 
     it('is a class method', () => {
-      var vector1 = new R3([3, -3, 1])
-      var vector2 = new R3([-12, 12, -4])
-
-      vector1.crossProduct(vector2).data.should.be.eql([0, 0, 0])
+      methodBinaryOperator(R3, operator, [3, -3, 1], [-12, 12, -4], [0, 0, 0])
     })
 
     it('is defined only in dimension 3', () => {

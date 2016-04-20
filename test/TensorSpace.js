@@ -100,24 +100,27 @@ describe('TensorSpace', () => {
     describe('order', () => {
       it('is 0 for scalars', () => {
         var Scalar = TensorSpace(Real)([1])
+        Scalar.order.should.eql(0)
+
         var scalar1 = new Scalar(4)
-	Scalar.order.should.eql(0)
-	scalar1.order.should.eql(0)
+        scalar1.order.should.eql(0)
       })
 
       it('is 1 for vectors', () => {
         var Vector = TensorSpace(Real)([2])
+        Vector.order.should.eql(1)
+
         var vector1 = new Vector([1, 2])
-	Vector.order.should.eql(1)
-	vector1.order.should.eql(1)
+        vector1.order.should.eql(1)
       })
 
       it('is 2 for matrices', () => {
         var Matrix = TensorSpace(Real)([2, 2])
+        Matrix.order.should.eql(2)
+
         var matrix1 = new Matrix([1, 2,
-	                          3, 4])
-	Matrix.order.should.eql(2)
-	matrix1.order.should.eql(2)
+                                  3, 4])
+        matrix1.order.should.eql(2)
       })
     })
   })
@@ -131,8 +134,8 @@ describe('TensorSpace', () => {
 
         T2x2x2.addition(tensor1, tensor2).should.deepEqual(resultData)
 
-	var tensor3 = tensor1.addition(tensor2)
-	tensor3.data.should.deepEqual(resultData)
+        var tensor3 = tensor1.addition(tensor2)
+        tensor3.data.should.deepEqual(resultData)
       })
     })
 
@@ -144,8 +147,8 @@ describe('TensorSpace', () => {
 
         T2x2x2.subtraction(tensor1, tensor2).should.deepEqual(resultData)
 
-	var tensor3 = tensor1.subtraction(tensor2)
-	tensor3.data.should.deepEqual(resultData)
+        var tensor3 = tensor1.subtraction(tensor2)
+        tensor3.data.should.deepEqual(resultData)
       })
     })
 
@@ -157,8 +160,8 @@ describe('TensorSpace', () => {
 
         T2x2x2.scalarMultiplication(tensor1, scalar1).should.deepEqual(resultData)
 
-	var tensor2 = tensor1.scalarMultiplication(scalar1)
-	tensor2.data.should.deepEqual(resultData)
+        var tensor2 = tensor1.scalarMultiplication(scalar1)
+        tensor2.data.should.deepEqual(resultData)
       })
     })
   })

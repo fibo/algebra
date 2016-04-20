@@ -1,22 +1,19 @@
-var algebra = require('algebra')
-
-var notDefined = require('not-defined')
-
-var MatrixSpace = algebra.MatrixSpace
-var Real = algebra.Real
-var VectorSpace = algebra.VectorSpace
-
-var methodBinaryOperator = require('./features/methodBinaryOperator')
-var methodUnaryOperator = require('./features/methodUnaryOperator')
-var staticBinaryOperator = require('./features/staticBinaryOperator')
-var staticUnaryOperator = require('./features/staticUnaryOperator')
-
 describe('MatrixSpace', () => {
+  var algebra = require('algebra')
+
+  var notDefined = require('not-defined')
+
+  var MatrixSpace = algebra.MatrixSpace
+  var Real = algebra.Real
+
+  var methodBinaryOperator = require('./features/methodBinaryOperator')
+  var staticBinaryOperator = require('./features/staticBinaryOperator')
+  var staticUnaryOperator = require('./features/staticUnaryOperator')
+
   var R1x4 = MatrixSpace(Real)(1, 4)
   var R2x3 = MatrixSpace(Real)(2, 3)
   var R2x2 = MatrixSpace(Real)(2)
   var R3x2 = MatrixSpace(Real)(3, 2)
-  var R4 = VectorSpace(Real)(4)
 
   it('has signature (Scalar)(numRows, numCols)', () => {
     R2x3.numRows.should.be.eql(2)
@@ -198,10 +195,12 @@ describe('MatrixSpace', () => {
   })
 
   describe('trace()', () => {
-    it('is a static method', () => {
-      R2x2.trace([1, 2,
-                  5, 6]).should.be.eql(7)
-    })
+    var operator = 'trace'
+
+    it('is a static method', staticUnaryOperator(R2x2, operator,
+      [1, 2,
+       5, 6], 7
+    ))
 
     it('is not available for no square matrices', () => {
       notDefined(R3x2.trace).should.be.true
@@ -252,7 +251,7 @@ describe('MatrixSpace', () => {
 
     it('holds a transposed matrix', () => {
       var matrix2x3 = new R2x3([1, 2, 3,
-                                  4, 5, 6])
+                                4, 5, 6])
 
       matrix2x3.transposed.data.should.deepEqual([1, 4,
                                                   2, 5,

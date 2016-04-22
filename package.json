@@ -50,6 +50,7 @@
     "type": "git",
     "url": "git://github.com/fibo/algebra.git"
   },
+  "changelog": "gh-pages/changelog.md",
   "keywords": [
     "algebra",
     "matrix",

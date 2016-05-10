@@ -53,9 +53,7 @@ to describe geometric transformations, solve linear system, even to render the s
 you are looking at now, it is used a matrix to represent the pixels.
 A matrix has two indices, one for rows and one for columns. For instance
 
-```
 {% include display/matrix.html %}
-```
 
 The magic of tensors is that they generalize scalars, vectors and matrices and their operators,
 that is why I would like to build a matrix as the result of a [Tensor product][4]

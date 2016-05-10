@@ -1,9 +1,7 @@
 {
   "name": "algebra",
   "main": [
-    "dist/algebra.js",
-    "dist/algebra.map",
-    "dist/algebra.min.js"
+    "dist/algebra.js"
   ],
   "homepage": "http://g14n.info/algebra",
   "authors": [

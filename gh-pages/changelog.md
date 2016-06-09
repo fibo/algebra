@@ -16,6 +16,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 ## [Unreleased]
 
 - Replaced jshint with standardjs
+- fixed math formulas rendering in blog
 
 ## [v0.10.0] - 2016-04-16
 

@@ -135,8 +135,8 @@ function MatrixSpace (Scalar) {
 
         if (numRows === 1) {
           var Vector = VectorSpace(Scalar)(numCols)
-          return new Vector(result)
-        } else {
+            return new Vector(result)
+          } else {
           var Matrix = MatrixSpace(Scalar)(numCols, numRows)
           return new Matrix(result)
         }

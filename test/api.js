@@ -8,9 +8,12 @@ describe('API', () => {
   var R = algebra.R
   var R2 = algebra.R2
   var R3 = algebra.R3
+  var R2x2 = algebra.R2x2
   var Real = algebra.Real
   var Scalar = algebra.Scalar
+  var MatrixSpace = algebra.MatrixSpace
   var TensorSpace = algebra.TensorSpace
+  var VectorSpace = algebra.VectorSpace
 
   var booleanField = require('../src/booleanField')
 
@@ -94,34 +97,37 @@ describe('API', () => {
 
   describe('Common spaces', () => {
     describe('R', () => {
-      it('is an alias', () => {
+      it('is an alias of Real', () => {
         R.should.be.eql(Real)
       })
     })
 
     describe('R2', () => {
-      it(/* 'is an alias', () => {
-      }*/)
+      it('is an alias of VectorSpace(Real)(2)', () => {
+        R2.should.be.eql(VectorSpace(Real)(2))
+      })
     })
 
     describe('R3', () => {
-      it(/* 'is an alias', () => {
-      }*/)
+      it('is an alias of VectorSpace(Real)(3)', () => {
+        R3.should.be.eql(VectorSpace(Real)(3))
+      })
     })
 
     describe('R2x2', () => {
-      it(/* 'is an alias', () => {
-      }*/)
+      it('is an alias of MatrixSpace(Real)(2)', () => {
+        R2x2.should.be.eql(MatrixSpace(Real)(2))
+      })
     })
 
     describe('C', () => {
-      it('is an alias', () => {
+      it('is an alias of Complex', () => {
         C.should.be.eql(Complex)
       })
     })
 
     describe('H', () => {
-      it('is an alias', () => {
+      it('is an alias of Quaternion', () => {
         H.should.be.eql(Quaternion)
       })
     })

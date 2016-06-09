@@ -299,10 +299,11 @@ describe('MatrixSpace', () => {
 
   describe('tr', () => {
     it('is an alias of transposed', () => {
-      var matrix = new R2x2([0, 1,
-                             1, 0])
+      var matrix = new R3x2([0, 1,
+                             1, 0,
+                             2, 2])
 
-      matrix.tr.should.be.eql(matrix.transposed)
+      matrix.tr.data.should.be.eql(matrix.transposed.data)
     })
   })
 })

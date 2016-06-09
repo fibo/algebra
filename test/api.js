@@ -61,7 +61,7 @@ describe('API', () => {
   })
 
   describe('Cyclic', () => {
-    it('works'/*, () => {
+    it('works', () => {
       var Cyclic = algebra.Cyclic
 
       var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
@@ -70,7 +70,10 @@ describe('API', () => {
 
       var a = new Alphanum('a')
       a.data.should.eql('a')
-    }*/)
+
+      // TODO a.addition('a').should.eql('b')
+      // TODO Alphanum.addition('a', 'b').should.eql('c')
+    })
   })
 
   describe('Real', () => {

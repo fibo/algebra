@@ -307,9 +307,12 @@ var Cyclic = algebra.Cyclic
 // The elements String or Array length must be prime.
 var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
-// TODO var Alphanum = Cyclic(elements)
-// TODO var a = new Alphanum('a')
-// TODO a.data.should.eql('a')
+var Alphanum = Cyclic(elements)
+var a = new Alphanum('a')
+a.data // 'a'
+
+// TODO a.addition('a') // 'b'
+// TODO Alphanum.addition('a', 'b') // 'c'
 ```
 
 ### Scalar

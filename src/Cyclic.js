@@ -1,10 +1,17 @@
-var CompositionAlgebra = require('./CompositionAlgebra')
+var Scalar = require('./Scalar')
 var algebraCyclic = require('algebra-cyclic')
 
-function Cyclic (elements) {
+/**
+ * Create a Cyclic algebra.
+ *
+ * @param {String|Array} elements
+ * @param {Number} [n] must be 1, 2, 4 or 8.
+ */
+
+function Cyclic (elements, n) {
   var cyclicRing = algebraCyclic(elements)
 
-  return CompositionAlgebra(cyclicRing)(1)
+  return Scalar(cyclicRing, n)
 }
 
 module.exports = Cyclic

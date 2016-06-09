@@ -15,6 +15,8 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+- fixed cyclic algebra
+
 ## [v0.10.1] - 2016-06-09
 
 - Replaced jshint with standardjs

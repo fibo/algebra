@@ -5,7 +5,7 @@ title: algebra
 
 > Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
 
-[![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
+[![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
@@ -13,7 +13,7 @@ title: algebra
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
-**Table Of Contents:**
+## Table Of Contents
 
 * [Status](#status)
 * [Features](#features)
@@ -26,56 +26,14 @@ title: algebra
   - [About operators](#about-operators)
   - [Cyclic](#cyclic)
   - [Scalar](#scalar)
-    - [attributes](#scalar-attributes)
-      - [one](#scalarone)
-      - [zero](#scalarzero)
-      - [data](#scalardata)
-      - [order](#scalar-order)
-    - [operators](#scalar-operators)
-      - [equality](#scalar-equality)
-      - [disequality](#scalar-disequality)
-      - [addition](#scalar-addition)
-      - [subtraction](#scalar-subtraction)
-      - [multiplication](#scalar-multiplication)
-      - [division](#scalar-division)
-      - [negation](#scalar-negation)
-      - [inversion](#scalar-inversion)
-      - [conjugation](#scalar-conjugation)
   - [Real](#real)
   - [Complex](#complex)
   - [Quaternion](#quaternion)
   - [Octonion](#octonion)
   - [Common spaces](#common-spaces)
-    - [R](#r)
-    - [R2](#r2)
-    - [R3](#r3)
-    - [R2x2](#r2x2)
-    - [C](#c)
-    - [H](#h)
   - [Vector](#vector)
-    - [attributes](#vector-attributes)
-    - [operators](#vector-operators)
-      - [cross product](#cross-product)
   - [Matrix](#matrix)
-    - [attributes](#matrix-attributes)
-      - [isSquare](#matrixissquare)
-      - [numCols](#matrixnumcols)
-      - [numRows](#matrixnumrows)
-    - [operators](#matrix-operators)
-      - [multiplication](#matrix-multiplication)
-      - [inversion](#matrix-inversion)
-      - [determinant](#matrix-determinant)
-      - [adjoint](#matrix-adjoint)
   - [Tensor](#tensor)
-    - [attributes](#tensor-attributes)
-      - [one](#tensorone)
-      - [zero](#tensorzero)
-      - [data](#tensordata)
-      - [indices](#tensor-indices)
-      - [order](#tensor-order)
-    - [operators](#tensor-operators)
-      - [equality](#tensor-equality)
-      - [scalarMultiplication](#scalar-multiplication)
 * [License](#license)
 
 ## Status
@@ -86,21 +44,21 @@ I am currently adding more tests and examples to achieve a stable version.
 
 Many functionalities of previous versions are now in separated atomic packages:
 
-* [algebra-cyclic](http://npm.im/algebra-cyclic)
-* [algebra-group](http://npm.im/algebra-group)
-* [algebra-ring][algebra-ring]
-* [cayley-dickson](http://npm.im/cayley-dickson)
-* [indices-permutations](http://npm.im/indices-permutations)
-* [laplace-determinant](http://npm.im/laplace-determinant)
-* [matrix-multiplication](http://npm.im/matrix-multiplication)
-* [multidim-array-index](http://npm.im/multidim-array-index)
-* [tensor-contraction](http://npm.im/tensor-contraction)
-* [tensor-permutation](http://npm.im/tensor-product)
+* [algebra-cyclic]
+* [algebra-group]
+* [algebra-ring]
+* [cayley-dickson]
+* [indices-permutations]
+* [laplace-determinant]
+* [matrix-multiplication]
+* [multidim-array-index]
+* [tensor-contraction]
+* [tensor-permutation]
 
 ## Features
 
 * Real, Complex, Quaternion, Octonion numbers.
-* [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#scalars), of course :).
+* [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#real), of course :).
 * Expressive syntax.
 * Everything is a Tensor.
 * [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
@@ -108,13 +66,13 @@ Many functionalities of previous versions are now in separated atomic packages:
 
 ## Installation
 
-With [npm](https://npmjs.org/) do
+With [npm] do
 
 ```bash
 npm install algebra
 ```
 
-With [bower](http://bower.io/) do
+With [bower] do
 
 ```bash
 bower install algebra
@@ -576,9 +534,42 @@ Inherits everything from [Tensor](#tensor).
 
 ### Vector attributes
 
-##### `Vector.dimension`
+#### Vector dimension
+
+##### `Vector dimension`
+
+```javascript
+R2.dimension // 2
+```
+
+##### `vector.dimension`
+
+```javascript
+var vector = new R2([1, 1])
+
+vector.dimension // 2
+```
 
 ### Vector operators
+
+#### Addition
+
+##### `Vector.addition(vector1, vector2)`
+
+```javascript
+R2.addition([2, 1], [1, 2]) // [3, 3]
+```
+
+##### `vector1.addition(vector2)`
+
+```javascript
+var vector1 = new R2([2, 1])
+var vector2 = new R2([2, 2])
+
+var vector3 = vector1.addition(vector2)
+
+vector3 // Vector { data: [4, 3] }
+```
 
 #### Cross product
 
@@ -736,8 +727,19 @@ tensor2.equality(tensor2) // false
 
 [MIT](http://g14n.info/mit-license/)
 
+[npm]: https://npmjs.org/
+[bower]: http://bower.io/
 [blog]: http://g14n.info/algebra/articles "algebra blog"
-[algebra-ring]: http://npm.im/algebra-ring "algebra-ring"
 [composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
 [booleanField]: https://github.com/fibo/algebra/blob/master/src/booleanField.js "boolean field"
 [realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"
+[algebra-cyclic]: http://npm.im/algebra-cyclic
+[algebra-group]: http://npm.im/algebra-group
+[algebra-ring]: http://npm.im/algebra-ring
+[cayley-dickson]: http://npm.im/cayley-dickson
+[indices-permutations]: http://npm.im/indices-permutations
+[laplace-determinant]: http://npm.im/laplace-determinant
+[matrix-multiplication]: http://npm.im/matrix-multiplication
+[multidim-array-index]: http://npm.im/multidim-array-index
+[tensor-contraction]: http://npm.im/tensor-contraction
+[tensor-permutation]: http://npm.im/tensor-product

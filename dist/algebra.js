@@ -162,11 +162,11 @@ module.exports = staticProps
 module.exports={
   "_args": [
     [
-      "algebra-cyclic@^0.2.0",
+      "algebra-cyclic@0.2.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "algebra-cyclic@>=0.2.0 <0.3.0",
+  "_from": "algebra-cyclic@0.2.0",
   "_id": "algebra-cyclic@0.2.0",
   "_inCache": true,
   "_installable": true,
@@ -184,18 +184,19 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "algebra-cyclic",
-    "raw": "algebra-cyclic@^0.2.0",
-    "rawSpec": "^0.2.0",
+    "raw": "algebra-cyclic@0.2.0",
+    "rawSpec": "0.2.0",
     "scope": null,
-    "spec": ">=0.2.0 <0.3.0",
-    "type": "range"
+    "spec": "0.2.0",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
+  "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.0.tgz",
   "_shasum": "d66e5dd19c8dab497c9115456376b3ab84b7756b",
   "_shrinkwrap": null,
-  "_spec": "algebra-cyclic@^0.2.0",
+  "_spec": "algebra-cyclic@0.2.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1082,11 +1083,11 @@ arguments[4][2][0].apply(exports,arguments)
 module.exports={
   "_args": [
     [
-      "matrix-multiplication@^0.4.0",
+      "matrix-multiplication@0.4.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "matrix-multiplication@>=0.4.0 <0.5.0",
+  "_from": "matrix-multiplication@0.4.0",
   "_id": "matrix-multiplication@0.4.0",
   "_inCache": true,
   "_installable": true,
@@ -1104,18 +1105,19 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "matrix-multiplication",
-    "raw": "matrix-multiplication@^0.4.0",
-    "rawSpec": "^0.4.0",
+    "raw": "matrix-multiplication@0.4.0",
+    "rawSpec": "0.4.0",
     "scope": null,
-    "spec": ">=0.4.0 <0.5.0",
-    "type": "range"
+    "spec": "0.4.0",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
+  "_resolved": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.4.0.tgz",
   "_shasum": "d63c0885ecd788fa9290c16f483ef50fa16c13a1",
   "_shrinkwrap": null,
-  "_spec": "matrix-multiplication@^0.4.0",
+  "_spec": "matrix-multiplication@0.4.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1245,11 +1247,11 @@ module.exports = multiDimArrayIndex
 module.exports={
   "_args": [
     [
-      "multidim-array-index@^0.5.0",
+      "multidim-array-index@0.5.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "multidim-array-index@>=0.5.0 <0.6.0",
+  "_from": "multidim-array-index@0.5.0",
   "_id": "multidim-array-index@0.5.0",
   "_inCache": true,
   "_installable": true,
@@ -1267,18 +1269,19 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "multidim-array-index",
-    "raw": "multidim-array-index@^0.5.0",
-    "rawSpec": "^0.5.0",
+    "raw": "multidim-array-index@0.5.0",
+    "rawSpec": "0.5.0",
     "scope": null,
-    "spec": ">=0.5.0 <0.6.0",
-    "type": "range"
+    "spec": "0.5.0",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
+  "_resolved": "https://registry.npmjs.org/multidim-array-index/-/multidim-array-index-0.5.0.tgz",
   "_shasum": "34aceea031769c419df016819329142b0332bd07",
   "_shrinkwrap": null,
-  "_spec": "multidim-array-index@^0.5.0",
+  "_spec": "multidim-array-index@0.5.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1845,9 +1848,9 @@ function MatrixSpace(Scalar) {
           trace: trace(data)
         });
 
-        Object.defineProperties(this, {
-          determinant: { get: computeDeterminant },
-          det: { get: computeDeterminant }
+        staticProps(this)({
+          determinant: computeDeterminant,
+          det: computeDeterminant
         });
       }
 
@@ -1863,9 +1866,9 @@ function MatrixSpace(Scalar) {
         }
       }
 
-      Object.defineProperties(this, {
-        transposed: { get: transposed },
-        tr: { get: transposed }
+      staticProps(this)({
+        transposed: transposed,
+        tr: transposed
       });
     }
 

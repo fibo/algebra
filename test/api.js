@@ -133,7 +133,28 @@ describe('API', () => {
     })
   })
 
-  describe('Tensor', () => {
+  describe('Vector', () => {
+    describe('vector.dimension', () => {
+      it('is an attribute', () => {
+        var vector = new R2([1, 1])
+
+        vector.dimension.should.eql(2)
+      })
+    })
+
+    describe('addition', () => {
+      it('works', () => {
+        R2.addition([2, 1], [1, 2]).should.deepEqual([3, 3])
+
+        var vector1 = new R2([2, 1])
+        var vector2 = new R2([2, 2])
+
+        var vector3 = vector1.addition(vector2)
+
+        vector3.data.should.deepEqual([4, 3])
+      })
+    })
+
     describe('Cross product', () => {
       it('works', () => {
         R3.crossProduct([3, -3, 1], [4, 9, 2]).should.deepEqual([-15, -2, 39])

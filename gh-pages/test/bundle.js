@@ -199,11 +199,11 @@ module.exports = staticProps
 module.exports={
   "_args": [
     [
-      "algebra-cyclic@^0.2.0",
+      "algebra-cyclic@0.2.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "algebra-cyclic@>=0.2.0 <0.3.0",
+  "_from": "algebra-cyclic@0.2.0",
   "_id": "algebra-cyclic@0.2.0",
   "_inCache": true,
   "_installable": true,
@@ -221,18 +221,19 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "algebra-cyclic",
-    "raw": "algebra-cyclic@^0.2.0",
-    "rawSpec": "^0.2.0",
+    "raw": "algebra-cyclic@0.2.0",
+    "rawSpec": "0.2.0",
     "scope": null,
-    "spec": ">=0.2.0 <0.3.0",
-    "type": "range"
+    "spec": "0.2.0",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
+  "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.0.tgz",
   "_shasum": "d66e5dd19c8dab497c9115456376b3ab84b7756b",
   "_shrinkwrap": null,
-  "_spec": "algebra-cyclic@^0.2.0",
+  "_spec": "algebra-cyclic@0.2.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1119,11 +1120,11 @@ arguments[4][3][0].apply(exports,arguments)
 module.exports={
   "_args": [
     [
-      "matrix-multiplication@^0.4.0",
+      "matrix-multiplication@0.4.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "matrix-multiplication@>=0.4.0 <0.5.0",
+  "_from": "matrix-multiplication@0.4.0",
   "_id": "matrix-multiplication@0.4.0",
   "_inCache": true,
   "_installable": true,
@@ -1141,18 +1142,19 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "matrix-multiplication",
-    "raw": "matrix-multiplication@^0.4.0",
-    "rawSpec": "^0.4.0",
+    "raw": "matrix-multiplication@0.4.0",
+    "rawSpec": "0.4.0",
     "scope": null,
-    "spec": ">=0.4.0 <0.5.0",
-    "type": "range"
+    "spec": "0.4.0",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
+  "_resolved": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.4.0.tgz",
   "_shasum": "d63c0885ecd788fa9290c16f483ef50fa16c13a1",
   "_shrinkwrap": null,
-  "_spec": "matrix-multiplication@^0.4.0",
+  "_spec": "matrix-multiplication@0.4.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1282,11 +1284,11 @@ module.exports = multiDimArrayIndex
 module.exports={
   "_args": [
     [
-      "multidim-array-index@^0.5.0",
+      "multidim-array-index@0.5.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "multidim-array-index@>=0.5.0 <0.6.0",
+  "_from": "multidim-array-index@0.5.0",
   "_id": "multidim-array-index@0.5.0",
   "_inCache": true,
   "_installable": true,
@@ -1304,18 +1306,19 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "multidim-array-index",
-    "raw": "multidim-array-index@^0.5.0",
-    "rawSpec": "^0.5.0",
+    "raw": "multidim-array-index@0.5.0",
+    "rawSpec": "0.5.0",
     "scope": null,
-    "spec": ">=0.5.0 <0.6.0",
-    "type": "range"
+    "spec": "0.5.0",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
+  "_resolved": "https://registry.npmjs.org/multidim-array-index/-/multidim-array-index-0.5.0.tgz",
   "_shasum": "34aceea031769c419df016819329142b0332bd07",
   "_shrinkwrap": null,
-  "_spec": "multidim-array-index@^0.5.0",
+  "_spec": "multidim-array-index@0.5.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1882,9 +1885,9 @@ function MatrixSpace(Scalar) {
           trace: trace(data)
         });
 
-        Object.defineProperties(this, {
-          determinant: { get: computeDeterminant },
-          det: { get: computeDeterminant }
+        staticProps(this)({
+          determinant: computeDeterminant,
+          det: computeDeterminant
         });
       }
 
@@ -1900,9 +1903,9 @@ function MatrixSpace(Scalar) {
         }
       }
 
-      Object.defineProperties(this, {
-        transposed: { get: transposed },
-        tr: { get: transposed }
+      staticProps(this)({
+        transposed: transposed,
+        tr: transposed
       });
     }
 
@@ -2646,25 +2649,22 @@ describe('CompositionAlgebra', function () {
 },{"../src/CompositionAlgebra":28,"../src/realField":37}],41:[function(require,module,exports){
 'use strict';
 
-var algebra = require('algebra');
-
-var notDefined = require('not-defined');
-
-var MatrixSpace = algebra.MatrixSpace;
-var Real = algebra.Real;
-var VectorSpace = algebra.VectorSpace;
-
-var methodBinaryOperator = require('./features/methodBinaryOperator');
-var methodUnaryOperator = require('./features/methodUnaryOperator');
-var staticBinaryOperator = require('./features/staticBinaryOperator');
-var staticUnaryOperator = require('./features/staticUnaryOperator');
-
 describe('MatrixSpace', function () {
+  var algebra = require('algebra');
+
+  var notDefined = require('not-defined');
+
+  var MatrixSpace = algebra.MatrixSpace;
+  var Real = algebra.Real;
+
+  var methodBinaryOperator = require('./features/methodBinaryOperator');
+  var staticBinaryOperator = require('./features/staticBinaryOperator');
+  var staticUnaryOperator = require('./features/staticUnaryOperator');
+
   var R1x4 = MatrixSpace(Real)(1, 4);
   var R2x3 = MatrixSpace(Real)(2, 3);
   var R2x2 = MatrixSpace(Real)(2);
   var R3x2 = MatrixSpace(Real)(3, 2);
-  var R4 = VectorSpace(Real)(4);
 
   it('has signature (Scalar)(numRows, numCols)', function () {
     R2x3.numRows.should.be.eql(2);
@@ -2766,9 +2766,9 @@ describe('MatrixSpace', function () {
   });
 
   describe('trace()', function () {
-    it('is a static method', function () {
-      R2x2.trace([1, 2, 5, 6]).should.be.eql(7);
-    });
+    var operator = 'trace';
+
+    it('is a static method', staticUnaryOperator(R2x2, operator, [1, 2, 5, 6], 7));
 
     it('is not available for no square matrices', function () {
       notDefined(R3x2.trace).should.be.true;
@@ -2853,14 +2853,14 @@ describe('MatrixSpace', function () {
 
   describe('tr', function () {
     it('is an alias of transposed', function () {
-      var matrix = new R2x2([0, 1, 1, 0]);
+      var matrix = new R3x2([0, 1, 1, 0, 2, 2]);
 
-      matrix.tr.should.be.eql(matrix.transposed);
+      matrix.tr.data.should.be.eql(matrix.transposed.data);
     });
   });
 });
 
-},{"./features/methodBinaryOperator":49,"./features/methodUnaryOperator":50,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53,"not-defined":20}],42:[function(require,module,exports){
+},{"./features/methodBinaryOperator":49,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53,"not-defined":20}],42:[function(require,module,exports){
 'use strict';
 
 var algebra = require('algebra');
@@ -2873,7 +2873,8 @@ var staticBinaryOperator = require('./features/staticBinaryOperator');
 var staticUnaryOperator = require('./features/staticUnaryOperator');
 
 describe('Real', function () {
-  var operator, x;
+  var operator;
+  var x;
 
   describe('zero', function () {
     it('is static', function () {
@@ -2893,9 +2894,6 @@ describe('Real', function () {
     it('is a static method', staticBinaryOperator(R, operator, 2, 3, 5));
 
     it('is a class method', methodBinaryOperator(R, operator, 1, 2, 3));
-
-    // TODO
-    //it('accepts many arguments', multiArgumentOperator(R, operator, 1, [2, 3, 4], 10))
 
     it('accepts many arguments', function () {
       x = new R(1);
@@ -3111,22 +3109,25 @@ describe('TensorSpace', function () {
     describe('order', function () {
       it('is 0 for scalars', function () {
         var Scalar = TensorSpace(Real)([1]);
-        var scalar1 = new Scalar(4);
         Scalar.order.should.eql(0);
+
+        var scalar1 = new Scalar(4);
         scalar1.order.should.eql(0);
       });
 
       it('is 1 for vectors', function () {
         var Vector = TensorSpace(Real)([2]);
-        var vector1 = new Vector([1, 2]);
         Vector.order.should.eql(1);
+
+        var vector1 = new Vector([1, 2]);
         vector1.order.should.eql(1);
       });
 
       it('is 2 for matrices', function () {
         var Matrix = TensorSpace(Real)([2, 2]);
-        var matrix1 = new Matrix([1, 2, 3, 4]);
         Matrix.order.should.eql(2);
+
+        var matrix1 = new Matrix([1, 2, 3, 4]);
         matrix1.order.should.eql(2);
       });
     });
@@ -3180,19 +3181,15 @@ describe('TensorSpace', function () {
 var algebra = require('algebra');
 var notDefined = require('not-defined');
 
-var MatrixSpace = algebra.MatrixSpace;
 var Real = algebra.Real;
 var VectorSpace = algebra.VectorSpace;
 
 var methodBinaryOperator = require('./features/methodBinaryOperator');
-var methodUnaryOperator = require('./features/methodUnaryOperator');
 var staticBinaryOperator = require('./features/staticBinaryOperator');
 var staticUnaryOperator = require('./features/staticUnaryOperator');
 
 var R2 = VectorSpace(Real)(2);
 var R3 = VectorSpace(Real)(3);
-
-var R2x2 = MatrixSpace(Real)(2, 2);
 
 describe('VectorSpace', function () {
   var operator;
@@ -3298,22 +3295,23 @@ describe('VectorSpace', function () {
   });
 
   describe('norm()', function () {
+    var operator = 'norm';
+
     it('is a static method', function () {
-      R2.norm([0, 1]).data.should.be.eql(1);
-      R3.norm([1, 1, 2]).data.should.be.eql(6);
+      staticUnaryOperator(R2, operator, [0, 1], 1);
+      staticUnaryOperator(R3, operator, [1, 1, 2], 6);
     });
   });
 
   describe('crossProduct()', function () {
+    var operator = 'crossProduct';
+
     it('is a static method', function () {
-      R3.crossProduct([3, -3, 1], [4, 9, 2]).should.be.eql([-15, -2, 39]);
+      staticBinaryOperator(R3, operator, [3, -3, 1], [4, 9, 2], [-15, -2, 39]);
     });
 
     it('is a class method', function () {
-      var vector1 = new R3([3, -3, 1]);
-      var vector2 = new R3([-12, 12, -4]);
-
-      vector1.crossProduct(vector2).data.should.be.eql([0, 0, 0]);
+      methodBinaryOperator(R3, operator, [3, -3, 1], [-12, 12, -4], [0, 0, 0]);
     });
 
     it('is defined only in dimension 3', function () {
@@ -3334,7 +3332,7 @@ describe('VectorSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":49,"./features/methodUnaryOperator":50,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53,"not-defined":20}],46:[function(require,module,exports){
+},{"./features/methodBinaryOperator":49,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53,"not-defined":20}],46:[function(require,module,exports){
 'use strict';
 
 describe('API', function () {
@@ -3347,9 +3345,12 @@ describe('API', function () {
   var R = algebra.R;
   var R2 = algebra.R2;
   var R3 = algebra.R3;
+  var R2x2 = algebra.R2x2;
   var Real = algebra.Real;
   var Scalar = algebra.Scalar;
+  var MatrixSpace = algebra.MatrixSpace;
   var TensorSpace = algebra.TensorSpace;
+  var VectorSpace = algebra.VectorSpace;
 
   var booleanField = require('../src/booleanField');
 
@@ -3429,40 +3430,64 @@ describe('API', function () {
 
   describe('Common spaces', function () {
     describe('R', function () {
-      it('is an alias', function () {
+      it('is an alias of Real', function () {
         R.should.be.eql(Real);
       });
     });
 
     describe('R2', function () {
-      it();
+      it('is an alias of VectorSpace(Real)(2)', function () {
+        R2.should.be.eql(VectorSpace(Real)(2));
+      });
     });
 
-    /* 'is an alias', () => {
-    }*/describe('R3', function () {
-      it();
+    describe('R3', function () {
+      it('is an alias of VectorSpace(Real)(3)', function () {
+        R3.should.be.eql(VectorSpace(Real)(3));
+      });
     });
 
-    /* 'is an alias', () => {
-    }*/describe('R2x2', function () {
-      it();
+    describe('R2x2', function () {
+      it('is an alias of MatrixSpace(Real)(2)', function () {
+        R2x2.should.be.eql(MatrixSpace(Real)(2));
+      });
     });
 
-    /* 'is an alias', () => {
-    }*/describe('C', function () {
-      it('is an alias', function () {
+    describe('C', function () {
+      it('is an alias of Complex', function () {
         C.should.be.eql(Complex);
       });
     });
 
     describe('H', function () {
-      it('is an alias', function () {
+      it('is an alias of Quaternion', function () {
         H.should.be.eql(Quaternion);
       });
     });
   });
 
-  describe('Tensor', function () {
+  describe('Vector', function () {
+    describe('vector.dimension', function () {
+      it('is an attribute', function () {
+        var vector = new R2([1, 1]);
+
+        vector.dimension.should.eql(2);
+      });
+    });
+
+    describe('addition', function () {
+      it('works', function () {
+        R2.addition([2, 1], [1, 2]).should.deepEqual([3, 3]);
+
+        var vector1 = new R2([2, 1]);
+        var vector2 = new R2([2, 2]);
+
+        var vector3 = vector1.addition(vector2);
+
+        vector3.data.should.deepEqual([4, 3]);
+      });
+    });
+
     describe('Cross product', function () {
       it('works', function () {
         R3.crossProduct([3, -3, 1], [4, 9, 2]).should.deepEqual([-15, -2, 39]);

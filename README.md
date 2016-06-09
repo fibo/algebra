@@ -10,7 +10,7 @@
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
-**Table Of Contents:**
+## Table Of Contents
 
 * [Status](#status)
 * [Features](#features)
@@ -41,16 +41,16 @@ I am currently adding more tests and examples to achieve a stable version.
 
 Many functionalities of previous versions are now in separated atomic packages:
 
-* [algebra-cyclic](http://npm.im/algebra-cyclic)
-* [algebra-group](http://npm.im/algebra-group)
-* [algebra-ring][algebra-ring]
-* [cayley-dickson](http://npm.im/cayley-dickson)
-* [indices-permutations](http://npm.im/indices-permutations)
-* [laplace-determinant](http://npm.im/laplace-determinant)
-* [matrix-multiplication](http://npm.im/matrix-multiplication)
-* [multidim-array-index](http://npm.im/multidim-array-index)
-* [tensor-contraction](http://npm.im/tensor-contraction)
-* [tensor-permutation](http://npm.im/tensor-product)
+* [algebra-cyclic]
+* [algebra-group]
+* [algebra-ring]
+* [cayley-dickson]
+* [indices-permutations]
+* [laplace-determinant]
+* [matrix-multiplication]
+* [multidim-array-index]
+* [tensor-contraction]
+* [tensor-permutation]
 
 ## Features
 
@@ -63,13 +63,13 @@ Many functionalities of previous versions are now in separated atomic packages:
 
 ## Installation
 
-With [npm](https://npmjs.org/) do
+With [npm] do
 
 ```bash
 npm install algebra
 ```
 
-With [bower](http://bower.io/) do
+With [bower] do
 
 ```bash
 bower install algebra
@@ -531,9 +531,42 @@ Inherits everything from [Tensor](#tensor).
 
 ### Vector attributes
 
-##### `Vector.dimension`
+#### Vector dimension
+
+##### `Vector dimension`
+
+```javascript
+R2.dimension // 2
+```
+
+##### `vector.dimension`
+
+```javascript
+var vector = new R2([1, 1])
+
+vector.dimension // 2
+```
 
 ### Vector operators
+
+#### Addition
+
+##### `Vector.addition(vector1, vector2)`
+
+```javascript
+R2.addition([2, 1], [1, 2]) // [3, 3]
+```
+
+##### `vector1.addition(vector2)`
+
+```javascript
+var vector1 = new R2([2, 1])
+var vector2 = new R2([2, 2])
+
+var vector3 = vector1.addition(vector2)
+
+vector3 // Vector { data: [4, 3] }
+```
 
 #### Cross product
 
@@ -691,8 +724,19 @@ tensor2.equality(tensor2) // false
 
 [MIT](http://g14n.info/mit-license/)
 
+[npm]: https://npmjs.org/
+[bower]: http://bower.io/
 [blog]: http://g14n.info/algebra/articles "algebra blog"
-[algebra-ring]: http://npm.im/algebra-ring "algebra-ring"
 [composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
 [booleanField]: https://github.com/fibo/algebra/blob/master/src/booleanField.js "boolean field"
 [realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"
+[algebra-cyclic]: http://npm.im/algebra-cyclic
+[algebra-group]: http://npm.im/algebra-group
+[algebra-ring]: http://npm.im/algebra-ring
+[cayley-dickson]: http://npm.im/cayley-dickson
+[indices-permutations]: http://npm.im/indices-permutations
+[laplace-determinant]: http://npm.im/laplace-determinant
+[matrix-multiplication]: http://npm.im/matrix-multiplication
+[multidim-array-index]: http://npm.im/multidim-array-index
+[tensor-contraction]: http://npm.im/tensor-contraction
+[tensor-permutation]: http://npm.im/tensor-product

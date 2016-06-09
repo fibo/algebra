@@ -124,9 +124,9 @@ function MatrixSpace (Scalar) {
           trace: trace(data)
         })
 
-        Object.defineProperties(this, {
-          determinant: { get: computeDeterminant },
-          det: { get: computeDeterminant }
+        staticProps(this)({
+          determinant: computeDeterminant,
+          det: computeDeterminant
         })
       }
 
@@ -135,16 +135,16 @@ function MatrixSpace (Scalar) {
 
         if (numRows === 1) {
           var Vector = VectorSpace(Scalar)(numCols)
-            return new Vector(result)
-          } else {
+          return new Vector(result)
+        } else {
           var Matrix = MatrixSpace(Scalar)(numCols, numRows)
           return new Matrix(result)
         }
       }
 
-      Object.defineProperties(this, {
-        transposed: { get: transposed },
-        tr: { get: transposed }
+      staticProps(this)({
+        transposed,
+        tr: transposed
       })
     }
 

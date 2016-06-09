@@ -1,7 +1,7 @@
 {
   "name": "algebra",
   "description": "means completeness and balancing, from the Arabic word الجبر",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "engines": {
     "node": ">= 4.4.0"
   },
@@ -13,9 +13,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "_build": "npm test && npm run browserify && npm run minify && npm run tex && npm run jekyll; git status",
-    "_pull": "git pull origin master && npm run gh-pages:pull",
-    "_push": "git push origin master && npm run gh-pages:push",
+    "build": "npm test && npm run browserify && npm run minify && npm run tex && npm run jekyll; git status",
     "browserify": "npm run browserify:dist; npm run browserify:test",
     "browserify:dist": "browserify -r ./index.js:${npm_package_name} -t babelify -o dist/${npm_package_name}.js",
     "browserify:test": "browserify test/*.js -t babelify -o gh-pages/test/bundle.js",
@@ -39,7 +37,12 @@
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
     "postversion": "git push origin v${npm_package_version}; npm publish; npm run _push",
-    "test": "mocha --reporter min"
+    "postpublish": "npm run gh-pages:_data; git commit -am ':arrow_up: updated version'; npm run push",
+    "postupdate-deps": "npm test && git commit -am ':arrow_up: updated deps' || git checkout -- package.json",
+    "pull": "git pull origin master && npm run gh-pages:pull",
+    "push": "git push origin master && npm run gh-pages:push",
+    "test": "mocha --reporter min",
+    "update-deps": "npm update --save --dev"
   },
   "pre-commit": [
     "lint",
@@ -50,6 +53,7 @@
     "type": "git",
     "url": "git://github.com/fibo/algebra.git"
   },
+  "changelog": "gh-pages/changelog.md",
   "keywords": [
     "algebra",
     "matrix",
@@ -65,14 +69,13 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "coveralls": "^2.11.9",
-    "install": "^0.6.1",
     "istanbul": "^0.4.1",
-    "katex": "^0.5.1",
+    "katex": "^0.6.0",
     "mocha": "^2.3.4",
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.1.2",
-    "should": "^8.3.1",
-    "standard": "^6.0.8",
+    "should": "^9.0.0",
+    "standard": "^7.0.0",
     "uglify-js": "^2.6.2"
   },
   "dependencies": {
@@ -80,7 +83,6 @@
     "cayley-dickson": "^0.3.0",
     "indices-permutations": "^0.2.0",
     "inherits": "^2.0.1",
-    "is-integer": "^1.0.6",
     "laplace-determinant": "^0.1.0",
     "matrix-multiplication": "^0.4.0",
     "multidim-array-index": "^0.5.0",

@@ -15,13 +15,18 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+### Added
+
+- updated deps and coverage
+
 ## [v0.11.0] - 2016-06-28
 
 ### Added
 
 - More tests and examples
-- createScalar
+- createScalar(ring)
 - some ES2015 refactored code
+- updated deps and coverage
 
 ### Fixed
 

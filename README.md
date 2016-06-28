@@ -344,7 +344,7 @@ var y = x.add('c', 'a', 't')
 y.data // 's'
 ```
 
-Yes, they are [scalars][#scalar] so you can build vector or matrix spaces on top
+Yes, they are [scalars](#scalar) so you can build vector or matrix spaces on top
 of them.
 
 ```javascript
@@ -580,7 +580,7 @@ Inherits everything from [Tensor](#tensor).
 
 #### Vector dimension
 
-##### `Vector dimension`
+##### `Vector.dimension`
 
 ```javascript
 R2.dimension // 2
@@ -761,7 +761,7 @@ tensor2.equality(tensor2) // false
 
 ##### `tensor.negation()`
 
-#### Scalar multiplication
+#### Tensor multiplication
 
 ##### `Tensor.scalarMultiplication(tensor, scalar)`
 

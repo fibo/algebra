@@ -34,7 +34,7 @@
     "tex": "npm run tex:display; npm run tex:inline",
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
-    "postversion": "git push origin v${npm_package_version}; npm publish; npm run _push",
+    "postversion": "git push origin v${npm_package_version}; npm publish; npm run push",
     "postpublish": "npm run gh-pages:_data; git commit -am ':arrow_up: updated version'; npm run push",
     "postupdate-deps": "npm test && git commit -am ':arrow_up: updated deps' || git checkout -- package.json",
     "pull": "git pull origin master && npm run gh-pages:pull",
@@ -87,7 +87,7 @@
     "multidim-array-index": "^0.5.0",
     "not-defined": "^1.0.0",
     "static-props": "^1.0.0",
-    "strict-mode": "^0.5.0",
+    "strict-mode": "^0.6.0",
     "tensor-contraction": "^0.1.1",
     "tensor-product": "^0.2.0"
   }

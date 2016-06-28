@@ -15,6 +15,16 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+## [v0.11.0] - 2016-06-28
+
+### Added
+
+- More tests and examples
+- createScalar
+- some ES2015 refactored code
+
+### Fixed
+
 - fixed cyclic algebra
 
 ## [v0.10.1] - 2016-06-09

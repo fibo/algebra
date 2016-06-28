@@ -1,8 +1,8 @@
-var inherits = require('inherits')
-var operators = require('./operators.json')
-var staticProps = require('static-props')
-var TensorSpace = require('./TensorSpace')
-var toData = require('./toData')
+const inherits = require('inherits')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const TensorSpace = require('./TensorSpace')
+const toData = require('./toData')
 
 /**
  * Space of vectors
@@ -19,9 +19,9 @@ var toData = require('./toData')
  */
 
 function VectorSpace (Scalar) {
-  var addition = Scalar.addition
-  var multiplication = Scalar.multiplication
-  var subtraction = Scalar.subtraction
+  const addition = Scalar.addition
+  const multiplication = Scalar.multiplication
+  const subtraction = Scalar.subtraction
 
   /**
    * @param {Number} dimension
@@ -30,9 +30,9 @@ function VectorSpace (Scalar) {
    */
 
   return function (dimension) {
-    var indices = [dimension]
+    const indices = [dimension]
 
-    var AbstractVector = TensorSpace(Scalar)(indices)
+    const AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
      * Computes the cross product of two vectors.
@@ -46,18 +46,18 @@ function VectorSpace (Scalar) {
      */
 
     function crossProduct (vector1, vector2) {
-      var vectorData1 = toData(vector1)
-      var vectorData2 = toData(vector2)
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
 
-      var ux = vectorData1[0]
-      var uy = vectorData1[1]
-      var uz = vectorData1[2]
+      const ux = vectorData1[0]
+      const uy = vectorData1[1]
+      const uz = vectorData1[2]
 
-      var vx = vectorData2[0]
-      var vy = vectorData2[1]
-      var vz = vectorData2[2]
+      const vx = vectorData2[0]
+      const vy = vectorData2[1]
+      const vz = vectorData2[2]
 
-      var vector = []
+      let vector = []
 
       vector.push(subtraction(multiplication(uy, vz), multiplication(uz, vy)))
       vector.push(subtraction(multiplication(uz, vx), multiplication(ux, vz)))
@@ -79,11 +79,11 @@ function VectorSpace (Scalar) {
      */
 
     function norm (vector) {
-      var data = toData(vector)
+      const data = toData(vector)
 
-      var value = multiplication(data[0], data[0])
+      let value = multiplication(data[0], data[0])
 
-      for (var i = 1; i < dimension; i++) {
+      for (let i = 1; i < dimension; i++) {
         value = addition(value, multiplication(data[i], data[i]))
       }
 
@@ -120,7 +120,6 @@ function VectorSpace (Scalar) {
     }
 
     /**
-     * @class
      */
 
     function Vector (data) {
@@ -162,6 +161,10 @@ function VectorSpace (Scalar) {
 
     Vector.norm = norm
     Vector.scalarProduct = scalarProduct
+
+    operators.comparison.forEach((operator) => {
+      Vector[operator] = AbstractVector[operator]
+    })
 
     operators.set.forEach((operator) => {
       Vector[operator] = AbstractVector[operator]

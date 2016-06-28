@@ -35,7 +35,7 @@ require('strict-mode')(function () {
   exports.TensorSpace = require('./src/TensorSpace');
 });
 
-},{"./src/Cyclic":29,"./src/MatrixSpace":30,"./src/Scalar":31,"./src/TensorSpace":32,"./src/VectorSpace":33,"./src/realField":37,"strict-mode":23}],2:[function(require,module,exports){
+},{"./src/Cyclic":29,"./src/MatrixSpace":30,"./src/Scalar":31,"./src/TensorSpace":32,"./src/VectorSpace":33,"./src/realField":38,"strict-mode":23}],2:[function(require,module,exports){
 var algebraRing = require('algebra-ring')
 var staticProps = require('static-props')
 
@@ -199,11 +199,11 @@ module.exports = staticProps
 module.exports={
   "_args": [
     [
-      "algebra-cyclic@0.2.0",
+      "algebra-cyclic@^0.2.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "algebra-cyclic@0.2.0",
+  "_from": "algebra-cyclic@>=0.2.0 <0.3.0",
   "_id": "algebra-cyclic@0.2.0",
   "_inCache": true,
   "_installable": true,
@@ -221,11 +221,11 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "algebra-cyclic",
-    "raw": "algebra-cyclic@0.2.0",
-    "rawSpec": "0.2.0",
+    "raw": "algebra-cyclic@^0.2.0",
+    "rawSpec": "^0.2.0",
     "scope": null,
-    "spec": "0.2.0",
-    "type": "version"
+    "spec": ">=0.2.0 <0.3.0",
+    "type": "range"
   },
   "_requiredBy": [
     "/"
@@ -233,7 +233,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.0.tgz",
   "_shasum": "d66e5dd19c8dab497c9115456376b3ab84b7756b",
   "_shrinkwrap": null,
-  "_spec": "algebra-cyclic@0.2.0",
+  "_spec": "algebra-cyclic@^0.2.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1120,11 +1120,11 @@ arguments[4][3][0].apply(exports,arguments)
 module.exports={
   "_args": [
     [
-      "matrix-multiplication@0.4.0",
+      "matrix-multiplication@^0.4.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "matrix-multiplication@0.4.0",
+  "_from": "matrix-multiplication@>=0.4.0 <0.5.0",
   "_id": "matrix-multiplication@0.4.0",
   "_inCache": true,
   "_installable": true,
@@ -1142,11 +1142,11 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "matrix-multiplication",
-    "raw": "matrix-multiplication@0.4.0",
-    "rawSpec": "0.4.0",
+    "raw": "matrix-multiplication@^0.4.0",
+    "rawSpec": "^0.4.0",
     "scope": null,
-    "spec": "0.4.0",
-    "type": "version"
+    "spec": ">=0.4.0 <0.5.0",
+    "type": "range"
   },
   "_requiredBy": [
     "/"
@@ -1154,7 +1154,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.4.0.tgz",
   "_shasum": "d63c0885ecd788fa9290c16f483ef50fa16c13a1",
   "_shrinkwrap": null,
-  "_spec": "matrix-multiplication@0.4.0",
+  "_spec": "matrix-multiplication@^0.4.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1284,11 +1284,11 @@ module.exports = multiDimArrayIndex
 module.exports={
   "_args": [
     [
-      "multidim-array-index@0.5.0",
+      "multidim-array-index@^0.5.0",
       "/home/io/github.com/fibo/algebra"
     ]
   ],
-  "_from": "multidim-array-index@0.5.0",
+  "_from": "multidim-array-index@>=0.5.0 <0.6.0",
   "_id": "multidim-array-index@0.5.0",
   "_inCache": true,
   "_installable": true,
@@ -1306,11 +1306,11 @@ module.exports={
   "_phantomChildren": {},
   "_requested": {
     "name": "multidim-array-index",
-    "raw": "multidim-array-index@0.5.0",
-    "rawSpec": "0.5.0",
+    "raw": "multidim-array-index@^0.5.0",
+    "rawSpec": "^0.5.0",
     "scope": null,
-    "spec": "0.5.0",
-    "type": "version"
+    "spec": ">=0.5.0 <0.6.0",
+    "type": "range"
   },
   "_requiredBy": [
     "/"
@@ -1318,7 +1318,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/multidim-array-index/-/multidim-array-index-0.5.0.tgz",
   "_shasum": "34aceea031769c419df016819329142b0332bd07",
   "_shrinkwrap": null,
-  "_spec": "multidim-array-index@0.5.0",
+  "_spec": "multidim-array-index@^0.5.0",
   "_where": "/home/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1678,14 +1678,8 @@ function CompositionAlgebra(ring) {
       };
     });
 
-    staticProps(Scalar)({
-      contains: function contains() {
-        return K.contains;
-      },
-      notContains: function notContains() {
-        return K.notContains;
-      }
-    });
+    Scalar.contains = K.contains;
+    Scalar.notContains = K.notContains;
 
     Scalar.prototype.add = Scalar.prototype.addition;
     Scalar.prototype.mul = Scalar.prototype.multiplication;
@@ -1742,21 +1736,27 @@ function CompositionAlgebra(ring) {
 
 module.exports = CompositionAlgebra;
 
-},{"./coerced":35,"./operators.json":36,"./toData":38,"cayley-dickson":8,"static-props":22}],29:[function(require,module,exports){
+},{"./coerced":35,"./operators.json":37,"./toData":39,"cayley-dickson":8,"static-props":22}],29:[function(require,module,exports){
 'use strict';
 
-var CompositionAlgebra = require('./CompositionAlgebra');
 var algebraCyclic = require('algebra-cyclic');
+var createScalar = require('./createScalar');
+
+/**
+ * Create a Cyclic algebra.
+ *
+ * @param {String|Array} elements
+ */
 
 function Cyclic(elements) {
-  var cyclicRing = algebraCyclic(elements);
+  var ring = algebraCyclic(elements);
 
-  return CompositionAlgebra(cyclicRing)(1);
+  return createScalar(ring);
 }
 
 module.exports = Cyclic;
 
-},{"./CompositionAlgebra":28,"algebra-cyclic":2}],30:[function(require,module,exports){
+},{"./createScalar":36,"algebra-cyclic":2}],30:[function(require,module,exports){
 'use strict';
 
 var determinant = require('laplace-determinant');
@@ -1789,7 +1789,6 @@ function MatrixSpace(Scalar) {
   var contraction = tensorContraction.bind(null, Scalar.addition);
 
   /**
-   *
    * @param {Number} numRows
    * @param {Number} [numCols] defaults to a square matrix.
    *
@@ -1863,7 +1862,7 @@ function MatrixSpace(Scalar) {
     }
 
     /**
-     * @class
+     * Matrix element.
      */
 
     function Matrix(data) {
@@ -1898,8 +1897,8 @@ function MatrixSpace(Scalar) {
           var Vector = VectorSpace(Scalar)(numCols);
           return new Vector(result);
         } else {
-          var Matrix = MatrixSpace(Scalar)(numCols, numRows);
-          return new Matrix(result);
+          var _Matrix = MatrixSpace(Scalar)(numCols, numRows);
+          return new _Matrix(result);
         }
       }
 
@@ -1961,7 +1960,7 @@ function MatrixSpace(Scalar) {
 
 module.exports = MatrixSpace;
 
-},{"./TensorSpace":32,"./VectorSpace":33,"./operators.json":36,"./toData":38,"inherits":11,"laplace-determinant":14,"matrix-multiplication":15,"multidim-array-index":18,"not-defined":20,"static-props":22,"tensor-contraction":24}],31:[function(require,module,exports){
+},{"./TensorSpace":32,"./VectorSpace":33,"./operators.json":37,"./toData":39,"inherits":11,"laplace-determinant":14,"matrix-multiplication":15,"multidim-array-index":18,"not-defined":20,"static-props":22,"tensor-contraction":24}],31:[function(require,module,exports){
 'use strict';
 
 var CompositionAlgebra = require('./CompositionAlgebra');
@@ -2051,9 +2050,6 @@ function TensorSpace(Scalar) {
     }, []);
 
     /**
-     * Tensor
-     *
-     * @class
      */
 
     function Tensor(data) {
@@ -2173,7 +2169,7 @@ function TensorSpace(Scalar) {
 
 module.exports = TensorSpace;
 
-},{"./operators.json":36,"./toData":38,"static-props":22,"tensor-product":26}],33:[function(require,module,exports){
+},{"./operators.json":37,"./toData":39,"static-props":22,"tensor-product":26}],33:[function(require,module,exports){
 'use strict';
 
 var inherits = require('inherits');
@@ -2298,7 +2294,6 @@ function VectorSpace(Scalar) {
     }
 
     /**
-     * @class
      */
 
     function Vector(data) {
@@ -2341,6 +2336,10 @@ function VectorSpace(Scalar) {
     Vector.norm = norm;
     Vector.scalarProduct = scalarProduct;
 
+    operators.comparison.forEach(function (operator) {
+      Vector[operator] = AbstractVector[operator];
+    });
+
     operators.set.forEach(function (operator) {
       Vector[operator] = AbstractVector[operator];
     });
@@ -2370,7 +2369,7 @@ function VectorSpace(Scalar) {
 
 module.exports = VectorSpace;
 
-},{"./TensorSpace":32,"./operators.json":36,"./toData":38,"inherits":11,"static-props":22}],34:[function(require,module,exports){
+},{"./TensorSpace":32,"./operators.json":37,"./toData":39,"inherits":11,"static-props":22}],34:[function(require,module,exports){
 "use strict";
 
 var booleanField = {
@@ -2421,11 +2420,117 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":38}],36:[function(require,module,exports){
+},{"./toData":39}],36:[function(require,module,exports){
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var coerced = require('./coerced');
+var operators = require('./operators.json');
+var staticProps = require('static-props');
+var toData = require('./toData');
+
+/**
+ * @param {Object} ring
+ *
+ * @returns {Function} Scalar
+ */
+
+function createScalar(ring) {
+  var attributes = {
+    zero: ring.zero,
+    one: ring.one,
+    order: 0
+  };
+
+  /**
+   * Scalar element.
+   */
+
+  var Scalar = function Scalar(data) {
+    _classCallCheck(this, Scalar);
+
+    // validate data
+    if (ring.notContains(data)) {
+      throw new TypeError('Invalid data = ' + data);
+    }
+
+    var enumerable = true;
+    staticProps(this)({ data: data }, enumerable);
+
+    staticProps(this)(attributes);
+  };
+
+  staticProps(Scalar)(attributes);
+
+  var staticNary = function staticNary(operator) {
+    Scalar[operator] = function () {
+      var operands = [].slice.call(arguments).map(toData);
+      return coerced(ring[operator]).apply(null, operands);
+    };
+  };
+
+  operators.inversion.forEach(function (operator) {
+    Scalar[operator] = function (operand) {
+      return ring[operator](toData(operand));
+    };
+
+    Scalar.prototype[operator] = function () {
+      var data = Scalar[operator](this.data);
+
+      return new Scalar(data);
+    };
+  });
+
+  operators.group.concat(operators.ring).forEach(function (operator) {
+    staticNary(operator);
+
+    Scalar.prototype[operator] = function () {
+      var args = [].slice.call(arguments);
+      var operands = [this.data].concat(args);
+
+      var data = Scalar[operator].apply(null, operands);
+
+      return new Scalar(data);
+    };
+  });
+
+  operators.set.forEach(function (operator) {
+    staticNary(operator);
+  });
+
+  operators.comparison.forEach(function (operator) {
+    staticNary(operator);
+
+    Scalar.prototype[operator] = function () {
+      var args = [].slice.call(arguments);
+      var operands = [this.data].concat(args);
+
+      var bool = Scalar[operator].apply(null, operands);
+
+      return bool;
+    };
+  });
+
+  Object.keys(operators.aliasesOf).forEach(function (operator) {
+    operators.aliasesOf[operator].forEach(function (alias) {
+      Scalar[alias] = Scalar[operator];
+      Scalar.prototype[alias] = Scalar.prototype[operator];
+    });
+  });
+
+  return Scalar;
+}
+
+module.exports = createScalar;
+
+},{"./coerced":35,"./operators.json":37,"./toData":39,"static-props":22}],37:[function(require,module,exports){
 module.exports={
-  "set": [
+  "comparison": [
     "equality",
-    "disequality",
+    "disequality"
+  ],
+  "set": [
     "contains",
     "notContains"
   ],
@@ -2434,7 +2539,12 @@ module.exports={
     "subtraction"
   ],
   "ring": [
-    "multiplication"
+    "multiplication",
+    "division"
+  ],
+  "inversion": [
+    "inversion",
+    "negation"
   ],
   "aliasesOf": {
     "conjugation": [
@@ -2475,7 +2585,7 @@ module.exports={
   }
 }
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 'use strict';
 
 var realField = {
@@ -2504,7 +2614,7 @@ var realField = {
 
 module.exports = realField;
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 
 var no = require('not-defined');
@@ -2531,7 +2641,7 @@ function toData(arg) {
 
 module.exports = toData;
 
-},{"not-defined":20}],39:[function(require,module,exports){
+},{"not-defined":20}],40:[function(require,module,exports){
 'use strict';
 
 var algebra = require('algebra');
@@ -2607,7 +2717,7 @@ describe('Complex', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":49,"./features/methodUnaryOperator":50,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53}],40:[function(require,module,exports){
+},{"./features/methodBinaryOperator":51,"./features/methodUnaryOperator":52,"./features/staticBinaryOperator":53,"./features/staticUnaryOperator":54,"algebra":55}],41:[function(require,module,exports){
 'use strict';
 
 var CompositionAlgebra = require('../src/CompositionAlgebra');
@@ -2646,7 +2756,141 @@ describe('CompositionAlgebra', function () {
   });
 });
 
-},{"../src/CompositionAlgebra":28,"../src/realField":37}],41:[function(require,module,exports){
+},{"../src/CompositionAlgebra":28,"../src/realField":38}],42:[function(require,module,exports){
+'use strict';
+
+var algebra = require('algebra');
+
+var methodBinaryOperator = require('./features/methodBinaryOperator');
+var methodUnaryOperator = require('./features/methodUnaryOperator');
+var staticBinaryOperator = require('./features/staticBinaryOperator');
+var staticUnaryOperator = require('./features/staticUnaryOperator');
+
+var Cyclic = algebra.Cyclic;
+
+var elements = ' abcdefghijklmnopqrstuvwyxz0123456789';
+
+var Alphanum = Cyclic(elements);
+
+describe('Cyclic', function () {
+  describe('zero', function () {
+    it('is static', function () {
+      Alphanum.zero.should.eql(' ');
+    });
+  });
+
+  describe('one', function () {
+    it('is static', function () {
+      Alphanum.one.should.eql('a');
+    });
+  });
+
+  describe('addition', function () {
+    var operator = 'addition';
+
+    it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', 'b', 'c'));
+
+    it('is a class method', methodBinaryOperator(Alphanum, operator, 'a', 'b', 'c'));
+
+    it('accepts many arguments', function () {
+      var x = new Alphanum('b');
+      x = x.addition('a', 'a', 'a');
+      x.data.should.eql('e');
+    });
+  });
+
+  describe('subtraction', function () {
+    var operator = 'subtraction';
+
+    it('is a static method', staticBinaryOperator(Alphanum, operator, '8', 'b', '6'));
+
+    it('is a class method', methodBinaryOperator(Alphanum, operator, 'f', 'd', 'b'));
+
+    it('accepts many arguments', function () {
+      var x = new Alphanum('e');
+      x = x.subtraction('e', 'a', 'b');
+      x.data.should.eql('7');
+    });
+  });
+
+  describe('multiplication', function () {
+    var operator = 'multiplication';
+
+    it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', 'b', 'b'));
+
+    it('is a class method', methodBinaryOperator(Alphanum, operator, 'c', 'c', 'i'));
+
+    it('accepts many arguments', function () {
+      var x = new Alphanum('c');
+      x = x.multiplication('0', 'u', 'e');
+      x.data.should.eql('5');
+    });
+  });
+
+  describe('division', function () {
+    var operator = 'division';
+
+    it('is a static method', staticBinaryOperator(Alphanum, operator, 'e', 'n', 'c'));
+
+    it('is a class method', methodBinaryOperator(Alphanum, operator, 'r', 'o', 'p'));
+
+    it('accepts many arguments', function () {
+      var x = new Alphanum('y');
+      x = x.division('e', 'e');
+      x.data.should.eql('8');
+    });
+  });
+
+  describe('equality', function () {
+    var operator = 'equality';
+
+    it('is a static method', staticBinaryOperator(Alphanum, operator, 'z', 'z', true));
+
+    it('is a class method', function () {
+      var x = new Alphanum('g');
+      x.equality('g').should.be.ok;
+    });
+  });
+
+  describe('disequality', function () {
+    var operator = 'disequality';
+
+    it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', ' ', true));
+
+    it('is a class method', function () {
+      var x = new Alphanum('e');
+      x.disequality('n').should.be.ok;
+    });
+  });
+
+  describe('negation', function () {
+    var operator = 'negation';
+
+    it('is a static method', staticUnaryOperator(Alphanum, operator, 'c', '7'));
+
+    it('is a class method', methodUnaryOperator(Alphanum, operator, 'z', 'k'));
+
+    it('is an involution', function () {
+      var x = new Alphanum('d');
+      x.negation().negation().data.should.be.eql('d');
+    });
+  });
+
+  describe('inversion', function () {
+    var operator = 'inversion';
+
+    it('is a static method', staticUnaryOperator(Alphanum, operator, 'w', '2'));
+
+    it('is a class method', methodUnaryOperator(Alphanum, operator, 'y', 'q'));
+
+    it('is an involution', function () {
+      var x = new Alphanum('8');
+      x.inversion().inversion().data.should.be.eql('8');
+    });
+  });
+});
+
+},{"./features/methodBinaryOperator":51,"./features/methodUnaryOperator":52,"./features/staticBinaryOperator":53,"./features/staticUnaryOperator":54,"algebra":55}],43:[function(require,module,exports){
 'use strict';
 
 describe('MatrixSpace', function () {
@@ -2860,7 +3104,7 @@ describe('MatrixSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":49,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53,"not-defined":20}],42:[function(require,module,exports){
+},{"./features/methodBinaryOperator":51,"./features/staticBinaryOperator":53,"./features/staticUnaryOperator":54,"algebra":55,"not-defined":20}],44:[function(require,module,exports){
 'use strict';
 
 var algebra = require('algebra');
@@ -2873,9 +3117,6 @@ var staticBinaryOperator = require('./features/staticBinaryOperator');
 var staticUnaryOperator = require('./features/staticUnaryOperator');
 
 describe('Real', function () {
-  var operator;
-  var x;
-
   describe('zero', function () {
     it('is static', function () {
       R.zero.should.eql(0);
@@ -2889,111 +3130,111 @@ describe('Real', function () {
   });
 
   describe('addition', function () {
-    operator = 'addition';
+    var operator = 'addition';
 
     it('is a static method', staticBinaryOperator(R, operator, 2, 3, 5));
 
     it('is a class method', methodBinaryOperator(R, operator, 1, 2, 3));
 
     it('accepts many arguments', function () {
-      x = new R(1);
+      var x = new R(1);
       x = x.addition(2, 3, 4);
       x.data.should.eql(10);
     });
   });
 
   describe('subtraction', function () {
-    operator = 'subtraction';
+    var operator = 'subtraction';
 
     it('is a static method', staticBinaryOperator(R, operator, 2, 3, -1));
 
     it('is a class method', methodBinaryOperator(R, operator, -1, -4, 3));
 
     it('accepts many arguments', function () {
-      x = new R(10);
+      var x = new R(10);
       x = x.subtraction(1, 2, 3);
       x.data.should.eql(4);
     });
   });
 
   describe('multiplication', function () {
-    operator = 'multiplication';
+    var operator = 'multiplication';
 
     it('is a static method', staticBinaryOperator(R, operator, 8, -2, -16));
 
     it('is a class method', methodBinaryOperator(R, operator, 2, 2, 4));
 
     it('accepts many arguments', function () {
-      x = new R(2);
+      var x = new R(2);
       x = x.multiplication(3, 4, 5);
       x.data.should.eql(120);
     });
   });
 
   describe('division', function () {
-    operator = 'division';
+    var operator = 'division';
 
     it('is a static method', staticBinaryOperator(R, operator, 8, 2, 4));
 
     it('is a class method', methodBinaryOperator(R, operator, -2, 4, -0.5));
 
     it('accepts many arguments', function () {
-      x = new R(120);
+      var x = new R(120);
       x = x.division(3, 4, 5);
       x.data.should.eql(2);
     });
   });
 
   describe('equality', function () {
-    operator = 'equality';
+    var operator = 'equality';
 
     it('is a static method', staticBinaryOperator(R, operator, 10, 10, true));
 
     it('is a class method', function () {
-      x = new R(10);
+      var x = new R(10);
       x.equality(10).should.be.ok;
     });
   });
 
   describe('disequality', function () {
-    operator = 'disequality';
+    var operator = 'disequality';
 
     it('is a static method', staticBinaryOperator(R, operator, 10, 20, true));
 
     it('is a class method', function () {
-      x = new R(10);
+      var x = new R(10);
       x.disequality(20).should.be.ok;
     });
   });
 
   describe('negation', function () {
-    operator = 'negation';
+    var operator = 'negation';
 
     it('is a static method', staticUnaryOperator(R, operator, -2, 2));
 
     it('is a class method', methodUnaryOperator(R, operator, 8, -8));
 
     it('is an involution', function () {
-      x = new R(10);
+      var x = new R(10);
       x.negation().negation().data.should.be.eql(10);
     });
   });
 
   describe('inversion', function () {
-    operator = 'inversion';
+    var operator = 'inversion';
 
     it('is a static method', staticUnaryOperator(R, operator, 2, 0.5));
 
     it('is a class method', methodUnaryOperator(R, operator, -4, -0.25));
 
     it('is an involution', function () {
-      x = new R(10);
+      var x = new R(10);
       x.inversion().inversion().data.should.be.eql(10);
     });
   });
 });
 
-},{"./features/methodBinaryOperator":49,"./features/methodUnaryOperator":50,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53}],43:[function(require,module,exports){
+},{"./features/methodBinaryOperator":51,"./features/methodUnaryOperator":52,"./features/staticBinaryOperator":53,"./features/staticUnaryOperator":54,"algebra":55}],45:[function(require,module,exports){
 'use strict';
 
 var Scalar = require('algebra').Scalar;
@@ -3025,7 +3266,7 @@ describe('Scalar', function () {
   });
 });
 
-},{"../src/realField":37,"algebra":53}],44:[function(require,module,exports){
+},{"../src/realField":38,"algebra":55}],46:[function(require,module,exports){
 'use strict';
 
 describe('TensorSpace', function () {
@@ -3175,7 +3416,7 @@ describe('TensorSpace', function () {
   });
 });
 
-},{"algebra":53}],45:[function(require,module,exports){
+},{"algebra":55}],47:[function(require,module,exports){
 'use strict';
 
 var algebra = require('algebra');
@@ -3332,7 +3573,7 @@ describe('VectorSpace', function () {
   });
 });
 
-},{"./features/methodBinaryOperator":49,"./features/staticBinaryOperator":51,"./features/staticUnaryOperator":52,"algebra":53,"not-defined":20}],46:[function(require,module,exports){
+},{"./features/methodBinaryOperator":51,"./features/staticBinaryOperator":53,"./features/staticUnaryOperator":54,"algebra":55,"not-defined":20}],48:[function(require,module,exports){
 'use strict';
 
 describe('API', function () {
@@ -3373,7 +3614,7 @@ describe('API', function () {
     });
   });
 
-  describe('Bool', function () {
+  describe('Scalar', function () {
     var Bool = Scalar(booleanField);
 
     it('works', function () {
@@ -3397,13 +3638,33 @@ describe('API', function () {
   });
 
   describe('Cyclic', function () {
-    it('works' /*, () => {
-               var Cyclic = algebra.Cyclic
-               var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
-               var Alphanum = Cyclic(elements)
-               var a = new Alphanum('a')
-               a.data.should.eql('a')
-               }*/);
+    it('works', function () {
+      var Cyclic = algebra.Cyclic;
+
+      var elements = ' abcdefghijklmnopqrstuvwyxz0123456789';
+
+      var Alphanum = Cyclic(elements);
+
+      Alphanum.addition('a', 'b').should.eql('c');
+
+      var x = new Alphanum('a');
+
+      var y = x.add('c', 'a', 't').mul('i', 's').add('o', 'n').sub('t', 'h', 'e').div('t', 'a', 'b', 'l', 'e');
+
+      y.data.should.eql('s');
+
+      var VectorStrings2 = algebra.VectorSpace(Alphanum)(2);
+      var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2);
+
+      var vectorOfStrings = new VectorStrings2(['o', 'k']);
+      var matrixOfStrings = new MatrixStrings2x2(['c', 'o', 'o', 'l']);
+
+      matrixOfStrings.mul(vectorOfStrings).data.should.deepEqual(['x', 'y']);
+
+      // TODO vectorOfStrings.mul(matrixOfStrings)
+      // TODO                .data.should.deepEqual(['a', 'b',
+      // TODO                                        'a', 'v'])
+    });
   });
 
   describe('Real', function () {
@@ -3520,7 +3781,7 @@ describe('API', function () {
   });
 });
 
-},{"../src/booleanField":34,"algebra":53}],47:[function(require,module,exports){
+},{"../src/booleanField":34,"algebra":55}],49:[function(require,module,exports){
 'use strict';
 
 describe('booleanField', function () {
@@ -3566,7 +3827,7 @@ describe('booleanField', function () {
   });
 });
 
-},{"../src/booleanField":34}],48:[function(require,module,exports){
+},{"../src/booleanField":34}],50:[function(require,module,exports){
 'use strict';
 
 var coerced = require('../src/coerced');
@@ -3584,7 +3845,7 @@ describe('coerced', function () {
   });
 });
 
-},{"../src/coerced":35}],49:[function(require,module,exports){
+},{"../src/coerced":35}],51:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3613,7 +3874,7 @@ function mutatorBinaryOperator(Scalar, operator, operand1, operand2, resultData)
 
 module.exports = mutatorBinaryOperator;
 
-},{}],50:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3641,7 +3902,7 @@ function mutatorUnaryOperator(Scalar, operator, operand, resultData) {
 
 module.exports = mutatorUnaryOperator;
 
-},{}],51:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3664,7 +3925,7 @@ function staticBinaryOperator(Scalar, operator, operand1, operand2, result) {
 
 module.exports = staticBinaryOperator;
 
-},{}],52:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3686,13 +3947,13 @@ function staticUnaryOperator(Scalar, operator, operand, result) {
 
 module.exports = staticUnaryOperator;
 
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 
 // Cheating npm require.
 module.exports = require('../../..')
 
 
-},{"../../..":1}],54:[function(require,module,exports){
+},{"../../..":1}],56:[function(require,module,exports){
 'use strict';
 
 describe('Quick start', function () {
@@ -3760,4 +4021,4 @@ describe('Quick start', function () {
                    });
 });
 
-},{"../index":1}]},{},[39,40,41,42,43,44,45,46,47,48,54]);
+},{"../index":1}]},{},[40,41,42,43,44,45,46,47,48,49,50,56]);

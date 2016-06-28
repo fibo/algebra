@@ -1,17 +1,16 @@
-var Scalar = require('./Scalar')
 var algebraCyclic = require('algebra-cyclic')
+var createScalar = require('./createScalar')
 
 /**
  * Create a Cyclic algebra.
  *
  * @param {String|Array} elements
- * @param {Number} [n] must be 1, 2, 4 or 8.
  */
 
-function Cyclic (elements, n) {
-  var cyclicRing = algebraCyclic(elements)
+function Cyclic (elements) {
+  var ring = algebraCyclic(elements)
 
-  return Scalar(cyclicRing, n)
+  return createScalar(ring)
 }
 
 module.exports = Cyclic

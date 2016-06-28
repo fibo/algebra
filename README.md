@@ -2,9 +2,13 @@
 
 > Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
 
+**New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
+
 [![Node engine](https://img.shields.io/node/v/algebra.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
+
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 [![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 
@@ -301,6 +305,14 @@ vector1.data // still [1, 2]
 
 ##### `Cyclic(elements)`
 
+Create an algebra cyclic ring, by passing its elements. The elements are provided
+as a string or an array, which lenght must be a prime number. This is necessary,
+otherwise the result would be a wild land where you can find [zero divisor][zero_divisor] beasts.
+
+
+Let's create a cyclic ring containing lower case letters, numbers and the blank
+char. How many are they? They are 26 + 10 + 1 = 37, that is prime! We like it.
+
 ```javascript
 var Cyclic = algebra.Cyclic
 
@@ -308,11 +320,43 @@ var Cyclic = algebra.Cyclic
 var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
 var Alphanum = Cyclic(elements)
-var a = new Alphanum('a')
-a.data // 'a'
+```
 
-// TODO a.addition('a') // 'b'
-// TODO Alphanum.addition('a', 'b') // 'c'
+Operators derive from modular arithmetic
+
+```javascript
+var a = new Alphanum('a')
+
+Alphanum.addition('a', 'b') // 'c'
+```
+
+You can also create element instances, and do any kind of operations.
+
+```javascript
+var x = new Alphanum('a')
+
+var y = x.add('c', 'a', 't')
+         .mul('i', 's')
+         .add('o', 'n')
+         .sub('t', 'h', 'e')
+         .div('t', 'a', 'b', 'l', 'e')
+
+y.data // 's'
+```
+
+Yes, they are [scalars][#scalar] so you can build vector or matrix spaces on top
+of them.
+
+```javascript
+var VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
+var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+
+var vectorOfStrings = new VectorStrings2(['o', 'k'])
+var matrixOfStrings = new MatrixStrings2x2(['c', 'o',
+                                            'o', 'l'])
+
+matrixOfStrings.mul(vectorOfStrings).data // ['x', 'x'
+                                          //  'x', 'x']
 ```
 
 ### Scalar
@@ -743,3 +787,4 @@ tensor2.equality(tensor2) // false
 [multidim-array-index]: http://npm.im/multidim-array-index
 [tensor-contraction]: http://npm.im/tensor-contraction
 [tensor-permutation]: http://npm.im/tensor-product
+[zero_divisor]: https://en.wikipedia.org/wiki/Zero_divisor "Zero divisor"

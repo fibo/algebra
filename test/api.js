@@ -36,7 +36,7 @@ describe('API', () => {
     })
   })
 
-  describe('Bool', () => {
+  describe('Scalar', () => {
     var Bool = Scalar(booleanField)
 
     it('works', () => {
@@ -68,11 +68,31 @@ describe('API', () => {
 
       var Alphanum = Cyclic(elements)
 
-      var a = new Alphanum('a')
-      a.data.should.eql('a')
+      Alphanum.addition('a', 'b').should.eql('c')
 
-      // TODO a.addition('a').should.eql('b')
-      // TODO Alphanum.addition('a', 'b').should.eql('c')
+      var x = new Alphanum('a')
+
+      var y = x.add('c', 'a', 't')
+               .mul('i', 's')
+               .add('o', 'n')
+               .sub('t', 'h', 'e')
+               .div('t', 'a', 'b', 'l', 'e')
+
+      y.data.should.eql('s')
+
+      var VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
+      var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+
+      var vectorOfStrings = new VectorStrings2(['o', 'k'])
+      var matrixOfStrings = new MatrixStrings2x2(['c', 'o',
+                                                  'o', 'l'])
+
+      matrixOfStrings.mul(vectorOfStrings)
+                     .data.should.deepEqual(['x', 'y'])
+
+      // TODO vectorOfStrings.mul(matrixOfStrings)
+      // TODO                .data.should.deepEqual(['a', 'b',
+      // TODO                                        'a', 'v'])
     })
   })
 

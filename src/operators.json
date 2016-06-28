@@ -1,7 +1,9 @@
 {
-  "set": [
+  "comparison": [
     "equality",
-    "disequality",
+    "disequality"
+  ],
+  "set": [
     "contains",
     "notContains"
   ],
@@ -10,7 +12,12 @@
     "subtraction"
   ],
   "ring": [
-    "multiplication"
+    "multiplication",
+    "division"
+  ],
+  "inversion": [
+    "inversion",
+    "negation"
   ],
   "aliasesOf": {
     "conjugation": [

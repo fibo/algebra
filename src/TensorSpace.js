@@ -1,7 +1,7 @@
-var operators = require('./operators.json')
-var staticProps = require('static-props')
-var toData = require('./toData')
-var tensorProduct = require('tensor-product')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const toData = require('./toData')
+const tensorProduct = require('tensor-product')
 
 /**
  * Creates a tensor space that is a class representing a tensor.
@@ -12,7 +12,7 @@ var tensorProduct = require('tensor-product')
  */
 
 function TensorSpace (Scalar) {
-  var multiplication = Scalar.multiplication
+  const multiplication = Scalar.multiplication
 
   /**
    * @param {Array} indices
@@ -38,7 +38,7 @@ function TensorSpace (Scalar) {
     var dimension = indices.reduce((a, b) => a * b, 1)
 
     if (isScalar) {
-      staticProps(Scalar)({order: order})
+      staticProps(Scalar)({ order })
 
       return Scalar
     }
@@ -54,9 +54,6 @@ function TensorSpace (Scalar) {
     }, [])
 
     /**
-     * Tensor
-     *
-     * @class
      */
 
     function Tensor (data) {
@@ -78,12 +75,12 @@ function TensorSpace (Scalar) {
 
     function staticBinary (operator) {
       Tensor[operator] = function () {
-        var result = []
+        let result = []
 
-        for (var i = 0; i < dimension; i++) {
+        for (let i = 0; i < dimension; i++) {
           var operands = []
 
-          for (var j = 0; j < arguments.length; j++) {
+          for (let j = 0; j < arguments.length; j++) {
             operands.push(toData(arguments[j])[i])
           }
 
@@ -112,11 +109,11 @@ function TensorSpace (Scalar) {
     })
 
     function scalarMultiplication (tensor, scalar) {
-      var tensorData = toData(tensor)
+      const tensorData = toData(tensor)
 
-      var result = []
+      let result = []
 
-      for (var i = 0; i < dimension; i++) {
+      for (let i = 0; i < dimension; i++) {
         result.push(multiplication(tensorData[i], scalar))
       }
 
@@ -126,16 +123,16 @@ function TensorSpace (Scalar) {
     Tensor.scalarMultiplication = scalarMultiplication
 
     Tensor.prototype.scalarMultiplication = function (scalar) {
-      var data = scalarMultiplication(this, scalar)
+      const data = scalarMultiplication(this, scalar)
 
       return new Tensor(data)
     }
 
     Tensor.equality = function (tensor1, tensor2) {
-      var tensorData1 = toData(tensor1)
-      var tensorData2 = toData(tensor2)
+      const tensorData1 = toData(tensor1)
+      const tensorData2 = toData(tensor2)
 
-      for (var i = 0; i < dimension; i++) {
+      for (let i = 0; i < dimension; i++) {
         if (Scalar.disequality(tensorData1[i], tensorData2[i])) {
           return false
         }
@@ -149,7 +146,7 @@ function TensorSpace (Scalar) {
     }
 
     Tensor.product = function (leftData) {
-      return function (rightDim) {
+      return (rightDim) => {
         return function (rightData) {
           return tensorProduct(multiplication, indices, rightDim, leftData, rightData)
         }
@@ -157,8 +154,8 @@ function TensorSpace (Scalar) {
     }
 
     staticProps(Tensor)({
-      order: order,
-      zero: zero
+      order,
+      zero
     })
 
     var myOperators = operators.group

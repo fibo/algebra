@@ -2,7 +2,7 @@
 
 > Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
 
-**New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
+> **New!**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
 
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 

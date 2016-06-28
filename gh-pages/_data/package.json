@@ -2,9 +2,6 @@
   "name": "algebra",
   "description": "means completeness and balancing, from the Arabic word الجبر",
   "version": "0.10.1",
-  "engines": {
-    "node": ">= 4.4.0"
-  },
   "homepage": "http://g14n.info/algebra",
   "author": {
     "name": "Gianluca Casati",

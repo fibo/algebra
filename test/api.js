@@ -10,7 +10,7 @@ describe('API', () => {
   var R3 = algebra.R3
   var R2x2 = algebra.R2x2
   var Real = algebra.Real
-  var Scalar = algebra.Scalar
+  var CompositionAlgebra = algebra.CompositionAlgebra
   var MatrixSpace = algebra.MatrixSpace
   var TensorSpace = algebra.TensorSpace
   var VectorSpace = algebra.VectorSpace
@@ -36,8 +36,8 @@ describe('API', () => {
     })
   })
 
-  describe('Scalar', () => {
-    var Bool = Scalar(booleanField)
+  describe('CompositionAlgebra', () => {
+    var Bool = CompositionAlgebra(booleanField)
 
     it('works', () => {
       Bool.contains(true).should.be.ok
@@ -55,7 +55,7 @@ describe('API', () => {
       var f = false
       var t = true
 
-      var Byte = Scalar(booleanField, 8)
+      var Byte = CompositionAlgebra(booleanField, 8)
       var byte1 = new Byte([t, f, f, f, f, f, f, f])
     }*/)
   })

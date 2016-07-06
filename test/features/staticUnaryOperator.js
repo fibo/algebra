@@ -4,7 +4,7 @@
  * @param {Object} Scalar
  * @param {String} operator name
  * @param {*} operand
- * @param {*} result
+ * @param {*} result expected
  *
  * @returns {Function} staticUnaryOperatorTest
  */

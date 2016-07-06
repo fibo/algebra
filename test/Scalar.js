@@ -1,15 +1,9 @@
-var Scalar = require('algebra').Scalar
+var CompositionAlgebra = require('algebra').CompositionAlgebra
 var realField = require('../src/realField')
 
-var R = Scalar(realField)
+var R = CompositionAlgebra(realField)
 
-describe('Scalar', () => {
-  it('checks n is 1, 2, 4 or 8', () => {
-    ;(() => {
-      Scalar(realField, 3)
-    }).should.throw()
-  })
-
+describe('CompositionAlgebra', () => {
   describe('data', () => {
     var pi = new R(Math.PI)
 

@@ -43,7 +43,11 @@ function createScalar (ring) {
     }
   }
 
-  operators.inversion.forEach((operator) => {
+  var unaryOperators = operators.inversion
+
+  unaryOperators.push('conjugation')
+
+  unaryOperators.forEach((operator) => {
     Scalar[operator] = function (operand) {
       return ring[operator](toData(operand))
     }

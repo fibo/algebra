@@ -26,6 +26,7 @@
 * [API](#api)
   - [About operators](#about-operators)
   - [Cyclic](#cyclic)
+  - [Composition Algebra](#composition-algebra)
   - [Scalar](#scalar)
   - [Real](#real)
   - [Complex](#complex)
@@ -303,7 +304,7 @@ vector1.data // still [1, 2]
 
 ### Cyclic
 
-##### `Cyclic(elements)`
+#### `Cyclic(elements)`
 
 Create an algebra cyclic ring, by passing its elements. The elements are provided
 as a string or an array, which lenght must be a prime number. This is necessary,
@@ -359,18 +360,24 @@ matrixOfStrings.mul(vectorOfStrings).data // ['x', 'x'
                                           //  'x', 'x']
 ```
 
-### Scalar
+### CompositionAlgebra
 
-##### `Scalar(field[, n])`
+A [composition algebra][composition-algebra] is one of ℝ, ℂ, ℍ, O:
+Real, Complex, Quaternion, Octonion.
+A generic function is provided to iterate the [Cayley-Dickson construction][Cayley-Dickson_construction] over any field.
+
+#### `CompositionAlgebra(field[, num])`
+
+* num can be 1, 2, 4 or 8
 
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```javascript
-var Scalar = algebra.Scalar
+var CompositionAlgebra = algebra.CompositionAlgebra
 
 var booleanField = require('algebra/src/booleanField')
 
-var Bool = Scalar(booleanField)
+var Bool = CompositionAlgebra(booleanField)
 
 Bool.contains(true) // true
 Bool.contains(1) // false
@@ -382,7 +389,7 @@ t.negation().data // false
 ```
 
 Not so exciting, let's build something more interesting.
-Scalar accepts a second parameter, that is used to build a [Composition algebra][composition-algebra] over the given field.
+Let's pass a second parameter, that is used to build a [Composition algebra][composition-algebra] over the given field.
 It is something experimental also for me, right now I am writing this but I still do not know how it will behave.
 My idea is that
 
@@ -392,10 +399,12 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 ```
 // n must be a power of two
-// TODO var Byte = Scalar(boolean, 8)
+// TODO var Byte = CompositionAlgebra(boolean, 8)
 ```
 
-### Scalar attributes
+### Scalar
+
+#### Scalar attributes
 
 ##### `Scalar.one`
 
@@ -788,3 +797,4 @@ tensor2.equality(tensor2) // false
 [tensor-contraction]: http://npm.im/tensor-contraction
 [tensor-permutation]: http://npm.im/tensor-product
 [zero_divisor]: https://en.wikipedia.org/wiki/Zero_divisor "Zero divisor"
+[Cayley-Dickson_construction]: https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction "Cayley-Dickson construction"

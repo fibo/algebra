@@ -2,11 +2,17 @@ var CompositionAlgebra = require('../src/CompositionAlgebra')
 var realField = require('../src/realField')
 
 describe('CompositionAlgebra', () => {
-  it('has signature (field)(num)', () => {
-    var R = CompositionAlgebra(realField)(0)
-    var C = CompositionAlgebra(realField)(1)
-    var H = CompositionAlgebra(realField)(2)
-    var O = CompositionAlgebra(realField)(3)
+  it('checks n is 1, 2, 4 or 8', () => {
+    ;(() => {
+      CompositionAlgebra(realField, 3)
+    }).should.throw()
+  })
+
+  it('has signature (field, num)', () => {
+    var R = CompositionAlgebra(realField, 1)
+    var C = CompositionAlgebra(realField, 2)
+    var H = CompositionAlgebra(realField, 4)
+    var O = CompositionAlgebra(realField, 8)
 
     R.should.be.instanceOf(Function)
     C.should.be.instanceOf(Function)
@@ -15,8 +21,8 @@ describe('CompositionAlgebra', () => {
   })
 
   it('returns a Scalar class', () => {
-    var R = CompositionAlgebra(realField)(0)
-    var C = CompositionAlgebra(realField)(1)
+    var R = CompositionAlgebra(realField, 1)
+    var C = CompositionAlgebra(realField, 2)
 
     R.addition(2, 3).should.be.eql(5)
 

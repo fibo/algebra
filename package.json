@@ -20,7 +20,7 @@
     "decrypt:.coveralls.yml": "keybase decrypt -o .coveralls.yml .coveralls.yml.asc",
     "gh-pages:_data": "for x in package.json tags.json; do npm run gh-pages:_data:$x; done",
     "gh-pages:_data:package.json": "cp package.json gh-pages/_data/",
-    "gh-pages:_data:tags.json": "wget https://api.github.com/repos/fibo/algebra/tags -O gh-pages/_data/tags.json",
+    "gh-pages:_data:tags.json": "wget https://api.github.com/repos/fibo/${npm_package_name}/tags -O gh-pages/_data/tags.json",
     "gh-pages:push": "git subtree --prefix gh-pages push origin gh-pages",
     "gh-pages:pull": "git subtree --prefix gh-pages pull origin gh-pages",
     "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; cat README.md >> gh-pages/index.md",
@@ -73,8 +73,8 @@
     "mocha": "^2.3.4",
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.1.2",
-    "should": "^9.0.0",
-    "standard": "^7.0.0",
+    "should": "^11.0.0",
+    "standard": "^8.0.0",
     "uglify-js": "^2.6.2"
   },
   "dependencies": {
@@ -87,7 +87,7 @@
     "multidim-array-index": "^0.5.0",
     "not-defined": "^1.0.0",
     "static-props": "^1.0.0",
-    "strict-mode": "^0.6.0",
+    "strict-mode": "^1.0.0",
     "tensor-contraction": "^0.1.1",
     "tensor-product": "^0.2.0"
   }

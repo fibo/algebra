@@ -1,28 +1,28 @@
-var algebra = require('algebra')
+const algebra = require('algebra')
 
-var C = algebra.Complex
+const C = algebra.Complex
 
-var methodBinaryOperator = require('./features/methodBinaryOperator')
-var methodUnaryOperator = require('./features/methodUnaryOperator')
-var staticBinaryOperator = require('./features/staticBinaryOperator')
-var staticUnaryOperator = require('./features/staticUnaryOperator')
+const methodBinaryOperator = require('./features/methodBinaryOperator')
+const methodUnaryOperator = require('./features/methodUnaryOperator')
+const staticBinaryOperator = require('./features/staticBinaryOperator')
+const staticUnaryOperator = require('./features/staticUnaryOperator')
 
-describe('Complex', function () {
+describe('Complex', () => {
   var operator
 
-  describe('zero', function () {
-    it('is static', function () {
+  describe('zero', () => {
+    it('is static', () => {
       C.zero.should.eql([0, 0])
     })
   })
 
-  describe('one', function () {
-    it('is static', function () {
+  describe('one', () => {
+    it('is static', () => {
       C.one.should.eql([1, 0])
     })
   })
 
-  describe('addition', function () {
+  describe('addition', () => {
     operator = 'addition'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [4, 4]))
@@ -30,7 +30,7 @@ describe('Complex', function () {
     it('is a class method', methodBinaryOperator(C, operator, [1, 2], [1, -1], [2, 1]))
   })
 
-  describe('subtraction', function () {
+  describe('subtraction', () => {
     operator = 'subtraction'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [0, -2]))
@@ -38,7 +38,7 @@ describe('Complex', function () {
     it('is a class method', methodBinaryOperator(C, operator, [0, 2], [1, -2], [-1, 4]))
   })
 
-  describe('multiplication', function () {
+  describe('multiplication', () => {
     operator = 'multiplication'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, -1], [5, 0]))
@@ -46,7 +46,7 @@ describe('Complex', function () {
     it('is a class method', methodBinaryOperator(C, operator, [1, 2], [-1, 2], [-5, 0]))
   })
 
-  describe('division', function () {
+  describe('division', () => {
     operator = 'division'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 4], [2, 0], [1, 2]))
@@ -54,7 +54,7 @@ describe('Complex', function () {
     it('is a class method', methodBinaryOperator(C, operator, [5, 0], [2, -1], [2, 1]))
   })
 
-  describe('negation', function () {
+  describe('negation', () => {
     operator = 'negation'
 
     it('is a static method', staticUnaryOperator(C, operator, [-2, 1], [2, -1]))
@@ -62,7 +62,7 @@ describe('Complex', function () {
     it('is a class method', methodUnaryOperator(C, operator, [1, 8], [-1, -8]))
   })
 
-  describe('conjugation', function () {
+  describe('conjugation', () => {
     operator = 'conjugation'
 
     it('is a static method', staticUnaryOperator(C, operator, [2, 1], [2, -1]))

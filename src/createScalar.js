@@ -1,7 +1,7 @@
-var coerced = require('./coerced')
-var operators = require('./operators.json')
-var staticProps = require('static-props')
-var toData = require('./toData')
+const coerced = require('./coerced')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const toData = require('./toData')
 
 /**
  * @param {Object} ring
@@ -10,7 +10,7 @@ var toData = require('./toData')
  */
 
 function createScalar (ring) {
-  var attributes = {
+  const attributes = {
     zero: ring.zero,
     one: ring.one,
     order: 0
@@ -27,7 +27,7 @@ function createScalar (ring) {
         throw new TypeError('Invalid data = ' + data)
       }
 
-      var enumerable = true
+      const enumerable = true
       staticProps(this)({ data }, enumerable)
 
       staticProps(this)(attributes)

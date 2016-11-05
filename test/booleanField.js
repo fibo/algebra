@@ -1,5 +1,5 @@
 describe('booleanField', () => {
-  var bool = require('../src/booleanField')
+  const bool = require('../src/booleanField')
 
   describe('contains', () => {
     it('ok for booleans, otherwise false', () => {

@@ -7,7 +7,9 @@ title: algebra
 
 > **New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
 
-[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
+**NOTA BENE** Immagine all code examples below as written in some REPL where expected output is documented as a comment.
+
+[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.min.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.min.js) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
@@ -29,6 +31,7 @@ title: algebra
 * [API](#api)
   - [About operators](#about-operators)
   - [Cyclic](#cyclic)
+  - [Composition Algebra](#composition-algebra)
   - [Scalar](#scalar)
   - [Real](#real)
   - [Complex](#complex)
@@ -83,7 +86,7 @@ bower install algebra
 ```
 or use a CDN adding this to your HTML page
 
-```
+```html
 <script src="https://cdn.rawgit.com/fibo/algebra/master/dist/algebra.min.js"></script>
 ```
 
@@ -93,8 +96,8 @@ or use a CDN adding this to your HTML page
 
 First of all, import *algebra* package.
 
-```
-var algebra = require('algebra')
+```javascript
+const algebra = require('algebra')
 ```
 
 ### Try it out
@@ -112,7 +115,7 @@ All code in the examples below should be contained into a single file, like [tes
 Use the Real numbers as scalars.
 
 ```javascript
-var R = algebra.Real
+const R = algebra.Real
 ```
 
 Every operator is implemented both as a static function and as an object method.
@@ -128,8 +131,8 @@ R.add(1, 2, 3) // 1 + 2 + 3 = 6
 Create two real number objects: x = 2, y = -2
 
 ```javascript
-var x = new R(2)
-var y = new R(-2)
+const x = new R(2)
+const y = new R(-2)
 ```
 
 The value *r* is the result of x multiplied by y.
@@ -165,10 +168,10 @@ x.notEqual(Math.PI) // true
 You can also play with Complexes.
 
 ```javascript
-var C = algebra.Complex
+const C = algebra.Complex
 
-var z1 = new C([1, 2])
-var z2 = new C([3, 4])
+let z1 = new C([1, 2])
+const z2 = new C([3, 4])
 
 z1 = z1.mul(z2)
 
@@ -184,14 +187,14 @@ z1.data // [-10, -20]
 Create vector space of dimension 2 over Reals.
 
 ```javascript
-var R2 = algebra.VectorSpace(R)(2)
+const R2 = algebra.VectorSpace(R)(2)
 ```
 
 Create two vectors and add them.
 
 ```javascript
-var v1 = new R2([0, 1])
-var v2 = new R2([1, -2])
+let v1 = new R2([0, 1])
+const v2 = new R2([1, -2])
 
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
 v1 = v1.add(v2)
@@ -204,17 +207,17 @@ v1 // Vector { data: [1, -1] }
 Create space of matrices 3 x 2 over Reals.
 
 ```javascript
-var R3x2 = algebra.MatrixSpace(R)(3, 2)
+const R3x2 = algebra.MatrixSpace(R)(3, 2)
 ```
 
 Create a matrix.
 
-```
+```javascript
 //       | 1 1 |
 //  m1 = | 0 1 |
 //       | 1 0 |
 //
-var m1 = new R3x2([1, 1,
+const m1 = new R3x2([1, 1,
                    0, 1,
                    1, 0])
 ```
@@ -233,21 +236,21 @@ Then, following the row by column multiplication law we have
 //    v3 = m1 * v1 = | 0 1 | * [1 , -1] = [0, -1, 1]
 //                   | 1 0 |
 
-var v3 = m1.mul(v1)
+const v3 = m1.mul(v1)
 
 v3.data // [0, -1, 1]
 ```
 
 Let's try with two square matrices 2 x 2.
 
-```
-var R2x2 = algebra.MatrixSpace(R)(2, 2)
+```javascript
+const R2x2 = algebra.MatrixSpace(R)(2, 2)
 
-var m2 = new R2x2([1, 0,
+let m2 = new R2x2([1, 0,
                    0, 2])
 
-var m3 = new R2x2([0, -1,
-                   1, 0])
+const m3 = new R2x2([0, -1,
+                     1, 0])
 
 m2 = m2.mul(m3)
 
@@ -269,10 +272,10 @@ In both cases, operands are coerced to raw data.
 As an example, consider addition of vectors in a plane.
 
 ```javascript
-var R2 = algebra.R2
+const R2 = algebra.R2
 
-var vector1 = new R2([1, 2])
-var vector2 = new R2([3, 4])
+const vector1 = new R2([1, 2])
+const vector2 = new R2([3, 4])
 ```
 
 The following static methods, give the same result: `[4, 6]`.
@@ -286,8 +289,8 @@ R2.addition(vector1, vector2)
 The following object methods, give the same result: a vector instance with data `[4, 6]`.
 
 ```javascript
-var vector3 = vector1.addition([3, 4])
-var vector4 = vector1.addition(vector2)
+const vector3 = vector1.addition([3, 4])
+const vector4 = vector1.addition(vector2)
 
 R2.equal(vector3, vector4) // true
 ```
@@ -306,7 +309,7 @@ vector1.data // still [1, 2]
 
 ### Cyclic
 
-##### `Cyclic(elements)`
+#### `Cyclic(elements)`
 
 Create an algebra cyclic ring, by passing its elements. The elements are provided
 as a string or an array, which lenght must be a prime number. This is necessary,
@@ -317,18 +320,18 @@ Let's create a cyclic ring containing lower case letters, numbers and the blank
 char. How many are they? They are 26 + 10 + 1 = 37, that is prime! We like it.
 
 ```javascript
-var Cyclic = algebra.Cyclic
+const Cyclic = algebra.Cyclic
 
 // The elements String or Array length must be prime.
-var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
-var Alphanum = Cyclic(elements)
+const Alphanum = Cyclic(elements)
 ```
 
 Operators derive from modular arithmetic
 
 ```javascript
-var a = new Alphanum('a')
+const a = new Alphanum('a')
 
 Alphanum.addition('a', 'b') // 'c'
 ```
@@ -336,56 +339,68 @@ Alphanum.addition('a', 'b') // 'c'
 You can also create element instances, and do any kind of operations.
 
 ```javascript
-var x = new Alphanum('a')
+const x = new Alphanum('a')
 
-var y = x.add('c', 'a', 't')
-         .mul('i', 's')
-         .add('o', 'n')
-         .sub('t', 'h', 'e')
-         .div('t', 'a', 'b', 'l', 'e')
+const y = x.add('c', 'a', 't')
+           .mul('i', 's')
+           .add('o', 'n')
+           .sub('t', 'h', 'e')
+           .div('t', 'a', 'b', 'l', 'e')
 
 y.data // 's'
 ```
 
-Yes, they are [scalars][#scalar] so you can build vector or matrix spaces on top
-of them.
+Yes, they are [scalars](#scalar) so you can build vector or matrix spaces on top of them.
 
 ```javascript
-var VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
+const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+const
+const vectorOfStrings = new VectorStrings2(['o', 'k'])
+const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
+                                              'o', 'l'])
 
-var vectorOfStrings = new VectorStrings2(['o', 'k'])
-var matrixOfStrings = new MatrixStrings2x2(['c', 'o',
-                                            'o', 'l'])
-
-matrixOfStrings.mul(vectorOfStrings).data // ['x', 'x'
-                                          //  'x', 'x']
+matrixOfStrings.mul(vectorOfStrings).data // ['x', 'y']
 ```
 
-### Scalar
+Note that, in the particular example above, since the matrix is simmetric
+it commutes with the vector, hence changing the order of the operands
+the result is still the same.
 
-##### `Scalar(field[, n])`
+```javascript
+vectorOfStrings.mul(matrixOfStrings).data // ['x', 'y']
+```
+
+### CompositionAlgebra
+
+A [composition algebra][composition-algebra] is one of ℝ, ℂ, ℍ, O:
+Real, Complex, Quaternion, Octonion.
+A generic function is provided to iterate the [Cayley-Dickson construction][Cayley-Dickson_construction] over any field.
+
+#### `CompositionAlgebra(field[, num])`
+
+* num can be 1, 2, 4 or 8
 
 Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```javascript
-var Scalar = algebra.Scalar
+const CompositionAlgebra = algebra.CompositionAlgebra
 
-var booleanField = require('algebra/src/booleanField')
+const booleanField = require('algebra/src/booleanField')
 
-var Bool = Scalar(booleanField)
+const Bool = CompositionAlgebra(booleanField)
 
 Bool.contains(true) // true
 Bool.contains(1) // false
 
 Bool.addition(true, false) // true
 
-var t = new Bool(true)
+const t = new Bool(true)
 t.negation().data // false
 ```
 
 Not so exciting, let's build something more interesting.
-Scalar accepts a second parameter, that is used to build a [Composition algebra][composition-algebra] over the given field.
+Let's pass a second parameter, that is used to build a [Composition algebra][composition-algebra] over the given field.
 It is something experimental also for me, right now I am writing this but I still do not know how it will behave.
 My idea is that
 
@@ -395,10 +410,12 @@ Maybe we can discover some new byte operator, taken from octonion rich algebra s
 
 ```
 // n must be a power of two
-// TODO var Byte = Scalar(boolean, 8)
+// TODO var Byte = CompositionAlgebra(boolean, 8)
 ```
 
-### Scalar attributes
+### Scalar
+
+#### Scalar attributes
 
 ##### `Scalar.one`
 
@@ -481,12 +498,12 @@ It is always 0 for scalars, see also [tensor order](#tensor-order).
 Inherits everything from [Scalar](#scalar).
 
 ```javascript
-var Real = algebra.Real
+const Real = algebra.Real
 
 Real.addition(1, 2) // 3
 
-var pi = new Real(Math.PI)
-var twoPi = pi.mul(2)
+const pi = new Real(Math.PI)
+const twoPi = pi.mul(2)
 
 Real.subtraction(twoPi, 2 * Math.PI) // 0
 ```
@@ -496,9 +513,9 @@ Real.subtraction(twoPi, 2 * Math.PI) // 0
 Inherits everything from [Scalar](#scalar).
 
 ```javascript
-var Complex = algebra.Complex
+const Complex = algebra.Complex
 
-var complex1 = new Complex([1, 2])
+const complex1 = new Complex([1, 2])
 
 complex1.conjugation() // Complex { data: [1, -2] }
 ```
@@ -520,7 +537,7 @@ The real line.
 It is in alias of [Real](#real).
 
 ```javascript
-var R = algebra.R
+const R = algebra.R
 ```
 
 #### R2
@@ -528,7 +545,7 @@ var R = algebra.R
 The real plane.
 
 ```javascript
-var R2 = algebra.R2
+const R2 = algebra.R2
 ```
 
 It is in alias of `VectorSpace(Real)(2)`.
@@ -538,7 +555,7 @@ It is in alias of `VectorSpace(Real)(2)`.
 The real space.
 
 ```javascript
-var R3 = algebra.R3
+const R3 = algebra.R3
 ```
 
 It is in alias of `VectorSpace(Real)(3)`.
@@ -548,7 +565,7 @@ It is in alias of `VectorSpace(Real)(3)`.
 Real square matrices of rank 2.
 
 ```javascript
-var R2x2 = algebra.R2x2
+const R2x2 = algebra.R2x2
 ```
 
 It is in alias of `MatrixSpace(Real)(2)`.
@@ -560,7 +577,7 @@ The complex numbers.
 It is in alias of [Complex](#complex).
 
 ```javascript
-var C = algebra.C
+const C = algebra.C
 ```
 
 #### H
@@ -570,7 +587,7 @@ Usually it is used the **H** in honour of [Sir Hamilton](https://en.wikipedia.or
 It is in alias of [Quaternion](#quaternion).
 
 ```javascript
-var H = algebra.H
+const H = algebra.H
 ```
 
 ### Vector
@@ -583,7 +600,7 @@ Inherits everything from [Tensor](#tensor).
 
 #### Vector dimension
 
-##### `Vector dimension`
+##### `Vector.dimension`
 
 ```javascript
 R2.dimension // 2
@@ -592,7 +609,7 @@ R2.dimension // 2
 ##### `vector.dimension`
 
 ```javascript
-var vector = new R2([1, 1])
+const vector = new R2([1, 1])
 
 vector.dimension // 2
 ```
@@ -610,10 +627,10 @@ R2.addition([2, 1], [1, 2]) // [3, 3]
 ##### `vector1.addition(vector2)`
 
 ```javascript
-var vector1 = new R2([2, 1])
-var vector2 = new R2([2, 2])
+const vector1 = new R2([2, 1])
+const vector2 = new R2([2, 2])
 
-var vector3 = vector1.addition(vector2)
+const vector3 = vector1.addition(vector2)
 
 vector3 // Vector { data: [4, 3] }
 ```
@@ -631,10 +648,10 @@ R3.crossProduct([3, -3, 1], [4, 9, 2]) // [-15, 2, 39]
 ##### `vector1.crossProduct(vector2)`
 
 ```javascript
-var vector1 = new R3([3, -3, 1])
-var vector2 = new R3([4, 9, 2])
+const vector1 = new R3([3, -3, 1])
+const vector2 = new R3([4, 9, 2])
 
-var vector3 = vector1.crossProduct(vector2)
+const vector3 = vector1.crossProduct(vector2)
 
 vector3 // Vector { data: [-15, 2, 39] }
 ```
@@ -720,10 +737,10 @@ It represents the number of varying indices.
 #### Tensor equality
 
 ```javascript
-var T2x2x2 = TensorSpace(Real)([2, 2, 2])
+const T2x2x2 = TensorSpace(Real)([2, 2, 2])
 
-var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
-var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
+const tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
+const tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 ```
 
 ##### `Tensor.equality(tensor1, tensor2)`
@@ -764,7 +781,7 @@ tensor2.equality(tensor2) // false
 
 ##### `tensor.negation()`
 
-#### Scalar multiplication
+#### Tensor multiplication
 
 ##### `Tensor.scalarMultiplication(tensor, scalar)`
 
@@ -791,3 +808,4 @@ tensor2.equality(tensor2) // false
 [tensor-contraction]: http://npm.im/tensor-contraction
 [tensor-permutation]: http://npm.im/tensor-product
 [zero_divisor]: https://en.wikipedia.org/wiki/Zero_divisor "Zero divisor"
+[Cayley-Dickson_construction]: https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction "Cayley-Dickson construction"

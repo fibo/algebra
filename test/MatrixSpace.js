@@ -1,19 +1,19 @@
 describe('MatrixSpace', () => {
-  var algebra = require('algebra')
+  const algebra = require('algebra')
 
-  var notDefined = require('not-defined')
+  const notDefined = require('not-defined')
 
-  var MatrixSpace = algebra.MatrixSpace
-  var Real = algebra.Real
+  const MatrixSpace = algebra.MatrixSpace
+  const Real = algebra.Real
 
-  var methodBinaryOperator = require('./features/methodBinaryOperator')
-  var staticBinaryOperator = require('./features/staticBinaryOperator')
-  var staticUnaryOperator = require('./features/staticUnaryOperator')
+  const methodBinaryOperator = require('./features/methodBinaryOperator')
+  const staticBinaryOperator = require('./features/staticBinaryOperator')
+  const staticUnaryOperator = require('./features/staticUnaryOperator')
 
-  var R1x4 = MatrixSpace(Real)(1, 4)
-  var R2x3 = MatrixSpace(Real)(2, 3)
-  var R2x2 = MatrixSpace(Real)(2)
-  var R3x2 = MatrixSpace(Real)(3, 2)
+  const R1x4 = MatrixSpace(Real)(1, 4)
+  const R2x3 = MatrixSpace(Real)(2, 3)
+  const R2x2 = MatrixSpace(Real)(2)
+  const R3x2 = MatrixSpace(Real)(3, 2)
 
   it('has signature (Scalar)(numRows, numCols)', () => {
     R2x3.numRows.should.be.eql(2)
@@ -25,11 +25,11 @@ describe('MatrixSpace', () => {
     R2x2.numCols.should.be.eql(2)
   })
 
-  var matrix1 = new R2x2([ 2, 3,
+  const matrix1 = new R2x2([ 2, 3,
                            1, 1 ])
-  var matrix2 = new R2x2([ 0, 1,
+  const matrix2 = new R2x2([ 0, 1,
                           -1, 0 ])
-  var matrix3 = new R2x3([ 0, 1, 2,
+  const matrix3 = new R2x3([ 0, 1, 2,
                           -2, 1, 0 ])
 
   describe('data', () => {
@@ -73,7 +73,7 @@ describe('MatrixSpace', () => {
   })
 
   describe('addition()', () => {
-    var operator = 'addition'
+    const operator = 'addition'
 
     it('is a static method', staticBinaryOperator(R2x2, operator,
         [ 2, 3,
@@ -102,7 +102,7 @@ describe('MatrixSpace', () => {
                       0, -1 ]).should.deepEqual([0, 0,
                                                  0, 0])
 
-      var matrix = new R2x2([ 2, 3,
+      const matrix = new R2x2([ 2, 3,
                               1, 1 ])
       matrix.addition([ 0, 1,
                        -1, 0 ],
@@ -113,7 +113,7 @@ describe('MatrixSpace', () => {
   })
 
   describe('subtraction()', () => {
-    var operator = 'subtraction'
+    const operator = 'subtraction'
 
     it('is a static method', staticBinaryOperator(R2x2, operator,
         [2, 3,
@@ -142,7 +142,7 @@ describe('MatrixSpace', () => {
                         0, 1]).should.deepEqual([0, -2,
                                                  2, 0])
 
-      var matrix = new R2x2([2, 3,
+      const matrix = new R2x2([2, 3,
                              1, 1])
       matrix.subtraction([0, 1,
                           -1, 0],
@@ -153,7 +153,7 @@ describe('MatrixSpace', () => {
   })
 
   describe('multiplication()', () => {
-    var operator = 'multiplication'
+    const operator = 'multiplication'
 
     it('is a static method', staticBinaryOperator(R3x2, operator,
         [2, 3,
@@ -184,7 +184,7 @@ describe('MatrixSpace', () => {
                             0, 1]).should.deepEqual([-2, 1,
                                                      -4, 3])
 
-      var matrix = new R2x2([1, 2,
+      const matrix = new R2x2([1, 2,
                              3, 4])
       matrix.multiplication([0, 1,
                             -1, 0],
@@ -195,7 +195,7 @@ describe('MatrixSpace', () => {
   })
 
   describe('trace()', () => {
-    var operator = 'trace'
+    const operator = 'trace'
 
     it('is a static method', staticUnaryOperator(R2x2, operator,
       [1, 2,
@@ -209,14 +209,14 @@ describe('MatrixSpace', () => {
 
   describe('trace', () => {
     it('is a static attribute', () => {
-      var matrix2x2 = new R2x2([1, 2,
+      const matrix2x2 = new R2x2([1, 2,
                                 5, 6])
 
       matrix2x2.trace.should.be.eql(7)
     })
 
     it('is not available for no square matrices', () => {
-      var matrix3x2 = new R3x2([1, 2,
+      const matrix3x2 = new R3x2([1, 2,
                                 3, 4,
                                 5, 6])
 
@@ -226,11 +226,11 @@ describe('MatrixSpace', () => {
 
   describe('transpose()', () => {
     it('is a static operator', () => {
-      var matrix3x2 = new R3x2([1, 2,
+      const matrix3x2 = new R3x2([1, 2,
                                 3, 4,
                                 5, 6])
 
-      var transposed = R3x2.transpose(matrix3x2)
+      const transposed = R3x2.transpose(matrix3x2)
 
       transposed.should.deepEqual([1, 3, 5,
                                    2, 4, 6])
@@ -239,18 +239,18 @@ describe('MatrixSpace', () => {
 
   describe('transposed', () => {
     it('is a class attribute', () => {
-      var matrix3x2 = new R3x2([1, 2,
+      const matrix3x2 = new R3x2([1, 2,
                                 3, 4,
                                 5, 6])
 
-      var transposed = matrix3x2.transposed
+      const transposed = matrix3x2.transposed
 
       transposed.data.should.deepEqual([1, 3, 5,
                                         2, 4, 6])
     })
 
     it('holds a transposed matrix', () => {
-      var matrix2x3 = new R2x3([1, 2, 3,
+      const matrix2x3 = new R2x3([1, 2, 3,
                                 4, 5, 6])
 
       matrix2x3.transposed.data.should.deepEqual([1, 4,
@@ -262,18 +262,18 @@ describe('MatrixSpace', () => {
     })
 
     it('is an involution', () => {
-      var matrix2x2a = new R2x2([1, 2,
+      const matrix2x2a = new R2x2([1, 2,
                                  3, 4])
 
-      var matrix2x2b = matrix2x2a.transposed.transposed
+      const matrix2x2b = matrix2x2a.transposed.transposed
 
       matrix2x2a.data.should.deepEqual(matrix2x2b.data)
     })
 
     it('returns a vector if the Matrix has one row', () => {
-      var matrix1x4 = new R1x4([1, 2, 3, 4])
+      const matrix1x4 = new R1x4([1, 2, 3, 4])
 
-      var vector = matrix1x4.transposed
+      const vector = matrix1x4.transposed
 
       matrix1x4.data.should.deepEqual(vector.data)
       vector.dimension.should.be.eql(matrix1x4.numCols)
@@ -284,7 +284,7 @@ describe('MatrixSpace', () => {
     it('is an alias of multiplication()', () => {
       R2x2.mul.should.be.eql(R2x2.multiplication)
 
-      var matrix2x2 = new R2x2([1, 2,
+      const matrix2x2 = new R2x2([1, 2,
                                 3, 4])
 
       matrix2x2.multiplication.should.be.eql(matrix2x2.mul)
@@ -299,7 +299,7 @@ describe('MatrixSpace', () => {
 
   describe('tr', () => {
     it('is an alias of transposed', () => {
-      var matrix = new R3x2([0, 1,
+      const matrix = new R3x2([0, 1,
                              1, 0,
                              2, 2])
 

@@ -1,14 +1,14 @@
 const determinant = require('laplace-determinant')
 const inherits = require('inherits')
-const no = require('not-defined')
+const itemsPool = require('./itemsPool')
 const matrixMultiplication = require('matrix-multiplication')
 const multiDimArrayIndex = require('multidim-array-index')
+const no = require('not-defined')
 const operators = require('./operators.json')
 const staticProps = require('static-props')
 const TensorSpace = require('./TensorSpace')
 const tensorContraction = require('tensor-contraction')
 const toData = require('./toData')
-const VectorSpace = require('./VectorSpace')
 
 /**
  * Space of m x n matrices
@@ -85,13 +85,13 @@ function MatrixSpace (Scalar) {
      */
 
     function transpose (matrix) {
-      var matrixData = toData(matrix)
-      var transposedData = []
+      const matrixData = toData(matrix)
+      let transposedData = []
 
-      for (var i = 0; i < numRows; i++) {
-        for (var j = 0; j < numCols; j++) {
-          var index = multiDimArrayIndex([numRows, numCols], [i, j])
-          var transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
+      for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+          let index = multiDimArrayIndex([numRows, numCols], [i, j])
+          let transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
 
           transposedData[transposedIndex] = matrixData[index]
         }
@@ -130,7 +130,8 @@ function MatrixSpace (Scalar) {
       }
 
       function transposed () {
-        var result = transpose(data)
+        const result = transpose(data)
+        const VectorSpace = itemsPool.get('VectorSpace')
 
         if (numRows === 1) {
           const Vector = VectorSpace(Scalar)(numCols)
@@ -196,5 +197,7 @@ function MatrixSpace (Scalar) {
     return Matrix
   }
 }
+
+itemsPool.set('MatrixSpace', MatrixSpace)
 
 module.exports = MatrixSpace

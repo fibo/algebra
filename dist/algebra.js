@@ -136,29 +136,7 @@ staticProps(algebraCyclic)({ error: error })
 
 module.exports = algebraCyclic
 
-},{"./package.json":3,"algebra-ring":5,"static-props":2}],2:[function(require,module,exports){
-function staticProps (obj) {
-  return function (props) {
-    var statik = {}
-
-    for (var propName in props) {
-      var propValue = props[propName]
-
-      statik[propName] = {
-        value: propValue,
-        configurable: false,
-        enumerable: false,
-        writable: false
-      }
-    }
-
-    Object.defineProperties(obj, statik)
-  }
-}
-
-module.exports = staticProps
-
-},{}],3:[function(require,module,exports){
+},{"./package.json":2,"algebra-ring":4,"static-props":20}],2:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -167,20 +145,20 @@ module.exports={
     ]
   ],
   "_from": "algebra-cyclic@>=0.2.0 <0.3.0",
-  "_id": "algebra-cyclic@0.2.0",
+  "_id": "algebra-cyclic@0.2.1",
   "_inCache": true,
   "_installable": true,
   "_location": "/algebra-cyclic",
-  "_nodeVersion": "4.2.2",
+  "_nodeVersion": "4.3.2",
   "_npmOperationalInternal": {
     "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/algebra-cyclic-0.2.0.tgz_1460327024377_0.46814342867583036"
+    "tmp": "tmp/algebra-cyclic-0.2.1.tgz_1472365525236_0.8247350375168025"
   },
   "_npmUser": {
     "email": "casati_gianluca@yahoo.it",
     "name": "fibo"
   },
-  "_npmVersion": "3.7.2",
+  "_npmVersion": "3.8.9",
   "_phantomChildren": {},
   "_requested": {
     "name": "algebra-cyclic",
@@ -193,8 +171,8 @@ module.exports={
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.0.tgz",
-  "_shasum": "d66e5dd19c8dab497c9115456376b3ab84b7756b",
+  "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.1.tgz",
+  "_shasum": "81a7dc25cfb0e9bb8eedb721d54d78728b9d3488",
   "_shrinkwrap": null,
   "_spec": "algebra-cyclic@^0.2.0",
   "_where": "/home/io/github.com/fibo/algebra",
@@ -208,20 +186,21 @@ module.exports={
   "dependencies": {
     "algebra-ring": "^0.5.0",
     "prime-number": "^0.1.0",
-    "static-props": "^0.2.0"
+    "static-props": "^1.0.0"
   },
   "description": "creates a space isomorphic to Zp: the cyclic ring of order p, where p is prime",
   "devDependencies": {
+    "npm-watch": "^0.1.3",
     "pre-commit": "^1.1.2",
-    "standard": "^5.4.1",
+    "standard": "^8.0.0",
     "tape": "^4.5.1"
   },
   "directories": {},
   "dist": {
-    "shasum": "d66e5dd19c8dab497c9115456376b3ab84b7756b",
-    "tarball": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.0.tgz"
+    "shasum": "81a7dc25cfb0e9bb8eedb721d54d78728b9d3488",
+    "tarball": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.1.tgz"
   },
-  "gitHead": "09e7d5ba863a93adaa75bf0e0f297e96df3f6dbd",
+  "gitHead": "62a9906342b4e9753f3753a6ddceb53f1c0d38e4",
   "homepage": "https://github.com/fibo/algebra-cyclic",
   "keywords": [
     "math",
@@ -251,13 +230,19 @@ module.exports={
   "scripts": {
     "check-deps": "npm outdated",
     "lint": "standard",
+    "postupdate-deps": "npm test && git commit -am 'updated deps' || git checkout -- package.json",
     "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
-    "test": "tape test.js"
+    "test": "tape test.js",
+    "update-deps": "npm update --save --dev",
+    "watch": "npm-watch"
   },
-  "version": "0.2.0"
+  "version": "0.2.1",
+  "watch": {
+    "test": "{index,test}.js"
+  }
 }
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 
 /**
  * given an algebra group structure
@@ -367,7 +352,7 @@ function algebraGroup (given, naming) {
 
 module.exports = algebraGroup
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var group = require('algebra-group')
 var staticProps = require('static-props')
 
@@ -455,9 +440,29 @@ staticProps(algebraRing)({error: error})
 
 module.exports = algebraRing
 
-},{"algebra-group":4,"static-props":6}],6:[function(require,module,exports){
-arguments[4][2][0].apply(exports,arguments)
-},{"dup":2}],7:[function(require,module,exports){
+},{"algebra-group":3,"static-props":5}],5:[function(require,module,exports){
+function staticProps (obj) {
+  return function (props) {
+    var statik = {}
+
+    for (var propName in props) {
+      var propValue = props[propName]
+
+      statik[propName] = {
+        value: propValue,
+        configurable: false,
+        enumerable: false,
+        writable: false
+      }
+    }
+
+    Object.defineProperties(obj, statik)
+  }
+}
+
+module.exports = staticProps
+
+},{}],6:[function(require,module,exports){
 var ring = require('algebra-ring')
 var twoPow = Math.pow.bind(null, 2)
 
@@ -693,7 +698,7 @@ function iterateCayleyDickson (given, iterations) {
 module.exports = iterateCayleyDickson
 
 
-},{"algebra-ring":8}],8:[function(require,module,exports){
+},{"algebra-ring":7}],7:[function(require,module,exports){
 var group = require('algebra-group')
 
 /**
@@ -772,7 +777,7 @@ function algebraRing (identity, given) {
 
 module.exports = algebraRing
 
-},{"algebra-group":4}],9:[function(require,module,exports){
+},{"algebra-group":3}],8:[function(require,module,exports){
 function indicesPermutations (previousValue, currentValue, currentIndex, array) {
   var result = []
 
@@ -801,7 +806,7 @@ function indicesPermutations (previousValue, currentValue, currentIndex, array) 
 
 module.exports = indicesPermutations
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -826,7 +831,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 var numberIsNan = require('number-is-nan');
 
@@ -834,7 +839,7 @@ module.exports = Number.isFinite || function (val) {
 	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
 };
 
-},{"number-is-nan":20}],12:[function(require,module,exports){
+},{"number-is-nan":19}],11:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -844,7 +849,7 @@ module.exports = Number.isInteger || function(val) {
     Math.floor(val) === val;
 };
 
-},{"is-finite":11}],13:[function(require,module,exports){
+},{"is-finite":10}],12:[function(require,module,exports){
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -958,7 +963,7 @@ function determinant (data, scalar, order) {
 module.exports = determinant
 
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var isInteger = require('is-integer')
 var no = require('not-defined')
 var staticProps = require('static-props')
@@ -1077,9 +1082,9 @@ staticProps(matrixMultiplication)({ error: error })
 
 module.exports = matrixMultiplication
 
-},{"./package.json":16,"is-integer":12,"not-defined":19,"static-props":15}],15:[function(require,module,exports){
-arguments[4][2][0].apply(exports,arguments)
-},{"dup":2}],16:[function(require,module,exports){
+},{"./package.json":15,"is-integer":11,"not-defined":18,"static-props":14}],14:[function(require,module,exports){
+arguments[4][5][0].apply(exports,arguments)
+},{"dup":5}],15:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -1176,7 +1181,7 @@ module.exports={
   "version": "0.4.0"
 }
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var staticProps = require('static-props')
 
 var pkg = require('./package.json')
@@ -1243,7 +1248,7 @@ staticProps(multiDimArrayIndex)({ error: error })
 
 module.exports = multiDimArrayIndex
 
-},{"./package.json":18,"static-props":21}],18:[function(require,module,exports){
+},{"./package.json":17,"static-props":20}],17:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -1333,16 +1338,16 @@ module.exports={
   "version": "0.5.0"
 }
 
-},{}],19:[function(require,module,exports){
-module.exports=function(x){return typeof x==='undefined'}
+},{}],18:[function(require,module,exports){
+module.exports=function(x){return (typeof x==='undefined')||(x === null)}
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 module.exports = Number.isNaN || function (x) {
 	return x !== x;
 };
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * @param {Object} obj
  * @returns {Function}
@@ -1377,11 +1382,11 @@ function staticProps (obj) {
 }
 module.exports = staticProps
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 // In browserify context, *strict-mode* fall back to a no op.
 module.exports = function (cb) { cb() }
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -1468,7 +1473,7 @@ function tensorContraction (addition, indicesPair, tensorDim, tensorData) {
 
 module.exports = tensorContraction
 
-},{"indices-permutations":9,"multidim-array-index":24}],24:[function(require,module,exports){
+},{"indices-permutations":8,"multidim-array-index":23}],23:[function(require,module,exports){
 /**
  * maps multidimensional array indices to monodimensional array index
  *
@@ -1510,7 +1515,7 @@ function multiDimArrayIndex (dimensions, indices) {
 
 module.exports = multiDimArrayIndex
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -1549,16 +1554,14 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 
 module.exports = tensorProduct
 
-},{"indices-permutations":9,"multidim-array-index":26}],26:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],27:[function(require,module,exports){
+},{"indices-permutations":8,"multidim-array-index":25}],25:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"dup":23}],26:[function(require,module,exports){
 'use strict';
 
 var CayleyDickson = require('cayley-dickson');
-var coerced = require('./coerced');
-var operators = require('./operators.json');
-var staticProps = require('static-props');
-var toData = require('./toData');
+var createScalar = require('./createScalar');
+var no = require('not-defined');
 
 /**
  * A composition algebra is one of ℝ, ℂ, ℍ, O:
@@ -1566,140 +1569,27 @@ var toData = require('./toData');
  *
  * https://en.wikipedia.org/wiki/Composition_algebra
  *
- * @param {Object} ring
+ * @param {Object} field
+ * @param {Number} [num] of CayleyDickson construction iterations. Can be 1, 2, 4 or 8.
  *
- * @returns {Function} anonymous with signature (numOfCayleyDicksonConstructionIteration)
+ * @returns {Object} Scalar
  */
 
-function CompositionAlgebra(ring) {
-  /**
-   * @param {Number} num of CayleyDickson construction iterations
-   */
+function CompositionAlgebra(field, num) {
+  if (no(num)) num = 1;
 
-  return function (num) {
-    var K = CayleyDickson(ring, num);
+  var logBase2 = [1, 2, 4, 8].indexOf(num);
 
-    function Scalar(data) {
-      // validate data
+  if (logBase2 === -1) {
+    throw new TypeError('Argument n must be 1, 2, 4 or 8');
+  }
 
-      if (K.notContains(data)) {
-        throw new TypeError('Invalid data = ' + data);
-      }
-
-      var enumerable = true;
-      staticProps(this)({ data: data }, enumerable);
-
-      staticProps(this)({
-        zero: K.zero,
-        one: K.one,
-        order: 0
-      });
-    }
-
-    staticProps(Scalar)({
-      zero: K.zero,
-      one: K.one,
-      order: 0
-    });
-
-    var comparisonOperators = ['equality', 'disequality'];
-
-    var binaryOperators = operators.group.concat(['multiplication', 'division']);
-
-    function staticNary(operator) {
-      Scalar[operator] = function () {
-        var operands = [].slice.call(arguments).map(toData);
-        return coerced(K[operator]).apply(null, operands);
-      };
-    }
-
-    binaryOperators.forEach(function (operator) {
-      staticNary(operator);
-
-      Scalar.prototype[operator] = function () {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
-
-        var data = Scalar[operator].apply(null, operands);
-
-        var scalar = new Scalar(data);
-
-        return scalar;
-      };
-    });
-
-    comparisonOperators.forEach(function (operator) {
-      staticNary(operator);
-
-      Scalar.prototype[operator] = function () {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
-
-        var bool = Scalar[operator].apply(null, operands);
-
-        return bool;
-      };
-    });
-
-    Scalar.contains = K.contains;
-    Scalar.notContains = K.notContains;
-
-    Scalar.prototype.add = Scalar.prototype.addition;
-    Scalar.prototype.mul = Scalar.prototype.multiplication;
-
-    Scalar.mul = Scalar.multiplication;
-
-    Scalar.div = Scalar.division;
-
-    Scalar.prototype.eq = Scalar.prototype.equality;
-
-    Scalar.eq = Scalar.equality;
-
-    Scalar.prototype.ne = Scalar.prototype.disequality;
-
-    Scalar.ne = Scalar.disequality;
-
-    var unaryOperators = ['inversion', 'negation'];
-
-    if (num > 0) unaryOperators.push('conjugation');
-
-    unaryOperators.forEach(function (operator) {
-      Scalar[operator] = function (operand) {
-        return K[operator](toData(operand));
-      };
-
-      Scalar.prototype[operator] = function () {
-        var data = Scalar[operator](this.data);
-
-        return new Scalar(data);
-      };
-    });
-
-    // Aliases
-
-    var myOperators = binaryOperators.concat(comparisonOperators).concat(unaryOperators);
-
-    // TODO this aliasify function can be in common with Vector and Matrix
-    myOperators.forEach(function (operator) {
-      operators.aliasesOf[operator].forEach(function (alias) {
-        Scalar[alias] = Scalar[operator];
-        Scalar.prototype[alias] = Scalar.prototype[operator];
-      });
-    });
-
-    Scalar.prototype.ne = Scalar.prototype.negation;
-    Scalar.prototype.inv = Scalar.prototype.inversion;
-
-    Scalar.ne = Scalar.negation;
-    Scalar.inv = Scalar.inversion;
-
-    return Scalar;
-  };
+  return createScalar(CayleyDickson(field, logBase2));
 }
 
 module.exports = CompositionAlgebra;
 
-},{"./coerced":33,"./operators.json":35,"./toData":37,"cayley-dickson":7,"static-props":21}],28:[function(require,module,exports){
+},{"./createScalar":32,"cayley-dickson":6,"not-defined":18}],27:[function(require,module,exports){
 'use strict';
 
 var algebraCyclic = require('algebra-cyclic');
@@ -1719,20 +1609,20 @@ function Cyclic(elements) {
 
 module.exports = Cyclic;
 
-},{"./createScalar":34,"algebra-cyclic":1}],29:[function(require,module,exports){
+},{"./createScalar":32,"algebra-cyclic":1}],28:[function(require,module,exports){
 'use strict';
 
 var determinant = require('laplace-determinant');
 var inherits = require('inherits');
-var no = require('not-defined');
+var itemsPool = require('./itemsPool');
 var matrixMultiplication = require('matrix-multiplication');
 var multiDimArrayIndex = require('multidim-array-index');
+var no = require('not-defined');
 var operators = require('./operators.json');
 var staticProps = require('static-props');
 var TensorSpace = require('./TensorSpace');
 var tensorContraction = require('tensor-contraction');
 var toData = require('./toData');
-var VectorSpace = require('./VectorSpace');
 
 /**
  * Space of m x n matrices
@@ -1855,6 +1745,7 @@ function MatrixSpace(Scalar) {
 
       function transposed() {
         var result = transpose(data);
+        var VectorSpace = itemsPool.get('VectorSpace');
 
         if (numRows === 1) {
           var Vector = VectorSpace(Scalar)(numCols);
@@ -1921,36 +1812,11 @@ function MatrixSpace(Scalar) {
   };
 }
 
+itemsPool.set('MatrixSpace', MatrixSpace);
+
 module.exports = MatrixSpace;
 
-},{"./TensorSpace":31,"./VectorSpace":32,"./operators.json":35,"./toData":37,"inherits":10,"laplace-determinant":13,"matrix-multiplication":14,"multidim-array-index":17,"not-defined":19,"static-props":21,"tensor-contraction":23}],30:[function(require,module,exports){
-'use strict';
-
-var CompositionAlgebra = require('./CompositionAlgebra');
-var no = require('not-defined');
-
-/**
- * Create a Scalar that belongs to a composition algebra.
- *
- * @param {Object} field
- * @param {Number} [n] must be 1, 2, 4 or 8.
- */
-
-function Scalar(field, n) {
-  if (no(n)) n = 1;
-
-  var logBase2 = [1, 2, 4, 8].indexOf(n);
-
-  if (logBase2 === -1) {
-    throw new TypeError('Argument n must be 1, 2, 4 or 8');
-  }
-
-  return CompositionAlgebra(field)(logBase2);
-}
-
-module.exports = Scalar;
-
-},{"./CompositionAlgebra":27,"not-defined":19}],31:[function(require,module,exports){
+},{"./TensorSpace":29,"./itemsPool":33,"./operators.json":34,"./toData":36,"inherits":9,"laplace-determinant":12,"matrix-multiplication":13,"multidim-array-index":16,"not-defined":18,"static-props":20,"tensor-contraction":22}],29:[function(require,module,exports){
 'use strict';
 
 var operators = require('./operators.json');
@@ -2132,10 +1998,12 @@ function TensorSpace(Scalar) {
 
 module.exports = TensorSpace;
 
-},{"./operators.json":35,"./toData":37,"static-props":21,"tensor-product":25}],32:[function(require,module,exports){
+},{"./operators.json":34,"./toData":36,"static-props":20,"tensor-product":24}],30:[function(require,module,exports){
 'use strict';
 
 var inherits = require('inherits');
+var itemsPool = require('./itemsPool');
+var matrixMultiplication = require('matrix-multiplication');
 var operators = require('./operators.json');
 var staticProps = require('static-props');
 var TensorSpace = require('./TensorSpace');
@@ -2204,6 +2072,22 @@ function VectorSpace(Scalar) {
     }
 
     /**
+     * Multiply a column vector by matrix on right side
+     * @param {Object|Array} vector
+     *
+     * @returns {Object} scalar
+     */
+
+    function multiplicationByMatrix(leftVector, rightMatrix) {
+      var leftVectorData = toData(leftVector);
+      var rightMatrixData = toData(rightMatrix);
+
+      var rowByColumnMultiplication = matrixMultiplication(Scalar)(dimension);
+
+      return rowByColumnMultiplication(leftVectorData, rightMatrixData);
+    }
+
+    /**
      * Norm of a vector
      *
      * Given v = (x1, x2, ... xN)
@@ -2257,6 +2141,7 @@ function VectorSpace(Scalar) {
     }
 
     /**
+     * Vector element.
      */
 
     function Vector(data) {
@@ -2294,8 +2179,26 @@ function VectorSpace(Scalar) {
       Vector.prototype.cross = crossProductMethod;
     }
 
+    Vector.prototype.multiplication = function (rightMatrix) {
+      var MatrixSpace = itemsPool.get('MatrixSpace');
+
+      var leftVectorData = this.data;
+      var result = multiplicationByMatrix(leftVectorData, rightMatrix);
+
+      // TODO rightNumRows equals dimension
+      // but the vector should be transposed.
+      // Add transpose operator for vectors, then use it implicitly.
+      var rightNumRows = dimension;
+      var rightNumCols = result.length / rightNumRows;
+
+      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols);
+
+      return new Matrix(result);
+    };
+
     // Static operators.
 
+    Vector.multiplication = multiplicationByMatrix;
     Vector.norm = norm;
     Vector.scalarProduct = scalarProduct;
 
@@ -2312,6 +2215,9 @@ function VectorSpace(Scalar) {
     });
 
     // Aliases
+
+    Vector.mul = multiplicationByMatrix;
+    Vector.prototype.mul = Vector.prototype.multiplication;
 
     var myOperators = ['scalarProduct'].concat(operators.group);
 
@@ -2330,9 +2236,11 @@ function VectorSpace(Scalar) {
   };
 }
 
+itemsPool.set('VectorSpace', VectorSpace);
+
 module.exports = VectorSpace;
 
-},{"./TensorSpace":31,"./operators.json":35,"./toData":37,"inherits":10,"static-props":21}],33:[function(require,module,exports){
+},{"./TensorSpace":29,"./itemsPool":33,"./operators.json":34,"./toData":36,"inherits":9,"matrix-multiplication":13,"static-props":20}],31:[function(require,module,exports){
 'use strict';
 
 var toData = require('./toData');
@@ -2355,7 +2263,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":37}],34:[function(require,module,exports){
+},{"./toData":36}],32:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2405,7 +2313,11 @@ function createScalar(ring) {
     };
   };
 
-  operators.inversion.forEach(function (operator) {
+  var unaryOperators = operators.inversion;
+
+  unaryOperators.push('conjugation');
+
+  unaryOperators.forEach(function (operator) {
     Scalar[operator] = function (operand) {
       return ring[operator](toData(operand));
     };
@@ -2459,7 +2371,14 @@ function createScalar(ring) {
 
 module.exports = createScalar;
 
-},{"./coerced":33,"./operators.json":35,"./toData":37,"static-props":21}],35:[function(require,module,exports){
+},{"./coerced":31,"./operators.json":34,"./toData":36,"static-props":20}],33:[function(require,module,exports){
+"use strict";
+
+var itemsPool = new Map();
+
+module.exports = itemsPool;
+
+},{}],34:[function(require,module,exports){
 module.exports={
   "comparison": [
     "equality",
@@ -2520,7 +2439,7 @@ module.exports={
   }
 }
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict';
 
 var realField = {
@@ -2549,7 +2468,7 @@ var realField = {
 
 module.exports = realField;
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 var no = require('not-defined');
@@ -2576,22 +2495,22 @@ function toData(arg) {
 
 module.exports = toData;
 
-},{"not-defined":19}],"algebra":[function(require,module,exports){
+},{"not-defined":18}],"algebra":[function(require,module,exports){
 'use strict';
 
 require('strict-mode')(function () {
   var Cyclic = require('./src/Cyclic');
   exports.Cyclic = Cyclic;
 
-  var Scalar = require('./src/Scalar');
-  exports.Scalar = Scalar;
+  var CompositionAlgebra = require('./src/CompositionAlgebra');
+  exports.CompositionAlgebra = CompositionAlgebra;
 
   var field = require('./src/realField');
 
-  var Real = Scalar(field, 1);
-  var Complex = Scalar(field, 2);
-  var Quaternion = Scalar(field, 4);
-  var Octonion = Scalar(field, 8);
+  var Real = CompositionAlgebra(field, 1);
+  var Complex = CompositionAlgebra(field, 2);
+  var Quaternion = CompositionAlgebra(field, 4);
+  var Octonion = CompositionAlgebra(field, 8);
 
   exports.Real = Real;
   exports.Complex = Complex;
@@ -2613,4 +2532,4 @@ require('strict-mode')(function () {
   exports.TensorSpace = require('./src/TensorSpace');
 });
 
-},{"./src/Cyclic":28,"./src/MatrixSpace":29,"./src/Scalar":30,"./src/TensorSpace":31,"./src/VectorSpace":32,"./src/realField":36,"strict-mode":22}]},{},[]);
+},{"./src/CompositionAlgebra":26,"./src/Cyclic":27,"./src/MatrixSpace":28,"./src/TensorSpace":29,"./src/VectorSpace":30,"./src/realField":35,"strict-mode":21}]},{},[]);

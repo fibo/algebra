@@ -1,4 +1,6 @@
 const inherits = require('inherits')
+const itemsPool = require('./itemsPool')
+const matrixMultiplication = require('matrix-multiplication')
 const operators = require('./operators.json')
 const staticProps = require('static-props')
 const TensorSpace = require('./TensorSpace')
@@ -67,6 +69,22 @@ function VectorSpace (Scalar) {
     }
 
     /**
+     * Multiply a column vector by matrix on right side
+     * @param {Object|Array} vector
+     *
+     * @returns {Object} scalar
+     */
+
+    function multiplicationByMatrix (leftVector, rightMatrix) {
+      const leftVectorData = toData(leftVector)
+      const rightMatrixData = toData(rightMatrix)
+
+      const rowByColumnMultiplication = matrixMultiplication(Scalar)(dimension)
+
+      return rowByColumnMultiplication(leftVectorData, rightMatrixData)
+    }
+
+    /**
      * Norm of a vector
      *
      * Given v = (x1, x2, ... xN)
@@ -120,6 +138,7 @@ function VectorSpace (Scalar) {
     }
 
     /**
+     * Vector element.
      */
 
     function Vector (data) {
@@ -157,8 +176,26 @@ function VectorSpace (Scalar) {
       Vector.prototype.cross = crossProductMethod
     }
 
+    Vector.prototype.multiplication = function (rightMatrix) {
+      const MatrixSpace = itemsPool.get('MatrixSpace')
+
+      const leftVectorData = this.data
+      const result = multiplicationByMatrix(leftVectorData, rightMatrix)
+
+      // TODO rightNumRows equals dimension
+      // but the vector should be transposed.
+      // Add transpose operator for vectors, then use it implicitly.
+      const rightNumRows = dimension
+      const rightNumCols = result.length / rightNumRows
+
+      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+
+      return new Matrix(result)
+    }
+
     // Static operators.
 
+    Vector.multiplication = multiplicationByMatrix
     Vector.norm = norm
     Vector.scalarProduct = scalarProduct
 
@@ -176,7 +213,10 @@ function VectorSpace (Scalar) {
 
     // Aliases
 
-    var myOperators = ['scalarProduct'].concat(operators.group)
+    Vector.mul = multiplicationByMatrix
+    Vector.prototype.mul = Vector.prototype.multiplication
+
+    const myOperators = ['scalarProduct'].concat(operators.group)
 
     myOperators.forEach((operator) => {
       operators.aliasesOf[operator].forEach((alias) => {
@@ -192,5 +232,7 @@ function VectorSpace (Scalar) {
     return Vector
   }
 }
+
+itemsPool.set('VectorSpace', VectorSpace)
 
 module.exports = VectorSpace

@@ -136,18 +136,25 @@ staticProps(algebraCyclic)({ error: error })
 
 module.exports = algebraCyclic
 
-},{"./package.json":2,"algebra-ring":4,"static-props":20}],2:[function(require,module,exports){
+},{"./package.json":2,"algebra-ring":4,"static-props":19}],2:[function(require,module,exports){
 module.exports={
   "_args": [
     [
-      "algebra-cyclic@^0.2.0",
+      {
+        "raw": "algebra-cyclic@^0.2.0",
+        "scope": null,
+        "escapedName": "algebra-cyclic",
+        "name": "algebra-cyclic",
+        "rawSpec": "^0.2.0",
+        "spec": ">=0.2.0 <0.3.0",
+        "type": "range"
+      },
       "/home/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "algebra-cyclic@>=0.2.0 <0.3.0",
   "_id": "algebra-cyclic@0.2.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/algebra-cyclic",
   "_nodeVersion": "4.3.2",
   "_npmOperationalInternal": {
@@ -155,16 +162,17 @@ module.exports={
     "tmp": "tmp/algebra-cyclic-0.2.1.tgz_1472365525236_0.8247350375168025"
   },
   "_npmUser": {
-    "email": "casati_gianluca@yahoo.it",
-    "name": "fibo"
+    "name": "fibo",
+    "email": "casati_gianluca@yahoo.it"
   },
   "_npmVersion": "3.8.9",
   "_phantomChildren": {},
   "_requested": {
-    "name": "algebra-cyclic",
     "raw": "algebra-cyclic@^0.2.0",
-    "rawSpec": "^0.2.0",
     "scope": null,
+    "escapedName": "algebra-cyclic",
+    "name": "algebra-cyclic",
+    "rawSpec": "^0.2.0",
     "spec": ">=0.2.0 <0.3.0",
     "type": "range"
   },
@@ -212,8 +220,8 @@ module.exports={
   "main": "index.js",
   "maintainers": [
     {
-      "email": "casati_gianluca@yahoo.it",
-      "name": "fibo"
+      "name": "fibo",
+      "email": "casati_gianluca@yahoo.it"
     }
   ],
   "name": "algebra-cyclic",
@@ -516,30 +524,32 @@ function arrayfy2 (operator, dim) {
  */
 
 function iterateCayleyDickson (given, iterations) {
-  var field = ring([given.zero, given.one], given)
+  'use strict'
+
+  const field = ring([given.zero, given.one], given)
 
   if (iterations === 0) {
     return field
   }
 
-  var fieldZero = field.zero
-  var fieldOne = field.one
-  var fieldAddition = field.addition
-  var fieldMultiplication = field.multiplication
-  var fieldNegation = field.negation
-  var fieldDisequality = field.disequality
-  var fieldNotContains = field.notContains
+  const fieldZero = field.zero
+  const fieldOne = field.one
+  const fieldAddition = field.addition
+  const fieldMultiplication = field.multiplication
+  const fieldNegation = field.negation
+  const fieldDisequality = field.disequality
+  const fieldNotContains = field.notContains
 
   // identities
 
-  var one = []
-  var zero = []
-  var dim = twoPow(iterations)
+  let one = []
+  let zero = []
+  const dim = twoPow(iterations)
 
   one.push(fieldOne)
   zero.push(fieldZero)
 
-  for (var i = 1; i < dim; i++) {
+  for (let i = 1; i < dim; i++) {
     one.push(fieldZero)
     zero.push(fieldZero)
   }
@@ -547,7 +557,7 @@ function iterateCayleyDickson (given, iterations) {
   // operators
 
   function equality (a, b) {
-    for (var i = 0; i < dim; i++) {
+    for (let i = 0; i < dim; i++) {
       if (fieldDisequality(a[i], b[i])) {
         return false
       }
@@ -557,7 +567,7 @@ function iterateCayleyDickson (given, iterations) {
   }
 
   function contains (a) {
-    for (var i = 0; i < dim; i++) {
+    for (let i = 0; i < dim; i++) {
       if (fieldNotContains(a[i])) {
         return false
       }
@@ -575,10 +585,10 @@ function iterateCayleyDickson (given, iterations) {
 
     // b -> p looks like complex conjugation simmetry (:
     function conjugation (b) {
-      var p = [b[0]]
+      let p = [b[0]]
 
       // First, copy half of b into q.
-      for (var i = 1; i < dim; i++) {
+      for (let i = 1; i < dim; i++) {
         p.push(fieldNegation(b[i]))
       }
 
@@ -588,7 +598,7 @@ function iterateCayleyDickson (given, iterations) {
     return conjugation
   }
 
-  var conjugation = buildConjugation(fieldNegation, iterations)
+  const conjugation = buildConjugation(fieldNegation, iterations)
 
   function buildMultiplication (fieldAddition, fieldNegation, fieldMultiplication, iterations) {
     if (iterations === 0) {
@@ -697,87 +707,7 @@ function iterateCayleyDickson (given, iterations) {
 
 module.exports = iterateCayleyDickson
 
-
-},{"algebra-ring":7}],7:[function(require,module,exports){
-var group = require('algebra-group')
-
-/**
- * Define an algebra ring structure
- *
- * @param {Array} identity
- * @param {*}     identity[0] a.k.a zero
- * @param {*}     identity[1] a.k.a uno
- * @param {Object}   given operator functions
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.addition
- * @param {Function} given.negation
- * @param {Function} given.multiplication
- * @param {Function} given.inversion
- *
- * @returns {Object} ring
- */
-
-function algebraRing (identity, given) {
-  // A ring is a group, with multiplication.
-
-  var ring = group({
-    identity: identity[0],
-    contains: given.contains,
-    equality: given.equality,
-    compositionLaw: given.addition,
-    inversion: given.negation
-  })
-
-  // operators
-
-  function multiplication () {
-    return [].slice.call(arguments).reduce(given.multiplication)
-  }
-
-  function inversion (a) {
-    if (ring.equality(a, ring.zero)) {
-      throw new TypeError('algebra-ring: Cannot divide by zero.')
-    }
-
-    return given.inversion(a)
-  }
-
-  function division (a) {
-    var rest = [].slice.call(arguments, 1)
-
-    return given.multiplication(a, rest.map(given.inversion).reduce(given.multiplication))
-  }
-
-  ring.multiplication = multiplication
-  ring.inversion = inversion
-  ring.division = division
-
-  // Multiplicative identity.
-
-  var one = identity[1]
-
-  if (ring.notContains(one)) {
-    throw new TypeError('algebra-ring: "identity" must be contained in ring set')
-  }
-
-  // Check that one*one=one.
-  if (ring.disequality(given.multiplication(one, one), one)) {
-    throw new TypeError('algebra-ring: "identity" is not neutral')
-  }
-
-  if (ring.notContains(identity[1])) {
-    throw new TypeError('algebra-ring:"identity" must be contained in ring set')
-  }
-
-  ring.one = identity[1]
-
-  return ring
-}
-
-module.exports = algebraRing
-
-},{"algebra-group":3}],8:[function(require,module,exports){
+},{"algebra-ring":4}],7:[function(require,module,exports){
 function indicesPermutations (previousValue, currentValue, currentIndex, array) {
   var result = []
 
@@ -806,7 +736,7 @@ function indicesPermutations (previousValue, currentValue, currentIndex, array) 
 
 module.exports = indicesPermutations
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -831,7 +761,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 var numberIsNan = require('number-is-nan');
 
@@ -839,7 +769,7 @@ module.exports = Number.isFinite || function (val) {
 	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
 };
 
-},{"number-is-nan":19}],11:[function(require,module,exports){
+},{"number-is-nan":18}],10:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -849,7 +779,7 @@ module.exports = Number.isInteger || function(val) {
     Math.floor(val) === val;
 };
 
-},{"is-finite":10}],12:[function(require,module,exports){
+},{"is-finite":9}],11:[function(require,module,exports){
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -963,7 +893,7 @@ function determinant (data, scalar, order) {
 module.exports = determinant
 
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var isInteger = require('is-integer')
 var no = require('not-defined')
 var staticProps = require('static-props')
@@ -1082,20 +1012,27 @@ staticProps(matrixMultiplication)({ error: error })
 
 module.exports = matrixMultiplication
 
-},{"./package.json":15,"is-integer":11,"not-defined":18,"static-props":14}],14:[function(require,module,exports){
+},{"./package.json":14,"is-integer":10,"not-defined":17,"static-props":13}],13:[function(require,module,exports){
 arguments[4][5][0].apply(exports,arguments)
-},{"dup":5}],15:[function(require,module,exports){
+},{"dup":5}],14:[function(require,module,exports){
 module.exports={
   "_args": [
     [
-      "matrix-multiplication@^0.4.0",
+      {
+        "raw": "matrix-multiplication@^0.4.0",
+        "scope": null,
+        "escapedName": "matrix-multiplication",
+        "name": "matrix-multiplication",
+        "rawSpec": "^0.4.0",
+        "spec": ">=0.4.0 <0.5.0",
+        "type": "range"
+      },
       "/home/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "matrix-multiplication@>=0.4.0 <0.5.0",
   "_id": "matrix-multiplication@0.4.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/matrix-multiplication",
   "_nodeVersion": "4.2.2",
   "_npmOperationalInternal": {
@@ -1103,16 +1040,17 @@ module.exports={
     "tmp": "tmp/matrix-multiplication-0.4.0.tgz_1460154669918_0.5360936403740197"
   },
   "_npmUser": {
-    "email": "casati_gianluca@yahoo.it",
-    "name": "fibo"
+    "name": "fibo",
+    "email": "casati_gianluca@yahoo.it"
   },
   "_npmVersion": "3.7.2",
   "_phantomChildren": {},
   "_requested": {
-    "name": "matrix-multiplication",
     "raw": "matrix-multiplication@^0.4.0",
-    "rawSpec": "^0.4.0",
     "scope": null,
+    "escapedName": "matrix-multiplication",
+    "name": "matrix-multiplication",
+    "rawSpec": "^0.4.0",
     "spec": ">=0.4.0 <0.5.0",
     "type": "range"
   },
@@ -1156,8 +1094,8 @@ module.exports={
   "main": "index.js",
   "maintainers": [
     {
-      "email": "casati_gianluca@yahoo.it",
-      "name": "fibo"
+      "name": "fibo",
+      "email": "casati_gianluca@yahoo.it"
     }
   ],
   "name": "matrix-multiplication",
@@ -1181,7 +1119,7 @@ module.exports={
   "version": "0.4.0"
 }
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var staticProps = require('static-props')
 
 var pkg = require('./package.json')
@@ -1248,18 +1186,25 @@ staticProps(multiDimArrayIndex)({ error: error })
 
 module.exports = multiDimArrayIndex
 
-},{"./package.json":17,"static-props":20}],17:[function(require,module,exports){
+},{"./package.json":16,"static-props":19}],16:[function(require,module,exports){
 module.exports={
   "_args": [
     [
-      "multidim-array-index@^0.5.0",
+      {
+        "raw": "multidim-array-index@^0.5.0",
+        "scope": null,
+        "escapedName": "multidim-array-index",
+        "name": "multidim-array-index",
+        "rawSpec": "^0.5.0",
+        "spec": ">=0.5.0 <0.6.0",
+        "type": "range"
+      },
       "/home/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "multidim-array-index@>=0.5.0 <0.6.0",
   "_id": "multidim-array-index@0.5.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/multidim-array-index",
   "_nodeVersion": "4.2.2",
   "_npmOperationalInternal": {
@@ -1267,16 +1212,17 @@ module.exports={
     "tmp": "tmp/multidim-array-index-0.5.0.tgz_1460790776022_0.695659349905327"
   },
   "_npmUser": {
-    "email": "casati_gianluca@yahoo.it",
-    "name": "fibo"
+    "name": "fibo",
+    "email": "casati_gianluca@yahoo.it"
   },
   "_npmVersion": "3.7.2",
   "_phantomChildren": {},
   "_requested": {
-    "name": "multidim-array-index",
     "raw": "multidim-array-index@^0.5.0",
-    "rawSpec": "^0.5.0",
     "scope": null,
+    "escapedName": "multidim-array-index",
+    "name": "multidim-array-index",
+    "rawSpec": "^0.5.0",
     "spec": ">=0.5.0 <0.6.0",
     "type": "range"
   },
@@ -1319,8 +1265,8 @@ module.exports={
   "main": "index.js",
   "maintainers": [
     {
-      "email": "casati_gianluca@yahoo.it",
-      "name": "fibo"
+      "name": "fibo",
+      "email": "casati_gianluca@yahoo.it"
     }
   ],
   "name": "multidim-array-index",
@@ -1338,16 +1284,16 @@ module.exports={
   "version": "0.5.0"
 }
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports=function(x){return (typeof x==='undefined')||(x === null)}
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 module.exports = Number.isNaN || function (x) {
 	return x !== x;
 };
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * @param {Object} obj
  * @returns {Function}
@@ -1382,11 +1328,11 @@ function staticProps (obj) {
 }
 module.exports = staticProps
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 // In browserify context, *strict-mode* fall back to a no op.
 module.exports = function (cb) { cb() }
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -1473,7 +1419,7 @@ function tensorContraction (addition, indicesPair, tensorDim, tensorData) {
 
 module.exports = tensorContraction
 
-},{"indices-permutations":8,"multidim-array-index":23}],23:[function(require,module,exports){
+},{"indices-permutations":7,"multidim-array-index":22}],22:[function(require,module,exports){
 /**
  * maps multidimensional array indices to monodimensional array index
  *
@@ -1515,7 +1461,7 @@ function multiDimArrayIndex (dimensions, indices) {
 
 module.exports = multiDimArrayIndex
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -1554,9 +1500,9 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 
 module.exports = tensorProduct
 
-},{"indices-permutations":8,"multidim-array-index":25}],25:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],26:[function(require,module,exports){
+},{"indices-permutations":7,"multidim-array-index":24}],24:[function(require,module,exports){
+arguments[4][22][0].apply(exports,arguments)
+},{"dup":22}],25:[function(require,module,exports){
 'use strict';
 
 var CayleyDickson = require('cayley-dickson');
@@ -1589,7 +1535,7 @@ function CompositionAlgebra(field, num) {
 
 module.exports = CompositionAlgebra;
 
-},{"./createScalar":32,"cayley-dickson":6,"not-defined":18}],27:[function(require,module,exports){
+},{"./createScalar":31,"cayley-dickson":6,"not-defined":17}],26:[function(require,module,exports){
 'use strict';
 
 var algebraCyclic = require('algebra-cyclic');
@@ -1609,7 +1555,7 @@ function Cyclic(elements) {
 
 module.exports = Cyclic;
 
-},{"./createScalar":32,"algebra-cyclic":1}],28:[function(require,module,exports){
+},{"./createScalar":31,"algebra-cyclic":1}],27:[function(require,module,exports){
 'use strict';
 
 var determinant = require('laplace-determinant');
@@ -1816,7 +1762,7 @@ itemsPool.set('MatrixSpace', MatrixSpace);
 
 module.exports = MatrixSpace;
 
-},{"./TensorSpace":29,"./itemsPool":33,"./operators.json":34,"./toData":36,"inherits":9,"laplace-determinant":12,"matrix-multiplication":13,"multidim-array-index":16,"not-defined":18,"static-props":20,"tensor-contraction":22}],29:[function(require,module,exports){
+},{"./TensorSpace":28,"./itemsPool":32,"./operators.json":33,"./toData":35,"inherits":8,"laplace-determinant":11,"matrix-multiplication":12,"multidim-array-index":15,"not-defined":17,"static-props":19,"tensor-contraction":21}],28:[function(require,module,exports){
 'use strict';
 
 var operators = require('./operators.json');
@@ -1998,7 +1944,7 @@ function TensorSpace(Scalar) {
 
 module.exports = TensorSpace;
 
-},{"./operators.json":34,"./toData":36,"static-props":20,"tensor-product":24}],30:[function(require,module,exports){
+},{"./operators.json":33,"./toData":35,"static-props":19,"tensor-product":23}],29:[function(require,module,exports){
 'use strict';
 
 var inherits = require('inherits');
@@ -2240,7 +2186,7 @@ itemsPool.set('VectorSpace', VectorSpace);
 
 module.exports = VectorSpace;
 
-},{"./TensorSpace":29,"./itemsPool":33,"./operators.json":34,"./toData":36,"inherits":9,"matrix-multiplication":13,"static-props":20}],31:[function(require,module,exports){
+},{"./TensorSpace":28,"./itemsPool":32,"./operators.json":33,"./toData":35,"inherits":8,"matrix-multiplication":12,"static-props":19}],30:[function(require,module,exports){
 'use strict';
 
 var toData = require('./toData');
@@ -2263,7 +2209,7 @@ function coerced(operator) {
 
 module.exports = coerced;
 
-},{"./toData":36}],32:[function(require,module,exports){
+},{"./toData":35}],31:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2371,14 +2317,14 @@ function createScalar(ring) {
 
 module.exports = createScalar;
 
-},{"./coerced":31,"./operators.json":34,"./toData":36,"static-props":20}],33:[function(require,module,exports){
+},{"./coerced":30,"./operators.json":33,"./toData":35,"static-props":19}],32:[function(require,module,exports){
 "use strict";
 
 var itemsPool = new Map();
 
 module.exports = itemsPool;
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports={
   "comparison": [
     "equality",
@@ -2439,7 +2385,7 @@ module.exports={
   }
 }
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 'use strict';
 
 var realField = {
@@ -2468,7 +2414,7 @@ var realField = {
 
 module.exports = realField;
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict';
 
 var no = require('not-defined');
@@ -2495,7 +2441,7 @@ function toData(arg) {
 
 module.exports = toData;
 
-},{"not-defined":18}],"algebra":[function(require,module,exports){
+},{"not-defined":17}],"algebra":[function(require,module,exports){
 'use strict';
 
 require('strict-mode')(function () {
@@ -2532,4 +2478,4 @@ require('strict-mode')(function () {
   exports.TensorSpace = require('./src/TensorSpace');
 });
 
-},{"./src/CompositionAlgebra":26,"./src/Cyclic":27,"./src/MatrixSpace":28,"./src/TensorSpace":29,"./src/VectorSpace":30,"./src/realField":35,"strict-mode":21}]},{},[]);
+},{"./src/CompositionAlgebra":25,"./src/Cyclic":26,"./src/MatrixSpace":27,"./src/TensorSpace":28,"./src/VectorSpace":29,"./src/realField":34,"strict-mode":20}]},{},[]);

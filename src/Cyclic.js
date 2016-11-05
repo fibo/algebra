@@ -1,5 +1,5 @@
-var algebraCyclic = require('algebra-cyclic')
-var createScalar = require('./createScalar')
+const algebraCyclic = require('algebra-cyclic')
+const createScalar = require('./createScalar')
 
 /**
  * Create a Cyclic algebra.
@@ -8,7 +8,7 @@ var createScalar = require('./createScalar')
  */
 
 function Cyclic (elements) {
-  var ring = algebraCyclic(elements)
+  const ring = algebraCyclic(elements)
 
   return createScalar(ring)
 }

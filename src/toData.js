@@ -1,9 +1,7 @@
-var no = require('not-defined')
+const no = require('not-defined')
 
 /**
  * Extract data attribute, if any, and check it
- *
- * @api private
  *
  * @param {*} arg
  *
@@ -11,7 +9,7 @@ var no = require('not-defined')
  */
 
 function toData (arg) {
-  var data
+  let data
 
   if (no(arg.data)) data = arg
   else data = arg.data

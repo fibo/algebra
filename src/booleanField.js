@@ -1,4 +1,4 @@
-var booleanField = {
+const booleanField = {
   zero: false,
   one: true,
   contains: (a) => (a === true) || (a === false),

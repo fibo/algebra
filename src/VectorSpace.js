@@ -121,16 +121,16 @@ function VectorSpace (Scalar) {
 
     function scalarProduct (vector1, vector2) {
       // TODO use tensor product and then contraction (trace)
-      var vectorData1 = toData(vector1)
-      var vectorData2 = toData(vector2)
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
 
       if (vectorData1.length !== vectorData2.length) {
         throw new TypeError('Vectors have not the same dimension')
       }
 
-      var result = multiplication(vectorData1[0], vectorData2[0])
+      let result = multiplication(vectorData1[0], vectorData2[0])
 
-      for (var i = 1; i < dimension; i++) {
+      for (let i = 1; i < dimension; i++) {
         result = addition(result, multiplication(vectorData1[i], vectorData2[i]))
       }
 
@@ -146,25 +146,25 @@ function VectorSpace (Scalar) {
 
       staticProps(this)({
         norm: norm(data),
-        dimension: dimension
+        dimension
       })
     }
 
     inherits(Vector, AbstractVector)
 
     Vector.prototype.scalarProduct = function (vector) {
-      var data = this.data
+      const data = this.data
 
-      var result = scalarProduct(data, vector)
+      const result = scalarProduct(data, vector)
 
       return new Scalar(result)
     }
 
     // Cross product is defined only in dimension 3.
     function crossProductMethod (vector) {
-      var data = this.data
+      const data = this.data
 
-      var result = crossProduct(data, vector)
+      const result = crossProduct(data, vector)
 
       return new Vector(result)
     }

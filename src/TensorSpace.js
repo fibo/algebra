@@ -26,16 +26,16 @@ function TensorSpace (Scalar) {
     // A matrix has order 2.
     // Order is also called "rank" or "tensor rank", but, to avoid confusion with
     // "matrix rank" it is better to call it "order".
-    var order = indices.filter((dim) => dim > 1).length
+    const order = indices.filter((dim) => dim > 1).length
 
     // TODO if it is a scalar, return the Scalar
     // which should be a composition algebra
     // Then add product tensor to composition algebras.
     // Finally, a tensor i,j,k should be constructed as the
     // tensor product of a scalar i,j,k times.
-    var isScalar = (order === 0)
+    const isScalar = (order === 0)
 
-    var dimension = indices.reduce((a, b) => a * b, 1)
+    const dimension = indices.reduce((a, b) => a * b, 1)
 
     if (isScalar) {
       staticProps(Scalar)({ order })
@@ -45,7 +45,7 @@ function TensorSpace (Scalar) {
 
     // TODO create one for square matrices
     // Create zero.
-    var zero = indices.reduce((result, dim) => {
+    const zero = indices.reduce((result, dim) => {
       for (var i = 0; i < dim; i++) {
         result.push(Scalar.zero)
       }
@@ -67,7 +67,7 @@ function TensorSpace (Scalar) {
 
       data.forEach(validate)
 
-      var enumerable = true
+      const enumerable = true
       staticProps(this)({ data }, enumerable)
 
       staticProps(this)({ order })
@@ -78,7 +78,7 @@ function TensorSpace (Scalar) {
         let result = []
 
         for (let i = 0; i < dimension; i++) {
-          var operands = []
+          let operands = []
 
           for (let j = 0; j < arguments.length; j++) {
             operands.push(toData(arguments[j])[i])
@@ -97,12 +97,12 @@ function TensorSpace (Scalar) {
       staticBinary(operator)
 
       Tensor.prototype[operator] = function () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+        const args = [].slice.call(arguments)
+        const operands = [this.data].concat(args)
 
-        var data = Tensor[operator].apply(null, operands)
+        const data = Tensor[operator].apply(null, operands)
 
-        var tensor = new Tensor(data)
+        const tensor = new Tensor(data)
 
         return tensor
       }
@@ -158,7 +158,7 @@ function TensorSpace (Scalar) {
       zero
     })
 
-    var myOperators = operators.group
+    const myOperators = operators.group
 
     myOperators.forEach((operator) => {
       operators.aliasesOf[operator].forEach((alias) => {

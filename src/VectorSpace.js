@@ -59,7 +59,7 @@ function VectorSpace (Scalar) {
       const vy = vectorData2[1]
       const vz = vectorData2[2]
 
-      let vector = []
+      var vector = []
 
       vector.push(subtraction(multiplication(uy, vz), multiplication(uz, vy)))
       vector.push(subtraction(multiplication(uz, vx), multiplication(ux, vz)))
@@ -99,9 +99,9 @@ function VectorSpace (Scalar) {
     function norm (vector) {
       const data = toData(vector)
 
-      let value = multiplication(data[0], data[0])
+      var value = multiplication(data[0], data[0])
 
-      for (let i = 1; i < dimension; i++) {
+      for (var i = 1; i < dimension; i++) {
         value = addition(value, multiplication(data[i], data[i]))
       }
 
@@ -128,9 +128,9 @@ function VectorSpace (Scalar) {
         throw new TypeError('Vectors have not the same dimension')
       }
 
-      let result = multiplication(vectorData1[0], vectorData2[0])
+      var result = multiplication(vectorData1[0], vectorData2[0])
 
-      for (let i = 1; i < dimension; i++) {
+      for (var i = 1; i < dimension; i++) {
         result = addition(result, multiplication(vectorData1[i], vectorData2[i]))
       }
 

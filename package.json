@@ -10,10 +10,10 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "npm test && npm run browserify && npm run minify && npm run tex && npm run jekyll; git status",
+    "build": "npm test && npm run browserify && npm run tex && npm run jekyll; git status",
     "browserify": "npm run browserify:dist; npm run browserify:test",
-    "browserify:dist": "browserify -r ./index.js:${npm_package_name} -t babelify -o dist/${npm_package_name}.js",
-    "browserify:test": "browserify test/*.js -t babelify -o gh-pages/test/bundle.js",
+    "browserify:dist": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
+    "browserify:test": "browserify test/*.js -o gh-pages/test/bundle.js",
     "check-deps": "npm outdated",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
@@ -30,7 +30,6 @@
     "lint": "npm run lint_src; npm run lint_test",
     "lint_src": "standard src/*.js",
     "lint_test": "cd test; standard --global describe --global it; cd -",
-    "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map ${npm_package_name}.map --output ${npm_package_name}.min.js --compress --mangle --preamble \"// Software: ${npm_package_name}\n// Homepage: ${npm_package_homepage}\n// License: ${npm_package_license}\"; cd -",
     "tex": "npm run tex:display; npm run tex:inline",
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
@@ -64,8 +63,6 @@
     "math"
   ],
   "devDependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babelify": "^7.2.0",
     "browserify": "^13.1.1",
     "coveralls": "^2.11.14",
     "istanbul": "^0.4.1",
@@ -74,12 +71,11 @@
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.1.2",
     "should": "^11.1.1",
-    "standard": "^8.5.0",
-    "uglify-js": "^2.6.4"
+    "standard": "^8.5.0"
   },
   "dependencies": {
     "algebra-cyclic": "^0.2.0",
-    "cayley-dickson": "^0.4.1",
+    "cayley-dickson": "^0.4.2",
     "indices-permutations": "^0.2.0",
     "inherits": "^2.0.1",
     "laplace-determinant": "^0.1.0",

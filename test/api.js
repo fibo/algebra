@@ -15,7 +15,7 @@ describe('API', () => {
   const TensorSpace = algebra.TensorSpace
   const VectorSpace = algebra.VectorSpace
 
-  const booleanField = require('../src/booleanField')
+  const binaryField = require('../src/binaryField')
 
   describe('About operators', () => {
     it('works', () => {
@@ -37,27 +37,44 @@ describe('API', () => {
   })
 
   describe('CompositionAlgebra', () => {
-    const Bool = CompositionAlgebra(booleanField)
+    const Bit = CompositionAlgebra(binaryField)
 
     it('works', () => {
-      Bool.contains(true).should.be.ok
-      Bool.contains(1).should.be.ko
+      Bit.contains(1).should.be.ok
+      Bit.contains(4).should.be.ko
 
-      Bool.addition(true, false).should.eql(true)
-
-      const t = new Bool(true)
-      t.negation().data.should.eql(false)
+      const bit = new Bit(1)
+      bit.addition(0).data.should.eql(1)
     })
   })
 
   describe('Byte', () => {
-    it('is an octionion of booleans'/*, () => {
-      const f = false
-      const t = true
+    it('is an octonion over binary field', () => {
+      const Byte = CompositionAlgebra(binaryField, 8)
 
-      const Byte = CompositionAlgebra(booleanField, 8)
-      const byte1 = new Byte([t, f, f, f, f, f, f, f])
-    }*/)
+      const byte1 = new Byte([1, 0, 0, 0, 0, 0, 0, 0])
+      const byte2 = new Byte([0, 1, 0, 0, 0, 0, 0, 0])
+      const byte3 = new Byte([0, 0, 1, 0, 0, 0, 0, 0])
+      const byte4 = new Byte([0, 0, 0, 1, 0, 0, 0, 0])
+      const byte5 = new Byte([0, 0, 0, 0, 1, 0, 0, 0])
+      const byte6 = new Byte([0, 0, 0, 0, 0, 1, 0, 0])
+      const byte7 = new Byte([0, 0, 0, 0, 0, 0, 1, 0])
+      const byte8 = new Byte([0, 0, 0, 0, 0, 0, 0, 1])
+
+      byte1.mul(byte1).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+      byte2.mul(byte2).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+      byte3.mul(byte3).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+      byte4.mul(byte4).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+      byte5.mul(byte5).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+      byte6.mul(byte6).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+      byte7.mul(byte7).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+      byte8.mul(byte8).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
+
+      const max = byte1.add(byte2).add(byte3).add(byte4)
+                       .add(byte5).add(byte6).add(byte7).add(byte8)
+
+      max.data.should.deepEqual([1, 1, 1, 1, 1, 1, 1, 1])
+    })
   })
 
   describe('Cyclic', () => {

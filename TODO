@@ -9,8 +9,6 @@ color space as example, but with color names  white -> 1  black -> 0
 
 example of complex space over custom field
 
-1 byte is an octonion over booleans
-
 be more semantic: transposition instead of transpose if it is static, transpose if it is a mutator, tha alias is the same (tr)
                   addition for the static operator, add for the mutator
                   subtraction for the static, subtract for the mutator

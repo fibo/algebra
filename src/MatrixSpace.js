@@ -86,12 +86,12 @@ function MatrixSpace (Scalar) {
 
     function transpose (matrix) {
       const matrixData = toData(matrix)
-      let transposedData = []
+      var transposedData = []
 
-      for (let i = 0; i < numRows; i++) {
-        for (let j = 0; j < numCols; j++) {
-          let index = multiDimArrayIndex([numRows, numCols], [i, j])
-          let transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
+      for (var i = 0; i < numRows; i++) {
+        for (var j = 0; j < numCols; j++) {
+          var index = multiDimArrayIndex([numRows, numCols], [i, j])
+          var transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
 
           transposedData[transposedIndex] = matrixData[index]
         }

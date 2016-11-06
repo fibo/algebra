@@ -75,12 +75,12 @@ function TensorSpace (Scalar) {
 
     function staticBinary (operator) {
       Tensor[operator] = function () {
-        let result = []
+        var result = []
 
-        for (let i = 0; i < dimension; i++) {
-          let operands = []
+        for (var i = 0; i < dimension; i++) {
+          var operands = []
 
-          for (let j = 0; j < arguments.length; j++) {
+          for (var j = 0; j < arguments.length; j++) {
             operands.push(toData(arguments[j])[i])
           }
 
@@ -111,9 +111,9 @@ function TensorSpace (Scalar) {
     function scalarMultiplication (tensor, scalar) {
       const tensorData = toData(tensor)
 
-      let result = []
+      var result = []
 
-      for (let i = 0; i < dimension; i++) {
+      for (var i = 0; i < dimension; i++) {
         result.push(multiplication(tensorData[i], scalar))
       }
 
@@ -132,7 +132,7 @@ function TensorSpace (Scalar) {
       const tensorData1 = toData(tensor1)
       const tensorData2 = toData(tensor2)
 
-      for (let i = 0; i < dimension; i++) {
+      for (var i = 0; i < dimension; i++) {
         if (Scalar.disequality(tensorData1[i], tensorData2[i])) {
           return false
         }

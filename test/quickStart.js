@@ -6,7 +6,7 @@ describe('Quick start', () => {
 
     R.add(1, 2, 3).should.eql(6)
 
-    let x = new R(2)
+    var x = new R(2)
     const y = new R(-2)
 
     const r = x.mul(y)
@@ -22,7 +22,7 @@ describe('Quick start', () => {
 
     const C = algebra.Complex
 
-    let z1 = new C([1, 2])
+    var z1 = new C([1, 2])
     const z2 = new C([3, 4])
 
     z1 = z1.mul(z2)
@@ -35,7 +35,7 @@ describe('Quick start', () => {
 
     const R2 = algebra.VectorSpace(R)(2)
 
-    let v1 = new R2([0, 1])
+    var v1 = new R2([0, 1])
     const v2 = new R2([1, -2])
 
     v1 = v1.add(v2)
@@ -54,7 +54,7 @@ describe('Quick start', () => {
 
     const R2x2 = algebra.MatrixSpace(R)(2)
 
-    let m2 = new R2x2([1, 0,
+    var m2 = new R2x2([1, 0,
                        0, 2])
     const m3 = new R2x2([0, -1,
                        1, 0])

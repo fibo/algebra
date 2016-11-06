@@ -9,7 +9,7 @@ const no = require('not-defined')
  */
 
 function toData (arg) {
-  let data
+  var data
 
   if (no(arg.data)) data = arg
   else data = arg.data

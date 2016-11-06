@@ -87,7 +87,7 @@ bower install algebra
 or use a CDN adding this to your HTML page
 
 ```html
-<script src="https://cdn.rawgit.com/fibo/algebra/master/dist/algebra.min.js"></script>
+<script src="https://cdn.rawgit.com/fibo/algebra/master/dist/algebra.js"></script>
 ```
 
 ## Quick start
@@ -381,36 +381,72 @@ A generic function is provided to iterate the [Cayley-Dickson construction][Cayl
 
 * num can be 1, 2, 4 or 8
 
-Let's use for example the [src/booleanField][booleanField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
+Let's use for example the [src/binaryField][binaryField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```javascript
 const CompositionAlgebra = algebra.CompositionAlgebra
 
-const booleanField = require('algebra/src/booleanField')
+const binaryField = require('algebra/src/binaryField')
 
-const Bool = CompositionAlgebra(booleanField)
+const Bit = CompositionAlgebra(binaryField)
 
-Bool.contains(true) // true
-Bool.contains(1) // false
+Bit.contains(1) // true
+Bit.contains(4) // false
 
-Bool.addition(true, false) // true
-
-const t = new Bool(true)
-t.negation().data // false
+const bit = new Bit(1)
+Bit.addition(0).data // 1
 ```
 
 Not so exciting, let's build something more interesting.
 Let's pass a second parameter, that is used to build a [Composition algebra][composition-algebra] over the given field.
-It is something experimental also for me, right now I am writing this but I still do not know how it will behave.
-My idea is that
+It is something **experimental** also for me, right now I am writing this but I still do not know how it will behave. My idea is that
 
-> A byte is an octonion of booleans
+> A byte is an octonion of bits
 
 Maybe we can discover some new byte operator, taken from octonion rich algebra structure.
+Create an octonion algebra over the binary field, a.k.a Z2 and create the
+eight units.
 
-```
+```javascript
 // n must be a power of two
-// TODO var Byte = CompositionAlgebra(boolean, 8)
+const Byte = CompositionAlgebra(binaryField, 8)
+
+const byte1 = new Byte([1, 0, 0, 0, 0, 0, 0, 0])
+const byte2 = new Byte([0, 1, 0, 0, 0, 0, 0, 0])
+const byte3 = new Byte([0, 0, 1, 0, 0, 0, 0, 0])
+const byte4 = new Byte([0, 0, 0, 1, 0, 0, 0, 0])
+const byte5 = new Byte([0, 0, 0, 0, 1, 0, 0, 0])
+const byte6 = new Byte([0, 0, 0, 0, 0, 1, 0, 0])
+const byte7 = new Byte([0, 0, 0, 0, 0, 0, 1, 0])
+const byte8 = new Byte([0, 0, 0, 0, 0, 0, 0, 1])
+```
+
+The first one corresponds to *one*, while the rest are immaginary units,
+but since the underlying field is Z2, -1 corresponds to 1.
+
+```javascript
+byte1.mul(byte1).data // [1, 0, 0, 0, 0, 0, 0, 0]
+byte2.mul(byte2).data // [1, 0, 0, 0, 0, 0, 0, 0]
+byte3.mul(byte3).data // [1, 0, 0, 0, 0, 0, 0, 0]
+byte4.mul(byte4).data // [1, 0, 0, 0, 0, 0, 0, 0]
+byte5.mul(byte5).data // [1, 0, 0, 0, 0, 0, 0, 0]
+byte6.mul(byte6).data // [1, 0, 0, 0, 0, 0, 0, 0]
+byte7.mul(byte7).data // [1, 0, 0, 0, 0, 0, 0, 0]
+byte8.mul(byte8).data // [1, 0, 0, 0, 0, 0, 0, 0]
+```
+
+Keeping in mind that *Byte* space defined above is an algebra, i.e. it has
+composition laws well defined, you maybe already noticed that, for example
+*byte2* could be seen as corresponding to 4, but in this strange structure
+we created, 4 * 4 = 2.
+
+You can play around with this structure.
+
+```javascript
+const max = byte1.add(byte2).add(byte3).add(byte4)
+                 .add(byte5).add(byte6).add(byte7).add(byte8)
+
+max.data // [1, 1, 1, 1, 1, 1, 1, 1]
 ```
 
 ### Scalar
@@ -795,7 +831,6 @@ tensor2.equality(tensor2) // false
 [bower]: http://bower.io/
 [blog]: http://g14n.info/algebra/articles "algebra blog"
 [composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
-[booleanField]: https://github.com/fibo/algebra/blob/master/src/booleanField.js "boolean field"
 [realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"
 [algebra-cyclic]: http://npm.im/algebra-cyclic
 [algebra-group]: http://npm.im/algebra-group

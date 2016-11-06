@@ -15,9 +15,17 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+## [v0.12.0] - 2016-11-05
+
+### Removed
+
+- Removed babel and uglify.
+
 ### Added
 
-- updated deps and coverage
+- updated deps and coverage.
+- Refactored to ES2015 code.
+- Vector multiplicated by matrix.
 
 ## [v0.11.0] - 2016-06-28
 

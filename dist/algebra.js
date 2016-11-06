@@ -471,8 +471,8 @@ function staticProps (obj) {
 module.exports = staticProps
 
 },{}],6:[function(require,module,exports){
-var ring = require('algebra-ring')
-var twoPow = Math.pow.bind(null, 2)
+const ring = require('algebra-ring')
+const twoPow = Math.pow.bind(null, 2)
 
 /**
  * Turn unary operator on single value to operator on n values.
@@ -664,7 +664,7 @@ function iterateCayleyDickson (given, iterations) {
 
   function norm (a) {
     var n = fieldZero
-    var squares = multiplication(a, conjugation(a))
+    const squares = multiplication(a, conjugation(a))
 
     for (var i = 0; i < dim; i++) {
       n = fieldAddition(n, squares[i])
@@ -674,8 +674,8 @@ function iterateCayleyDickson (given, iterations) {
   }
 
   function inversion (a) {
-    var n = norm(a)
-    var b = conjugation(a)
+    const n = norm(a)
+    const b = conjugation(a)
 
     for (var i = 0; i < dim; i++) {
       b[i] = field.division(b[i], n)
@@ -684,19 +684,19 @@ function iterateCayleyDickson (given, iterations) {
     return b
   }
 
-  var addition = arrayfy2(fieldAddition, dim)
-  var negation = arrayfy1(fieldNegation, dim)
+  const addition = arrayfy2(fieldAddition, dim)
+  const negation = arrayfy1(fieldNegation, dim)
 
   // Cayley-Dickson construction take a field as input but the result can be often a ring,
   // this means that it can be *not-commutative*.
-  // To elevate it to an algebra, we need a bilinear form wich is given by the norm.
+  // To elevate it to an algebra, we need a bilinear form which is given by the norm.
   var algebra = ring([zero, one], {
-    contains: contains,
-    equality: equality,
-    addition: addition,
-    negation: negation,
-    multiplication: multiplication,
-    inversion: inversion
+    contains,
+    equality,
+    addition,
+    negation,
+    multiplication,
+    inversion
   })
 
   algebra.conjugation = conjugation
@@ -1503,11 +1503,9 @@ module.exports = tensorProduct
 },{"indices-permutations":7,"multidim-array-index":24}],24:[function(require,module,exports){
 arguments[4][22][0].apply(exports,arguments)
 },{"dup":22}],25:[function(require,module,exports){
-'use strict';
-
-var CayleyDickson = require('cayley-dickson');
-var createScalar = require('./createScalar');
-var no = require('not-defined');
+const CayleyDickson = require('cayley-dickson')
+const createScalar = require('./createScalar')
+const no = require('not-defined')
 
 /**
  * A composition algebra is one of ℝ, ℂ, ℍ, O:
@@ -1521,25 +1519,23 @@ var no = require('not-defined');
  * @returns {Object} Scalar
  */
 
-function CompositionAlgebra(field, num) {
-  if (no(num)) num = 1;
+function CompositionAlgebra (field, num) {
+  if (no(num)) num = 1
 
-  var logBase2 = [1, 2, 4, 8].indexOf(num);
+  const logBase2 = [1, 2, 4, 8].indexOf(num)
 
   if (logBase2 === -1) {
-    throw new TypeError('Argument n must be 1, 2, 4 or 8');
+    throw new TypeError('Argument n must be 1, 2, 4 or 8')
   }
 
-  return createScalar(CayleyDickson(field, logBase2));
+  return createScalar(CayleyDickson(field, logBase2))
 }
 
-module.exports = CompositionAlgebra;
+module.exports = CompositionAlgebra
 
 },{"./createScalar":31,"cayley-dickson":6,"not-defined":17}],26:[function(require,module,exports){
-'use strict';
-
-var algebraCyclic = require('algebra-cyclic');
-var createScalar = require('./createScalar');
+const algebraCyclic = require('algebra-cyclic')
+const createScalar = require('./createScalar')
 
 /**
  * Create a Cyclic algebra.
@@ -1547,28 +1543,26 @@ var createScalar = require('./createScalar');
  * @param {String|Array} elements
  */
 
-function Cyclic(elements) {
-  var ring = algebraCyclic(elements);
+function Cyclic (elements) {
+  const ring = algebraCyclic(elements)
 
-  return createScalar(ring);
+  return createScalar(ring)
 }
 
-module.exports = Cyclic;
+module.exports = Cyclic
 
 },{"./createScalar":31,"algebra-cyclic":1}],27:[function(require,module,exports){
-'use strict';
-
-var determinant = require('laplace-determinant');
-var inherits = require('inherits');
-var itemsPool = require('./itemsPool');
-var matrixMultiplication = require('matrix-multiplication');
-var multiDimArrayIndex = require('multidim-array-index');
-var no = require('not-defined');
-var operators = require('./operators.json');
-var staticProps = require('static-props');
-var TensorSpace = require('./TensorSpace');
-var tensorContraction = require('tensor-contraction');
-var toData = require('./toData');
+const determinant = require('laplace-determinant')
+const inherits = require('inherits')
+const itemsPool = require('./itemsPool')
+const matrixMultiplication = require('matrix-multiplication')
+const multiDimArrayIndex = require('multidim-array-index')
+const no = require('not-defined')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const TensorSpace = require('./TensorSpace')
+const tensorContraction = require('tensor-contraction')
+const toData = require('./toData')
 
 /**
  * Space of m x n matrices
@@ -1584,8 +1578,8 @@ var toData = require('./toData');
  * @returns {Function} anonymous with signature (numRows[, numCols])
  */
 
-function MatrixSpace(Scalar) {
-  var contraction = tensorContraction.bind(null, Scalar.addition);
+function MatrixSpace (Scalar) {
+  var contraction = tensorContraction.bind(null, Scalar.addition)
 
   /**
    * @param {Number} numRows
@@ -1596,12 +1590,12 @@ function MatrixSpace(Scalar) {
 
   return function (numRows, numCols) {
     // numCols defaults to numRows
-    if (no(numCols)) numCols = numRows;
+    if (no(numCols)) numCols = numRows
 
-    var isSquare = numRows === numCols;
-    var indices = [numRows, numCols];
+    const isSquare = (numRows === numCols)
+    const indices = [numRows, numCols]
 
-    var AbstractMatrix = TensorSpace(Scalar)(indices);
+    const AbstractMatrix = TensorSpace(Scalar)(indices)
 
     /**
      * Calculates the matrix trace.
@@ -1613,10 +1607,10 @@ function MatrixSpace(Scalar) {
      * @returns {Object} scalar
      */
 
-    function trace(matrix) {
-      var matrixData = toData(matrix);
+    function trace (matrix) {
+      const matrixData = toData(matrix)
 
-      return contraction([0, 1], indices, matrixData);
+      return contraction([0, 1], indices, matrixData)
     }
 
     /**
@@ -1627,13 +1621,13 @@ function MatrixSpace(Scalar) {
      * @returns {Object} matrix
      */
 
-    function multiplication(leftMatrix, rightMatrix) {
-      var leftMatrixData = toData(leftMatrix);
-      var rightMatrixData = toData(rightMatrix);
+    function multiplication (leftMatrix, rightMatrix) {
+      const leftMatrixData = toData(leftMatrix)
+      const rightMatrixData = toData(rightMatrix)
 
-      var rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols);
+      const rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols)
 
-      return rowByColumnMultiplication(leftMatrixData, rightMatrixData);
+      return rowByColumnMultiplication(leftMatrixData, rightMatrixData)
     }
 
     /**
@@ -1644,131 +1638,129 @@ function MatrixSpace(Scalar) {
      * @returns {Array} matrix
      */
 
-    function transpose(matrix) {
-      var matrixData = toData(matrix);
-      var transposedData = [];
+    function transpose (matrix) {
+      const matrixData = toData(matrix)
+      var transposedData = []
 
       for (var i = 0; i < numRows; i++) {
         for (var j = 0; j < numCols; j++) {
-          var index = multiDimArrayIndex([numRows, numCols], [i, j]);
-          var transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i]);
+          var index = multiDimArrayIndex([numRows, numCols], [i, j])
+          var transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
 
-          transposedData[transposedIndex] = matrixData[index];
+          transposedData[transposedIndex] = matrixData[index]
         }
       }
 
-      return transposedData;
+      return transposedData
     }
 
     /**
      * Matrix element.
      */
 
-    function Matrix(data) {
-      AbstractMatrix.call(this, data);
+    function Matrix (data) {
+      AbstractMatrix.call(this, data)
 
       staticProps(this)({
-        numCols: numCols,
-        numRows: numRows
-      });
+        numCols,
+        numRows
+      })
 
-      function computeDeterminant() {
-        var det = determinant(data, Scalar, numRows);
+      function computeDeterminant () {
+        var det = determinant(data, Scalar, numRows)
 
-        return new Scalar(det);
+        return new Scalar(det)
       }
 
       if (isSquare) {
         staticProps(this)({
           trace: trace(data)
-        });
+        })
 
         staticProps(this)({
           determinant: computeDeterminant,
           det: computeDeterminant
-        });
+        })
       }
 
-      function transposed() {
-        var result = transpose(data);
-        var VectorSpace = itemsPool.get('VectorSpace');
+      function transposed () {
+        const result = transpose(data)
+        const VectorSpace = itemsPool.get('VectorSpace')
 
         if (numRows === 1) {
-          var Vector = VectorSpace(Scalar)(numCols);
-          return new Vector(result);
+          const Vector = VectorSpace(Scalar)(numCols)
+          return new Vector(result)
         } else {
-          var _Matrix = MatrixSpace(Scalar)(numCols, numRows);
-          return new _Matrix(result);
+          const Matrix = MatrixSpace(Scalar)(numCols, numRows)
+          return new Matrix(result)
         }
       }
 
       staticProps(this)({
-        transposed: transposed,
+        transposed,
         tr: transposed
-      });
+      })
     }
 
-    inherits(Matrix, AbstractMatrix);
+    inherits(Matrix, AbstractMatrix)
 
     if (isSquare) {
-      Matrix.trace = trace;
+      Matrix.trace = trace
     }
 
     Matrix.prototype.multiplication = function (rightMatrix) {
-      var leftMatrixData = this.data;
-      var result = multiplication(leftMatrixData, rightMatrix);
+      var leftMatrixData = this.data
+      var result = multiplication(leftMatrixData, rightMatrix)
 
-      var rightNumRows = numCols;
-      var rightNumCols = result.length / rightNumRows;
+      var rightNumRows = numCols
+      var rightNumCols = result.length / rightNumRows
 
-      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols);
+      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
 
-      return new Matrix(result);
-    };
+      return new Matrix(result)
+    }
 
     // Static operators.
 
-    Matrix.multiplication = multiplication;
-    Matrix.transpose = transpose;
+    Matrix.multiplication = multiplication
+    Matrix.transpose = transpose
 
     // Aliases
 
-    Matrix.tr = Matrix.transpose;
-    Matrix.mul = Matrix.multiplication;
+    Matrix.tr = Matrix.transpose
+    Matrix.mul = Matrix.multiplication
 
-    Matrix.prototype.mul = Matrix.prototype.multiplication;
+    Matrix.prototype.mul = Matrix.prototype.multiplication
 
-    operators.group.forEach(function (operator) {
-      operators.aliasesOf[operator].forEach(function (alias) {
-        Matrix[alias] = Matrix[operator];
-        Matrix.prototype[alias] = Matrix.prototype[operator];
-      });
-    });
+    operators.group.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Matrix[alias] = Matrix[operator]
+        Matrix.prototype[alias] = Matrix.prototype[operator]
+      })
+    })
 
-    operators.group.forEach(function (operator) {
-      Matrix[operator] = AbstractMatrix[operator];
-    });
+    operators.group.forEach((operator) => {
+      Matrix[operator] = AbstractMatrix[operator]
+    })
 
     staticProps(Matrix)({
-      numCols: numCols,
-      numRows: numRows
-    });
+      numCols,
+      numRows
+    })
 
-    return Matrix;
-  };
+    return Matrix
+  }
 }
 
-itemsPool.set('MatrixSpace', MatrixSpace);
+itemsPool.set('MatrixSpace', MatrixSpace)
 
-module.exports = MatrixSpace;
+module.exports = MatrixSpace
 
 },{"./TensorSpace":28,"./itemsPool":32,"./operators.json":33,"./toData":35,"inherits":8,"laplace-determinant":11,"matrix-multiplication":12,"multidim-array-index":15,"not-defined":17,"static-props":19,"tensor-contraction":21}],28:[function(require,module,exports){
-'use strict';
-
-var operators = require('./operators.json');
-var staticProps = require('static-props');
-var toData = require('./toData');
-var tensorProduct = require('tensor-product');
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const toData = require('./toData')
+const tensorProduct = require('tensor-product')
 
 /**
  * Creates a tensor space that is a class representing a tensor.
@@ -1778,8 +1770,8 @@ var tensorProduct = require('tensor-product');
  * @returns {Function} anonymous with signature (indices)
  */
 
-function TensorSpace(Scalar) {
-  var multiplication = Scalar.multiplication;
+function TensorSpace (Scalar) {
+  const multiplication = Scalar.multiplication
 
   /**
    * @param {Array} indices
@@ -1793,167 +1785,161 @@ function TensorSpace(Scalar) {
     // A matrix has order 2.
     // Order is also called "rank" or "tensor rank", but, to avoid confusion with
     // "matrix rank" it is better to call it "order".
-    var order = indices.filter(function (dim) {
-      return dim > 1;
-    }).length;
+    const order = indices.filter((dim) => dim > 1).length
 
     // TODO if it is a scalar, return the Scalar
     // which should be a composition algebra
     // Then add product tensor to composition algebras.
     // Finally, a tensor i,j,k should be constructed as the
     // tensor product of a scalar i,j,k times.
-    var isScalar = order === 0;
+    const isScalar = (order === 0)
 
-    var dimension = indices.reduce(function (a, b) {
-      return a * b;
-    }, 1);
+    const dimension = indices.reduce((a, b) => a * b, 1)
 
     if (isScalar) {
-      staticProps(Scalar)({ order: order });
+      staticProps(Scalar)({ order })
 
-      return Scalar;
+      return Scalar
     }
 
     // TODO create one for square matrices
     // Create zero.
-    var zero = indices.reduce(function (result, dim) {
+    const zero = indices.reduce((result, dim) => {
       for (var i = 0; i < dim; i++) {
-        result.push(Scalar.zero);
+        result.push(Scalar.zero)
       }
 
-      return result;
-    }, []);
+      return result
+    }, [])
 
     /**
      */
 
-    function Tensor(data) {
+    function Tensor (data) {
       // validate data
 
-      function validate(item) {
+      function validate (item) {
         if (Scalar.notContains(item)) {
-          throw new TypeError('Invalid data = ' + item);
+          throw new TypeError('Invalid data = ' + item)
         }
       }
 
-      data.forEach(validate);
+      data.forEach(validate)
 
-      var enumerable = true;
-      staticProps(this)({ data: data }, enumerable);
+      const enumerable = true
+      staticProps(this)({ data }, enumerable)
 
-      staticProps(this)({ order: order });
+      staticProps(this)({ order })
     }
 
-    function staticBinary(operator) {
+    function staticBinary (operator) {
       Tensor[operator] = function () {
-        var result = [];
+        var result = []
 
         for (var i = 0; i < dimension; i++) {
-          var operands = [];
+          var operands = []
 
           for (var j = 0; j < arguments.length; j++) {
-            operands.push(toData(arguments[j])[i]);
+            operands.push(toData(arguments[j])[i])
           }
 
-          result.push(Scalar[operator].apply(null, operands));
+          result.push(Scalar[operator].apply(null, operands))
         }
 
-        return result;
-      };
+        return result
+      }
     }
 
-    var myBinaryOperators = ['addition', 'subtraction'];
+    var myBinaryOperators = ['addition', 'subtraction']
 
-    myBinaryOperators.forEach(function (operator) {
-      staticBinary(operator);
+    myBinaryOperators.forEach((operator) => {
+      staticBinary(operator)
 
       Tensor.prototype[operator] = function () {
-        var args = [].slice.call(arguments);
-        var operands = [this.data].concat(args);
+        const args = [].slice.call(arguments)
+        const operands = [this.data].concat(args)
 
-        var data = Tensor[operator].apply(null, operands);
+        const data = Tensor[operator].apply(null, operands)
 
-        var tensor = new Tensor(data);
+        const tensor = new Tensor(data)
 
-        return tensor;
-      };
-    });
+        return tensor
+      }
+    })
 
-    function scalarMultiplication(tensor, scalar) {
-      var tensorData = toData(tensor);
+    function scalarMultiplication (tensor, scalar) {
+      const tensorData = toData(tensor)
 
-      var result = [];
+      var result = []
 
       for (var i = 0; i < dimension; i++) {
-        result.push(multiplication(tensorData[i], scalar));
+        result.push(multiplication(tensorData[i], scalar))
       }
 
-      return result;
+      return result
     }
 
-    Tensor.scalarMultiplication = scalarMultiplication;
+    Tensor.scalarMultiplication = scalarMultiplication
 
     Tensor.prototype.scalarMultiplication = function (scalar) {
-      var data = scalarMultiplication(this, scalar);
+      const data = scalarMultiplication(this, scalar)
 
-      return new Tensor(data);
-    };
+      return new Tensor(data)
+    }
 
     Tensor.equality = function (tensor1, tensor2) {
-      var tensorData1 = toData(tensor1);
-      var tensorData2 = toData(tensor2);
+      const tensorData1 = toData(tensor1)
+      const tensorData2 = toData(tensor2)
 
       for (var i = 0; i < dimension; i++) {
         if (Scalar.disequality(tensorData1[i], tensorData2[i])) {
-          return false;
+          return false
         }
       }
 
-      return true;
-    };
+      return true
+    }
 
     Tensor.prototype.equality = function (tensor2) {
-      return Tensor.equality(this, tensor2);
-    };
+      return Tensor.equality(this, tensor2)
+    }
 
     Tensor.product = function (leftData) {
-      return function (rightDim) {
+      return (rightDim) => {
         return function (rightData) {
-          return tensorProduct(multiplication, indices, rightDim, leftData, rightData);
-        };
-      };
-    };
+          return tensorProduct(multiplication, indices, rightDim, leftData, rightData)
+        }
+      }
+    }
 
     staticProps(Tensor)({
-      order: order,
-      zero: zero
-    });
+      order,
+      zero
+    })
 
-    var myOperators = operators.group;
+    const myOperators = operators.group
 
-    myOperators.forEach(function (operator) {
-      operators.aliasesOf[operator].forEach(function (alias) {
-        Tensor[alias] = Tensor[operator];
-        Tensor.prototype[alias] = Tensor.prototype[operator];
-      });
-    });
+    myOperators.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Tensor[alias] = Tensor[operator]
+        Tensor.prototype[alias] = Tensor.prototype[operator]
+      })
+    })
 
-    return Tensor;
-  };
+    return Tensor
+  }
 }
 
-module.exports = TensorSpace;
+module.exports = TensorSpace
 
 },{"./operators.json":33,"./toData":35,"static-props":19,"tensor-product":23}],29:[function(require,module,exports){
-'use strict';
-
-var inherits = require('inherits');
-var itemsPool = require('./itemsPool');
-var matrixMultiplication = require('matrix-multiplication');
-var operators = require('./operators.json');
-var staticProps = require('static-props');
-var TensorSpace = require('./TensorSpace');
-var toData = require('./toData');
+const inherits = require('inherits')
+const itemsPool = require('./itemsPool')
+const matrixMultiplication = require('matrix-multiplication')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const TensorSpace = require('./TensorSpace')
+const toData = require('./toData')
 
 /**
  * Space of vectors
@@ -1969,10 +1955,10 @@ var toData = require('./toData');
  * @returns {Function} anonymous with signature (dimension)
  */
 
-function VectorSpace(Scalar) {
-  var addition = Scalar.addition;
-  var multiplication = Scalar.multiplication;
-  var subtraction = Scalar.subtraction;
+function VectorSpace (Scalar) {
+  const addition = Scalar.addition
+  const multiplication = Scalar.multiplication
+  const subtraction = Scalar.subtraction
 
   /**
    * @param {Number} dimension
@@ -1981,9 +1967,9 @@ function VectorSpace(Scalar) {
    */
 
   return function (dimension) {
-    var indices = [dimension];
+    const indices = [dimension]
 
-    var AbstractVector = TensorSpace(Scalar)(indices);
+    const AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
      * Computes the cross product of two vectors.
@@ -1996,25 +1982,25 @@ function VectorSpace(Scalar) {
      * @returns {Array} vector
      */
 
-    function crossProduct(vector1, vector2) {
-      var vectorData1 = toData(vector1);
-      var vectorData2 = toData(vector2);
+    function crossProduct (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
 
-      var ux = vectorData1[0];
-      var uy = vectorData1[1];
-      var uz = vectorData1[2];
+      const ux = vectorData1[0]
+      const uy = vectorData1[1]
+      const uz = vectorData1[2]
 
-      var vx = vectorData2[0];
-      var vy = vectorData2[1];
-      var vz = vectorData2[2];
+      const vx = vectorData2[0]
+      const vy = vectorData2[1]
+      const vz = vectorData2[2]
 
-      var vector = [];
+      var vector = []
 
-      vector.push(subtraction(multiplication(uy, vz), multiplication(uz, vy)));
-      vector.push(subtraction(multiplication(uz, vx), multiplication(ux, vz)));
-      vector.push(subtraction(multiplication(ux, vy), multiplication(uy, vx)));
+      vector.push(subtraction(multiplication(uy, vz), multiplication(uz, vy)))
+      vector.push(subtraction(multiplication(uz, vx), multiplication(ux, vz)))
+      vector.push(subtraction(multiplication(ux, vy), multiplication(uy, vx)))
 
-      return vector;
+      return vector
     }
 
     /**
@@ -2024,13 +2010,13 @@ function VectorSpace(Scalar) {
      * @returns {Object} scalar
      */
 
-    function multiplicationByMatrix(leftVector, rightMatrix) {
-      var leftVectorData = toData(leftVector);
-      var rightMatrixData = toData(rightMatrix);
+    function multiplicationByMatrix (leftVector, rightMatrix) {
+      const leftVectorData = toData(leftVector)
+      const rightMatrixData = toData(rightMatrix)
 
-      var rowByColumnMultiplication = matrixMultiplication(Scalar)(dimension);
+      const rowByColumnMultiplication = matrixMultiplication(Scalar)(dimension)
 
-      return rowByColumnMultiplication(leftVectorData, rightMatrixData);
+      return rowByColumnMultiplication(leftVectorData, rightMatrixData)
     }
 
     /**
@@ -2045,16 +2031,16 @@ function VectorSpace(Scalar) {
      * @returns {Object} scalar
      */
 
-    function norm(vector) {
-      var data = toData(vector);
+    function norm (vector) {
+      const data = toData(vector)
 
-      var value = multiplication(data[0], data[0]);
+      var value = multiplication(data[0], data[0])
 
       for (var i = 1; i < dimension; i++) {
-        value = addition(value, multiplication(data[i], data[i]));
+        value = addition(value, multiplication(data[i], data[i]))
       }
 
-      return new Scalar(value);
+      return new Scalar(value)
     }
 
     /**
@@ -2068,128 +2054,126 @@ function VectorSpace(Scalar) {
      * @returns {*} scalar
      */
 
-    function scalarProduct(vector1, vector2) {
+    function scalarProduct (vector1, vector2) {
       // TODO use tensor product and then contraction (trace)
-      var vectorData1 = toData(vector1);
-      var vectorData2 = toData(vector2);
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
 
       if (vectorData1.length !== vectorData2.length) {
-        throw new TypeError('Vectors have not the same dimension');
+        throw new TypeError('Vectors have not the same dimension')
       }
 
-      var result = multiplication(vectorData1[0], vectorData2[0]);
+      var result = multiplication(vectorData1[0], vectorData2[0])
 
       for (var i = 1; i < dimension; i++) {
-        result = addition(result, multiplication(vectorData1[i], vectorData2[i]));
+        result = addition(result, multiplication(vectorData1[i], vectorData2[i]))
       }
 
-      return result;
+      return result
     }
 
     /**
      * Vector element.
      */
 
-    function Vector(data) {
-      AbstractVector.call(this, data);
+    function Vector (data) {
+      AbstractVector.call(this, data)
 
       staticProps(this)({
         norm: norm(data),
-        dimension: dimension
-      });
+        dimension
+      })
     }
 
-    inherits(Vector, AbstractVector);
+    inherits(Vector, AbstractVector)
 
     Vector.prototype.scalarProduct = function (vector) {
-      var data = this.data;
+      const data = this.data
 
-      var result = scalarProduct(data, vector);
+      const result = scalarProduct(data, vector)
 
-      return new Scalar(result);
-    };
+      return new Scalar(result)
+    }
 
     // Cross product is defined only in dimension 3.
-    function crossProductMethod(vector) {
-      var data = this.data;
+    function crossProductMethod (vector) {
+      const data = this.data
 
-      var result = crossProduct(data, vector);
+      const result = crossProduct(data, vector)
 
-      return new Vector(result);
+      return new Vector(result)
     }
 
     if (dimension === 3) {
-      Vector.crossProduct = crossProduct;
+      Vector.crossProduct = crossProduct
 
-      Vector.prototype.crossProduct = crossProductMethod;
-      Vector.prototype.cross = crossProductMethod;
+      Vector.prototype.crossProduct = crossProductMethod
+      Vector.prototype.cross = crossProductMethod
     }
 
     Vector.prototype.multiplication = function (rightMatrix) {
-      var MatrixSpace = itemsPool.get('MatrixSpace');
+      const MatrixSpace = itemsPool.get('MatrixSpace')
 
-      var leftVectorData = this.data;
-      var result = multiplicationByMatrix(leftVectorData, rightMatrix);
+      const leftVectorData = this.data
+      const result = multiplicationByMatrix(leftVectorData, rightMatrix)
 
       // TODO rightNumRows equals dimension
       // but the vector should be transposed.
       // Add transpose operator for vectors, then use it implicitly.
-      var rightNumRows = dimension;
-      var rightNumCols = result.length / rightNumRows;
+      const rightNumRows = dimension
+      const rightNumCols = result.length / rightNumRows
 
-      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols);
+      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
 
-      return new Matrix(result);
-    };
+      return new Matrix(result)
+    }
 
     // Static operators.
 
-    Vector.multiplication = multiplicationByMatrix;
-    Vector.norm = norm;
-    Vector.scalarProduct = scalarProduct;
+    Vector.multiplication = multiplicationByMatrix
+    Vector.norm = norm
+    Vector.scalarProduct = scalarProduct
 
-    operators.comparison.forEach(function (operator) {
-      Vector[operator] = AbstractVector[operator];
-    });
+    operators.comparison.forEach((operator) => {
+      Vector[operator] = AbstractVector[operator]
+    })
 
-    operators.set.forEach(function (operator) {
-      Vector[operator] = AbstractVector[operator];
-    });
+    operators.set.forEach((operator) => {
+      Vector[operator] = AbstractVector[operator]
+    })
 
-    operators.group.forEach(function (operator) {
-      Vector[operator] = AbstractVector[operator];
-    });
+    operators.group.forEach((operator) => {
+      Vector[operator] = AbstractVector[operator]
+    })
 
     // Aliases
 
-    Vector.mul = multiplicationByMatrix;
-    Vector.prototype.mul = Vector.prototype.multiplication;
+    Vector.mul = multiplicationByMatrix
+    Vector.prototype.mul = Vector.prototype.multiplication
 
-    var myOperators = ['scalarProduct'].concat(operators.group);
+    const myOperators = ['scalarProduct'].concat(operators.group)
 
-    myOperators.forEach(function (operator) {
-      operators.aliasesOf[operator].forEach(function (alias) {
-        Vector[alias] = Vector[operator];
-        Vector.prototype[alias] = Vector.prototype[operator];
-      });
-    });
+    myOperators.forEach((operator) => {
+      operators.aliasesOf[operator].forEach((alias) => {
+        Vector[alias] = Vector[operator]
+        Vector.prototype[alias] = Vector.prototype[operator]
+      })
+    })
 
     if (dimension === 3) {
-      Vector.cross = crossProduct;
+      Vector.cross = crossProduct
     }
 
-    return Vector;
-  };
+    return Vector
+  }
 }
 
-itemsPool.set('VectorSpace', VectorSpace);
+itemsPool.set('VectorSpace', VectorSpace)
 
-module.exports = VectorSpace;
+module.exports = VectorSpace
 
 },{"./TensorSpace":28,"./itemsPool":32,"./operators.json":33,"./toData":35,"inherits":8,"matrix-multiplication":12,"static-props":19}],30:[function(require,module,exports){
-'use strict';
-
-var toData = require('./toData');
+var toData = require('./toData')
 
 /**
  * Get an operator that coerces arguments to data.
@@ -2201,23 +2185,19 @@ var toData = require('./toData');
  * @returns {Function} anonymous coerced operator
  */
 
-function coerced(operator) {
+function coerced (operator) {
   return function () {
-    return operator.apply(null, [].slice.call(arguments).map(toData));
-  };
+    return operator.apply(null, [].slice.call(arguments).map(toData))
+  }
 }
 
-module.exports = coerced;
+module.exports = coerced
 
 },{"./toData":35}],31:[function(require,module,exports){
-'use strict';
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var coerced = require('./coerced');
-var operators = require('./operators.json');
-var staticProps = require('static-props');
-var toData = require('./toData');
+const coerced = require('./coerced')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const toData = require('./toData')
 
 /**
  * @param {Object} ring
@@ -2225,104 +2205,102 @@ var toData = require('./toData');
  * @returns {Function} Scalar
  */
 
-function createScalar(ring) {
-  var attributes = {
+function createScalar (ring) {
+  const attributes = {
     zero: ring.zero,
     one: ring.one,
     order: 0
-  };
+  }
 
   /**
    * Scalar element.
    */
 
-  var Scalar = function Scalar(data) {
-    _classCallCheck(this, Scalar);
+  class Scalar {
+    constructor (data) {
+      // validate data
+      if (ring.notContains(data)) {
+        throw new TypeError('Invalid data = ' + data)
+      }
 
-    // validate data
-    if (ring.notContains(data)) {
-      throw new TypeError('Invalid data = ' + data);
+      const enumerable = true
+      staticProps(this)({ data }, enumerable)
+
+      staticProps(this)(attributes)
+    }
+  }
+
+  staticProps(Scalar)(attributes)
+
+  const staticNary = (operator) => {
+    Scalar[operator] = function () {
+      var operands = [].slice.call(arguments).map(toData)
+      return coerced(ring[operator]).apply(null, operands)
+    }
+  }
+
+  var unaryOperators = operators.inversion
+
+  unaryOperators.push('conjugation')
+
+  unaryOperators.forEach((operator) => {
+    Scalar[operator] = function (operand) {
+      return ring[operator](toData(operand))
     }
 
-    var enumerable = true;
-    staticProps(this)({ data: data }, enumerable);
+    Scalar.prototype[operator] = function () {
+      var data = Scalar[operator](this.data)
 
-    staticProps(this)(attributes);
-  };
+      return new Scalar(data)
+    }
+  })
 
-  staticProps(Scalar)(attributes);
-
-  var staticNary = function staticNary(operator) {
-    Scalar[operator] = function () {
-      var operands = [].slice.call(arguments).map(toData);
-      return coerced(ring[operator]).apply(null, operands);
-    };
-  };
-
-  var unaryOperators = operators.inversion;
-
-  unaryOperators.push('conjugation');
-
-  unaryOperators.forEach(function (operator) {
-    Scalar[operator] = function (operand) {
-      return ring[operator](toData(operand));
-    };
+  operators.group.concat(operators.ring).forEach((operator) => {
+    staticNary(operator)
 
     Scalar.prototype[operator] = function () {
-      var data = Scalar[operator](this.data);
+      const args = [].slice.call(arguments)
+      const operands = [this.data].concat(args)
 
-      return new Scalar(data);
-    };
-  });
+      const data = Scalar[operator].apply(null, operands)
 
-  operators.group.concat(operators.ring).forEach(function (operator) {
-    staticNary(operator);
+      return new Scalar(data)
+    }
+  })
 
-    Scalar.prototype[operator] = function () {
-      var args = [].slice.call(arguments);
-      var operands = [this.data].concat(args);
+  operators.set.forEach((operator) => {
+    staticNary(operator)
+  })
 
-      var data = Scalar[operator].apply(null, operands);
-
-      return new Scalar(data);
-    };
-  });
-
-  operators.set.forEach(function (operator) {
-    staticNary(operator);
-  });
-
-  operators.comparison.forEach(function (operator) {
-    staticNary(operator);
+  operators.comparison.forEach((operator) => {
+    staticNary(operator)
 
     Scalar.prototype[operator] = function () {
-      var args = [].slice.call(arguments);
-      var operands = [this.data].concat(args);
+      const args = [].slice.call(arguments)
+      const operands = [this.data].concat(args)
 
-      var bool = Scalar[operator].apply(null, operands);
+      const bool = Scalar[operator].apply(null, operands)
 
-      return bool;
-    };
-  });
+      return bool
+    }
+  })
 
-  Object.keys(operators.aliasesOf).forEach(function (operator) {
-    operators.aliasesOf[operator].forEach(function (alias) {
-      Scalar[alias] = Scalar[operator];
-      Scalar.prototype[alias] = Scalar.prototype[operator];
-    });
-  });
+  Object.keys(operators.aliasesOf).forEach((operator) => {
+    operators.aliasesOf[operator].forEach((alias) => {
+      Scalar[alias] = Scalar[operator]
+      Scalar.prototype[alias] = Scalar.prototype[operator]
+    })
+  })
 
-  return Scalar;
+  return Scalar
 }
 
-module.exports = createScalar;
+module.exports = createScalar
 
 },{"./coerced":30,"./operators.json":33,"./toData":35,"static-props":19}],32:[function(require,module,exports){
-"use strict";
+const itemsPool = new Map()
 
-var itemsPool = new Map();
-
-module.exports = itemsPool;
+module.exports = itemsPool
 
 },{}],33:[function(require,module,exports){
 module.exports={
@@ -2386,96 +2364,77 @@ module.exports={
 }
 
 },{}],34:[function(require,module,exports){
-'use strict';
-
-var realField = {
+const realField = {
   zero: 0,
   one: 1,
-  contains: function contains(a) {
-    // NaN, Infinity and -Infinity are not allowed.
-    return typeof a === 'number' && isFinite(a);
-  },
-  equality: function equality(a, b) {
-    return a === b;
-  },
-  addition: function addition(a, b) {
-    return a + b;
-  },
-  negation: function negation(a) {
-    return -a;
-  },
-  multiplication: function multiplication(a, b) {
-    return a * b;
-  },
-  inversion: function inversion(a) {
-    return 1 / a;
-  }
-};
+  // NaN, Infinity and -Infinity are not allowed.
+  contains: (a) => (typeof a === 'number' && isFinite(a)),
+  equality: (a, b) => a === b,
+  addition: (a, b) => a + b,
+  negation: (a) => -a,
+  multiplication: (a, b) => a * b,
+  inversion: (a) => 1 / a
+}
 
-module.exports = realField;
+module.exports = realField
 
 },{}],35:[function(require,module,exports){
-'use strict';
-
-var no = require('not-defined');
+const no = require('not-defined')
 
 /**
  * Extract data attribute, if any, and check it
- *
- * @api private
  *
  * @param {*} arg
  *
  * @returns {*} data
  */
 
-function toData(arg) {
-  var data;
+function toData (arg) {
+  var data
 
-  if (no(arg.data)) data = arg;else data = arg.data;
+  if (no(arg.data)) data = arg
+  else data = arg.data
 
-  if (no(data)) throw new TypeError('No data');
+  if (no(data)) throw new TypeError('No data')
 
-  return data;
+  return data
 }
 
-module.exports = toData;
+module.exports = toData
 
 },{"not-defined":17}],"algebra":[function(require,module,exports){
-'use strict';
+require('strict-mode')(() => {
+  var Cyclic = require('./src/Cyclic')
+  exports.Cyclic = Cyclic
 
-require('strict-mode')(function () {
-  var Cyclic = require('./src/Cyclic');
-  exports.Cyclic = Cyclic;
+  var CompositionAlgebra = require('./src/CompositionAlgebra')
+  exports.CompositionAlgebra = CompositionAlgebra
 
-  var CompositionAlgebra = require('./src/CompositionAlgebra');
-  exports.CompositionAlgebra = CompositionAlgebra;
+  var field = require('./src/realField')
 
-  var field = require('./src/realField');
+  var Real = CompositionAlgebra(field, 1)
+  var Complex = CompositionAlgebra(field, 2)
+  var Quaternion = CompositionAlgebra(field, 4)
+  var Octonion = CompositionAlgebra(field, 8)
 
-  var Real = CompositionAlgebra(field, 1);
-  var Complex = CompositionAlgebra(field, 2);
-  var Quaternion = CompositionAlgebra(field, 4);
-  var Octonion = CompositionAlgebra(field, 8);
+  exports.Real = Real
+  exports.Complex = Complex
+  exports.Quaternion = Quaternion
+  exports.Octonion = Octonion
 
-  exports.Real = Real;
-  exports.Complex = Complex;
-  exports.Quaternion = Quaternion;
-  exports.Octonion = Octonion;
+  var VectorSpace = require('./src/VectorSpace')
+  var MatrixSpace = require('./src/MatrixSpace')
 
-  var VectorSpace = require('./src/VectorSpace');
-  var MatrixSpace = require('./src/MatrixSpace');
+  exports.C = Complex
+  exports.H = Quaternion
+  exports.R = Real
+  exports.R2 = VectorSpace(Real)(2)
+  exports.R3 = VectorSpace(Real)(3)
+  exports.R2x2 = MatrixSpace(Real)(2)
 
-  exports.C = Complex;
-  exports.H = Quaternion;
-  exports.R = Real;
-  exports.R2 = VectorSpace(Real)(2);
-  exports.R3 = VectorSpace(Real)(3);
-  exports.R2x2 = MatrixSpace(Real)(2);
-
-  exports.VectorSpace = VectorSpace;
-  exports.MatrixSpace = MatrixSpace;
-  exports.TensorSpace = require('./src/TensorSpace');
-});
+  exports.VectorSpace = VectorSpace
+  exports.MatrixSpace = MatrixSpace
+  exports.TensorSpace = require('./src/TensorSpace')
+})
 
 },{"./src/CompositionAlgebra":25,"./src/Cyclic":26,"./src/MatrixSpace":27,"./src/TensorSpace":28,"./src/VectorSpace":29,"./src/realField":34,"strict-mode":20}]},{},[]);

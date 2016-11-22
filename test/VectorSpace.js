@@ -101,6 +101,19 @@ describe('VectorSpace', () => {
     })
   })
 
+  describe('dimension', () => {
+    it('is a static attribute', () => {
+      const vector1 = new R2([0, 1])
+      const vector2 = new R3([1, 1, 2])
+
+      vector1.dimension.should.be.eql(2)
+      vector2.dimension.should.be.eql(3)
+
+      R2.dimension.should.be.eql(2)
+      R3.dimension.should.be.eql(3)
+    })
+  })
+
   describe('norm', () => {
     it('is an attribute holding a scalar', () => {
       const vector1 = new R2([0, 1])

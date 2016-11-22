@@ -172,11 +172,32 @@ describe('API', () => {
   })
 
   describe('Vector', () => {
+    describe('Vector.dimension', () => {
+      it('is a static attribute', () => {
+        R2.dimension.should.eql(2)
+        R3.dimension.should.eql(3)
+      })
+    })
+
     describe('vector.dimension', () => {
       it('is an attribute', () => {
         const vector = new R2([1, 1])
 
         vector.dimension.should.eql(2)
+      })
+    })
+
+    describe('Vector.norm', () => {
+      it('is a static operator', () => {
+        R2.norm([3, 4]).data.should.eql(25)
+      })
+    })
+
+    describe('vector.norm', () => {
+      it('is an attribute', () => {
+        const vector = new R2([1, 2])
+
+        vector.norm.data.should.eql(5)
       })
     })
 

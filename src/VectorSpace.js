@@ -152,6 +152,8 @@ function VectorSpace (Scalar) {
 
     inherits(Vector, AbstractVector)
 
+    staticProps(Vector)({ dimension })
+
     Vector.prototype.scalarProduct = function (vector) {
       const data = this.data
 

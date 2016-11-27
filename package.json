@@ -17,7 +17,6 @@
     "check-deps": "npm outdated",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
-    "decrypt:.coveralls.yml": "keybase decrypt -o .coveralls.yml .coveralls.yml.asc",
     "gh-pages:_data": "for x in package.json tags.json; do npm run gh-pages:_data:$x; done",
     "gh-pages:_data:package.json": "cp package.json gh-pages/_data/",
     "gh-pages:_data:tags.json": "wget https://api.github.com/repos/fibo/${npm_package_name}/tags -O gh-pages/_data/tags.json",
@@ -71,7 +70,7 @@
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.1.2",
     "should": "^11.1.1",
-    "standard": "^8.5.0"
+    "standard": "9.x"
   },
   "dependencies": {
     "algebra-cyclic": "^0.2.0",

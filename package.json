@@ -64,10 +64,10 @@
   ],
   "devDependencies": {
     "browserify": "^13.1.1",
-    "coveralls": "^2.11.14",
+    "coveralls": "2.x",
     "istanbul": "^0.4.1",
     "katex": "^0.6.0",
-    "mocha": "^3.1.2",
+    "mocha": "3.x",
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.1.2",
     "should": "^11.1.1",
@@ -79,11 +79,11 @@
     "indices-permutations": "^0.2.0",
     "inherits": "^2.0.1",
     "laplace-determinant": "^0.1.0",
-    "matrix-multiplication": "^0.4.0",
+    "matrix-multiplication": "^0.5.0",
     "multidim-array-index": "^0.5.0",
     "not-defined": "^1.0.0",
-    "static-props": "^1.0.0",
-    "strict-mode": "^1.0.0",
+    "static-props": "1.x",
+    "strict-mode": "1.x",
     "tensor-contraction": "^0.1.1",
     "tensor-product": "^0.2.0"
   }

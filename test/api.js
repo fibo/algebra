@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 describe('API', () => {
   const algebra = require('algebra')
 

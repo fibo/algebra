@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 describe('Quick start', () => {
   const algebra = require('algebra')
 

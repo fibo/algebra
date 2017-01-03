@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 describe('TensorSpace', () => {
   const algebra = require('algebra')
   const TensorSpace = algebra.TensorSpace

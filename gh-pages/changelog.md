@@ -17,7 +17,8 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ### Added
 
-UglifyJS with harmony branch.
+- UglifyJS with harmony branch.
+- Linted tests.
 
 ## [v0.12.0] - 2016-11-05
 

@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 describe('MatrixSpace', () => {
   const algebra = require('algebra')
 

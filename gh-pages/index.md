@@ -9,7 +9,7 @@ title: algebra
 
 **NOTA BENE** Immagine all code examples below as written in some REPL where expected output is documented as a comment.
 
-[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.min.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.min.js) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
+[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
@@ -218,8 +218,8 @@ Create a matrix.
 //       | 1 0 |
 //
 const m1 = new R3x2([1, 1,
-                   0, 1,
-                   1, 0])
+                     0, 1,
+                     1, 0])
 ```
 
 Multiply m1 by v1, the result is a vector v3 with dimension 3.
@@ -379,7 +379,7 @@ A generic function is provided to iterate the [Cayley-Dickson construction][Cayl
 
 #### `CompositionAlgebra(field[, num])`
 
-* num can be 1, 2, 4 or 8
+* *num* can be 1, 2, 4 or 8
 
 Let's use for example the [src/binaryField][binaryField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
@@ -628,21 +628,42 @@ const H = algebra.H
 
 ### Vector
 
-Inherits everything from [Tensor](#tensor).
+A *Vector* extends the concept of number, since it is defined as a tuple
+of numbers.
+For example, the [Cartesian plane](https://en.wikipedia.org/wiki/Cartesian_coordinate_system)
+is a set where every point has two coordinates, the famous `(x, y)` that
+is in fact a *vector* of dimension 2.
+A [Scalar](#scalar) itself can be identified with a vector of dimension 1.
 
-##### `VectorSpace(Scalar)(dimension)`
+We have already seen an implementation of the plain: [R2](#r2).
 
-### Vector attributes
+If you want to find the position of an airplain, you need *latitute*, *longitude*
+but also *altitude*, hence three coordinates. That is a 3-ple, a tuple with
+three numbers, a vector of dimension 3.
+
+An implementation of the vector space of dimension 3 over reals is given
+by [R3](#r3).
+
+A *Vector* class inherits everything from [Tensor](#tensor).
+
+#### `VectorSpace(Scalar)(dimension)`
 
 #### Vector dimension
 
+Strictly speaking, dimension of a Vector is the number of its elements.
+
 ##### `Vector.dimension`
+
+It is a static class attribute.
 
 ```javascript
 R2.dimension // 2
+R3.dimension // 3
 ```
 
 ##### `vector.dimension`
+
+It is also defined as a static instance attribute.
 
 ```javascript
 const vector = new R2([1, 1])
@@ -650,9 +671,39 @@ const vector = new R2([1, 1])
 vector.dimension // 2
 ```
 
-### Vector operators
+### Vector norm
 
-#### Addition
+The *norm*, at the end, is the square of the length of vector.
+The good old [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem).
+It is usually defined as the sum of the squares of the coordinates.
+Anyway, it must be a function that, given an element, returns a positive real number.
+For example in [Complex](#complex) numbers it is defined as the multiplication of
+an element and its conjugate: it works as a norm.
+It is a really important property since it shapes a metric space.
+In the Euclidean topology gives us the common sense of space,
+but it is also important in other spaces even not so exotic, like a functional space.
+In fact a *norm* gives us a *distance* defined as its square root, thus it
+defines a metric space and hence a topology: a lot of good stuff.
+
+#### `Vector.norm()`
+
+Is a static operator that returns the square of the lenght of the vector.
+
+```javascript
+R2.norm([3, 4]).data // 25
+```
+
+#### `vector.norm`
+
+This implements a static attribute that returns the square of the length of the vector instance.
+
+```javascript
+const vector = new R2([1, 2])
+
+vector.norm.data // 5
+```
+
+#### Vector addition
 
 ##### `Vector.addition(vector1, vector2)`
 
@@ -671,7 +722,7 @@ const vector3 = vector1.addition(vector2)
 vector3 // Vector { data: [4, 3] }
 ```
 
-#### Cross product
+#### Vector cross product
 
 It is defined only in dimension three. See [Cross product on wikipedia](https://en.wikipedia.org/wiki/Cross_product).
 
@@ -694,19 +745,15 @@ vector3 // Vector { data: [-15, 2, 39] }
 
 ### Matrix
 
-Inherits everything from [Tensor](#tensor).
+A *Matrix* class inherits everything from [Tensor](#tensor).
 
-##### `MatrixSpace(Scalar)(numRows[, numCols])`
+#### `MatrixSpace(Scalar)(numRows[, numCols])`
 
-#### Matrix attributes
+#### `Matrix.isSquare`
 
-##### `Matrix.isSquare`
+#### `Matrix.numCols`
 
-##### `Matrix.numCols`
-
-##### `Matrix.numRows`
-
-#### Matrix operators
+#### `Matrix.numRows`
 
 #### Matrix multiplication
 
@@ -738,15 +785,13 @@ It is defined only for square matrices.
 
 ### Tensor
 
-##### `TensorSpace(Scalar)(indices)`
+#### `TensorSpace(Scalar)(indices)`
 
-### Tensor attributes
+#### `Tensor.one`
 
-##### `Tensor.one`
+#### `Tensor.zero`
 
-##### `Tensor.zero`
-
-##### `tensor.data`
+#### `tensor.data`
 
 #### Tensor indices
 
@@ -766,9 +811,7 @@ It represents the number of varying indices.
 
 ##### `tensor.order`
 
-### Tensor operators
-
-##### `Tensor.contains(tensor1, tensor2[, tensor3, … ])`
+#### `Tensor.contains(tensor1, tensor2[, tensor3, … ])`
 
 #### Tensor equality
 
@@ -793,31 +836,43 @@ tensor1.equality(tensor1) // true
 tensor2.equality(tensor2) // false
 ```
 
-##### `Tensor.disequality(tensor1, tensor2)`
+#### Tensor disequality
+
+#### `Tensor.disequality(tensor1, tensor2)`
 
 ##### `tensor1.disequality(tensor2)`
+
+#### Tensor addition
 
 ##### `Tensor.addition(tensor1, tensor2[, tensor3, … ])`
 
 ##### `tensor1.addition(tensor2[, tensor3, … ])`
 
+#### Tensor subtraction
+
 ##### `Tensor.subtraction(tensor1, tensor2[, tensor3, … ])`
 
 ##### `tensor1.subtraction(tensor2[, tensor3, … ])`
+
+#### Tensor product
 
 ##### `Tensor.product(tensor1, tensor2)`
 
 ##### `tensor1.product(tensor2)`
 
+#### Tensor contraction
+
 ##### `Tensor.contraction()`
 
 ##### `tensor.contraction()`
+
+#### Tensor negation
 
 ##### `Tensor.negation(tensor1)`
 
 ##### `tensor.negation()`
 
-#### Tensor multiplication
+#### Tensor scalar multiplication
 
 ##### `Tensor.scalarMultiplication(tensor, scalar)`
 

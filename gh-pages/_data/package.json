@@ -10,14 +10,13 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "npm test && npm run browserify && npm run tex && npm run jekyll; git status",
+    "build": "npm test && npm run browserify && npm run minify && npm run tex && npm run jekyll; git status",
     "browserify": "npm run browserify:dist; npm run browserify:test",
     "browserify:dist": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
     "browserify:test": "browserify test/*.js -o gh-pages/test/bundle.js",
     "check-deps": "npm outdated",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
-    "decrypt:.coveralls.yml": "keybase decrypt -o .coveralls.yml .coveralls.yml.asc",
     "gh-pages:_data": "for x in package.json tags.json; do npm run gh-pages:_data:$x; done",
     "gh-pages:_data:package.json": "cp package.json gh-pages/_data/",
     "gh-pages:_data:tags.json": "wget https://api.github.com/repos/fibo/${npm_package_name}/tags -O gh-pages/_data/tags.json",
@@ -30,6 +29,7 @@
     "lint": "npm run lint_src; npm run lint_test",
     "lint_src": "standard src/*.js",
     "lint_test": "cd test; standard --global describe --global it; cd -",
+    "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map ${npm_package_name}.map --output ${npm_package_name}.min.js --compress --mangle --preamble \"// Software: ${npm_package_name}\n// Homepage: ${npm_package_homepage}\n// License: ${npm_package_license}\"; cd -",
     "tex": "npm run tex:display; npm run tex:inline",
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
@@ -64,14 +64,15 @@
   ],
   "devDependencies": {
     "browserify": "^13.1.1",
-    "coveralls": "^2.11.14",
+    "coveralls": "2.x",
     "istanbul": "^0.4.1",
     "katex": "^0.6.0",
-    "mocha": "^3.1.2",
+    "mocha": "3.x",
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.1.2",
     "should": "^11.1.1",
-    "standard": "^8.5.0"
+    "standard": "^8.6.0",
+    "uglify-js": "github:mishoo/UglifyJS2#harmony"
   },
   "dependencies": {
     "algebra-cyclic": "^0.2.0",
@@ -79,11 +80,11 @@
     "indices-permutations": "^0.2.0",
     "inherits": "^2.0.1",
     "laplace-determinant": "^0.1.0",
-    "matrix-multiplication": "^0.4.0",
+    "matrix-multiplication": "^0.5.0",
     "multidim-array-index": "^0.5.0",
     "not-defined": "^1.0.0",
-    "static-props": "^1.0.0",
-    "strict-mode": "^1.0.0",
+    "static-props": "1.x",
+    "strict-mode": "1.x",
     "tensor-contraction": "^0.1.1",
     "tensor-product": "^0.2.0"
   }

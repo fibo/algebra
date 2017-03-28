@@ -1,3 +1,3 @@
-const itemsPool = new Map()
+var itemsPool = new Map()
 
 module.exports = itemsPool

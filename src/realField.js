@@ -1,4 +1,4 @@
-const realField = {
+var realField = {
   zero: 0,
   one: 1,
   // NaN, Infinity and -Infinity are not allowed.

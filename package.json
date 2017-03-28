@@ -58,7 +58,7 @@
     "math"
   ],
   "devDependencies": {
-    "browserify": "^13.1.1",
+    "browserify": "^14.1.0",
     "coveralls": "2.x",
     "istanbul": "^0.4.1",
     "mocha": "3.x",

@@ -14,9 +14,9 @@
 
 function mutatorBinaryOperator (Scalar, operator, operand1, operand2, resultData) {
   return function mutatorBinaryOperatorTest () {
-    const scalar = new Scalar(operand1)
+    var scalar = new Scalar(operand1)
 
-    const result = scalar[operator](operand2)
+    var result = scalar[operator](operand2)
 
     result.data.should.eql(resultData)
   }

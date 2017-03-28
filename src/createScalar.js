@@ -1,7 +1,7 @@
-const coerced = require('./coerced')
-const operators = require('./operators.json')
-const staticProps = require('static-props')
-const toData = require('./toData')
+var coerced = require('./coerced')
+var operators = require('./operators.json')
+var staticProps = require('static-props')
+var toData = require('./toData')
 
 /**
  * @param {Object} ring
@@ -10,7 +10,7 @@ const toData = require('./toData')
  */
 
 function createScalar (ring) {
-  const attributes = {
+  var attributes = {
     zero: ring.zero,
     one: ring.one,
     order: 0
@@ -27,7 +27,7 @@ function createScalar (ring) {
         throw new TypeError('Invalid data = ' + data)
       }
 
-      const enumerable = true
+      var enumerable = true
       staticProps(this)({ data }, enumerable)
 
       staticProps(this)(attributes)
@@ -36,7 +36,7 @@ function createScalar (ring) {
 
   staticProps(Scalar)(attributes)
 
-  const staticNary = (operator) => {
+  var staticNary = (operator) => {
     Scalar[operator] = function () {
       var operands = [].slice.call(arguments).map(toData)
       return coerced(ring[operator]).apply(null, operands)
@@ -63,10 +63,10 @@ function createScalar (ring) {
     staticNary(operator)
 
     Scalar.prototype[operator] = function () {
-      const args = [].slice.call(arguments)
-      const operands = [this.data].concat(args)
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-      const data = Scalar[operator].apply(null, operands)
+      var data = Scalar[operator].apply(null, operands)
 
       return new Scalar(data)
     }
@@ -80,10 +80,10 @@ function createScalar (ring) {
     staticNary(operator)
 
     Scalar.prototype[operator] = function () {
-      const args = [].slice.call(arguments)
-      const operands = [this.data].concat(args)
+      var args = [].slice.call(arguments)
+      var operands = [this.data].concat(args)
 
-      const bool = Scalar[operator].apply(null, operands)
+      var bool = Scalar[operator].apply(null, operands)
 
       return bool
     }

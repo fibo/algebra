@@ -79,6 +79,77 @@ describe('API', () => {
     })
   })
 
+  describe('Scalar', () => {
+    // TODO Color space RBG as example
+    //
+    // colorA = (.2, .3, .7)
+    // colorB = (.1, .1, .1)
+    //
+    // colorC = colorA * colorB = (.2 * .1, .3 * .1, .7 * .1)
+    // colorD = colorA + colorB = (.2 + .1 / 2, .3 + .1 / 2, .7 + .1 / 2)
+    //
+    // is it a Ring?
+    describe('Scalar.one', () => {
+      it('is a static attribute')
+    })
+
+    describe('Scalar.zero', () => {
+      it('is a static attribute')
+    })
+
+    describe('order', () => {
+      it('works')
+    })
+
+    describe('data', () => {
+      it('works')
+    })
+
+    describe('contains', () => {
+      it('works')
+    })
+
+    describe('belongsTo', () => {
+      it('works')
+    })
+
+    describe('equality', () => {
+      it('works')
+    })
+
+    describe('disequality', () => {
+      it('works')
+    })
+
+    describe('addition', () => {
+      it('works')
+    })
+
+    describe('subtraction', () => {
+      it('works')
+    })
+
+    describe('multiplication', () => {
+      it('works')
+    })
+
+    describe('division', () => {
+      it('works')
+    })
+
+    describe('negation', () => {
+      it('works')
+    })
+
+    describe('inversion', () => {
+      it('works')
+    })
+
+    describe('conjugation', () => {
+      it('works')
+    })
+  })
+
   describe('Cyclic', () => {
     it('works', () => {
       const Cyclic = algebra.Cyclic
@@ -133,6 +204,14 @@ describe('API', () => {
 
       complex1.conjugation().data.should.deepEqual([1, -2])
     })
+  })
+
+  describe('Quaternion', () => {
+    it('works')
+  })
+
+  describe('Octonion', () => {
+    it('works')
   })
 
   describe('Common spaces', () => {

@@ -15,6 +15,10 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+### Removed
+
+- blog
+
 ### Added
 
 - UglifyJS with harmony branch.

@@ -66,7 +66,6 @@ Many functionalities of previous versions are now in separated atomic packages:
 * Expressive syntax.
 * Everything is a Tensor.
 * [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
-* [math blog][blog] with articles explaining algebra concepts and practical examples. I started [blogging about math](http://g14n.info/algebra/2015/08/i-love-math/) hoping it can help other people learning about the *Queen of Science*.
 
 ## Installation
 

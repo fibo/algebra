@@ -4,7 +4,7 @@
 
 > **New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
 
-**NOTA BENE** Immagine all code examples below as written in some REPL where expected output is documented as a comment.
+**NOTA BENE** Imagine all code examples below as written in some REPL where expected output is documented as a comment.
 
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)[![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 

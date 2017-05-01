@@ -1,5 +1,5 @@
 .travis.yml
 bower.json
 dist/
-gh-pages
+docs
 npm-debug.log

@@ -1,11 +1,11 @@
-const CompositionAlgebra = require('algebra').CompositionAlgebra
-const realField = require('../src/realField')
+var CompositionAlgebra = require('algebra').CompositionAlgebra
+var realField = require('../src/realField')
 
-const R = CompositionAlgebra(realField)
+var R = CompositionAlgebra(realField)
 
 describe('CompositionAlgebra', () => {
   describe('data', () => {
-    const pi = new R(Math.PI)
+    var pi = new R(Math.PI)
 
     it('is enumerable', () => {
       pi.propertyIsEnumerable('data').should.be.ok

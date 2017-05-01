@@ -1,6 +1,6 @@
-const CayleyDickson = require('cayley-dickson')
-const createScalar = require('./createScalar')
-const no = require('not-defined')
+var CayleyDickson = require('cayley-dickson')
+var createScalar = require('./createScalar')
+var no = require('not-defined')
 
 /**
  * A composition algebra is one of ℝ, ℂ, ℍ, O:
@@ -17,7 +17,7 @@ const no = require('not-defined')
 function CompositionAlgebra (field, num) {
   if (no(num)) num = 1
 
-  const logBase2 = [1, 2, 4, 8].indexOf(num)
+  var logBase2 = [1, 2, 4, 8].indexOf(num)
 
   if (logBase2 === -1) {
     throw new TypeError('Argument n must be 1, 2, 4 or 8')

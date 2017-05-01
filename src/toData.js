@@ -1,4 +1,4 @@
-const no = require('not-defined')
+var no = require('not-defined')
 
 /**
  * Extract data attribute, if any, and check it

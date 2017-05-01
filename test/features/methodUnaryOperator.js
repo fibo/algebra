@@ -13,9 +13,9 @@
 
 function mutatorUnaryOperator (Scalar, operator, operand, resultData) {
   return function mutatorUnaryOperatorTest () {
-    const scalar = new Scalar(operand)
+    var scalar = new Scalar(operand)
 
-    const result = scalar[operator]()
+    var result = scalar[operator]()
 
     result.data.should.eql(resultData)
   }

@@ -1,4 +1,4 @@
-const binaryField = {
+var binaryField = {
   zero: 0,
   one: 1,
   contains: (a) => ((a === 0) || (a === 1)),

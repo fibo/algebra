@@ -1,10 +1,10 @@
-const inherits = require('inherits')
-const itemsPool = require('./itemsPool')
-const matrixMultiplication = require('matrix-multiplication')
-const operators = require('./operators.json')
-const staticProps = require('static-props')
-const TensorSpace = require('./TensorSpace')
-const toData = require('./toData')
+var inherits = require('inherits')
+var itemsPool = require('./itemsPool')
+var matrixMultiplication = require('matrix-multiplication')
+var operators = require('./operators.json')
+var staticProps = require('static-props')
+var TensorSpace = require('./TensorSpace')
+var toData = require('./toData')
 
 /**
  * Space of vectors
@@ -21,9 +21,9 @@ const toData = require('./toData')
  */
 
 function VectorSpace (Scalar) {
-  const addition = Scalar.addition
-  const multiplication = Scalar.multiplication
-  const subtraction = Scalar.subtraction
+  var addition = Scalar.addition
+  var multiplication = Scalar.multiplication
+  var subtraction = Scalar.subtraction
 
   /**
    * @param {Number} dimension
@@ -32,9 +32,9 @@ function VectorSpace (Scalar) {
    */
 
   return function (dimension) {
-    const indices = [dimension]
+    var indices = [dimension]
 
-    const AbstractVector = TensorSpace(Scalar)(indices)
+    var AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
      * Computes the cross product of two vectors.
@@ -48,16 +48,16 @@ function VectorSpace (Scalar) {
      */
 
     function crossProduct (vector1, vector2) {
-      const vectorData1 = toData(vector1)
-      const vectorData2 = toData(vector2)
+      var vectorData1 = toData(vector1)
+      var vectorData2 = toData(vector2)
 
-      const ux = vectorData1[0]
-      const uy = vectorData1[1]
-      const uz = vectorData1[2]
+      var ux = vectorData1[0]
+      var uy = vectorData1[1]
+      var uz = vectorData1[2]
 
-      const vx = vectorData2[0]
-      const vy = vectorData2[1]
-      const vz = vectorData2[2]
+      var vx = vectorData2[0]
+      var vy = vectorData2[1]
+      var vz = vectorData2[2]
 
       var vector = []
 
@@ -76,10 +76,10 @@ function VectorSpace (Scalar) {
      */
 
     function multiplicationByMatrix (leftVector, rightMatrix) {
-      const leftVectorData = toData(leftVector)
-      const rightMatrixData = toData(rightMatrix)
+      var leftVectorData = toData(leftVector)
+      var rightMatrixData = toData(rightMatrix)
 
-      const rowByColumnMultiplication = matrixMultiplication(Scalar)(dimension)
+      var rowByColumnMultiplication = matrixMultiplication(Scalar)(dimension)
 
       return rowByColumnMultiplication(leftVectorData, rightMatrixData)
     }
@@ -97,7 +97,7 @@ function VectorSpace (Scalar) {
      */
 
     function norm (vector) {
-      const data = toData(vector)
+      var data = toData(vector)
 
       var value = multiplication(data[0], data[0])
 
@@ -121,8 +121,8 @@ function VectorSpace (Scalar) {
 
     function scalarProduct (vector1, vector2) {
       // TODO use tensor product and then contraction (trace)
-      const vectorData1 = toData(vector1)
-      const vectorData2 = toData(vector2)
+      var vectorData1 = toData(vector1)
+      var vectorData2 = toData(vector2)
 
       if (vectorData1.length !== vectorData2.length) {
         throw new TypeError('Vectors have not the same dimension')
@@ -155,18 +155,18 @@ function VectorSpace (Scalar) {
     staticProps(Vector)({ dimension })
 
     Vector.prototype.scalarProduct = function (vector) {
-      const data = this.data
+      var data = this.data
 
-      const result = scalarProduct(data, vector)
+      var result = scalarProduct(data, vector)
 
       return new Scalar(result)
     }
 
     // Cross product is defined only in dimension 3.
     function crossProductMethod (vector) {
-      const data = this.data
+      var data = this.data
 
-      const result = crossProduct(data, vector)
+      var result = crossProduct(data, vector)
 
       return new Vector(result)
     }
@@ -179,18 +179,18 @@ function VectorSpace (Scalar) {
     }
 
     Vector.prototype.multiplication = function (rightMatrix) {
-      const MatrixSpace = itemsPool.get('MatrixSpace')
+      var MatrixSpace = itemsPool.get('MatrixSpace')
 
-      const leftVectorData = this.data
-      const result = multiplicationByMatrix(leftVectorData, rightMatrix)
+      var leftVectorData = this.data
+      var result = multiplicationByMatrix(leftVectorData, rightMatrix)
 
       // TODO rightNumRows equals dimension
       // but the vector should be transposed.
       // Add transpose operator for vectors, then use it implicitly.
-      const rightNumRows = dimension
-      const rightNumCols = result.length / rightNumRows
+      var rightNumRows = dimension
+      var rightNumCols = result.length / rightNumRows
 
-      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
 
       return new Matrix(result)
     }
@@ -218,7 +218,7 @@ function VectorSpace (Scalar) {
     Vector.mul = multiplicationByMatrix
     Vector.prototype.mul = Vector.prototype.multiplication
 
-    const myOperators = ['scalarProduct'].concat(operators.group)
+    var myOperators = ['scalarProduct'].concat(operators.group)
 
     myOperators.forEach((operator) => {
       operators.aliasesOf[operator].forEach((alias) => {

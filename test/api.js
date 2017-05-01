@@ -1,35 +1,35 @@
 /* eslint-disable indent */
 
 describe('API', () => {
-  const algebra = require('algebra')
+  var algebra = require('algebra')
 
-  const C = algebra.C
-  const Complex = algebra.Complex
-  const H = algebra.H
-  const Quaternion = algebra.Quaternion
-  const R = algebra.R
-  const R2 = algebra.R2
-  const R3 = algebra.R3
-  const R2x2 = algebra.R2x2
-  const Real = algebra.Real
-  const CompositionAlgebra = algebra.CompositionAlgebra
-  const MatrixSpace = algebra.MatrixSpace
-  const TensorSpace = algebra.TensorSpace
-  const VectorSpace = algebra.VectorSpace
+  var C = algebra.C
+  var Complex = algebra.Complex
+  var H = algebra.H
+  var Quaternion = algebra.Quaternion
+  var R = algebra.R
+  var R2 = algebra.R2
+  var R3 = algebra.R3
+  var R2x2 = algebra.R2x2
+  var Real = algebra.Real
+  var CompositionAlgebra = algebra.CompositionAlgebra
+  var MatrixSpace = algebra.MatrixSpace
+  var TensorSpace = algebra.TensorSpace
+  var VectorSpace = algebra.VectorSpace
 
-  const binaryField = require('../src/binaryField')
+  var binaryField = require('../src/binaryField')
 
   describe('About operators', () => {
     it('works', () => {
-      const vector1 = new R2([1, 2])
-      const vector2 = new R2([3, 4])
+      var vector1 = new R2([1, 2])
+      var vector2 = new R2([3, 4])
 
       R2.addition(vector1, [3, 4]).should.deepEqual([4, 6])
       R2.addition([1, 2], vector2).should.deepEqual([4, 6])
       R2.addition(vector1, vector2).should.deepEqual([4, 6])
 
-      const vector3 = vector1.addition([3, 4])
-      const vector4 = vector1.addition(vector2)
+      var vector3 = vector1.addition([3, 4])
+      var vector4 = vector1.addition(vector2)
       R2.equality(vector3, vector4).should.be.ok
 
       vector1.addition(vector1, vector1).equality([4, 6]).should.be.ok
@@ -39,29 +39,29 @@ describe('API', () => {
   })
 
   describe('CompositionAlgebra', () => {
-    const Bit = CompositionAlgebra(binaryField)
+    var Bit = CompositionAlgebra(binaryField)
 
     it('works', () => {
       Bit.contains(1).should.be.ok
       Bit.contains(4).should.be.ko
 
-      const bit = new Bit(1)
+      var bit = new Bit(1)
       bit.addition(0).data.should.eql(1)
     })
   })
 
   describe('Byte', () => {
     it('is an octonion over binary field', () => {
-      const Byte = CompositionAlgebra(binaryField, 8)
+      var Byte = CompositionAlgebra(binaryField, 8)
 
-      const byte1 = new Byte([1, 0, 0, 0, 0, 0, 0, 0])
-      const byte2 = new Byte([0, 1, 0, 0, 0, 0, 0, 0])
-      const byte3 = new Byte([0, 0, 1, 0, 0, 0, 0, 0])
-      const byte4 = new Byte([0, 0, 0, 1, 0, 0, 0, 0])
-      const byte5 = new Byte([0, 0, 0, 0, 1, 0, 0, 0])
-      const byte6 = new Byte([0, 0, 0, 0, 0, 1, 0, 0])
-      const byte7 = new Byte([0, 0, 0, 0, 0, 0, 1, 0])
-      const byte8 = new Byte([0, 0, 0, 0, 0, 0, 0, 1])
+      var byte1 = new Byte([1, 0, 0, 0, 0, 0, 0, 0])
+      var byte2 = new Byte([0, 1, 0, 0, 0, 0, 0, 0])
+      var byte3 = new Byte([0, 0, 1, 0, 0, 0, 0, 0])
+      var byte4 = new Byte([0, 0, 0, 1, 0, 0, 0, 0])
+      var byte5 = new Byte([0, 0, 0, 0, 1, 0, 0, 0])
+      var byte6 = new Byte([0, 0, 0, 0, 0, 1, 0, 0])
+      var byte7 = new Byte([0, 0, 0, 0, 0, 0, 1, 0])
+      var byte8 = new Byte([0, 0, 0, 0, 0, 0, 0, 1])
 
       byte1.mul(byte1).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
       byte2.mul(byte2).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
@@ -72,26 +72,97 @@ describe('API', () => {
       byte7.mul(byte7).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
       byte8.mul(byte8).data.should.deepEqual([1, 0, 0, 0, 0, 0, 0, 0])
 
-      const max = byte1.add(byte2).add(byte3).add(byte4)
+      var max = byte1.add(byte2).add(byte3).add(byte4)
                        .add(byte5).add(byte6).add(byte7).add(byte8)
 
       max.data.should.deepEqual([1, 1, 1, 1, 1, 1, 1, 1])
     })
   })
 
+  describe('Scalar', () => {
+    // TODO Color space RBG as example
+    //
+    // colorA = (.2, .3, .7)
+    // colorB = (.1, .1, .1)
+    //
+    // colorC = colorA * colorB = (.2 * .1, .3 * .1, .7 * .1)
+    // colorD = colorA + colorB = (.2 + .1 / 2, .3 + .1 / 2, .7 + .1 / 2)
+    //
+    // is it a Ring?
+    describe('Scalar.one', () => {
+      it('is a static attribute')
+    })
+
+    describe('Scalar.zero', () => {
+      it('is a static attribute')
+    })
+
+    describe('order', () => {
+      it('works')
+    })
+
+    describe('data', () => {
+      it('works')
+    })
+
+    describe('contains', () => {
+      it('works')
+    })
+
+    describe('belongsTo', () => {
+      it('works')
+    })
+
+    describe('equality', () => {
+      it('works')
+    })
+
+    describe('disequality', () => {
+      it('works')
+    })
+
+    describe('addition', () => {
+      it('works')
+    })
+
+    describe('subtraction', () => {
+      it('works')
+    })
+
+    describe('multiplication', () => {
+      it('works')
+    })
+
+    describe('division', () => {
+      it('works')
+    })
+
+    describe('negation', () => {
+      it('works')
+    })
+
+    describe('inversion', () => {
+      it('works')
+    })
+
+    describe('conjugation', () => {
+      it('works')
+    })
+  })
+
   describe('Cyclic', () => {
     it('works', () => {
-      const Cyclic = algebra.Cyclic
+      var Cyclic = algebra.Cyclic
 
-      const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+      var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
-      const Alphanum = Cyclic(elements)
+      var Alphanum = Cyclic(elements)
 
       Alphanum.addition('a', 'b').should.eql('c')
 
-      const x = new Alphanum('a')
+      var x = new Alphanum('a')
 
-      const y = x.add('c', 'a', 't')
+      var y = x.add('c', 'a', 't')
                .mul('i', 's')
                .add('o', 'n')
                .sub('t', 'h', 'e')
@@ -99,11 +170,11 @@ describe('API', () => {
 
       y.data.should.eql('s')
 
-      const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-      const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+      var VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
+      var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
 
-      const vectorOfStrings = new VectorStrings2(['o', 'k'])
-      const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
+      var vectorOfStrings = new VectorStrings2(['o', 'k'])
+      var matrixOfStrings = new MatrixStrings2x2(['c', 'o',
                                                     'o', 'l'])
       matrixOfStrings.mul(vectorOfStrings)
                      .data.should.deepEqual(['x', 'y'])
@@ -115,12 +186,12 @@ describe('API', () => {
 
   describe('Real', () => {
     it('works', () => {
-      const Real = algebra.Real
+      var Real = algebra.Real
 
       Real.addition(1, 2).should.eql(3)
 
-      const pi = new Real(Math.PI)
-      const twoPi = pi.mul(2)
+      var pi = new Real(Math.PI)
+      var twoPi = pi.mul(2)
 
       Real.subtraction(twoPi, 2 * Math.PI).should.eql(0)
     })
@@ -128,11 +199,19 @@ describe('API', () => {
 
   describe('Complex', () => {
     it('works', () => {
-      const Complex = algebra.Complex
-      const complex1 = new Complex([1, 2])
+      var Complex = algebra.Complex
+      var complex1 = new Complex([1, 2])
 
       complex1.conjugation().data.should.deepEqual([1, -2])
     })
+  })
+
+  describe('Quaternion', () => {
+    it('works')
+  })
+
+  describe('Octonion', () => {
+    it('works')
   })
 
   describe('Common spaces', () => {
@@ -183,7 +262,7 @@ describe('API', () => {
 
     describe('vector.dimension', () => {
       it('is an attribute', () => {
-        const vector = new R2([1, 1])
+        var vector = new R2([1, 1])
 
         vector.dimension.should.eql(2)
       })
@@ -197,7 +276,7 @@ describe('API', () => {
 
     describe('vector.norm', () => {
       it('is an attribute', () => {
-        const vector = new R2([1, 2])
+        var vector = new R2([1, 2])
 
         vector.norm.data.should.eql(5)
       })
@@ -207,10 +286,10 @@ describe('API', () => {
       it('works', () => {
         R2.addition([2, 1], [1, 2]).should.deepEqual([3, 3])
 
-        const vector1 = new R2([2, 1])
-        const vector2 = new R2([2, 2])
+        var vector1 = new R2([2, 1])
+        var vector2 = new R2([2, 2])
 
-        const vector3 = vector1.addition(vector2)
+        var vector3 = vector1.addition(vector2)
 
         vector3.data.should.deepEqual([4, 3])
       })
@@ -220,10 +299,10 @@ describe('API', () => {
       it('works', () => {
         R3.crossProduct([3, -3, 1], [4, 9, 2]).should.deepEqual([-15, -2, 39])
 
-        const vector1 = new R3([3, -3, 1])
-        const vector2 = new R3([4, 9, 2])
+        var vector1 = new R3([3, -3, 1])
+        var vector2 = new R3([4, 9, 2])
 
-        const vector3 = vector1.crossProduct(vector2)
+        var vector3 = vector1.crossProduct(vector2)
 
         vector3.data.should.deepEqual([-15, -2, 39])
       })
@@ -233,10 +312,10 @@ describe('API', () => {
   describe('Tensor', () => {
     describe('equality', () => {
       it('works', () => {
-        const T2x2x2 = TensorSpace(Real)([2, 2, 2])
+        var T2x2x2 = TensorSpace(Real)([2, 2, 2])
 
-        const tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
-        const tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
+        var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
+        var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 
         T2x2x2.equality(tensor1, tensor1).should.be.ok
         T2x2x2.equality(tensor1, tensor2).should.be.ko

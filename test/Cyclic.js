@@ -1,15 +1,15 @@
-const algebra = require('algebra')
+var algebra = require('algebra')
 
-const methodBinaryOperator = require('./features/methodBinaryOperator')
-const methodUnaryOperator = require('./features/methodUnaryOperator')
-const staticBinaryOperator = require('./features/staticBinaryOperator')
-const staticUnaryOperator = require('./features/staticUnaryOperator')
+var methodBinaryOperator = require('./features/methodBinaryOperator')
+var methodUnaryOperator = require('./features/methodUnaryOperator')
+var staticBinaryOperator = require('./features/staticBinaryOperator')
+var staticUnaryOperator = require('./features/staticUnaryOperator')
 
-const Cyclic = algebra.Cyclic
+var Cyclic = algebra.Cyclic
 
-const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
-const Alphanum = Cyclic(elements)
+var Alphanum = Cyclic(elements)
 
 describe('Cyclic', () => {
   describe('zero', () => {
@@ -25,101 +25,101 @@ describe('Cyclic', () => {
   })
 
   describe('addition', () => {
-    const operator = 'addition'
+    var operator = 'addition'
 
     it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', 'b', 'c'))
 
     it('is a class method', methodBinaryOperator(Alphanum, operator, 'a', 'b', 'c'))
 
     it('accepts many arguments', () => {
-      const x = new Alphanum('b')
+      var x = new Alphanum('b')
       x.addition('a', 'a', 'a').data.should.eql('e')
     })
   })
 
   describe('subtraction', () => {
-    const operator = 'subtraction'
+    var operator = 'subtraction'
 
     it('is a static method', staticBinaryOperator(Alphanum, operator, '8', 'b', '6'))
 
     it('is a class method', methodBinaryOperator(Alphanum, operator, 'f', 'd', 'b'))
 
     it('accepts many arguments', () => {
-      const x = new Alphanum('e')
+      var x = new Alphanum('e')
       x.subtraction('e', 'a', 'b').data.should.eql('7')
     })
   })
 
   describe('multiplication', () => {
-    const operator = 'multiplication'
+    var operator = 'multiplication'
 
     it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', 'b', 'b'))
 
     it('is a class method', methodBinaryOperator(Alphanum, operator, 'c', 'c', 'i'))
 
     it('accepts many arguments', () => {
-      const x = new Alphanum('c')
+      var x = new Alphanum('c')
       x.multiplication('0', 'u', 'e').data.should.eql('5')
     })
   })
 
   describe('division', () => {
-    const operator = 'division'
+    var operator = 'division'
 
     it('is a static method', staticBinaryOperator(Alphanum, operator, 'e', 'n', 'c'))
 
     it('is a class method', methodBinaryOperator(Alphanum, operator, 'r', 'o', 'p'))
 
     it('accepts many arguments', () => {
-      const x = new Alphanum('y')
+      var x = new Alphanum('y')
       x.division('e', 'e').data.should.eql('8')
     })
   })
 
   describe('equality', () => {
-    const operator = 'equality'
+    var operator = 'equality'
 
     it('is a static method', staticBinaryOperator(Alphanum, operator, 'z', 'z', true))
 
     it('is a class method', () => {
-      const x = new Alphanum('g')
+      var x = new Alphanum('g')
       x.equality('g').should.be.ok
     })
   })
 
   describe('disequality', () => {
-    const operator = 'disequality'
+    var operator = 'disequality'
 
     it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', ' ', true))
 
     it('is a class method', () => {
-      const x = new Alphanum('e')
+      var x = new Alphanum('e')
       x.disequality('n').should.be.ok
     })
   })
 
   describe('negation', () => {
-    const operator = 'negation'
+    var operator = 'negation'
 
     it('is a static method', staticUnaryOperator(Alphanum, operator, 'c', '7'))
 
     it('is a class method', methodUnaryOperator(Alphanum, operator, 'z', 'k'))
 
     it('is an involution', () => {
-      const x = new Alphanum('d')
+      var x = new Alphanum('d')
       x.negation().negation().data.should.be.eql('d')
     })
   })
 
   describe('inversion', () => {
-    const operator = 'inversion'
+    var operator = 'inversion'
 
     it('is a static method', staticUnaryOperator(Alphanum, operator, 'w', '2'))
 
     it('is a class method', methodUnaryOperator(Alphanum, operator, 'y', 'q'))
 
     it('is an involution', () => {
-      const x = new Alphanum('8')
+      var x = new Alphanum('8')
       x.inversion().inversion().data.should.be.eql('8')
     })
   })

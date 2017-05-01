@@ -15,6 +15,14 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+### Changed
+
+- Using only `var` instead of `let` and `const`.
+
+### Removed
+
+- blog
+
 ### Added
 
 - Folder docs/ instead of gh-pages.

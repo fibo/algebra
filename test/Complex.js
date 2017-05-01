@@ -1,11 +1,11 @@
-const algebra = require('algebra')
+var algebra = require('algebra')
 
-const C = algebra.Complex
+var C = algebra.Complex
 
-const methodBinaryOperator = require('./features/methodBinaryOperator')
-const methodUnaryOperator = require('./features/methodUnaryOperator')
-const staticBinaryOperator = require('./features/staticBinaryOperator')
-const staticUnaryOperator = require('./features/staticUnaryOperator')
+var methodBinaryOperator = require('./features/methodBinaryOperator')
+var methodUnaryOperator = require('./features/methodUnaryOperator')
+var staticBinaryOperator = require('./features/staticBinaryOperator')
+var staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('Complex', () => {
   var operator

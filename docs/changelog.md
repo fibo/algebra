@@ -17,6 +17,10 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ### Added
 
+- Folder docs/ instead of gh-pages.
+
+### Added
+
 - UglifyJS with harmony branch.
 - Linted tests.
 

@@ -2,7 +2,7 @@
 node_modules
 npm-debug.log
 Gemfile*
-gh-pages/_site
+docs/_site
 
 # Test coverage
 coverage

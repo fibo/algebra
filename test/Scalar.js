@@ -8,7 +8,7 @@ describe('CompositionAlgebra', () => {
     var pi = new R(Math.PI)
 
     it('is enumerable', () => {
-      pi.propertyIsEnumerable('data').should.be.ok
+      pi.propertyIsEnumerable('data').should.be.ok()
     })
 
     it('is immutable', () => {

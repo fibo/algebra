@@ -83,7 +83,7 @@ describe('Cyclic', () => {
 
     it('is a class method', () => {
       var x = new Alphanum('g')
-      x.equality('g').should.be.ok
+      x.equality('g').should.be.ok()
     })
   })
 
@@ -94,7 +94,7 @@ describe('Cyclic', () => {
 
     it('is a class method', () => {
       var x = new Alphanum('e')
-      x.disequality('n').should.be.ok
+      x.disequality('n').should.be.ok()
     })
   })
 

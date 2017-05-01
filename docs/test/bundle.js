@@ -3089,7 +3089,7 @@ describe('Cyclic', () => {
 
     it('is a class method', () => {
       var x = new Alphanum('g')
-      x.equality('g').should.be.ok
+      x.equality('g').should.be.ok()
     })
   })
 
@@ -3100,7 +3100,7 @@ describe('Cyclic', () => {
 
     it('is a class method', () => {
       var x = new Alphanum('e')
-      x.disequality('n').should.be.ok
+      x.disequality('n').should.be.ok()
     })
   })
 
@@ -3170,7 +3170,7 @@ describe('MatrixSpace', () => {
 
   describe('data', () => {
     it('is enumerable', () => {
-      matrix1.propertyIsEnumerable('data').should.be.ok
+      matrix1.propertyIsEnumerable('data').should.be.ok()
     })
 
     it('is immutable', () => {
@@ -3339,7 +3339,7 @@ describe('MatrixSpace', () => {
     ))
 
     it('is not available for no square matrices', () => {
-      notDefined(R3x2.trace).should.be.true
+      notDefined(R3x2.trace).should.be.ok()
     })
   })
 
@@ -3356,7 +3356,7 @@ describe('MatrixSpace', () => {
                                 3, 4,
                                 5, 6])
 
-      notDefined(matrix3x2.trace).should.be.true
+      notDefined(matrix3x2.trace).should.be.ok()
     })
   })
 
@@ -3526,7 +3526,7 @@ describe('Real', () => {
 
     it('is a class method', () => {
       var x = new R(10)
-      x.equality(10).should.be.ok
+      x.equality(10).should.be.ok()
     })
   })
 
@@ -3537,7 +3537,7 @@ describe('Real', () => {
 
     it('is a class method', () => {
       var x = new R(10)
-      x.disequality(20).should.be.ok
+      x.disequality(20).should.be.ok()
     })
   })
 
@@ -3579,7 +3579,7 @@ describe('CompositionAlgebra', () => {
     var pi = new R(Math.PI)
 
     it('is enumerable', () => {
-      pi.propertyIsEnumerable('data').should.be.ok
+      pi.propertyIsEnumerable('data').should.be.ok()
     })
 
     it('is immutable', () => {
@@ -3782,7 +3782,7 @@ describe('VectorSpace', () => {
     var v = new R2([0, 1])
 
     it('is enumerable', () => {
-      v.propertyIsEnumerable('data').should.be.ok
+      v.propertyIsEnumerable('data').should.be.ok()
     })
 
     it('is immutable', () => {
@@ -3911,10 +3911,10 @@ describe('VectorSpace', () => {
     })
 
     it('is defined only in dimension 3', () => {
-      notDefined(R2.cross).should.be.ok
+      notDefined(R2.cross).should.be.ok()
 
       var vector = new R2([1, 0])
-      notDefined(vector.cross).should.be.ok
+      notDefined(vector.cross).should.be.ok()
     })
   })
 
@@ -3961,9 +3961,9 @@ describe('API', () => {
 
       var vector3 = vector1.addition([3, 4])
       var vector4 = vector1.addition(vector2)
-      R2.equality(vector3, vector4).should.be.ok
+      R2.equality(vector3, vector4).should.be.ok()
 
-      vector1.addition(vector1, vector1).equality([4, 6]).should.be.ok
+      vector1.addition(vector1, vector1).equality([3, 6]).should.be.ok()
 
       vector1.data.should.deepEqual([1, 2])
     })
@@ -3973,8 +3973,8 @@ describe('API', () => {
     var Bit = CompositionAlgebra(binaryField)
 
     it('works', () => {
-      Bit.contains(1).should.be.ok
-      Bit.contains(4).should.be.ko
+      Bit.contains(1).should.be.ok()
+      Bit.contains(4).should.not.be.ok()
 
       var bit = new Bit(1)
       bit.addition(0).data.should.eql(1)
@@ -4248,11 +4248,11 @@ describe('API', () => {
         var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
         var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 
-        T2x2x2.equality(tensor1, tensor1).should.be.ok
-        T2x2x2.equality(tensor1, tensor2).should.be.ko
+        T2x2x2.equality(tensor1, tensor1).should.be.ok()
+        T2x2x2.equality(tensor1, tensor2).should.not.be.ok()
 
-        tensor1.equality(tensor1).should.be.ok
-        tensor2.equality(tensor2).should.be.ko
+        tensor1.equality(tensor1).should.be.ok()
+        tensor1.equality(tensor2).should.not.be.ok()
       })
     })
   })
@@ -4394,8 +4394,8 @@ describe('Quick start', () => {
 
     x.data.should.eql(0.1)
 
-    x.equal(0.1).should.be.ok
-    x.notEqual(Math.PI).should.be.ok
+    x.equal(0.1).should.be.ok()
+    x.notEqual(Math.PI).should.be.ok()
 
     var C = algebra.Complex
 
@@ -4422,8 +4422,8 @@ describe('Quick start', () => {
     var R3x2 = algebra.MatrixSpace(R)(3, 2)
 
     var m1 = new R3x2([1, 1,
-                         0, 1,
-                         1, 0])
+                       0, 1,
+                       1, 0])
 
     var v3 = m1.mul(v1)
 

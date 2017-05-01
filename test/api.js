@@ -30,9 +30,9 @@ describe('API', () => {
 
       var vector3 = vector1.addition([3, 4])
       var vector4 = vector1.addition(vector2)
-      R2.equality(vector3, vector4).should.be.ok
+      R2.equality(vector3, vector4).should.be.ok()
 
-      vector1.addition(vector1, vector1).equality([4, 6]).should.be.ok
+      vector1.addition(vector1, vector1).equality([3, 6]).should.be.ok()
 
       vector1.data.should.deepEqual([1, 2])
     })
@@ -42,8 +42,8 @@ describe('API', () => {
     var Bit = CompositionAlgebra(binaryField)
 
     it('works', () => {
-      Bit.contains(1).should.be.ok
-      Bit.contains(4).should.be.ko
+      Bit.contains(1).should.be.ok()
+      Bit.contains(4).should.not.be.ok()
 
       var bit = new Bit(1)
       bit.addition(0).data.should.eql(1)
@@ -317,11 +317,11 @@ describe('API', () => {
         var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
         var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 
-        T2x2x2.equality(tensor1, tensor1).should.be.ok
-        T2x2x2.equality(tensor1, tensor2).should.be.ko
+        T2x2x2.equality(tensor1, tensor1).should.be.ok()
+        T2x2x2.equality(tensor1, tensor2).should.not.be.ok()
 
-        tensor1.equality(tensor1).should.be.ok
-        tensor2.equality(tensor2).should.be.ko
+        tensor1.equality(tensor1).should.be.ok()
+        tensor1.equality(tensor2).should.not.be.ok()
       })
     })
   })

@@ -15,6 +15,8 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+## [v0.12.1] - 2017-05-01
+
 ### Changed
 
 - Using only `var` instead of `let` and `const`.
@@ -26,11 +28,14 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 ### Added
 
 - Folder docs/ instead of gh-pages.
-
-### Added
-
 - UglifyJS with harmony branch.
 - Linted tests.
+
+### Fixed
+
+- Minor bugs in README docs:
+  * `vector1.addition(vector1, vector1)` was `[4, 6]`.
+  * `tensor2.equality(tensor2)` was `false`.
 
 ## [v0.12.0] - 2016-11-05
 

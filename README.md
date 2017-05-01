@@ -294,7 +294,7 @@ R2.equal(vector3, vector4) // true
 Operators can be chained and accept multiple arguments when it makes sense.
 
 ```javascript
-vector1.addition(vector1, vector1).equality([4, 6]) // true
+vector1.addition(vector1, vector1).equality([3, 6]) // true
 ```
 
 Objects are immutable
@@ -830,7 +830,7 @@ T2x2x2.equality(tensor1, tensor2) // false
 
 ```javascript
 tensor1.equality(tensor1) // true
-tensor2.equality(tensor2) // false
+tensor1.equality(tensor2) // false
 ```
 
 #### Tensor disequality

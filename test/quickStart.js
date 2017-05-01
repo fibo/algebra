@@ -19,8 +19,8 @@ describe('Quick start', () => {
 
     x.data.should.eql(0.1)
 
-    x.equal(0.1).should.be.ok
-    x.notEqual(Math.PI).should.be.ok
+    x.equal(0.1).should.be.ok()
+    x.notEqual(Math.PI).should.be.ok()
 
     var C = algebra.Complex
 
@@ -47,8 +47,8 @@ describe('Quick start', () => {
     var R3x2 = algebra.MatrixSpace(R)(3, 2)
 
     var m1 = new R3x2([1, 1,
-                         0, 1,
-                         1, 0])
+                       0, 1,
+                       1, 0])
 
     var v3 = m1.mul(v1)
 

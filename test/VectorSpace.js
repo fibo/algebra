@@ -16,7 +16,7 @@ describe('VectorSpace', () => {
     var v = new R2([0, 1])
 
     it('is enumerable', () => {
-      v.propertyIsEnumerable('data').should.be.ok
+      v.propertyIsEnumerable('data').should.be.ok()
     })
 
     it('is immutable', () => {
@@ -145,10 +145,10 @@ describe('VectorSpace', () => {
     })
 
     it('is defined only in dimension 3', () => {
-      notDefined(R2.cross).should.be.ok
+      notDefined(R2.cross).should.be.ok()
 
       var vector = new R2([1, 0])
-      notDefined(vector.cross).should.be.ok
+      notDefined(vector.cross).should.be.ok()
     })
   })
 

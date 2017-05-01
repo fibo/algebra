@@ -9,7 +9,7 @@ title: algebra
 
 **NOTA BENE** Immagine all code examples below as written in some REPL where expected output is documented as a comment.
 
-[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra) [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
+[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)[![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
@@ -217,8 +217,8 @@ Create a matrix.
 //       | 1 0 |
 //
 var m1 = new R3x2([1, 1,
-                     0, 1,
-                     1, 0])
+                   0, 1,
+                   1, 0])
 ```
 
 Multiply m1 by v1, the result is a vector v3 with dimension 3.
@@ -249,7 +249,7 @@ var m2 = new R2x2([1, 0,
                    0, 2])
 
 var m3 = new R2x2([0, -1,
-                     1, 0])
+                   1, 0])
 
 m2 = m2.mul(m3)
 
@@ -297,7 +297,7 @@ R2.equal(vector3, vector4) // true
 Operators can be chained and accept multiple arguments when it makes sense.
 
 ```javascript
-vector1.addition(vector1, vector1).equality([4, 6]) // true
+vector1.addition(vector1, vector1).equality([3, 6]) // true
 ```
 
 Objects are immutable
@@ -341,10 +341,10 @@ You can also create element instances, and do any kind of operations.
 var x = new Alphanum('a')
 
 var y = x.add('c', 'a', 't')
-           .mul('i', 's')
-           .add('o', 'n')
-           .sub('t', 'h', 'e')
-           .div('t', 'a', 'b', 'l', 'e')
+         .mul('i', 's')
+         .add('o', 'n')
+         .sub('t', 'h', 'e')
+         .div('t', 'a', 'b', 'l', 'e')
 
 y.data // 's'
 ```
@@ -354,10 +354,11 @@ Yes, they are [scalars](#scalar) so you can build vector or matrix spaces on top
 ```javascript
 var VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
 var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
-const
+
 var vectorOfStrings = new VectorStrings2(['o', 'k'])
+
 var matrixOfStrings = new MatrixStrings2x2(['c', 'o',
-                                              'o', 'l'])
+                                            'o', 'l'])
 
 matrixOfStrings.mul(vectorOfStrings).data // ['x', 'y']
 ```
@@ -832,7 +833,7 @@ T2x2x2.equality(tensor1, tensor2) // false
 
 ```javascript
 tensor1.equality(tensor1) // true
-tensor2.equality(tensor2) // false
+tensor1.equality(tensor2) // false
 ```
 
 #### Tensor disequality

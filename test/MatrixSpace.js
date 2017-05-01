@@ -36,7 +36,7 @@ describe('MatrixSpace', () => {
 
   describe('data', () => {
     it('is enumerable', () => {
-      matrix1.propertyIsEnumerable('data').should.be.ok
+      matrix1.propertyIsEnumerable('data').should.be.ok()
     })
 
     it('is immutable', () => {
@@ -205,7 +205,7 @@ describe('MatrixSpace', () => {
     ))
 
     it('is not available for no square matrices', () => {
-      notDefined(R3x2.trace).should.be.true
+      notDefined(R3x2.trace).should.be.ok()
     })
   })
 
@@ -222,7 +222,7 @@ describe('MatrixSpace', () => {
                                 3, 4,
                                 5, 6])
 
-      notDefined(matrix3x2.trace).should.be.true
+      notDefined(matrix3x2.trace).should.be.ok()
     })
   })
 

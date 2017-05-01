@@ -27,11 +27,9 @@
     "lint_src": "standard src/*.js",
     "lint_test": "cd test; standard --env mocha; cd -",
     "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map ${npm_package_name}.map --output ${npm_package_name}.min.js --compress --mangle --preamble \"// Software: ${npm_package_name}\n// Homepage: ${npm_package_homepage}\n// License: ${npm_package_license}\"; cd -",
-    "postversion": "git push origin v${npm_package_version}; npm publish; npm run push",
-    "postpublish": "npm run docs:_data; git commit -am ':arrow_up: updated version'; npm run push",
+    "postversion": "git push origin v${npm_package_version}; npm publish",
+    "postpublish": "npm run docs:_data; git commit -am ':arrow_up: updated version'; git push origin master",
     "postupdate-deps": "npm test && git commit -am ':arrow_up: updated deps' || git checkout -- package.json",
-    "pull": "git pull origin master && npm run docs:pull",
-    "push": "git push origin master && npm run docs:push",
     "test": "mocha",
     "update-deps": "npm update --save --dev",
     "watch": "mocha -w"

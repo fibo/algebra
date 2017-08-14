@@ -6,13 +6,16 @@
 
 **NOTA BENE** Imagine all code examples below as written in some REPL where expected output is documented as a comment.
 
-[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)[![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js) [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master) [![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra) [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test) [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
+[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
+[![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js)
+[![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
+[![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra)
+[![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test)
+[![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
-
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-
-[![NPM](https://nodei.co/npm-dl/algebra.png)](https://nodei.co/npm-dl/algebra/)
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
@@ -441,22 +444,35 @@ You can play around with this structure.
 
 ```javascript
 var max = byte1.add(byte2).add(byte3).add(byte4)
-                 .add(byte5).add(byte6).add(byte7).add(byte8)
+               .add(byte5).add(byte6).add(byte7).add(byte8)
 
 max.data // [1, 1, 1, 1, 1, 1, 1, 1]
 ```
 
 ### Scalar
 
+The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors,
+matrices, tensors. They are the underneath set enriched with a
+[ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
+consists of two binary operators that generalize the arithmetic operations of addition and multiplication. A ring that has the commutativity property
+is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
+
+Ok, let's make a simple example. Real numbers, with common addition and
+multiplication are a scalar field.
+
 #### Scalar attributes
 
 ##### `Scalar.one`
 
+Is the *neutral element* for [multiplication][#scalar-multiplication] operator.
+
 ##### `Scalar.zero`
+
+Is the *neutral element* for [addition][#scalar-addition] operator.
 
 #### Scalar order
 
-It is always 0 for scalars, see also [tensor order](#tensor-order).
+It is always 0 for scalars, see also [Tensor order](#tensor-order).
 
 ##### `Scalar.order`
 
@@ -464,7 +480,7 @@ It is always 0 for scalars, see also [tensor order](#tensor-order).
 
 ##### `scalar.data`
 
-### Scalar operators
+#### Scalar operators
 
 #### Scalar set operators
 
@@ -544,6 +560,26 @@ Real.subtraction(twoPi, 2 * Math.PI) // 0
 ### Complex
 
 Inherits everything from [Scalar](#scalar).
+
+It is said the [Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) brain
+is uncommonly big and folded, much more than the Einstein brain (both are conserved and studied).
+Gauss was one of the biggest mathematicians and discovered many important
+results in many mathematic areas. One of its biggest intuitions, in my opinion,
+was to realize that the Complex number field is geometrically a plane.
+The Complex numbers are an extension on the Real numbers, they have a real
+part and an imaginary part.
+The imaginary numbers, as named by Descartes later, were discovered by italian mathematicians [Cardano](https://en.wikipedia.org/wiki/Gerolamo_Cardano), [Bombelli](https://en.wikipedia.org/wiki/Rafael_Bombelli) among others
+as a trick to solve third order equations.
+
+Complex numbers are a goldmine for mathematics, they are incredibly rich
+of deepest beauty: just as a divulgative example, take a look to the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), but please trust me,
+this is nothing compared to the divine nature of Complex numbers.
+
+![Mandelbrot Set](https://upload.wikimedia.org/wikipedia/commons/a/a4/Mandelbrot_sequence_new.gif)
+
+The first thing I noticed when I started to study the Complex numbers is
+conjugation. Every Complex number has its conjugate, that is its simmetric
+counterparte respect to the Real numbers line.
 
 ```javascript
 var Complex = algebra.Complex
@@ -670,15 +706,15 @@ vector.dimension // 2
 
 ### Vector norm
 
-The *norm*, at the end, is the square of the length of vector.
-The good old [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem).
+The *norm*, at the end, is the square of the vector length: the good old
+[Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem).
 It is usually defined as the sum of the squares of the coordinates.
 Anyway, it must be a function that, given an element, returns a positive real number.
 For example in [Complex](#complex) numbers it is defined as the multiplication of
-an element and its conjugate: it works as a norm.
+an element and its conjugate: it works as a well defined norm.
 It is a really important property since it shapes a metric space.
-In the Euclidean topology gives us the common sense of space,
-but it is also important in other spaces even not so exotic, like a functional space.
+In the Euclidean topology it gives us the common sense of space,
+but it is also important in other spaces, like a functional space.
 In fact a *norm* gives us a *distance* defined as its square root, thus it
 defines a metric space and hence a topology: a lot of good stuff.
 
@@ -760,7 +796,7 @@ A *Matrix* class inherits everything from [Tensor](#tensor).
 
 #### Matrix inversion
 
-It is defined only for square matrices which determinant is not zero.
+It is defined only for square matrices which [determinant][#matrix-determinant] is not zero.
 
 ##### `Matrix.inversion(matrix)`
 

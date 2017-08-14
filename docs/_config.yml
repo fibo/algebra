@@ -1,17 +1,8 @@
 
-domain: g14n.info
-
-permalink: ./:year/:month/:title/
-
 gems:
   - jekyll-sitemap
 
 markdown: kramdown
-
-exclude:
-  - npm-debug.log
-  - node_modules/
-  - package.json
 
 # Defaults
 
@@ -21,22 +12,5 @@ defaults:
       path: ""
       type: "pages"
     values:
-      layout: page
-
-# Custom vars
-
-katex:
-  basepath: https://cdnjs.cloudflare.com/ajax/libs/KaTeX
-  version: 0.5.1
-
-bootstrap:
-  basepath: https://maxcdn.bootstrapcdn.com/bootstrap
-  version: 3.3.6
-
-jquery:
-  basepath: https://ajax.googleapis.com/ajax/libs/jquery
-  version: 2.1.4
-
-google-analytics:
-  id: UA-12635045-12
+      layout: common/page
 

@@ -140,49 +140,31 @@ module.exports = algebraCyclic
 module.exports={
   "_args": [
     [
-      {
-        "raw": "algebra-cyclic@^0.2.0",
-        "scope": null,
-        "escapedName": "algebra-cyclic",
-        "name": "algebra-cyclic",
-        "rawSpec": "^0.2.0",
-        "spec": ">=0.2.0 <0.3.0",
-        "type": "range"
-      },
+      "algebra-cyclic@0.2.1",
       "/Users/gcasati/github.com/fibo/algebra"
     ]
   ],
-  "_from": "algebra-cyclic@>=0.2.0 <0.3.0",
+  "_from": "algebra-cyclic@0.2.1",
   "_id": "algebra-cyclic@0.2.1",
-  "_inCache": true,
+  "_inBundle": false,
+  "_integrity": "sha1-gafcJc+w6buO7bch1U14coudNIg=",
   "_location": "/algebra-cyclic",
-  "_nodeVersion": "4.3.2",
-  "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/algebra-cyclic-0.2.1.tgz_1472365525236_0.8247350375168025"
-  },
-  "_npmUser": {
-    "name": "fibo",
-    "email": "casati_gianluca@yahoo.it"
-  },
-  "_npmVersion": "3.8.9",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "algebra-cyclic@^0.2.0",
-    "scope": null,
-    "escapedName": "algebra-cyclic",
+    "type": "version",
+    "registry": true,
+    "raw": "algebra-cyclic@0.2.1",
     "name": "algebra-cyclic",
-    "rawSpec": "^0.2.0",
-    "spec": ">=0.2.0 <0.3.0",
-    "type": "range"
+    "escapedName": "algebra-cyclic",
+    "rawSpec": "0.2.1",
+    "saveSpec": null,
+    "fetchSpec": "0.2.1"
   },
   "_requiredBy": [
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.1.tgz",
-  "_shasum": "81a7dc25cfb0e9bb8eedb721d54d78728b9d3488",
-  "_shrinkwrap": null,
-  "_spec": "algebra-cyclic@^0.2.0",
+  "_spec": "0.2.1",
   "_where": "/Users/gcasati/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -203,12 +185,6 @@ module.exports={
     "standard": "^8.0.0",
     "tape": "^4.5.1"
   },
-  "directories": {},
-  "dist": {
-    "shasum": "81a7dc25cfb0e9bb8eedb721d54d78728b9d3488",
-    "tarball": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.1.tgz"
-  },
-  "gitHead": "62a9906342b4e9753f3753a6ddceb53f1c0d38e4",
   "homepage": "https://github.com/fibo/algebra-cyclic",
   "keywords": [
     "math",
@@ -218,19 +194,11 @@ module.exports={
   ],
   "license": "MIT",
   "main": "index.js",
-  "maintainers": [
-    {
-      "name": "fibo",
-      "email": "casati_gianluca@yahoo.it"
-    }
-  ],
   "name": "algebra-cyclic",
-  "optionalDependencies": {},
   "pre-commit": [
     "lint",
     "test"
   ],
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fibo/algebra-cyclic.git"
@@ -878,50 +846,32 @@ module.exports = algebraGroup
 module.exports={
   "_args": [
     [
-      {
-        "raw": "algebra-group@^0.6.0",
-        "scope": null,
-        "escapedName": "algebra-group",
-        "name": "algebra-group",
-        "rawSpec": "^0.6.0",
-        "spec": ">=0.6.0 <0.7.0",
-        "type": "range"
-      },
-      "/Users/gcasati/github.com/fibo/algebra/node_modules/cayley-dickson/node_modules/algebra-ring"
+      "algebra-group@0.6.0",
+      "/Users/gcasati/github.com/fibo/algebra"
     ]
   ],
-  "_from": "algebra-group@>=0.6.0 <0.7.0",
+  "_from": "algebra-group@0.6.0",
   "_id": "algebra-group@0.6.0",
-  "_inCache": true,
+  "_inBundle": false,
+  "_integrity": "sha1-OEmHIJfj4e/1rQPtPPCfIQ0xvoE=",
   "_location": "/cayley-dickson/algebra-group",
-  "_nodeVersion": "6.9.1",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/algebra-group-0.6.0.tgz_1480252373194_0.09729086351580918"
-  },
-  "_npmUser": {
-    "name": "fibo",
-    "email": "casati_gianluca@yahoo.it"
-  },
-  "_npmVersion": "3.10.8",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "algebra-group@^0.6.0",
-    "scope": null,
-    "escapedName": "algebra-group",
+    "type": "version",
+    "registry": true,
+    "raw": "algebra-group@0.6.0",
     "name": "algebra-group",
-    "rawSpec": "^0.6.0",
-    "spec": ">=0.6.0 <0.7.0",
-    "type": "range"
+    "escapedName": "algebra-group",
+    "rawSpec": "0.6.0",
+    "saveSpec": null,
+    "fetchSpec": "0.6.0"
   },
   "_requiredBy": [
     "/cayley-dickson/algebra-ring"
   ],
   "_resolved": "https://registry.npmjs.org/algebra-group/-/algebra-group-0.6.0.tgz",
-  "_shasum": "3849872097e3e1eff5ad03ed3cf09f210d31be81",
-  "_shrinkwrap": null,
-  "_spec": "algebra-group@^0.6.0",
-  "_where": "/Users/gcasati/github.com/fibo/algebra/node_modules/cayley-dickson/node_modules/algebra-ring",
+  "_spec": "0.6.0",
+  "_where": "/Users/gcasati/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -939,32 +889,18 @@ module.exports={
     "standard": "8.x",
     "tape": "4.x"
   },
-  "directories": {},
-  "dist": {
-    "shasum": "3849872097e3e1eff5ad03ed3cf09f210d31be81",
-    "tarball": "https://registry.npmjs.org/algebra-group/-/algebra-group-0.6.0.tgz"
-  },
-  "gitHead": "3f6697fad0ab440231f4ccc92e2b8eb3c9eafdcd",
   "homepage": "http://npm.im/algebra-group",
   "keywords": [
     "algebra"
   ],
   "license": "MIT",
   "main": "index.js",
-  "maintainers": [
-    {
-      "name": "fibo",
-      "email": "casati_gianluca@yahoo.it"
-    }
-  ],
   "name": "algebra-group",
-  "optionalDependencies": {},
   "pre-commit": [
     "lint",
     "test",
     "check-deps"
   ],
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git://github.com/fibo/algebra-group.git"
@@ -1080,50 +1016,32 @@ module.exports = algebraRing
 module.exports={
   "_args": [
     [
-      {
-        "raw": "algebra-ring@^0.6.0",
-        "scope": null,
-        "escapedName": "algebra-ring",
-        "name": "algebra-ring",
-        "rawSpec": "^0.6.0",
-        "spec": ">=0.6.0 <0.7.0",
-        "type": "range"
-      },
-      "/Users/gcasati/github.com/fibo/algebra/node_modules/cayley-dickson"
+      "algebra-ring@0.6.0",
+      "/Users/gcasati/github.com/fibo/algebra"
     ]
   ],
-  "_from": "algebra-ring@>=0.6.0 <0.7.0",
+  "_from": "algebra-ring@0.6.0",
   "_id": "algebra-ring@0.6.0",
-  "_inCache": true,
+  "_inBundle": false,
+  "_integrity": "sha1-IYowwwGV5FWatXGDya4fxPqMo7k=",
   "_location": "/cayley-dickson/algebra-ring",
-  "_nodeVersion": "7.7.4",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/algebra-ring-0.6.0.tgz_1490736342978_0.44902119413018227"
-  },
-  "_npmUser": {
-    "name": "fibo",
-    "email": "casati_gianluca@yahoo.it"
-  },
-  "_npmVersion": "4.4.4",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "algebra-ring@^0.6.0",
-    "scope": null,
-    "escapedName": "algebra-ring",
+    "type": "version",
+    "registry": true,
+    "raw": "algebra-ring@0.6.0",
     "name": "algebra-ring",
-    "rawSpec": "^0.6.0",
-    "spec": ">=0.6.0 <0.7.0",
-    "type": "range"
+    "escapedName": "algebra-ring",
+    "rawSpec": "0.6.0",
+    "saveSpec": null,
+    "fetchSpec": "0.6.0"
   },
   "_requiredBy": [
     "/cayley-dickson"
   ],
   "_resolved": "https://registry.npmjs.org/algebra-ring/-/algebra-ring-0.6.0.tgz",
-  "_shasum": "218a30c30195e4559ab57183c9ae1fc4fa8ca3b9",
-  "_shrinkwrap": null,
-  "_spec": "algebra-ring@^0.6.0",
-  "_where": "/Users/gcasati/github.com/fibo/algebra/node_modules/cayley-dickson",
+  "_spec": "0.6.0",
+  "_where": "/Users/gcasati/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -1141,12 +1059,6 @@ module.exports={
     "standard": "^9.0.2",
     "tape": "^4.2.0"
   },
-  "directories": {},
-  "dist": {
-    "shasum": "218a30c30195e4559ab57183c9ae1fc4fa8ca3b9",
-    "tarball": "https://registry.npmjs.org/algebra-ring/-/algebra-ring-0.6.0.tgz"
-  },
-  "gitHead": "6636b9931ef5fcc7f89584395b2b6e27612e5d3d",
   "homepage": "https://github.com/fibo/algebra-ring",
   "keywords": [
     "algebra",
@@ -1155,20 +1067,12 @@ module.exports={
   ],
   "license": "MIT",
   "main": "algebra-ring.js",
-  "maintainers": [
-    {
-      "name": "fibo",
-      "email": "casati_gianluca@yahoo.it"
-    }
-  ],
   "name": "algebra-ring",
-  "optionalDependencies": {},
   "pre-commit": [
     "lint",
     "test",
     "check-deps"
   ],
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fibo/algebra-ring.git"
@@ -1462,49 +1366,31 @@ module.exports = matrixMultiplication
 module.exports={
   "_args": [
     [
-      {
-        "raw": "matrix-multiplication@^0.5.0",
-        "scope": null,
-        "escapedName": "matrix-multiplication",
-        "name": "matrix-multiplication",
-        "rawSpec": "^0.5.0",
-        "spec": ">=0.5.0 <0.6.0",
-        "type": "range"
-      },
+      "matrix-multiplication@0.5.0",
       "/Users/gcasati/github.com/fibo/algebra"
     ]
   ],
-  "_from": "matrix-multiplication@>=0.5.0 <0.6.0",
+  "_from": "matrix-multiplication@0.5.0",
   "_id": "matrix-multiplication@0.5.0",
-  "_inCache": true,
+  "_inBundle": false,
+  "_integrity": "sha1-7ZLwaODgIYGUcTWRCyi6uYw2pLE=",
   "_location": "/matrix-multiplication",
-  "_nodeVersion": "6.9.1",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/matrix-multiplication-0.5.0.tgz_1480269165278_0.5621082405559719"
-  },
-  "_npmUser": {
-    "name": "fibo",
-    "email": "casati_gianluca@yahoo.it"
-  },
-  "_npmVersion": "3.10.8",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "matrix-multiplication@^0.5.0",
-    "scope": null,
-    "escapedName": "matrix-multiplication",
+    "type": "version",
+    "registry": true,
+    "raw": "matrix-multiplication@0.5.0",
     "name": "matrix-multiplication",
-    "rawSpec": "^0.5.0",
-    "spec": ">=0.5.0 <0.6.0",
-    "type": "range"
+    "escapedName": "matrix-multiplication",
+    "rawSpec": "0.5.0",
+    "saveSpec": null,
+    "fetchSpec": "0.5.0"
   },
   "_requiredBy": [
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.5.0.tgz",
-  "_shasum": "ed92f068e0e02181947135910b28bab98c36a4b1",
-  "_shrinkwrap": null,
-  "_spec": "matrix-multiplication@^0.5.0",
+  "_spec": "0.5.0",
   "_where": "/Users/gcasati/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1523,32 +1409,18 @@ module.exports={
     "standard": "8.x",
     "tape": "4.x"
   },
-  "directories": {},
-  "dist": {
-    "shasum": "ed92f068e0e02181947135910b28bab98c36a4b1",
-    "tarball": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.5.0.tgz"
-  },
-  "gitHead": "e562ab098e148930fe52d140caf57169e1f1b43a",
   "homepage": "http://npm.im/matrix-multiplication",
   "keywords": [
     "algebra"
   ],
   "license": "MIT",
   "main": "matrix-multiplication.js",
-  "maintainers": [
-    {
-      "name": "fibo",
-      "email": "casati_gianluca@yahoo.it"
-    }
-  ],
   "name": "matrix-multiplication",
-  "optionalDependencies": {},
   "pre-commit": [
     "lint",
     "test",
     "check-deps"
   ],
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git://github.com/fibo/matrix-multiplication.git"
@@ -1633,49 +1505,31 @@ module.exports = multiDimArrayIndex
 module.exports={
   "_args": [
     [
-      {
-        "raw": "multidim-array-index@^0.5.0",
-        "scope": null,
-        "escapedName": "multidim-array-index",
-        "name": "multidim-array-index",
-        "rawSpec": "^0.5.0",
-        "spec": ">=0.5.0 <0.6.0",
-        "type": "range"
-      },
+      "multidim-array-index@0.5.0",
       "/Users/gcasati/github.com/fibo/algebra"
     ]
   ],
-  "_from": "multidim-array-index@>=0.5.0 <0.6.0",
+  "_from": "multidim-array-index@0.5.0",
   "_id": "multidim-array-index@0.5.0",
-  "_inCache": true,
+  "_inBundle": false,
+  "_integrity": "sha1-NKzuoDF2nEGd8BaBkykUKwMyvQc=",
   "_location": "/multidim-array-index",
-  "_nodeVersion": "4.2.2",
-  "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/multidim-array-index-0.5.0.tgz_1460790776022_0.695659349905327"
-  },
-  "_npmUser": {
-    "name": "fibo",
-    "email": "casati_gianluca@yahoo.it"
-  },
-  "_npmVersion": "3.7.2",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "multidim-array-index@^0.5.0",
-    "scope": null,
-    "escapedName": "multidim-array-index",
+    "type": "version",
+    "registry": true,
+    "raw": "multidim-array-index@0.5.0",
     "name": "multidim-array-index",
-    "rawSpec": "^0.5.0",
-    "spec": ">=0.5.0 <0.6.0",
-    "type": "range"
+    "escapedName": "multidim-array-index",
+    "rawSpec": "0.5.0",
+    "saveSpec": null,
+    "fetchSpec": "0.5.0"
   },
   "_requiredBy": [
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/multidim-array-index/-/multidim-array-index-0.5.0.tgz",
-  "_shasum": "34aceea031769c419df016819329142b0332bd07",
-  "_shrinkwrap": null,
-  "_spec": "multidim-array-index@^0.5.0",
+  "_spec": "0.5.0",
   "_where": "/Users/gcasati/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1692,12 +1546,6 @@ module.exports={
     "standard": "^5.4.1",
     "tape": "^4.4.0"
   },
-  "directories": {},
-  "dist": {
-    "shasum": "34aceea031769c419df016819329142b0332bd07",
-    "tarball": "https://registry.npmjs.org/multidim-array-index/-/multidim-array-index-0.5.0.tgz"
-  },
-  "gitHead": "4476b7f91a74189b27be85f0d6f42f4d63928bfe",
   "homepage": "http://npm.im/multidim-array-index",
   "keywords": [
     "array",
@@ -1706,15 +1554,7 @@ module.exports={
   ],
   "license": "MIT",
   "main": "index.js",
-  "maintainers": [
-    {
-      "name": "fibo",
-      "email": "casati_gianluca@yahoo.it"
-    }
-  ],
   "name": "multidim-array-index",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git://github.com/fibo/multidim-array-index.git"
@@ -1728,7 +1568,7 @@ module.exports={
 }
 
 },{}],18:[function(require,module,exports){
-module.exports=function(x){return (typeof x==='undefined')||(x === null)}
+module.exports=function(x){return typeof x==='undefined'||x === null}
 
 },{}],19:[function(require,module,exports){
 /**
@@ -1759,7 +1599,7 @@ function staticProps (obj) {
     Object.defineProperties(obj, staticProps)
   }
 }
-module.exports = staticProps
+module.exports = exports.default = staticProps
 
 },{}],20:[function(require,module,exports){
 // In browserify context, fall back to a no op.

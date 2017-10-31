@@ -1,4 +1,7 @@
 require('strict-mode')(() => {
+  var Boole = require('./src/Boole')
+  exports.Boole = Boole
+
   var Cyclic = require('./src/Cyclic')
   exports.Cyclic = Cyclic
 

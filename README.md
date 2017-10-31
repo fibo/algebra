@@ -381,25 +381,26 @@ A generic function is provided to iterate the [Cayley-Dickson construction][Cayl
 
 * *num* can be 1, 2, 4 or 8
 
-Let's use for example the [src/binaryField][binaryField] which exports an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
+Let's use for example the `algebra.Boole` which implements [Boolean Algebra](https://en.wikipedia.org/wiki/Boolean_algebra)
+by exporting an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```javascript
 var CompositionAlgebra = algebra.CompositionAlgebra
 
-var binaryField = require('algebra/src/binaryField')
+var Boole = algebra.Boole
 
-var Bit = CompositionAlgebra(binaryField)
+var Bit = CompositionAlgebra(Boole)
 
-Bit.contains(1) // true
+Bit.contains(false) // true
 Bit.contains(4) // false
 
-var bit = new Bit(1)
-Bit.addition(0).data // 1
+var bit = new Bit(true)
+Bit.addition(false).data // true
 ```
 
 Not so exciting, let's build something more interesting.
 Let's pass a second parameter, that is used to build a [Composition algebra][composition-algebra] over the given field.
-It is something **experimental** also for me, right now I am writing this but I still do not know how it will behave. My idea is that
+It is something **experimental** also for me, right now I am writing this but I still do not know how it will behave. My idea (idea feliz) is that
 
 > A byte is an octonion of bits
 
@@ -409,30 +410,34 @@ eight units.
 
 ```javascript
 // n must be a power of two
-var Byte = CompositionAlgebra(binaryField, 8)
+var Byte = CompositionAlgebra(Boole, 8)
 
-var byte1 = new Byte([1, 0, 0, 0, 0, 0, 0, 0])
-var byte2 = new Byte([0, 1, 0, 0, 0, 0, 0, 0])
-var byte3 = new Byte([0, 0, 1, 0, 0, 0, 0, 0])
-var byte4 = new Byte([0, 0, 0, 1, 0, 0, 0, 0])
-var byte5 = new Byte([0, 0, 0, 0, 1, 0, 0, 0])
-var byte6 = new Byte([0, 0, 0, 0, 0, 1, 0, 0])
-var byte7 = new Byte([0, 0, 0, 0, 0, 0, 1, 0])
-var byte8 = new Byte([0, 0, 0, 0, 0, 0, 0, 1])
+// Use a single char var for better indentation.
+var t = true
+var f = false
+
+var byte1 = new Byte([t, t, t, t, t, t, t, t])
+var byte2 = new Byte([t, t, t, t, t, t, t, t])
+var byte3 = new Byte([t, t, t, t, t, t, t, t])
+var byte4 = new Byte([t, t, t, t, t, t, t, t])
+var byte5 = new Byte([t, t, t, t, t, t, t, t])
+var byte6 = new Byte([t, t, t, t, t, t, t, t])
+var byte7 = new Byte([t, t, t, t, t, t, t, t])
+var byte8 = new Byte([t, t, t, t, t, t, t, t])
 ```
 
 The first one corresponds to *one*, while the rest are immaginary units,
 but since the underlying field is Z2, -1 corresponds to 1.
 
 ```javascript
-byte1.mul(byte1).data // [1, 0, 0, 0, 0, 0, 0, 0]
-byte2.mul(byte2).data // [1, 0, 0, 0, 0, 0, 0, 0]
-byte3.mul(byte3).data // [1, 0, 0, 0, 0, 0, 0, 0]
-byte4.mul(byte4).data // [1, 0, 0, 0, 0, 0, 0, 0]
-byte5.mul(byte5).data // [1, 0, 0, 0, 0, 0, 0, 0]
-byte6.mul(byte6).data // [1, 0, 0, 0, 0, 0, 0, 0]
-byte7.mul(byte7).data // [1, 0, 0, 0, 0, 0, 0, 0]
-byte8.mul(byte8).data // [1, 0, 0, 0, 0, 0, 0, 0]
+bytet.mul(bytet).data // [t, t, t, t, t, t, t, t]
+byte2.mul(byte2).data // [t, t, t, t, t, t, t, t]
+byte3.mul(byte3).data // [t, t, t, t, t, t, t, t]
+byte4.mul(byte4).data // [t, t, t, t, t, t, t, t]
+byte5.mul(byte5).data // [t, t, t, t, t, t, t, t]
+byte6.mul(byte6).data // [t, t, t, t, t, t, t, t]
+byte7.mul(byte7).data // [t, t, t, t, t, t, t, t]
+byte8.mul(byte8).data // [t, t, t, t, t, t, t, t]
 ```
 
 Keeping in mind that *Byte* space defined above is an algebra, i.e. it has
@@ -446,7 +451,7 @@ You can play around with this structure.
 var max = byte1.add(byte2).add(byte3).add(byte4)
                .add(byte5).add(byte6).add(byte7).add(byte8)
 
-max.data // [1, 1, 1, 1, 1, 1, 1, 1]
+max.data // [t, t, t, t, t, t, t, t]
 ```
 
 ### Scalar
@@ -464,11 +469,11 @@ multiplication are a scalar field.
 
 ##### `Scalar.one`
 
-Is the *neutral element* for [multiplication][#scalar-multiplication] operator.
+Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
 
 ##### `Scalar.zero`
 
-Is the *neutral element* for [addition][#scalar-addition] operator.
+Is the *neutral element* for [addition](#scalar-addition) operator.
 
 #### Scalar order
 
@@ -796,7 +801,7 @@ A *Matrix* class inherits everything from [Tensor](#tensor).
 
 #### Matrix inversion
 
-It is defined only for square matrices which [determinant][#matrix-determinant] is not zero.
+It is defined only for square matrices which [determinant](#matrix-determinant) is not zero.
 
 ##### `Matrix.inversion(matrix)`
 

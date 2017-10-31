@@ -15,10 +15,13 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+## [v0.12.2] - 2017-11-01
+
 ### Added
 
 - More docs.
 - Updated website style.
+- Updated deps.
 
 ## [v0.12.1] - 2017-05-01
 

@@ -136,35 +136,66 @@ staticProps(algebraCyclic)({ error: error })
 
 module.exports = algebraCyclic
 
-},{"./package.json":2,"algebra-ring":4,"static-props":19}],2:[function(require,module,exports){
+},{"./package.json":3,"algebra-ring":8,"static-props":2}],2:[function(require,module,exports){
+/**
+ * @param {Object} obj
+ * @returns {Function}
+ */
+function staticProps (obj) {
+  /**
+   * @param {Object} props
+   * @param {Boolean} [enumerable]
+   */
+  return function (props, enumerable) {
+    var staticProps = {}
+    for (var propName in props) {
+      var staticProp = {
+        configurable: false,
+        enumerable: enumerable
+      }
+      var prop = props[propName]
+      if (typeof prop === 'function') {
+        staticProp.get = prop
+      } else {
+        staticProp.value = prop
+        staticProp.writable = false
+      }
+      staticProps[propName] = staticProp
+    }
+    Object.defineProperties(obj, staticProps)
+  }
+}
+module.exports = exports.default = staticProps
+
+},{}],3:[function(require,module,exports){
 module.exports={
   "_args": [
     [
-      "algebra-cyclic@0.2.1",
+      "algebra-cyclic@0.2.2",
       "/Users/gcasati/github.com/fibo/algebra"
     ]
   ],
-  "_from": "algebra-cyclic@0.2.1",
-  "_id": "algebra-cyclic@0.2.1",
+  "_from": "algebra-cyclic@0.2.2",
+  "_id": "algebra-cyclic@0.2.2",
   "_inBundle": false,
-  "_integrity": "sha1-gafcJc+w6buO7bch1U14coudNIg=",
+  "_integrity": "sha512-tZA14GWdoK51QDW5jCwVx3iXDln/OtesjLIHpL+kQm1L0OK2u2trDnyGkvB88FW/nJyMeD8GRR3cmvfdP8Gwnw==",
   "_location": "/algebra-cyclic",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "algebra-cyclic@0.2.1",
+    "raw": "algebra-cyclic@0.2.2",
     "name": "algebra-cyclic",
     "escapedName": "algebra-cyclic",
-    "rawSpec": "0.2.1",
+    "rawSpec": "0.2.2",
     "saveSpec": null,
-    "fetchSpec": "0.2.1"
+    "fetchSpec": "0.2.2"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.1.tgz",
-  "_spec": "0.2.1",
+  "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.2.tgz",
+  "_spec": "0.2.2",
   "_where": "/Users/gcasati/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -174,18 +205,16 @@ module.exports={
     "url": "https://github.com/fibo/algebra-cyclic/issues"
   },
   "dependencies": {
-    "algebra-ring": "^0.5.0",
-    "prime-number": "^0.1.0",
-    "static-props": "^1.0.0"
+    "algebra-ring": "^0.6.1",
+    "static-props": "^1.1.0"
   },
   "description": "creates a space isomorphic to Zp: the cyclic ring of order p, where p is prime",
   "devDependencies": {
-    "npm-watch": "^0.1.3",
     "pre-commit": "^1.1.2",
-    "standard": "^8.0.0",
+    "standa": "^1.0.2",
     "tape": "^4.5.1"
   },
-  "homepage": "https://github.com/fibo/algebra-cyclic",
+  "homepage": "http://g14n.info/algebra-cyclic",
   "keywords": [
     "math",
     "algebra",
@@ -205,23 +234,38 @@ module.exports={
   },
   "scripts": {
     "check-deps": "npm outdated",
-    "lint": "standard",
-    "postupdate-deps": "npm test && git commit -am 'updated deps' || git checkout -- package.json",
+    "lint": "standa",
     "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
-    "test": "tape test.js",
-    "update-deps": "npm update --save --dev",
-    "watch": "npm-watch"
+    "test": "tape test.js"
   },
-  "version": "0.2.1",
-  "watch": {
-    "test": "{index,test}.js"
-  }
+  "version": "0.2.2"
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
+const no = require('not-defined')
+const staticProps = require('static-props')
+
+const pkg = require('./package.json')
 
 /**
- * given an algebra group structure
+ * Prepend package name to error message
+ */
+
+function msg (str) {
+  return pkg.name + ': ' + str
+}
+
+const error = {}
+
+staticProps(error)({
+  argumentIsNotInGroup: msg('argument is not contained in group set'),
+  equalityIsNotReflexive: msg('"equality" is not reflexive'),
+  identityIsNotInGroup: msg('"identity" must be contained in group set'),
+  identityIsNotNeutral: msg('"identity" is not neutral')
+})
+
+/**
+ * Defines an algebra group structure
  *
  * @param {Object}   given
  * @param {*}        given.identity a.k.a neutral element
@@ -233,6 +277,7 @@ module.exports={
  * @param {String} [naming.identity=zero]
  * @param {String} [naming.contains=contains]
  * @param {String} [naming.equality=equality]
+ * @param {String} [naming.disequality=disequality]
  * @param {String} [naming.compositionLaw=addition]
  * @param {String} [naming.inversion=negation]
  * @param {String} [naming.inverseCompositionLaw=subtraction]
@@ -242,45 +287,68 @@ module.exports={
  */
 
 function algebraGroup (given, naming) {
-  var group = {}
-
-  if (typeof given === 'undefined') {
-    given = {}
-  }
-
-  if (typeof naming === 'undefined') {
-    naming = {}
-  }
+  if (no(given)) given = {}
+  if (no(naming)) naming = {}
 
   // default attribute naming
 
-  var defaultNaming = {
+  const defaultNaming = {
     compositionLaw: 'addition',
+    contains: 'contains',
+    disequality: 'disequality',
+    equality: 'equality',
     identity: 'zero',
     inverseCompositionLaw: 'subtraction',
-    inversion: 'negation'
+    inversion: 'negation',
+    notContains: 'notContains'
   }
 
+  /**
+   * Returns a prop custom name or its default
+   *
+   * @param {String} name
+   *
+   * @returns {String} actualName
+   */
+
   function prop (name) {
-    if (typeof naming[name] === 'string') {
-      return naming[name]
-    }
+    if (typeof naming[name] === 'string') return naming[name]
+    else return defaultNaming[name]
+  }
 
-    if (typeof defaultNaming[name] === 'string') {
-      return defaultNaming[name]
-    }
+  /**
+   * Wraps operator by checking if arguments are contained in group.
+   *
+   * @param {Object} given operators
+   * @param {String} operator name
+   * @param {Number} arity
+   *
+   * @returns {Function} internalOperator
+   */
 
-    return name
+  function internalOperator (given, operator, arity) {
+    return function () {
+      const args = [].slice.call(arguments, 0, arity)
+
+      if (contains.apply(null, args)) {
+        return given[operator].apply(null, args)
+      } else {
+        throw new TypeError(error.argumentIsNotInGroup)
+      }
+    }
   }
 
   // operators
 
+  const secureCompositionLaw = internalOperator(given, 'compositionLaw', 2)
+  const secureInversion = internalOperator(given, 'inversion', 1)
+
   function compositionLaw () {
-    return [].slice.call(arguments).reduce(given.compositionLaw)
+    return [].slice.call(arguments).reduce(secureCompositionLaw)
   }
 
   function contains () {
-    var arg = [].slice.call(arguments)
+    const arg = [].slice.call(arguments)
 
     for (var i in arg) {
       if (!given.contains(arg[i])) {
@@ -296,46 +364,148 @@ function algebraGroup (given, naming) {
   function disequality (a, b) { return !given.equality(a, b) }
 
   function inverseCompositionLaw (a) {
-    var rest = [].slice.call(arguments, 1)
+    const rest = [].slice.call(arguments, 1)
 
-    return compositionLaw(a, rest.map(given.inversion).reduce(given.compositionLaw))
+    return secureCompositionLaw(a, rest.map(secureInversion).reduce(secureCompositionLaw))
   }
 
-  group[prop('contains')] = contains
-  group[prop('notContains')] = notContains
-  group[prop('compositionLaw')] = compositionLaw
-  group[prop('inversion')] = given.inversion
-  group[prop('inverseCompositionLaw')] = inverseCompositionLaw
-  group[prop('equality')] = given.equality
-  group[prop('disequality')] = disequality
-
   // identity element
-  var e = given.identity
+  const e = given.identity
 
-  if (notContains(e)) {
-    throw new TypeError('algebra-group: "identity" must be contained in group set')
+  // Check that e=e.
+  if (given.equality(e, e) !== true) {
+    throw new TypeError(error.equalityIsNotReflexive)
+  }
+
+  if (!given.contains(e)) {
+    throw new TypeError(error.identityIsNotInGroup)
   }
 
   // Check that e+e=e.
-  if (disequality(given.compositionLaw(e, e), e)) {
-    throw new TypeError('algebra-group: "identity" is not neutral')
+  if (!given.equality(given.compositionLaw(e, e), e)) {
+    throw new TypeError(error.identityIsNotNeutral)
   }
 
-  group[prop('identity')] = e
+  const definition = {}
+
+  definition[prop('identity')] = e
+
+  // Wrap functions otherwise staticProps will treat them as getters.
+  definition[prop('contains')] = () => contains
+  definition[prop('notContains')] = () => notContains
+  definition[prop('compositionLaw')] = () => compositionLaw
+  definition[prop('inversion')] = () => secureInversion
+  definition[prop('inverseCompositionLaw')] = () => inverseCompositionLaw
+  definition[prop('equality')] = () => given.equality
+  definition[prop('disequality')] = () => disequality
+
+  const group = {}
+
+  // Add immutable props to group.
+  staticProps(group)(definition)
 
   return group
 }
 
+staticProps(algebraGroup)({ error })
+
 module.exports = algebraGroup
 
-},{}],4:[function(require,module,exports){
+},{"./package.json":7,"not-defined":5,"static-props":6}],5:[function(require,module,exports){
+module.exports=function(x){return x == null||(x.length<1 && typeof x != 'function')||(typeof x == 'object'&& Object.keys(x).length<1)}
+
+},{}],6:[function(require,module,exports){
+arguments[4][2][0].apply(exports,arguments)
+},{"dup":2}],7:[function(require,module,exports){
+module.exports={
+  "_args": [
+    [
+      "algebra-group@0.6.1",
+      "/Users/gcasati/github.com/fibo/algebra"
+    ]
+  ],
+  "_from": "algebra-group@0.6.1",
+  "_id": "algebra-group@0.6.1",
+  "_inBundle": false,
+  "_integrity": "sha512-ttDyGhejr8a6D+X88S/J5RDWJN/rktLn/F79TDSUPeIyaPbe/aOwe3n/MKV0Kzs29zLOL8iHMTZNNYj9sQDYlQ==",
+  "_location": "/algebra-group",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "algebra-group@0.6.1",
+    "name": "algebra-group",
+    "escapedName": "algebra-group",
+    "rawSpec": "0.6.1",
+    "saveSpec": null,
+    "fetchSpec": "0.6.1"
+  },
+  "_requiredBy": [
+    "/algebra-ring"
+  ],
+  "_resolved": "https://registry.npmjs.org/algebra-group/-/algebra-group-0.6.1.tgz",
+  "_spec": "0.6.1",
+  "_where": "/Users/gcasati/github.com/fibo/algebra",
+  "author": {
+    "name": "Gianluca Casati",
+    "url": "http://g14n.info"
+  },
+  "bugs": {
+    "url": "https://github.com/fibo/algebra-group/issues"
+  },
+  "dependencies": {
+    "not-defined": "^2.0.1",
+    "static-props": "^1.1.0"
+  },
+  "description": "defines and algebra group structure",
+  "devDependencies": {
+    "pre-commit": "^1.2.2",
+    "standa": "^1.0.2",
+    "tape": "^4.8.0"
+  },
+  "homepage": "http://npm.im/algebra-group",
+  "keywords": [
+    "algebra"
+  ],
+  "license": "MIT",
+  "main": "algebra-group.js",
+  "name": "algebra-group",
+  "pre-commit": [
+    "lint",
+    "test",
+    "check-deps"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fibo/algebra-group.git"
+  },
+  "scripts": {
+    "check-deps": "npm outdated",
+    "lint": "standa",
+    "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
+    "test": "NODE_PATH=. tape test.js"
+  },
+  "version": "0.6.1"
+}
+
+},{}],8:[function(require,module,exports){
 var group = require('algebra-group')
 var staticProps = require('static-props')
 
+var pkg = require('./package.json')
+
+/**
+ * Prepend package name to error message
+ */
+
+function msg (str) {
+  return pkg.name + ': ' + str
+}
+
 var error = {
-  cannotDivideByZero: 'algebra-ring: Cannot divide by zero',
-  doesNotContainIdentity: 'algebra-ring: "identity" must be contained in ring set',
-  identityIsNotNeutral: 'algebra-ring: "identity" is not neutral'
+  cannotDivideByZero: msg('Cannot divide by zero'),
+  doesNotContainIdentity: msg('"identity" must be contained in ring set'),
+  identityIsNotNeutral: msg('"identity" is not neutral')
 }
 
 /**
@@ -416,29 +586,84 @@ staticProps(algebraRing)({error: error})
 
 module.exports = algebraRing
 
-},{"algebra-group":3,"static-props":5}],5:[function(require,module,exports){
-function staticProps (obj) {
-  return function (props) {
-    var statik = {}
-
-    for (var propName in props) {
-      var propValue = props[propName]
-
-      statik[propName] = {
-        value: propValue,
-        configurable: false,
-        enumerable: false,
-        writable: false
-      }
-    }
-
-    Object.defineProperties(obj, statik)
-  }
+},{"./package.json":10,"algebra-group":4,"static-props":9}],9:[function(require,module,exports){
+arguments[4][2][0].apply(exports,arguments)
+},{"dup":2}],10:[function(require,module,exports){
+module.exports={
+  "_args": [
+    [
+      "algebra-ring@0.6.1",
+      "/Users/gcasati/github.com/fibo/algebra"
+    ]
+  ],
+  "_from": "algebra-ring@0.6.1",
+  "_id": "algebra-ring@0.6.1",
+  "_inBundle": false,
+  "_integrity": "sha512-GnrKOsTm6Zcoh4BqgXJJqxAzVo16sANr2RhohDTTTJs4Zi+6H2rKv+xR16jCO8Ix/xZVBnhUolULOqDnRyxstQ==",
+  "_location": "/algebra-ring",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "algebra-ring@0.6.1",
+    "name": "algebra-ring",
+    "escapedName": "algebra-ring",
+    "rawSpec": "0.6.1",
+    "saveSpec": null,
+    "fetchSpec": "0.6.1"
+  },
+  "_requiredBy": [
+    "/algebra-cyclic",
+    "/cayley-dickson"
+  ],
+  "_resolved": "https://registry.npmjs.org/algebra-ring/-/algebra-ring-0.6.1.tgz",
+  "_spec": "0.6.1",
+  "_where": "/Users/gcasati/github.com/fibo/algebra",
+  "author": {
+    "name": "Gianluca Casati",
+    "url": "http://g14n.info"
+  },
+  "bugs": {
+    "url": "https://github.com/fibo/algebra-ring/issues"
+  },
+  "dependencies": {
+    "algebra-group": "^0.6.1",
+    "static-props": "^1.0.2"
+  },
+  "description": "defines an algebra ring structure",
+  "devDependencies": {
+    "pre-commit": "^1.1.2",
+    "standa": "^1.0.2",
+    "tape": "^4.2.0"
+  },
+  "homepage": "https://github.com/fibo/algebra-ring",
+  "keywords": [
+    "algebra",
+    "ring",
+    "structure"
+  ],
+  "license": "MIT",
+  "main": "algebra-ring.js",
+  "name": "algebra-ring",
+  "pre-commit": [
+    "lint",
+    "test",
+    "check-deps"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fibo/algebra-ring.git"
+  },
+  "scripts": {
+    "check-deps": "npm outdated",
+    "lint": "standa",
+    "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
+    "test": "NODE_PATH=. tape test.js"
+  },
+  "version": "0.6.1"
 }
 
-module.exports = staticProps
-
-},{}],6:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var ring = require('algebra-ring')
 var twoPow = Math.pow.bind(null, 2)
 
@@ -673,420 +898,7 @@ function iterateCayleyDickson (given, iterations) {
 
 module.exports = iterateCayleyDickson
 
-},{"algebra-ring":9}],7:[function(require,module,exports){
-const no = require('not-defined')
-const staticProps = require('static-props')
-
-const pkg = require('./package.json')
-
-/**
- * Prepend package name to error message
- */
-
-function msg (str) {
-  return pkg.name + ': ' + str
-}
-
-var error = {}
-
-staticProps(error)({
-  argumentIsNotInGroup: msg('argument is not contained in group set'),
-  equalityIsNotReflexive: msg('"equality" is not reflexive'),
-  identityIsNotInGroup: msg('"identity" must be contained in group set'),
-  identityIsNotNeutral: msg('"identity" is not neutral')
-})
-
-/**
- * Defines an algebra group structure
- *
- * @param {Object}   given
- * @param {*}        given.identity a.k.a neutral element
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.compositionLaw
- * @param {Function} given.inversion
- * @param {Object} [naming]
- * @param {String} [naming.identity=zero]
- * @param {String} [naming.contains=contains]
- * @param {String} [naming.equality=equality]
- * @param {String} [naming.disequality=disequality]
- * @param {String} [naming.compositionLaw=addition]
- * @param {String} [naming.inversion=negation]
- * @param {String} [naming.inverseCompositionLaw=subtraction]
- * @param {String} [naming.notContains=notContains]
- *
- * @returns {Object} group
- */
-
-function algebraGroup (given, naming) {
-  if (no(given)) given = {}
-  if (no(naming)) naming = {}
-
-  // default attribute naming
-
-  const defaultNaming = {
-    compositionLaw: 'addition',
-    contains: 'contains',
-    disequality: 'disequality',
-    equality: 'equality',
-    identity: 'zero',
-    inverseCompositionLaw: 'subtraction',
-    inversion: 'negation',
-    notContains: 'notContains'
-  }
-
-  /**
-   * Returns a prop custom name or its default
-   *
-   * @param {String} name
-   *
-   * @returns {String} actualName
-   */
-
-  function prop (name) {
-    if (typeof naming[name] === 'string') return naming[name]
-    else return defaultNaming[name]
-  }
-
-  /**
-   * Wraps operator by checking if arguments are contained in group.
-   *
-   * @param {Object} given operators
-   * @param {String} operator name
-   * @param {Number} arity
-   *
-   * @returns {Function} internalOperator
-   */
-
-  function internalOperator (given, operator, arity) {
-    return function () {
-      const args = [].slice.call(arguments, 0, arity)
-
-      if (contains.apply(null, args)) {
-        return given[operator].apply(null, args)
-      } else {
-        throw new TypeError(error.argumentIsNotInGroup)
-      }
-    }
-  }
-
-  // operators
-
-  var secureCompositionLaw = internalOperator(given, 'compositionLaw', 2)
-  var secureInversion = internalOperator(given, 'inversion', 1)
-
-  function compositionLaw () {
-    return [].slice.call(arguments).reduce(secureCompositionLaw)
-  }
-
-  function contains () {
-    var arg = [].slice.call(arguments)
-    for (var i in arg) {
-      if (!given.contains(arg[i])) {
-        return false
-      }
-    }
-
-    return true
-  }
-
-  function notContains (a) { return !contains(a) }
-
-  function disequality (a, b) { return !given.equality(a, b) }
-
-  function inverseCompositionLaw (a) {
-    var rest = [].slice.call(arguments, 1)
-
-    return secureCompositionLaw(a, rest.map(secureInversion).reduce(secureCompositionLaw))
-  }
-
-  // identity element
-  var e = given.identity
-
-  // Check that e=e.
-  if (given.equality(e, e) !== true) {
-    throw new TypeError(error.equalityIsNotReflexive)
-  }
-
-  if (!given.contains(e)) {
-    throw new TypeError(error.identityIsNotInGroup)
-  }
-
-  // Check that e+e=e.
-  if (!given.equality(given.compositionLaw(e, e), e)) {
-    throw new TypeError(error.identityIsNotNeutral)
-  }
-
-  var definition = {}
-
-  definition[prop('identity')] = e
-
-  // Wrap functions otherwise staticProps will treat them as getters.
-  definition[prop('contains')] = () => contains
-  definition[prop('notContains')] = () => notContains
-  definition[prop('compositionLaw')] = () => compositionLaw
-  definition[prop('inversion')] = () => secureInversion
-  definition[prop('inverseCompositionLaw')] = () => inverseCompositionLaw
-  definition[prop('equality')] = () => given.equality
-  definition[prop('disequality')] = () => disequality
-
-  var group = {}
-
-  // Add immutable props to group.
-  staticProps(group)(definition)
-
-  return group
-}
-
-staticProps(algebraGroup)({ error })
-
-module.exports = algebraGroup
-
-},{"./package.json":8,"not-defined":18,"static-props":19}],8:[function(require,module,exports){
-module.exports={
-  "_args": [
-    [
-      "algebra-group@0.6.0",
-      "/Users/gcasati/github.com/fibo/algebra"
-    ]
-  ],
-  "_from": "algebra-group@0.6.0",
-  "_id": "algebra-group@0.6.0",
-  "_inBundle": false,
-  "_integrity": "sha1-OEmHIJfj4e/1rQPtPPCfIQ0xvoE=",
-  "_location": "/cayley-dickson/algebra-group",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "algebra-group@0.6.0",
-    "name": "algebra-group",
-    "escapedName": "algebra-group",
-    "rawSpec": "0.6.0",
-    "saveSpec": null,
-    "fetchSpec": "0.6.0"
-  },
-  "_requiredBy": [
-    "/cayley-dickson/algebra-ring"
-  ],
-  "_resolved": "https://registry.npmjs.org/algebra-group/-/algebra-group-0.6.0.tgz",
-  "_spec": "0.6.0",
-  "_where": "/Users/gcasati/github.com/fibo/algebra",
-  "author": {
-    "name": "Gianluca Casati",
-    "url": "http://g14n.info"
-  },
-  "bugs": {
-    "url": "https://github.com/fibo/algebra-group/issues"
-  },
-  "dependencies": {
-    "not-defined": "1.x",
-    "static-props": "1.x"
-  },
-  "description": "defines and algebra group structure",
-  "devDependencies": {
-    "pre-commit": "1.x",
-    "standard": "8.x",
-    "tape": "4.x"
-  },
-  "homepage": "http://npm.im/algebra-group",
-  "keywords": [
-    "algebra"
-  ],
-  "license": "MIT",
-  "main": "index.js",
-  "name": "algebra-group",
-  "pre-commit": [
-    "lint",
-    "test",
-    "check-deps"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/fibo/algebra-group.git"
-  },
-  "scripts": {
-    "check-deps": "npm outdated",
-    "lint": "standard",
-    "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
-    "test": "tape test.js"
-  },
-  "version": "0.6.0"
-}
-
-},{}],9:[function(require,module,exports){
-var group = require('algebra-group')
-var staticProps = require('static-props')
-
-var pkg = require('./package.json')
-
-/**
- * Prepend package name to error message
- */
-
-function msg (str) {
-  return pkg.name + ': ' + str
-}
-
-var error = {
-  cannotDivideByZero: msg('Cannot divide by zero'),
-  doesNotContainIdentity: msg('"identity" must be contained in ring set'),
-  identityIsNotNeutral: msg('"identity" is not neutral')
-}
-
-/**
- * Define an algebra ring structure
- *
- * @param {Array} identity
- * @param {*}     identity[0] a.k.a zero
- * @param {*}     identity[1] a.k.a uno
- * @param {Object}   given operator functions
- * @param {Function} given.contains
- * @param {Function} given.equality
- * @param {Function} given.addition
- * @param {Function} given.negation
- * @param {Function} given.multiplication
- * @param {Function} given.inversion
- *
- * @returns {Object} ring
- */
-
-function algebraRing (identity, given) {
-  // A ring is a group, with multiplication.
-
-  var ring = group({
-    identity: identity[0],
-    contains: given.contains,
-    equality: given.equality,
-    compositionLaw: given.addition,
-    inversion: given.negation
-  })
-
-  // operators
-
-  function multiplication () {
-    return [].slice.call(arguments).reduce(given.multiplication)
-  }
-
-  function inversion (a) {
-    if (ring.equality(a, ring.zero)) {
-      throw new TypeError(error.cannotDivideByZero)
-    }
-
-    return given.inversion(a)
-  }
-
-  function division (a) {
-    var rest = [].slice.call(arguments, 1)
-
-    return given.multiplication(a, rest.map(inversion).reduce(given.multiplication))
-  }
-
-  ring.multiplication = multiplication
-  ring.inversion = inversion
-  ring.division = division
-
-  // Multiplicative identity.
-
-  var one = identity[1]
-
-  if (ring.notContains(one)) {
-    throw new TypeError(error.doesNotContainIdentity)
-  }
-
-  // Check that one*one=one.
-  if (ring.disequality(given.multiplication(one, one), one)) {
-    throw new TypeError(error.identityIsNotNeutral)
-  }
-
-  if (ring.notContains(identity[1])) {
-    throw new TypeError(error.doesNotContainIdentity)
-  }
-
-  ring.one = identity[1]
-
-  return ring
-}
-
-staticProps(algebraRing)({error: error})
-
-module.exports = algebraRing
-
-},{"./package.json":10,"algebra-group":7,"static-props":19}],10:[function(require,module,exports){
-module.exports={
-  "_args": [
-    [
-      "algebra-ring@0.6.0",
-      "/Users/gcasati/github.com/fibo/algebra"
-    ]
-  ],
-  "_from": "algebra-ring@0.6.0",
-  "_id": "algebra-ring@0.6.0",
-  "_inBundle": false,
-  "_integrity": "sha1-IYowwwGV5FWatXGDya4fxPqMo7k=",
-  "_location": "/cayley-dickson/algebra-ring",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "algebra-ring@0.6.0",
-    "name": "algebra-ring",
-    "escapedName": "algebra-ring",
-    "rawSpec": "0.6.0",
-    "saveSpec": null,
-    "fetchSpec": "0.6.0"
-  },
-  "_requiredBy": [
-    "/cayley-dickson"
-  ],
-  "_resolved": "https://registry.npmjs.org/algebra-ring/-/algebra-ring-0.6.0.tgz",
-  "_spec": "0.6.0",
-  "_where": "/Users/gcasati/github.com/fibo/algebra",
-  "author": {
-    "name": "Gianluca Casati",
-    "url": "http://g14n.info"
-  },
-  "bugs": {
-    "url": "https://github.com/fibo/algebra-ring/issues"
-  },
-  "dependencies": {
-    "algebra-group": "^0.6.0",
-    "static-props": "^1.0.2"
-  },
-  "description": "defines an algebra ring structure",
-  "devDependencies": {
-    "pre-commit": "^1.1.2",
-    "standard": "^9.0.2",
-    "tape": "^4.2.0"
-  },
-  "homepage": "https://github.com/fibo/algebra-ring",
-  "keywords": [
-    "algebra",
-    "ring",
-    "structure"
-  ],
-  "license": "MIT",
-  "main": "algebra-ring.js",
-  "name": "algebra-ring",
-  "pre-commit": [
-    "lint",
-    "test",
-    "check-deps"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fibo/algebra-ring.git"
-  },
-  "scripts": {
-    "check-deps": "npm outdated",
-    "lint": "standard",
-    "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
-    "test": "NODE_PATH=. tape test.js"
-  },
-  "version": "0.6.0"
-}
-
-},{}],11:[function(require,module,exports){
+},{"algebra-ring":8}],12:[function(require,module,exports){
 function indicesPermutations (previousValue, currentValue, currentIndex, array) {
   var result = []
 
@@ -1115,7 +927,7 @@ function indicesPermutations (previousValue, currentValue, currentIndex, array) 
 
 module.exports = indicesPermutations
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -1140,7 +952,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 
 /**
  * Convert a pair of indices to a 1-dimensional index
@@ -1254,11 +1066,11 @@ function determinant (data, scalar, order) {
 module.exports = determinant
 
 
-},{}],14:[function(require,module,exports){
-const no = require('not-defined')
-const staticProps = require('static-props')
+},{}],15:[function(require,module,exports){
+var no = require('not-defined')
+var staticProps = require('static-props')
 
-const pkg = require('./package.json')
+var pkg = require('./package.json')
 
 /**
  * Prepend package name to error message
@@ -1268,14 +1080,14 @@ function msg (str) {
   return pkg.name + ': ' + str
 }
 
-const error = {}
+var error = {}
 
 staticProps(error)({
   leftMatrixNotCompatible: msg('Cannot multiply matrix at left side'),
   rightMatrixNotCompatible: msg('Cannot multiply matrix at right side')
 })
 
-const matrixToArrayIndex = (i, j, numCols) => (j + i * numCols)
+var matrixToArrayIndex = (i, j, numCols) => (j + i * numCols)
 
 /**
  * Multiply two matrices, row by column.
@@ -1299,28 +1111,28 @@ function matrixMultiplication (customOperator) {
   if (no(add)) add = (a, b) => (a + b)
   if (no(mul)) mul = (a, b) => (a * b)
 
- /**
-  * @param {Number} middle
-  *
-  * @returns {Function} mul
-  */
+  /**
+   * @param {Number} middle
+   *
+   * @returns {Function} mul
+   */
 
   return function (middle) {
-   /**
-    * @param {Array} leftMatrix
-    * @param {Array} rightMatrix
-    *
-    * @returns {Array} matrix
-    */
+    /**
+     * @param {Array} leftMatrix
+     * @param {Array} rightMatrix
+     *
+     * @returns {Array} matrix
+     */
 
     return function (leftMatrix, rightMatrix) {
       // Compatibilty check.
 
-      const cols = rightMatrix.length / middle // right num cols
-      const rows = leftMatrix.length / middle  // left num rows
+      var cols = rightMatrix.length / middle // right num cols
+      var rows = leftMatrix.length / middle // left num rows
 
-      const colsIsNotInteger = Math.floor(cols) !== cols
-      const rowsIsNotInteger = Math.floor(rows) !== rows
+      var colsIsNotInteger = Math.floor(cols) !== cols
+      var rowsIsNotInteger = Math.floor(rows) !== rows
 
       if (colsIsNotInteger) throw new TypeError(error.rightMatrixNotCompatible)
       if (rowsIsNotInteger) throw new TypeError(error.leftMatrixNotCompatible)
@@ -1362,35 +1174,37 @@ staticProps(matrixMultiplication)({ error })
 
 module.exports = matrixMultiplication
 
-},{"./package.json":15,"not-defined":18,"static-props":19}],15:[function(require,module,exports){
+},{"./package.json":17,"not-defined":16,"static-props":21}],16:[function(require,module,exports){
+arguments[4][5][0].apply(exports,arguments)
+},{"dup":5}],17:[function(require,module,exports){
 module.exports={
   "_args": [
     [
-      "matrix-multiplication@0.5.0",
+      "matrix-multiplication@0.5.1",
       "/Users/gcasati/github.com/fibo/algebra"
     ]
   ],
-  "_from": "matrix-multiplication@0.5.0",
-  "_id": "matrix-multiplication@0.5.0",
+  "_from": "matrix-multiplication@0.5.1",
+  "_id": "matrix-multiplication@0.5.1",
   "_inBundle": false,
-  "_integrity": "sha1-7ZLwaODgIYGUcTWRCyi6uYw2pLE=",
+  "_integrity": "sha512-jMlbTNW1OpDgLYS/ndVDim9lMkzDBUIuK3JyEuCwGDs4ELqjjk9BRu+t565X65v2EazDI0VAiSUhU4UsN+C4Gw==",
   "_location": "/matrix-multiplication",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "matrix-multiplication@0.5.0",
+    "raw": "matrix-multiplication@0.5.1",
     "name": "matrix-multiplication",
     "escapedName": "matrix-multiplication",
-    "rawSpec": "0.5.0",
+    "rawSpec": "0.5.1",
     "saveSpec": null,
-    "fetchSpec": "0.5.0"
+    "fetchSpec": "0.5.1"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.5.0.tgz",
-  "_spec": "0.5.0",
+  "_resolved": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.5.1.tgz",
+  "_spec": "0.5.1",
   "_where": "/Users/gcasati/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -1400,14 +1214,14 @@ module.exports={
     "url": "https://github.com/fibo/matrix-multiplication/issues"
   },
   "dependencies": {
-    "not-defined": "1.x",
-    "static-props": "1.x"
+    "not-defined": "^2.0.1",
+    "static-props": "^1.1.0"
   },
   "description": "implements row by column multiplication",
   "devDependencies": {
-    "pre-commit": "1.x",
-    "standard": "8.x",
-    "tape": "4.x"
+    "pre-commit": "^1.2.2",
+    "standa": "^1.0.2",
+    "tape": "^4.8.0"
   },
   "homepage": "http://npm.im/matrix-multiplication",
   "keywords": [
@@ -1427,14 +1241,14 @@ module.exports={
   },
   "scripts": {
     "check-deps": "npm outdated",
-    "lint": "standard",
+    "lint": "standa",
     "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
     "test": "NODE_PATH=. tape test.js"
   },
-  "version": "0.5.0"
+  "version": "0.5.1"
 }
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var staticProps = require('static-props')
 
 var pkg = require('./package.json')
@@ -1501,7 +1315,7 @@ staticProps(multiDimArrayIndex)({ error: error })
 
 module.exports = multiDimArrayIndex
 
-},{"./package.json":17,"static-props":19}],17:[function(require,module,exports){
+},{"./package.json":19,"static-props":21}],19:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -1567,45 +1381,15 @@ module.exports={
   "version": "0.5.0"
 }
 
-},{}],18:[function(require,module,exports){
-module.exports=function(x){return typeof x==='undefined'||x === null}
-
-},{}],19:[function(require,module,exports){
-/**
- * @param {Object} obj
- * @returns {Function}
- */
-function staticProps (obj) {
-  /**
-   * @param {Object} props
-   * @param {Boolean} [enumerable]
-   */
-  return function (props, enumerable) {
-    var staticProps = {}
-    for (var propName in props) {
-      var staticProp = {
-        configurable: false,
-        enumerable: enumerable
-      }
-      var prop = props[propName]
-      if (typeof prop === 'function') {
-        staticProp.get = prop
-      } else {
-        staticProp.value = prop
-        staticProp.writable = false
-      }
-      staticProps[propName] = staticProp
-    }
-    Object.defineProperties(obj, staticProps)
-  }
-}
-module.exports = exports.default = staticProps
-
 },{}],20:[function(require,module,exports){
+arguments[4][5][0].apply(exports,arguments)
+},{"dup":5}],21:[function(require,module,exports){
+arguments[4][2][0].apply(exports,arguments)
+},{"dup":2}],22:[function(require,module,exports){
 // In browserify context, fall back to a no op.
 module.exports = function (cb) { cb() }
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -1692,7 +1476,7 @@ function tensorContraction (addition, indicesPair, tensorDim, tensorData) {
 
 module.exports = tensorContraction
 
-},{"indices-permutations":11,"multidim-array-index":22}],22:[function(require,module,exports){
+},{"indices-permutations":12,"multidim-array-index":24}],24:[function(require,module,exports){
 /**
  * maps multidimensional array indices to monodimensional array index
  *
@@ -1734,7 +1518,7 @@ function multiDimArrayIndex (dimensions, indices) {
 
 module.exports = multiDimArrayIndex
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 var indicesPermutations = require('indices-permutations')
 var multiDimArrayIndex = require('multidim-array-index')
 
@@ -1773,9 +1557,23 @@ function tensorProduct (multiplication, leftDim, rightDim, leftData, rightData) 
 
 module.exports = tensorProduct
 
-},{"indices-permutations":11,"multidim-array-index":24}],24:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"dup":22}],25:[function(require,module,exports){
+},{"indices-permutations":12,"multidim-array-index":26}],26:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],27:[function(require,module,exports){
+var Boole = {
+  zero: false,
+  one: true,
+  contains: (a) => (typeof a === 'boolean'),
+  addition: (a, b) => (a || b),
+  equality: (a, b) => (a === b),
+  negation: (a) => (a),
+  multiplication: (a, b) => (a && b),
+  inversion: (a) => (a)
+}
+
+module.exports = Boole
+
+},{}],28:[function(require,module,exports){
 var CayleyDickson = require('cayley-dickson')
 var createScalar = require('./createScalar')
 var no = require('not-defined')
@@ -1806,7 +1604,7 @@ function CompositionAlgebra (field, num) {
 
 module.exports = CompositionAlgebra
 
-},{"./createScalar":31,"cayley-dickson":6,"not-defined":18}],26:[function(require,module,exports){
+},{"./createScalar":34,"cayley-dickson":11,"not-defined":20}],29:[function(require,module,exports){
 var algebraCyclic = require('algebra-cyclic')
 var createScalar = require('./createScalar')
 
@@ -1824,7 +1622,7 @@ function Cyclic (elements) {
 
 module.exports = Cyclic
 
-},{"./createScalar":31,"algebra-cyclic":1}],27:[function(require,module,exports){
+},{"./createScalar":34,"algebra-cyclic":1}],30:[function(require,module,exports){
 var determinant = require('laplace-determinant')
 var inherits = require('inherits')
 var itemsPool = require('./itemsPool')
@@ -2029,7 +1827,7 @@ itemsPool.set('MatrixSpace', MatrixSpace)
 
 module.exports = MatrixSpace
 
-},{"./TensorSpace":28,"./itemsPool":32,"./operators.json":33,"./toData":35,"inherits":12,"laplace-determinant":13,"matrix-multiplication":14,"multidim-array-index":16,"not-defined":18,"static-props":19,"tensor-contraction":21}],28:[function(require,module,exports){
+},{"./TensorSpace":31,"./itemsPool":35,"./operators.json":36,"./toData":38,"inherits":13,"laplace-determinant":14,"matrix-multiplication":15,"multidim-array-index":18,"not-defined":20,"static-props":21,"tensor-contraction":23}],31:[function(require,module,exports){
 var operators = require('./operators.json')
 var staticProps = require('static-props')
 var toData = require('./toData')
@@ -2205,7 +2003,7 @@ function TensorSpace (Scalar) {
 
 module.exports = TensorSpace
 
-},{"./operators.json":33,"./toData":35,"static-props":19,"tensor-product":23}],29:[function(require,module,exports){
+},{"./operators.json":36,"./toData":38,"static-props":21,"tensor-product":25}],32:[function(require,module,exports){
 var inherits = require('inherits')
 var itemsPool = require('./itemsPool')
 var matrixMultiplication = require('matrix-multiplication')
@@ -2447,7 +2245,7 @@ itemsPool.set('VectorSpace', VectorSpace)
 
 module.exports = VectorSpace
 
-},{"./TensorSpace":28,"./itemsPool":32,"./operators.json":33,"./toData":35,"inherits":12,"matrix-multiplication":14,"static-props":19}],30:[function(require,module,exports){
+},{"./TensorSpace":31,"./itemsPool":35,"./operators.json":36,"./toData":38,"inherits":13,"matrix-multiplication":15,"static-props":21}],33:[function(require,module,exports){
 var toData = require('./toData')
 
 /**
@@ -2468,7 +2266,7 @@ function coerced (operator) {
 
 module.exports = coerced
 
-},{"./toData":35}],31:[function(require,module,exports){
+},{"./toData":38}],34:[function(require,module,exports){
 var coerced = require('./coerced')
 var operators = require('./operators.json')
 var staticProps = require('static-props')
@@ -2572,12 +2370,12 @@ function createScalar (ring) {
 
 module.exports = createScalar
 
-},{"./coerced":30,"./operators.json":33,"./toData":35,"static-props":19}],32:[function(require,module,exports){
+},{"./coerced":33,"./operators.json":36,"./toData":38,"static-props":21}],35:[function(require,module,exports){
 var itemsPool = new Map()
 
 module.exports = itemsPool
 
-},{}],33:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 module.exports={
   "comparison": [
     "equality",
@@ -2638,7 +2436,7 @@ module.exports={
   }
 }
 
-},{}],34:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var realField = {
   zero: 0,
   one: 1,
@@ -2653,7 +2451,7 @@ var realField = {
 
 module.exports = realField
 
-},{}],35:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 var no = require('not-defined')
 
 /**
@@ -2677,8 +2475,11 @@ function toData (arg) {
 
 module.exports = toData
 
-},{"not-defined":18}],"algebra":[function(require,module,exports){
+},{"not-defined":20}],"algebra":[function(require,module,exports){
 require('strict-mode')(() => {
+  var Boole = require('./src/Boole')
+  exports.Boole = Boole
+
   var Cyclic = require('./src/Cyclic')
   exports.Cyclic = Cyclic
 
@@ -2712,4 +2513,4 @@ require('strict-mode')(() => {
   exports.TensorSpace = require('./src/TensorSpace')
 })
 
-},{"./src/CompositionAlgebra":25,"./src/Cyclic":26,"./src/MatrixSpace":27,"./src/TensorSpace":28,"./src/VectorSpace":29,"./src/realField":34,"strict-mode":20}]},{},[]);
+},{"./src/Boole":27,"./src/CompositionAlgebra":28,"./src/Cyclic":29,"./src/MatrixSpace":30,"./src/TensorSpace":31,"./src/VectorSpace":32,"./src/realField":37,"strict-mode":22}]},{},[]);

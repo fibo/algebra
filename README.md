@@ -430,7 +430,7 @@ The first one corresponds to *one*, while the rest are immaginary units,
 but since the underlying field is Z2, -1 corresponds to 1.
 
 ```javascript
-bytet.mul(bytet).data // [t, t, t, t, t, t, t, t]
+byte1.mul(bytet).data // [t, t, t, t, t, t, t, t]
 byte2.mul(byte2).data // [t, t, t, t, t, t, t, t]
 byte3.mul(byte3).data // [t, t, t, t, t, t, t, t]
 byte4.mul(byte4).data // [t, t, t, t, t, t, t, t]

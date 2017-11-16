@@ -66,7 +66,7 @@ describe('API', () => {
       var byte7 = new Byte([f, f, f, f, f, f, t, f])
       var byte8 = new Byte([f, f, f, f, f, f, f, t])
 
-      byte1.mul(bytet).data.should.deepEqual([t, f, f, f, f, f, f, f])
+      byte1.mul(byte1).data.should.deepEqual([t, f, f, f, f, f, f, f])
       byte2.mul(byte2).data.should.deepEqual([t, f, f, f, f, f, f, f])
       byte3.mul(byte3).data.should.deepEqual([t, f, f, f, f, f, f, f])
       byte4.mul(byte4).data.should.deepEqual([t, f, f, f, f, f, f, f])

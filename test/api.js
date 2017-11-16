@@ -51,7 +51,7 @@ describe('API', () => {
   })
 
   describe('Byte', () => {
-    it('is an octonion over binary field'/*, () => {
+    it('is an octonion over binary field' /*, () => {
       const Byte = CompositionAlgebra(Boole, 8)
 
       const t = true

@@ -1,35 +1,35 @@
 /* eslint-disable indent */
 
 describe('API', () => {
-  var algebra = require('algebra')
+  const algebra = require('algebra')
 
-  var C = algebra.C
-  var Complex = algebra.Complex
-  var H = algebra.H
-  var Quaternion = algebra.Quaternion
-  var R = algebra.R
-  var R2 = algebra.R2
-  var R3 = algebra.R3
-  var R2x2 = algebra.R2x2
-  var Real = algebra.Real
-  var CompositionAlgebra = algebra.CompositionAlgebra
-  var MatrixSpace = algebra.MatrixSpace
-  var TensorSpace = algebra.TensorSpace
-  var VectorSpace = algebra.VectorSpace
+  const C = algebra.C
+  const Complex = algebra.Complex
+  const H = algebra.H
+  const Quaternion = algebra.Quaternion
+  const R = algebra.R
+  const R2 = algebra.R2
+  const R3 = algebra.R3
+  const R2x2 = algebra.R2x2
+  const Real = algebra.Real
+  const CompositionAlgebra = algebra.CompositionAlgebra
+  const MatrixSpace = algebra.MatrixSpace
+  const TensorSpace = algebra.TensorSpace
+  const VectorSpace = algebra.VectorSpace
 
-  var Boole = algebra.Boole
+  const Boole = algebra.Boole
 
   describe('About operators', () => {
     it('works', () => {
-      var vector1 = new R2([1, 2])
-      var vector2 = new R2([3, 4])
+      const vector1 = new R2([1, 2])
+      const vector2 = new R2([3, 4])
 
       R2.addition(vector1, [3, 4]).should.deepEqual([4, 6])
       R2.addition([1, 2], vector2).should.deepEqual([4, 6])
       R2.addition(vector1, vector2).should.deepEqual([4, 6])
 
-      var vector3 = vector1.addition([3, 4])
-      var vector4 = vector1.addition(vector2)
+      const vector3 = vector1.addition([3, 4])
+      const vector4 = vector1.addition(vector2)
       R2.equality(vector3, vector4).should.be.ok()
 
       vector1.addition(vector1, vector1).equality([3, 6]).should.be.ok()
@@ -39,32 +39,32 @@ describe('API', () => {
   })
 
   describe('CompositionAlgebra', () => {
-    var Bit = CompositionAlgebra(Boole)
+    const Bit = CompositionAlgebra(Boole)
 
     it('works', () => {
       Bit.contains(false).should.be.ok()
       Bit.contains(4).should.not.be.ok()
 
-      var bit = new Bit(true)
+      const bit = new Bit(true)
       bit.addition(false).data.should.eql(true)
     })
   })
 
   describe('Byte', () => {
-    it('is an octonion over binary field' /*, () => {
-      var Byte = CompositionAlgebra(Boole, 8)
+    it('is an octonion over binary field'/*, () => {
+      const Byte = CompositionAlgebra(Boole, 8)
 
-      var t = true
-      var f = false
+      const t = true
+      const f = false
 
-      var byte1 = new Byte([t, f, f, f, f, f, f, f])
-      var byte2 = new Byte([f, t, f, f, f, f, f, f])
-      var byte3 = new Byte([f, f, t, f, f, f, f, f])
-      var byte4 = new Byte([f, f, f, t, f, f, f, f])
-      var byte5 = new Byte([f, f, f, f, t, f, f, f])
-      var byte6 = new Byte([f, f, f, f, f, t, f, f])
-      var byte7 = new Byte([f, f, f, f, f, f, t, f])
-      var byte8 = new Byte([f, f, f, f, f, f, f, t])
+      const byte1 = new Byte([t, f, f, f, f, f, f, f])
+      const byte2 = new Byte([f, t, f, f, f, f, f, f])
+      const byte3 = new Byte([f, f, t, f, f, f, f, f])
+      const byte4 = new Byte([f, f, f, t, f, f, f, f])
+      const byte5 = new Byte([f, f, f, f, t, f, f, f])
+      const byte6 = new Byte([f, f, f, f, f, t, f, f])
+      const byte7 = new Byte([f, f, f, f, f, f, t, f])
+      const byte8 = new Byte([f, f, f, f, f, f, f, t])
 
       byte1.mul(byte1).data.should.deepEqual([t, f, f, f, f, f, f, f])
       byte2.mul(byte2).data.should.deepEqual([t, f, f, f, f, f, f, f])
@@ -75,11 +75,11 @@ describe('API', () => {
       byte7.mul(byte7).data.should.deepEqual([t, f, f, f, f, f, f, f])
       byte8.mul(byte8).data.should.deepEqual([t, f, f, f, f, f, f, f])
 
-      var max = byte1.add(byte2).add(byte3).add(byte4)
+      const max = byte1.add(byte2).add(byte3).add(byte4)
                        .add(byte5).add(byte6).add(byte7).add(byte8)
 
       max.data.should.deepEqual([t, t, t, t, t, t, t, t])
-    } */)
+    }*/)
   })
 
   describe('Scalar', () => {
@@ -155,17 +155,17 @@ describe('API', () => {
 
   describe('Cyclic', () => {
     it('works', () => {
-      var Cyclic = algebra.Cyclic
+      const Cyclic = algebra.Cyclic
 
-      var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+      const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
-      var Alphanum = Cyclic(elements)
+      const Alphanum = Cyclic(elements)
 
       Alphanum.addition('a', 'b').should.eql('c')
 
-      var x = new Alphanum('a')
+      const x = new Alphanum('a')
 
-      var y = x.add('c', 'a', 't')
+      const y = x.add('c', 'a', 't')
                .mul('i', 's')
                .add('o', 'n')
                .sub('t', 'h', 'e')
@@ -173,11 +173,11 @@ describe('API', () => {
 
       y.data.should.eql('s')
 
-      var VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-      var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+      const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
+      const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
 
-      var vectorOfStrings = new VectorStrings2(['o', 'k'])
-      var matrixOfStrings = new MatrixStrings2x2(['c', 'o',
+      const vectorOfStrings = new VectorStrings2(['o', 'k'])
+      const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
                                                     'o', 'l'])
       matrixOfStrings.mul(vectorOfStrings)
                      .data.should.deepEqual(['x', 'y'])
@@ -189,12 +189,12 @@ describe('API', () => {
 
   describe('Real', () => {
     it('works', () => {
-      var Real = algebra.Real
+      const Real = algebra.Real
 
       Real.addition(1, 2).should.eql(3)
 
-      var pi = new Real(Math.PI)
-      var twoPi = pi.mul(2)
+      const pi = new Real(Math.PI)
+      const twoPi = pi.mul(2)
 
       Real.subtraction(twoPi, 2 * Math.PI).should.eql(0)
     })
@@ -202,8 +202,8 @@ describe('API', () => {
 
   describe('Complex', () => {
     it('works', () => {
-      var Complex = algebra.Complex
-      var complex1 = new Complex([1, 2])
+      const Complex = algebra.Complex
+      const complex1 = new Complex([1, 2])
 
       complex1.conjugation().data.should.deepEqual([1, -2])
     })
@@ -265,7 +265,7 @@ describe('API', () => {
 
     describe('vector.dimension', () => {
       it('is an attribute', () => {
-        var vector = new R2([1, 1])
+        const vector = new R2([1, 1])
 
         vector.dimension.should.eql(2)
       })
@@ -279,7 +279,7 @@ describe('API', () => {
 
     describe('vector.norm', () => {
       it('is an attribute', () => {
-        var vector = new R2([1, 2])
+        const vector = new R2([1, 2])
 
         vector.norm.data.should.eql(5)
       })
@@ -289,10 +289,10 @@ describe('API', () => {
       it('works', () => {
         R2.addition([2, 1], [1, 2]).should.deepEqual([3, 3])
 
-        var vector1 = new R2([2, 1])
-        var vector2 = new R2([2, 2])
+        const vector1 = new R2([2, 1])
+        const vector2 = new R2([2, 2])
 
-        var vector3 = vector1.addition(vector2)
+        const vector3 = vector1.addition(vector2)
 
         vector3.data.should.deepEqual([4, 3])
       })
@@ -302,10 +302,10 @@ describe('API', () => {
       it('works', () => {
         R3.crossProduct([3, -3, 1], [4, 9, 2]).should.deepEqual([-15, -2, 39])
 
-        var vector1 = new R3([3, -3, 1])
-        var vector2 = new R3([4, 9, 2])
+        const vector1 = new R3([3, -3, 1])
+        const vector2 = new R3([4, 9, 2])
 
-        var vector3 = vector1.crossProduct(vector2)
+        const vector3 = vector1.crossProduct(vector2)
 
         vector3.data.should.deepEqual([-15, -2, 39])
       })
@@ -315,10 +315,10 @@ describe('API', () => {
   describe('Tensor', () => {
     describe('equality', () => {
       it('works', () => {
-        var T2x2x2 = TensorSpace(Real)([2, 2, 2])
+        const T2x2x2 = TensorSpace(Real)([2, 2, 2])
 
-        var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
-        var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
+        const tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
+        const tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 
         T2x2x2.equality(tensor1, tensor1).should.be.ok()
         T2x2x2.equality(tensor1, tensor2).should.not.be.ok()

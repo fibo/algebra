@@ -96,7 +96,7 @@ or use a CDN adding this to your HTML page
 First of all, import *algebra* package.
 
 ```javascript
-var algebra = require('algebra')
+const algebra = require('algebra')
 ```
 
 ### Try it out
@@ -114,7 +114,7 @@ All code in the examples below should be contained into a single file, like [tes
 Use the Real numbers as scalars.
 
 ```javascript
-var R = algebra.Real
+const R = algebra.Real
 ```
 
 Every operator is implemented both as a static function and as an object method.
@@ -130,15 +130,15 @@ R.add(1, 2, 3) // 1 + 2 + 3 = 6
 Create two real number objects: x = 2, y = -2
 
 ```javascript
-var x = new R(2)
-var y = new R(-2)
+const x = new R(2)
+const y = new R(-2)
 ```
 
 The value *r* is the result of x multiplied by y.
 
 ```javascript
 // 2 * (-2) = -4
-var r = x.mul(y)
+const r = x.mul(y)
 
 r // Scalar { data: -4 }
 
@@ -167,10 +167,10 @@ x.notEqual(Math.PI) // true
 You can also play with Complexes.
 
 ```javascript
-var C = algebra.Complex
+const C = algebra.Complex
 
-var z1 = new C([1, 2])
-var z2 = new C([3, 4])
+const z1 = new C([1, 2])
+const z2 = new C([3, 4])
 
 z1 = z1.mul(z2)
 
@@ -186,14 +186,14 @@ z1.data // [-10, -20]
 Create vector space of dimension 2 over Reals.
 
 ```javascript
-var R2 = algebra.VectorSpace(R)(2)
+const R2 = algebra.VectorSpace(R)(2)
 ```
 
 Create two vectors and add them.
 
 ```javascript
-var v1 = new R2([0, 1])
-var v2 = new R2([1, -2])
+const v1 = new R2([0, 1])
+const v2 = new R2([1, -2])
 
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
 v1 = v1.add(v2)
@@ -206,7 +206,7 @@ v1 // Vector { data: [1, -1] }
 Create space of matrices 3 x 2 over Reals.
 
 ```javascript
-var R3x2 = algebra.MatrixSpace(R)(3, 2)
+const R3x2 = algebra.MatrixSpace(R)(3, 2)
 ```
 
 Create a matrix.
@@ -216,7 +216,7 @@ Create a matrix.
 //  m1 = | 0 1 |
 //       | 1 0 |
 //
-var m1 = new R3x2([1, 1,
+const m1 = new R3x2([1, 1,
                    0, 1,
                    1, 0])
 ```
@@ -235,7 +235,7 @@ Then, following the row by column multiplication law we have
 //    v3 = m1 * v1 = | 0 1 | * [1 , -1] = [0, -1, 1]
 //                   | 1 0 |
 
-var v3 = m1.mul(v1)
+const v3 = m1.mul(v1)
 
 v3.data // [0, -1, 1]
 ```
@@ -243,12 +243,12 @@ v3.data // [0, -1, 1]
 Let's try with two square matrices 2 x 2.
 
 ```javascript
-var R2x2 = algebra.MatrixSpace(R)(2, 2)
+const R2x2 = algebra.MatrixSpace(R)(2, 2)
 
-var m2 = new R2x2([1, 0,
+const m2 = new R2x2([1, 0,
                    0, 2])
 
-var m3 = new R2x2([0, -1,
+const m3 = new R2x2([0, -1,
                    1, 0])
 
 m2 = m2.mul(m3)
@@ -271,10 +271,10 @@ In both cases, operands are coerced to raw data.
 As an example, consider addition of vectors in a plane.
 
 ```javascript
-var R2 = algebra.R2
+const R2 = algebra.R2
 
-var vector1 = new R2([1, 2])
-var vector2 = new R2([3, 4])
+const vector1 = new R2([1, 2])
+const vector2 = new R2([3, 4])
 ```
 
 The following static methods, give the same result: `[4, 6]`.
@@ -288,8 +288,8 @@ R2.addition(vector1, vector2)
 The following object methods, give the same result: a vector instance with data `[4, 6]`.
 
 ```javascript
-var vector3 = vector1.addition([3, 4])
-var vector4 = vector1.addition(vector2)
+const vector3 = vector1.addition([3, 4])
+const vector4 = vector1.addition(vector2)
 
 R2.equal(vector3, vector4) // true
 ```
@@ -319,18 +319,18 @@ Let's create a cyclic ring containing lower case letters, numbers and the blank
 char. How many are they? They are 26 + 10 + 1 = 37, that is prime! We like it.
 
 ```javascript
-var Cyclic = algebra.Cyclic
+const Cyclic = algebra.Cyclic
 
 // The elements String or Array length must be prime.
-var elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
+const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
 
-var Alphanum = Cyclic(elements)
+const Alphanum = Cyclic(elements)
 ```
 
 Operators derive from modular arithmetic
 
 ```javascript
-var a = new Alphanum('a')
+const a = new Alphanum('a')
 
 Alphanum.addition('a', 'b') // 'c'
 ```
@@ -338,9 +338,9 @@ Alphanum.addition('a', 'b') // 'c'
 You can also create element instances, and do any kind of operations.
 
 ```javascript
-var x = new Alphanum('a')
+const x = new Alphanum('a')
 
-var y = x.add('c', 'a', 't')
+const y = x.add('c', 'a', 't')
          .mul('i', 's')
          .add('o', 'n')
          .sub('t', 'h', 'e')
@@ -352,12 +352,12 @@ y.data // 's'
 Yes, they are [scalars](#scalar) so you can build vector or matrix spaces on top of them.
 
 ```javascript
-var VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-var MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
+const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
 
-var vectorOfStrings = new VectorStrings2(['o', 'k'])
+const vectorOfStrings = new VectorStrings2(['o', 'k'])
 
-var matrixOfStrings = new MatrixStrings2x2(['c', 'o',
+const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
                                             'o', 'l'])
 
 matrixOfStrings.mul(vectorOfStrings).data // ['x', 'y']
@@ -385,16 +385,16 @@ Let's use for example the `algebra.Boole` which implements [Boolean Algebra](htt
 by exporting an object with all the stuff needed by [algebra-ring npm package][algebra-ring].
 
 ```javascript
-var CompositionAlgebra = algebra.CompositionAlgebra
+const CompositionAlgebra = algebra.CompositionAlgebra
 
-var Boole = algebra.Boole
+const Boole = algebra.Boole
 
-var Bit = CompositionAlgebra(Boole)
+const Bit = CompositionAlgebra(Boole)
 
 Bit.contains(false) // true
 Bit.contains(4) // false
 
-var bit = new Bit(true)
+const bit = new Bit(true)
 Bit.addition(false).data // true
 ```
 
@@ -410,20 +410,20 @@ eight units.
 
 ```javascript
 // n must be a power of two
-var Byte = CompositionAlgebra(Boole, 8)
+const Byte = CompositionAlgebra(Boole, 8)
 
-// Use a single char var for better indentation.
-var t = true
-var f = false
+// Use a single char const for better indentation.
+const t = true
+const f = false
 
-var byte1 = new Byte([t, t, t, t, t, t, t, t])
-var byte2 = new Byte([t, t, t, t, t, t, t, t])
-var byte3 = new Byte([t, t, t, t, t, t, t, t])
-var byte4 = new Byte([t, t, t, t, t, t, t, t])
-var byte5 = new Byte([t, t, t, t, t, t, t, t])
-var byte6 = new Byte([t, t, t, t, t, t, t, t])
-var byte7 = new Byte([t, t, t, t, t, t, t, t])
-var byte8 = new Byte([t, t, t, t, t, t, t, t])
+const byte1 = new Byte([t, t, t, t, t, t, t, t])
+const byte2 = new Byte([t, t, t, t, t, t, t, t])
+const byte3 = new Byte([t, t, t, t, t, t, t, t])
+const byte4 = new Byte([t, t, t, t, t, t, t, t])
+const byte5 = new Byte([t, t, t, t, t, t, t, t])
+const byte6 = new Byte([t, t, t, t, t, t, t, t])
+const byte7 = new Byte([t, t, t, t, t, t, t, t])
+const byte8 = new Byte([t, t, t, t, t, t, t, t])
 ```
 
 The first one corresponds to *one*, while the rest are immaginary units,
@@ -448,7 +448,7 @@ we created, 4 * 4 = 2.
 You can play around with this structure.
 
 ```javascript
-var max = byte1.add(byte2).add(byte3).add(byte4)
+const max = byte1.add(byte2).add(byte3).add(byte4)
                .add(byte5).add(byte6).add(byte7).add(byte8)
 
 max.data // [t, t, t, t, t, t, t, t]
@@ -552,12 +552,12 @@ It is always 0 for scalars, see also [Tensor order](#tensor-order).
 Inherits everything from [Scalar](#scalar).
 
 ```javascript
-var Real = algebra.Real
+const Real = algebra.Real
 
 Real.addition(1, 2) // 3
 
-var pi = new Real(Math.PI)
-var twoPi = pi.mul(2)
+const pi = new Real(Math.PI)
+const twoPi = pi.mul(2)
 
 Real.subtraction(twoPi, 2 * Math.PI) // 0
 ```
@@ -587,9 +587,9 @@ conjugation. Every Complex number has its conjugate, that is its simmetric
 counterparte respect to the Real numbers line.
 
 ```javascript
-var Complex = algebra.Complex
+const Complex = algebra.Complex
 
-var complex1 = new Complex([1, 2])
+const complex1 = new Complex([1, 2])
 
 complex1.conjugation() // Complex { data: [1, -2] }
 ```
@@ -611,7 +611,7 @@ The real line.
 It is in alias of [Real](#real).
 
 ```javascript
-var R = algebra.R
+const R = algebra.R
 ```
 
 #### R2
@@ -619,7 +619,7 @@ var R = algebra.R
 The real plane.
 
 ```javascript
-var R2 = algebra.R2
+const R2 = algebra.R2
 ```
 
 It is in alias of `VectorSpace(Real)(2)`.
@@ -629,7 +629,7 @@ It is in alias of `VectorSpace(Real)(2)`.
 The real space.
 
 ```javascript
-var R3 = algebra.R3
+const R3 = algebra.R3
 ```
 
 It is in alias of `VectorSpace(Real)(3)`.
@@ -639,7 +639,7 @@ It is in alias of `VectorSpace(Real)(3)`.
 Real square matrices of rank 2.
 
 ```javascript
-var R2x2 = algebra.R2x2
+const R2x2 = algebra.R2x2
 ```
 
 It is in alias of `MatrixSpace(Real)(2)`.
@@ -651,7 +651,7 @@ The complex numbers.
 It is in alias of [Complex](#complex).
 
 ```javascript
-var C = algebra.C
+const C = algebra.C
 ```
 
 #### H
@@ -661,7 +661,7 @@ Usually it is used the **H** in honour of [Sir Hamilton](https://en.wikipedia.or
 It is in alias of [Quaternion](#quaternion).
 
 ```javascript
-var H = algebra.H
+const H = algebra.H
 ```
 
 ### Vector
@@ -704,7 +704,7 @@ R3.dimension // 3
 It is also defined as a static instance attribute.
 
 ```javascript
-var vector = new R2([1, 1])
+const vector = new R2([1, 1])
 
 vector.dimension // 2
 ```
@@ -736,7 +736,7 @@ R2.norm([3, 4]).data // 25
 This implements a static attribute that returns the square of the length of the vector instance.
 
 ```javascript
-var vector = new R2([1, 2])
+const vector = new R2([1, 2])
 
 vector.norm.data // 5
 ```
@@ -752,10 +752,10 @@ R2.addition([2, 1], [1, 2]) // [3, 3]
 ##### `vector1.addition(vector2)`
 
 ```javascript
-var vector1 = new R2([2, 1])
-var vector2 = new R2([2, 2])
+const vector1 = new R2([2, 1])
+const vector2 = new R2([2, 2])
 
-var vector3 = vector1.addition(vector2)
+const vector3 = vector1.addition(vector2)
 
 vector3 // Vector { data: [4, 3] }
 ```
@@ -773,10 +773,10 @@ R3.crossProduct([3, -3, 1], [4, 9, 2]) // [-15, 2, 39]
 ##### `vector1.crossProduct(vector2)`
 
 ```javascript
-var vector1 = new R3([3, -3, 1])
-var vector2 = new R3([4, 9, 2])
+const vector1 = new R3([3, -3, 1])
+const vector2 = new R3([4, 9, 2])
 
-var vector3 = vector1.crossProduct(vector2)
+const vector3 = vector1.crossProduct(vector2)
 
 vector3 // Vector { data: [-15, 2, 39] }
 ```
@@ -854,10 +854,10 @@ It represents the number of varying indices.
 #### Tensor equality
 
 ```javascript
-var T2x2x2 = TensorSpace(Real)([2, 2, 2])
+const T2x2x2 = TensorSpace(Real)([2, 2, 2])
 
-var tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
-var tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
+const tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
+const tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
 ```
 
 ##### `Tensor.equality(tensor1, tensor2)`

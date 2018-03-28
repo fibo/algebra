@@ -61,21 +61,21 @@
     "mocha-lcov-reporter": "1.3.0",
     "pre-commit": "^1.1.2",
     "should": "^13.1.3",
-    "standa": "^1.0.2",
+    "standa": "^2.0.1",
     "uglify-js": "github:mishoo/UglifyJS2#harmony"
   },
   "dependencies": {
-    "algebra-cyclic": "^0.2.2",
+    "algebra-cyclic": "^0.2.3",
     "cayley-dickson": "^0.5.1",
-    "indices-permutations": "^0.2.0",
+    "indices-permutations": "^0.2.1",
     "inherits": "^2.0.1",
-    "laplace-determinant": "^0.1.0",
+    "laplace-determinant": "^0.1.1",
     "matrix-multiplication": "^0.5.2",
-    "multidim-array-index": "^0.5.0",
+    "multidim-array-index": "^0.5.1",
     "not-defined": "^2.0.1",
     "static-props": "^1.1.1",
     "strict-mode": "^1.0.2",
-    "tensor-contraction": "^0.1.1",
-    "tensor-product": "^0.2.0"
+    "tensor-contraction": "^0.1.2",
+    "tensor-product": "^0.2.1"
   }
 }

@@ -79,7 +79,7 @@ describe('API', () => {
                        .add(byte5).add(byte6).add(byte7).add(byte8)
 
       max.data.should.deepEqual([t, t, t, t, t, t, t, t])
-    }*/)
+    } */)
   })
 
   describe('Scalar', () => {

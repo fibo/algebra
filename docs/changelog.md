@@ -21,6 +21,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 - Updated deps.
 - Updated npm minify script with uglify-es and correct source map.
+- Updated coverage.
 
 ### Fixed
 

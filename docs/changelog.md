@@ -15,6 +15,24 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+## [v0.12.3] - 2018-03-29
+
+### Added
+
+- Updated deps.
+- Updated npm minify script with uglify-es and correct source map.
+
+### Fixed
+
+- *Byte is an Octionion of booleans* example now works!
+- Dependency badge.
+- Test page layout.
+
+### Removed
+
+- Jekyll related npm script.
+- Bower support.
+
 ## [v0.12.2] - 2017-11-01
 
 ### Added

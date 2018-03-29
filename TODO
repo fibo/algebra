@@ -14,3 +14,5 @@ be more semantic: transposition instead of transpose if it is static, transpose 
                   subtraction for the static, subtract for the mutator
                   multiplication, multiply or better multiplyBy ... the alias is mul, that is the same
 
+Add the Fano Plane as an example, since it is homomorphyc to Byte example
+without 0: it could be used for Scalar example.

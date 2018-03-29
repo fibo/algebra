@@ -51,7 +51,7 @@ describe('API', () => {
   })
 
   describe('Byte', () => {
-    it('is an octonion over binary field' /*, () => {
+    it('is an octonion over binary field', () => {
       const Byte = CompositionAlgebra(Boole, 8)
 
       const t = true
@@ -79,7 +79,7 @@ describe('API', () => {
                        .add(byte5).add(byte6).add(byte7).add(byte8)
 
       max.data.should.deepEqual([t, t, t, t, t, t, t, t])
-    } */)
+    })
   })
 
   describe('Scalar', () => {
@@ -166,10 +166,10 @@ describe('API', () => {
       const x = new Alphanum('a')
 
       const y = x.add('c', 'a', 't')
-               .mul('i', 's')
-               .add('o', 'n')
-               .sub('t', 'h', 'e')
-               .div('t', 'a', 'b', 'l', 'e')
+                 .mul('i', 's')
+                 .add('o', 'n')
+                 .sub('t', 'h', 'e')
+                 .div('t', 'a', 'b', 'l', 'e')
 
       y.data.should.eql('s')
 

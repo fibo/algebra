@@ -1,5 +1,4 @@
 .travis.yml
-bower.json
 dist/
 docs
 npm-debug.log

@@ -9,7 +9,7 @@
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
 [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js)
 [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
-[![Dependency Status](https://david-dm.org/fibo/algebra.svg)](https://david-dm.org/fibo/algebra)
+[Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra)
 [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test)
@@ -78,11 +78,6 @@ With [npm] do
 npm install algebra
 ```
 
-With [bower] do
-
-```bash
-bower install algebra
-```
 or use a CDN adding this to your HTML page
 
 ```html
@@ -416,28 +411,29 @@ const Byte = CompositionAlgebra(Boole, 8)
 const t = true
 const f = false
 
-const byte1 = new Byte([t, t, t, t, t, t, t, t])
-const byte2 = new Byte([t, t, t, t, t, t, t, t])
-const byte3 = new Byte([t, t, t, t, t, t, t, t])
-const byte4 = new Byte([t, t, t, t, t, t, t, t])
-const byte5 = new Byte([t, t, t, t, t, t, t, t])
-const byte6 = new Byte([t, t, t, t, t, t, t, t])
-const byte7 = new Byte([t, t, t, t, t, t, t, t])
-const byte8 = new Byte([t, t, t, t, t, t, t, t])
+const byte1 = new Byte([t, f, f, f, f, f, f, f])
+const byte2 = new Byte([f, t, f, f, f, f, f, f])
+const byte3 = new Byte([f, f, t, f, f, f, f, f])
+const byte4 = new Byte([f, f, f, t, f, f, f, f])
+const byte5 = new Byte([f, f, f, f, t, f, f, f])
+const byte6 = new Byte([f, f, f, f, f, t, f, f])
+const byte7 = new Byte([f, f, f, f, f, f, t, f])
+const byte8 = new Byte([f, f, f, f, f, f, f, t])
 ```
 
-The first one corresponds to *one*, while the rest are immaginary units,
-but since the underlying field is Z2, -1 corresponds to 1.
+The first one corresponds to *one*, while the rest are immaginary units.
+Every imaginary unit multiplied by itself gives -1, but since the
+underlying field is homomorphic to Z2, -1 corresponds to 1.
 
 ```javascript
-byte1.mul(bytet).data // [t, t, t, t, t, t, t, t]
-byte2.mul(byte2).data // [t, t, t, t, t, t, t, t]
-byte3.mul(byte3).data // [t, t, t, t, t, t, t, t]
-byte4.mul(byte4).data // [t, t, t, t, t, t, t, t]
-byte5.mul(byte5).data // [t, t, t, t, t, t, t, t]
-byte6.mul(byte6).data // [t, t, t, t, t, t, t, t]
-byte7.mul(byte7).data // [t, t, t, t, t, t, t, t]
-byte8.mul(byte8).data // [t, t, t, t, t, t, t, t]
+byte1.mul(byte1).data // [t, f, f, f, f, f, f, f]
+byte2.mul(byte2).data // [t, f, f, f, f, f, f, f]
+byte3.mul(byte3).data // [t, f, f, f, f, f, f, f]
+byte4.mul(byte4).data // [t, f, f, f, f, f, f, f]
+byte5.mul(byte5).data // [t, f, f, f, f, f, f, f]
+byte6.mul(byte6).data // [t, f, f, f, f, f, f, f]
+byte7.mul(byte7).data // [t, f, f, f, f, f, f, f]
+byte8.mul(byte8).data // [t, f, f, f, f, f, f, f]
 ```
 
 Keeping in mind that *Byte* space defined above is an algebra, i.e. it has
@@ -449,7 +445,7 @@ You can play around with this structure.
 
 ```javascript
 const max = byte1.add(byte2).add(byte3).add(byte4)
-               .add(byte5).add(byte6).add(byte7).add(byte8)
+                 .add(byte5).add(byte6).add(byte7).add(byte8)
 
 max.data // [t, t, t, t, t, t, t, t]
 ```
@@ -921,7 +917,6 @@ tensor1.equality(tensor2) // false
 [MIT](http://g14n.info/mit-license/)
 
 [npm]: https://npmjs.org/
-[bower]: http://bower.io/
 [blog]: http://g14n.info/algebra/articles "algebra blog"
 [composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
 [realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"

@@ -10,7 +10,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "npm test && npm run browserify && npm run minify && npm run jekyll; git status",
+    "build": "npm test && npm run browserify && npm run minify && npm run docs; git status",
     "browserify": "npm run browserify:dist; npm run browserify:test",
     "browserify:dist": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
     "browserify:test": "browserify test/*.js -o docs/test/bundle.js",
@@ -21,18 +21,14 @@
     "docs:_data:tags.json": "wget https://api.github.com/repos/fibo/${npm_package_name}/tags -O docs/_data/tags.json",
     "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > docs/index.md; cat README.md >> docs/index.md",
     "istanbul": "istanbul cover _mocha",
-    "jekyll": "npm run homepage; npm run docs:_data; cd docs; jekyll build; cd ..",
-    "jekyll:serve": "npm run browserify; npm run homepage; npm run cp; cd docs; jekyll serve; cd ..",
+    "docs": "npm run homepage; npm run docs:_data",
     "lint": "npm run lint_src; npm run lint_test",
     "lint_src": "standa src/*.js",
     "lint_test": "cd test; standa --env mocha; cd -",
-    "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map ${npm_package_name}.map --output ${npm_package_name}.min.js --compress --mangle --preamble \"// Software: ${npm_package_name}\n// Homepage: ${npm_package_homepage}\n// License: ${npm_package_license}\"; cd -",
+    "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map --output ${npm_package_name}.min.js --compress --mangle -b beautify=false,preamble='\"// http://g14n.info/algebra\"'; cd -",
     "postversion": "git push origin v${npm_package_version}; npm publish",
     "postpublish": "npm run docs:_data; git commit -am ':arrow_up: updated version'; git push origin master",
-    "postupdate-deps": "npm test && git commit -am ':arrow_up: updated deps' || git checkout -- package.json",
-    "test": "mocha",
-    "update-deps": "npm update --save --dev",
-    "watch": "mocha -w"
+    "test": "mocha"
   },
   "pre-commit": [
     "lint",
@@ -62,11 +58,11 @@
     "pre-commit": "^1.1.2",
     "should": "^13.2.1",
     "standa": "^2.0.1",
-    "uglify-js": "github:mishoo/UglifyJS2#harmony"
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "algebra-cyclic": "^0.2.4",
-    "cayley-dickson": "^0.5.2",
+    "cayley-dickson": "^0.5.3",
     "indices-permutations": "^0.2.1",
     "inherits": "^2.0.1",
     "laplace-determinant": "^0.1.1",

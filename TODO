@@ -16,3 +16,5 @@ be more semantic: transposition instead of transpose if it is static, transpose 
 
 Add the Fano Plane as an example, since it is homomorphyc to Byte example
 without 0: it could be used for Scalar example.
+
+Use tex matrices to document examples in Readme.md, if they are not rendered on npm open an issue, it will encrease visibility.

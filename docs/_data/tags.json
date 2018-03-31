@@ -1,5 +1,14 @@
 [
   {
+    "name": "v0.12.5",
+    "zipball_url": "https://api.github.com/repos/fibo/algebra/zipball/v0.12.5",
+    "tarball_url": "https://api.github.com/repos/fibo/algebra/tarball/v0.12.5",
+    "commit": {
+      "sha": "b87d696026a25a070c42285b23c5c8058c3d641c",
+      "url": "https://api.github.com/repos/fibo/algebra/commits/b87d696026a25a070c42285b23c5c8058c3d641c"
+    }
+  },
+  {
     "name": "v0.12.4",
     "zipball_url": "https://api.github.com/repos/fibo/algebra/zipball/v0.12.4",
     "tarball_url": "https://api.github.com/repos/fibo/algebra/tarball/v0.12.4",

@@ -18,3 +18,6 @@ Add the Fano Plane as an example, since it is homomorphyc to Byte example
 without 0: it could be used for Scalar example.
 
 Use tex matrices to document examples in Readme.md, if they are not rendered on npm open an issue, it will encrease visibility.
+
+Found color space: RGBA where every value is in [0, 1]
+and sum is modulo 1, transparent and white are the neutral elements

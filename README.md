@@ -241,10 +241,10 @@ Let's try with two square matrices 2 x 2.
 const R2x2 = algebra.MatrixSpace(R)(2, 2)
 
 const m2 = new R2x2([1, 0,
-                   0, 2])
+                     0, 2])
 
 const m3 = new R2x2([0, -1,
-                   1, 0])
+                     1, 0])
 
 m2 = m2.mul(m3)
 
@@ -353,7 +353,7 @@ const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
 const vectorOfStrings = new VectorStrings2(['o', 'k'])
 
 const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
-                                            'o', 'l'])
+                                              'o', 'l'])
 
 matrixOfStrings.mul(vectorOfStrings).data // ['x', 'y']
 ```
@@ -466,57 +466,56 @@ axioms. That is why it will be used something maybe you did not expect could
 be treated as an algebra: in the examples below during this section we will
 play with the color space, giving a ring structure.
 
-Let's consider the space of html colors, with optional alpha, in the form
+Let's consider the space of html colors in the form
 
-> RGB(A): Red Green Blue (Alpha)
+> RGB: Red Green Blue
 
-composed of three or four hexadecimal values from `00` to `ff`. Let's start
+composed of three hexadecimal values from `00` to `ff`. Let's start
 defining a sum operator on hexadecimals.
 
 Credits and thanks for dec to hex and viceversa conversions goes to [this gist](https://gist.github.com/faisalman/4213592) author.
 
 ```javascript
 const hexSum = (hex1, hex2) => {
-  const dec1 = parseInt(hex1, 16)
-  const dec2 = parseInt(hex2, 16)
+  const dec1 = parseInt(hex1, 16) % 256
+  const dec2 = parseInt(hex2, 16) % 256
 
-  return parseInt((dec1 + dec2) % 255, 10).toString(16)
+  // Sum modulo 256 and convert to hexadecimal.
+  const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
+
+  // Return left padded result.
+  return hexResult.length === 1 ? `0${hexResult}` : hexResult
 }
 ```
 
-Note that it is required to sum modulo 255 cause we need that our set is
-*closed* on this operator, it means that the sum of two colors must be
-another color.
+Note that it is used modulo 256 cause we need that our set is *closed*
+on this operator, it means that the sum of two colors must be another      color.
 
-To define color sum we can split a color in an array of four hexadecimals,
-where forth coordinate defaults to maximum opacity (`ff`), and sum
-componentwise.
+To define color sum we can split a color in an array of three hexadecimals,
+and sum componentwise.
 
 ```javascript
 const splitColor = (color) => {
   const r = color.substring(0, 2)
   const g = color.substring(2, 4)
   const b = color.substring(4, 6)
-  const a = color.substring(6, 8) || 'ff'
 
-  return [r, g, b, a]
+  return [r, g, b]
 }
 ```
 
-For example, white color `ffffff` will be splitted in `['ff', 'ff', 'ff', 'ff']`.
+For example, white color `ffffff` will be splitted in `['ff', 'ff', 'ff']`.
 
 ```javascript
 const colorSum = (color1, color2) => {
-  const [r1, g1, b1, a1] = splitColor(color1)
-  const [r2, g2, b2, a2] = splitColor(color2)
+  const [r1, g1, b1] = splitColor(color1)
+  const [r2, g2, b2] = splitColor(color2)
 
   const r = hexSum(r1, r2)
   const g = hexSum(g1, g2)
   const b = hexSum(b1, b2)
-  const a = hexSum(a1, a2)
 
-  // Do not append alpha if set to maximum opacity.
-  return a === 'ff' ? [r, g, b].join('') : [r, g, b, a].join('')
+  return [r, g, b]
 }
 ```
 
@@ -524,10 +523,108 @@ You can check that this sum is *well defined*, and for example, green plus
 blue equals cyan.
 
 ```javascript
-const green = '00ff00'
-const blue = '0000ff'
+colorSum('00ff00', '0000ff') // '00ffff'
+```
 
-const cyan = colorSum(green, blue) // '00ffff'
+The neutral element respect to this operator is *black* (`000000`).
+
+To define a scalar field we need another operation to be used as multiplication.
+Let's define a multiplication on hexadecimals first.
+
+```javascript
+const hexMul = (hex1, hex2) => {
+  const dec1 = parseInt(hex1, 16) % 256
+  const dec2 = parseInt(hex2, 16) % 256
+
+  // Multiply, then divide by 255 and convert to hexadecimal.
+  const hexResult = parseInt((dec1 * dec2) / 255, 10).toString(16)
+
+  // Return left padded result.
+  return hexResult.length === 1 ? `0${hexResult}` : hexResult
+}
+```
+
+Then similarly to `colorSum` it is possible to define a `colorMul` that
+applies `hexMul` componentwise.
+
+```javascript
+const colorMul = (color1, color2) => {
+  const [r1, g1, b1] = splitColor(color1)
+  const [r2, g2, b2] = splitColor(color2)
+
+  const r = hexMul(r1, r2)
+  const g = hexMul(g1, g2)
+  const b = hexMul(b1, b2)
+
+  return [r, g, b]
+}
+```
+
+The neutral element for this operator is *white* (`ffffff`).
+
+We are ready to create our scalar field over RGB colors.
+Arguments are the same as [algebra-ring].
+
+```javascript
+const RGB = algebra.Scalar(
+  [ '000000', 'ffffff' ],
+  {
+    equality: (a, b) => a === b,
+    contains: (color) => {
+      const [r, g, b] = splitColor(color)
+
+      return (parseInt(r, 16) < 256) && (parseInt(g, 16) < 256) && (parseInt(b, 16) < 256)
+    },
+    addition: colorSum,
+    negation: (color) => {
+      const [r, g, b] = splitColor(color)
+
+      const decR = parseInt(r, 16)
+      const decG = parseInt(g, 16)
+      const decB = parseInt(b, 16)
+
+      const minusR = decR === 0 ? 0 : 256 - decR
+      const minusG = decG === 0 ? 0 : 256 - decG
+      const minusB = decB === 0 ? 0 : 256 - decB
+
+      const hexMinusR = parseInt(minusR, 10).toString(16)
+      const hexMinusG = parseInt(minusG, 10).toString(16)
+      const hexMinusB = parseInt(minusB, 10).toString(16)
+
+      const paddedMinusR = hexMinusR.length === 1 ? `0${hexMinusR}` : hexMinusR
+      const paddedMinusG = hexMinusG.length === 1 ? `0${hexMinusG}` : hexMinusG
+      const paddedMinusB = hexMinusB.length === 1 ? `0${hexMinusB}` : hexMinusB
+
+      return `${paddedMinusR}${paddedMinusG}${paddedMinusB}`
+    },
+    multiplication: colorMul,
+    inversion: (color) => {
+      const [r, g, b] = splitColor(color)
+
+      const decR = parseInt(r, 16)
+      const decG = parseInt(g, 16)
+      const decB = parseInt(b, 16)
+
+      const invR = parseInt(255 * 255 / decR, 10).toString(16)
+      const invG = parseInt(255 * 255 / decG, 10).toString(16)
+      const invB = parseInt(255 * 255 / decB, 10).toString(16)
+
+      const paddedInvR = invR.length === 1 ? `0${invR}` : invR
+      const paddedInvG = invG.length === 1 ? `0${invG}` : invG
+      const paddedInvB = invB.length === 1 ? `0${invB}` : invB
+
+      return `${paddedInvR}${paddedInvG}${paddedInvB}`
+    },
+  }
+)
+```
+
+So far so good, algebra dependencies will do some checks under the hood
+and complain if something looks wrong. Now we can create color instances
+
+```javascript
+const green = new RGB('00ff00')
+const blue = new RGB('0000ff')
 ```
 
 #### Scalar attributes
@@ -535,12 +632,20 @@ const cyan = colorSum(green, blue) // '00ffff'
 ##### `Scalar.one`
 
 Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
-In our *color algebra* example it corrensponds to *white* (`#ffffff`).
+In our *RGB* example it corrensponds to *white* (`ffffff`).
+
+```javascript
+RGB.one // 'ffffff'
+```
 
 ##### `Scalar.zero`
 
 Is the *neutral element* for [addition](#scalar-addition) operator.
-In our *color algebra* example it corrensponds to *transparent* (`#00000000`)
+In our *RGB* example it corrensponds to *black* (`000000`)
+
+```javascript
+RGB.zero // '000000'
+```
 
 #### Scalar order
 
@@ -548,7 +653,19 @@ It is always 0 for scalars, see also [Tensor order](#tensor-order).
 
 ##### `Scalar.order`
 
+The *order* is a static attribute.
+
+```javascript
+RGB.order // 0
+```
+
 ##### `scalar.order`
+
+The *order* is also available as attribute of a Scalar class instance.
+
+```javascript
+green.order // 0
+```
 
 ##### `scalar.data`
 

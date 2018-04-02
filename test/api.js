@@ -87,59 +87,132 @@ describe('API', () => {
       const dec1 = parseInt(hex1, 16)
       const dec2 = parseInt(hex2, 16)
 
-      return parseInt((dec1 + dec2) % 255, 10).toString(16)
+      const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
+
+      return hexResult.length === 1 ? `0${hexResult}` : hexResult
     }
 
     const splitColor = (color) => {
       const r = color.substring(0, 2)
       const g = color.substring(2, 4)
       const b = color.substring(4, 6)
-      const a = color.substring(6, 8) || 'ff'
 
-      return [r, g, b, a]
+      return [r, g, b]
     }
 
-const colorSum = (color1, color2) => {
-  const [r1, g1, b1, a1] = splitColor(color1)
-  const [r2, g2, b2, a2] = splitColor(color2)
+    const colorSum = (color1, color2) => {
+      const [r1, g1, b1] = splitColor(color1)
+      const [r2, g2, b2] = splitColor(color2)
 
-  const r = hexSum(r1, r2)
-  const g = hexSum(g1, g2)
-  const b = hexSum(b1, b2)
-  const a = hexSum(a1, a2)
+      const r = hexSum(r1, r2)
+      const g = hexSum(g1, g2)
+      const b = hexSum(b1, b2)
 
-  console.log(r, r1, r2)
-  console.log(g, g1, g2)
-  // Do not append alpha if set to maximum opacity.
-  return a === 'ff' ? [r, g, b].join('') : [r, g, b, a].join('')
-}
+      return [r, g, b].join('')
+    }
+
+    const colorMul = (color1, color2) => {
+      const [r1, g1, b1] = splitColor(color1)
+      const [r2, g2, b2] = splitColor(color2)
+
+      const r = hexMul(r1, r2)
+      const g = hexMul(g1, g2)
+      const b = hexMul(b1, b2)
+
+      return [r, g, b].join('')
+    }
+
     describe('Color space example', () => {
       describe('splitColor() alpha', () => {
         it('defaults to maximum opacity', () => {
-          splitColor('ffffff').should.deepEqual(['ff', 'ff', 'ff', 'ff'])
+          splitColor('ffffff').should.deepEqual(['ff', 'ff', 'ff'])
         })
       })
 
       describe('colorSum()', () => {
         it('is well defined', () => {
-          const green = '00ff00'
-          const blue = '0000ff'
-
-          colorSum(green, blue).should.equal('00ffff')
+          colorSum('00ff00', '0000ff').should.equal('00ffff')
         })
       })
     })
 
+    const RGB = algebra.Scalar(
+      [ '000000', 'ffffff' ],
+      {
+        equality: (a, b) => a === b,
+        contains: (color) => {
+          const [r, g, b] = splitColor(color)
+
+          return (parseInt(r, 16) < 256) && (parseInt(g, 16) < 256) && (parseInt(b, 16) < 256)
+        },
+        addition: colorSum,
+        negation: (color) => {
+          const [r, g, b] = splitColor(color)
+
+          const decR = parseInt(r, 16)
+          const decG = parseInt(g, 16)
+          const decB = parseInt(b, 16)
+
+          const minusR = decR === 0 ? 0 : 256 - decR
+          const minusG = decG === 0 ? 0 : 256 - decG
+          const minusB = decB === 0 ? 0 : 256 - decB
+
+          const hexMinusR = parseInt(minusR, 10).toString(16)
+          const hexMinusG = parseInt(minusG, 10).toString(16)
+          const hexMinusB = parseInt(minusB, 10).toString(16)
+
+          const paddedMinusR = hexMinusR.length === 1 ? `0${hexMinusR}` : hexMinusR
+          const paddedMinusG = hexMinusG.length === 1 ? `0${hexMinusG}` : hexMinusG
+          const paddedMinusB = hexMinusB.length === 1 ? `0${hexMinusB}` : hexMinusB
+
+          return `${paddedMinusR}${paddedMinusG}${paddedMinusB}`
+        },
+        multiplication: colorMul,
+        inversion: (color) => {
+          const [r, g, b] = splitColor(color)
+
+          const decR = parseInt(r, 16)
+          const decG = parseInt(g, 16)
+          const decB = parseInt(b, 16)
+
+          const invR = parseInt(255 * 255 / decR, 10).toString(16)
+          const invG = parseInt(255 * 255 / decG, 10).toString(16)
+          const invB = parseInt(255 * 255 / decB, 10).toString(16)
+
+          const paddedInvR = invR.length === 1 ? `0${invR}` : invR
+          const paddedInvG = invG.length === 1 ? `0${invG}` : invG
+          const paddedInvB = invB.length === 1 ? `0${invB}` : invB
+
+          return `${paddedInvR}${paddedInvG}${paddedInvB}`
+        },
+      }
+    )
+
+    // TODO const green = new RGB('00ff00')
+    // const blue = new RGB('0000ff')
+
     describe('Scalar.one', () => {
-      it('is a static attribute')
+      it('is a static attribute', () => {
+        RGB.one.should.be.equal('ffffff')
+      })
     })
 
     describe('Scalar.zero', () => {
-      it('is a static attribute')
+      it('is a static attribute', () => {
+        RGB.zero.should.be.equal('000000')
+      })
     })
 
-    describe('order', () => {
-      it('works')
+    describe('Scalar.order', () => {
+      it('is a static attribute', () => {
+        RGB.order.should.be.equal(0)
+      })
+    })
+
+    describe('scalar.order', () => {
+      it('is an attribute'/*, () => {
+        green.order.should.eql(0)
+      }*/)
     })
 
     describe('data', () => {

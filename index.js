@@ -2,18 +2,21 @@ require('strict-mode')(() => {
   var Boole = require('./src/Boole')
   exports.Boole = Boole
 
-  var Cyclic = require('./src/Cyclic')
-  exports.Cyclic = Cyclic
-
   var CompositionAlgebra = require('./src/CompositionAlgebra')
   exports.CompositionAlgebra = CompositionAlgebra
 
-  var field = require('./src/realField')
+  var Cyclic = require('./src/Cyclic')
+  exports.Cyclic = Cyclic
 
-  var Real = CompositionAlgebra(field, 1)
-  var Complex = CompositionAlgebra(field, 2)
-  var Quaternion = CompositionAlgebra(field, 4)
-  var Octonion = CompositionAlgebra(field, 8)
+  var Scalar = require('./src/Scalar')
+  exports.Scalar = Scalar
+
+  var realField = require('./src/realField')
+
+  var Real = CompositionAlgebra(realField, 1)
+  var Complex = CompositionAlgebra(realField, 2)
+  var Quaternion = CompositionAlgebra(realField, 4)
+  var Octonion = CompositionAlgebra(realField, 8)
 
   exports.Real = Real
   exports.Complex = Complex

@@ -21,3 +21,5 @@ Use tex matrices to document examples in Readme.md, if they are not rendered on 
 
 Found color space: RGBA where every value is in [0, 1]
 and sum is modulo 1, transparent and white are the neutral elements
+
+Use again let and const.

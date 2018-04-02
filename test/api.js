@@ -83,15 +83,53 @@ describe('API', () => {
   })
 
   describe('Scalar', () => {
-    // TODO Color space RBG as example
-    //
-    // colorA = (.2, .3, .7)
-    // colorB = (.1, .1, .1)
-    //
-    // colorC = colorA * colorB = (.2 * .1, .3 * .1, .7 * .1)
-    // colorD = colorA + colorB = (.2 + .1 / 2, .3 + .1 / 2, .7 + .1 / 2)
-    //
-    // is it a Ring?
+    const hexSum = (hex1, hex2) => {
+      const dec1 = parseInt(hex1, 16)
+      const dec2 = parseInt(hex2, 16)
+
+      return parseInt((dec1 + dec2) % 255, 10).toString(16)
+    }
+
+    const splitColor = (color) => {
+      const r = color.substring(0, 2)
+      const g = color.substring(2, 4)
+      const b = color.substring(4, 6)
+      const a = color.substring(6, 8) || 'ff'
+
+      return [r, g, b, a]
+    }
+
+const colorSum = (color1, color2) => {
+  const [r1, g1, b1, a1] = splitColor(color1)
+  const [r2, g2, b2, a2] = splitColor(color2)
+
+  const r = hexSum(r1, r2)
+  const g = hexSum(g1, g2)
+  const b = hexSum(b1, b2)
+  const a = hexSum(a1, a2)
+
+  console.log(r, r1, r2)
+  console.log(g, g1, g2)
+  // Do not append alpha if set to maximum opacity.
+  return a === 'ff' ? [r, g, b].join('') : [r, g, b, a].join('')
+}
+    describe('Color space example', () => {
+      describe('splitColor() alpha', () => {
+        it('defaults to maximum opacity', () => {
+          splitColor('ffffff').should.deepEqual(['ff', 'ff', 'ff', 'ff'])
+        })
+      })
+
+      describe('colorSum()', () => {
+        it('is well defined', () => {
+          const green = '00ff00'
+          const blue = '0000ff'
+
+          colorSum(green, blue).should.equal('00ffff')
+        })
+      })
+    })
+
     describe('Scalar.one', () => {
       it('is a static attribute')
     })

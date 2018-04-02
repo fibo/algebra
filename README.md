@@ -458,18 +458,89 @@ matrices, tensors. They are the underneath set enriched with a
 consists of two binary operators that generalize the arithmetic operations of addition and multiplication. A ring that has the commutativity property
 is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
 
-Ok, let's make a simple example. Real numbers, with common addition and
-multiplication are a scalar field.
+Ok, ret's make a simple example. [Real numbers](#real), with common addition
+and multiplication are a scalar field: see documentation below. The good new
+is that you can create any scalar field as long as you provide a set with
+two internal operations and related neutral elements that satisfy the ring
+axioms. That is why it will be used something maybe you did not expect could
+be treated as an algebra: in the examples below during this section we will
+play with the color space, giving a ring structure.
+
+Let's consider the space of html colors, with optional alpha, in the form
+
+> RGB(A): Red Green Blue (Alpha)
+
+composed of three or four hexadecimal values from `00` to `ff`. Let's start
+defining a sum operator on hexadecimals.
+
+Credits and thanks for dec to hex and viceversa conversions goes to [this gist](https://gist.github.com/faisalman/4213592) author.
+
+```javascript
+const hexSum = (hex1, hex2) => {
+  const dec1 = parseInt(hex1, 16)
+  const dec2 = parseInt(hex2, 16)
+
+  return parseInt((dec1 + dec2) % 255, 10).toString(16)
+}
+```
+
+Note that it is required to sum modulo 255 cause we need that our set is
+*closed* on this operator, it means that the sum of two colors must be
+another color.
+
+To define color sum we can split a color in an array of four hexadecimals,
+where forth coordinate defaults to maximum opacity (`ff`), and sum
+componentwise.
+
+```javascript
+const splitColor = (color) => {
+  const r = color.substring(0, 2)
+  const g = color.substring(2, 4)
+  const b = color.substring(4, 6)
+  const a = color.substring(6, 8) || 'ff'
+
+  return [r, g, b, a]
+}
+```
+
+For example, white color `ffffff` will be splitted in `['ff', 'ff', 'ff', 'ff']`.
+
+```javascript
+const colorSum = (color1, color2) => {
+  const [r1, g1, b1, a1] = splitColor(color1)
+  const [r2, g2, b2, a2] = splitColor(color2)
+
+  const r = hexSum(r1, r2)
+  const g = hexSum(g1, g2)
+  const b = hexSum(b1, b2)
+  const a = hexSum(a1, a2)
+
+  // Do not append alpha if set to maximum opacity.
+  return a === 'ff' ? [r, g, b].join('') : [r, g, b, a].join('')
+}
+```
+
+You can check that this sum is *well defined*, and for example, green plus
+blue equals cyan.
+
+```javascript
+const green = '00ff00'
+const blue = '0000ff'
+
+const cyan = colorSum(green, blue) // '00ffff'
+```
 
 #### Scalar attributes
 
 ##### `Scalar.one`
 
 Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
+In our *color algebra* example it corrensponds to *white* (`#ffffff`).
 
 ##### `Scalar.zero`
 
 Is the *neutral element* for [addition](#scalar-addition) operator.
+In our *color algebra* example it corrensponds to *transparent* (`#00000000`)
 
 #### Scalar order
 

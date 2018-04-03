@@ -65,13 +65,13 @@
     "cayley-dickson": "^0.5.3",
     "indices-permutations": "^0.2.1",
     "inherits": "^2.0.1",
-    "laplace-determinant": "^0.1.1",
+    "laplace-determinant": "^0.2.1",
     "matrix-multiplication": "^0.5.2",
-    "multidim-array-index": "^0.5.1",
+    "multidim-array-index": "^0.6.0",
     "not-defined": "^2.0.1",
     "static-props": "^1.1.1",
     "strict-mode": "^1.0.2",
-    "tensor-contraction": "^0.1.2",
+    "tensor-contraction": "^0.2.0",
     "tensor-product": "^0.2.1"
   }
 }

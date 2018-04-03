@@ -15,6 +15,10 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+### Added
+
+- Updated deps.
+
 ## [v0.12.3] - 2018-03-29
 
 ### Added

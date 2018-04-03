@@ -60,7 +60,7 @@ Many functionalities of previous versions are now in separated atomic packages:
 * [matrix-multiplication]
 * [multidim-array-index]
 * [tensor-contraction]
-* [tensor-permutation]
+* [tensor-product]
 
 ## Features
 
@@ -1117,6 +1117,6 @@ tensor1.equality(tensor2) // false
 [matrix-multiplication]: http://npm.im/matrix-multiplication
 [multidim-array-index]: http://npm.im/multidim-array-index
 [tensor-contraction]: http://npm.im/tensor-contraction
-[tensor-permutation]: http://npm.im/tensor-product
+[tensor-product]: http://npm.im/tensor-product
 [zero_divisor]: https://en.wikipedia.org/wiki/Zero_divisor "Zero divisor"
 [Cayley-Dickson_construction]: https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction "Cayley-Dickson construction"

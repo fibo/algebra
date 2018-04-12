@@ -481,10 +481,10 @@ const hexSum = (hex1, hex2) => {
   const dec2 = parseInt(hex2, 16) % 256
 
   // Sum modulo 256 and convert to hexadecimal.
-  const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
+  const hex = parseInt((dec1 + dec2) % 256, 10).toString(16)
 
   // Return left padded result.
-  return hexResult.length === 1 ? `0${hexResult}` : hexResult
+  return hex.padStart(2, '0')
 }
 ```
 

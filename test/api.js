@@ -87,9 +87,9 @@ describe('API', () => {
       const dec1 = parseInt(hex1, 16)
       const dec2 = parseInt(hex2, 16)
 
-      const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
+      const hex = parseInt((dec1 + dec2) % 256, 10).toString(16)
 
-      return hexResult.length === 1 ? `0${hexResult}` : hexResult
+      return hex.padStart(2, '0')
     }
 
     const splitColor = (color) => {
@@ -123,12 +123,6 @@ describe('API', () => {
     }
 
     describe('Color space example', () => {
-      describe('splitColor() alpha', () => {
-        it('defaults to maximum opacity', () => {
-          splitColor('ffffff').should.deepEqual(['ff', 'ff', 'ff'])
-        })
-      })
-
       describe('colorSum()', () => {
         it('is well defined', () => {
           colorSum('00ff00', '0000ff').should.equal('00ffff')

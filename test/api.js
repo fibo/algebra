@@ -216,7 +216,7 @@ describe('API', () => {
     describe('scalar.order', () => {
       it('is an attribute'/* , () => {
         green.order.should.eql(0)
-      }*/)
+      } */)
     })
 
     describe('data', () => {

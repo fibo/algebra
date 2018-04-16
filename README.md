@@ -452,13 +452,15 @@ max.data // [t, t, t, t, t, t, t, t]
 
 ### Scalar
 
+**NOTA BENE** The coloe space example in this section is still a *WiP*.
+
 The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors,
 matrices, tensors. They are the underneath set enriched with a
 [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
 consists of two binary operators that generalize the arithmetic operations of addition and multiplication. A ring that has the commutativity property
 is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
 
-Ok, ret's make a simple example. [Real numbers](#real), with common addition
+Ok, let's make a simple example. [Real numbers](#real), with common addition
 and multiplication are a scalar field: see documentation below. The good new
 is that you can create any scalar field as long as you provide a set with
 two internal operations and related neutral elements that satisfy the ring

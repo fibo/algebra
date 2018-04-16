@@ -455,13 +455,15 @@ max.data // [t, t, t, t, t, t, t, t]
 
 ### Scalar
 
+**NOTA BENE** The coloe space example in this section is still a *WiP*.
+
 The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors,
 matrices, tensors. They are the underneath set enriched with a
 [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
 consists of two binary operators that generalize the arithmetic operations of addition and multiplication. A ring that has the commutativity property
 is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
 
-Ok, ret's make a simple example. [Real numbers](#real), with common addition
+Ok, let's make a simple example. [Real numbers](#real), with common addition
 and multiplication are a scalar field: see documentation below. The good new
 is that you can create any scalar field as long as you provide a set with
 two internal operations and related neutral elements that satisfy the ring
@@ -484,10 +486,10 @@ const hexSum = (hex1, hex2) => {
   const dec2 = parseInt(hex2, 16) % 256
 
   // Sum modulo 256 and convert to hexadecimal.
-  const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
+  const hex = parseInt((dec1 + dec2) % 256, 10).toString(16)
 
   // Return left padded result.
-  return hexResult.length === 1 ? `0${hexResult}` : hexResult
+  return hex.padStart(2, '0')
 }
 ```
 
@@ -840,6 +842,16 @@ It is in alias of [Complex](#complex).
 ```javascript
 const C = algebra.C
 ```
+
+#### C2x2
+
+Complex square matrices of rank 2.
+
+```javascript
+const C2x2 = algebra.C2x2
+```
+
+It is in alias of `MatrixSpace(Complex)(2)`.
 
 #### H
 

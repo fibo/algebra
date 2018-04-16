@@ -1,7 +1,7 @@
-var operators = require('./operators.json')
-var staticProps = require('static-props')
-var toData = require('./toData')
-var tensorProduct = require('tensor-product')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const toData = require('./toData')
+const tensorProduct = require('tensor-product')
 
 /**
  * Creates a tensor space that is a class representing a tensor.
@@ -12,7 +12,7 @@ var tensorProduct = require('tensor-product')
  */
 
 function TensorSpace (Scalar) {
-  var multiplication = Scalar.multiplication
+  const multiplication = Scalar.multiplication
 
   /**
    * @param {Array} indices
@@ -26,16 +26,16 @@ function TensorSpace (Scalar) {
     // A matrix has order 2.
     // Order is also called "rank" or "tensor rank", but, to avoid confusion with
     // "matrix rank" it is better to call it "order".
-    var order = indices.filter((dim) => dim > 1).length
+    const order = indices.filter((dim) => dim > 1).length
 
     // TODO if it is a scalar, return the Scalar
     // which should be a composition algebra
     // Then add product tensor to composition algebras.
     // Finally, a tensor i,j,k should be constructed as the
     // tensor product of a scalar i,j,k times.
-    var isScalar = (order === 0)
+    const isScalar = (order === 0)
 
-    var dimension = indices.reduce((a, b) => a * b, 1)
+    const dimension = indices.reduce((a, b) => a * b, 1)
 
     if (isScalar) {
       staticProps(Scalar)({ order })
@@ -45,8 +45,8 @@ function TensorSpace (Scalar) {
 
     // TODO create one for square matrices
     // Create zero.
-    var zero = indices.reduce((result, dim) => {
-      for (var i = 0; i < dim; i++) {
+    const zero = indices.reduce((result, dim) => {
+      for (let i = 0; i < dim; i++) {
         result.push(Scalar.zero)
       }
 
@@ -67,7 +67,7 @@ function TensorSpace (Scalar) {
 
       data.forEach(validate)
 
-      var enumerable = true
+      const enumerable = true
       staticProps(this)({ data }, enumerable)
 
       staticProps(this)({ order })
@@ -75,12 +75,12 @@ function TensorSpace (Scalar) {
 
     function staticBinary (operator) {
       Tensor[operator] = function () {
-        var result = []
+        let result = []
 
-        for (var i = 0; i < dimension; i++) {
-          var operands = []
+        for (let i = 0; i < dimension; i++) {
+          let operands = []
 
-          for (var j = 0; j < arguments.length; j++) {
+          for (let j = 0; j < arguments.length; j++) {
             operands.push(toData(arguments[j])[i])
           }
 
@@ -91,29 +91,29 @@ function TensorSpace (Scalar) {
       }
     }
 
-    var myBinaryOperators = ['addition', 'subtraction']
+    const myBinaryOperators = ['addition', 'subtraction']
 
     myBinaryOperators.forEach((operator) => {
       staticBinary(operator)
 
       Tensor.prototype[operator] = function () {
-        var args = [].slice.call(arguments)
-        var operands = [this.data].concat(args)
+        const args = [].slice.call(arguments)
+        const operands = [this.data].concat(args)
 
-        var data = Tensor[operator].apply(null, operands)
+        const data = Tensor[operator].apply(null, operands)
 
-        var tensor = new Tensor(data)
+        const tensor = new Tensor(data)
 
         return tensor
       }
     })
 
     function scalarMultiplication (tensor, scalar) {
-      var tensorData = toData(tensor)
+      const tensorData = toData(tensor)
 
-      var result = []
+      let result = []
 
-      for (var i = 0; i < dimension; i++) {
+      for (let i = 0; i < dimension; i++) {
         result.push(multiplication(tensorData[i], scalar))
       }
 
@@ -123,16 +123,16 @@ function TensorSpace (Scalar) {
     Tensor.scalarMultiplication = scalarMultiplication
 
     Tensor.prototype.scalarMultiplication = function (scalar) {
-      var data = scalarMultiplication(this, scalar)
+      const data = scalarMultiplication(this, scalar)
 
       return new Tensor(data)
     }
 
     Tensor.equality = function (tensor1, tensor2) {
-      var tensorData1 = toData(tensor1)
-      var tensorData2 = toData(tensor2)
+      const tensorData1 = toData(tensor1)
+      const tensorData2 = toData(tensor2)
 
-      for (var i = 0; i < dimension; i++) {
+      for (let i = 0; i < dimension; i++) {
         if (Scalar.disequality(tensorData1[i], tensorData2[i])) {
           return false
         }
@@ -158,7 +158,7 @@ function TensorSpace (Scalar) {
       zero
     })
 
-    var myOperators = operators.group
+    const myOperators = operators.group
 
     myOperators.forEach((operator) => {
       operators.aliasesOf[operator].forEach((alias) => {

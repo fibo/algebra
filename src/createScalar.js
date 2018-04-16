@@ -1,7 +1,7 @@
-var coerced = require('./coerced')
-var operators = require('./operators.json')
-var staticProps = require('static-props')
-var toData = require('./toData')
+const coerced = require('./coerced')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const toData = require('./toData')
 
 /**
  * @param {Object} ring
@@ -10,7 +10,7 @@ var toData = require('./toData')
  */
 
 function createScalar (ring) {
-  var attributes = {
+  const attributes = {
     zero: ring.zero,
     one: ring.one,
     order: 0
@@ -27,7 +27,7 @@ function createScalar (ring) {
         throw new TypeError('Invalid data = ' + data)
       }
 
-      var enumerable = true
+      const enumerable = true
       staticProps(this)({ data }, enumerable)
 
       staticProps(this)(attributes)
@@ -36,14 +36,14 @@ function createScalar (ring) {
 
   staticProps(Scalar)(attributes)
 
-  var staticNary = (operator) => {
+  const staticNary = (operator) => {
     Scalar[operator] = function () {
-      var operands = [].slice.call(arguments).map(toData)
+      const operands = [].slice.call(arguments).map(toData)
       return coerced(ring[operator]).apply(null, operands)
     }
   }
 
-  var unaryOperators = operators.inversion
+  const unaryOperators = operators.inversion
 
   unaryOperators.push('conjugation')
 
@@ -53,7 +53,7 @@ function createScalar (ring) {
     }
 
     Scalar.prototype[operator] = function () {
-      var data = Scalar[operator](this.data)
+      const data = Scalar[operator](this.data)
 
       return new Scalar(data)
     }
@@ -63,10 +63,10 @@ function createScalar (ring) {
     staticNary(operator)
 
     Scalar.prototype[operator] = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
+      const args = [].slice.call(arguments)
+      const operands = [this.data].concat(args)
 
-      var data = Scalar[operator].apply(null, operands)
+      const data = Scalar[operator].apply(null, operands)
 
       return new Scalar(data)
     }
@@ -80,10 +80,10 @@ function createScalar (ring) {
     staticNary(operator)
 
     Scalar.prototype[operator] = function () {
-      var args = [].slice.call(arguments)
-      var operands = [this.data].concat(args)
+      const args = [].slice.call(arguments)
+      const operands = [this.data].concat(args)
 
-      var bool = Scalar[operator].apply(null, operands)
+      const bool = Scalar[operator].apply(null, operands)
 
       return bool
     }

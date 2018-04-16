@@ -1,22 +1,22 @@
-var determinant = require('laplace-determinant')
-var inherits = require('inherits')
-var itemsPool = require('./itemsPool')
-var matrixMultiplication = require('matrix-multiplication')
-var multiDimArrayIndex = require('multidim-array-index')
-var no = require('not-defined')
-var operators = require('./operators.json')
-var staticProps = require('static-props')
-var TensorSpace = require('./TensorSpace')
-var tensorContraction = require('tensor-contraction')
-var toData = require('./toData')
+const determinant = require('laplace-determinant')
+const inherits = require('inherits')
+const itemsPool = require('./itemsPool')
+const matrixMultiplication = require('matrix-multiplication')
+const multiDimArrayIndex = require('multidim-array-index')
+const no = require('not-defined')
+const operators = require('./operators.json')
+const staticProps = require('static-props')
+const TensorSpace = require('./TensorSpace')
+const tensorContraction = require('tensor-contraction')
+const toData = require('./toData')
 
 /**
  * Space of m x n matrices
  *
  * ```
- * var R = algebra.R
+ * const R = algebra.R
  *
- * var R2x2 = algebra.MatrixSpace(R)(2)
+ * const R2x2 = algebra.MatrixSpace(R)(2)
  * ```
  *
  * @param {Object} Scalar
@@ -25,7 +25,7 @@ var toData = require('./toData')
  */
 
 function MatrixSpace (Scalar) {
-  var contraction = tensorContraction.bind(null, Scalar.addition)
+  const contraction = tensorContraction.bind(null, Scalar.addition)
 
   /**
    * @param {Number} numRows
@@ -38,10 +38,10 @@ function MatrixSpace (Scalar) {
     // numCols defaults to numRows
     if (no(numCols)) numCols = numRows
 
-    var isSquare = (numRows === numCols)
-    var indices = [numRows, numCols]
+    const isSquare = (numRows === numCols)
+    const indices = [numRows, numCols]
 
-    var AbstractMatrix = TensorSpace(Scalar)(indices)
+    const AbstractMatrix = TensorSpace(Scalar)(indices)
 
     /**
      * Calculates the matrix trace.
@@ -54,7 +54,7 @@ function MatrixSpace (Scalar) {
      */
 
     function trace (matrix) {
-      var matrixData = toData(matrix)
+      const matrixData = toData(matrix)
 
       return contraction([0, 1], indices, matrixData)
     }
@@ -68,10 +68,10 @@ function MatrixSpace (Scalar) {
      */
 
     function multiplication (leftMatrix, rightMatrix) {
-      var leftMatrixData = toData(leftMatrix)
-      var rightMatrixData = toData(rightMatrix)
+      const leftMatrixData = toData(leftMatrix)
+      const rightMatrixData = toData(rightMatrix)
 
-      var rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols)
+      const rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols)
 
       return rowByColumnMultiplication(leftMatrixData, rightMatrixData)
     }
@@ -85,13 +85,13 @@ function MatrixSpace (Scalar) {
      */
 
     function transpose (matrix) {
-      var matrixData = toData(matrix)
-      var transposedData = []
+      const matrixData = toData(matrix)
+      const transposedData = []
 
-      for (var i = 0; i < numRows; i++) {
-        for (var j = 0; j < numCols; j++) {
-          var index = multiDimArrayIndex([numRows, numCols], [i, j])
-          var transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
+      for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+          const index = multiDimArrayIndex([numRows, numCols], [i, j])
+          const transposedIndex = multiDimArrayIndex([numCols, numRows], [j, i])
 
           transposedData[transposedIndex] = matrixData[index]
         }
@@ -113,7 +113,7 @@ function MatrixSpace (Scalar) {
       })
 
       function computeDeterminant () {
-        var det = determinant(data, Scalar, numRows)
+        const det = determinant(data, Scalar, numRows)
 
         return new Scalar(det)
       }
@@ -130,14 +130,14 @@ function MatrixSpace (Scalar) {
       }
 
       function transposed () {
-        var result = transpose(data)
-        var VectorSpace = itemsPool.get('VectorSpace')
+        const result = transpose(data)
+        const VectorSpace = itemsPool.get('VectorSpace')
 
         if (numRows === 1) {
-          var Vector = VectorSpace(Scalar)(numCols)
+          const Vector = VectorSpace(Scalar)(numCols)
           return new Vector(result)
         } else {
-          var Matrix = MatrixSpace(Scalar)(numCols, numRows)
+          const Matrix = MatrixSpace(Scalar)(numCols, numRows)
           return new Matrix(result)
         }
       }
@@ -155,13 +155,13 @@ function MatrixSpace (Scalar) {
     }
 
     Matrix.prototype.multiplication = function (rightMatrix) {
-      var leftMatrixData = this.data
-      var result = multiplication(leftMatrixData, rightMatrix)
+      const leftMatrixData = this.data
+      const result = multiplication(leftMatrixData, rightMatrix)
 
-      var rightNumRows = numCols
-      var rightNumCols = result.length / rightNumRows
+      const rightNumRows = numCols
+      const rightNumCols = result.length / rightNumRows
 
-      var Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
 
       return new Matrix(result)
     }

@@ -15,10 +15,13 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+## [v0.12.4] - 2018-04-16
+
 ### Added
 
 - Updated deps.
 - C2x2 matrix space alias.
+- Using (yep, again) `const` and `let`.
 
 ## [v0.12.3] - 2018-03-29
 

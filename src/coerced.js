@@ -1,4 +1,4 @@
-var toData = require('./toData')
+const toData = require('./toData')
 
 /**
  * Get an operator that coerces arguments to data.

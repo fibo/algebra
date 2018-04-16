@@ -1,14 +1,12 @@
-var algebraRing = require('algebra-cyclic')
-var createScalar = require('./createScalar')
+const algebraRing = require('algebra-cyclic')
+const createScalar = require('./createScalar')
 
 /**
  * Create a Scalar.
  */
 
 function Scalar (neutralElements, operators) {
-  var ring = algebraRing(neutralElements, operators)
-  console.log(operators.contains('00ff00'))
-  console.log(ring.notContains('00ff00'))
+  const ring = algebraRing(neutralElements, operators)
 
   return createScalar(ring)
 }

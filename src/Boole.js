@@ -1,4 +1,4 @@
-var Boole = {
+const Boole = {
   zero: false,
   one: true,
   contains: (a) => (typeof a === 'boolean'),

@@ -1,4 +1,4 @@
-var algebraRing= require('algebra-cyclic')
+var algebraRing = require('algebra-cyclic')
 var createScalar = require('./createScalar')
 
 /**

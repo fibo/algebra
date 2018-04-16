@@ -112,6 +112,15 @@ describe('API', () => {
       return [r, g, b].join('')
     }
 
+    const hexMul = (hex1, hex2) => {
+      const dec1 = parseInt(hex1, 16) % 256
+      const dec2 = parseInt(hex2, 16) % 256
+
+      const hexResult = parseInt((dec1 * dec2) / 255, 10).toString(16)
+
+      return hexResult.length === 1 ? `0${hexResult}` : hexResult
+    }
+
     const colorMul = (color1, color2) => {
       const [r1, g1, b1] = splitColor(color1)
       const [r2, g2, b2] = splitColor(color2)
@@ -179,7 +188,7 @@ describe('API', () => {
           const paddedInvB = invB.length === 1 ? `0${invB}` : invB
 
           return `${paddedInvR}${paddedInvG}${paddedInvB}`
-        },
+        }
       }
     )
 
@@ -205,7 +214,7 @@ describe('API', () => {
     })
 
     describe('scalar.order', () => {
-      it('is an attribute'/*, () => {
+      it('is an attribute'/* , () => {
         green.order.should.eql(0)
       }*/)
     })

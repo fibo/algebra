@@ -838,6 +838,16 @@ It is in alias of [Complex](#complex).
 const C = algebra.C
 ```
 
+#### C2x2
+
+Complex square matrices of rank 2.
+
+```javascript
+const C2x2 = algebra.C2x2
+```
+
+It is in alias of `MatrixSpace(Complex)(2)`.
+
 #### H
 
 Usually it is used the **H** in honour of [Sir Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton).

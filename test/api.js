@@ -4,6 +4,7 @@ describe('API', () => {
   const algebra = require('algebra')
 
   const C = algebra.C
+  const C2x2 = algebra.C2x2
   const Complex = algebra.Complex
   const H = algebra.H
   const Quaternion = algebra.Quaternion
@@ -350,6 +351,12 @@ describe('API', () => {
     describe('C', () => {
       it('is an alias of Complex', () => {
         C.should.be.eql(Complex)
+      })
+    })
+
+    describe('C2x2', () => {
+      it('is an alias of MatrixSpace(Complex)(2)', () => {
+        C2x2.should.be.eql(MatrixSpace(Complex)(2))
       })
     })
 

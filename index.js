@@ -27,6 +27,7 @@ require('strict-mode')(() => {
   var MatrixSpace = require('./src/MatrixSpace')
 
   exports.C = Complex
+  exports.C2x2 = MatrixSpace(Complex)(2)
   exports.H = Quaternion
   exports.R = Real
   exports.R2 = VectorSpace(Real)(2)

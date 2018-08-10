@@ -1,6 +1,6 @@
 # algebra
 
-> Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
+> means completeness and balancing, from the Arabic word الجبر
 
 > **New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
 

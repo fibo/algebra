@@ -17,7 +17,8 @@
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
-![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
+![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png)!
+[OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
 ## Table Of Contents
 
@@ -766,7 +767,8 @@ Complex numbers are a goldmine for mathematics, they are incredibly rich
 of deepest beauty: just as a divulgative example, take a look to the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), but please trust me,
 this is nothing compared to the divine nature of Complex numbers.
 
-![Mandelbrot Set](https://upload.wikimedia.org/wikipedia/commons/a/a4/Mandelbrot_sequence_new.gif)
+![Mandelbrot Set](http://g14n.info/algebra/images/Mandelbrot.gif)
+[OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
 The first thing I noticed when I started to study the Complex numbers is
 conjugation. Every Complex number has its conjugate, that is its simmetric

@@ -1,4 +1,4 @@
-const algebraRing = require('algebra-cyclic')
+const algebraRing = require('algebra-ring')
 const createScalar = require('./createScalar')
 
 /**

@@ -85,12 +85,12 @@ describe('API', () => {
 
   describe('Scalar', () => {
     const hexSum = (hex1, hex2) => {
-      const dec1 = parseInt(hex1, 16)
-      const dec2 = parseInt(hex2, 16)
+      const dec1 = parseInt(hex1, 16) % 256
+      const dec2 = parseInt(hex2, 16) % 256
 
-      const hex = parseInt((dec1 + dec2) % 256, 10).toString(16)
+      const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
 
-      return hex.padStart(2, '0')
+      return hexResult.padStart(2, '0')
     }
 
     const splitColor = (color) => {
@@ -118,7 +118,7 @@ describe('API', () => {
 
       const hexResult = parseInt((dec1 * dec2) / 255, 10).toString(16)
 
-      return hexResult.length === 1 ? `0${hexResult}` : hexResult
+      return hexResult.padStart(2, '0')
     }
 
     const colorMul = (color1, color2) => {
@@ -157,17 +157,17 @@ describe('API', () => {
           const decG = parseInt(g, 16)
           const decB = parseInt(b, 16)
 
-          const minusR = decR === 0 ? 0 : 256 - decR
-          const minusG = decG === 0 ? 0 : 256 - decG
-          const minusB = decB === 0 ? 0 : 256 - decB
+          const minusR = decR === 0 ? 0 : 255 - decR
+          const minusG = decG === 0 ? 0 : 255 - decG
+          const minusB = decB === 0 ? 0 : 255 - decB
 
           const hexMinusR = parseInt(minusR, 10).toString(16)
           const hexMinusG = parseInt(minusG, 10).toString(16)
           const hexMinusB = parseInt(minusB, 10).toString(16)
 
-          const paddedMinusR = hexMinusR.length === 1 ? `0${hexMinusR}` : hexMinusR
-          const paddedMinusG = hexMinusG.length === 1 ? `0${hexMinusG}` : hexMinusG
-          const paddedMinusB = hexMinusB.length === 1 ? `0${hexMinusB}` : hexMinusB
+          const paddedMinusR = hexMinusR.padStart(2, '0')
+          const paddedMinusG = hexMinusG.padStart(2, '0')
+          const paddedMinusB = hexMinusB.padStart(2, '0')
 
           return `${paddedMinusR}${paddedMinusG}${paddedMinusB}`
         },
@@ -183,17 +183,27 @@ describe('API', () => {
           const invG = parseInt(255 * 255 / decG, 10).toString(16)
           const invB = parseInt(255 * 255 / decB, 10).toString(16)
 
-          const paddedInvR = invR.length === 1 ? `0${invR}` : invR
-          const paddedInvG = invG.length === 1 ? `0${invG}` : invG
-          const paddedInvB = invB.length === 1 ? `0${invB}` : invB
+          const paddedInvR = invR.padStart(2, '0')
+          const paddedInvG = invG.padStart(2, '0')
+          const paddedInvB = invB.padStart(2, '0')
 
           return `${paddedInvR}${paddedInvG}${paddedInvB}`
         }
       }
     )
 
-    // TODO const green = new RGB('00ff00')
-    // const blue = new RGB('0000ff')
+    const green = new RGB('00ff00')
+    const blue = new RGB('0000ff')
+    const red = new RGB('ff0000')
+    const yellow = new RGB('ffff00')
+
+    const cyan = green.add(blue)
+
+    describe('Color instances example', () => {
+      it('works', () => {
+        cyan.data.should.be.equal('00ffff')
+      })
+    })
 
     describe('Scalar.one', () => {
       it('is a static attribute', () => {
@@ -214,9 +224,9 @@ describe('API', () => {
     })
 
     describe('scalar.order', () => {
-      it('is an attribute'/* , () => {
+      it('is an attribute', () => {
         green.order.should.eql(0)
-      } */)
+      })
     })
 
     describe('data', () => {

@@ -15,9 +15,16 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+## [v0.12.4] - 2018-04-16
+
 ### Added
 
 - Better equality for Real numbers.
+= Updated deps.
+
+## Fixed
+
+- Wrong import in *createScalar.js*.
 
 ## [v0.12.4] - 2018-04-16
 

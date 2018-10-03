@@ -453,7 +453,7 @@ max.data // [t, t, t, t, t, t, t, t]
 
 ### Scalar
 
-**NOTA BENE** The coloe space example in this section is still a *WiP*.
+**NOTA BENE** The color space example in this section is still a *WiP*.
 
 The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors,
 matrices, tensors. They are the underneath set enriched with a
@@ -484,10 +484,10 @@ const hexSum = (hex1, hex2) => {
   const dec2 = parseInt(hex2, 16) % 256
 
   // Sum modulo 256 and convert to hexadecimal.
-  const hex = parseInt((dec1 + dec2) % 256, 10).toString(16)
+  const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
 
   // Return left padded result.
-  return hex.padStart(2, '0')
+  return hexResult.padStart(2, '0')
 }
 ```
 
@@ -518,7 +518,7 @@ const colorSum = (color1, color2) => {
   const g = hexSum(g1, g2)
   const b = hexSum(b1, b2)
 
-  return [r, g, b]
+  return [r, g, b].join('')
 }
 ```
 
@@ -543,7 +543,7 @@ const hexMul = (hex1, hex2) => {
   const hexResult = parseInt((dec1 * dec2) / 255, 10).toString(16)
 
   // Return left padded result.
-  return hexResult.length === 1 ? `0${hexResult}` : hexResult
+  return hex.padStart(2, '0')
 }
 ```
 
@@ -559,7 +559,7 @@ const colorMul = (color1, color2) => {
   const g = hexMul(g1, g2)
   const b = hexMul(b1, b2)
 
-  return [r, g, b]
+  return [r, g, b].join('')
 }
 ```
 
@@ -594,9 +594,9 @@ const RGB = algebra.Scalar(
       const hexMinusG = parseInt(minusG, 10).toString(16)
       const hexMinusB = parseInt(minusB, 10).toString(16)
 
-      const paddedMinusR = hexMinusR.length === 1 ? `0${hexMinusR}` : hexMinusR
-      const paddedMinusG = hexMinusG.length === 1 ? `0${hexMinusG}` : hexMinusG
-      const paddedMinusB = hexMinusB.length === 1 ? `0${hexMinusB}` : hexMinusB
+      const paddedMinusR = hexMinusR.padStart(2, '0')
+      const paddedMinusG = hexMinusG.padStart(2, '0')
+      const paddedMinusB = hexMinusB.padStart(2, '0')
 
       return `${paddedMinusR}${paddedMinusG}${paddedMinusB}`
     },
@@ -612,9 +612,9 @@ const RGB = algebra.Scalar(
       const invG = parseInt(255 * 255 / decG, 10).toString(16)
       const invB = parseInt(255 * 255 / decB, 10).toString(16)
 
-      const paddedInvR = invR.length === 1 ? `0${invR}` : invR
-      const paddedInvG = invG.length === 1 ? `0${invG}` : invG
-      const paddedInvB = invB.length === 1 ? `0${invB}` : invB
+      const paddedInvR = invR.padStart(2, '0')
+      const paddedInvG = invG.padStart(2, '0')
+      const paddedInvB = invB.padStart(2, '0')
 
       return `${paddedInvR}${paddedInvG}${paddedInvB}`
     },
@@ -628,6 +628,13 @@ and complain if something looks wrong. Now we can create color instances
 ```javascript
 const green = new RGB('00ff00')
 const blue = new RGB('0000ff')
+```
+
+And as you may expect, you can do operations with them
+
+```javascript
+const cyan = green.add(blue)
+cyan.data // '00ffff'
 ```
 
 #### Scalar attributes

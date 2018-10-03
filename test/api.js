@@ -194,8 +194,6 @@ describe('API', () => {
 
     const green = new RGB('00ff00')
     const blue = new RGB('0000ff')
-    const red = new RGB('ff0000')
-    const yellow = new RGB('ffff00')
 
     const cyan = green.add(blue)
 

@@ -679,6 +679,14 @@ green.order // 0
 
 ##### `scalar.data`
 
+The *data* attribute holds the raw data underneath our scalar instance.
+
+```javascript
+green.data // '00ff00'
+blue.data // '0000ff'
+cyan.data // '00ffff'
+```
+
 #### Scalar operators
 
 #### Scalar set operators
@@ -738,6 +746,8 @@ green.order // 0
 #### Scalar conjugation
 
 ##### `Scalar.conjugation(scalar)`
+
+Is a static method
 
 ##### `scalar.conjugation()`
 

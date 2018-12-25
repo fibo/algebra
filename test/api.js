@@ -227,51 +227,91 @@ describe('API', () => {
       })
     })
 
-    describe('data', () => {
+    describe('scalar.data', () => {
+      it('works', () => {
+        green.data.should.eql('00ff00')
+        blue.data.should.eql('0000ff')
+        cyan.data.should.eql('00ffff')
+      })
+    })
+
+    describe('Scalar.contains', () => {
       it('works')
     })
 
-    describe('contains', () => {
+    describe('scalar.belongsTo', () => {
       it('works')
     })
 
-    describe('belongsTo', () => {
+    describe('Scalar.equality', () => {
       it('works')
     })
 
-    describe('equality', () => {
+    describe('scalar.equality', () => {
       it('works')
     })
 
-    describe('disequality', () => {
+    describe('Scalar.disequality', () => {
       it('works')
     })
 
-    describe('addition', () => {
+    describe('scalar.disequality', () => {
       it('works')
     })
 
-    describe('subtraction', () => {
+    describe('Scalar.addition', () => {
       it('works')
     })
 
-    describe('multiplication', () => {
+    describe('scalar.addition', () => {
       it('works')
     })
 
-    describe('division', () => {
+    describe('Scalar.subtraction', () => {
       it('works')
     })
 
-    describe('negation', () => {
+    describe('scalar.subtraction', () => {
       it('works')
     })
 
-    describe('inversion', () => {
+    describe('Scalar.multiplication', () => {
       it('works')
     })
 
-    describe('conjugation', () => {
+    describe('scalar.multiplication', () => {
+      it('works')
+    })
+
+    describe('Scalar.division', () => {
+      it('works')
+    })
+
+    describe('scalar.division', () => {
+      it('works')
+    })
+
+    describe('Scalar.negation', () => {
+      it('works')
+    })
+
+    describe('scalar.negation', () => {
+      it('works')
+    })
+
+    describe('Scalar.inversion', () => {
+      it('works')
+    })
+
+    describe('scalar.inversion', () => {
+      it('works')
+    })
+
+    describe('Scalar.conjugation', () => {
+      it('works')
+    })
+
+    describe('scalar.conjugation', () => {
       it('works')
     })
   })

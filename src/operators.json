@@ -28,7 +28,8 @@
       "eq"
     ],
     "disequality": [
-      "notEqual"
+      "notEqual",
+      "ne"
     ],
     "addition": [
       "add"

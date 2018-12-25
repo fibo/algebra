@@ -213,8 +213,8 @@ Create a matrix.
 //       | 1 0 |
 //
 const m1 = new R3x2([1, 1,
-                   0, 1,
-                   1, 0])
+                     0, 1,
+                     1, 0])
 ```
 
 Multiply m1 by v1, the result is a vector v3 with dimension 3.
@@ -337,10 +337,10 @@ You can also create element instances, and do any kind of operations.
 const x = new Alphanum('a')
 
 const y = x.add('c', 'a', 't')
-         .mul('i', 's')
-         .add('o', 'n')
-         .sub('t', 'h', 'e')
-         .div('t', 'a', 'b', 'l', 'e')
+           .mul('i', 's')
+           .add('o', 'n')
+           .sub('t', 'h', 'e')
+           .div('t', 'a', 'b', 'l', 'e')
 
 y.data // 's'
 ```

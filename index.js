@@ -36,5 +36,4 @@ require('strict-mode')(() => {
 
   exports.VectorSpace = VectorSpace
   exports.MatrixSpace = MatrixSpace
-  exports.TensorSpace = require('./src/TensorSpace')
 })

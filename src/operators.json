@@ -6,8 +6,9 @@
     ],
     "categories": [
       "binary",
-      "comparison"
+      "scalar"
     ],
+    "isClosed": false,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "equality"
@@ -19,35 +20,45 @@
     ],
     "categories": [
       "binary",
-      "comparison"
+      "scalar"
     ],
+    "isClosed": false,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "disequality"
   },
   {
-    "aliases": [],
-    "categories": [
-      "set"
+    "aliases": [
     ],
+    "categories": [
+      "scalar",
+      "unary"
+    ],
+    "isClosed": false,
     "isInstanceMethod": false,
     "isStaticMethod": true,
     "name": "contains"
   },
   {
-    "aliases": [],
-    "categories": [
-      "set"
+    "aliases": [
     ],
+    "categories": [
+      "scalar",
+      "unary"
+    ],
+    "isClosed": false,
     "isInstanceMethod": false,
     "isStaticMethod": true,
     "name": "notContains"
   },
   {
-    "aliases": [],
-    "categories": [
-      "set"
+    "aliases": [
     ],
+    "categories": [
+      "scalar",
+      "unary"
+    ],
+    "isClosed": false,
     "isInstanceMethod": true,
     "isStaticMethod": false,
     "name": "belongsTo"
@@ -58,8 +69,11 @@
     ],
     "categories": [
       "binary",
-      "group"
+      "group",
+      "matrix",
+      "scalar"
     ],
+    "isClosed": true,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "addition"
@@ -69,9 +83,10 @@
       "neg"
     ],
     "categories": [
-      "group",
+      "scalar",
       "unary"
     ],
+    "isClosed": true,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "negation"
@@ -82,8 +97,11 @@
     ],
     "categories": [
       "binary",
-      "group"
+      "group",
+      "matrix",
+      "scalar"
     ],
+    "isClosed": true,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "subtraction"
@@ -94,9 +112,9 @@
     ],
     "categories": [
       "binary",
-      "group",
-      "ring"
+      "scalar"
     ],
+    "isClosed": true,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "multiplication"
@@ -107,21 +125,39 @@
     ],
     "categories": [
       "binary",
-      "group",
-      "ring"
+      "matrix",
+      "scalar"
     ],
+    "isClosed": true,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "division"
   },
   {
     "aliases": [
+      "inv"
+    ],
+    "categories": [
+      "matrix",
+      "scalar",
+      "unary"
+    ],
+    "isClosed": true,
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "inversion"
+  },
+  {
+    "aliases": [
       "conj"
     ],
     "categories": [
-      "algebra",
+      "matrix",
+      "scalar",
+      "vector",
       "unary"
     ],
+    "isClosed": true,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "conjugation"
@@ -134,6 +170,7 @@
       "matrix",
       "unary"
     ],
+    "isClosed": true,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "transposition"
@@ -147,8 +184,60 @@
       "binary",
       "vector"
     ],
+    "isClosed": false,
     "isInstanceMethod": true,
     "isStaticMethod": true,
     "name": "scalarProduct"
+  },
+  {
+    "aliases": [
+      "det"
+    ],
+    "categories": [
+      "unary",
+      "matrix"
+    ],
+    "isClosed": false,
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "determinant"
+  },
+  {
+    "aliases": [
+    ],
+    "categories": [
+      "unary",
+      "vector"
+    ],
+    "isClosed": false,
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "norm"
+  },
+  {
+    "aliases": [
+      "adj"
+    ],
+    "categories": [
+      "unary",
+      "matrix"
+    ],
+    "isClosed": true,
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "adjoint"
+  },
+  {
+    "aliases": [
+      "cross"
+    ],
+    "categories": [
+      "binary",
+      "vector"
+    ],
+    "isClosed": true,
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "crossProduct"
   }
 ]

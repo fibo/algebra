@@ -12,8 +12,7 @@ const toData = require('./toData')
 function createScalar (ring) {
   const attributes = {
     zero: ring.zero,
-    one: ring.one,
-    order: 0
+    one: ring.one
   }
 
   /**
@@ -36,63 +35,71 @@ function createScalar (ring) {
 
   staticProps(Scalar)(attributes)
 
-  const staticNary = (operator) => {
-    Scalar[operator] = function () {
-      const operands = [].slice.call(arguments).map(toData)
-      return coerced(ring[operator]).apply(null, operands)
-    }
-  }
-
   const unaryOperators = operators.inversion
 
-  unaryOperators.push('conjugation')
+  const scalarOperators = ({ categories }) => categories.includes('scalar')
 
-  unaryOperators.forEach((operator) => {
-    Scalar[operator] = function (operand) {
-      return ring[operator](toData(operand))
+  operators.filter(scalarOperators).forEach(operator => {
+    const isBinary = operator.categories.includes('binary')
+    const isClosed = operator.isClosed
+    const isInstanceMethod = operator.isInstanceMethod
+    const isStaticMethod = operator.isStaticMethod
+    const isUnary = operator.categories.includes('unary')
+    const operatorName = operator.name
+
+    if (isBinary) {
+      if (isInstanceMethod) {
+        Scalar.prototype[operatorName] = function () {
+          const args = [].slice.call(arguments)
+          const operands = [this.data].concat(args)
+
+          const data = coerced(ring[operatorName]).apply(null, operands)
+
+          if (isClosed) {
+            return new Scalar(data)
+          } else {
+            return data
+          }
+        }
+      }
+
+      if (isStaticMethod) {
+        Scalar[operatorName] = function () {
+          const operands = [].slice.call(arguments).map(toData)
+
+          return coerced(ring[operatorName]).apply(null, operands)
+        }
+      }
     }
 
-    Scalar.prototype[operator] = function () {
-      const data = Scalar[operator](this.data)
+    if (isUnary) {
+      if (isInstanceMethod) {
+        Scalar.prototype[operatorName] = function () {
+          const data = Scalar[operatorName](this.data)
 
-      return new Scalar(data)
+          if (isClosed) {
+            return new Scalar(data)
+          } else {
+            return data
+          }
+        }
+      }
+
+      if (isStaticMethod) {
+        Scalar[operatorName] = function (operand) {
+          return ring[operatorName](toData(operand))
+        }
+      }
     }
-  })
 
-  operators.group.concat(operators.ring).forEach((operator) => {
-    staticNary(operator)
+    operator.aliases.forEach(alias => {
+      if (isInstanceMethod) {
+        Scalar.prototype[alias] = Scalar.prototype[operatorName]
+      }
 
-    Scalar.prototype[operator] = function () {
-      const args = [].slice.call(arguments)
-      const operands = [this.data].concat(args)
-
-      const data = Scalar[operator].apply(null, operands)
-
-      return new Scalar(data)
-    }
-  })
-
-  operators.set.forEach((operator) => {
-    staticNary(operator)
-  })
-
-  operators.comparison.forEach((operator) => {
-    staticNary(operator)
-
-    Scalar.prototype[operator] = function () {
-      const args = [].slice.call(arguments)
-      const operands = [this.data].concat(args)
-
-      const bool = Scalar[operator].apply(null, operands)
-
-      return bool
-    }
-  })
-
-  Object.keys(operators.aliasesOf).forEach((operator) => {
-    operators.aliasesOf[operator].forEach((alias) => {
-      Scalar[alias] = Scalar[operator]
-      Scalar.prototype[alias] = Scalar.prototype[operator]
+      if (isStaticMethod) {
+        Scalar[alias] = Scalar[operatorName]
+      }
     })
   })
 

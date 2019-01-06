@@ -1,9 +1,7 @@
-const inherits = require('inherits')
 const itemsPool = require('./itemsPool')
 const matrixMultiplication = require('matrix-multiplication')
 const operators = require('./operators.json')
 const staticProps = require('static-props')
-const TensorSpace = require('./TensorSpace')
 const toData = require('./toData')
 
 /**
@@ -33,8 +31,6 @@ function VectorSpace (Scalar) {
 
   return function (dimension) {
     const indices = [dimension]
-
-    const AbstractVector = TensorSpace(Scalar)(indices)
 
     /**
      * Computes the cross product of two vectors.
@@ -120,7 +116,6 @@ function VectorSpace (Scalar) {
      */
 
     function scalarProduct (vector1, vector2) {
-      // TODO use tensor product and then contraction (trace)
       const vectorData1 = toData(vector1)
       const vectorData2 = toData(vector2)
 
@@ -142,15 +137,11 @@ function VectorSpace (Scalar) {
      */
 
     function Vector (data) {
-      AbstractVector.call(this, data)
-
       staticProps(this)({
         norm: norm(data),
         dimension
       })
     }
-
-    inherits(Vector, AbstractVector)
 
     staticProps(Vector)({ dimension })
 
@@ -201,31 +192,10 @@ function VectorSpace (Scalar) {
     Vector.norm = norm
     Vector.scalarProduct = scalarProduct
 
-    operators.comparison.forEach((operator) => {
-      Vector[operator] = AbstractVector[operator]
-    })
-
-    operators.set.forEach((operator) => {
-      Vector[operator] = AbstractVector[operator]
-    })
-
-    operators.group.forEach((operator) => {
-      Vector[operator] = AbstractVector[operator]
-    })
-
     // Aliases
 
     Vector.mul = multiplicationByMatrix
     Vector.prototype.mul = Vector.prototype.multiplication
-
-    const myOperators = ['scalarProduct'].concat(operators.group)
-
-    myOperators.forEach((operator) => {
-      operators.aliasesOf[operator].forEach((alias) => {
-        Vector[alias] = Vector[operator]
-        Vector.prototype[alias] = Vector.prototype[operator]
-      })
-    })
 
     if (dimension === 3) {
       Vector.cross = crossProduct

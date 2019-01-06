@@ -15,7 +15,6 @@ describe('API', () => {
   const Real = algebra.Real
   const CompositionAlgebra = algebra.CompositionAlgebra
   const MatrixSpace = algebra.MatrixSpace
-  const TensorSpace = algebra.TensorSpace
   const VectorSpace = algebra.VectorSpace
 
   const Boole = algebra.Boole
@@ -212,18 +211,6 @@ describe('API', () => {
     describe('Scalar.zero', () => {
       it('is a static attribute', () => {
         RGB.zero.should.be.equal('000000')
-      })
-    })
-
-    describe('Scalar.order', () => {
-      it('is a static attribute', () => {
-        RGB.order.should.be.equal(0)
-      })
-    })
-
-    describe('scalar.order', () => {
-      it('is an attribute', () => {
-        green.order.should.eql(0)
       })
     })
 
@@ -482,23 +469,6 @@ describe('API', () => {
         const vector3 = vector1.crossProduct(vector2)
 
         vector3.data.should.deepEqual([-15, -2, 39])
-      })
-    })
-  })
-
-  describe('Tensor', () => {
-    describe('equality', () => {
-      it('works', () => {
-        const T2x2x2 = TensorSpace(Real)([2, 2, 2])
-
-        const tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
-        const tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
-
-        T2x2x2.equality(tensor1, tensor1).should.be.ok()
-        T2x2x2.equality(tensor1, tensor2).should.not.be.ok()
-
-        tensor1.equality(tensor1).should.be.ok()
-        tensor1.equality(tensor2).should.not.be.ok()
       })
     })
   })

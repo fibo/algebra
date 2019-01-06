@@ -1,12 +1,10 @@
 const determinant = require('laplace-determinant')
-const inherits = require('inherits')
 const itemsPool = require('./itemsPool')
 const matrixMultiplication = require('matrix-multiplication')
 const multiDimArrayIndex = require('multidim-array-index')
 const no = require('not-defined')
 const operators = require('./operators.json')
 const staticProps = require('static-props')
-const TensorSpace = require('./TensorSpace')
 const tensorContraction = require('tensor-contraction')
 const toData = require('./toData')
 
@@ -40,8 +38,6 @@ function MatrixSpace (Scalar) {
 
     const isSquare = (numRows === numCols)
     const indices = [numRows, numCols]
-
-    const AbstractMatrix = TensorSpace(Scalar)(indices)
 
     /**
      * Calculates the matrix trace.
@@ -105,11 +101,74 @@ function MatrixSpace (Scalar) {
      */
 
     function Matrix (data) {
-      AbstractMatrix.call(this, data)
-
       staticProps(this)({
+        data,
         numCols,
         numRows
+      }, true)
+
+      function staticGroupBinary (operatorName) {
+        return function (leftMatrix, rightMatrix) {
+          if (leftMatrix.numCols === rightMatrix.numCols && leftMatrix.numRows === rightMatrix.numRows) {
+            const { numCols, numRows } = leftMatrix
+            const operands = []
+            const result = []
+
+            for (let i = 0; i < numRows * numCols; i++) {
+              for (let j = 0; j < arguments.length; j++) {
+                operands.push(toData(arguments[j])[i])
+              }
+
+              result.push(Scalar[operatorName].apply(null, operands))
+            }
+
+            return result
+          } else {
+            return new TypeError('Incompatible matrices')
+          }
+        }
+      }
+
+      const matrixOperators = ({ categories }) => categories.includes('matrix')
+      const groupOperators = ({ categories }) => categories.includes('group')
+
+      operators.filter(matrixOperators).filter(groupOperators).forEach(operator => {
+        const isBinary = operator.categories.includes('binary')
+        const isClosed = operator.isClosed
+        const isInstanceMethod = operator.isInstanceMethod
+        const isStaticMethod = operator.isStaticMethod
+        const isUnary = operator.categories.includes('unary')
+        const operatorName = operator.name
+
+        if (isBinary) {
+          if (isInstanceMethod) {
+            Matrix.prototype[operatorName] = function () {
+              const args = [].slice.call(arguments)
+              const operands = [this.data].concat(args)
+
+              const data = staticGroupBinary(operatorName).apply(null, operands)
+
+              if (isClosed) {
+                return new Matrix(data)
+              } else {
+                return data
+              }
+            }
+          }
+
+          if (isStaticMethod) {
+            Matrix[operatorName] = staticGroupBinary(operatorName)
+          }
+        }
+
+        if (isUnary) {
+          if (isInstanceMethod) {
+
+          }
+
+          if (isStaticMethod) {
+          }
+        }
       })
 
       function computeDeterminant () {
@@ -124,8 +183,7 @@ function MatrixSpace (Scalar) {
         })
 
         staticProps(this)({
-          determinant: computeDeterminant,
-          det: computeDeterminant
+          determinant: computeDeterminant
         })
       }
 
@@ -147,8 +205,6 @@ function MatrixSpace (Scalar) {
         tr: transposed
       })
     }
-
-    inherits(Matrix, AbstractMatrix)
 
     if (isSquare) {
       Matrix.trace = trace
@@ -173,20 +229,20 @@ function MatrixSpace (Scalar) {
 
     // Aliases
 
-    Matrix.tr = Matrix.transpose
-    Matrix.mul = Matrix.multiplication
+    operators.filter(matrixOperators).forEach(operator => {
+      const isInstanceMethod = operator.isInstanceMethod
+      const isStaticMethod = operator.isStaticMethod
+      const operatorName = operator.name
 
-    Matrix.prototype.mul = Matrix.prototype.multiplication
+      operator.aliases.forEach(alias => {
+        if (isInstanceMethod) {
+          Matrix.prototype[alias] = Matrix.prototype[operatorName]
+        }
 
-    operators.group.forEach((operator) => {
-      operators.aliasesOf[operator].forEach((alias) => {
-        Matrix[alias] = Matrix[operator]
-        Matrix.prototype[alias] = Matrix.prototype[operator]
+        if (isStaticMethod) {
+          Matrix[alias] = Matrix[operatorName]
+        }
       })
-    })
-
-    operators.group.forEach((operator) => {
-      Matrix[operator] = AbstractMatrix[operator]
     })
 
     staticProps(Matrix)({

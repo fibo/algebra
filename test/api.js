@@ -236,11 +236,16 @@ describe('API', () => {
     })
 
     describe('Scalar.contains', () => {
-      it('works')
+      it('works', () => {
+        RGB.contains('ffffff').should.be.ok()
+        RGB.contains('not a color').should.be.not.ok()
+      })
     })
 
     describe('scalar.belongsTo', () => {
-      it('works')
+      it('works', () => {
+        green.belongsTo(RGB).should.be.ok()
+      })
     })
 
     describe('Scalar.equality', () => {

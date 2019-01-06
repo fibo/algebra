@@ -3,7 +3,7 @@ title: algebra
 ---
 # algebra
 
-> Vectors, Matrices; Real, Complex, Quaternion; custom groups and rings for Node.js
+> means completeness and balancing, from the Arabic word الجبر
 
 > **New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
 
@@ -20,7 +20,8 @@ title: algebra
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
-![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png) ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
+![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png)
+![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
 ## Table Of Contents
 
@@ -215,8 +216,8 @@ Create a matrix.
 //       | 1 0 |
 //
 const m1 = new R3x2([1, 1,
-                   0, 1,
-                   1, 0])
+                     0, 1,
+                     1, 0])
 ```
 
 Multiply m1 by v1, the result is a vector v3 with dimension 3.
@@ -339,10 +340,10 @@ You can also create element instances, and do any kind of operations.
 const x = new Alphanum('a')
 
 const y = x.add('c', 'a', 't')
-         .mul('i', 's')
-         .add('o', 'n')
-         .sub('t', 'h', 'e')
-         .div('t', 'a', 'b', 'l', 'e')
+           .mul('i', 's')
+           .add('o', 'n')
+           .sub('t', 'h', 'e')
+           .div('t', 'a', 'b', 'l', 'e')
 
 y.data // 's'
 ```
@@ -455,7 +456,7 @@ max.data // [t, t, t, t, t, t, t, t]
 
 ### Scalar
 
-**NOTA BENE** The coloe space example in this section is still a *WiP*.
+**NOTA BENE** The color space example in this section is still a *WiP*.
 
 The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors,
 matrices, tensors. They are the underneath set enriched with a
@@ -486,10 +487,10 @@ const hexSum = (hex1, hex2) => {
   const dec2 = parseInt(hex2, 16) % 256
 
   // Sum modulo 256 and convert to hexadecimal.
-  const hex = parseInt((dec1 + dec2) % 256, 10).toString(16)
+  const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
 
   // Return left padded result.
-  return hex.padStart(2, '0')
+  return hexResult.padStart(2, '0')
 }
 ```
 
@@ -520,7 +521,7 @@ const colorSum = (color1, color2) => {
   const g = hexSum(g1, g2)
   const b = hexSum(b1, b2)
 
-  return [r, g, b]
+  return [r, g, b].join('')
 }
 ```
 
@@ -545,7 +546,7 @@ const hexMul = (hex1, hex2) => {
   const hexResult = parseInt((dec1 * dec2) / 255, 10).toString(16)
 
   // Return left padded result.
-  return hexResult.length === 1 ? `0${hexResult}` : hexResult
+  return hex.padStart(2, '0')
 }
 ```
 
@@ -561,7 +562,7 @@ const colorMul = (color1, color2) => {
   const g = hexMul(g1, g2)
   const b = hexMul(b1, b2)
 
-  return [r, g, b]
+  return [r, g, b].join('')
 }
 ```
 
@@ -596,9 +597,9 @@ const RGB = algebra.Scalar(
       const hexMinusG = parseInt(minusG, 10).toString(16)
       const hexMinusB = parseInt(minusB, 10).toString(16)
 
-      const paddedMinusR = hexMinusR.length === 1 ? `0${hexMinusR}` : hexMinusR
-      const paddedMinusG = hexMinusG.length === 1 ? `0${hexMinusG}` : hexMinusG
-      const paddedMinusB = hexMinusB.length === 1 ? `0${hexMinusB}` : hexMinusB
+      const paddedMinusR = hexMinusR.padStart(2, '0')
+      const paddedMinusG = hexMinusG.padStart(2, '0')
+      const paddedMinusB = hexMinusB.padStart(2, '0')
 
       return `${paddedMinusR}${paddedMinusG}${paddedMinusB}`
     },
@@ -614,9 +615,9 @@ const RGB = algebra.Scalar(
       const invG = parseInt(255 * 255 / decG, 10).toString(16)
       const invB = parseInt(255 * 255 / decB, 10).toString(16)
 
-      const paddedInvR = invR.length === 1 ? `0${invR}` : invR
-      const paddedInvG = invG.length === 1 ? `0${invG}` : invG
-      const paddedInvB = invB.length === 1 ? `0${invB}` : invB
+      const paddedInvR = invR.padStart(2, '0')
+      const paddedInvG = invG.padStart(2, '0')
+      const paddedInvB = invB.padStart(2, '0')
 
       return `${paddedInvR}${paddedInvG}${paddedInvB}`
     },
@@ -630,6 +631,13 @@ and complain if something looks wrong. Now we can create color instances
 ```javascript
 const green = new RGB('00ff00')
 const blue = new RGB('0000ff')
+```
+
+And as you may expect, you can do operations with them
+
+```javascript
+const cyan = green.add(blue)
+cyan.data // '00ffff'
 ```
 
 #### Scalar attributes
@@ -673,6 +681,14 @@ green.order // 0
 ```
 
 ##### `scalar.data`
+
+The *data* attribute holds the raw data underneath our scalar instance.
+
+```javascript
+green.data // '00ff00'
+blue.data // '0000ff'
+cyan.data // '00ffff'
+```
 
 #### Scalar operators
 
@@ -734,6 +750,8 @@ green.order // 0
 
 ##### `Scalar.conjugation(scalar)`
 
+Is a static method
+
 ##### `scalar.conjugation()`
 
 ### Real
@@ -769,7 +787,8 @@ Complex numbers are a goldmine for mathematics, they are incredibly rich
 of deepest beauty: just as a divulgative example, take a look to the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), but please trust me,
 this is nothing compared to the divine nature of Complex numbers.
 
-![Mandelbrot Set](https://upload.wikimedia.org/wikipedia/commons/a/a4/Mandelbrot_sequence_new.gif)
+![Mandelbrot Set](http://g14n.info/algebra/images/Mandelbrot.gif)
+[OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
 The first thing I noticed when I started to study the Complex numbers is
 conjugation. Every Complex number has its conjugate, that is its simmetric

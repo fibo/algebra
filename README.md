@@ -693,7 +693,20 @@ cyan.data // '00ffff'
 
 ##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
 
+This static method checks that the given argument is contained in the scalar field that was defined.
+
+```javascript
+RGB.contains('ffffff') // true
+RGB.contains('not a color') // false
+```
+
 ##### `scalar1.belongsTo(Scalar)`
+
+This is a class method that checks a scalar instance is contained in the given scalar field.
+
+```javascript
+green.belongsTo(RGB) // true
+```
 
 #### Scalar equality
 

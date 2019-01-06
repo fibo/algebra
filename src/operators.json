@@ -1,60 +1,154 @@
-{
-  "comparison": [
-    "equality",
-    "disequality"
-  ],
-  "set": [
-    "contains",
-    "notContains"
-  ],
-  "group": [
-    "addition",
-    "subtraction"
-  ],
-  "ring": [
-    "multiplication",
-    "division"
-  ],
-  "inversion": [
-    "inversion",
-    "negation"
-  ],
-  "aliasesOf": {
-    "conjugation": [
-      "conj"
+[
+  {
+    "aliases": [
+      "eq",
+      "equal"
     ],
-    "equality": [
-      "equal",
-      "eq"
+    "categories": [
+      "binary",
+      "comparison"
     ],
-    "disequality": [
-      "notEqual",
-      "ne"
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "equality"
+  },
+  {
+    "aliases": [
+      "ne",
+      "notEqual"
     ],
-    "addition": [
+    "categories": [
+      "binary",
+      "comparison"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "disequality"
+  },
+  {
+    "aliases": [],
+    "categories": [
+      "set"
+    ],
+    "isInstanceMethod": false,
+    "isStaticMethod": true,
+    "name": "contains"
+  },
+  {
+    "aliases": [],
+    "categories": [
+      "set"
+    ],
+    "isInstanceMethod": false,
+    "isStaticMethod": true,
+    "name": "notContains"
+  },
+  {
+    "aliases": [],
+    "categories": [
+      "set"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": false,
+    "name": "belongsTo"
+  },
+  {
+    "aliases": [
       "add"
     ],
-    "multiplication": [
-      "mul"
+    "categories": [
+      "binary",
+      "group"
     ],
-    "division": [
-      "div"
-    ],
-    "scalarProduct": [
-      "dotProduct",
-      "dot"
-    ],
-    "subtraction": [
-      "sub"
-    ],
-    "inversion": [
-      "inv"
-    ],
-    "negation": [
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "addition"
+  },
+  {
+    "aliases": [
       "neg"
     ],
-    "transpose": [
+    "categories": [
+      "group",
+      "unary"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "negation"
+  },
+  {
+    "aliases": [
+      "sub"
+    ],
+    "categories": [
+      "binary",
+      "group"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "subtraction"
+  },
+  {
+    "aliases": [
+      "mul"
+    ],
+    "categories": [
+      "binary",
+      "group",
+      "ring"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "multiplication"
+  },
+  {
+    "aliases": [
+      "div"
+    ],
+    "categories": [
+      "binary",
+      "group",
+      "ring"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "division"
+  },
+  {
+    "aliases": [
+      "conj"
+    ],
+    "categories": [
+      "algebra",
+      "unary"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "conjugation"
+  },
+  {
+    "aliases": [
       "tr"
-    ]
+    ],
+    "categories": [
+      "matrix",
+      "unary"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "transposition"
+  },
+  {
+    "aliases": [
+      "dot",
+      "dotProduct"
+    ],
+    "categories": [
+      "binary",
+      "vector"
+    ],
+    "isInstanceMethod": true,
+    "isStaticMethod": true,
+    "name": "scalarProduct"
   }
-}
+]

@@ -791,8 +791,7 @@ Complex numbers are a goldmine for mathematics, they are incredibly rich
 of deepest beauty: just as a divulgative example, take a look to the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), but please trust me,
 this is nothing compared to the divine nature of Complex numbers.
 
-![Mandelbrot Set](http://g14n.info/algebra/images/Mandelbrot.gif)
-[OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
+![Mandelbrot Set](http://g14n.info/algebra/images/Mandelbrot.gif){:.responsive}
 
 The first thing I noticed when I started to study the Complex numbers is
 conjugation. Every Complex number has its conjugate, that is its simmetric

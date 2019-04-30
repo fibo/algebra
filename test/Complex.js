@@ -1,15 +1,13 @@
-var algebra = require('algebra')
+const algebra = require('algebra')
 
-var C = algebra.Complex
+const C = algebra.Complex
 
-var methodBinaryOperator = require('./features/methodBinaryOperator')
-var methodUnaryOperator = require('./features/methodUnaryOperator')
-var staticBinaryOperator = require('./features/staticBinaryOperator')
-var staticUnaryOperator = require('./features/staticUnaryOperator')
+const methodBinaryOperator = require('./features/methodBinaryOperator')
+const methodUnaryOperator = require('./features/methodUnaryOperator')
+const staticBinaryOperator = require('./features/staticBinaryOperator')
+const staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('Complex', () => {
-  var operator
-
   describe('zero', () => {
     it('is static', () => {
       C.zero.should.eql([0, 0])
@@ -23,7 +21,7 @@ describe('Complex', () => {
   })
 
   describe('addition', () => {
-    operator = 'addition'
+    const operator = 'addition'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [4, 4]))
 
@@ -31,7 +29,7 @@ describe('Complex', () => {
   })
 
   describe('subtraction', () => {
-    operator = 'subtraction'
+    const operator = 'subtraction'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, 3], [0, -2]))
 
@@ -39,7 +37,7 @@ describe('Complex', () => {
   })
 
   describe('multiplication', () => {
-    operator = 'multiplication'
+    const operator = 'multiplication'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 1], [2, -1], [5, 0]))
 
@@ -47,7 +45,7 @@ describe('Complex', () => {
   })
 
   describe('division', () => {
-    operator = 'division'
+    const operator = 'division'
 
     it('is a static method', staticBinaryOperator(C, operator, [2, 4], [2, 0], [1, 2]))
 
@@ -55,7 +53,7 @@ describe('Complex', () => {
   })
 
   describe('negation', () => {
-    operator = 'negation'
+    const operator = 'negation'
 
     it('is a static method', staticUnaryOperator(C, operator, [-2, 1], [2, -1]))
 
@@ -63,7 +61,7 @@ describe('Complex', () => {
   })
 
   describe('conjugation', () => {
-    operator = 'conjugation'
+    const operator = 'conjugation'
 
     it('is a static method', staticUnaryOperator(C, operator, [2, 1], [2, -1]))
 

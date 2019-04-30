@@ -25,6 +25,10 @@ const toData = require('./toData')
 function MatrixSpace (Scalar) {
   const contraction = tensorContraction.bind(null, Scalar.addition)
 
+  // Operator filters.
+  const matrixOperators = ({ categories }) => categories.includes('matrix')
+  const groupOperators = ({ categories }) => categories.includes('group')
+
   /**
    * @param {Number} numRows
    * @param {Number} [numCols] defaults to a square matrix.
@@ -96,6 +100,34 @@ function MatrixSpace (Scalar) {
       return transposedData
     }
 
+    function staticGroupBinary (operatorName) {
+      return function (leftMatrix, rightMatrix) {
+        if (leftMatrix.numCols === rightMatrix.numCols && leftMatrix.numRows === rightMatrix.numRows) {
+          const { numCols, numRows } = leftMatrix
+          const operands = []
+          const result = []
+
+          for (let i = 0; i < numRows * numCols; i++) {
+            for (let j = 0; j < arguments.length; j++) {
+              operands.push(toData(arguments[j])[i])
+            }
+
+            result.push(Scalar[operatorName].apply(null, operands))
+          }
+
+          return result
+        } else {
+          return new TypeError('Incompatible matrices')
+        }
+      }
+    }
+
+    function computeDeterminant () {
+      const det = determinant(data, Scalar, numRows)
+
+      return new Scalar(det)
+    }
+
     /**
      * Matrix element.
      */
@@ -106,31 +138,6 @@ function MatrixSpace (Scalar) {
         numCols,
         numRows
       }, true)
-
-      function staticGroupBinary (operatorName) {
-        return function (leftMatrix, rightMatrix) {
-          if (leftMatrix.numCols === rightMatrix.numCols && leftMatrix.numRows === rightMatrix.numRows) {
-            const { numCols, numRows } = leftMatrix
-            const operands = []
-            const result = []
-
-            for (let i = 0; i < numRows * numCols; i++) {
-              for (let j = 0; j < arguments.length; j++) {
-                operands.push(toData(arguments[j])[i])
-              }
-
-              result.push(Scalar[operatorName].apply(null, operands))
-            }
-
-            return result
-          } else {
-            return new TypeError('Incompatible matrices')
-          }
-        }
-      }
-
-      const matrixOperators = ({ categories }) => categories.includes('matrix')
-      const groupOperators = ({ categories }) => categories.includes('group')
 
       operators.filter(matrixOperators).filter(groupOperators).forEach(operator => {
         const isBinary = operator.categories.includes('binary')
@@ -170,12 +177,6 @@ function MatrixSpace (Scalar) {
           }
         }
       })
-
-      function computeDeterminant () {
-        const det = determinant(data, Scalar, numRows)
-
-        return new Scalar(det)
-      }
 
       if (isSquare) {
         staticProps(this)({

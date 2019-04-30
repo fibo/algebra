@@ -44,7 +44,6 @@ title: algebra
   - [Common spaces](#common-spaces)
   - [Vector](#vector)
   - [Matrix](#matrix)
-  - [Tensor](#tensor)
 * [License](#license)
 
 ## Status
@@ -64,14 +63,12 @@ Many functionalities of previous versions are now in separated atomic packages:
 * [matrix-multiplication]
 * [multidim-array-index]
 * [tensor-contraction]
-* [tensor-product]
 
 ## Features
 
 * Real, Complex, Quaternion, Octonion numbers.
 * [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#real), of course :).
 * Expressive syntax.
-* Everything is a Tensor.
 * [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
 
 ## Installation
@@ -129,7 +126,7 @@ R.add(1, 2, 3) // 1 + 2 + 3 = 6
 Create two real number objects: x = 2, y = -2
 
 ```javascript
-const x = new R(2)
+let x = new R(2) // x will be overwritten, see below
 const y = new R(-2)
 ```
 
@@ -168,7 +165,7 @@ You can also play with Complexes.
 ```javascript
 const C = algebra.Complex
 
-const z1 = new C([1, 2])
+let z1 = new C([1, 2])
 const z2 = new C([3, 4])
 
 z1 = z1.mul(z2)
@@ -458,9 +455,9 @@ max.data // [t, t, t, t, t, t, t, t]
 
 **NOTA BENE** The color space example in this section is still a *WiP*.
 
-The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors,
-matrices, tensors. They are the underneath set enriched with a
-[ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
+The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks,
+they are the elements you can use to create vectors and matrices.
+They are the underneath set enriched with a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
 consists of two binary operators that generalize the arithmetic operations of addition and multiplication. A ring that has the commutativity property
 is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
 
@@ -660,26 +657,6 @@ In our *RGB* example it corrensponds to *black* (`000000`)
 RGB.zero // '000000'
 ```
 
-#### Scalar order
-
-It is always 0 for scalars, see also [Tensor order](#tensor-order).
-
-##### `Scalar.order`
-
-The *order* is a static attribute.
-
-```javascript
-RGB.order // 0
-```
-
-##### `scalar.order`
-
-The *order* is also available as attribute of a Scalar class instance.
-
-```javascript
-green.order // 0
-```
-
 ##### `scalar.data`
 
 The *data* attribute holds the raw data underneath our scalar instance.
@@ -696,11 +673,27 @@ cyan.data // '00ffff'
 
 ##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
 
+Is a static method
+that checks a given argument is contained in the scalar field that was defined.
+
+```javascript
+RGB.contains('ffffff') // true
+RGB.contains('not a color') // false
+```
+
 ##### `scalar1.belongsTo(Scalar)`
+
+This is a class method that checks a scalar instance is contained in the given scalar field.
+
+```javascript
+green.belongsTo(RGB) // true
+```
 
 #### Scalar equality
 
 ##### `Scalar.equality(scalar1, scalar2)`
+
+Is a static method
 
 ##### `scalar1.equality(scalar2)`
 
@@ -708,11 +701,15 @@ cyan.data // '00ffff'
 
 ##### `Scalar.disequality(scalar1, scalar2)`
 
+Is a static method
+
 ##### `scalar1.disequality(scalar2)`
 
 #### Scalar addition
 
 ##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
+
+Is a static method
 
 ##### `scalar1.addition(scalar2[, scalar3, … ])`
 
@@ -720,11 +717,15 @@ cyan.data // '00ffff'
 
 ##### `Scalar.subtraction(scalar1, scalar2[, … ])`
 
+Is a static method
+
 ##### `scalar1.subtraction(scalar2[, scalar3, … ])`
 
 #### Scalar multiplication
 
 ##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
+
+Is a static method
 
 ##### `scalar1.multiplication(scalar2[, scalar3, … ])`
 
@@ -732,17 +733,23 @@ cyan.data // '00ffff'
 
 ##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
 
+Is a static method
+
 ##### `scalar1.division(scalar2[, scalar3, … ])`
 
 #### Scalar negation
 
 ##### `Scalar.negation(scalar)`
 
+Is a static method
+
 ##### `scalar.negation()`
 
 #### Scalar inversion
 
 ##### `Scalar.inversion(scalar)`
+
+Is a static method
 
 ##### `scalar.inversion()`
 
@@ -752,7 +759,7 @@ cyan.data // '00ffff'
 
 Is a static method
 
-##### `scalar.conjugation()`
+##### `scalar.conjugated()`
 
 ### Real
 
@@ -787,8 +794,7 @@ Complex numbers are a goldmine for mathematics, they are incredibly rich
 of deepest beauty: just as a divulgative example, take a look to the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), but please trust me,
 this is nothing compared to the divine nature of Complex numbers.
 
-![Mandelbrot Set](http://g14n.info/algebra/images/Mandelbrot.gif)
-[OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
+![Mandelbrot Set](http://g14n.info/algebra/images/Mandelbrot.gif){:.responsive}
 
 The first thing I noticed when I started to study the Complex numbers is
 conjugation. Every Complex number has its conjugate, that is its simmetric
@@ -900,8 +906,6 @@ three numbers, a vector of dimension 3.
 An implementation of the vector space of dimension 3 over reals is given
 by [R3](#r3).
 
-A *Vector* class inherits everything from [Tensor](#tensor).
-
 #### `VectorSpace(Scalar)(dimension)`
 
 #### Vector dimension
@@ -1001,8 +1005,6 @@ vector3 // Vector { data: [-15, 2, 39] }
 
 ### Matrix
 
-A *Matrix* class inherits everything from [Tensor](#tensor).
-
 #### `MatrixSpace(Scalar)(numRows[, numCols])`
 
 #### `Matrix.isSquare`
@@ -1038,101 +1040,6 @@ It is defined only for square matrices.
 ##### `Matrix.adjoint(matrix1)`
 
 ##### `matrix.adjoint`
-
-### Tensor
-
-#### `TensorSpace(Scalar)(indices)`
-
-#### `Tensor.one`
-
-#### `Tensor.zero`
-
-#### `tensor.data`
-
-#### Tensor indices
-
-##### `Tensor.indices`
-
-##### `tensor.indices`
-
-#### Tensor order
-
-It represents the number of varying indices.
-
-* A scalar has order 0.
-* A vector has order 1.
-* A matrix has order 2.
-
-##### `Tensor.order`
-
-##### `tensor.order`
-
-#### `Tensor.contains(tensor1, tensor2[, tensor3, … ])`
-
-#### Tensor equality
-
-```javascript
-const T2x2x2 = TensorSpace(Real)([2, 2, 2])
-
-const tensor1 = new T2x2x2([1, 2, 3, 4, 5, 6, 7, 8])
-const tensor2 = new T2x2x2([2, 3, 4, 5, 6, 7, 8, 9])
-```
-
-##### `Tensor.equality(tensor1, tensor2)`
-
-```javascript
-T2x2x2.equality(tensor1, tensor1) // true
-T2x2x2.equality(tensor1, tensor2) // false
-```
-
-##### `tensor1.equality(tensor2)`
-
-```javascript
-tensor1.equality(tensor1) // true
-tensor1.equality(tensor2) // false
-```
-
-#### Tensor disequality
-
-#### `Tensor.disequality(tensor1, tensor2)`
-
-##### `tensor1.disequality(tensor2)`
-
-#### Tensor addition
-
-##### `Tensor.addition(tensor1, tensor2[, tensor3, … ])`
-
-##### `tensor1.addition(tensor2[, tensor3, … ])`
-
-#### Tensor subtraction
-
-##### `Tensor.subtraction(tensor1, tensor2[, tensor3, … ])`
-
-##### `tensor1.subtraction(tensor2[, tensor3, … ])`
-
-#### Tensor product
-
-##### `Tensor.product(tensor1, tensor2)`
-
-##### `tensor1.product(tensor2)`
-
-#### Tensor contraction
-
-##### `Tensor.contraction()`
-
-##### `tensor.contraction()`
-
-#### Tensor negation
-
-##### `Tensor.negation(tensor1)`
-
-##### `tensor.negation()`
-
-#### Tensor scalar multiplication
-
-##### `Tensor.scalarMultiplication(tensor, scalar)`
-
-##### `tensor.scalarMultiplication(scalar)`
 
 ## License
 

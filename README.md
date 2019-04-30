@@ -123,7 +123,7 @@ R.add(1, 2, 3) // 1 + 2 + 3 = 6
 Create two real number objects: x = 2, y = -2
 
 ```javascript
-const x = new R(2)
+let x = new R(2) // x will be overwritten, see below
 const y = new R(-2)
 ```
 
@@ -162,7 +162,7 @@ You can also play with Complexes.
 ```javascript
 const C = algebra.Complex
 
-const z1 = new C([1, 2])
+let z1 = new C([1, 2])
 const z2 = new C([3, 4])
 
 z1 = z1.mul(z2)

@@ -1,6 +1,6 @@
-var coerced = require('../src/coerced')
+const coerced = require('../src/coerced')
 
-var add = coerced((a, b) => a + b)
+const add = coerced((a, b) => a + b)
 
 describe('coerced', () => {
   it('means to extract "data" property, if any', () => {

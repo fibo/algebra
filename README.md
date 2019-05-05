@@ -81,7 +81,7 @@ To be used only for 404 page, create a file *404.html* like this
 
 ```
 ---
-layout: page-not-found
+layout: common/page-not-found
 title: Page not found
 permalink: /404.html
 ---

@@ -373,50 +373,6 @@ describe('API', () => {
     it('works')
   })
 
-  describe('Common spaces', () => {
-    describe('R', () => {
-      it('is an alias of Real', () => {
-        R.should.be.eql(Real)
-      })
-    })
-
-    describe('R2', () => {
-      it('is an alias of VectorSpace(Real)(2)', () => {
-        R2.should.be.eql(VectorSpace(Real)(2))
-      })
-    })
-
-    describe('R3', () => {
-      it('is an alias of VectorSpace(Real)(3)', () => {
-        R3.should.be.eql(VectorSpace(Real)(3))
-      })
-    })
-
-    describe('R2x2', () => {
-      it('is an alias of MatrixSpace(Real)(2)', () => {
-        R2x2.should.be.eql(MatrixSpace(Real)(2))
-      })
-    })
-
-    describe('C', () => {
-      it('is an alias of Complex', () => {
-        C.should.be.eql(Complex)
-      })
-    })
-
-    describe('C2x2', () => {
-      it('is an alias of MatrixSpace(Complex)(2)', () => {
-        C2x2.should.be.eql(MatrixSpace(Complex)(2))
-      })
-    })
-
-    describe('H', () => {
-      it('is an alias of Quaternion', () => {
-        H.should.be.eql(Quaternion)
-      })
-    })
-  })
-
   describe('Vector', () => {
     describe('Vector.dimension', () => {
       it('is a static attribute', () => {

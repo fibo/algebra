@@ -150,7 +150,7 @@ function VectorSpace (Scalar) {
     }
 
     /**
-     * Vector subtraction is the scalar subtraction for every coordinate
+     * Vector subtraction is the scalar subtraction for every coordinate.
      */
 
     function vectorSubtraction (vector1, vector2) {
@@ -172,11 +172,12 @@ function VectorSpace (Scalar) {
 
     class Vector {
       constructor (data) {
+        staticProps(this)({ data }, true)
+
         staticProps(this)({
-          data,
           norm: norm(data),
           dimension
-        }, true)
+        })
       }
 
       addition () {
@@ -185,6 +186,20 @@ function VectorSpace (Scalar) {
         const result = operands.reduce((result, vector) => vectorAddition(result, vector))
 
         return new Vector(result)
+      }
+
+      multiplication (rightMatrix) {
+        const MatrixSpace = itemsPool.get('MatrixSpace')
+
+        const leftVectorData = this.data
+        const result = multiplicationByMatrix(leftVectorData, rightMatrix)
+
+        const rightNumRows = dimension
+        const rightNumCols = result.length / rightNumRows
+
+        const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+
+        return new Matrix(result)
       }
 
       scalarProduct (vector) {
@@ -206,7 +221,43 @@ function VectorSpace (Scalar) {
       dimension
     }, true)
 
-    // Cross product is defined only in dimension 3.
+    // Aliases
+
+    Vector.prototype.add = Vector.prototype.addition
+    Vector.prototype.mul = Vector.prototype.multiplication
+    Vector.prototype.scalar = Vector.prototype.scalarProduct
+    Vector.prototype.sub = Vector.prototype.subtraction
+
+    // Vector static operators.
+
+    function staticAddition () {
+      const operands = [].slice.call(arguments)
+
+      const result = operands.reduce((result, vector) => vectorAddition(result, vector))
+
+      return result
+    }
+
+    function staticSubtraction () {
+      const operands = [].slice.call(arguments)
+
+      const result = operands.reduce((result, vector) => vectorSubtraction(result, vector))
+
+      return result
+    }
+
+    staticProps(Vector)({
+      add: () => staticAddition,
+      addition: () => staticAddition,
+      mul: () => multiplicationByMatrix,
+      multiplication: () => multiplicationByMatrix,
+      norm: () => norm,
+      scalar: () => scalarProduct,
+      scalarProduct: () => scalarProduct,
+      sub: () => staticSubtraction,
+      subtraction: () => staticSubtraction
+    })
+
     function crossProductMethod (vector) {
       const data = this.data
 
@@ -216,62 +267,13 @@ function VectorSpace (Scalar) {
     }
 
     if (dimension === 3) {
-      Vector.crossProduct = crossProduct
-
-      Vector.prototype.crossProduct = crossProductMethod
       Vector.prototype.cross = crossProductMethod
-    }
+      Vector.prototype.crossProduct = crossProductMethod
 
-    Vector.prototype.multiplication = function (rightMatrix) {
-      const MatrixSpace = itemsPool.get('MatrixSpace')
-
-      const leftVectorData = this.data
-      const result = multiplicationByMatrix(leftVectorData, rightMatrix)
-
-      // TODO rightNumRows equals dimension
-      // but the vector should be transposed.
-      // Add transpose operator for vectors, then use it implicitly.
-      const rightNumRows = dimension
-      const rightNumCols = result.length / rightNumRows
-
-      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
-
-      return new Matrix(result)
-    }
-
-    // Static operators.
-
-    staticProps(Vector)({
-      addition: () => function () {
-        const operands = [].slice.call(arguments)
-
-        const result = operands.reduce((result, vector) => vectorAddition(result, vector))
-
-        return result
-      },
-
-      multiplication: () => multiplicationByMatrix,
-
-      norm: () => norm,
-
-      scalarProduct: () => scalarProduct,
-
-      subtraction: () => function () {
-        const operands = [].slice.call(arguments)
-
-        const result = operands.reduce((result, vector) => vectorSubtraction(result, vector))
-
-        return result
-      }
-    })
-
-    // Aliases
-
-    Vector.mul = multiplicationByMatrix
-    Vector.prototype.mul = Vector.prototype.multiplication
-
-    if (dimension === 3) {
-      Vector.cross = crossProduct
+      staticProps(Vector)({
+        crossProduct: () => crossProduct,
+        cross: () => crossProduct
+      })
     }
 
     return Vector

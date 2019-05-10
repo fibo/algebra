@@ -15,6 +15,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+- Using classes for vectors and matrices.
 - Better operators classification.
 - Removed inherits package.
 - Removed Tensor, consider them out of scope by now. They can be confusing for several reasons. A part TensorFlow name, implementing covariant and controvariant indices will complicate a lot the interface.

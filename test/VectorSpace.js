@@ -116,31 +116,31 @@ describe('VectorSpace', () => {
     })
   })
 
-  // describe('crossProduct()', () => {
-  //   const operator = 'crossProduct'
+  describe('crossProduct()', () => {
+    const operator = 'crossProduct'
 
-  //   it('is a static method', () => {
-  //     staticBinaryOperator(R3, operator, [3, -3, 1], [4, 9, 2], [-15, -2, 39])
-  //   })
+    it('is a static method', () => {
+      staticBinaryOperator(R3, operator, [3, -3, 1], [4, 9, 2], [-15, -2, 39])
+    })
 
-  //   it('is a class method', () => {
-  //     methodBinaryOperator(R3, operator, [3, -3, 1], [-12, 12, -4], [0, 0, 0])
-  //   })
+    it('is a class method', () => {
+      methodBinaryOperator(R3, operator, [3, -3, 1], [-12, 12, -4], [0, 0, 0])
+    })
 
-  //   it('is defined only in dimension 3', () => {
-  //     notDefined(R2.cross).should.be.ok()
+    it('is defined only in dimension 3', () => {
+      notDefined(R2.crossProduct).should.be.ok()
 
-  //     const vector = new R2([1, 0])
-  //     notDefined(vector.cross).should.be.ok()
-  //   })
-  // })
+      const vector = new R2([1, 0])
+      notDefined(vector.crossProduct).should.be.ok()
+    })
+  })
 
-  // describe('cross()', () => {
-  //   it('is an alias of crossProduct()', () => {
-  //     R3.crossProduct.should.be.eql(R3.cross)
+  describe('cross()', () => {
+    it('is an alias of crossProduct()', () => {
+      R3.crossProduct.should.be.eql(R3.cross)
 
-  //     const vector = new R3([1, 0, 1])
-  //     vector.crossProduct.should.be.eql(vector.cross)
-  //   })
-  // })
+      const vector = new R3([1, 0, 1])
+      vector.crossProduct.should.be.eql(vector.cross)
+    })
+  })
 })

@@ -58,31 +58,31 @@ describe('VectorSpace', () => {
     })
   })
 
-  // describe('scalarProduct()', () => {
-  //   it('is a static operator', () => {
-  //     const data = R2.scalarProduct([0, 1], [1, 1])
+  describe('scalarProduct()', () => {
+    it('is a static operator', () => {
+      const data = R2.scalarProduct([0, 1], [1, 1])
 
-  //     data.should.eql(1)
-  //   })
+      data.should.eql(1)
+    })
 
-  //   it('is a class method', () => {
-  //     const vector1 = new R2([0, 1])
-  //     const vector2 = new R2([1, 1])
+    it('is a class method', () => {
+      const vector1 = new R2([0, 1])
+      const vector2 = new R2([1, 1])
 
-  //     const scalar = vector1.scalarProduct(vector2)
+      const scalar = vector1.scalarProduct(vector2)
 
-  //     scalar.data.should.be.eql(1)
-  //   })
+      scalar.data.should.be.eql(1)
+    })
 
-  //   it('is returns a scalar', () => {
-  //     const vector1 = new R2([0, 1])
-  //     const vector2 = new R2([1, 1])
+    it('is returns a scalar', () => {
+      const vector1 = new R2([0, 1])
+      const vector2 = new R2([1, 1])
 
-  //     const scalar = vector1.scalarProduct(vector2)
+      const scalar = vector1.scalarProduct(vector2)
 
-  //     scalar.data.should.be.eql(1)
-  //   })
-  // })
+      scalar.data.should.be.eql(1)
+    })
+  })
 
   // describe('dotProduct()', () => {
   //   it('is an alias of scalarProduct()', () => {

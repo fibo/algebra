@@ -122,7 +122,7 @@ function MatrixSpace (Scalar) {
       }
     }
 
-    function computeDeterminant () {
+    function computeDeterminant (data) {
       const det = determinant(data, Scalar, numRows)
 
       return new Scalar(det)

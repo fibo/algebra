@@ -150,7 +150,7 @@ function VectorSpace (Scalar) {
     }
 
     /**
-     * Vector addition is the scalar addition for every coordinate
+     * Vector subtraction is the scalar subtraction for every coordinate
      */
 
     function vectorSubtraction (vector1, vector2) {
@@ -187,6 +187,12 @@ function VectorSpace (Scalar) {
         return new Vector(result)
       }
 
+      scalarProduct (vector) {
+        const result = scalarProduct(this, vector)
+
+        return new Scalar(result)
+      }
+
       subtraction () {
         const operands = [this].concat([].slice.call(arguments))
 
@@ -199,14 +205,6 @@ function VectorSpace (Scalar) {
     staticProps(Vector)({
       dimension
     }, true)
-
-    Vector.prototype.scalarProduct = function (vector) {
-      const data = this.data
-
-      const result = scalarProduct(data, vector)
-
-      return new Scalar(result)
-    }
 
     // Cross product is defined only in dimension 3.
     function crossProductMethod (vector) {

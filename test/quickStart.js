@@ -38,18 +38,18 @@ describe('Quick start', () => {
 
     const R2 = algebra.VectorSpace(R)(2)
 
-    const v1 = new R2([0, 1])
+    let v1 = new R2([0, 1])
     const v2 = new R2([1, -2])
 
-    // v1 = v1.add(v2)
+    v1 = v1.add(v2)
 
-    // v1.data.should.eql([1, -1])
+    v1.data.should.eql([1, -1])
 
     // const R3x2 = algebra.MatrixSpace(R)(3, 2)
 
     // const m1 = new R3x2([1, 1,
-    //                    0, 1,
-    //                    1, 0])
+    //                      0, 1,
+    //                      1, 0])
 
     // const v3 = m1.mul(v1)
 
@@ -57,14 +57,15 @@ describe('Quick start', () => {
 
     // const R2x2 = algebra.MatrixSpace(R)(2)
 
-    // const m2 = new R2x2([1, 0,
+    // let m2 = new R2x2([1, 0,
     //                    0, 2])
     // const m3 = new R2x2([0, -1,
-    //                    1, 0])
+    //                      1, 0])
 
     // m2 = m2.mul(m3)
 
-    // m2.data.should.deepEqual([0, -1, 2, 0])
+    // m2.data.should.deepEqual([0, -1,
+    //                           2, 0])
 
     // m2.determinant.data.should.be.eql(2)
   })

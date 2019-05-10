@@ -185,7 +185,7 @@ const R2 = algebra.VectorSpace(R)(2)
 Create two vectors and add them.
 
 ```javascript
-const v1 = new R2([0, 1])
+let v1 = new R2([0, 1])
 const v2 = new R2([1, -2])
 
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
@@ -238,8 +238,8 @@ Let's try with two square matrices 2 x 2.
 ```javascript
 const R2x2 = algebra.MatrixSpace(R)(2, 2)
 
-const m2 = new R2x2([1, 0,
-                     0, 2])
+let m2 = new R2x2([1, 0,
+                   0, 2])
 
 const m3 = new R2x2([0, -1,
                      1, 0])

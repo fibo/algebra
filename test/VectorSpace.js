@@ -84,55 +84,37 @@ describe('VectorSpace', () => {
     })
   })
 
-  // describe('dotProduct()', () => {
-  //   it('is an alias of scalarProduct()', () => {
-  //     R2.scalarProduct.should.be.eql(R2.dotProduct)
+  describe('dimension', () => {
+    it('is a static attribute', () => {
+      const vector1 = new R2([0, 1])
+      const vector2 = new R3([1, 1, 2])
 
-  //     const vector = new R2([0, 1])
-  //     vector.scalarProduct.should.be.eql(vector.dotProduct)
-  //   })
-  // })
+      vector1.dimension.should.be.eql(2)
+      vector2.dimension.should.be.eql(3)
 
-  // describe('dot()', () => {
-  //   it('is an alias of scalarProduct()', () => {
-  //     R2.scalarProduct.should.be.eql(R2.dot)
+      R2.dimension.should.be.eql(2)
+      R3.dimension.should.be.eql(3)
+    })
+  })
 
-  //     const vector = new R2([0, 1])
-  //     vector.scalarProduct.should.be.eql(vector.dot)
-  //   })
-  // })
+  describe('norm', () => {
+    it('is an attribute holding a scalar', () => {
+      const vector1 = new R2([0, 1])
+      const vector2 = new R3([1, 1, 2])
 
-  // describe('dimension', () => {
-  //   it('is a static attribute', () => {
-  //     const vector1 = new R2([0, 1])
-  //     const vector2 = new R3([1, 1, 2])
+      vector1.norm.data.should.be.eql(1)
+      vector2.norm.data.should.be.eql(6)
+    })
+  })
 
-  //     vector1.dimension.should.be.eql(2)
-  //     vector2.dimension.should.be.eql(3)
+  describe('norm()', () => {
+    const operator = 'norm'
 
-  //     R2.dimension.should.be.eql(2)
-  //     R3.dimension.should.be.eql(3)
-  //   })
-  // })
-
-  // describe('norm', () => {
-  //   it('is an attribute holding a scalar', () => {
-  //     const vector1 = new R2([0, 1])
-  //     const vector2 = new R3([1, 1, 2])
-
-  //     vector1.norm.data.should.be.eql(1)
-  //     vector2.norm.data.should.be.eql(6)
-  //   })
-  // })
-
-  // describe('norm()', () => {
-  //   const operator = 'norm'
-
-  //   it('is a static method', () => {
-  //     staticUnaryOperator(R2, operator, [0, 1], 1)
-  //     staticUnaryOperator(R3, operator, [1, 1, 2], 6)
-  //   })
-  // })
+    it('is a static method', () => {
+      staticUnaryOperator(R2, operator, [0, 1], 1)
+      staticUnaryOperator(R3, operator, [1, 1, 2], 6)
+    })
+  })
 
   // describe('crossProduct()', () => {
   //   const operator = 'crossProduct'

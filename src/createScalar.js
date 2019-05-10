@@ -35,8 +35,6 @@ function createScalar (ring) {
 
   staticProps(Scalar)(attributes)
 
-  const unaryOperators = operators.inversion
-
   const scalarOperators = ({ categories }) => categories.includes('scalar')
 
   operators.filter(scalarOperators).forEach(operator => {

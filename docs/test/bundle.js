@@ -1607,7 +1607,7 @@ const no = require('not-defined')
  * A composition algebra is one of ℝ, ℂ, ℍ, O:
  * Real, Complex, Quaternion, Octonion.
  *
- * https://en.wikipedia.org/wiki/Composition_algebra
+ * @see {@link https://en.wikipedia.org/wiki/Composition_algebra}
  *
  * @param {Object} field
  * @param {Number} [num] of CayleyDickson construction iterations. Can be 1, 2, 4 or 8.
@@ -1696,7 +1696,7 @@ function MatrixSpace (Scalar) {
     /**
      * Calculates the matrix trace.
      *
-     * https://en.wikipedia.org/wiki/Trace_(linear_algebra)
+     * @see {@link https://en.wikipedia.org/wiki/Trace_(linear_algebra)}
      *
      * @param {Object|Array} matrix
      *

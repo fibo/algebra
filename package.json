@@ -57,7 +57,7 @@
     "mocha-lcov-reporter": "1.3.0",
     "pre-commit": "^1.1.2",
     "should": "^13.2.3",
-    "standa": "^12.0.0",
+    "standa": "^12.1.0",
     "uglify-es": "^3.3.9"
   },
   "dependencies": {

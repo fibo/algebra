@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 const algebra = require('algebra')
 const notDefined = require('not-defined')
 
@@ -12,20 +13,20 @@ const R2 = VectorSpace(Real)(2)
 const R3 = VectorSpace(Real)(3)
 
 describe('VectorSpace', () => {
-  // describe('data', () => {
-  //   const v = new R2([0, 1])
+  describe('data', () => {
+    const vector = new R2([0, 1])
 
-  //   it('is enumerable', () => {
-  //     v.propertyIsEnumerable('data').should.be.ok()
-  //   })
+    it('is enumerable', () => {
+      vector.propertyIsEnumerable('data').should.be.ok()
+    })
 
-  //   it('is immutable', () => {
-  //     ;(() => {
-  //       'use strict'
-  //       v.data = [2, 1]
-  //     }).should.throwError()
-  //   })
-  // })
+    it('is immutable', () => {
+      ;(() => {
+        'use strict'
+        vector.data = [2, 1]
+      }).should.throwError()
+    })
+  })
 
   // describe('addition()', () => {
   //   const operator = 'addition'

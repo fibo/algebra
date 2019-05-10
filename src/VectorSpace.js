@@ -134,14 +134,19 @@ function VectorSpace (Scalar) {
      * Vector element.
      */
 
-    function Vector (data) {
-      staticProps(this)({
-        norm: norm(data),
-        dimension
-      })
+    class Vector {
+      constructor (data) {
+        staticProps(this)({
+          data,
+          norm: norm(data),
+          dimension
+        }, true)
+      }
     }
 
-    staticProps(Vector)({ dimension })
+    staticProps(Vector)({
+      dimension
+    }, true)
 
     Vector.prototype.scalarProduct = function (vector) {
       const data = this.data

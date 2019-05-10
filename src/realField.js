@@ -16,11 +16,9 @@ const realField = {
     //
     //     0.30000000000000004
     //
-    // Hence we need to aproximate equality with an epsilon.
+    // Hence we need to approximate equality with an epsilon.
 
-    const epsilon = 0.000000000001
-
-    return Math.abs(a - b) < epsilon
+    return Math.abs(a - b) < Number.EPSILON
   },
   addition: (a, b) => a + b,
   negation: (a) => -a,

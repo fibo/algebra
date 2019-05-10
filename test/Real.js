@@ -1,4 +1,6 @@
 const algebra = require('algebra')
+const realField = require('../src/realField');
+const assert = require('assert');
 
 const R = algebra.Real
 
@@ -119,4 +121,10 @@ describe('Real', () => {
       x.inversion().inversion().data.should.be.eql(10)
     })
   })
+
+  describe('realField', () => {
+    it('epsilon', () => {
+      assert(realField.equality(0.2 + 0.1, 0.3));
+    })
+  });
 })

@@ -1,6 +1,5 @@
 const itemsPool = require('./itemsPool')
 const matrixMultiplication = require('matrix-multiplication')
-const operators = require('./operators.json')
 const staticProps = require('static-props')
 const toData = require('./toData')
 
@@ -30,8 +29,6 @@ function VectorSpace (Scalar) {
    */
 
   return function (dimension) {
-    const indices = [dimension]
-
     /**
      * Computes the cross product of two vectors.
      *
@@ -66,9 +63,10 @@ function VectorSpace (Scalar) {
 
     /**
      * Multiply a column vector by matrix on right side
-     * @param {Object|Array} vector
      *
      * @returns {Object} scalar
+     * @param leftVector
+     * @param rightMatrix
      */
 
     function multiplicationByMatrix (leftVector, rightMatrix) {
@@ -107,7 +105,7 @@ function VectorSpace (Scalar) {
     /**
      * Scalar product
      *
-     * https://en.wikipedia.org/wiki/Dot_product
+     * @see {@link https://en.wikipedia.org/wiki/Dot_product}
      *
      * @param {Object|Array} vector1
      * @param {Object|Array} vector2

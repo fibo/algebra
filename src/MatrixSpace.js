@@ -46,7 +46,7 @@ function MatrixSpace (Scalar) {
     /**
      * Calculates the matrix trace.
      *
-     * https://en.wikipedia.org/wiki/Trace_(linear_algebra)
+     * @see {@link https://en.wikipedia.org/wiki/Trace_(linear_algebra)}
      *
      * @param {Object|Array} matrix
      *

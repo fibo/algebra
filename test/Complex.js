@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 const algebra = require('algebra')
 
 const C = algebra.Complex

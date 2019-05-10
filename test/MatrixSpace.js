@@ -1,16 +1,16 @@
 /* eslint-disable indent */
+/* eslint-env mocha */
+const algebra = require('algebra')
+const notDefined = require('not-defined')
+
+const MatrixSpace = algebra.MatrixSpace
+const Real = algebra.Real
+
+const methodBinaryOperator = require('./features/methodBinaryOperator')
+const staticBinaryOperator = require('./features/staticBinaryOperator')
+const staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('MatrixSpace', () => {
-  const algebra = require('algebra')
-
-  const notDefined = require('not-defined')
-
-  const MatrixSpace = algebra.MatrixSpace
-  const Real = algebra.Real
-
-  const methodBinaryOperator = require('./features/methodBinaryOperator')
-  const staticBinaryOperator = require('./features/staticBinaryOperator')
-  const staticUnaryOperator = require('./features/staticUnaryOperator')
 
   const R1x4 = MatrixSpace(Real)(1, 4)
   const R2x3 = MatrixSpace(Real)(2, 3)
@@ -28,11 +28,11 @@ describe('MatrixSpace', () => {
   })
 
   const matrix1 = new R2x2([ 2, 3,
-                           1, 1 ])
+                             1, 1 ])
   const matrix2 = new R2x2([ 0, 1,
-                          -1, 0 ])
+                            -1, 0 ])
   const matrix3 = new R2x3([ 0, 1, 2,
-                          -2, 1, 0 ])
+                            -2, 1, 0 ])
 
   describe('data', () => {
     it('is enumerable', () => {

@@ -28,35 +28,35 @@ describe('VectorSpace', () => {
     })
   })
 
-  // describe('addition()', () => {
-  //   const operator = 'addition'
+  describe('addition()', () => {
+    const operator = 'addition'
 
-  //   it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
+    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [-1, 5]))
 
-  //   it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
+    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [1, 2]))
 
-  //   it('accepts multiple arguments', () => {
-  //     R2.addition([1, -1], [2, -2], [3, -3]).should.deepEqual([6, -6])
+    it('accepts multiple arguments', () => {
+      R2.addition([1, -1], [2, -2], [3, -3]).should.deepEqual([6, -6])
 
-  //     const vector = new R2([1, -1])
-  //     vector.addition([2, -2], [3, -3]).data.should.eql([6, -6])
-  //   })
-  // })
+      const vector = new R2([1, -1])
+      vector.addition([2, -2], [3, -3]).data.should.eql([6, -6])
+    })
+  })
 
-  // describe('subtraction()', () => {
-  //   const operator = 'subtraction'
+  describe('subtraction()', () => {
+    const operator = 'subtraction'
 
-  //   it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
+    it('is a static method', staticBinaryOperator(R2, operator, [0, 2], [-1, 3], [1, -1]))
 
-  //   it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
+    it('is a class method', methodBinaryOperator(R2, operator, [0, 1], [1, 1], [-1, 0]))
 
-  //   it('accepts multiple arguments', () => {
-  //     R2.subtraction([6, -6], [2, -2], [3, -3]).should.deepEqual([1, -1])
+    it('accepts multiple arguments', () => {
+      R2.subtraction([6, -6], [2, -2], [3, -3]).should.deepEqual([1, -1])
 
-  //     const vector = new R2([6, -6])
-  //     vector.subtraction([2, -2], [3, -3]).data.should.eql([1, -1])
-  //   })
-  // })
+      const vector = new R2([6, -6])
+      vector.subtraction([2, -2], [3, -3]).data.should.eql([1, -1])
+    })
+  })
 
   // describe('scalarProduct()', () => {
   //   it('is a static operator', () => {

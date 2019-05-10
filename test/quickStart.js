@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+/* eslint-env mocha */
 
 describe('Quick start', () => {
   const algebra = require('algebra')

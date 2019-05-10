@@ -18,9 +18,11 @@ const toData = require('./toData')
  */
 
 function VectorSpace (Scalar) {
-  const addition = Scalar.addition
-  const multiplication = Scalar.multiplication
-  const subtraction = Scalar.subtraction
+  const {
+    addition,
+    multiplication,
+    subtraction
+  } = Scalar
 
   /**
    * @param {Number} dimension
@@ -29,6 +31,23 @@ function VectorSpace (Scalar) {
    */
 
   return function (dimension) {
+    /**
+     * Vector addition is the scalar addition for every coordinate
+     */
+
+    function vectorAddition (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(addition(vectorData1[i], vectorData2[i]))
+      }
+
+      return result
+    }
+
     /**
      * Computes the cross product of two vectors.
      *
@@ -131,6 +150,23 @@ function VectorSpace (Scalar) {
     }
 
     /**
+     * Vector addition is the scalar addition for every coordinate
+     */
+
+    function vectorSubtraction (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(subtraction(vectorData1[i], vectorData2[i]))
+      }
+
+      return result
+    }
+
+    /**
      * Vector element.
      */
 
@@ -141,6 +177,22 @@ function VectorSpace (Scalar) {
           norm: norm(data),
           dimension
         }, true)
+      }
+
+      addition () {
+        const operands = [this].concat([].slice.call(arguments))
+
+        const result = operands.reduce((result, vector) => vectorAddition(result, vector))
+
+        return new Vector(result)
+      }
+
+      subtraction () {
+        const operands = [this].concat([].slice.call(arguments))
+
+        const result = operands.reduce((result, vector) => vectorSubtraction(result, vector))
+
+        return new Vector(result)
       }
     }
 
@@ -191,9 +243,29 @@ function VectorSpace (Scalar) {
 
     // Static operators.
 
-    Vector.multiplication = multiplicationByMatrix
-    Vector.norm = norm
-    Vector.scalarProduct = scalarProduct
+    staticProps(Vector)({
+      addition: () => function () {
+        const operands = [].slice.call(arguments)
+
+        const result = operands.reduce((result, vector) => vectorAddition(result, vector))
+
+        return result
+      },
+
+      multiplication: () => multiplicationByMatrix,
+
+      norm: () => norm,
+
+      scalarProduct: () => scalarProduct,
+
+      subtraction: () => function () {
+        const operands = [].slice.call(arguments)
+
+        const result = operands.reduce((result, vector) => vectorSubtraction(result, vector))
+
+        return result
+      }
+    })
 
     // Aliases
 

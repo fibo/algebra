@@ -50,9 +50,7 @@ function MatrixSpace (Scalar) {
     function computeDeterminant (matrix) {
       const data = toData(matrix)
 
-      const det = determinant(data, Scalar, numRows)
-
-      return new Scalar(det)
+      return determinant(data, Scalar, numRows)
     }
 
     /**
@@ -164,8 +162,17 @@ function MatrixSpace (Scalar) {
 
         if (isSquare) {
           staticProps(this)({
-            determinant: () => computeDeterminant(this),
-            trace: () => trace(this)
+            determinant: () => {
+              const result = computeDeterminant(this)
+
+              return new Scalar(result)
+            },
+
+            trace: () => {
+              const result = trace(this)
+
+              return new Scalar(result)
+            }
           })
 
           staticProps(this)({

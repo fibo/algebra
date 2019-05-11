@@ -212,15 +212,15 @@ describe('MatrixSpace', () => {
   describe('trace', () => {
     it('is a static attribute', () => {
       const matrix2x2 = new R2x2([1, 2,
-                                5, 6])
+                                  5, 6])
 
-      matrix2x2.trace.should.be.eql(7)
+      matrix2x2.trace.data.should.be.eql(7)
     })
 
     it('is not available for no square matrices', () => {
       const matrix3x2 = new R3x2([1, 2,
-                                3, 4,
-                                5, 6])
+                                  3, 4,
+                                  5, 6])
 
       notDefined(matrix3x2.trace).should.be.ok()
     })
@@ -229,8 +229,8 @@ describe('MatrixSpace', () => {
   describe('transpose()', () => {
     it('is a static operator', () => {
       const matrix3x2 = new R3x2([1, 2,
-                                3, 4,
-                                5, 6])
+                                  3, 4,
+                                  5, 6])
 
       const transposed = R3x2.transpose(matrix3x2)
 

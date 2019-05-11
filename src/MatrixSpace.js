@@ -1,11 +1,10 @@
 const determinant = require('laplace-determinant')
-const itemsPool = require('./itemsPool')
-const matrixMultiplication = require('matrix-multiplication')
+const multiplication = require('matrix-multiplication')
 const multiDimArrayIndex = require('multidim-array-index')
-const no = require('not-defined')
-const operators = require('./operators.json')
 const staticProps = require('static-props')
 const tensorContraction = require('tensor-contraction')
+
+const itemsPool = require('./itemsPool')
 const toData = require('./toData')
 
 /**
@@ -23,25 +22,89 @@ const toData = require('./toData')
  */
 
 function MatrixSpace (Scalar) {
-  const contraction = tensorContraction.bind(null, Scalar.addition)
+  const {
+    addition,
+    subtraction
+  } = Scalar
 
-  // Operator filters.
-  const matrixOperators = ({ categories }) => categories.includes('matrix')
-  const groupOperators = ({ categories }) => categories.includes('group')
+  const contraction = tensorContraction.bind(null, addition)
+
+  const enumerable = true
 
   /**
    * @param {Number} numRows
    * @param {Number} [numCols] defaults to a square matrix.
    *
-   * @returns {Function} Matrix
+   * @returns {class} Matrix
    */
 
-  return function (numRows, numCols) {
-    // numCols defaults to numRows
-    if (no(numCols)) numCols = numRows
-
-    const isSquare = (numRows === numCols)
+  return function (numRows, numCols = numRows) {
+    const dimension = numRows * numCols
     const indices = [numRows, numCols]
+    const isSquare = (numRows === numCols)
+
+    /**
+     * Determinant computation is defined only if it is a square matrix.
+     */
+
+    function computeDeterminant (matrix) {
+      const data = toData(matrix)
+
+      const det = determinant(data, Scalar, numRows)
+
+      return new Scalar(det)
+    }
+
+    /**
+     * Matrix addition is the scalar addition for every item.
+     */
+
+    function matrixAddition (matrix1, matrix2) {
+      const matrixData1 = toData(matrix1)
+      const matrixData2 = toData(matrix2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(addition(matrixData1[i], matrixData2[i]))
+      }
+
+      return result
+    }
+
+    /**
+     * Multiplies row by column to the right.
+     *
+     * @param {Object|Array} rightMatrix
+     *
+     * @returns {Object} matrix
+     */
+
+    function matrixMultiplication (leftMatrix, rightMatrix) {
+      const leftMatrixData = toData(leftMatrix)
+      const rightMatrixData = toData(rightMatrix)
+
+      const rowByColumnMultiplication = multiplication(Scalar)(numCols)
+
+      return rowByColumnMultiplication(leftMatrixData, rightMatrixData)
+    }
+
+    /**
+     * Matrix subtraction is the scalar subtraction for every item.
+     */
+
+    function matrixSubtraction (matrix1, matrix2) {
+      const matrixData1 = toData(matrix1)
+      const matrixData2 = toData(matrix2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(subtraction(matrixData1[i], matrixData2[i]))
+      }
+
+      return result
+    }
 
     /**
      * Calculates the matrix trace.
@@ -57,23 +120,6 @@ function MatrixSpace (Scalar) {
       const matrixData = toData(matrix)
 
       return contraction([0, 1], indices, matrixData)
-    }
-
-    /**
-     * Multiplies row by column to the right.
-     *
-     * @param {Object|Array} rightMatrix
-     *
-     * @returns {Object} matrix
-     */
-
-    function multiplication (leftMatrix, rightMatrix) {
-      const leftMatrixData = toData(leftMatrix)
-      const rightMatrixData = toData(rightMatrix)
-
-      const rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols)
-
-      return rowByColumnMultiplication(leftMatrixData, rightMatrixData)
     }
 
     /**
@@ -100,156 +146,111 @@ function MatrixSpace (Scalar) {
       return transposedData
     }
 
-    function staticGroupBinary (operatorName) {
-      return function (leftMatrix, rightMatrix) {
-        if (leftMatrix.numCols === rightMatrix.numCols && leftMatrix.numRows === rightMatrix.numRows) {
-          const { numCols, numRows } = leftMatrix
-          const operands = []
-          const result = []
-
-          for (let i = 0; i < numRows * numCols; i++) {
-            for (let j = 0; j < arguments.length; j++) {
-              operands.push(toData(arguments[j])[i])
-            }
-
-            result.push(Scalar[operatorName].apply(null, operands))
-          }
-
-          return result
-        } else {
-          return new TypeError('Incompatible matrices')
-        }
-      }
-    }
-
-    function computeDeterminant (data) {
-      const det = determinant(data, Scalar, numRows)
-
-      return new Scalar(det)
-    }
-
     /**
      * Matrix element.
      */
 
-    function Matrix (data) {
-      staticProps(this)({
-        data,
-        numCols,
-        numRows
-      }, true)
-
-      operators.filter(matrixOperators).filter(groupOperators).forEach(operator => {
-        const isBinary = operator.categories.includes('binary')
-        const isClosed = operator.isClosed
-        const isInstanceMethod = operator.isInstanceMethod
-        const isStaticMethod = operator.isStaticMethod
-        const isUnary = operator.categories.includes('unary')
-        const operatorName = operator.name
-
-        if (isBinary) {
-          if (isInstanceMethod) {
-            Matrix.prototype[operatorName] = function () {
-              const args = [].slice.call(arguments)
-              const operands = [this.data].concat(args)
-
-              const data = staticGroupBinary(operatorName).apply(null, operands)
-
-              if (isClosed) {
-                return new Matrix(data)
-              } else {
-                return data
-              }
-            }
-          }
-
-          if (isStaticMethod) {
-            Matrix[operatorName] = staticGroupBinary(operatorName)
-          }
-        }
-
-        if (isUnary) {
-          if (isInstanceMethod) {
-
-          }
-
-          if (isStaticMethod) {
-          }
-        }
-      })
-
-      if (isSquare) {
+    class Matrix {
+      constructor (data) {
         staticProps(this)({
-          trace: trace(data)
-        })
+          data,
+          numCols,
+          numRows
+        }, enumerable)
 
         staticProps(this)({
-          determinant: computeDeterminant
+          tr: () => this.transposed
         })
-      }
 
-      function transposed () {
-        const result = transpose(data)
-        const VectorSpace = itemsPool.get('VectorSpace')
+        if (isSquare) {
+          staticProps(this)({
+            determinant: () => computeDeterminant(this),
+            trace: () => trace(this)
+          })
 
-        if (numRows === 1) {
-          const Vector = VectorSpace(Scalar)(numCols)
-          return new Vector(result)
-        } else {
-          const Matrix = MatrixSpace(Scalar)(numCols, numRows)
-          return new Matrix(result)
+          staticProps(this)({
+            det: () => this.determinant
+          })
         }
       }
 
-      staticProps(this)({
-        transposed,
-        tr: transposed
-      })
+      get transposed () {
+        const transposedElements = transpose(this)
+
+        // Get a class matrix in the transposed matrix space.
+        // Note that numCols and numRows order as arguments is inverted.
+        const TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows)
+
+        return new TransposedMatrix(transposedElements)
+      }
+
+      addition () {
+        const operands = [this].concat([].slice.call(arguments))
+
+        const result = operands.reduce((result, matrix) => matrixAddition(result, matrix))
+
+        return new Matrix(result)
+      }
+
+      subtraction () {
+        const operands = [this].concat([].slice.call(arguments))
+
+        const result = operands.reduce((result, matrix) => matrixSubtraction(result, matrix))
+
+        return new Matrix(result)
+      }
     }
-
-    if (isSquare) {
-      Matrix.trace = trace
-    }
-
-    Matrix.prototype.multiplication = function (rightMatrix) {
-      const leftMatrixData = this.data
-      const result = multiplication(leftMatrixData, rightMatrix)
-
-      const rightNumRows = numCols
-      const rightNumCols = result.length / rightNumRows
-
-      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
-
-      return new Matrix(result)
-    }
-
-    // Static operators.
-
-    Matrix.multiplication = multiplication
-    Matrix.transpose = transpose
-
-    // Aliases
-
-    operators.filter(matrixOperators).forEach(operator => {
-      const isInstanceMethod = operator.isInstanceMethod
-      const isStaticMethod = operator.isStaticMethod
-      const operatorName = operator.name
-
-      operator.aliases.forEach(alias => {
-        if (isInstanceMethod) {
-          Matrix.prototype[alias] = Matrix.prototype[operatorName]
-        }
-
-        if (isStaticMethod) {
-          Matrix[alias] = Matrix[operatorName]
-        }
-      })
-    })
 
     staticProps(Matrix)({
       numCols,
       numRows
     })
+
+    // Method aliases.
+
+    Matrix.prototype.add = Matrix.prototype.addition
+    Matrix.prototype.sub = Matrix.prototype.subtraction
+
+    // Matrix static operators.
+
+    function staticAddition () {
+      const operands = [].slice.call(arguments)
+
+      const result = operands.reduce((result, matrix) => matrixAddition(result, matrix))
+
+      return result
+    }
+
+    function staticSubtraction () {
+      const operands = [].slice.call(arguments)
+
+      const result = operands.reduce((result, matrix) => matrixSubtraction(result, matrix))
+
+      return result
+    }
+
+    staticProps(Matrix)({
+      addition: () => staticAddition,
+      subtraction: () => staticSubtraction,
+      transpose: () => transpose
+    })
+
+    staticProps(Matrix)({
+      add: Matrix.addition,
+      sub: Matrix.subtraction,
+      tr: Matrix.transpose
+    })
+
+    if (isSquare) {
+      staticProps(Matrix)({
+        determinant: () => computeDeterminant,
+        trace: () => trace
+      })
+
+      staticProps(Matrix)({
+        det: Matrix.determinant
+      })
+    }
 
     return Matrix
   }

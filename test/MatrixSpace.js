@@ -64,95 +64,95 @@ describe('MatrixSpace', () => {
     })
   })
 
-  // describe('determinant', () => {
-  //   it('returns a scalar', () => {
-  //     matrix1.determinant.should.be.instanceOf(Real)
-  //     matrix2.determinant.should.be.instanceOf(Real)
+  describe('determinant', () => {
+    it('returns a scalar', () => {
+      matrix1.determinant.should.be.instanceOf(Real)
+      matrix2.determinant.should.be.instanceOf(Real)
 
-  //     matrix1.determinant.data.should.be.eql(-1)
-  //     matrix2.determinant.data.should.be.eql(1)
-  //   })
-  // })
+      matrix1.determinant.data.should.be.eql(-1)
+      matrix2.determinant.data.should.be.eql(1)
+    })
+  })
 
-  // describe('addition()', () => {
-  //   const operator = 'addition'
+  describe('addition()', () => {
+    const operator = 'addition'
 
-  //   it('is a static method', staticBinaryOperator(R2x2, operator,
-  //     [ 2, 3,
-  //       1, 1 ],
-  //     [ 0, 1,
-  //      -1, 0 ],
-  //     [ 2, 4,
-  //       0, 1 ]
-  //    ))
+    it('is a static method', staticBinaryOperator(R2x2, operator,
+      [ 2, 3,
+        1, 1 ],
+      [ 0, 1,
+       -1, 0 ],
+      [ 2, 4,
+        0, 1 ]
+     ))
 
-  //   it('is a class method', methodBinaryOperator(R2x2, operator,
-  //     [ 2, 3,
-  //       1, 1 ],
-  //     [ 0, 1,
-  //      -1, 0 ],
-  //     [ 2, 4,
-  //       0, 1 ]
-  //   ))
+    it('is a class method', methodBinaryOperator(R2x2, operator,
+      [ 2, 3,
+        1, 1 ],
+      [ 0, 1,
+       -1, 0 ],
+      [ 2, 4,
+        0, 1 ]
+    ))
 
-  //   it('accepts multiple arguments', () => {
-  //     R2x2.addition([ 2, 3,
-  //                     1, 1 ],
-  //                   [ 0, 1,
-  //                    -1, 0 ],
-  //                   [ -2, -4,
-  //                     0, -1 ]).should.deepEqual([ 0, 0,
-  //                                                 0, 0 ])
+    it('accepts multiple arguments', () => {
+      R2x2.addition([ 2, 3,
+                      1, 1 ],
+                    [ 0, 1,
+                     -1, 0 ],
+                    [ -2, -4,
+                      0, -1 ]).should.deepEqual([ 0, 0,
+                                                  0, 0 ])
 
-  //     const matrix = new R2x2([ 2, 3,
-  //                             1, 1 ])
-  //     matrix.addition([ 0, 1,
-  //                      -1, 0 ],
-  //                     [ -2, -4,
-  //                        0, -1 ]).data.should.deepEqual([ 0, 0,
-  //                                                         0, 0 ])
-  //   })
-  // })
+      const matrix = new R2x2([ 2, 3,
+                              1, 1 ])
+      matrix.addition([ 0, 1,
+                       -1, 0 ],
+                      [ -2, -4,
+                         0, -1 ]).data.should.deepEqual([ 0, 0,
+                                                          0, 0 ])
+    })
+  })
 
-  // describe('subtraction()', () => {
-  //   const operator = 'subtraction'
+  describe('subtraction()', () => {
+    const operator = 'subtraction'
 
-  //   it('is a static method', staticBinaryOperator(R2x2, operator,
-  //       [2, 3,
-  //        1, 1],
-  //       [0, 1,
-  //       -1, 0],
-  //       [2, 2,
-  //        2, 1]
-  //   ))
+    it('is a static method', staticBinaryOperator(R2x2, operator,
+        [2, 3,
+         1, 1],
+        [0, 1,
+        -1, 0],
+        [2, 2,
+         2, 1]
+    ))
 
-  //   it('is a class method', methodBinaryOperator(R2x2, operator,
-  //       [2, 3,
-  //        1, 1],
-  //       [0, 1,
-  //       -1, 0],
-  //       [2, 2,
-  //        2, 1]
-  //   ))
+    it('is a class method', methodBinaryOperator(R2x2, operator,
+        [2, 3,
+         1, 1],
+        [0, 1,
+        -1, 0],
+        [2, 2,
+         2, 1]
+    ))
 
-  //   it('accepts multiple arguments', () => {
-  //     R2x2.subtraction([2, 3,
-  //                       1, 1],
-  //                      [0, 1,
-  //                      -1, 0],
-  //                      [2, 4,
-  //                       0, 1]).should.deepEqual([0, -2,
-  //                                                2, 0])
+    it('accepts multiple arguments', () => {
+      R2x2.subtraction([2, 3,
+                        1, 1],
+                       [0, 1,
+                       -1, 0],
+                       [2, 4,
+                        0, 1]).should.deepEqual([0, -2,
+                                                 2, 0])
 
-  //     const matrix = new R2x2([2, 3,
-  //                            1, 1])
-  //     matrix.subtraction([0, 1,
-  //                         -1, 0],
-  //                        [2, 4,
-  //                         0, 1]).data.should.deepEqual([0, -2,
-  //                                                       2, 0])
-  //   })
-  // })
+      const matrix = new R2x2([2, 3,
+                               1, 1])
+      matrix.subtraction([0, 1,
+                         -1, 0],
+                         [2, 4,
+                          0, 1]).data.should.deepEqual([0, -2,
+                                                        2,  0])
+    })
+  })
 
   // describe('multiplication()', () => {
   //   const operator = 'multiplication'
@@ -196,98 +196,98 @@ describe('MatrixSpace', () => {
   //   })
   // })
 
-  // describe('trace()', () => {
-  //   const operator = 'trace'
+  describe('trace()', () => {
+    const operator = 'trace'
 
-  //   it('is a static method', staticUnaryOperator(R2x2, operator,
-  //     [1, 2,
-  //      5, 6], 7
-  //   ))
+    it('is a static method', staticUnaryOperator(R2x2, operator,
+      [1, 2,
+       5, 6], 7
+    ))
 
-  //   it('is not available for no square matrices', () => {
-  //     notDefined(R3x2.trace).should.be.ok()
-  //   })
-  // })
+    it('is not available if it is not a square matrices', () => {
+      notDefined(R3x2.trace).should.be.ok()
+    })
+  })
 
-  // describe('trace', () => {
-  //   it('is a static attribute', () => {
-  //     const matrix2x2 = new R2x2([1, 2,
-  //                               5, 6])
+  describe('trace', () => {
+    it('is a static attribute', () => {
+      const matrix2x2 = new R2x2([1, 2,
+                                5, 6])
 
-  //     matrix2x2.trace.should.be.eql(7)
-  //   })
+      matrix2x2.trace.should.be.eql(7)
+    })
 
-  //   it('is not available for no square matrices', () => {
-  //     const matrix3x2 = new R3x2([1, 2,
-  //                               3, 4,
-  //                               5, 6])
+    it('is not available for no square matrices', () => {
+      const matrix3x2 = new R3x2([1, 2,
+                                3, 4,
+                                5, 6])
 
-  //     notDefined(matrix3x2.trace).should.be.ok()
-  //   })
-  // })
+      notDefined(matrix3x2.trace).should.be.ok()
+    })
+  })
 
-  // describe('transpose()', () => {
-  //   it('is a static operator', () => {
-  //     const matrix3x2 = new R3x2([1, 2,
-  //                               3, 4,
-  //                               5, 6])
+  describe('transpose()', () => {
+    it('is a static operator', () => {
+      const matrix3x2 = new R3x2([1, 2,
+                                3, 4,
+                                5, 6])
 
-  //     const transposed = R3x2.transpose(matrix3x2)
+      const transposed = R3x2.transpose(matrix3x2)
 
-  //     transposed.should.deepEqual([1, 3, 5,
-  //                                  2, 4, 6])
-  //   })
-  // })
+      transposed.should.deepEqual([1, 3, 5,
+                                   2, 4, 6])
+    })
+  })
 
-  // describe('transposed', () => {
-  //   it('is a class attribute', () => {
-  //     const matrix3x2 = new R3x2([1, 2,
-  //                               3, 4,
-  //                               5, 6])
+  describe('transposed', () => {
+    it('is a class attribute', () => {
+      const matrix3x2 = new R3x2([1, 2,
+                                  3, 4,
+                                  5, 6])
 
-  //     const transposed = matrix3x2.transposed
+      const transposed = matrix3x2.transposed
 
-  //     transposed.data.should.deepEqual([1, 3, 5,
-  //                                       2, 4, 6])
-  //   })
+      transposed.data.should.deepEqual([1, 3, 5,
+                                        2, 4, 6])
+    })
 
-  //   it('holds a transposed matrix', () => {
-  //     const matrix2x3 = new R2x3([1, 2, 3,
-  //                               4, 5, 6])
+    it('holds a transposed matrix', () => {
+      const matrix2x3 = new R2x3([1, 2, 3,
+                                  4, 5, 6])
 
-  //     matrix2x3.transposed.data.should.deepEqual([1, 4,
-  //                                                 2, 5,
-  //                                                 3, 6])
+      matrix2x3.transposed.data.should.deepEqual([1, 4,
+                                                  2, 5,
+                                                  3, 6])
 
-  //     matrix2x3.numRows.should.be.eql(matrix2x3.transposed.numCols)
-  //     matrix2x3.numCols.should.be.eql(matrix2x3.transposed.numRows)
-  //   })
+      matrix2x3.numRows.should.be.eql(matrix2x3.transposed.numCols)
+      matrix2x3.numCols.should.be.eql(matrix2x3.transposed.numRows)
+    })
 
-  //   it('is an involution', () => {
-  //     const matrix2x2a = new R2x2([1, 2,
-  //                                3, 4])
+    it('is an involution', () => {
+      const matrix2x2a = new R2x2([1, 2,
+                                   3, 4])
 
-  //     const matrix2x2b = matrix2x2a.transposed.transposed
+      const matrix2x2b = matrix2x2a.transposed.transposed
 
-  //     matrix2x2a.data.should.deepEqual(matrix2x2b.data)
-  //   })
+      matrix2x2a.data.should.deepEqual(matrix2x2b.data)
+    })
 
-  //   it('returns a vector if the Matrix has one row', () => {
-  //     const matrix1x4 = new R1x4([1, 2, 3, 4])
+    // it('returns a vector if the Matrix has one row', () => {
+    //   const matrix1x4 = new R1x4([1, 2, 3, 4])
 
-  //     const vector = matrix1x4.transposed
+    //   const vector = matrix1x4.transposed
 
-  //     matrix1x4.data.should.deepEqual(vector.data)
-  //     vector.dimension.should.be.eql(matrix1x4.numCols)
-  //   })
-  // })
+    //   matrix1x4.data.should.deepEqual(vector.data)
+    //   vector.dimension.should.be.eql(matrix1x4.numCols)
+    // })
+  })
 
   // describe('mul()', () => {
   //   it('is an alias of multiplication()', () => {
   //     R2x2.mul.should.be.eql(R2x2.multiplication)
 
   //     const matrix2x2 = new R2x2([1, 2,
-  //                               3, 4])
+  //                                 3, 4])
 
   //     matrix2x2.multiplication.should.be.eql(matrix2x2.mul)
   //   })
@@ -295,17 +295,20 @@ describe('MatrixSpace', () => {
 
   // describe('tr()', () => {
   //   it('is an alias of transpose()', () => {
-  //     R2x2.tr.should.be.eql(R2x2.transpose)
+  //     const matrix = new R2x2([0, 1,
+  //                              2, 2])
+
+  //     R2x2.tr(matrix).should.deepEqual(R2x2.transpose(matrix))
   //   })
   // })
 
-  // describe('tr', () => {
-  //   it('is an alias of transposed', () => {
-  //     const matrix = new R3x2([0, 1,
-  //                            1, 0,
-  //                            2, 2])
+  describe('tr', () => {
+    it('is an alias of transposed', () => {
+      const matrix = new R3x2([0, 1,
+                               1, 0,
+                               2, 2])
 
-  //     matrix.tr.data.should.be.eql(matrix.transposed.data)
-  //   })
-  // })
+      matrix.tr.data.should.be.eql(matrix.transposed.data)
+    })
+  })
 })

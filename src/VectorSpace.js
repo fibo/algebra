@@ -24,6 +24,8 @@ function VectorSpace (Scalar) {
     subtraction
   } = Scalar
 
+  const enumerable = true
+
   /**
    * @param {Number} dimension
    *
@@ -32,7 +34,7 @@ function VectorSpace (Scalar) {
 
   return function (dimension) {
     /**
-     * Vector addition is the scalar addition for every coordinate
+     * Vector addition is the scalar addition for every coordinate.
      */
 
     function vectorAddition (vector1, vector2) {
@@ -172,7 +174,7 @@ function VectorSpace (Scalar) {
 
     class Vector {
       constructor (data) {
-        staticProps(this)({ data }, true)
+        staticProps(this)({ data }, enumerable)
 
         staticProps(this)({
           norm: norm(data),
@@ -219,9 +221,9 @@ function VectorSpace (Scalar) {
 
     staticProps(Vector)({
       dimension
-    }, true)
+    }, enumerable)
 
-    // Aliases
+    // Method aliases.
 
     Vector.prototype.add = Vector.prototype.addition
     Vector.prototype.mul = Vector.prototype.multiplication

@@ -15,13 +15,17 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
+TODO: add bigint example for scalars, move color space in another page
+bigint is clearer and more useful.
+
 ### Added
 
 - Using classes for vectors and matrices.
 
 ### Removed
 
-- Removed test page.
+- Simpler interface, do not accept multiple arguments for binary operators.
+- Removed online test page.
 - Removed inherits package.
 - Removed Tensor, consider them out of scope by now. They can be confusing for several reasons. A part TensorFlow name, implementing covariant and controvariant indices will complicate a lot the interface.
 

@@ -114,7 +114,7 @@ function MatrixSpace (Scalar) {
      * @returns {Object} scalar
      */
 
-    function trace (matrix) {
+    function computeTrace (matrix) {
       const matrixData = toData(matrix)
 
       return contraction([0, 1], indices, matrixData)
@@ -157,6 +157,12 @@ function MatrixSpace (Scalar) {
         }, enumerable)
 
         staticProps(this)({
+          Scalar
+        })
+
+        // Method aliases.
+
+        staticProps(this)({
           tr: () => this.transposed
         })
 
@@ -169,7 +175,7 @@ function MatrixSpace (Scalar) {
             },
 
             trace: () => {
-              const result = trace(this)
+              const result = computeTrace(this)
 
               return new Scalar(result)
             }
@@ -191,18 +197,20 @@ function MatrixSpace (Scalar) {
         return new TransposedMatrix(transposedElements)
       }
 
-      addition () {
-        const operands = [this].concat([].slice.call(arguments))
-
-        const result = operands.reduce((result, matrix) => matrixAddition(result, matrix))
+      addition (matrix) {
+        const result = matrixAddition(this, matrix)
 
         return new Matrix(result)
       }
 
-      subtraction () {
-        const operands = [this].concat([].slice.call(arguments))
+      multiplication (matrix) {
+        const result = matrixMultiplication(this, matrix)
 
-        const result = operands.reduce((result, matrix) => matrixSubtraction(result, matrix))
+        return new Matrix(result)
+      }
+
+      subtraction (matrix) {
+        const result = matrixSubtraction(this, matrix)
 
         return new Matrix(result)
       }
@@ -220,25 +228,9 @@ function MatrixSpace (Scalar) {
 
     // Matrix static operators.
 
-    function staticAddition () {
-      const operands = [].slice.call(arguments)
-
-      const result = operands.reduce((result, matrix) => matrixAddition(result, matrix))
-
-      return result
-    }
-
-    function staticSubtraction () {
-      const operands = [].slice.call(arguments)
-
-      const result = operands.reduce((result, matrix) => matrixSubtraction(result, matrix))
-
-      return result
-    }
-
     staticProps(Matrix)({
-      addition: () => staticAddition,
-      subtraction: () => staticSubtraction,
+      addition: () => matrixAddition,
+      subtraction: () => matrixSubtraction,
       transpose: () => transpose
     })
 
@@ -251,7 +243,7 @@ function MatrixSpace (Scalar) {
     if (isSquare) {
       staticProps(Matrix)({
         determinant: () => computeDeterminant,
-        trace: () => trace
+        trace: () => computeTrace
       })
 
       staticProps(Matrix)({

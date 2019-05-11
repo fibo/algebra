@@ -178,17 +178,42 @@ function VectorSpace (Scalar) {
 
         staticProps(this)({
           norm: norm(data),
-          dimension
+          dimension,
+          Scalar
+        })
+
+        // Method aliases.
+
+        staticProps(this)({
+          add: () => this.addition,
+          mul: () => this.multiplication,
+          scalar: () => this.scalarProduct,
+          sub: () => this.subtraction
         })
       }
 
-      addition () {
-        const operands = [this].concat([].slice.call(arguments))
-
-        const result = operands.reduce((result, vector) => vectorAddition(result, vector))
+      addition (vector) {
+        const result = vectorAddition(this, vector)
 
         return new Vector(result)
       }
+
+      /**
+       * Multiplication of a vector by a right matrix.
+       *
+       * Actually the vector it is supposed to be transposed, so it
+       * becomes a row-vector, while by convention all vectors are column-vectors,
+       * and after it is transposed, it can be multiplied by a right matrix.
+       *
+       * The transposition happens here implicitly.
+       *
+       * If you do not know what it means, do not worry. It is part of
+       * Geometry first course at the first year of University, and you can
+       * ignore it, since it has no consequences but it is hard to spot.
+       *
+       * I would like to thank and remember here in this comment, my awesome
+       * prof. of Geometry. Thank you, Monti Bragadin.
+       */
 
       multiplication (rightMatrix) {
         const MatrixSpace = itemsPool.get('MatrixSpace')
@@ -210,10 +235,8 @@ function VectorSpace (Scalar) {
         return new Scalar(result)
       }
 
-      subtraction () {
-        const operands = [this].concat([].slice.call(arguments))
-
-        const result = operands.reduce((result, vector) => vectorSubtraction(result, vector))
+      subtraction (vector) {
+        const result = vectorSubtraction(this, vector)
 
         return new Vector(result)
       }
@@ -223,41 +246,19 @@ function VectorSpace (Scalar) {
       dimension
     }, enumerable)
 
-    // Method aliases.
-
-    Vector.prototype.add = Vector.prototype.addition
-    Vector.prototype.mul = Vector.prototype.multiplication
-    Vector.prototype.scalar = Vector.prototype.scalarProduct
-    Vector.prototype.sub = Vector.prototype.subtraction
-
     // Vector static operators.
 
-    function staticAddition () {
-      const operands = [].slice.call(arguments)
-
-      const result = operands.reduce((result, vector) => vectorAddition(result, vector))
-
-      return result
-    }
-
-    function staticSubtraction () {
-      const operands = [].slice.call(arguments)
-
-      const result = operands.reduce((result, vector) => vectorSubtraction(result, vector))
-
-      return result
-    }
+    staticProps(Vector)({
+      addition: () => vectorAddition,
+      norm: () => norm,
+      scalarProduct: () => scalarProduct,
+      subtraction: () => vectorSubtraction
+    })
 
     staticProps(Vector)({
-      add: () => staticAddition,
-      addition: () => staticAddition,
-      mul: () => multiplicationByMatrix,
-      multiplication: () => multiplicationByMatrix,
-      norm: () => norm,
-      scalar: () => scalarProduct,
-      scalarProduct: () => scalarProduct,
-      sub: () => staticSubtraction,
-      subtraction: () => staticSubtraction
+      add: () => Vector.addition,
+      scalar: () => Vector.scalarProduct,
+      sub: () => Vector.subtraction
     })
 
     function crossProductMethod (vector) {

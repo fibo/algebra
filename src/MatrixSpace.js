@@ -163,6 +163,9 @@ function MatrixSpace (Scalar) {
         // Method aliases.
 
         staticProps(this)({
+          add: this.addition,
+          mul: this.multiplication,
+          sub: this.subtraction,
           tr: () => this.transposed
         })
 
@@ -221,21 +224,18 @@ function MatrixSpace (Scalar) {
       numRows
     })
 
-    // Method aliases.
-
-    Matrix.prototype.add = Matrix.prototype.addition
-    Matrix.prototype.sub = Matrix.prototype.subtraction
-
     // Matrix static operators.
 
     staticProps(Matrix)({
       addition: () => matrixAddition,
+      multiplication: () => matrixMultiplication,
       subtraction: () => matrixSubtraction,
       transpose: () => transpose
     })
 
     staticProps(Matrix)({
       add: Matrix.addition,
+      mul: Matrix.multiplication,
       sub: Matrix.subtraction,
       tr: Matrix.transpose
     })

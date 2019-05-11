@@ -12,7 +12,6 @@
 [![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra)
 [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test)
 [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
@@ -459,14 +458,15 @@ consists of two binary operators that generalize the arithmetic operations of ad
 is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
 
 Ok, let's make a simple example. [Real numbers](#real), with common addition
-and multiplication are a scalar field: see documentation below. The good new
-is that you can create any scalar field as long as you provide a set with
-two internal operations and related neutral elements that satisfy the ring
-axioms. That is why it will be used something maybe you did not expect could
+and multiplication are a *scalar field*.
+
+The good new is that you can create any *scalar field* as long as you provide a set with two internal operations and related neutral elements that satisfy the ring axioms.
+
+Something maybe you did not expect could
 be treated as an algebra: in the examples below during this section we will
 play with the color space, giving a ring structure.
 
-Let's consider the space of html colors in the form
+Let's consider the space of HTML colors in the form
 
 > RGB: Red Green Blue
 

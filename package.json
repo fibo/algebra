@@ -11,9 +11,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm test && npm run browserify && npm run minify && npm run docs; git status",
-    "browserify": "npm run browserify:dist; npm run browserify:test",
-    "browserify:dist": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
-    "browserify:test": "browserify test/*.js -o docs/test/bundle.js",
+    "browserify": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "docs:_data": "for x in package.json tags.json; do npm run docs:_data:$x; done",

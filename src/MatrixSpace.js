@@ -24,6 +24,7 @@ const toData = require('./toData')
 function MatrixSpace (Scalar) {
   const {
     addition,
+    equality,
     subtraction
   } = Scalar
 
@@ -70,6 +71,37 @@ function MatrixSpace (Scalar) {
       return result
     }
 
+    /**
+     * Matrix equality checks that all elements are equal.
+     * It also tries to check if numCols and numRows correspond.
+     */
+
+    function matrixEquality (matrix1, matrix2) {
+      if (matrix1 instanceof Matrix && matrix2 instanceof Matrix) {
+        if (matrix1.numCols !== matrix2.numCols) {
+          return false
+        }
+
+        if (matrix1.numRows !== matrix2.numRows) {
+          return false
+        }
+      }
+
+      const matrixData1 = toData(matrix1)
+      const matrixData2 = toData(matrix2)
+
+      if (matrixData1.length !== matrixData2.length) {
+        return false
+      }
+
+      for (let i = 0; i < dimension; i++) {
+        if (!equality(matrixData1[i], matrixData2[i])) {
+          return false
+        }
+      }
+
+      return true
+    }
     /**
      * Multiplies row by column to the right.
      *
@@ -157,15 +189,7 @@ function MatrixSpace (Scalar) {
         }, enumerable)
 
         staticProps(this)({
-          Scalar
-        })
-
-        // Method aliases.
-
-        staticProps(this)({
-          add: this.addition,
-          mul: this.multiplication,
-          sub: this.subtraction,
+          Scalar,
           tr: () => this.transposed
         })
 
@@ -183,11 +207,11 @@ function MatrixSpace (Scalar) {
               return new Scalar(result)
             }
           })
-
-          staticProps(this)({
-            det: () => this.determinant
-          })
         }
+      }
+
+      equality (matrix) {
+        return matrixEquality(this, matrix)
       }
 
       get transposed () {
@@ -219,6 +243,13 @@ function MatrixSpace (Scalar) {
       }
     }
 
+    // Method aliases.
+    Matrix.prototype.add = Matrix.prototype.addition
+    Matrix.prototype.eq = Matrix.prototype.equality
+    Matrix.prototype.equal = Matrix.prototype.equality
+    Matrix.prototype.mul = Matrix.prototype.multiplication
+    Matrix.prototype.sub = Matrix.prototype.subtraction
+
     staticProps(Matrix)({
       numCols,
       numRows
@@ -228,6 +259,7 @@ function MatrixSpace (Scalar) {
 
     staticProps(Matrix)({
       addition: () => matrixAddition,
+      equality: () => matrixEquality,
       multiplication: () => matrixMultiplication,
       subtraction: () => matrixSubtraction,
       transpose: () => transpose
@@ -235,12 +267,15 @@ function MatrixSpace (Scalar) {
 
     staticProps(Matrix)({
       add: Matrix.addition,
+      eq: Matrix.equality,
       mul: Matrix.multiplication,
       sub: Matrix.subtraction,
       tr: Matrix.transpose
     })
 
     if (isSquare) {
+      Matrix.prototype.det = Matrix.prototype.determinant
+
       staticProps(Matrix)({
         determinant: () => computeDeterminant,
         trace: () => computeTrace

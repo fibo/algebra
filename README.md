@@ -258,7 +258,7 @@ m2.determinant // Scalar { data: 2 }
 
 ### About operators
 
-All operators are implemented as static methods and as object methods.
+All operators can be implemented as *static methods* and as *object methods*.
 In both cases, operands are coerced to raw data.
 As an example, consider addition of vectors in a plane.
 
@@ -286,10 +286,10 @@ const vector4 = vector1.addition(vector2)
 R2.equal(vector3, vector4) // true
 ```
 
-Operators can be chained and accept multiple arguments when it makes sense.
+Operators can be chained when it makes sense.
 
 ```javascript
-vector1.addition(vector1, vector1).equality([3, 6]) // true
+vector1.addition(vector1).equality([2, 4]) // true
 ```
 
 Objects are immutable

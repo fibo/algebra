@@ -1,6 +1,7 @@
 const CayleyDickson = require('cayley-dickson')
-const createScalar = require('./createScalar')
 const no = require('not-defined')
+
+const createScalar = require('./createScalar')
 
 /**
  * A composition algebra is one of ℝ, ℂ, ℍ, O:

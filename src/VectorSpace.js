@@ -20,6 +20,7 @@ const toData = require('./toData')
 function VectorSpace (Scalar) {
   const {
     addition,
+    equality,
     multiplication,
     subtraction
   } = Scalar
@@ -33,23 +34,6 @@ function VectorSpace (Scalar) {
    */
 
   return function (dimension) {
-    /**
-     * Vector addition is the scalar addition for every coordinate.
-     */
-
-    function vectorAddition (vector1, vector2) {
-      const vectorData1 = toData(vector1)
-      const vectorData2 = toData(vector2)
-
-      let result = []
-
-      for (let i = 0; i < dimension; i++) {
-        result.push(addition(vectorData1[i], vectorData2[i]))
-      }
-
-      return result
-    }
-
     /**
      * Computes the cross product of two vectors.
      *
@@ -152,6 +136,44 @@ function VectorSpace (Scalar) {
     }
 
     /**
+     * Vector addition is the scalar addition for every coordinate.
+     */
+
+    function vectorAddition (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(addition(vectorData1[i], vectorData2[i]))
+      }
+
+      return result
+    }
+
+    /**
+     * Vector equality checks that all coordinates are equal.
+     */
+
+    function vectorEquality (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
+
+      if (vectorData1.length !== vectorData2.length) {
+        return false
+      }
+
+      for (let i = 0; i < dimension; i++) {
+        if (!equality(vectorData1[i], vectorData2[i])) {
+          return false
+        }
+      }
+
+      return true
+    }
+
+    /**
      * Vector subtraction is the scalar subtraction for every coordinate.
      */
 
@@ -186,6 +208,8 @@ function VectorSpace (Scalar) {
 
         staticProps(this)({
           add: () => this.addition,
+          eq: () => this.equality,
+          equal: () => this.equality,
           mul: () => this.multiplication,
           scalar: () => this.scalarProduct,
           sub: () => this.subtraction
@@ -196,6 +220,10 @@ function VectorSpace (Scalar) {
         const result = vectorAddition(this, vector)
 
         return new Vector(result)
+      }
+
+      equality (vector) {
+        return vectorEquality(this, vector)
       }
 
       /**
@@ -250,6 +278,7 @@ function VectorSpace (Scalar) {
 
     staticProps(Vector)({
       addition: () => vectorAddition,
+      equality: () => vectorEquality,
       norm: () => norm,
       scalarProduct: () => scalarProduct,
       subtraction: () => vectorSubtraction
@@ -257,6 +286,7 @@ function VectorSpace (Scalar) {
 
     staticProps(Vector)({
       add: () => Vector.addition,
+      eq: () => Vector.equality,
       scalar: () => Vector.scalarProduct,
       sub: () => Vector.subtraction
     })

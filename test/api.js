@@ -21,22 +21,22 @@ describe('API', () => {
   const Boole = algebra.Boole
 
   describe('About operators', () => {
-    // it('works', () => {
-    //   const vector1 = new R2([1, 2])
-    //   const vector2 = new R2([3, 4])
+    it('works', () => {
+      const vector1 = new R2([1, 2])
+      const vector2 = new R2([3, 4])
 
-    //   R2.addition(vector1, [3, 4]).should.deepEqual([4, 6])
-    //   R2.addition([1, 2], vector2).should.deepEqual([4, 6])
-    //   R2.addition(vector1, vector2).should.deepEqual([4, 6])
+      R2.addition(vector1, [3, 4]).should.deepEqual([4, 6])
+      R2.addition([1, 2], vector2).should.deepEqual([4, 6])
+      R2.addition(vector1, vector2).should.deepEqual([4, 6])
 
-    //   const vector3 = vector1.addition([3, 4])
-    //   const vector4 = vector1.addition(vector2)
-    //   R2.equality(vector3, vector4).should.be.ok()
+      const vector3 = vector1.addition([3, 4])
+      const vector4 = vector1.addition(vector2)
+      R2.equality(vector3, vector4).should.be.ok()
 
-    //   vector1.addition(vector1, vector1).equality([3, 6]).should.be.ok()
+      vector1.addition(vector1).equality([2, 4]).should.be.ok()
 
-    //   vector1.data.should.deepEqual([1, 2])
-    // })
+      vector1.data.should.deepEqual([1, 2])
+    })
   })
 
   describe('CompositionAlgebra', () => {
@@ -230,11 +230,11 @@ describe('API', () => {
       })
     })
 
-    // describe('scalar.belongsTo', () => {
-    //   it('works', () => {
-    //     green.belongsTo(RGB).should.be.ok()
-    //   })
-    // })
+    describe('scalar.belongsTo', () => {
+      it('works'/*, () => {
+        green.belongsTo(RGB).should.be.ok()
+      }*/)
+    })
 
     describe('Scalar.equality', () => {
       it('works')
@@ -335,11 +335,12 @@ describe('API', () => {
       const vectorOfStrings = new VectorStrings2(['o', 'k'])
       const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
                                                     'o', 'l'])
-      // matrixOfStrings.mul(vectorOfStrings)
-      //                .data.should.deepEqual(['x', 'y'])
 
-      // vectorOfStrings.mul(matrixOfStrings)
-      //                .data.should.deepEqual(['x', 'y'])
+      matrixOfStrings.mul(vectorOfStrings)
+                     .data.should.deepEqual(['x', 'y'])
+
+      vectorOfStrings.mul(matrixOfStrings)
+                     .data.should.deepEqual(['x', 'y'])
     })
   })
 

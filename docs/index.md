@@ -12,10 +12,8 @@ title: algebra
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
 [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js)
 [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
-[![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra)
 [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/algebra/test)
 [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
 [![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
@@ -82,28 +80,20 @@ npm install algebra
 or use a CDN adding this to your HTML page
 
 ```html
-<script src="https://cdn.rawgit.com/fibo/algebra/master/dist/algebra.js"></script>
+<script src="https://unpkg.com/algebra/dist/algebra.min.js"></script>
 ```
 
 ## Quick start
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
+All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
+
 First of all, import *algebra* package.
 
 ```javascript
 const algebra = require('algebra')
 ```
-
-### Try it out
-
-All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
-
-<ul class="box">
-<li class="tonicdev"><a href="https://tonicdev.com/fibo/algebra-quick-start" target="_blank">Test algebra <em>quick start</em> in your browser.</a></li>
-</ul>
-
-[![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
 
 ### Scalars
 
@@ -188,7 +178,7 @@ const R2 = algebra.VectorSpace(R)(2)
 Create two vectors and add them.
 
 ```javascript
-const v1 = new R2([0, 1])
+let v1 = new R2([0, 1])
 const v2 = new R2([1, -2])
 
 // v1 -> v1 + v2 -> [0, 1] + [1, -2] = [1, -1]
@@ -241,8 +231,8 @@ Let's try with two square matrices 2 x 2.
 ```javascript
 const R2x2 = algebra.MatrixSpace(R)(2, 2)
 
-const m2 = new R2x2([1, 0,
-                     0, 2])
+let m2 = new R2x2([1, 0,
+                   0, 2])
 
 const m3 = new R2x2([0, -1,
                      1, 0])
@@ -262,9 +252,9 @@ m2.determinant // Scalar { data: 2 }
 
 ### About operators
 
-All operators are implemented as static methods and as object methods.
+All operators can be implemented as *static methods* and as *object methods*.
 In both cases, operands are coerced to raw data.
-As an example, consider addition of vectors in a plane.
+As an example, consider addition of vectors in a *Cartesian Plane*.
 
 ```javascript
 const R2 = algebra.R2
@@ -290,10 +280,10 @@ const vector4 = vector1.addition(vector2)
 R2.equal(vector3, vector4) // true
 ```
 
-Operators can be chained and accept multiple arguments when it makes sense.
+Operators can be chained when it makes sense.
 
 ```javascript
-vector1.addition(vector1, vector1).equality([3, 6]) // true
+vector1.addition(vector1).equality([2, 4]) // true
 ```
 
 Objects are immutable
@@ -437,11 +427,6 @@ byte7.mul(byte7).data // [t, f, f, f, f, f, f, f]
 byte8.mul(byte8).data // [t, f, f, f, f, f, f, f]
 ```
 
-Keeping in mind that *Byte* space defined above is an algebra, i.e. it has
-composition laws well defined, you maybe already noticed that, for example
-*byte2* could be seen as corresponding to 4, but in this strange structure
-we created, 4 * 4 = 2.
-
 You can play around with this structure.
 
 ```javascript
@@ -453,219 +438,85 @@ max.data // [t, t, t, t, t, t, t, t]
 
 ### Scalar
 
-**NOTA BENE** The color space example in this section is still a *WiP*.
-
-The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks,
-they are the elements you can use to create vectors and matrices.
+The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors and matrices.
 They are the underneath set enriched with a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
-consists of two binary operators that generalize the arithmetic operations of addition and multiplication. A ring that has the commutativity property
-is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
+consists of two binary operators that generalize the arithmetic operations of addition and multiplication.
+A ring that has the commutativity property is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
 
-Ok, let's make a simple example. [Real numbers](#real), with common addition
-and multiplication are a scalar field: see documentation below. The good new
-is that you can create any scalar field as long as you provide a set with
-two internal operations and related neutral elements that satisfy the ring
-axioms. That is why it will be used something maybe you did not expect could
-be treated as an algebra: in the examples below during this section we will
-play with the color space, giving a ring structure.
+Ok, let's make a simple example. [Real numbers](#real), with common addition and multiplication are a *scalar field*.
 
-Let's consider the space of html colors in the form
+The good new is that you can create any *scalar field* as long as you provide a set with two internal operations and related neutral elements that satisfy the ring axioms.
 
-> RGB: Red Green Blue
+We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number).
 
-composed of three hexadecimal values from `00` to `ff`. Let's start
-defining a sum operator on hexadecimals.
+Arguments we need are the same as [algebra-ring]. Let's start by unities; every element is a couple of numbers, the
+*numerator* and the *denominator*, hence unitites are:
 
-Credits and thanks for dec to hex and viceversa conversions goes to [this gist](https://gist.github.com/faisalman/4213592) author.
+* zero: `[ BigInt(0), BigInt(1) ]`
+* one: `[ BigInt(1), BigInt(1) ]`
+
+We need a function that computes the *Great Common Divisor*.
 
 ```javascript
-const hexSum = (hex1, hex2) => {
-  const dec1 = parseInt(hex1, 16) % 256
-  const dec2 = parseInt(hex2, 16) % 256
-
-  // Sum modulo 256 and convert to hexadecimal.
-  const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
-
-  // Return left padded result.
-  return hexResult.padStart(2, '0')
+function greatCommonDivisor (a, b) {
+  if (b === BigInt(0)) {
+    return a
+  } else {
+    return greatCommonDivisor(b, a % b)
+  }
 }
 ```
 
-Note that it is used modulo 256 cause we need that our set is *closed*
-on this operator, it means that the sum of two colors must be another      color.
-
-To define color sum we can split a color in an array of three hexadecimals,
-and sum componentwise.
+So now we can normalize a rational number, by removing the common divisors of numerator and denominator.
 
 ```javascript
-const splitColor = (color) => {
-  const r = color.substring(0, 2)
-  const g = color.substring(2, 4)
-  const b = color.substring(4, 6)
+function normalizeRational ([numerator, denominator]) {
+  const divisor = greatCommonDivisor(numerator, denominator)
 
-  return [r, g, b]
+  return [numerator / divisor, denominator / divisor]
 }
 ```
 
-For example, white color `ffffff` will be splitted in `['ff', 'ff', 'ff']`.
-
 ```javascript
-const colorSum = (color1, color2) => {
-  const [r1, g1, b1] = splitColor(color1)
-  const [r2, g2, b2] = splitColor(color2)
-
-  const r = hexSum(r1, r2)
-  const g = hexSum(g1, g2)
-  const b = hexSum(b1, b2)
-
-  return [r, g, b].join('')
-}
-```
-
-You can check that this sum is *well defined*, and for example, green plus
-blue equals cyan.
-
-```javascript
-colorSum('00ff00', '0000ff') // '00ffff'
-```
-
-The neutral element respect to this operator is *black* (`000000`).
-
-To define a scalar field we need another operation to be used as multiplication.
-Let's define a multiplication on hexadecimals first.
-
-```javascript
-const hexMul = (hex1, hex2) => {
-  const dec1 = parseInt(hex1, 16) % 256
-  const dec2 = parseInt(hex2, 16) % 256
-
-  // Multiply, then divide by 255 and convert to hexadecimal.
-  const hexResult = parseInt((dec1 * dec2) / 255, 10).toString(16)
-
-  // Return left padded result.
-  return hex.padStart(2, '0')
-}
-```
-
-Then similarly to `colorSum` it is possible to define a `colorMul` that
-applies `hexMul` componentwise.
-
-```javascript
-const colorMul = (color1, color2) => {
-  const [r1, g1, b1] = splitColor(color1)
-  const [r2, g2, b2] = splitColor(color2)
-
-  const r = hexMul(r1, r2)
-  const g = hexMul(g1, g2)
-  const b = hexMul(b1, b2)
-
-  return [r, g, b].join('')
-}
-```
-
-The neutral element for this operator is *white* (`ffffff`).
-
-We are ready to create our scalar field over RGB colors.
-Arguments are the same as [algebra-ring].
-
-```javascript
-const RGB = algebra.Scalar(
-  [ '000000', 'ffffff' ],
+const Big = algebra.Scalar(
+  [
+    [BigInt(0), BigInt(1)],
+    [BigInt(1), BigInt(1)]
+  ],
   {
-    equality: (a, b) => a === b,
-    contains: (color) => {
-      const [r, g, b] = splitColor(color)
-
-      return (parseInt(r, 16) < 256) && (parseInt(g, 16) < 256) && (parseInt(b, 16) < 256)
-    },
-    addition: colorSum,
-    negation: (color) => {
-      const [r, g, b] = splitColor(color)
-
-      const decR = parseInt(r, 16)
-      const decG = parseInt(g, 16)
-      const decB = parseInt(b, 16)
-
-      const minusR = decR === 0 ? 0 : 256 - decR
-      const minusG = decG === 0 ? 0 : 256 - decG
-      const minusB = decB === 0 ? 0 : 256 - decB
-
-      const hexMinusR = parseInt(minusR, 10).toString(16)
-      const hexMinusG = parseInt(minusG, 10).toString(16)
-      const hexMinusB = parseInt(minusB, 10).toString(16)
-
-      const paddedMinusR = hexMinusR.padStart(2, '0')
-      const paddedMinusG = hexMinusG.padStart(2, '0')
-      const paddedMinusB = hexMinusB.padStart(2, '0')
-
-      return `${paddedMinusR}${paddedMinusG}${paddedMinusB}`
-    },
-    multiplication: colorMul,
-    inversion: (color) => {
-      const [r, g, b] = splitColor(color)
-
-      const decR = parseInt(r, 16)
-      const decG = parseInt(g, 16)
-      const decB = parseInt(b, 16)
-
-      const invR = parseInt(255 * 255 / decR, 10).toString(16)
-      const invG = parseInt(255 * 255 / decG, 10).toString(16)
-      const invB = parseInt(255 * 255 / decB, 10).toString(16)
-
-      const paddedInvR = invR.padStart(2, '0')
-      const paddedInvG = invG.padStart(2, '0')
-      const paddedInvB = invB.padStart(2, '0')
-
-      return `${paddedInvR}${paddedInvG}${paddedInvB}`
-    },
+    equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
+    contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
+    addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
+    negation: ([n, d]) => ([-n, d]),
+    multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
+    inversion: ([n, d]) => ([d, n])
   }
 )
 ```
 
-So far so good, algebra dependencies will do some checks under the hood
-and complain if something looks wrong. Now we can create color instances
-
-```javascript
-const green = new RGB('00ff00')
-const blue = new RGB('0000ff')
-```
-
-And as you may expect, you can do operations with them
-
-```javascript
-const cyan = green.add(blue)
-cyan.data // '00ffff'
-```
+So far so good, algebra dependencies will do some checks under the hood and complain if something looks wrong.
 
 #### Scalar attributes
 
 ##### `Scalar.one`
 
 Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
-In our *RGB* example it corrensponds to *white* (`ffffff`).
 
 ```javascript
-RGB.one // 'ffffff'
+Big.one // [1n, 1n]
 ```
 
 ##### `Scalar.zero`
 
 Is the *neutral element* for [addition](#scalar-addition) operator.
-In our *RGB* example it corrensponds to *black* (`000000`)
 
 ```javascript
-RGB.zero // '000000'
+Big.zero // [0n, 1n]
 ```
 
 ##### `scalar.data`
 
 The *data* attribute holds the raw data underneath our scalar instance.
-
-```javascript
-green.data // '00ff00'
-blue.data // '0000ff'
-cyan.data // '00ffff'
-```
 
 #### Scalar operators
 
@@ -673,21 +524,11 @@ cyan.data // '00ffff'
 
 ##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
 
-Is a static method
-that checks a given argument is contained in the scalar field that was defined.
-
-```javascript
-RGB.contains('ffffff') // true
-RGB.contains('not a color') // false
-```
+Is a static method that checks a given argument is contained in the scalar field that was defined.
 
 ##### `scalar1.belongsTo(Scalar)`
 
 This is a class method that checks a scalar instance is contained in the given scalar field.
-
-```javascript
-green.belongsTo(RGB) // true
-```
 
 #### Scalar equality
 
@@ -830,7 +671,7 @@ const R = algebra.R
 
 #### R2
 
-The real plane.
+The *Cartesian Plane*.
 
 ```javascript
 const R2 = algebra.R2

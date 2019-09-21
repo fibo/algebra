@@ -141,7 +141,7 @@ module.exports={
   "_args": [
     [
       "algebra-cyclic@0.2.4",
-      "/home/gianluca/github.com/fibo/algebra"
+      "/Users/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "algebra-cyclic@0.2.4",
@@ -165,7 +165,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/algebra-cyclic/-/algebra-cyclic-0.2.4.tgz",
   "_spec": "0.2.4",
-  "_where": "/home/gianluca/github.com/fibo/algebra",
+  "_where": "/Users/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -385,7 +385,7 @@ module.exports={
   "_args": [
     [
       "algebra-group@0.6.2",
-      "/home/gianluca/github.com/fibo/algebra"
+      "/Users/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "algebra-group@0.6.2",
@@ -409,7 +409,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/algebra-group/-/algebra-group-0.6.2.tgz",
   "_spec": "0.6.2",
-  "_where": "/home/gianluca/github.com/fibo/algebra",
+  "_where": "/Users/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -556,7 +556,7 @@ module.exports={
   "_args": [
     [
       "algebra-ring@0.6.3",
-      "/home/gianluca/github.com/fibo/algebra"
+      "/Users/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "algebra-ring@0.6.3",
@@ -581,7 +581,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/algebra-ring/-/algebra-ring-0.6.3.tgz",
   "_spec": "0.6.3",
-  "_where": "/home/gianluca/github.com/fibo/algebra",
+  "_where": "/Users/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -1127,7 +1127,7 @@ module.exports={
   "_args": [
     [
       "matrix-multiplication@0.5.2",
-      "/home/gianluca/github.com/fibo/algebra"
+      "/Users/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "matrix-multiplication@0.5.2",
@@ -1151,7 +1151,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/matrix-multiplication/-/matrix-multiplication-0.5.2.tgz",
   "_spec": "0.5.2",
-  "_where": "/home/gianluca/github.com/fibo/algebra",
+  "_where": "/Users/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -1266,7 +1266,7 @@ module.exports={
   "_args": [
     [
       "multidim-array-index@0.6.0",
-      "/home/gianluca/github.com/fibo/algebra"
+      "/Users/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "multidim-array-index@0.6.0",
@@ -1290,7 +1290,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/multidim-array-index/-/multidim-array-index-0.6.0.tgz",
   "_spec": "0.6.0",
-  "_where": "/home/gianluca/github.com/fibo/algebra",
+  "_where": "/Users/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -1386,7 +1386,7 @@ module.exports={
   "_args": [
     [
       "multidim-array-index@0.6.0",
-      "/home/gianluca/github.com/fibo/algebra"
+      "/Users/io/github.com/fibo/algebra"
     ]
   ],
   "_from": "multidim-array-index@0.6.0",
@@ -1410,7 +1410,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/multidim-array-index/-/multidim-array-index-0.6.0.tgz",
   "_spec": "0.6.0",
-  "_where": "/home/gianluca/github.com/fibo/algebra",
+  "_where": "/Users/io/github.com/fibo/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "http://g14n.info"
@@ -1559,8 +1559,9 @@ module.exports = Boole
 
 },{}],21:[function(require,module,exports){
 const CayleyDickson = require('cayley-dickson')
-const createScalar = require('./createScalar')
 const no = require('not-defined')
+
+const createScalar = require('./createScalar')
 
 /**
  * A composition algebra is one of ℝ, ℂ, ℍ, O:
@@ -1608,13 +1609,12 @@ module.exports = Cyclic
 
 },{"./createScalar":27,"algebra-cyclic":1}],23:[function(require,module,exports){
 const determinant = require('laplace-determinant')
-const itemsPool = require('./itemsPool')
-const matrixMultiplication = require('matrix-multiplication')
+const multiplication = require('matrix-multiplication')
 const multiDimArrayIndex = require('multidim-array-index')
-const no = require('not-defined')
-const operators = require('./operators.json')
 const staticProps = require('static-props')
 const tensorContraction = require('tensor-contraction')
+
+const itemsPool = require('./itemsPool')
 const toData = require('./toData')
 
 /**
@@ -1632,42 +1632,86 @@ const toData = require('./toData')
  */
 
 function MatrixSpace (Scalar) {
-  const contraction = tensorContraction.bind(null, Scalar.addition)
+  const {
+    addition,
+    equality,
+    subtraction
+  } = Scalar
 
-  // Operator filters.
-  const matrixOperators = ({ categories }) => categories.includes('matrix')
-  const groupOperators = ({ categories }) => categories.includes('group')
+  const contraction = tensorContraction.bind(null, addition)
+
+  const enumerable = true
 
   /**
    * @param {Number} numRows
    * @param {Number} [numCols] defaults to a square matrix.
    *
-   * @returns {Function} Matrix
+   * @returns {class} Matrix
    */
 
-  return function (numRows, numCols) {
-    // numCols defaults to numRows
-    if (no(numCols)) numCols = numRows
-
-    const isSquare = (numRows === numCols)
+  return function (numRows, numCols = numRows) {
+    const dimension = numRows * numCols
     const indices = [numRows, numCols]
+    const isSquare = (numRows === numCols)
 
     /**
-     * Calculates the matrix trace.
-     *
-     * https://en.wikipedia.org/wiki/Trace_(linear_algebra)
-     *
-     * @param {Object|Array} matrix
-     *
-     * @returns {Object} scalar
+     * Determinant computation is defined only if it is a square matrix.
      */
 
-    function trace (matrix) {
-      const matrixData = toData(matrix)
+    function computeDeterminant (matrix) {
+      const data = toData(matrix)
 
-      return contraction([0, 1], indices, matrixData)
+      return determinant(data, Scalar, numRows)
     }
 
+    /**
+     * Matrix addition is the scalar addition for every item.
+     */
+
+    function matrixAddition (matrix1, matrix2) {
+      const matrixData1 = toData(matrix1)
+      const matrixData2 = toData(matrix2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(addition(matrixData1[i], matrixData2[i]))
+      }
+
+      return result
+    }
+
+    /**
+     * Matrix equality checks that all elements are equal.
+     * It also tries to check if numCols and numRows correspond.
+     */
+
+    function matrixEquality (matrix1, matrix2) {
+      if (matrix1 instanceof Matrix && matrix2 instanceof Matrix) {
+        if (matrix1.numCols !== matrix2.numCols) {
+          return false
+        }
+
+        if (matrix1.numRows !== matrix2.numRows) {
+          return false
+        }
+      }
+
+      const matrixData1 = toData(matrix1)
+      const matrixData2 = toData(matrix2)
+
+      if (matrixData1.length !== matrixData2.length) {
+        return false
+      }
+
+      for (let i = 0; i < dimension; i++) {
+        if (!equality(matrixData1[i], matrixData2[i])) {
+          return false
+        }
+      }
+
+      return true
+    }
     /**
      * Multiplies row by column to the right.
      *
@@ -1676,13 +1720,46 @@ function MatrixSpace (Scalar) {
      * @returns {Object} matrix
      */
 
-    function multiplication (leftMatrix, rightMatrix) {
+    function matrixMultiplication (leftMatrix, rightMatrix) {
       const leftMatrixData = toData(leftMatrix)
       const rightMatrixData = toData(rightMatrix)
 
-      const rowByColumnMultiplication = matrixMultiplication(Scalar)(numCols)
+      const rowByColumnMultiplication = multiplication(Scalar)(numCols)
 
       return rowByColumnMultiplication(leftMatrixData, rightMatrixData)
+    }
+
+    /**
+     * Matrix subtraction is the scalar subtraction for every item.
+     */
+
+    function matrixSubtraction (matrix1, matrix2) {
+      const matrixData1 = toData(matrix1)
+      const matrixData2 = toData(matrix2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(subtraction(matrixData1[i], matrixData2[i]))
+      }
+
+      return result
+    }
+
+    /**
+     * Calculates the matrix trace.
+     *
+     * @see {@link https://en.wikipedia.org/wiki/Trace_(linear_algebra)}
+     *
+     * @param {Object|Array} matrix
+     *
+     * @returns {Object} scalar
+     */
+
+    function computeTrace (matrix) {
+      const matrixData = toData(matrix)
+
+      return contraction([0, 1], indices, matrixData)
     }
 
     /**
@@ -1709,156 +1786,115 @@ function MatrixSpace (Scalar) {
       return transposedData
     }
 
-    function staticGroupBinary (operatorName) {
-      return function (leftMatrix, rightMatrix) {
-        if (leftMatrix.numCols === rightMatrix.numCols && leftMatrix.numRows === rightMatrix.numRows) {
-          const { numCols, numRows } = leftMatrix
-          const operands = []
-          const result = []
-
-          for (let i = 0; i < numRows * numCols; i++) {
-            for (let j = 0; j < arguments.length; j++) {
-              operands.push(toData(arguments[j])[i])
-            }
-
-            result.push(Scalar[operatorName].apply(null, operands))
-          }
-
-          return result
-        } else {
-          return new TypeError('Incompatible matrices')
-        }
-      }
-    }
-
-    function computeDeterminant () {
-      const det = determinant(data, Scalar, numRows)
-
-      return new Scalar(det)
-    }
-
     /**
      * Matrix element.
      */
 
-    function Matrix (data) {
-      staticProps(this)({
-        data,
-        numCols,
-        numRows
-      }, true)
+    class Matrix {
+      constructor (data) {
+        staticProps(this)({
+          data,
+          numCols,
+          numRows
+        }, enumerable)
 
-      operators.filter(matrixOperators).filter(groupOperators).forEach(operator => {
-        const isBinary = operator.categories.includes('binary')
-        const isClosed = operator.isClosed
-        const isInstanceMethod = operator.isInstanceMethod
-        const isStaticMethod = operator.isStaticMethod
-        const isUnary = operator.categories.includes('unary')
-        const operatorName = operator.name
+        staticProps(this)({
+          Scalar,
+          tr: () => this.transposed
+        })
 
-        if (isBinary) {
-          if (isInstanceMethod) {
-            Matrix.prototype[operatorName] = function () {
-              const args = [].slice.call(arguments)
-              const operands = [this.data].concat(args)
+        if (isSquare) {
+          staticProps(this)({
+            determinant: () => {
+              const result = computeDeterminant(this)
 
-              const data = staticGroupBinary(operatorName).apply(null, operands)
+              return new Scalar(result)
+            },
 
-              if (isClosed) {
-                return new Matrix(data)
-              } else {
-                return data
-              }
+            trace: () => {
+              const result = computeTrace(this)
+
+              return new Scalar(result)
             }
-          }
-
-          if (isStaticMethod) {
-            Matrix[operatorName] = staticGroupBinary(operatorName)
-          }
-        }
-
-        if (isUnary) {
-          if (isInstanceMethod) {
-
-          }
-
-          if (isStaticMethod) {
-          }
-        }
-      })
-
-      if (isSquare) {
-        staticProps(this)({
-          trace: trace(data)
-        })
-
-        staticProps(this)({
-          determinant: computeDeterminant
-        })
-      }
-
-      function transposed () {
-        const result = transpose(data)
-        const VectorSpace = itemsPool.get('VectorSpace')
-
-        if (numRows === 1) {
-          const Vector = VectorSpace(Scalar)(numCols)
-          return new Vector(result)
-        } else {
-          const Matrix = MatrixSpace(Scalar)(numCols, numRows)
-          return new Matrix(result)
+          })
         }
       }
 
-      staticProps(this)({
-        transposed,
-        tr: transposed
-      })
+      equality (matrix) {
+        return matrixEquality(this, matrix)
+      }
+
+      get transposed () {
+        const transposedElements = transpose(this)
+
+        // Get a class matrix in the transposed matrix space.
+        // Note that numCols and numRows order as arguments is inverted.
+        const TransposedMatrix = MatrixSpace(Scalar)(numCols, numRows)
+
+        return new TransposedMatrix(transposedElements)
+      }
+
+      addition (matrix) {
+        const result = matrixAddition(this, matrix)
+
+        return new Matrix(result)
+      }
+
+      multiplication (matrix) {
+        const result = matrixMultiplication(this, matrix)
+
+        return new Matrix(result)
+      }
+
+      subtraction (matrix) {
+        const result = matrixSubtraction(this, matrix)
+
+        return new Matrix(result)
+      }
     }
 
-    if (isSquare) {
-      Matrix.trace = trace
-    }
-
-    Matrix.prototype.multiplication = function (rightMatrix) {
-      const leftMatrixData = this.data
-      const result = multiplication(leftMatrixData, rightMatrix)
-
-      const rightNumRows = numCols
-      const rightNumCols = result.length / rightNumRows
-
-      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
-
-      return new Matrix(result)
-    }
-
-    // Static operators.
-
-    Matrix.multiplication = multiplication
-    Matrix.transpose = transpose
-
-    // Aliases
-
-    operators.filter(matrixOperators).forEach(operator => {
-      const isInstanceMethod = operator.isInstanceMethod
-      const isStaticMethod = operator.isStaticMethod
-      const operatorName = operator.name
-
-      operator.aliases.forEach(alias => {
-        if (isInstanceMethod) {
-          Matrix.prototype[alias] = Matrix.prototype[operatorName]
-        }
-
-        if (isStaticMethod) {
-          Matrix[alias] = Matrix[operatorName]
-        }
-      })
-    })
+    // Method aliases.
+    Matrix.prototype.add = Matrix.prototype.addition
+    Matrix.prototype.eq = Matrix.prototype.equality
+    Matrix.prototype.equal = Matrix.prototype.equality
+    Matrix.prototype.mul = Matrix.prototype.multiplication
+    Matrix.prototype.sub = Matrix.prototype.subtraction
 
     staticProps(Matrix)({
       numCols,
       numRows
     })
+
+    // Matrix static operators.
+
+    staticProps(Matrix)({
+      addition: () => matrixAddition,
+      equality: () => matrixEquality,
+      multiplication: () => matrixMultiplication,
+      subtraction: () => matrixSubtraction,
+      transpose: () => transpose
+    })
+
+    staticProps(Matrix)({
+      add: Matrix.addition,
+      eq: Matrix.equality,
+      mul: Matrix.multiplication,
+      sub: Matrix.subtraction,
+      tr: Matrix.transpose
+    })
+
+    if (isSquare) {
+      Matrix.prototype.det = Matrix.prototype.determinant
+
+      staticProps(Matrix)({
+        determinant: () => computeDeterminant,
+        trace: () => computeTrace
+      })
+
+      staticProps(Matrix)({
+        det: Matrix.determinant
+      })
+    }
 
     return Matrix
   }
@@ -1868,7 +1904,7 @@ itemsPool.set('MatrixSpace', MatrixSpace)
 
 module.exports = MatrixSpace
 
-},{"./itemsPool":28,"./operators.json":29,"./toData":31,"laplace-determinant":9,"matrix-multiplication":10,"multidim-array-index":12,"not-defined":14,"static-props":15,"tensor-contraction":19}],24:[function(require,module,exports){
+},{"./itemsPool":28,"./toData":31,"laplace-determinant":9,"matrix-multiplication":10,"multidim-array-index":12,"static-props":15,"tensor-contraction":19}],24:[function(require,module,exports){
 const algebraRing = require('algebra-ring')
 const createScalar = require('./createScalar')
 
@@ -1887,7 +1923,6 @@ module.exports = Scalar
 },{"./createScalar":27,"algebra-ring":5}],25:[function(require,module,exports){
 const itemsPool = require('./itemsPool')
 const matrixMultiplication = require('matrix-multiplication')
-const operators = require('./operators.json')
 const staticProps = require('static-props')
 const toData = require('./toData')
 
@@ -1906,9 +1941,14 @@ const toData = require('./toData')
  */
 
 function VectorSpace (Scalar) {
-  const addition = Scalar.addition
-  const multiplication = Scalar.multiplication
-  const subtraction = Scalar.subtraction
+  const {
+    addition,
+    equality,
+    multiplication,
+    subtraction
+  } = Scalar
+
+  const enumerable = true
 
   /**
    * @param {Number} dimension
@@ -1917,8 +1957,6 @@ function VectorSpace (Scalar) {
    */
 
   return function (dimension) {
-    const indices = [dimension]
-
     /**
      * Computes the cross product of two vectors.
      *
@@ -1953,9 +1991,10 @@ function VectorSpace (Scalar) {
 
     /**
      * Multiply a column vector by matrix on right side
-     * @param {Object|Array} vector
      *
      * @returns {Object} scalar
+     * @param leftVector
+     * @param rightMatrix
      */
 
     function multiplicationByMatrix (leftVector, rightMatrix) {
@@ -1994,7 +2033,7 @@ function VectorSpace (Scalar) {
     /**
      * Scalar product
      *
-     * https://en.wikipedia.org/wiki/Dot_product
+     * @see {@link https://en.wikipedia.org/wiki/Dot_product}
      *
      * @param {Object|Array} vector1
      * @param {Object|Array} vector2
@@ -2020,27 +2059,161 @@ function VectorSpace (Scalar) {
     }
 
     /**
+     * Vector addition is the scalar addition for every coordinate.
+     */
+
+    function vectorAddition (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(addition(vectorData1[i], vectorData2[i]))
+      }
+
+      return result
+    }
+
+    /**
+     * Vector equality checks that all coordinates are equal.
+     */
+
+    function vectorEquality (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
+
+      if (vectorData1.length !== vectorData2.length) {
+        return false
+      }
+
+      for (let i = 0; i < dimension; i++) {
+        if (!equality(vectorData1[i], vectorData2[i])) {
+          return false
+        }
+      }
+
+      return true
+    }
+
+    /**
+     * Vector subtraction is the scalar subtraction for every coordinate.
+     */
+
+    function vectorSubtraction (vector1, vector2) {
+      const vectorData1 = toData(vector1)
+      const vectorData2 = toData(vector2)
+
+      let result = []
+
+      for (let i = 0; i < dimension; i++) {
+        result.push(subtraction(vectorData1[i], vectorData2[i]))
+      }
+
+      return result
+    }
+
+    /**
      * Vector element.
      */
 
-    function Vector (data) {
-      staticProps(this)({
-        norm: norm(data),
-        dimension
-      })
+    class Vector {
+      constructor (data) {
+        staticProps(this)({ data }, enumerable)
+
+        staticProps(this)({
+          norm: norm(data),
+          dimension,
+          Scalar
+        })
+
+        // Method aliases.
+
+        staticProps(this)({
+          add: () => this.addition,
+          eq: () => this.equality,
+          equal: () => this.equality,
+          mul: () => this.multiplication,
+          scalar: () => this.scalarProduct,
+          sub: () => this.subtraction
+        })
+      }
+
+      addition (vector) {
+        const result = vectorAddition(this, vector)
+
+        return new Vector(result)
+      }
+
+      equality (vector) {
+        return vectorEquality(this, vector)
+      }
+
+      /**
+       * Multiplication of a vector by a right matrix.
+       *
+       * Actually the vector it is supposed to be transposed, so it
+       * becomes a row-vector, while by convention all vectors are column-vectors,
+       * and after it is transposed, it can be multiplied by a right matrix.
+       *
+       * The transposition happens here implicitly.
+       *
+       * If you do not know what it means, do not worry. It is part of
+       * Geometry first course at the first year of University, and you can
+       * ignore it, since it has no consequences but it is hard to spot.
+       *
+       * I would like to thank and remember here in this comment, my awesome
+       * prof. of Geometry. Thank you, Monti Bragadin.
+       */
+
+      multiplication (rightMatrix) {
+        const MatrixSpace = itemsPool.get('MatrixSpace')
+
+        const leftVectorData = this.data
+        const result = multiplicationByMatrix(leftVectorData, rightMatrix)
+
+        const rightNumRows = dimension
+        const rightNumCols = result.length / rightNumRows
+
+        const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
+
+        return new Matrix(result)
+      }
+
+      scalarProduct (vector) {
+        const result = scalarProduct(this, vector)
+
+        return new Scalar(result)
+      }
+
+      subtraction (vector) {
+        const result = vectorSubtraction(this, vector)
+
+        return new Vector(result)
+      }
     }
 
-    staticProps(Vector)({ dimension })
+    staticProps(Vector)({
+      dimension
+    }, enumerable)
 
-    Vector.prototype.scalarProduct = function (vector) {
-      const data = this.data
+    // Vector static operators.
 
-      const result = scalarProduct(data, vector)
+    staticProps(Vector)({
+      addition: () => vectorAddition,
+      equality: () => vectorEquality,
+      norm: () => norm,
+      scalarProduct: () => scalarProduct,
+      subtraction: () => vectorSubtraction
+    })
 
-      return new Scalar(result)
-    }
+    staticProps(Vector)({
+      add: () => Vector.addition,
+      eq: () => Vector.equality,
+      scalar: () => Vector.scalarProduct,
+      sub: () => Vector.subtraction
+    })
 
-    // Cross product is defined only in dimension 3.
     function crossProductMethod (vector) {
       const data = this.data
 
@@ -2050,42 +2223,13 @@ function VectorSpace (Scalar) {
     }
 
     if (dimension === 3) {
-      Vector.crossProduct = crossProduct
-
-      Vector.prototype.crossProduct = crossProductMethod
       Vector.prototype.cross = crossProductMethod
-    }
+      Vector.prototype.crossProduct = crossProductMethod
 
-    Vector.prototype.multiplication = function (rightMatrix) {
-      const MatrixSpace = itemsPool.get('MatrixSpace')
-
-      const leftVectorData = this.data
-      const result = multiplicationByMatrix(leftVectorData, rightMatrix)
-
-      // TODO rightNumRows equals dimension
-      // but the vector should be transposed.
-      // Add transpose operator for vectors, then use it implicitly.
-      const rightNumRows = dimension
-      const rightNumCols = result.length / rightNumRows
-
-      const Matrix = MatrixSpace(Scalar)(rightNumRows, rightNumCols)
-
-      return new Matrix(result)
-    }
-
-    // Static operators.
-
-    Vector.multiplication = multiplicationByMatrix
-    Vector.norm = norm
-    Vector.scalarProduct = scalarProduct
-
-    // Aliases
-
-    Vector.mul = multiplicationByMatrix
-    Vector.prototype.mul = Vector.prototype.multiplication
-
-    if (dimension === 3) {
-      Vector.cross = crossProduct
+      staticProps(Vector)({
+        crossProduct: () => crossProduct,
+        cross: () => crossProduct
+      })
     }
 
     return Vector
@@ -2096,7 +2240,7 @@ itemsPool.set('VectorSpace', VectorSpace)
 
 module.exports = VectorSpace
 
-},{"./itemsPool":28,"./operators.json":29,"./toData":31,"matrix-multiplication":10,"static-props":15}],26:[function(require,module,exports){
+},{"./itemsPool":28,"./toData":31,"matrix-multiplication":10,"static-props":15}],26:[function(require,module,exports){
 const toData = require('./toData')
 
 /**
@@ -2154,8 +2298,6 @@ function createScalar (ring) {
   }
 
   staticProps(Scalar)(attributes)
-
-  const unaryOperators = operators.inversion
 
   const scalarOperators = ({ categories }) => categories.includes('scalar')
 
@@ -2497,11 +2639,9 @@ const realField = {
     //
     //     0.30000000000000004
     //
-    // Hence we need to aproximate equality with an epsilon.
+    // Hence we need to approximate equality with an epsilon.
 
-    const epsilon = 0.000000000001
-
-    return Math.abs(a - b) < epsilon
+    return Math.abs(a - b) < Number.EPSILON
   },
   addition: (a, b) => a + b,
   negation: (a) => -a,

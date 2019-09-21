@@ -34,12 +34,14 @@ function MatrixSpace (Scalar) {
 
   /**
    * @param {Number} numRows
-   * @param {Number} [numCols] defaults to a square matrix.
+   * @param {Number} [numCols] if not defined it defaults to a square matrix.
    *
    * @returns {class} Matrix
    */
 
-  return function (numRows, numCols = numRows) {
+  return function (numRows, numCols) {
+    if (typeof numCols === 'undefined') numCols = numRows
+
     const dimension = numRows * numCols
     const indices = [numRows, numCols]
     const isSquare = (numRows === numCols)

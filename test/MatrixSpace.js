@@ -215,36 +215,20 @@ describe('MatrixSpace', () => {
 
       matrix2x2a.data.should.deepEqual(matrix2x2b.data)
     })
-
-    // it('returns a vector if the Matrix has one row', () => {
-    //   const matrix1x4 = new R1x4([1, 2, 3, 4])
-
-    //   const vector = matrix1x4.transposed
-
-    //   matrix1x4.data.should.deepEqual(vector.data)
-    //   vector.dimension.should.be.eql(matrix1x4.numCols)
-    // })
   })
 
-  // describe('mul()', () => {
-  //   it('is an alias of multiplication()', () => {
-  //     R2x2.mul.should.be.eql(R2x2.multiplication)
+  describe('mul()', () => {
+    it('is an alias of multiplication()', () => {
+      const matrix2x2 = new R2x2([1, 2,
+                                  3, 4])
 
-  //     const matrix2x2 = new R2x2([1, 2,
-  //                                 3, 4])
+      const matrix3x2 = new R3x2([1, 2,
+                                  3, 4,
+                                  5, 6])
 
-  //     matrix2x2.multiplication.should.be.eql(matrix2x2.mul)
-  //   })
-  // })
-
-  // describe('tr()', () => {
-  //   it('is an alias of transpose()', () => {
-  //     const matrix = new R2x2([0, 1,
-  //                              2, 2])
-
-  //     R2x2.tr(matrix).should.deepEqual(R2x2.transpose(matrix))
-  //   })
-  // })
+      matrix3x2.multiplication(matrix2x2).data.should.be.deepEqual(matrix3x2.mul(matrix2x2).data)
+    })
+  })
 
   describe('tr', () => {
     it('is an alias of transposed', () => {

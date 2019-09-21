@@ -444,19 +444,49 @@ Ok, let's make a simple example. [Real numbers](#real), with common addition and
 
 The good new is that you can create any *scalar field* as long as you provide a set with two internal operations and related neutral elements that satisfy the ring axioms.
 
-We are going to create a scalar field using `BigInt` elements.
-Arguments are the same as [algebra-ring].
+We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number).
+
+Arguments we need are the same as [algebra-ring]. Let's start by unities; every element is a couple of numbers, the
+*numerator* and the *denominator*, hence unitites are:
+
+* zero: `[ BigInt(0), BigInt(1) ]`
+* one: `[ BigInt(1), BigInt(1) ]`
+
+We need a function that computes the *Great Common Divisor*.
+
+```javascript
+function greatCommonDivisor (a, b) {
+  if (b === BigInt(0)) {
+    return a
+  } else {
+    return greatCommonDivisor(b, a % b)
+  }
+}
+```
+
+So now we can normalize a rational number, by removing the common divisors of numerator and denominator.
+
+```javascript
+function normalizeRational ([numerator, denominator]) {
+  const divisor = greatCommonDivisor(numerator, denominator)
+
+  return [numerator / divisor, denominator / divisor]
+}
+```
 
 ```javascript
 const Big = algebra.Scalar(
-  [ BigInt(0), BigInt(1) ],
+  [
+    [BigInt(0), BigInt(1)],
+    [BigInt(1), BigInt(1)]
+  ],
   {
-    equality: (a, b) => a === b,
-    contains: (a) => typeof a === 'bigint',
-    addition: (a, b) => a + b,
-    negation: (a) => -a,
-    multiplication: (a, b) => a * b,
-    inversion: (a) => 1 / a
+    equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
+    contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
+    addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
+    negation: ([n, d]) => ([-n, d]),
+    multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
+    inversion: ([n, d]) => ([d, n])
   }
 )
 ```
@@ -470,7 +500,7 @@ So far so good, algebra dependencies will do some checks under the hood and comp
 Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
 
 ```javascript
-Big.one // 1n
+Big.one // [1n, 1n]
 ```
 
 ##### `Scalar.zero`
@@ -478,7 +508,7 @@ Big.one // 1n
 Is the *neutral element* for [addition](#scalar-addition) operator.
 
 ```javascript
-Big.zero // 0n
+Big.zero // [0n, 1n]
 ```
 
 ##### `scalar.data`

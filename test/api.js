@@ -86,28 +86,47 @@ describe('API', () => {
   })
 
   describe('Scalar', () => {
+    function greatCommonDivisor (a, b) {
+      if (b === BigInt(0)) {
+        return a
+      } else {
+        return greatCommonDivisor(b, a % b)
+      }
+    }
+
+    function normalizeRational ([numerator, denominator]) {
+      const divisor = greatCommonDivisor(numerator, denominator)
+
+      return [numerator / divisor, denominator / divisor]
+    }
+
     const Big = algebra.Scalar(
-      [ BigInt(0), BigInt(1) ],
+      [
+        [ BigInt(0), BigInt(1) ],
+        [ BigInt(1), BigInt(1) ]
+      ],
       {
-        equality: (a, b) => a === b,
+        equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
         // eslint-disable-next-line
-        contains: (a) => typeof a === 'bigint',
-        addition: (a, b) => a + b,
-        negation: (a) => -a,
-        multiplication: (a, b) => a * b,
-        inversion: (a) => 1 / a
+        contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
+        addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
+        negation: ([n, d]) => ([-n, d]),
+        multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
+        inversion: ([n, d]) => ([d, n])
       }
     )
 
     describe('Scalar.one', () => {
       it('is a static attribute', () => {
-        Big.one.should.be.equal(BigInt(1))
+        Big.one[0].should.be.deepEqual(BigInt(1))
+        Big.one[1].should.be.deepEqual(BigInt(1))
       })
     })
 
     describe('Scalar.zero', () => {
       it('is a static attribute', () => {
-        Big.zero.should.be.equal(BigInt(0))
+        Big.zero[0].should.be.equal(BigInt(0))
+        Big.zero[1].should.be.equal(BigInt(1))
       })
     })
 

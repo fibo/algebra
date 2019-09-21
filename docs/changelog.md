@@ -15,12 +15,10 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 ## [Unreleased]
 
-TODO: add bigint example for scalars, move color space in another page
-bigint is clearer and more useful.
-
 ### Added
 
 - Using classes for vectors and matrices.
+- Scalar example using BigInt to implement rational numbers.
 
 ### Fixed
 

@@ -9,7 +9,7 @@ describe('CompositionAlgebra', () => {
     const pi = new R(Math.PI)
 
     it('is enumerable', () => {
-      pi.propertyIsEnumerable('data').should.be.ok()
+      Object.prototype.propertyIsEnumerable.call(pi, 'data').should.be.ok()
     })
 
     it('is immutable', () => {

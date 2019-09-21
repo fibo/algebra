@@ -57,7 +57,7 @@ function VectorSpace (Scalar) {
       const vy = vectorData2[1]
       const vz = vectorData2[2]
 
-      let vector = []
+      const vector = []
 
       vector.push(subtraction(multiplication(uy, vz), multiplication(uz, vy)))
       vector.push(subtraction(multiplication(uz, vx), multiplication(ux, vz)))
@@ -143,7 +143,7 @@ function VectorSpace (Scalar) {
       const vectorData1 = toData(vector1)
       const vectorData2 = toData(vector2)
 
-      let result = []
+      const result = []
 
       for (let i = 0; i < dimension; i++) {
         result.push(addition(vectorData1[i], vectorData2[i]))
@@ -181,7 +181,7 @@ function VectorSpace (Scalar) {
       const vectorData1 = toData(vector1)
       const vectorData2 = toData(vector2)
 
-      let result = []
+      const result = []
 
       for (let i = 0; i < dimension; i++) {
         result.push(subtraction(vectorData1[i], vectorData2[i]))

@@ -62,7 +62,7 @@ function MatrixSpace (Scalar) {
       const matrixData1 = toData(matrix1)
       const matrixData2 = toData(matrix2)
 
-      let result = []
+      const result = []
 
       for (let i = 0; i < dimension; i++) {
         result.push(addition(matrixData1[i], matrixData2[i]))
@@ -127,7 +127,7 @@ function MatrixSpace (Scalar) {
       const matrixData1 = toData(matrix1)
       const matrixData2 = toData(matrix2)
 
-      let result = []
+      const result = []
 
       for (let i = 0; i < dimension; i++) {
         result.push(subtraction(matrixData1[i], matrixData2[i]))

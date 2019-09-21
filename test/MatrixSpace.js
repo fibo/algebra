@@ -25,16 +25,16 @@ describe('MatrixSpace', () => {
     R2x2.numCols.should.be.eql(2)
   })
 
-  const matrix1 = new R2x2([ 2, 3,
-                             1, 1 ])
-  const matrix2 = new R2x2([ 0, 1,
-                            -1, 0 ])
-  const matrix3 = new R2x3([ 0, 1, 2,
-                            -2, 1, 0 ])
+  const matrix1 = new R2x2([2, 3,
+                            1, 1])
+  const matrix2 = new R2x2([0, 1,
+                            -1, 0])
+  const matrix3 = new R2x3([0, 1, 2,
+                           -2, 1, 0])
 
   describe('data', () => {
     it('is enumerable', () => {
-      matrix1.propertyIsEnumerable('data').should.be.ok()
+      Object.prototype.propertyIsEnumerable.call(matrix1, 'data').should.be.ok()
     })
 
     it('is immutable', () => {
@@ -76,21 +76,21 @@ describe('MatrixSpace', () => {
     const operator = 'addition'
 
     it('is a static method', staticBinaryOperator(R2x2, operator,
-      [ 2, 3,
-        1, 1 ],
-      [ 0, 1,
-       -1, 0 ],
-      [ 2, 4,
-        0, 1 ]
+      [2, 3,
+        1, 1],
+      [0, 1,
+      -1, 0],
+      [2, 4,
+       0, 1]
      ))
 
     it('is a class method', methodBinaryOperator(R2x2, operator,
-      [ 2, 3,
-        1, 1 ],
-      [ 0, 1,
-       -1, 0 ],
-      [ 2, 4,
-        0, 1 ]
+      [2, 3,
+       1, 1],
+      [0, 1,
+      -1, 0],
+      [2, 4,
+       0, 1]
     ))
   })
 
@@ -98,21 +98,21 @@ describe('MatrixSpace', () => {
     const operator = 'subtraction'
 
     it('is a static method', staticBinaryOperator(R2x2, operator,
-        [2, 3,
-         1, 1],
-        [0, 1,
-        -1, 0],
-        [2, 2,
-         2, 1]
+      [2, 3,
+       1, 1],
+      [0, 1,
+      -1, 0],
+      [2, 2,
+       2, 1]
     ))
 
     it('is a class method', methodBinaryOperator(R2x2, operator,
-        [2, 3,
-         1, 1],
-        [0, 1,
-        -1, 0],
-        [2, 2,
-         2, 1]
+      [2, 3,
+       1, 1],
+      [0, 1,
+      -1, 0],
+      [2, 2,
+       2, 1]
     ))
   })
 
@@ -120,23 +120,23 @@ describe('MatrixSpace', () => {
     const operator = 'multiplication'
 
     it('is a static method', staticBinaryOperator(R3x2, operator,
-        [2, 3,
-         1, 1,
-         1, 1],
-        [0, 1, 1, 1,
-        -1, 0, 2, 3],
-        [-3, 2, 8, 11,
-         -1, 1, 3, 4,
-         -1, 1, 3, 4]
+      [2, 3,
+       1, 1,
+       1, 1],
+      [0, 1, 1, 1,
+      -1, 0, 2, 3],
+      [-3, 2, 8, 11,
+       -1, 1, 3, 4,
+       -1, 1, 3, 4]
     ))
 
     it('is a class method', methodBinaryOperator(R2x2, operator,
-        [2, 3,
-         1, 1],
-        [0, 1,
-        -1, 0],
-        [-3, 2,
-         -1, 1]
+      [2, 3,
+       1, 1],
+      [0, 1,
+      -1, 0],
+      [-3, 2,
+       -1, 1]
     ))
   })
 

@@ -17,7 +17,7 @@ describe('VectorSpace', () => {
     const vector = new R2([0, 1])
 
     it('is enumerable', () => {
-      vector.propertyIsEnumerable('data').should.be.ok()
+      Object.prototype.propertyIsEnumerable.call(vector, 'data').should.be.ok()
     })
 
     it('is immutable', () => {

@@ -102,8 +102,8 @@ describe('API', () => {
 
     const Big = algebra.Scalar(
       [
-        [ BigInt(0), BigInt(1) ],
-        [ BigInt(1), BigInt(1) ]
+        [BigInt(0), BigInt(1)],
+        [BigInt(1), BigInt(1)]
       ],
       {
         equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),

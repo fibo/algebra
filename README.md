@@ -9,7 +9,6 @@
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
 [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js)
 [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
-[![Dependency Status](https://gemnasium.com/fibo/algebra.svg)](https://gemnasium.com/fibo/algebra)
 [![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
@@ -78,28 +77,20 @@ npm install algebra
 or use a CDN adding this to your HTML page
 
 ```html
-<script src="https://cdn.rawgit.com/fibo/algebra/master/dist/algebra.js"></script>
+<script src="https://unpkg.com/algebra/dist/algebra.min.js"></script>
 ```
 
 ## Quick start
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
+All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
+
 First of all, import *algebra* package.
 
 ```javascript
 const algebra = require('algebra')
 ```
-
-### Try it out
-
-All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
-
-<ul class="box">
-<li class="tonicdev"><a href="https://tonicdev.com/fibo/algebra-quick-start" target="_blank">Test algebra <em>quick start</em> in your browser.</a></li>
-</ul>
-
-[![view on requirebin](http://requirebin.com/badge.png)](http://requirebin.com/?gist=345763d95f093b9d9350)
 
 ### Scalars
 
@@ -260,7 +251,7 @@ m2.determinant // Scalar { data: 2 }
 
 All operators can be implemented as *static methods* and as *object methods*.
 In both cases, operands are coerced to raw data.
-As an example, consider addition of vectors in a plane.
+As an example, consider addition of vectors in a *Cartesian Plane*.
 
 ```javascript
 const R2 = algebra.R2
@@ -432,11 +423,6 @@ byte6.mul(byte6).data // [t, f, f, f, f, f, f, f]
 byte7.mul(byte7).data // [t, f, f, f, f, f, f, f]
 byte8.mul(byte8).data // [t, f, f, f, f, f, f, f]
 ```
-
-Keeping in mind that *Byte* space defined above is an algebra, i.e. it has
-composition laws well defined, you maybe already noticed that, for example
-*byte2* could be seen as corresponding to 4, but in this strange structure
-we created, 4 * 4 = 2.
 
 You can play around with this structure.
 

@@ -125,7 +125,7 @@ describe('Real', () => {
 
   describe('realField', () => {
     it('epsilon', () => {
-      assert(realField.equality(0.2 + 0.1, 0.3));
+      assert(realField.equality(0.2 + 0.1, 0.3))
     })
-  });
+  })
 })

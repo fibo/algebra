@@ -22,6 +22,10 @@ bigint is clearer and more useful.
 
 - Using classes for vectors and matrices.
 
+### Fixed
+
+- Import algebra by CDN instructions
+
 ### Removed
 
 - Simpler interface, do not accept multiple arguments for binary operators.

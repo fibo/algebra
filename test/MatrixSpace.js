@@ -11,8 +11,6 @@ const staticBinaryOperator = require('./features/staticBinaryOperator')
 const staticUnaryOperator = require('./features/staticUnaryOperator')
 
 describe('MatrixSpace', () => {
-
-  const R1x4 = MatrixSpace(Real)(1, 4)
   const R2x3 = MatrixSpace(Real)(2, 3)
   const R2x2 = MatrixSpace(Real)(2)
   const R3x2 = MatrixSpace(Real)(3, 2)

@@ -45,28 +45,28 @@ describe('Quick start', () => {
 
     v1.data.should.eql([1, -1])
 
-    // const R3x2 = algebra.MatrixSpace(R)(3, 2)
+    const R3x2 = algebra.MatrixSpace(R)(3, 2)
 
-    // const m1 = new R3x2([1, 1,
-    //                      0, 1,
-    //                      1, 0])
+    const m1 = new R3x2([1, 1,
+                         0, 1,
+                         1, 0])
 
-    // const v3 = m1.mul(v1)
+    const v3 = m1.mul(v1)
 
-    // v3.data.should.deepEqual([0, -1, 1])
+    v3.data.should.deepEqual([0, -1, 1])
 
-    // const R2x2 = algebra.MatrixSpace(R)(2)
+    const R2x2 = algebra.MatrixSpace(R)(2)
 
-    // let m2 = new R2x2([1, 0,
-    //                    0, 2])
-    // const m3 = new R2x2([0, -1,
-    //                      1, 0])
+    let m2 = new R2x2([1, 0,
+                       0, 2])
+    const m3 = new R2x2([0, -1,
+                         1, 0])
 
-    // m2 = m2.mul(m3)
+    m2 = m2.mul(m3)
 
-    // m2.data.should.deepEqual([0, -1,
-    //                           2, 0])
+    m2.data.should.deepEqual([0, -1,
+                              2, 0])
 
-    // m2.determinant.data.should.be.eql(2)
+    m2.determinant.data.should.be.eql(2)
   })
 })

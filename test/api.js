@@ -1,6 +1,8 @@
 /* eslint-disable indent */
 /* eslint-env mocha */
 
+/* global BigInt */
+
 describe('API', () => {
   const algebra = require('algebra')
 
@@ -84,150 +86,37 @@ describe('API', () => {
   })
 
   describe('Scalar', () => {
-    const hexSum = (hex1, hex2) => {
-      const dec1 = parseInt(hex1, 16) % 256
-      const dec2 = parseInt(hex2, 16) % 256
-
-      const hexResult = parseInt((dec1 + dec2) % 256, 10).toString(16)
-
-      return hexResult.padStart(2, '0')
-    }
-
-    const splitColor = (color) => {
-      const r = color.substring(0, 2)
-      const g = color.substring(2, 4)
-      const b = color.substring(4, 6)
-
-      return [r, g, b]
-    }
-
-    const colorSum = (color1, color2) => {
-      const [r1, g1, b1] = splitColor(color1)
-      const [r2, g2, b2] = splitColor(color2)
-
-      const r = hexSum(r1, r2)
-      const g = hexSum(g1, g2)
-      const b = hexSum(b1, b2)
-
-      return [r, g, b].join('')
-    }
-
-    const hexMul = (hex1, hex2) => {
-      const dec1 = parseInt(hex1, 16) % 256
-      const dec2 = parseInt(hex2, 16) % 256
-
-      const hexResult = parseInt((dec1 * dec2) / 255, 10).toString(16)
-
-      return hexResult.padStart(2, '0')
-    }
-
-    const colorMul = (color1, color2) => {
-      const [r1, g1, b1] = splitColor(color1)
-      const [r2, g2, b2] = splitColor(color2)
-
-      const r = hexMul(r1, r2)
-      const g = hexMul(g1, g2)
-      const b = hexMul(b1, b2)
-
-      return [r, g, b].join('')
-    }
-
-    describe('Color space example', () => {
-      describe('colorSum()', () => {
-        it('is well defined', () => {
-          colorSum('00ff00', '0000ff').should.equal('00ffff')
-        })
-      })
-    })
-
-    const RGB = algebra.Scalar(
-      [ '000000', 'ffffff' ],
+    const Big = algebra.Scalar(
+      [ BigInt(0), BigInt(1) ],
       {
         equality: (a, b) => a === b,
-        contains: (color) => {
-          const [r, g, b] = splitColor(color)
-
-          return (parseInt(r, 16) < 256) && (parseInt(g, 16) < 256) && (parseInt(b, 16) < 256)
-        },
-        addition: colorSum,
-        negation: (color) => {
-          const [r, g, b] = splitColor(color)
-
-          const decR = parseInt(r, 16)
-          const decG = parseInt(g, 16)
-          const decB = parseInt(b, 16)
-
-          const minusR = decR === 0 ? 0 : 255 - decR
-          const minusG = decG === 0 ? 0 : 255 - decG
-          const minusB = decB === 0 ? 0 : 255 - decB
-
-          const hexMinusR = parseInt(minusR, 10).toString(16)
-          const hexMinusG = parseInt(minusG, 10).toString(16)
-          const hexMinusB = parseInt(minusB, 10).toString(16)
-
-          const paddedMinusR = hexMinusR.padStart(2, '0')
-          const paddedMinusG = hexMinusG.padStart(2, '0')
-          const paddedMinusB = hexMinusB.padStart(2, '0')
-
-          return `${paddedMinusR}${paddedMinusG}${paddedMinusB}`
-        },
-        multiplication: colorMul,
-        inversion: (color) => {
-          const [r, g, b] = splitColor(color)
-
-          const decR = parseInt(r, 16)
-          const decG = parseInt(g, 16)
-          const decB = parseInt(b, 16)
-
-          const invR = parseInt(255 * 255 / decR, 10).toString(16)
-          const invG = parseInt(255 * 255 / decG, 10).toString(16)
-          const invB = parseInt(255 * 255 / decB, 10).toString(16)
-
-          const paddedInvR = invR.padStart(2, '0')
-          const paddedInvG = invG.padStart(2, '0')
-          const paddedInvB = invB.padStart(2, '0')
-
-          return `${paddedInvR}${paddedInvG}${paddedInvB}`
-        }
+        // eslint-disable-next-line
+        contains: (a) => typeof a === 'bigint',
+        addition: (a, b) => a + b,
+        negation: (a) => -a,
+        multiplication: (a, b) => a * b,
+        inversion: (a) => 1 / a
       }
     )
 
-    const green = new RGB('00ff00')
-    const blue = new RGB('0000ff')
-
-    const cyan = green.add(blue)
-
-    describe('Color instances example', () => {
-      it('works', () => {
-        cyan.data.should.be.equal('00ffff')
-      })
-    })
-
     describe('Scalar.one', () => {
       it('is a static attribute', () => {
-        RGB.one.should.be.equal('ffffff')
+        Big.one.should.be.equal(BigInt(1))
       })
     })
 
     describe('Scalar.zero', () => {
       it('is a static attribute', () => {
-        RGB.zero.should.be.equal('000000')
+        Big.zero.should.be.equal(BigInt(0))
       })
     })
 
     describe('scalar.data', () => {
-      it('works', () => {
-        green.data.should.eql('00ff00')
-        blue.data.should.eql('0000ff')
-        cyan.data.should.eql('00ffff')
-      })
+      it('works')
     })
 
     describe('Scalar.contains', () => {
-      it('works', () => {
-        RGB.contains('ffffff').should.be.ok()
-        RGB.contains('not a color').should.be.not.ok()
-      })
+      it('works')
     })
 
     describe('scalar.belongsTo', () => {

@@ -1,34 +1,6 @@
 [
   {
     "aliases": [
-      "eq",
-      "equal"
-    ],
-    "categories": [
-      "binary",
-      "scalar"
-    ],
-    "isClosed": false,
-    "isInstanceMethod": true,
-    "isStaticMethod": true,
-    "name": "equality"
-  },
-  {
-    "aliases": [
-      "ne",
-      "notEqual"
-    ],
-    "categories": [
-      "binary",
-      "scalar"
-    ],
-    "isClosed": false,
-    "isInstanceMethod": true,
-    "isStaticMethod": true,
-    "name": "disequality"
-  },
-  {
-    "aliases": [
     ],
     "categories": [
       "scalar",
@@ -50,18 +22,6 @@
     "isInstanceMethod": false,
     "isStaticMethod": true,
     "name": "notContains"
-  },
-  {
-    "aliases": [
-    ],
-    "categories": [
-      "scalar",
-      "unary"
-    ],
-    "isClosed": false,
-    "isInstanceMethod": true,
-    "isStaticMethod": false,
-    "name": "belongsTo"
   },
   {
     "aliases": [

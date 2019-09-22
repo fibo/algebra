@@ -15,6 +15,17 @@ function createScalar (ring) {
     one: ring.one
   }
 
+  function scalarEquality (scalar1, scalar2) {
+    const scalarData1 = toData(scalar1)
+    const scalarData2 = toData(scalar2)
+
+    return ring.equality(scalarData1, scalarData2)
+  }
+
+  function scalarDisequality (scalar1, scalar2) {
+    return !scalarEquality(scalar1, scalar2)
+  }
+
   /**
    * Scalar element.
    */
@@ -30,10 +41,53 @@ function createScalar (ring) {
       staticProps(this)({ data }, enumerable)
 
       staticProps(this)(attributes)
+
+      // Method aliases.
+
+      staticProps(this)({
+        // add: () => this.addition,
+        eq: () => this.equality,
+        equal: () => this.equality,
+        equals: () => this.equality,
+        ne: () => this.disequality,
+        notEqual: () => this.disequality,
+        notEquals: () => this.disequality
+        // mul: () => this.multiplication,
+        // sub: () => this.subtraction
+      })
+    }
+
+    belongsTo (Ring) {
+      return Ring.contains(this.data)
+    }
+
+    disequality (scalar) {
+      return scalarDisequality(this, scalar)
+    }
+
+    equality (scalar) {
+      return scalarEquality(this, scalar)
     }
   }
 
   staticProps(Scalar)(attributes)
+
+  // Vector static operators.
+
+  staticProps(Scalar)({
+    // addition: () => vectorAddition,
+    disequality: () => scalarDisequality,
+    equality: () => scalarEquality,
+    ne: () => scalarDisequality,
+    notEqual: () => scalarDisequality
+    // subtraction: () => vectorSubtraction
+  })
+
+  staticProps(Scalar)({
+    // add: () => Vector.addition,
+    eq: () => Scalar.equality
+    // sub: () => Vector.subtraction
+  })
 
   const scalarOperators = ({ categories }) => categories.includes('scalar')
 

@@ -444,7 +444,7 @@ Ok, let's make a simple example. [Real numbers](#real), with common addition and
 
 The good new is that you can create any *scalar field* as long as you provide a set with two internal operations and related neutral elements that satisfy the ring axioms.
 
-We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number).
+We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number). The idea is to use a couple of numbers, the first one is the *numerator* and the second one the *denominator*.
 
 Arguments we need are the same as [algebra-ring]. Let's start by unities; every element is a couple of numbers, the
 *numerator* and the *denominator*, hence unitites are:
@@ -475,7 +475,7 @@ function normalizeRational ([numerator, denominator]) {
 ```
 
 ```javascript
-const Big = algebra.Scalar(
+const Rational = algebra.Scalar(
   [
     [BigInt(0), BigInt(1)],
     [BigInt(1), BigInt(1)]
@@ -491,7 +491,14 @@ const Big = algebra.Scalar(
 )
 ```
 
-So far so good, algebra dependencies will do some checks under the hood and complain if something looks wrong.
+So far so good, algebra dependencies will do some checks under the hood and will complain if something looks wrong.
+
+Let's create few rational numbers.
+
+```javascript
+const half = new Rational([BigInt(1), BigInt(2)])
+const two = new Rational([BigInt(2), BigInt(1)])
+```
 
 #### Scalar attributes
 
@@ -500,7 +507,7 @@ So far so good, algebra dependencies will do some checks under the hood and comp
 Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
 
 ```javascript
-Big.one // [1n, 1n]
+Rational.one // [1n, 1n]
 ```
 
 ##### `Scalar.zero`
@@ -508,12 +515,16 @@ Big.one // [1n, 1n]
 Is the *neutral element* for [addition](#scalar-addition) operator.
 
 ```javascript
-Big.zero // [0n, 1n]
+Rational.zero // [0n, 1n]
 ```
 
 ##### `scalar.data`
 
 The *data* attribute holds the raw data underneath our scalar instance.
+
+```javascript
+half.data // [1n, 2n]
+```
 
 #### Scalar operators
 
@@ -523,9 +534,18 @@ The *data* attribute holds the raw data underneath our scalar instance.
 
 Is a static method that checks a given argument is contained in the scalar field that was defined.
 
+```javascript
+Rational.contains(half) // true
+Rational.contains([1n, 2n]) // true
+```
+
 ##### `scalar1.belongsTo(Scalar)`
 
 This is a class method that checks a scalar instance is contained in the given scalar field.
+
+```javascript
+half.belongsTo(Rational) // true
+```
 
 #### Scalar equality
 
@@ -533,13 +553,25 @@ This is a class method that checks a scalar instance is contained in the given s
 
 Is a static method
 
-##### `scalar1.equality(scalar2)`
+```javascript
+Rational.equality(half, [BigInt(5), BigInt(10)])
+```
+
+##### `scalar1.equals(scalar2)`
+
+```javascript
+half.equals([BigInt(2), BigInt(4)])
+```
 
 #### Scalar disequality
 
 ##### `Scalar.disequality(scalar1, scalar2)`
 
 Is a static method
+
+```javascript
+Rational.disequality(half, two) // true
+```
 
 ##### `scalar1.disequality(scalar2)`
 

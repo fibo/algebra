@@ -209,7 +209,7 @@ function VectorSpace (Scalar) {
         staticProps(this)({
           add: () => this.addition,
           eq: () => this.equality,
-          equal: () => this.equality,
+          equals: () => this.equality,
           mul: () => this.multiplication,
           scalar: () => this.scalarProduct,
           sub: () => this.subtraction

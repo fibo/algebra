@@ -100,7 +100,7 @@ describe('API', () => {
       return [numerator / divisor, denominator / divisor]
     }
 
-    const Big = algebra.Scalar(
+    const Rational = algebra.Scalar(
       [
         [BigInt(0), BigInt(1)],
         [BigInt(1), BigInt(1)]
@@ -116,42 +116,59 @@ describe('API', () => {
       }
     )
 
+    const half = new Rational([BigInt(1), BigInt(2)])
+    const two = new Rational([BigInt(2), BigInt(1)])
+
     describe('Scalar.one', () => {
       it('is a static attribute', () => {
-        Big.one[0].should.be.deepEqual(BigInt(1))
-        Big.one[1].should.be.deepEqual(BigInt(1))
+        Rational.one[0].should.be.deepEqual(BigInt(1))
+        Rational.one[1].should.be.deepEqual(BigInt(1))
       })
     })
 
     describe('Scalar.zero', () => {
       it('is a static attribute', () => {
-        Big.zero[0].should.be.equal(BigInt(0))
-        Big.zero[1].should.be.equal(BigInt(1))
+        Rational.zero[0].should.be.equal(BigInt(0))
+        Rational.zero[1].should.be.equal(BigInt(1))
       })
     })
 
     describe('scalar.data', () => {
-      it('works')
+      it('works', () => {
+        half.data[0].should.be.eql(BigInt(1))
+        half.data[1].should.be.eql(BigInt(2))
+      })
     })
 
     describe('Scalar.contains', () => {
-      it('works')
+      it('works', () => {
+        Rational.contains(half).should.be.ok()
+        Rational.contains([BigInt(1), BigInt(2)]).should.be.ok()
+      })
     })
 
     describe('scalar.belongsTo', () => {
-      it('works')
+      it('works', () => {
+        half.belongsTo(Rational).should.be.ok()
+      })
     })
 
     describe('Scalar.equality', () => {
-      it('works')
+      it('works', () => {
+        Rational.equality(half, [BigInt(5), BigInt(10)])
+      })
     })
 
     describe('scalar.equality', () => {
-      it('works')
+      it('works', () => {
+        half.equality([BigInt(2), BigInt(4)])
+      })
     })
 
     describe('Scalar.disequality', () => {
-      it('works')
+      it('works', () => {
+        Rational.disequality(half, two).should.be.ok()
+      })
     })
 
     describe('scalar.disequality', () => {

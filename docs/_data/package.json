@@ -1,7 +1,7 @@
 {
   "name": "algebra",
   "description": "means completeness and balancing, from the Arabic word الجبر",
-  "version": "0.12.7",
+  "version": "1.0.0",
   "homepage": "http://g14n.info/algebra",
   "author": {
     "name": "Gianluca Casati",
@@ -11,11 +11,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm test && npm run browserify && npm run minify && npm run docs; git status",
-    "browserify": "npm run browserify:dist; npm run browserify:test",
-    "browserify:dist": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
-    "browserify:test": "browserify test/*.js -o docs/test/bundle.js",
-    "coverage": "npm run istanbul && npm run coveralls",
-    "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
+    "browserify": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
     "docs:_data": "for x in package.json tags.json; do npm run docs:_data:$x; done",
     "docs:_data:package.json": "cp package.json docs/_data/",
     "docs:_data:tags.json": "wget https://api.github.com/repos/fibo/${npm_package_name}/tags -O docs/_data/tags.json",
@@ -25,7 +21,7 @@
     "lint": "npm run lint_src; npm run lint_test",
     "lint_src": "standa src/*.js",
     "lint_test": "cd test; standa --env mocha; cd -",
-    "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map --output ${npm_package_name}.min.js --compress --mangle -b beautify=false,preamble='\"// http://g14n.info/algebra\"'; cd -",
+    "minify": "cd dist; terser ${npm_package_name}.js --source-map --output ${npm_package_name}.min.js --compress --mangle -b beautify=false,preamble='\"// http://g14n.info/algebra\"'; cd -",
     "postversion": "git push origin v${npm_package_version}; npm publish",
     "postpublish": "npm run docs:_data; git commit -am ':arrow_up: updated version'; git push origin master",
     "test": "mocha"
@@ -50,18 +46,14 @@
     "math"
   ],
   "devDependencies": {
-    "browserify": "^16.1.1",
-    "coveralls": "^3.0.0",
-    "istanbul": "^0.4.1",
+    "browserify": "^16.5.0",
     "mocha": "^5.2.0",
-    "mocha-lcov-reporter": "1.3.0",
     "pre-commit": "^1.1.2",
     "should": "^13.2.3",
-    "standa": "^12.0.0",
-    "uglify-es": "^3.3.9"
+    "standa": "^14.0.0",
+    "terser": "^4.3.1"
   },
   "dependencies": {
-    "algebra-cyclic": "^0.2.4",
     "cayley-dickson": "^0.5.4",
     "indices-permutations": "^0.2.3",
     "laplace-determinant": "^0.2.1",

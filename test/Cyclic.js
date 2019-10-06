@@ -32,11 +32,6 @@ describe('Cyclic', () => {
     it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', 'b', 'c'))
 
     it('is a class method', methodBinaryOperator(Alphanum, operator, 'a', 'b', 'c'))
-
-    it('accepts many arguments', () => {
-      const x = new Alphanum('b')
-      x.addition('a', 'a', 'a').data.should.eql('e')
-    })
   })
 
   describe('subtraction', () => {
@@ -45,11 +40,6 @@ describe('Cyclic', () => {
     it('is a static method', staticBinaryOperator(Alphanum, operator, '8', 'b', '6'))
 
     it('is a class method', methodBinaryOperator(Alphanum, operator, 'f', 'd', 'b'))
-
-    it('accepts many arguments', () => {
-      const x = new Alphanum('e')
-      x.subtraction('e', 'a', 'b').data.should.eql('7')
-    })
   })
 
   // describe('multiplication', () => {
@@ -58,11 +48,6 @@ describe('Cyclic', () => {
   //   it('is a static method', staticBinaryOperator(Alphanum, operator, 'a', 'b', 'b'))
 
   //   it('is a class method', methodBinaryOperator(Alphanum, operator, 'c', 'c', 'i'))
-
-  //   it('accepts many arguments', () => {
-  //     const x = new Alphanum('c')
-  //     x.multiplication('0', 'u', 'e').data.should.eql('5')
-  //   })
   // })
 
   describe('division', () => {
@@ -71,11 +56,6 @@ describe('Cyclic', () => {
     it('is a static method', staticBinaryOperator(Alphanum, operator, 'e', 'n', 'c'))
 
     it('is a class method', methodBinaryOperator(Alphanum, operator, 'r', 'o', 'p'))
-
-    // it('accepts many arguments', () => {
-    //   const x = new Alphanum('y')
-    //   x.division('e', 'e').data.should.eql('8')
-    // })
   })
 
   describe('equality', () => {

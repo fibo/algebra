@@ -31,11 +31,6 @@ describe('Real', () => {
     it('is a static method', staticBinaryOperator(R, operator, 2, 3, 5))
 
     it('is a class method', methodBinaryOperator(R, operator, 1, 2, 3))
-
-    it('accepts many arguments', () => {
-      const x = new R(1)
-      x.addition(2, 3, 4).data.should.eql(10)
-    })
   })
 
   describe('subtraction', () => {
@@ -44,11 +39,6 @@ describe('Real', () => {
     it('is a static method', staticBinaryOperator(R, operator, 2, 3, -1))
 
     it('is a class method', methodBinaryOperator(R, operator, -1, -4, 3))
-
-    it('accepts many arguments', () => {
-      const x = new R(10)
-      x.subtraction(1, 2, 3).data.should.eql(4)
-    })
   })
 
   describe('multiplication', () => {
@@ -57,11 +47,6 @@ describe('Real', () => {
     it('is a static method', staticBinaryOperator(R, operator, 8, -2, -16))
 
     it('is a class method', methodBinaryOperator(R, operator, 2, 2, 4))
-
-    it('accepts many arguments', () => {
-      const x = new R(2)
-      x.multiplication(3, 4, 5).data.should.eql(120)
-    })
   })
 
   describe('division', () => {
@@ -70,11 +55,6 @@ describe('Real', () => {
     it('is a static method', staticBinaryOperator(R, operator, 8, 2, 4))
 
     it('is a class method', methodBinaryOperator(R, operator, -2, 4, -0.5))
-
-    it('accepts many arguments', () => {
-      const x = new R(120)
-      x.division(3, 4, 5).data.should.eql(2)
-    })
   })
 
   describe('equality', () => {

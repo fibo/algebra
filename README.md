@@ -107,13 +107,14 @@ Static operators return raw data, while class methods return object instances.
 Use static addition operator to add three numbers.
 
 ```javascript
-R.add(1, 2, 3) // 1 + 2 + 3 = 6
+R.add(1, 2) // 3
 ```
 
 Create two real number objects: x = 2, y = -2
 
 ```javascript
-let x = new R(2) // x will be overwritten, see below
+// x will be overwritten, see below
+let x = new R(2)
 const y = new R(-2)
 ```
 
@@ -321,13 +322,13 @@ Alphanum.addition('a', 'b') // 'c'
 You can also create element instances, and do any kind of operations.
 
 ```javascript
-const x = new Alphanum('a')
+const x = new Alphanum('1')
 
-const y = x.add('c', 'a', 't')
-           .mul('i', 's')
-           .add('o', 'n')
-           .sub('t', 'h', 'e')
-           .div('t', 'a', 'b', 'l', 'e')
+const y = x.add('a')
+           .mul('b')
+           .add('c')
+           .sub('d')
+           .div('e')
 
 y.data // 's'
 ```

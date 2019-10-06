@@ -240,13 +240,13 @@ describe('API', () => {
 
       Alphanum.addition('a', 'b').should.eql('c')
 
-      // const x = new Alphanum('a')
+      const x = new Alphanum('1')
 
-      // const y = x.add('c', 'a', 't')
-      //            .mul('i', 's')
-      //            .add('o', 'n')
-      //            .sub('t', 'h', 'e')
-      //            .div('t', 'a', 'b', 'l', 'e')
+      // const y = x.add('a')
+      //            .mul('b')
+      //            .add('c')
+      //            .sub('d')
+      //            .div('e')
 
       // y.data.should.eql('s')
 

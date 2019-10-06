@@ -22,12 +22,11 @@ function Ring ({
   subtraction,
   zero
 }) {
-  function scalarAddition (scalar1, scalar2, ...rest) {
+  function scalarAddition (scalar1, scalar2) {
     const scalarData1 = toData(scalar1)
     const scalarData2 = toData(scalar2)
-    const restData = rest.map(toData)
 
-    return addition(scalarData1, scalarData2, ...restData)
+    return addition(scalarData1, scalarData2)
   }
 
   function scalarConjugation (scalar) {
@@ -36,38 +35,32 @@ function Ring ({
     return conjugation(scalarData)
   }
 
-  function scalarContains (scalar, ...rest) {
+  function scalarContains (scalar) {
     const scalarData = toData(scalar)
-    const restData = rest.map(toData)
 
-    return contains(scalarData, ...restData)
+    return contains(scalarData)
   }
 
-  function scalarEquality (scalar1, scalar2, ...rest) {
+  function scalarEquality (scalar1, scalar2) {
     const scalarData1 = toData(scalar1)
     const scalarData2 = toData(scalar2)
-    const restData = rest.map(toData)
 
-    return equality(scalarData1, scalarData2, ...restData)
+    return equality(scalarData1, scalarData2)
   }
 
-  function scalarDisequality (...args) {
-    return !scalarEquality(...args)
+  function scalarDisequality (scalar1, scalar2) {
+    return !scalarEquality(scalar1, scalar2)
   }
 
-  function scalarDivision (scalar, ...rest) {
-    const scalarData = toData(scalar)
-    const restData = rest.map(toData)
+  function scalarDivision (scalar1, scalar2) {
+    const scalarData1 = toData(scalar1)
+    const scalarData2 = toData(scalar2)
 
-    const operands = [scalarData].concat(restData)
+    if (Scalar.equality(zero, scalarData2)) {
+      throw new Error('Cannot divide by zero')
+    }
 
-    operands.forEach((operand) => {
-      if (Scalar.equality(zero, operand)) {
-        throw new Error('Cannot divide by zero')
-      }
-    })
-
-    return division(...operands)
+    return division(scalarData1, scalarData2)
   }
 
   function scalarInversion (scalar) {
@@ -80,12 +73,11 @@ function Ring ({
     return inversion(scalarData)
   }
 
-  function scalarMultiplication (scalar1, scalar2, ...rest) {
+  function scalarMultiplication (scalar1, scalar2) {
     const scalarData1 = toData(scalar1)
     const scalarData2 = toData(scalar2)
-    const restData = rest.map(toData)
 
-    return multiplication(scalarData1, scalarData2, ...restData)
+    return multiplication(scalarData1, scalarData2)
   }
 
   function scalarNegation (scalar) {
@@ -94,12 +86,11 @@ function Ring ({
     return negation(scalarData)
   }
 
-  function scalarSubtraction (scalar1, scalar2, ...rest) {
+  function scalarSubtraction (scalar1, scalar2) {
     const scalarData1 = toData(scalar1)
     const scalarData2 = toData(scalar2)
-    const restData = rest.map(toData)
 
-    return subtraction(scalarData1, scalarData2, ...restData)
+    return subtraction(scalarData1, scalarData2)
   }
 
   /**
@@ -136,11 +127,7 @@ function Ring ({
     }
 
     addition (scalar) {
-      const scalarData = toData(scalar)
-
-      const rest = [].slice.call(arguments, 1).map(toData)
-
-      const data = scalarAddition.apply(null, [this, scalarData].concat(rest))
+      const data = scalarAddition(this, scalar)
 
       return new Scalar(data)
     }
@@ -156,29 +143,17 @@ function Ring ({
     }
 
     disequality (scalar) {
-      const scalarData = toData(scalar)
-
-      const rest = [].slice.call(arguments, 1).map(toData)
-
-      return scalarDisequality.apply(null, [this, scalarData].concat(rest))
+      return scalarDisequality(this, scalar)
     }
 
     division (scalar) {
-      const scalarData = toData(scalar)
-
-      const rest = [].slice.call(arguments, 1).map(toData)
-
-      const data = scalarDivision.apply(null, [this, scalarData].concat(rest))
+      const data = scalarDivision(this, scalar)
 
       return new Scalar(data)
     }
 
     equality (scalar) {
-      const scalarData = toData(scalar)
-
-      const rest = [].slice.call(arguments, 1).map(toData)
-
-      return scalarEquality.apply(null, [this, scalarData].concat(rest))
+      return scalarEquality(this, scalar)
     }
 
     inversion () {
@@ -188,11 +163,7 @@ function Ring ({
     }
 
     multiplication (scalar) {
-      const scalarData = toData(scalar)
-
-      const rest = [].slice.call(arguments, 1).map(toData)
-
-      const data = scalarMultiplication.apply(null, [this, scalarData].concat(rest))
+      const data = scalarMultiplication(this, scalar)
 
       return new Scalar(data)
     }
@@ -204,11 +175,7 @@ function Ring ({
     }
 
     subtraction (scalar) {
-      const scalarData = toData(scalar)
-
-      const rest = [].slice.call(arguments, 1).map(toData)
-
-      const data = scalarSubtraction.apply(null, [this, scalarData].concat(rest))
+      const data = scalarSubtraction(this, scalar)
 
       return new Scalar(data)
     }

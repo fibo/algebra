@@ -7,7 +7,7 @@ describe('Quick start', () => {
   it('works', () => {
     const R = algebra.Real
 
-    R.add(1, 2, 3).should.eql(6)
+    R.add(1, 2).should.eql(3)
 
     let x = new R(2)
     const y = new R(-2)

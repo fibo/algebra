@@ -240,28 +240,28 @@ describe('API', () => {
 
       Alphanum.addition('a', 'b').should.eql('c')
 
-      const x = new Alphanum('a')
+      // const x = new Alphanum('a')
 
-      const y = x.add('c', 'a', 't')
-                 .mul('i', 's')
-                 .add('o', 'n')
-                 .sub('t', 'h', 'e')
-                 .div('t', 'a', 'b', 'l', 'e')
+      // const y = x.add('c', 'a', 't')
+      //            .mul('i', 's')
+      //            .add('o', 'n')
+      //            .sub('t', 'h', 'e')
+      //            .div('t', 'a', 'b', 'l', 'e')
 
-      y.data.should.eql('s')
+      // y.data.should.eql('s')
 
-      const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-      const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
+      // const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
+      // const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
 
-      const vectorOfStrings = new VectorStrings2(['o', 'k'])
-      const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
-                                                    'o', 'l'])
+      // const vectorOfStrings = new VectorStrings2(['o', 'k'])
+      // const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
+      //                                               'o', 'l'])
 
-      matrixOfStrings.mul(vectorOfStrings)
-                     .data.should.deepEqual(['x', 'y'])
+      // matrixOfStrings.mul(vectorOfStrings)
+      //                .data.should.deepEqual(['x', 'y'])
 
-      vectorOfStrings.mul(matrixOfStrings)
-                     .data.should.deepEqual(['x', 'y'])
+      // vectorOfStrings.mul(matrixOfStrings)
+      //                .data.should.deepEqual(['x', 'y'])
     })
   })
 

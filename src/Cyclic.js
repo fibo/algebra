@@ -1,6 +1,6 @@
 const algebraCyclic = require('algebra-cyclic')
 
-const Ring = require('./Ring.js')
+const Scalar = require('./Scalar.js')
 
 /**
  * Create a Cyclic algebra.
@@ -9,7 +9,7 @@ const Ring = require('./Ring.js')
  */
 
 function Cyclic (elements) {
-  return Ring(algebraCyclic(elements))
+  return Scalar(algebraCyclic(elements))
 }
 
 module.exports = Cyclic

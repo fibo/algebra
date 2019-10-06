@@ -164,59 +164,111 @@ describe('API', () => {
     })
 
     describe('Scalar.addition', () => {
-      it('works')
+      it('works', () => {
+        const result = Rational.addition(half, two)
+
+        result[0].should.eql(BigInt(5))
+        result[1].should.eql(BigInt(2))
+      })
     })
 
     describe('scalar.addition', () => {
-      it('works')
+      it('works', () => {
+        const result = half.addition(two)
+
+        result.data[0].should.eql(BigInt(5))
+        result.data[1].should.eql(BigInt(2))
+      })
     })
 
     describe('Scalar.subtraction', () => {
-      it('works')
+      it('works', () => {
+        const result = Rational.subtraction(two, half)
+
+        result[0].should.eql(BigInt(3))
+        result[1].should.eql(BigInt(2))
+      })
     })
 
     describe('scalar.subtraction', () => {
-      it('works')
+      it('works', () => {
+        const result = two.subtraction(half)
+
+        result.data[0].should.eql(BigInt(3))
+        result.data[1].should.eql(BigInt(2))
+      })
     })
 
     describe('Scalar.multiplication', () => {
-      it('works')
+      it('works', () => {
+        const result = Rational.multiplication(half, two)
+
+        result[0].should.eql(BigInt(1))
+        result[1].should.eql(BigInt(1))
+      })
     })
 
     describe('scalar.multiplication', () => {
-      it('works')
+      it('works', () => {
+        const result = half.multiplication(two)
+
+        result.data[0].should.eql(BigInt(1))
+        result.data[1].should.eql(BigInt(1))
+      })
     })
 
     describe('Scalar.division', () => {
-      it('works')
+      it('works', () => {
+        const result = Rational.division(half, two)
+
+        result[0].should.eql(BigInt(1))
+        result[1].should.eql(BigInt(4))
+      })
     })
 
     describe('scalar.division', () => {
-      it('works')
+      it('works', () => {
+        const result = half.division(two)
+
+        result.data[0].should.eql(BigInt(1))
+        result.data[1].should.eql(BigInt(4))
+      })
     })
 
     describe('Scalar.negation', () => {
-      it('works')
+      it('works', () => {
+        const result = Rational.negation(two)
+
+        result[0].should.eql(BigInt(-2))
+        result[1].should.eql(BigInt(1))
+      })
     })
 
     describe('scalar.negation', () => {
-      it('works')
+      it('works', () => {
+        const result = two.negation()
+
+        result.data[0].should.eql(BigInt(-2))
+        result.data[1].should.eql(BigInt(1))
+      })
     })
 
     describe('Scalar.inversion', () => {
-      it('works')
+      it('works', () => {
+        const result = Rational.inversion(two)
+
+        result[0].should.eql(BigInt(1))
+        result[1].should.eql(BigInt(2))
+      })
     })
 
     describe('scalar.inversion', () => {
-      it('works')
-    })
+      it('works', () => {
+        const result = two.inversion()
 
-    describe('Scalar.conjugation', () => {
-      it('works')
-    })
-
-    describe('scalar.conjugation', () => {
-      it('works')
+        result.data[0].should.eql(BigInt(1))
+        result.data[1].should.eql(BigInt(2))
+      })
     })
   })
 

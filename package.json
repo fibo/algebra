@@ -12,8 +12,6 @@
   "scripts": {
     "build": "npm test && npm run browserify && npm run minify && npm run docs; git status",
     "browserify": "browserify -r ./index.js:${npm_package_name} -o dist/${npm_package_name}.js",
-    "coverage": "npm run istanbul && npm run coveralls",
-    "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "docs:_data": "for x in package.json tags.json; do npm run docs:_data:$x; done",
     "docs:_data:package.json": "cp package.json docs/_data/",
     "docs:_data:tags.json": "wget https://api.github.com/repos/fibo/${npm_package_name}/tags -O docs/_data/tags.json",
@@ -49,10 +47,7 @@
   ],
   "devDependencies": {
     "browserify": "^16.5.0",
-    "coveralls": "^3.0.0",
-    "istanbul": "^0.4.1",
     "mocha": "^5.2.0",
-    "mocha-lcov-reporter": "1.3.0",
     "pre-commit": "^1.1.2",
     "should": "^13.2.3",
     "standa": "^14.0.0",

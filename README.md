@@ -2,12 +2,9 @@
 
 > means completeness and balancing, from the Arabic word الجبر
 
-**NOTA BENE** Imagine all code examples below as written in some REPL where expected output is documented as a comment.
-
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
 [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js)
 [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
-[![Coverage Status](https://coveralls.io/repos/fibo/algebra/badge.svg?branch=master)](https://coveralls.io/r/fibo/algebra?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
 
@@ -18,7 +15,6 @@
 
 ## Table Of Contents
 
-* [Status](#status)
 * [Features](#features)
 * [Installation](#installation)
 * [Quick start](#quick-start)
@@ -37,23 +33,6 @@
   - [Vector](#vector)
   - [Matrix](#matrix)
 * [License](#license)
-
-## Status
-
-*algebra* is under development, but API should not change until version **1.0**.
-
-I am currently adding more tests and examples to achieve a stable version.
-
-Many functionalities of previous versions are now in separated atomic packages:
-
-* [algebra-group]
-* [algebra-ring]
-* [cayley-dickson]
-* [indices-permutations]
-* [laplace-determinant]
-* [matrix-multiplication]
-* [multidim-array-index]
-* [tensor-contraction]
 
 ## Features
 
@@ -79,6 +58,8 @@ or use a CDN adding this to your HTML page
 ## Quick start
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
+
+**NOTA BENE** Imagine all code examples below as written in some REPL where expected output is documented as a comment.
 
 All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
 
@@ -428,9 +409,7 @@ const half = new Rational([BigInt(1), BigInt(2)])
 const two = new Rational([BigInt(2), BigInt(1)])
 ```
 
-#### Scalar attributes
-
-##### `Scalar.one`
+#### `Scalar.one`
 
 Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
 
@@ -438,7 +417,7 @@ Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
 Rational.one // [1n, 1n]
 ```
 
-##### `Scalar.zero`
+#### `Scalar.zero`
 
 Is the *neutral element* for [addition](#scalar-addition) operator.
 
@@ -446,7 +425,7 @@ Is the *neutral element* for [addition](#scalar-addition) operator.
 Rational.zero // [0n, 1n]
 ```
 
-##### `scalar.data`
+#### `scalar.data`
 
 The *data* attribute holds the raw data underneath our scalar instance.
 
@@ -454,20 +433,16 @@ The *data* attribute holds the raw data underneath our scalar instance.
 half.data // [1n, 2n]
 ```
 
-#### Scalar operators
+#### `Scalar.contains(scalar)`
 
-#### Scalar set operators
-
-##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
-
-Is a static method that checks a given argument is contained in the scalar field that was defined.
+Checks a given argument is contained in the scalar field that was defined.
 
 ```javascript
 Rational.contains(half) // true
 Rational.contains([1n, 2n]) // true
 ```
 
-##### `scalar1.belongsTo(Scalar)`
+#### `scalar1.belongsTo(Scalar)`
 
 This is a class method that checks a scalar instance is contained in the given scalar field.
 
@@ -475,9 +450,7 @@ This is a class method that checks a scalar instance is contained in the given s
 half.belongsTo(Rational) // true
 ```
 
-#### Scalar equality
-
-##### `Scalar.equality(scalar1, scalar2)`
+#### `Scalar.equality(scalar1, scalar2)`
 
 Is a static method
 
@@ -485,87 +458,105 @@ Is a static method
 Rational.equality(half, [BigInt(5), BigInt(10)])
 ```
 
-##### `scalar1.equals(scalar2)`
+#### `scalar1.equals(scalar2)`
 
 ```javascript
 half.equals([BigInt(2), BigInt(4)])
 ```
 
-#### Scalar disequality
-
-##### `Scalar.disequality(scalar1, scalar2)`
-
-Is a static method
+#### `Scalar.disequality(scalar1, scalar2)`
 
 ```javascript
 Rational.disequality(half, two) // true
 ```
 
-##### `scalar1.disequality(scalar2)`
+#### `scalar1.disequality(scalar2)`
 
 ```javascript
 half.disequality(two) // true
 ```
 
-#### Scalar addition
+#### `Scalar.addition(scalar1, scalar2)`
 
-##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
+```javascript
+Rational.addition(half, two) // [5n , 2n]
+```
 
-Is a static method
+#### `scalar1.addition(scalar2)`
 
-##### `scalar1.addition(scalar2[, scalar3, … ])`
+```javascript
+half.addition(two) // Scalar { data: [5n, 2n] }
+```
 
-#### Scalar subtraction
+#### `Scalar.subtraction(scalar1, scalar2)`
 
-##### `Scalar.subtraction(scalar1, scalar2[, … ])`
+```javascript
+Rational.subtraction(two, half) // [3n , 2n]
+```
 
-Is a static method
+#### `scalar1.subtraction(scalar2)`
 
-##### `scalar1.subtraction(scalar2[, scalar3, … ])`
+```javascript
+two.multiplication(half) // Scalar { data: [1n, 1n] }
+```
 
-#### Scalar multiplication
+#### `Scalar.multiplication(scalar1, scalar2)`
 
-##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
+```javascript
+Rational.multiplication(half, two) // [1n, 1n]
+```
 
-Is a static method
+#### `scalar1.multiplication(scalar2)`
 
-##### `scalar1.multiplication(scalar2[, scalar3, … ])`
+```javascript
+half.multiplication(two) // Scalar { data: [1n, 1n] }
+```
 
-#### Scalar division
+#### `Scalar.division(scalar1, scalar2)`
 
-##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
+```javascript
+Rational.division(two, half) // [1n, 4n]
+```
 
-Is a static method
+#### `scalar1.division(scalar2)`
 
-##### `scalar1.division(scalar2[, scalar3, … ])`
+```javascript
+half.division(two) // Scalar { data: [1n, 4n] }
+```
 
-#### Scalar negation
+#### `Scalar.negation(scalar)`
 
-##### `Scalar.negation(scalar)`
+```javascript
+Rational.negation(two) // [-2n, 1n]
+```
 
-Is a static method
+#### `scalar.negation()`
 
-##### `scalar.negation()`
+```javascript
+two.negation() // Scalar { data: [-2n, 1n] }
+```
 
-#### Scalar inversion
+#### `Scalar.inversion(scalar)`
 
-##### `Scalar.inversion(scalar)`
+```javascript
+Rational.inversion(two) // [1n, 2n]
+```
 
-Is a static method
+#### `scalar.inversion()`
 
-##### `scalar.inversion()`
+```javascript
+two.inversion() // Scalar { data: [1n, 2n] }
+```
 
-#### Scalar conjugation
+<!-- TODO
+#### `Scalar.conjugation(scalar)`
 
-##### `Scalar.conjugation(scalar)`
-
-Is a static method
-
-##### `scalar.conjugated()`
+#### `scalar.conjugation()`
+-->
 
 ### Real
 
-Inherits everything from [Scalar](#scalar).
+Inherits everything from [Scalar](#scalar). Implements algebra of real numbers.
 
 ```javascript
 const Real = algebra.Real

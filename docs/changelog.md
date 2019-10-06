@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 <sub>This project adheres to [Semantic Versioning](http://semver.org/).
 Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
-## [Unreleased]
+## [v1.0.0] - 2019-10-06
 
 ### Added
 
@@ -35,6 +35,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - Do not import algebra-ring package directly.
 - Removed multiple argument feature.
 - Removed cyclic algebra.
+- Removed test coverage scripts.
 
 ## [v0.12.4] - 2018-04-16
 

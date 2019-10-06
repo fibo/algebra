@@ -5,10 +5,6 @@ title: algebra
 
 > means completeness and balancing, from the Arabic word الجبر
 
-> **New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
-
-**NOTA BENE** Imagine all code examples below as written in some REPL where expected output is documented as a comment.
-
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
 [![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js)
 [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
@@ -23,7 +19,6 @@ title: algebra
 
 ## Table Of Contents
 
-* [Status](#status)
 * [Features](#features)
 * [Installation](#installation)
 * [Quick start](#quick-start)
@@ -32,7 +27,6 @@ title: algebra
   3. [Matrices](#matrices)
 * [API](#api)
   - [About operators](#about-operators)
-  - [Cyclic](#cyclic)
   - [Composition Algebra](#composition-algebra)
   - [Scalar](#scalar)
   - [Real](#real)
@@ -43,24 +37,6 @@ title: algebra
   - [Vector](#vector)
   - [Matrix](#matrix)
 * [License](#license)
-
-## Status
-
-*algebra* is under development, but API should not change until version **1.0**.
-
-I am currently adding more tests and examples to achieve a stable version.
-
-Many functionalities of previous versions are now in separated atomic packages:
-
-* [algebra-cyclic]
-* [algebra-group]
-* [algebra-ring]
-* [cayley-dickson]
-* [indices-permutations]
-* [laplace-determinant]
-* [matrix-multiplication]
-* [multidim-array-index]
-* [tensor-contraction]
 
 ## Features
 
@@ -87,6 +63,8 @@ or use a CDN adding this to your HTML page
 
 > This is a 60 seconds tutorial to get your hands dirty with *algebra*.
 
+**NOTA BENE** Imagine all code examples below as written in some REPL where expected output is documented as a comment.
+
 All code in the examples below should be contained into a single file, like [test/quickStart.js](https://github.com/fibo/algebra/blob/master/test/quickStart.js).
 
 First of all, import *algebra* package.
@@ -110,13 +88,14 @@ Static operators return raw data, while class methods return object instances.
 Use static addition operator to add three numbers.
 
 ```javascript
-R.add(1, 2, 3) // 1 + 2 + 3 = 6
+R.add(1, 2) // 3
 ```
 
 Create two real number objects: x = 2, y = -2
 
 ```javascript
-let x = new R(2) // x will be overwritten, see below
+// x will be overwritten, see below
+let x = new R(2)
 const y = new R(-2)
 ```
 
@@ -235,7 +214,7 @@ let m2 = new R2x2([1, 0,
                    0, 2])
 
 const m3 = new R2x2([0, -1,
-                     1, 0])
+                     1,  0])
 
 m2 = m2.mul(m3)
 
@@ -290,71 +269,6 @@ Objects are immutable
 
 ```javascript
 vector1.data // still [1, 2]
-```
-
-### Cyclic
-
-#### `Cyclic(elements)`
-
-Create an algebra cyclic ring, by passing its elements. The elements are provided
-as a string or an array, which lenght must be a prime number. This is necessary,
-otherwise the result would be a wild land where you can find [zero divisor][zero_divisor] beasts.
-
-
-Let's create a cyclic ring containing lower case letters, numbers and the blank
-char. How many are they? They are 26 + 10 + 1 = 37, that is prime! We like it.
-
-```javascript
-const Cyclic = algebra.Cyclic
-
-// The elements String or Array length must be prime.
-const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
-
-const Alphanum = Cyclic(elements)
-```
-
-Operators derive from modular arithmetic
-
-```javascript
-const a = new Alphanum('a')
-
-Alphanum.addition('a', 'b') // 'c'
-```
-
-You can also create element instances, and do any kind of operations.
-
-```javascript
-const x = new Alphanum('a')
-
-const y = x.add('c', 'a', 't')
-           .mul('i', 's')
-           .add('o', 'n')
-           .sub('t', 'h', 'e')
-           .div('t', 'a', 'b', 'l', 'e')
-
-y.data // 's'
-```
-
-Yes, they are [scalars](#scalar) so you can build vector or matrix spaces on top of them.
-
-```javascript
-const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
-
-const vectorOfStrings = new VectorStrings2(['o', 'k'])
-
-const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
-                                              'o', 'l'])
-
-matrixOfStrings.mul(vectorOfStrings).data // ['x', 'y']
-```
-
-Note that, in the particular example above, since the matrix is simmetric
-it commutes with the vector, hence changing the order of the operands
-the result is still the same.
-
-```javascript
-vectorOfStrings.mul(matrixOfStrings).data // ['x', 'y']
 ```
 
 ### CompositionAlgebra
@@ -447,7 +361,7 @@ Ok, let's make a simple example. [Real numbers](#real), with common addition and
 
 The good new is that you can create any *scalar field* as long as you provide a set with two internal operations and related neutral elements that satisfy the ring axioms.
 
-We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number).
+We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number). The idea is to use a couple of numbers, the first one is the *numerator* and the second one the *denominator*.
 
 Arguments we need are the same as [algebra-ring]. Let's start by unities; every element is a couple of numbers, the
 *numerator* and the *denominator*, hence unitites are:
@@ -478,133 +392,175 @@ function normalizeRational ([numerator, denominator]) {
 ```
 
 ```javascript
-const Big = algebra.Scalar(
-  [
-    [BigInt(0), BigInt(1)],
-    [BigInt(1), BigInt(1)]
-  ],
-  {
-    equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
-    contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
-    addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
-    negation: ([n, d]) => ([-n, d]),
-    multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
-    inversion: ([n, d]) => ([d, n])
-  }
-)
+const Rational = algebra.Scalar({
+  zero: [BigInt(0), BigInt(1)],
+  one: [BigInt(1), BigInt(1)],
+  equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
+  contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
+  addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
+  negation: ([n, d]) => ([-n, d]),
+  multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
+  inversion: ([n, d]) => ([d, n])
+})
 ```
 
-So far so good, algebra dependencies will do some checks under the hood and complain if something looks wrong.
+So far so good, algebra dependencies will do some checks under the hood and will complain if something looks wrong.
 
-#### Scalar attributes
+Let's create few rational numbers.
 
-##### `Scalar.one`
+```javascript
+const half = new Rational([BigInt(1), BigInt(2)])
+const two = new Rational([BigInt(2), BigInt(1)])
+```
+
+#### `Scalar.one`
 
 Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
 
 ```javascript
-Big.one // [1n, 1n]
+Rational.one // [1n, 1n]
 ```
 
-##### `Scalar.zero`
+#### `Scalar.zero`
 
 Is the *neutral element* for [addition](#scalar-addition) operator.
 
 ```javascript
-Big.zero // [0n, 1n]
+Rational.zero // [0n, 1n]
 ```
 
-##### `scalar.data`
+#### `scalar.data`
 
 The *data* attribute holds the raw data underneath our scalar instance.
 
-#### Scalar operators
+```javascript
+half.data // [1n, 2n]
+```
 
-#### Scalar set operators
+#### `Scalar.contains(scalar)`
 
-##### `Scalar.contains(scalar1, scalar2[, scalar3, … ])`
+Checks a given argument is contained in the scalar field that was defined.
 
-Is a static method that checks a given argument is contained in the scalar field that was defined.
+```javascript
+Rational.contains(half) // true
+Rational.contains([1n, 2n]) // true
+```
 
-##### `scalar1.belongsTo(Scalar)`
+#### `scalar1.belongsTo(Scalar)`
 
 This is a class method that checks a scalar instance is contained in the given scalar field.
 
-#### Scalar equality
+```javascript
+half.belongsTo(Rational) // true
+```
 
-##### `Scalar.equality(scalar1, scalar2)`
-
-Is a static method
-
-##### `scalar1.equality(scalar2)`
-
-#### Scalar disequality
-
-##### `Scalar.disequality(scalar1, scalar2)`
+#### `Scalar.equality(scalar1, scalar2)`
 
 Is a static method
 
-##### `scalar1.disequality(scalar2)`
+```javascript
+Rational.equality(half, [BigInt(5), BigInt(10)])
+```
 
-#### Scalar addition
+#### `scalar1.equals(scalar2)`
 
-##### `Scalar.addition(scalar1, scalar2[, scalar3, … ])`
+```javascript
+half.equals([BigInt(2), BigInt(4)])
+```
 
-Is a static method
+#### `Scalar.disequality(scalar1, scalar2)`
 
-##### `scalar1.addition(scalar2[, scalar3, … ])`
+```javascript
+Rational.disequality(half, two) // true
+```
 
-#### Scalar subtraction
+#### `scalar1.disequality(scalar2)`
 
-##### `Scalar.subtraction(scalar1, scalar2[, … ])`
+```javascript
+half.disequality(two) // true
+```
 
-Is a static method
+#### `Scalar.addition(scalar1, scalar2)`
 
-##### `scalar1.subtraction(scalar2[, scalar3, … ])`
+```javascript
+Rational.addition(half, two) // [5n , 2n]
+```
 
-#### Scalar multiplication
+#### `scalar1.addition(scalar2)`
 
-##### `Scalar.multiplication(scalar1, scalar2[, scalar3, … ])`
+```javascript
+half.addition(two) // Scalar { data: [5n, 2n] }
+```
 
-Is a static method
+#### `Scalar.subtraction(scalar1, scalar2)`
 
-##### `scalar1.multiplication(scalar2[, scalar3, … ])`
+```javascript
+Rational.subtraction(two, half) // [3n , 2n]
+```
 
-#### Scalar division
+#### `scalar1.subtraction(scalar2)`
 
-##### `Scalar.division(scalar1, scalar2[, scalar3, … ])`
+```javascript
+two.multiplication(half) // Scalar { data: [1n, 1n] }
+```
 
-Is a static method
+#### `Scalar.multiplication(scalar1, scalar2)`
 
-##### `scalar1.division(scalar2[, scalar3, … ])`
+```javascript
+Rational.multiplication(half, two) // [1n, 1n]
+```
 
-#### Scalar negation
+#### `scalar1.multiplication(scalar2)`
 
-##### `Scalar.negation(scalar)`
+```javascript
+half.multiplication(two) // Scalar { data: [1n, 1n] }
+```
 
-Is a static method
+#### `Scalar.division(scalar1, scalar2)`
 
-##### `scalar.negation()`
+```javascript
+Rational.division(two, half) // [1n, 4n]
+```
 
-#### Scalar inversion
+#### `scalar1.division(scalar2)`
 
-##### `Scalar.inversion(scalar)`
+```javascript
+half.division(two) // Scalar { data: [1n, 4n] }
+```
 
-Is a static method
+#### `Scalar.negation(scalar)`
 
-##### `scalar.inversion()`
+```javascript
+Rational.negation(two) // [-2n, 1n]
+```
 
-#### Scalar conjugation
+#### `scalar.negation()`
 
-##### `Scalar.conjugation(scalar)`
+```javascript
+two.negation() // Scalar { data: [-2n, 1n] }
+```
 
-Is a static method
+#### `Scalar.inversion(scalar)`
 
-##### `scalar.conjugated()`
+```javascript
+Rational.inversion(two) // [1n, 2n]
+```
+
+#### `scalar.inversion()`
+
+```javascript
+two.inversion() // Scalar { data: [1n, 2n] }
+```
+
+<!-- TODO
+#### `Scalar.conjugation(scalar)`
+
+#### `scalar.conjugation()`
+-->
 
 ### Real
 
-Inherits everything from [Scalar](#scalar).
+Inherits everything from [Scalar](#scalar). Implements algebra of real numbers.
 
 ```javascript
 const Real = algebra.Real

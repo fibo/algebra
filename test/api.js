@@ -11,6 +11,8 @@ describe('API', () => {
   const CompositionAlgebra = algebra.CompositionAlgebra
 
   const Boole = algebra.Boole
+  const Quaternion = algebra.Quaternion
+  const Octonion = algebra.Octonion
 
   describe('About operators', () => {
     it('works', () => {
@@ -295,11 +297,28 @@ describe('API', () => {
   })
 
   describe('Quaternion', () => {
-    it('works')
+    it('works', () => {
+      const j = new Quaternion([0, 1, 0, 0])
+      const k = new Quaternion([0, 0, 1, 0])
+
+      j.mul(k).equal(k.mul(j).neg()).should.be.ok()
+    })
   })
 
   describe('Octonion', () => {
-    it('works')
+    it('works', () => {
+      const a = new Octonion([0, 1, 0, 0, 0, 0, 0, 0])
+      const b = new Octonion([0, 0, 0, 0, 0, 1, 0, 0])
+      const c = new Octonion([0, 0, 0, 1, 0, 0, 0, 0])
+
+      const abc1 = a.mul(b.mul(c))
+      abc1.data.should.be.deepEqual([0, 0, 0, 0, 0, 0, 0, -1])
+
+      const abc2 = a.mul(b).mul(c)
+      abc2.data.should.be.deepEqual([0, 0, 0, 0, 0, 0, 0, 1])
+
+      Octonion.equality(Octonion.negation(abc1), abc2)
+    })
   })
 
   describe('Vector', () => {

@@ -3,12 +3,10 @@
 > means completeness and balancing, from the Arabic word الجبر
 
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
-[![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.js)
+[![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.min.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.min.js)
 [![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
-
-[![Whatchers](https://g14n.info/svg/github/watchers/algebra.svg)](https://github.com/fibo/algebra/watchers) [![Stargazers](https://g14n.info/svg/github/stars/algebra.svg)](https://github.com/fibo/algebra/stargazers) [![Forks](https://g14n.info/svg/github/forks/algebra.svg)](https://github.com/fibo/algebra/network/members)
 
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png)
 ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
@@ -605,9 +603,40 @@ complex1.conjugation() // Complex { data: [1, -2] }
 
 Inherits everything from [Scalar](#scalar).
 
+Quaternions are not commutative, usually if you invert the operands in a multiplication you get
+the same number in absolute value but with the sign inverted.
+
+```javascript
+const Quaternion = algebra.Quaternion
+
+const j = new Quaternion([0, 1, 0, 0])
+const k = new Quaternion([0, 0, 1, 0])
+
+// j * k = - k * j
+j.mul(k).equal(k.mul(j).neg()) // true
+```
+
 ### Octonion
 
 Inherits everything from [Scalar](#scalar).
+
+Octonions are not associative, this is getting hard: `a * (b * c)` could be equal to the negation of `(a * b) * c`.
+
+```javascript
+const Octonion = algebra.Octonion
+
+const a = new Octonion([0, 1, 0, 0, 0, 0, 0, 0])
+const b = new Octonion([0, 0, 0, 0, 0, 1, 0, 0])
+const c = new Octonion([0, 0, 0, 1, 0, 0, 0, 0])
+
+// a * ( b * c )
+const abc1 = a.mul(b.mul(c)) // Octonion { data: [0, 0, 0, 0, 0, 0, 0, -1] }
+
+// (a * b) * c
+const abc2 = a.mul(b).mul(c) // Octonion { data: [0, 0, 0, 0, 0, 0, 0, 1] }
+
+Octonion.equality(Octonion.negation(abc1), abc2)
+```
 
 ### Common spaces
 

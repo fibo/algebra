@@ -4,8 +4,8 @@ const multiDimArrayIndex = require('multidim-array-index')
 const staticProps = require('static-props')
 const tensorContraction = require('tensor-contraction')
 
-const itemsPool = require('./itemsPool')
-const toData = require('./toData')
+const itemsPool = require('./itemsPool.js')
+const toData = require('./toData.js')
 
 /**
  * Space of m x n matrices

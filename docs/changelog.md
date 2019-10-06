@@ -19,6 +19,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 
 - Using classes for vectors and matrices.
 - Scalar example using BigInt to implement rational numbers.
+- Ring space instead of createScalar.
 
 ### Fixed
 
@@ -31,6 +32,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - Removed inherits package.
 - Removed Tensor, consider them out of scope by now. They can be confusing for several reasons. A part TensorFlow name, implementing covariant and controvariant indices will complicate a lot the interface.
 - Removed uglifyJS, using Terser.
+- Do not import algebra-ring package directly.
 
 ## [v0.12.4] - 2018-04-16
 

@@ -1,17 +1,17 @@
 require('strict-mode')(() => {
-  const Boole = require('./src/Boole')
+  const Boole = require('./src/Boole.js')
   exports.Boole = Boole
 
-  const CompositionAlgebra = require('./src/CompositionAlgebra')
+  const CompositionAlgebra = require('./src/CompositionAlgebra.js')
   exports.CompositionAlgebra = CompositionAlgebra
 
-  const Cyclic = require('./src/Cyclic')
+  const Cyclic = require('./src/Cyclic.js')
   exports.Cyclic = Cyclic
 
-  const Scalar = require('./src/Scalar')
+  const Scalar = require('./src/Scalar.js')
   exports.Scalar = Scalar
 
-  const realField = require('./src/realField')
+  const realField = require('./src/realField.js')
 
   const Real = CompositionAlgebra(realField, 1)
   const Complex = CompositionAlgebra(realField, 2)
@@ -23,8 +23,8 @@ require('strict-mode')(() => {
   exports.Quaternion = Quaternion
   exports.Octonion = Octonion
 
-  const VectorSpace = require('./src/VectorSpace')
-  const MatrixSpace = require('./src/MatrixSpace')
+  const VectorSpace = require('./src/VectorSpace.js')
+  const MatrixSpace = require('./src/MatrixSpace.js')
 
   exports.C = Complex
   exports.C2x2 = MatrixSpace(Complex)(2)

@@ -1,14 +1,11 @@
-const algebraRing = require('algebra-ring')
-const createScalar = require('./createScalar')
+const CompositionAlgebra = require('./CompositionAlgebra.js')
 
 /**
  * Create a Scalar.
  */
 
-function Scalar (neutralElements, operators) {
-  const ring = algebraRing(neutralElements, operators)
-
-  return createScalar(ring)
+function Scalar (ringDefinition) {
+  return CompositionAlgebra(ringDefinition)
 }
 
 module.exports = Scalar

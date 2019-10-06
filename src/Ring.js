@@ -1,15 +1,16 @@
-const coerced = require('./coerced')
-const operators = require('./operators.json')
 const staticProps = require('static-props')
-const toData = require('./toData')
+
+const coerced = require('./coerced.js')
+const operators = require('./operators.json')
+const toData = require('./toData.js')
 
 /**
- * @param {Object} ring
+ * @param {Object} ring definition
  *
  * @returns {Function} Scalar
  */
 
-function createScalar (ring) {
+function Ring (ring) {
   const attributes = {
     zero: ring.zero,
     one: ring.one
@@ -158,4 +159,4 @@ function createScalar (ring) {
   return Scalar
 }
 
-module.exports = createScalar
+module.exports = Ring

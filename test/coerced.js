@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+
 const coerced = require('../src/coerced')
 
 const add = coerced((a, b) => a + b)

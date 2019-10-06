@@ -100,21 +100,17 @@ describe('API', () => {
       return [numerator / divisor, denominator / divisor]
     }
 
-    const Rational = algebra.Scalar(
-      [
-        [BigInt(0), BigInt(1)],
-        [BigInt(1), BigInt(1)]
-      ],
-      {
-        equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
-        // eslint-disable-next-line
-        contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
-        addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
-        negation: ([n, d]) => ([-n, d]),
-        multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
-        inversion: ([n, d]) => ([d, n])
-      }
-    )
+    const Rational = algebra.Scalar({
+      zero: [BigInt(0), BigInt(1)],
+      one: [BigInt(1), BigInt(1)],
+      equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
+      // eslint-disable-next-line
+      contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
+      addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
+      negation: ([n, d]) => ([-n, d]),
+      multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
+      inversion: ([n, d]) => ([d, n])
+    })
 
     const half = new Rational([BigInt(1), BigInt(2)])
     const two = new Rational([BigInt(2), BigInt(1)])
@@ -172,7 +168,9 @@ describe('API', () => {
     })
 
     describe('scalar.disequality', () => {
-      it('works')
+      it('works', () => {
+        half.disequality(two).should.be.ok()
+      })
     })
 
     describe('Scalar.addition', () => {

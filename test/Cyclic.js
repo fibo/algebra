@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+
 const algebra = require('algebra')
 
 const methodBinaryOperator = require('./features/methodBinaryOperator')

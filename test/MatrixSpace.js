@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 /* eslint-env mocha */
+
 const algebra = require('algebra')
 const notDefined = require('not-defined')
 

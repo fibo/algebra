@@ -1,7 +1,9 @@
 /* eslint-env mocha */
+
 const algebra = require('algebra')
-const realField = require('../src/realField')
 const assert = require('assert')
+
+const realField = require('../src/realField')
 
 const R = algebra.Real
 

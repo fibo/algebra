@@ -1,7 +1,7 @@
 const CayleyDickson = require('cayley-dickson')
 const no = require('not-defined')
 
-const createScalar = require('./createScalar')
+const Ring = require('./Ring.js')
 
 /**
  * A composition algebra is one of ℝ, ℂ, ℍ, O:
@@ -9,13 +9,13 @@ const createScalar = require('./createScalar')
  *
  * https://en.wikipedia.org/wiki/Composition_algebra
  *
- * @param {Object} field
+ * @param {Object} ringDefinition
  * @param {Number} [num] of CayleyDickson construction iterations. Can be 1, 2, 4 or 8.
  *
  * @returns {Object} Scalar
  */
 
-function CompositionAlgebra (field, num) {
+function CompositionAlgebra (ringDefinition, num) {
   if (no(num)) num = 1
 
   const logBase2 = [1, 2, 4, 8].indexOf(num)
@@ -24,7 +24,7 @@ function CompositionAlgebra (field, num) {
     throw new TypeError('Argument n must be 1, 2, 4 or 8')
   }
 
-  return createScalar(CayleyDickson(field, logBase2))
+  return Ring(CayleyDickson(ringDefinition, logBase2))
 }
 
 module.exports = CompositionAlgebra

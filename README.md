@@ -265,7 +265,7 @@ Objects are immutable
 vector1.data // still [1, 2]
 ```
 
-### CompositionAlgebra
+### Composition Algebra
 
 A [composition algebra][composition-algebra] is one of ℝ, ℂ, ℍ, O:
 Real, Complex, Quaternion, Octonion.

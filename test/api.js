@@ -6,19 +6,9 @@
 describe('API', () => {
   const algebra = require('algebra')
 
-  // const C = algebra.C
-  // const C2x2 = algebra.C2x2
-  // const Complex = algebra.Complex
-  // const H = algebra.H
-  // const Quaternion = algebra.Quaternion
-  // const R = algebra.R
   const R2 = algebra.R2
   const R3 = algebra.R3
-  // const R2x2 = algebra.R2x2
-  // const Real = algebra.Real
   const CompositionAlgebra = algebra.CompositionAlgebra
-  // const MatrixSpace = algebra.MatrixSpace
-  // const VectorSpace = algebra.VectorSpace
 
   const Boole = algebra.Boole
 
@@ -227,41 +217,6 @@ describe('API', () => {
 
     describe('scalar.conjugation', () => {
       it('works')
-    })
-  })
-
-  describe('Cyclic', () => {
-    it('works', () => {
-      const Cyclic = algebra.Cyclic
-
-      const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
-
-      const Alphanum = Cyclic(elements)
-
-      Alphanum.addition('a', 'b').should.eql('c')
-
-      const x = new Alphanum('1')
-
-      // const y = x.add('a')
-      //            .mul('b')
-      //            .add('c')
-      //            .sub('d')
-      //            .div('e')
-
-      // y.data.should.eql('s')
-
-      // const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-      // const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
-
-      // const vectorOfStrings = new VectorStrings2(['o', 'k'])
-      // const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
-      //                                               'o', 'l'])
-
-      // matrixOfStrings.mul(vectorOfStrings)
-      //                .data.should.deepEqual(['x', 'y'])
-
-      // vectorOfStrings.mul(matrixOfStrings)
-      //                .data.should.deepEqual(['x', 'y'])
     })
   })
 

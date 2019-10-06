@@ -2,8 +2,6 @@
 
 > means completeness and balancing, from the Arabic word الجبر
 
-> **New**: checkout matrices and vectors made of strings, with [cyclic algebra](#cyclic).
-
 **NOTA BENE** Imagine all code examples below as written in some REPL where expected output is documented as a comment.
 
 [![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
@@ -29,7 +27,6 @@
   3. [Matrices](#matrices)
 * [API](#api)
   - [About operators](#about-operators)
-  - [Cyclic](#cyclic)
   - [Composition Algebra](#composition-algebra)
   - [Scalar](#scalar)
   - [Real](#real)
@@ -49,7 +46,6 @@ I am currently adding more tests and examples to achieve a stable version.
 
 Many functionalities of previous versions are now in separated atomic packages:
 
-* [algebra-cyclic]
 * [algebra-group]
 * [algebra-ring]
 * [cayley-dickson]
@@ -288,71 +284,6 @@ Objects are immutable
 
 ```javascript
 vector1.data // still [1, 2]
-```
-
-### Cyclic
-
-#### `Cyclic(elements)`
-
-Create an algebra cyclic ring, by passing its elements. The elements are provided
-as a string or an array, which lenght must be a prime number. This is necessary,
-otherwise the result would be a wild land where you can find [zero divisor][zero_divisor] beasts.
-
-
-Let's create a cyclic ring containing lower case letters, numbers and the blank
-char. How many are they? They are 26 + 10 + 1 = 37, that is prime! We like it.
-
-```javascript
-const Cyclic = algebra.Cyclic
-
-// The elements String or Array length must be prime.
-const elements = ' abcdefghijklmnopqrstuvwyxz0123456789'
-
-const Alphanum = Cyclic(elements)
-```
-
-Operators derive from modular arithmetic
-
-```javascript
-const a = new Alphanum('a')
-
-Alphanum.addition('a', 'b') // 'c'
-```
-
-You can also create element instances, and do any kind of operations.
-
-```javascript
-const x = new Alphanum('1')
-
-const y = x.add('a')
-           .mul('b')
-           .add('c')
-           .sub('d')
-           .div('e')
-
-y.data // 's'
-```
-
-Yes, they are [scalars](#scalar) so you can build vector or matrix spaces on top of them.
-
-```javascript
-const VectorStrings2 = algebra.VectorSpace(Alphanum)(2)
-const MatrixStrings2x2 = algebra.MatrixSpace(Alphanum)(2)
-
-const vectorOfStrings = new VectorStrings2(['o', 'k'])
-
-const matrixOfStrings = new MatrixStrings2x2(['c', 'o',
-                                              'o', 'l'])
-
-matrixOfStrings.mul(vectorOfStrings).data // ['x', 'y']
-```
-
-Note that, in the particular example above, since the matrix is simmetric
-it commutes with the vector, hence changing the order of the operands
-the result is still the same.
-
-```javascript
-vectorOfStrings.mul(matrixOfStrings).data // ['x', 'y']
 ```
 
 ### CompositionAlgebra

@@ -34,6 +34,7 @@ Changelog format adheres to [Keep a Changelog](http://keepachangelog.com/)</sub>
 - Removed uglifyJS, using Terser.
 - Do not import algebra-ring package directly.
 - Removed multiple argument feature.
+- Removed cyclic algebra.
 
 ## [v0.12.4] - 2018-04-16
 

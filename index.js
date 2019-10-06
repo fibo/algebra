@@ -5,9 +5,6 @@ require('strict-mode')(() => {
   const CompositionAlgebra = require('./src/CompositionAlgebra.js')
   exports.CompositionAlgebra = CompositionAlgebra
 
-  const Cyclic = require('./src/Cyclic.js')
-  exports.Cyclic = Cyclic
-
   const Scalar = require('./src/Scalar.js')
   exports.Scalar = Scalar
 

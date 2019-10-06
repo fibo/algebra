@@ -78,7 +78,7 @@ describe('MatrixSpace', () => {
 
     it('is a static method', staticBinaryOperator(R2x2, operator,
       [2, 3,
-        1, 1],
+       1, 1],
       [0, 1,
       -1, 0],
       [2, 4,

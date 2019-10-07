@@ -89,7 +89,11 @@ describe('API', () => {
     function normalizeRational ([numerator, denominator]) {
       const divisor = greatCommonDivisor(numerator, denominator)
 
-      return [numerator / divisor, denominator / divisor]
+      return denominator > 0 ? (
+        [numerator / divisor, denominator / divisor]
+      ) : (
+        [-numerator / divisor, -denominator / divisor]
+      )
     }
 
     const Rational = algebra.Scalar({
@@ -143,13 +147,14 @@ describe('API', () => {
 
     describe('Scalar.equality', () => {
       it('works', () => {
-        Rational.equality(half, [BigInt(5), BigInt(10)])
+        Rational.equality(half, [BigInt(5), BigInt(10)]).should.be.ok()
+        Rational.equality(two, [BigInt(-4), BigInt(-2)]).should.be.ok()
       })
     })
 
     describe('scalar.equality', () => {
       it('works', () => {
-        half.equality([BigInt(2), BigInt(4)])
+        half.equality([BigInt(2), BigInt(4)]).should.be.ok()
       })
     })
 

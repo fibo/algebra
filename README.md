@@ -375,13 +375,19 @@ function greatCommonDivisor (a, b) {
 }
 ```
 
-So now we can normalize a rational number, by removing the common divisors of numerator and denominator.
+So now we can normalize a rational number, by removing the common divisors of numerator and denominator. Also, denominator should be positive.
 
 ```javascript
 function normalizeRational ([numerator, denominator]) {
   const divisor = greatCommonDivisor(numerator, denominator)
 
-  return [numerator / divisor, denominator / divisor]
+  const sign = denominator > 0 ? 1 : -1
+
+  return denominator > 0 ? (
+    [numerator / divisor, denominator / divisor]
+  ) : (
+    [-numerator / divisor, -denominator / divisor]
+  )
 }
 ```
 
@@ -437,7 +443,7 @@ Checks a given argument is contained in the scalar field that was defined.
 
 ```javascript
 Rational.contains(half) // true
-Rational.contains([1n, 2n]) // true
+Rational.contains([BigInt(1), BigInt(2)]) // true
 ```
 
 #### `scalar1.belongsTo(Scalar)`
@@ -450,10 +456,9 @@ half.belongsTo(Rational) // true
 
 #### `Scalar.equality(scalar1, scalar2)`
 
-Is a static method
-
 ```javascript
-Rational.equality(half, [BigInt(5), BigInt(10)])
+Rational.equality(half, [BigInt(5), BigInt(10)]) // true
+Rational.equality(two, [BigInt(-4), BigInt(-2)]) // true
 ```
 
 #### `scalar1.equals(scalar2)`
@@ -545,12 +550,6 @@ Rational.inversion(two) // [1n, 2n]
 ```javascript
 two.inversion() // Scalar { data: [1n, 2n] }
 ```
-
-<!-- TODO
-#### `Scalar.conjugation(scalar)`
-
-#### `scalar.conjugation()`
--->
 
 ### Real
 

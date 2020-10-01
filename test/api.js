@@ -108,8 +108,8 @@ describe('API', () => {
       inversion: ([n, d]) => ([d, n])
     })
 
-    const half = new Rational([BigInt(1), BigInt(2)])
-    const two = new Rational([BigInt(2), BigInt(1)])
+    const bigHalf = new Rational([BigInt(1), BigInt(2)])
+    const bigTwo = new Rational([BigInt(2), BigInt(1)])
 
     describe('Scalar.one', () => {
       it('is a static attribute', () => {
@@ -127,52 +127,52 @@ describe('API', () => {
 
     describe('scalar.data', () => {
       it('works', () => {
-        half.data[0].should.be.eql(BigInt(1))
-        half.data[1].should.be.eql(BigInt(2))
+        bigHalf.data[0].should.be.eql(BigInt(1))
+        bigHalf.data[1].should.be.eql(BigInt(2))
       })
     })
 
     describe('Scalar.contains', () => {
       it('works', () => {
-        Rational.contains(half).should.be.ok()
+        Rational.contains(bigHalf).should.be.ok()
         Rational.contains([BigInt(1), BigInt(2)]).should.be.ok()
       })
     })
 
     describe('scalar.belongsTo', () => {
       it('works', () => {
-        half.belongsTo(Rational).should.be.ok()
+        bigHalf.belongsTo(Rational).should.be.ok()
       })
     })
 
     describe('Scalar.equality', () => {
       it('works', () => {
-        Rational.equality(half, [BigInt(5), BigInt(10)]).should.be.ok()
-        Rational.equality(two, [BigInt(-4), BigInt(-2)]).should.be.ok()
+        Rational.equality(bigHalf, [BigInt(5), BigInt(10)]).should.be.ok()
+        Rational.equality(bigTwo, [BigInt(-4), BigInt(-2)]).should.be.ok()
       })
     })
 
     describe('scalar.equality', () => {
       it('works', () => {
-        half.equality([BigInt(2), BigInt(4)]).should.be.ok()
+        bigHalf.equality([BigInt(2), BigInt(4)]).should.be.ok()
       })
     })
 
     describe('Scalar.disequality', () => {
       it('works', () => {
-        Rational.disequality(half, two).should.be.ok()
+        Rational.disequality(bigHalf, bigTwo).should.be.ok()
       })
     })
 
     describe('scalar.disequality', () => {
       it('works', () => {
-        half.disequality(two).should.be.ok()
+        bigHalf.disequality(bigTwo).should.be.ok()
       })
     })
 
     describe('Scalar.addition', () => {
       it('works', () => {
-        const result = Rational.addition(half, two)
+        const result = Rational.addition(bigHalf, bigTwo)
 
         result[0].should.eql(BigInt(5))
         result[1].should.eql(BigInt(2))
@@ -181,7 +181,7 @@ describe('API', () => {
 
     describe('scalar.addition', () => {
       it('works', () => {
-        const result = half.addition(two)
+        const result = bigHalf.addition(bigTwo)
 
         result.data[0].should.eql(BigInt(5))
         result.data[1].should.eql(BigInt(2))
@@ -190,7 +190,7 @@ describe('API', () => {
 
     describe('Scalar.subtraction', () => {
       it('works', () => {
-        const result = Rational.subtraction(two, half)
+        const result = Rational.subtraction(bigTwo, bigHalf)
 
         result[0].should.eql(BigInt(3))
         result[1].should.eql(BigInt(2))
@@ -199,7 +199,7 @@ describe('API', () => {
 
     describe('scalar.subtraction', () => {
       it('works', () => {
-        const result = two.subtraction(half)
+        const result = bigTwo.subtraction(bigHalf)
 
         result.data[0].should.eql(BigInt(3))
         result.data[1].should.eql(BigInt(2))
@@ -208,7 +208,7 @@ describe('API', () => {
 
     describe('Scalar.multiplication', () => {
       it('works', () => {
-        const result = Rational.multiplication(half, two)
+        const result = Rational.multiplication(bigHalf, bigTwo)
 
         result[0].should.eql(BigInt(1))
         result[1].should.eql(BigInt(1))
@@ -217,7 +217,7 @@ describe('API', () => {
 
     describe('scalar.multiplication', () => {
       it('works', () => {
-        const result = half.multiplication(two)
+        const result = bigHalf.multiplication(bigTwo)
 
         result.data[0].should.eql(BigInt(1))
         result.data[1].should.eql(BigInt(1))
@@ -226,7 +226,7 @@ describe('API', () => {
 
     describe('Scalar.division', () => {
       it('works', () => {
-        const result = Rational.division(half, two)
+        const result = Rational.division(bigHalf, bigTwo)
 
         result[0].should.eql(BigInt(1))
         result[1].should.eql(BigInt(4))
@@ -235,7 +235,7 @@ describe('API', () => {
 
     describe('scalar.division', () => {
       it('works', () => {
-        const result = half.division(two)
+        const result = bigHalf.division(bigTwo)
 
         result.data[0].should.eql(BigInt(1))
         result.data[1].should.eql(BigInt(4))
@@ -244,7 +244,7 @@ describe('API', () => {
 
     describe('Scalar.negation', () => {
       it('works', () => {
-        const result = Rational.negation(two)
+        const result = Rational.negation(bigTwo)
 
         result[0].should.eql(BigInt(-2))
         result[1].should.eql(BigInt(1))
@@ -253,7 +253,7 @@ describe('API', () => {
 
     describe('scalar.negation', () => {
       it('works', () => {
-        const result = two.negation()
+        const result = bigTwo.negation()
 
         result.data[0].should.eql(BigInt(-2))
         result.data[1].should.eql(BigInt(1))
@@ -262,7 +262,7 @@ describe('API', () => {
 
     describe('Scalar.inversion', () => {
       it('works', () => {
-        const result = Rational.inversion(two)
+        const result = Rational.inversion(bigTwo)
 
         result[0].should.eql(BigInt(1))
         result[1].should.eql(BigInt(2))
@@ -271,7 +271,7 @@ describe('API', () => {
 
     describe('scalar.inversion', () => {
       it('works', () => {
-        const result = two.inversion()
+        const result = bigTwo.inversion()
 
         result.data[0].should.eql(BigInt(1))
         result.data[1].should.eql(BigInt(2))
@@ -286,9 +286,9 @@ describe('API', () => {
       Real.addition(1, 2).should.eql(3)
 
       const pi = new Real(Math.PI)
-      const twoPi = pi.mul(2)
+      const bigTwo = pi.mul(2)
 
-      Real.subtraction(twoPi, 2 * Math.PI).should.eql(0)
+      Real.subtraction(bigTwo, 2 * Math.PI).should.eql(0)
     })
   })
 

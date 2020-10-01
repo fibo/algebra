@@ -21,9 +21,9 @@
   3. [Matrices](#matrices)
 * [API](#api)
   - [About operators](#about-operators)
-  - [Composition Algebra](#composition-algebra)
   - [Scalar](#scalar)
   - [Real](#real)
+  - [Composition Algebra](#composition-algebra)
   - [Complex](#complex)
   - [Quaternion](#quaternion)
   - [Octonion](#octonion)
@@ -265,6 +265,228 @@ Objects are immutable
 vector1.data // still [1, 2]
 ```
 
+### Scalar
+
+The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors and matrices.
+They are the underneath set enriched with a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
+consists of two binary operators that generalize the arithmetic operations of addition and multiplication.
+A ring that has the commutativity property is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
+
+Ok, let's make a simple example. [Real numbers](#real), with common addition and multiplication are a *scalar field*.
+
+The good new is that you can create any *scalar field* as long as you provide a set with two internal operations and related neutral elements that satisfy the ring axioms.
+
+We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number). The idea is to use a couple of numbers, the first one is the *numerator* and the second one the *denominator*.
+
+Arguments we need are the same as [algebra-ring]. Let's start by unities; every element is a couple of numbers, the
+*numerator* and the *denominator*, hence unitites are:
+
+* zero: `[ BigInt(0), BigInt(1) ]`
+* one: `[ BigInt(1), BigInt(1) ]`
+
+We need a function that computes the *Great Common Divisor*.
+
+```javascript
+function greatCommonDivisor (a, b) {
+  if (b === BigInt(0)) {
+    return a
+  } else {
+    return greatCommonDivisor(b, a % b)
+  }
+}
+```
+
+So now we can normalize a rational number, by removing the common divisors of numerator and denominator. Also, denominator should be positive.
+
+```javascript
+function normalizeRational ([numerator, denominator]) {
+  const divisor = greatCommonDivisor(numerator, denominator)
+
+  const sign = denominator > 0 ? 1 : -1
+
+  return denominator > 0 ? (
+    [numerator / divisor, denominator / divisor]
+  ) : (
+    [-numerator / divisor, -denominator / divisor]
+  )
+}
+```
+
+```javascript
+const Rational = algebra.Scalar({
+  zero: [BigInt(0), BigInt(1)],
+  one: [BigInt(1), BigInt(1)],
+  equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
+  contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
+  addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
+  negation: ([n, d]) => ([-n, d]),
+  multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
+  inversion: ([n, d]) => ([d, n])
+})
+```
+
+So far so good, algebra dependencies will do some checks under the hood and will complain if something looks wrong.
+
+Let's create few rational numbers.
+
+```javascript
+const bigHalf = new Rational([BigInt(1), BigInt(2)])
+const bigTwo = new Rational([BigInt(2), BigInt(1)])
+```
+
+#### `Scalar.one`
+
+Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
+
+```javascript
+Rational.one // [1n, 1n]
+```
+
+#### `Scalar.zero`
+
+Is the *neutral element* for [addition](#scalar-addition) operator.
+
+```javascript
+Rational.zero // [0n, 1n]
+```
+
+#### `scalar.data`
+
+The *data* attribute holds the raw data underneath our scalar instance.
+
+```javascript
+bigHalf.data // [1n, 2n]
+```
+
+#### `Scalar.contains(scalar)`
+
+Checks a given argument is contained in the scalar field that was defined.
+
+```javascript
+Rational.contains(bigHalf) // true
+Rational.contains([BigInt(1), BigInt(2)]) // true
+```
+
+#### `scalar1.belongsTo(Scalar)`
+
+This is a class method that checks a scalar instance is contained in the given scalar field.
+
+```javascript
+bigHalf.belongsTo(Rational) // true
+```
+
+#### `Scalar.equality(scalar1, scalar2)`
+
+```javascript
+Rational.equality(bigHalf, [BigInt(5), BigInt(10)]) // true
+Rational.equality(bigTwo, [BigInt(-4), BigInt(-2)]) // true
+```
+
+#### `scalar1.equals(scalar2)`
+
+```javascript
+bigHalf.equals([BigInt(2), BigInt(4)])
+```
+
+#### `Scalar.disequality(scalar1, scalar2)`
+
+```javascript
+Rational.disequality(bigHalf, bigTwo) // true
+```
+
+#### `scalar1.disequality(scalar2)`
+
+```javascript
+bigHalf.disequality(bigTwo) // true
+```
+
+#### `Scalar.addition(scalar1, scalar2)`
+
+```javascript
+Rational.addition(bigHalf, bigTwo) // [5n , 2n]
+```
+
+#### `scalar1.addition(scalar2)`
+
+```javascript
+bigHalf.addition(bigTwo) // Scalar { data: [5n, 2n] }
+```
+
+#### `Scalar.subtraction(scalar1, scalar2)`
+
+```javascript
+Rational.subtraction(bigTwo, bigHalf) // [3n , 2n]
+```
+
+#### `scalar1.subtraction(scalar2)`
+
+```javascript
+bigTwo.multiplication(bigHalf) // Scalar { data: [1n, 1n] }
+```
+
+#### `Scalar.multiplication(scalar1, scalar2)`
+
+```javascript
+Rational.multiplication(bigHalf, bigTwo) // [1n, 1n]
+```
+
+#### `scalar1.multiplication(scalar2)`
+
+```javascript
+bigHalf.multiplication(bigTwo) // Scalar { data: [1n, 1n] }
+```
+
+#### `Scalar.division(scalar1, scalar2)`
+
+```javascript
+Rational.division(bigTwo, bigHalf) // [1n, 4n]
+```
+
+#### `scalar1.division(scalar2)`
+
+```javascript
+bigHalf.division(bigTwo) // Scalar { data: [1n, 4n] }
+```
+
+#### `Scalar.negation(scalar)`
+
+```javascript
+Rational.negation(bigTwo) // [-2n, 1n]
+```
+
+#### `scalar.negation()`
+
+```javascript
+bigTwo.negation() // Scalar { data: [-2n, 1n] }
+```
+
+#### `Scalar.inversion(scalar)`
+
+```javascript
+Rational.inversion(bigTwo) // [1n, 2n]
+```
+
+#### `scalar.inversion()`
+
+```javascript
+bigTwo.inversion() // Scalar { data: [1n, 2n] }
+```
+
+### Real
+
+Inherits everything from [Scalar](#scalar). Implements algebra of real numbers.
+
+```javascript
+const Real = algebra.Real
+
+Real.addition(1, 2) // 3
+
+const pi = new Real(Math.PI)
+const twoPi = pi.mul(2)
+
+Real.subtraction(twoPi, 2 * Math.PI) // 0
+```
+
 ### Composition Algebra
 
 A [composition algebra][composition-algebra] is one of ℝ, ℂ, ℍ, O:
@@ -342,228 +564,6 @@ const max = byte1.add(byte2).add(byte3).add(byte4)
                  .add(byte5).add(byte6).add(byte7).add(byte8)
 
 max.data // [t, t, t, t, t, t, t, t]
-```
-
-### Scalar
-
-The [scalars](https://en.wikipedia.org/wiki/Scalar_(mathematics)) are the building blocks, they are the elements you can use to create vectors and matrices.
-They are the underneath set enriched with a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) structure which
-consists of two binary operators that generalize the arithmetic operations of addition and multiplication.
-A ring that has the commutativity property is called *abelian* (in honour to [Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel)) or also a **field**.
-
-Ok, let's make a simple example. [Real numbers](#real), with common addition and multiplication are a *scalar field*.
-
-The good new is that you can create any *scalar field* as long as you provide a set with two internal operations and related neutral elements that satisfy the ring axioms.
-
-We are going to create a scalar field using `BigInt` elements to implement something similar to a [Rational Number](https://en.wikipedia.org/wiki/Rational_number). The idea is to use a couple of numbers, the first one is the *numerator* and the second one the *denominator*.
-
-Arguments we need are the same as [algebra-ring]. Let's start by unities; every element is a couple of numbers, the
-*numerator* and the *denominator*, hence unitites are:
-
-* zero: `[ BigInt(0), BigInt(1) ]`
-* one: `[ BigInt(1), BigInt(1) ]`
-
-We need a function that computes the *Great Common Divisor*.
-
-```javascript
-function greatCommonDivisor (a, b) {
-  if (b === BigInt(0)) {
-    return a
-  } else {
-    return greatCommonDivisor(b, a % b)
-  }
-}
-```
-
-So now we can normalize a rational number, by removing the common divisors of numerator and denominator. Also, denominator should be positive.
-
-```javascript
-function normalizeRational ([numerator, denominator]) {
-  const divisor = greatCommonDivisor(numerator, denominator)
-
-  const sign = denominator > 0 ? 1 : -1
-
-  return denominator > 0 ? (
-    [numerator / divisor, denominator / divisor]
-  ) : (
-    [-numerator / divisor, -denominator / divisor]
-  )
-}
-```
-
-```javascript
-const Rational = algebra.Scalar({
-  zero: [BigInt(0), BigInt(1)],
-  one: [BigInt(1), BigInt(1)],
-  equality: ([n1, d1], [n2, d2]) => (n1 * d2 === n2 * d1),
-  contains: ([n, d]) => (typeof n === 'bigint' && typeof d === 'bigint'),
-  addition: ([n1, d1], [n2, d2]) => normalizeRational([n1 * d2 + n2 * d1, d1 * d2]),
-  negation: ([n, d]) => ([-n, d]),
-  multiplication: ([n1, d1], [n2, d2]) => normalizeRational([n1 * n2, d1 * d2]),
-  inversion: ([n, d]) => ([d, n])
-})
-```
-
-So far so good, algebra dependencies will do some checks under the hood and will complain if something looks wrong.
-
-Let's create few rational numbers.
-
-```javascript
-const half = new Rational([BigInt(1), BigInt(2)])
-const two = new Rational([BigInt(2), BigInt(1)])
-```
-
-#### `Scalar.one`
-
-Is the *neutral element* for [multiplication](#scalar-multiplication) operator.
-
-```javascript
-Rational.one // [1n, 1n]
-```
-
-#### `Scalar.zero`
-
-Is the *neutral element* for [addition](#scalar-addition) operator.
-
-```javascript
-Rational.zero // [0n, 1n]
-```
-
-#### `scalar.data`
-
-The *data* attribute holds the raw data underneath our scalar instance.
-
-```javascript
-half.data // [1n, 2n]
-```
-
-#### `Scalar.contains(scalar)`
-
-Checks a given argument is contained in the scalar field that was defined.
-
-```javascript
-Rational.contains(half) // true
-Rational.contains([BigInt(1), BigInt(2)]) // true
-```
-
-#### `scalar1.belongsTo(Scalar)`
-
-This is a class method that checks a scalar instance is contained in the given scalar field.
-
-```javascript
-half.belongsTo(Rational) // true
-```
-
-#### `Scalar.equality(scalar1, scalar2)`
-
-```javascript
-Rational.equality(half, [BigInt(5), BigInt(10)]) // true
-Rational.equality(two, [BigInt(-4), BigInt(-2)]) // true
-```
-
-#### `scalar1.equals(scalar2)`
-
-```javascript
-half.equals([BigInt(2), BigInt(4)])
-```
-
-#### `Scalar.disequality(scalar1, scalar2)`
-
-```javascript
-Rational.disequality(half, two) // true
-```
-
-#### `scalar1.disequality(scalar2)`
-
-```javascript
-half.disequality(two) // true
-```
-
-#### `Scalar.addition(scalar1, scalar2)`
-
-```javascript
-Rational.addition(half, two) // [5n , 2n]
-```
-
-#### `scalar1.addition(scalar2)`
-
-```javascript
-half.addition(two) // Scalar { data: [5n, 2n] }
-```
-
-#### `Scalar.subtraction(scalar1, scalar2)`
-
-```javascript
-Rational.subtraction(two, half) // [3n , 2n]
-```
-
-#### `scalar1.subtraction(scalar2)`
-
-```javascript
-two.multiplication(half) // Scalar { data: [1n, 1n] }
-```
-
-#### `Scalar.multiplication(scalar1, scalar2)`
-
-```javascript
-Rational.multiplication(half, two) // [1n, 1n]
-```
-
-#### `scalar1.multiplication(scalar2)`
-
-```javascript
-half.multiplication(two) // Scalar { data: [1n, 1n] }
-```
-
-#### `Scalar.division(scalar1, scalar2)`
-
-```javascript
-Rational.division(two, half) // [1n, 4n]
-```
-
-#### `scalar1.division(scalar2)`
-
-```javascript
-half.division(two) // Scalar { data: [1n, 4n] }
-```
-
-#### `Scalar.negation(scalar)`
-
-```javascript
-Rational.negation(two) // [-2n, 1n]
-```
-
-#### `scalar.negation()`
-
-```javascript
-two.negation() // Scalar { data: [-2n, 1n] }
-```
-
-#### `Scalar.inversion(scalar)`
-
-```javascript
-Rational.inversion(two) // [1n, 2n]
-```
-
-#### `scalar.inversion()`
-
-```javascript
-two.inversion() // Scalar { data: [1n, 2n] }
-```
-
-### Real
-
-Inherits everything from [Scalar](#scalar). Implements algebra of real numbers.
-
-```javascript
-const Real = algebra.Real
-
-Real.addition(1, 2) // 3
-
-const pi = new Real(Math.PI)
-const twoPi = pi.mul(2)
-
-Real.subtraction(twoPi, 2 * Math.PI) // 0
 ```
 
 ### Complex

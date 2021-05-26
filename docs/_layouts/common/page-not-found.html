@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% if site.lang %}
+  <html lang="{{ site.lang }}">
+{% else %}
+  <html lang="en">
+{% endif %}
+<head>
+  {% include common/favicon.html %}
+  {% include common/fontawesome.html %}
+  {% include common/style.html %}
+</head>
+<body>
+  <main class="page-not-found">{{ content }}</main>
+</body>
+</html>

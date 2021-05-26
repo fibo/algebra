@@ -75,5 +75,19 @@ nav:
   Mandolino: //g14n.info
 ```
 
+## page-not-found
+
+To be used only for 404 page, create a file *404.html* like this
+
+```
+---
+layout: common/page-not-found
+title: Page not found
+permalink: /404.html
+---
+
+<h1>Page not found</h1>
+```
+
 [page_template]: http://g14n.info/templates/page "page template"
 [g14n.info-jekyll-includes]: https://github.com/fibo/g14n.info-jekyll-includes "g14n.info-jekyll-includes"

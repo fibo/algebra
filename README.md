@@ -2,12 +2,6 @@
 
 > means completeness and balancing, from the Arabic word الجبر
 
-[![NPM version](https://badge.fury.io/js/algebra.svg)](http://badge.fury.io/js/algebra)
-[![Badge size](https://badge-size.herokuapp.com/fibo/algebra/master/dist/algebra.min.js)](https://github.com/fibo/algebra/blob/master/dist/algebra.min.js)
-[![Build Status](https://travis-ci.org/fibo/algebra.svg?branch=master)](https://travis-ci.org/fibo/algebra?branch=master)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Change log](https://img.shields.io/badge/change-log-blue.svg)](http://g14n.info/algebra/changelog)
-
 ![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png)
 ![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 

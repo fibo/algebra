@@ -2,29 +2,8 @@
 
 > means completeness and balancing, from the Arabic word الجبر
 
-![Algebra](http://g14n.info/algebra/images/Cover-Algebra.png)
-![OnQuaternionsAndOctonions](http://g14n.info/algebra/images/Cover-OnQuaternionsAndOctonions.png)
-
-## Table Of Contents
-
-* [Features](#features)
-* [Installation](#installation)
-* [Quick start](#quick-start)
-  1. [Scalars](#scalars)
-  2. [Vectors](#vectors)
-  3. [Matrices](#matrices)
-* [API](#api)
-  - [About operators](#about-operators)
-  - [Scalar](#scalar)
-  - [Real](#real)
-  - [Composition Algebra](#composition-algebra)
-  - [Complex](#complex)
-  - [Quaternion](#quaternion)
-  - [Octonion](#octonion)
-  - [Common spaces](#common-spaces)
-  - [Vector](#vector)
-  - [Matrix](#matrix)
-* [License](#license)
+![Algebra](https://fibo.github.io/algebra/images/Cover-Algebra.png)
+![OnQuaternionsAndOctonions](https://fibo.github.io/algebra/images/Cover-OnQuaternionsAndOctonions.png)
 
 ## Features
 
@@ -32,19 +11,20 @@
 * [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#real), of course :).
 * Expressive syntax.
 * [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
+* Implemented in TypeScript.
 
 ## Installation
 
-With [npm] do
+With [npm](https://npmjs.com/) do
 
 ```bash
 npm install algebra
 ```
 
-or use a CDN adding this to your HTML page
+or use a CDN: add this to your HTML page
 
 ```html
-<script src="https://unpkg.com/algebra/dist/algebra.min.js"></script>
+<script src="https://unpkg.com/algebra"></script>
 ```
 
 ## Quick start
@@ -485,7 +465,8 @@ Real.subtraction(twoPi, 2 * Math.PI) // 0
 
 A [composition algebra][composition-algebra] is one of ℝ, ℂ, ℍ, O:
 Real, Complex, Quaternion, Octonion.
-A generic function is provided to iterate the [Cayley-Dickson construction][Cayley-Dickson_construction] over any field.
+A generic function is provided to iterate the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction) over any field.
+
 
 #### `CompositionAlgebra(field[, num])`
 
@@ -578,7 +559,7 @@ Complex numbers are a goldmine for mathematics, they are incredibly rich
 of deepest beauty: just as a divulgative example, take a look to the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), but please trust me,
 this is nothing compared to the divine nature of Complex numbers.
 
-![Mandelbrot Set](http://g14n.info/algebra/images/Mandelbrot.gif){:.responsive}
+![Mandelbrot Set](https://fibo.github.io/algebra/images/Mandelbrot.gif)
 
 The first thing I noticed when I started to study the Complex numbers is
 conjugation. Every Complex number has its conjugate, that is its simmetric
@@ -858,21 +839,5 @@ It is defined only for square matrices.
 
 ## License
 
-[MIT](http://g14n.info/mit-license/)
+[MIT](https://fibo.github.io/mit-license/)
 
-[npm]: https://npmjs.org/
-[blog]: http://g14n.info/algebra/articles "algebra blog"
-[composition-algebra]: https://en.wikipedia.org/wiki/Composition_algebra "Composition algebra"
-[realField]: https://github.com/fibo/algebra/blob/master/src/realField.js "real field"
-[algebra-cyclic]: http://npm.im/algebra-cyclic
-[algebra-group]: http://npm.im/algebra-group
-[algebra-ring]: http://npm.im/algebra-ring
-[cayley-dickson]: http://npm.im/cayley-dickson
-[indices-permutations]: http://npm.im/indices-permutations
-[laplace-determinant]: http://npm.im/laplace-determinant
-[matrix-multiplication]: http://npm.im/matrix-multiplication
-[multidim-array-index]: http://npm.im/multidim-array-index
-[tensor-contraction]: http://npm.im/tensor-contraction
-[tensor-product]: http://npm.im/tensor-product
-[zero_divisor]: https://en.wikipedia.org/wiki/Zero_divisor "Zero divisor"
-[Cayley-Dickson_construction]: https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction "Cayley-Dickson construction"

@@ -9,8 +9,6 @@
 
 * Real, Complex, Quaternion, Octonion numbers.
 * [Vector](#vectors) and [Matrix](#matrices) spaces over any field (included [Real numbers](#real), of course :).
-* Expressive syntax.
-* [Immutable objects](https://en.wikipedia.org/wiki/Immutable_object).
 * Implemented in TypeScript.
 
 ## Installation

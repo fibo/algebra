@@ -2,12 +2,24 @@
   "name": "algebra",
   "description": "means completeness and balancing, from the Arabic word الجبر",
   "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "homepage": "https://fibo.github.io/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "https://fibo.github.io"
   },
-  "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc --build",
+    "prestart": "npm run build",
+    "start": "serve -d ."
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/fibo/algebra.git"

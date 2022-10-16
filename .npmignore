@@ -1,3 +1,7 @@
+DEVELOP.md
+dist/examples/
+tsconfig.tsbuildinfo
+tsconfig.json
 images
 index.html
 style.css

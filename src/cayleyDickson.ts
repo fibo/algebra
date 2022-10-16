@@ -1,4 +1,4 @@
-import { ErrorInvalidDimension } from "./errors";
+import { ErrorInvalidDimension } from "./errors.js";
 import { Ring } from "./ring.js";
 import { VectorSpace, vectorSpace } from "./vector.js";
 

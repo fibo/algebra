@@ -1,4 +1,4 @@
-import { ErrorInvalidDimension } from "./errors";
+import { ErrorInvalidDimension } from "./errors.js";
 import { vectorSpace } from "./vector.js";
 export const cayleyDickson = (ring, dimension) => {
     if (dimension === 1 ||

@@ -9,6 +9,7 @@ Gemfile*
 node_modules
 npm-debug.log
 Thumbs.db
+tsconfig.tsbuildinfo
 
 # Test coverage
 .coveralls.yml

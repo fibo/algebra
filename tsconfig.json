@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "composite": true,
     "declaration": true,
+    "declarationMap": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "isolatedModules": true,
@@ -8,11 +10,12 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "removeComments": true,
+    "rootDir": "./src",
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "tsBuildInfoFile": "tsconfig.tsbuildinfo"
   },
-  "files": ["src/index.ts", "src/examples/quick-start.ts"],
-  "include": [".src/**/*.ts"]
+  "include": ["./src/**/*.ts"]
 }

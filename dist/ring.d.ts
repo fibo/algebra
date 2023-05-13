@@ -1,7 +1,7 @@
-import type { Group } from "./group.js";
-export declare type Ring<T> = Group<T> & Readonly<{
-    one: T;
-    mul: (a: T, b: T) => T;
-    inv: (a: T) => T;
-    div: (a: T, b: T) => T;
-}>;
+import { Group } from './Group.js';
+export type Ring<Scalar> = Group<Scalar> & {
+    one: Scalar;
+    mul(a: Scalar, b: Scalar): Scalar;
+    inv(a: Scalar, b: Scalar): Scalar;
+};
+//# sourceMappingURL=Ring.d.ts.map

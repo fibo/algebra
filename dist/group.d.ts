@@ -1,8 +1,7 @@
-export declare type Group<T> = Readonly<{
-    zero: T;
-    includes: (arg: unknown) => arg is T;
-    eq: (a: T, b: T) => boolean;
-    add: (a: T, b: T) => T;
-    neg: (a: T) => T;
-    sub: (a: T, b: T) => T;
-}>;
+export type Group<Scalar> = {
+    zero: Scalar;
+    includes(arg: unknown): boolean;
+    add(a: Scalar, b: Scalar): Scalar;
+    neg(a: Scalar): Scalar;
+};
+//# sourceMappingURL=Group.d.ts.map

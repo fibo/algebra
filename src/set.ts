@@ -1,4 +1,11 @@
+export type AlgebraSetElement<Element> = {
+  eq(b: Element): boolean;
+  valueOf(): Element;
+  toString(): string;
+};
+
 export type AlgebraSet<Element> = {
-  eq(a: Element, b: Element): boolean
-  includes(arg: Element): arg is Element
-}
+  element(arg: Element): AlgebraSetElement<Element>;
+  includes(arg: unknown): arg is Element;
+  eq(a: Element, b: Element): boolean;
+};

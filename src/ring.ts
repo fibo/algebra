@@ -1,7 +1,7 @@
-import { Group } from './Group.js';
+import { AlgebraGroup } from './group.js';
 
-export type Ring<Scalar> = Group<Scalar> & {
-  one: Scalar
-  mul(a: Scalar, b: Scalar): Scalar
-  inv(a: Scalar, b: Scalar): Scalar
+export type AlgebraRing<Element> = AlgebraGroup<Element> & {
+  one: Element
+  mul(a: Element, b: Element): Element
+  inv(a: Element, b: Element): Element
 }

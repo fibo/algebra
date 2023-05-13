@@ -1,6 +1,7 @@
-export type Group<Scalar> = {
-  zero: Scalar
-  includes(arg: unknown): boolean
-  add(a: Scalar, b: Scalar): Scalar
-  neg(a: Scalar): Scalar
+import { AlgebraSet } from "./set.js"
+
+export type AlgebraGroup<Element> = AlgebraSet<Element> & {
+  zero: Element
+  add(a: Element, b: Element): Element
+  neg(a: Element): Element
 }

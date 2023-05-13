@@ -7,9 +7,12 @@ const coerce = (arg) => {
     }
     if (typeof value === "bigint")
         return value;
-    if (typeof value === 'number' && !isNaN(value) && Number.isFinite(value) && Number.isInteger(value))
+    if (typeof value === "number" &&
+        !isNaN(value) &&
+        Number.isFinite(value) &&
+        Number.isInteger(value))
         return BigInt(value);
-    throw new Error('Cannot coerce');
+    throw new Error("Cannot coerce");
 };
 export const Z = {
     element(arg) {

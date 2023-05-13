@@ -8,4 +8,3 @@ export type AlgebraSet<Element> = {
     includes(arg: unknown): arg is Element;
     eq(a: Element, b: Element): boolean;
 };
-//# sourceMappingURL=set.d.ts.map

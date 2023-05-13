@@ -9,9 +9,9 @@ const coerce = (arg) => {
         value = arg.valueOf();
     if (typeof value === "bigint")
         return value.toString();
-    if (typeof value === 'number' && !isNaN(value) && Number.isFinite(value))
+    if (typeof value === "number" && !isNaN(value) && Number.isFinite(value))
         return value.toString();
-    throw new Error('Cannot coerce');
+    throw new Error("Cannot coerce");
 };
 export const Q = {
     element(argA) {

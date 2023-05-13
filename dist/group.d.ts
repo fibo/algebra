@@ -11,4 +11,3 @@ export type AlgebraGroup<Element> = Omit<AlgebraSet<Element>, "element"> & {
     sub(a: Element, b: Element): Element;
     neg(a: Element): Element;
 };
-//# sourceMappingURL=group.d.ts.map

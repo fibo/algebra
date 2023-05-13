@@ -4,4 +4,3 @@ export type AlgebraRing<Element> = AlgebraGroup<Element> & {
     mul(a: Element, b: Element): Element;
     inv(a: Element, b: Element): Element;
 };
-//# sourceMappingURL=ring.d.ts.map

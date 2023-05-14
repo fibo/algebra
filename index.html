@@ -1,20 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" href="data:image/x-icon;base64,AA">
-  <meta name="viewport" content="width=device-width">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="data:image/x-icon;base64,AA" />
+		<meta name="viewport" content="width=device-width" />
+		<title>algebra</title>
+		<meta
+			name="description"
+			content="means completeness and balancing, from the Arabic word الجبر"
+		/>
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<main>
+			<h1>algebra</h1>
 
-  <title>algebra</title>
-  <meta name="description" content="means completeness and balancing, from the Arabic word الجبر">
+			<blockquote>
+				means completeness and balancing, from the Arabic word الجبر
+			</blockquote>
 
-  <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-  <main>
-    <h1>algebra</h1>
+			<ul>
+				<li>
+					<a href="./examples/set.html">sets</a>
+				</li>
+			</ul>
 
-    <blockquote>means completeness and balancing, from the Arabic word الجبر</blockquote>
-  </main>
-</body>
+			<p>Books that inspired me.</p>
+			<style>
+				.books {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+					gap: 1em;
+				}
+				@media only screen and (max-width: 456px) {
+					.books {
+						flex-direction: column;
+						flex-wrap: nowrap;
+					}
+				}
+			</style>
+			<div class="books">
+				<img src="./images/Cover-Algebra.png" alt="Algebra book" />
+				<img
+					src="./images/Cover-OnQuaternionsAndOctonions.png"
+					alt="Quaternion and Octonion book"
+				/>
+			</div>
+		</main>
+	</body>
 </html>

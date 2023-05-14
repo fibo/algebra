@@ -2,10 +2,10 @@
 
 ## Requirements
 
-With [npm](https://www.npmjs.com/) install the following packages globally:
+With [npm](https://www.npmjs.com/) install the following packages **without saving**:
 
 ```sh
-npm install typescript serve -g
+npm install prettier typescript serve @types/node --no-save
 ```
 
 ## scripts

@@ -1,18 +1,2 @@
-dist/examples/*.d.ts
-
-$RECYCLE.BIN
-*~
-.DS_Store
-.idea
-.Trashes
-.vscode
-docs/_site
-Gemfile*
-node_modules
-npm-debug.log
-Thumbs.db
-tsconfig.tsbuildinfo
-
-# Test coverage
-.coveralls.yml
-coverage
+node_modules/
+temp/

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="data:image/x-icon;base64,AA" />
+		<meta name="viewport" content="width=device-width" />
+		<title>algebra sets</title>
+		<link rel="stylesheet" href="../style.css" />
+	</head>
+	<body>
+		<main>
+			<h1>algebra sets</h1>
+
+			<pre><code id="set-code"></code></pre>
+
+			<!-- Code from src/set_test.ts -->
+			<script type="text/typescript" id="set-script">
+import { AlgebraSet } from "algebra";
+
+const Boole: AlgebraSet<boolean> = {
+	element(a) {
+		if (typeof a !== "boolean") throw new TypeError();
+		return {
+			equal(b) {
+				return a === b;
+			},
+			valueOf() {
+				return a;
+			},
+			toString() {
+				return a.toString();
+			},
+		};
+	},
+	includes(arg) {
+		return typeof arg === "boolean";
+	},
+	equal(a, b) {
+		return (
+			typeof a === "boolean" && typeof b === "boolean" && a === b
+		);
+	},
+};
+			</script>
+		</main>
+
+		<script>
+			document.getElementById("set-code").textContent =
+				document.getElementById("set-script").textContent;
+		</script>
+	</body>
+</html>

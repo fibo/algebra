@@ -15,7 +15,8 @@
     "rootDir": "./src",
     "strict": true,
     "target": "esnext",
-    "tsBuildInfoFile": "tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "temp/tsconfig.tsbuildinfo"
   },
+  "exclude": ["node_modules", "**/*_test.ts"],
   "include": ["./src/**/*.ts"]
 }

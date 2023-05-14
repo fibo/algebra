@@ -19,8 +19,12 @@
   "scripts": {
     "build": "tsc --build",
     "check_types": "tsc --noEmit --project .",
+    "postbuild": "npm run prettier",
     "prestart": "npm run build",
-    "start": "serve -d ."
+    "pretest": "tsc --build tsconfig.test.json",
+    "prettier": "prettier --loglevel warn --write .",
+    "start": "serve -d .",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",

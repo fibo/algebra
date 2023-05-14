@@ -1,11 +1,34 @@
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+	box-sizing: inherit;
+}
+
+html {
+	color-scheme: light dark;
 }
 
 body {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	font-family: sistem-ui;
+	line-height: 1.5;
+	font-size: 1.17rem;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	width: min(71ch, 100% - 4rem);
+	margin-inline: auto;
+}
+
+img,
+svg,
+video {
+	max-width: 100%;
+	display: block;
+}
+
+pre {
+	overflow-x: auto;
 }

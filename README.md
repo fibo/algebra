@@ -16,4 +16,3 @@ npm install algebra
 ## License
 
 [MIT](https://fibo.github.io/mit-license)
-

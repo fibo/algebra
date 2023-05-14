@@ -1,8 +1,10 @@
+examples/
+src/
+temp/
+
 DEVELOP.md
-dist/examples/
-tsconfig.tsbuildinfo
-tsconfig.json
 images
 index.html
 style.css
-src
+tsconfig.json
+tsconfig.test.json

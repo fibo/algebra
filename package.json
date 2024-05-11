@@ -41,6 +41,6 @@
     "math"
   ],
   "dependencies": {
-    "arithmetica": "^0.2.0"
+    "arithmetica": "^1.0.0"
   }
 }

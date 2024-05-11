@@ -23,7 +23,6 @@
     "prestart": "npm run build",
     "pretest": "tsc --build tsconfig.test.json",
     "prettier": "prettier --loglevel warn --write .",
-    "start": "serve -d .",
     "test": "node --test"
   },
   "repository": {

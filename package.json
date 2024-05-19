@@ -17,12 +17,12 @@
     "url": "https://fibo.github.io"
   },
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc --removeComments && tsc --declaration --emitDeclarationOnly",
     "check_types": "tsc --noEmit --project .",
     "postbuild": "npm run prettier",
     "prestart": "npm run build",
     "pretest": "tsc --build tsconfig.test.json",
-    "prettier": "prettier --loglevel warn --write .",
+    "prettier": "prettier --write .",
     "test": "node --test"
   },
   "repository": {

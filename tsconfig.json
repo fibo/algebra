@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "incremental": true,
     "isolatedModules": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -11,11 +8,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",
-    "removeComments": true,
     "rootDir": "./src",
     "strict": true,
     "target": "esnext",
-    "tsBuildInfoFile": "temp/tsconfig.tsbuildinfo"
+
+    // To build stripped JS, but emit declarations with JSDoc preserved:
+    // disable comments and declaration, then in package.json add script
+    //
+    //     "build": "tsc --removeComments && tsc --declaration --emitDeclarationOnly",
+    //
+    "removeComments": false,
+    "declaration": false
   },
   "exclude": ["node_modules", "**/*_test.ts"],
   "include": ["./src/**/*.ts"]

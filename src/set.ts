@@ -4,6 +4,16 @@ export type AlgebraSetElement<Element> = {
 	toString(): string;
 };
 
+/**
+ * An algebra set of elements.
+ *
+ * @example
+ *
+ * ```ts
+ * const Integers: AlgebraSet<bigint> = {
+ * }
+ * ```
+ */
 export type AlgebraSet<Element> = {
 	element(arg: unknown): AlgebraSetElement<Element>;
 	includes(arg: unknown): boolean;

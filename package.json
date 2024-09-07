@@ -17,13 +17,12 @@
     "url": "https://fibo.github.io"
   },
   "scripts": {
-    "build": "tsc --removeComments && tsc --declaration --emitDeclarationOnly",
-    "check_types": "tsc --noEmit --project .",
+    "build": "tsc --removeComments --project tsconfig.build.json && tsc --declaration --emitDeclarationOnly --project tsconfig.build.json",
+    "check_types": "tsc --noEmit",
     "postbuild": "npm run prettier",
     "prestart": "npm run build",
-    "pretest": "tsc --build tsconfig.test.json",
     "prettier": "prettier --write .",
-    "test": "node --test"
+    "test": "node --test --env-file .ts-node.env src/*_test.ts"
   },
   "repository": {
     "type": "git",
@@ -41,5 +40,8 @@
   ],
   "dependencies": {
     "arithmetica": "^1.0.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
   }
 }

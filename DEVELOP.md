@@ -11,4 +11,3 @@ npm install prettier typescript @types/node --no-save
 ## Documentation website
 
 Just open [index.html](index.html) in your browser.
-

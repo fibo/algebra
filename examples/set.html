@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -15,32 +15,32 @@
 
 			<!-- Code from src/set_test.ts -->
 			<script type="text/typescript" id="set-script">
-import { AlgebraSet } from "algebra";
+				import { AlgebraSet } from "algebra";
 
-const Boole: AlgebraSet<boolean> = {
-	element(a) {
-		if (typeof a !== "boolean") throw new TypeError();
-		return {
-			equal(b) {
-				return a === b;
-			},
-			valueOf() {
-				return a;
-			},
-			toString() {
-				return a.toString();
-			},
-		};
-	},
-	includes(arg) {
-		return typeof arg === "boolean";
-	},
-	equal(a, b) {
-		return (
-			typeof a === "boolean" && typeof b === "boolean" && a === b
-		);
-	},
-};
+				const Boole: AlgebraSet<boolean> = {
+					element(a) {
+						if (typeof a !== "boolean") throw new TypeError();
+						return {
+							equal(b) {
+								return a === b;
+							},
+							valueOf() {
+								return a;
+							},
+							toString() {
+								return a.toString();
+							},
+						};
+					},
+					includes(arg) {
+						return typeof arg === "boolean";
+					},
+					equal(a, b) {
+						return (
+							typeof a === "boolean" && typeof b === "boolean" && a === b
+						);
+					},
+				};
 			</script>
 		</main>
 

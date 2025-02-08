@@ -1,6 +1,6 @@
 import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
-import { AlgebraSet } from "./set.js";
+import type { AlgebraSet } from "./set.ts";
 
 describe("AlgebraSet", () => {
 	it("is used to create a set of elements", () => {

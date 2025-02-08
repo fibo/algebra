@@ -22,7 +22,7 @@
     "postbuild": "npm run prettier",
     "prestart": "npm run build",
     "prettier": "prettier --write .",
-    "test": "node --test --env-file .ts-node.env src/*_test.ts"
+    "test": "node --test --env-file .ts.env src/*_test.ts"
   },
   "repository": {
     "type": "git",
@@ -40,8 +40,5 @@
   ],
   "dependencies": {
     "arithmetica": "^1.0.0"
-  },
-  "devDependencies": {
-    "ts-node": "^10.9.2"
   }
 }

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": false,
     "noEmit": false,
     "outDir": "./dist",
     // To build stripped JS, but emit declarations with JSDoc preserved:

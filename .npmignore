@@ -1,3 +1,4 @@
+docs/
 examples/
 src/
 temp/
@@ -5,6 +6,5 @@ temp/
 DEVELOP.md
 images
 index.html
-style.css
 tsconfig.json
 tsconfig.test.json

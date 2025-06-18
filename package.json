@@ -19,9 +19,7 @@
   "scripts": {
     "build": "tsc --removeComments --project tsconfig.build.json && tsc --declaration --emitDeclarationOnly --project tsconfig.build.json",
     "check_types": "tsc --noEmit",
-    "postbuild": "npm run prettier",
     "prestart": "npm run build",
-    "prettier": "prettier --write .",
     "test": "node --test --env-file .ts.env src/*_test.ts"
   },
   "repository": {

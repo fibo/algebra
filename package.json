@@ -4,23 +4,16 @@
   "version": "1.0.1",
   "type": "module",
   "license": "MIT",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
+  "types": "./src/algebra.d.ts",
+  "exports": "./src/algebra.js",
   "homepage": "https://fibo.github.io/algebra",
   "author": {
     "name": "Gianluca Casati",
     "url": "https://fibo.github.io"
   },
   "scripts": {
-    "build": "tsc --removeComments --project tsconfig.build.json && tsc --declaration --emitDeclarationOnly --project tsconfig.build.json",
-    "check_types": "tsc --noEmit",
-    "prestart": "npm run build",
-    "test": "node --test --env-file .ts.env src/*_test.ts"
+    "check_types": "tsc",
+    "test": "node --test --env-file .ts.env tests/*_test.ts"
   },
   "repository": {
     "type": "git",
@@ -37,6 +30,15 @@
     "math"
   ],
   "dependencies": {
-    "arithmetica": "^1.0.0"
-  }
+    "arithmetica": "1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "pre-commit": "^1.2.2",
+    "typescript": "^5.8.3"
+  },
+  "pre-commit": [
+    "check_types",
+    "test"
+  ]
 }

@@ -1,18 +1,12 @@
 {
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "erasableSyntaxOnly": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "noFallthroughCasesInSwitch": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "rootDir": "./src",
-    "strict": true,
-    "target": "esnext"
+    "strict": true
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*.ts"]
+  "include": ["./**/*.ts"]
 }

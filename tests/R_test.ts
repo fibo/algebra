@@ -17,11 +17,11 @@ test('R', () => {
 		assert.equal(x.value, 9)
 	}
 
-	// Floating point arithmetic
+	// Online docs: floating point arithmetic
 	{
 		const x = R(0.1)
-		const y = R(0.2)
-		assert.equal(x.add(y).value, 0.3)
+		x.add(0.2)
+		assert.equal(x.value, 0.3)
 	}
 
 	// Can coerce to number, via Number()

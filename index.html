@@ -19,34 +19,44 @@
 				means completeness and balancing, from the Arabic word الجبر
 			</blockquote>
 
-			<ul>
-				<li>
-					<a href="./examples/set.html">sets</a>
-				</li>
-			</ul>
+			<section>
+				<p>Books that inspired me.</p>
+				<div class="books">
+					<img src="./images/Cover-Algebra.png"
+						alt="Algebra book" />
+					<img src="./images/Cover-OnQuaternionsAndOctonions.png"
+						alt="Quaternion and Octonion book" />
+				</div>
+			</section>
 
-			<p>Books that inspired me.</p>
-			<style>
-				.books {
-					display: flex;
-					flex-direction: row;
-					flex-wrap: wrap;
-					gap: 1em;
-				}
-				@media only screen and (max-width: 456px) {
-					.books {
-						flex-direction: column;
-						flex-wrap: nowrap;
-					}
-				}
-			</style>
-			<div class="books">
-				<img src="./images/Cover-Algebra.png" alt="Algebra book" />
-				<img
-					src="./images/Cover-OnQuaternionsAndOctonions.png"
-					alt="Quaternion and Octonion book"
-				/>
-			</div>
+			<section>
+				<h2>Real numbers</h2>
+
+				<p>
+					The <em>algebra</em> package exports <code>R</code> function which stands for <em>Real number</em>.
+					It returns an object that implements arithmetic operators.
+					You probably know about the floating point numbers issue, that is <code>0.1 + 0.2</code> does not equal <code>0.3</code>.
+					This is due to the floating point representation, it affects many programming languages.
+					With <em>algebra</em> you can get the result you expect.
+				</p>
+
+				<pre><code>
+import { R } from 'algebra';
+
+// Create a Real number with a value of 0.1
+const x = R(0.1);
+
+// Add 0.2
+x.add(0.2);
+
+// Result is 0.3 as expected.
+console.log(x.value); // 0.3
+				</code></pre>
+			</section>
 		</main>
+
+		<footer>
+			GitHub repo: <a href="https://github.com/fibo/algebra">fibo/algebra</a>
+		</footer>
 	</body>
 </html>

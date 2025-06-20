@@ -1,10 +1,6 @@
 docs/
-examples/
 src/
 tests/
-
-DEVELOP.md
-images
+images/
 index.html
 tsconfig.json
-tsconfig.test.json

@@ -1,8 +1,4 @@
-*,
-*::before,
-*::after {
-	box-sizing: inherit;
-}
+*, *::before, *::after { box-sizing: inherit }
 
 html {
 	color-scheme: light dark;
@@ -22,13 +18,48 @@ main {
 	margin-inline: auto;
 }
 
-img,
-svg,
-video {
+img, svg, video {
 	max-width: 100%;
 	display: block;
 }
 
 pre {
 	overflow-x: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: sans-serif;
+	text-transform: uppercase;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+blockquote {
+	margin: 0;
+	padding: 0.5em 1em;
+	border-left: 4px solid #ccc;
+	background-color: #f9f9f9;
+}
+
+section {
+	margin-bottom: 4em;
+}
+
+footer {
+	padding: 1em;
+	border-top: 1px solid #ccc;
+	text-align: center;
+}
+
+.books {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 1em;
+}
+@media only screen and (max-width: 456px) {
+	.books {
+		flex-direction: column;
+		flex-wrap: nowrap;
+	}
 }

@@ -5,7 +5,8 @@ import type { ComplexAlgebraGroupElement } from 'algebra'
 function coerce(arg: unknown): [bigint, bigint] {
 	if (Array.isArray(arg) && arg.length === 2) {
 		const [a, b] = arg;
-		if (typeof a === 'bigint' && typeof b === 'bigint') return [a, b];
+		if (typeof a === 'bigint' && typeof b === 'bigint')
+			return [a, b];
 	}
 	throw new TypeError('Cannot coerce to Z[i]');
 }
@@ -16,7 +17,6 @@ function Zi(a: bigint, b: bigint): ComplexAlgebraGroupElement<bigint> {
 	return {
 		get re() { return re },
 		get im() { return im },
-		valueOf() { return [re, im] },
 		eq(arg: unknown): boolean {
 			const [a, b] = coerce(arg)
 			return a === re && b === im

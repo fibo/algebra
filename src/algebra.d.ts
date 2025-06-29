@@ -1,7 +1,6 @@
 export type AlgebraSetElement<T> = {
 	readonly value: T
     eq(b: unknown): boolean
-    valueOf(): T
 }
 
 export type AlgebraGroupElement<T> = AlgebraSetElement<T> & {
@@ -22,7 +21,6 @@ export type ComplexAlgebraSetElement<T> = {
 	readonly re: T
 	readonly im: T
     eq(b: unknown): boolean
-    valueOf(): [T, T]
 }
 
 export type ComplexAlgebraGroupElement<T> = ComplexAlgebraSetElement<T> & {
@@ -35,20 +33,28 @@ export type QuaternionAlgebraSetElement<T> = {
 	readonly re: T
 	readonly im: [T, T, T]
     eq(b: unknown): boolean
-    valueOf(): [T, T, T, T]
 }
 
 /**
  * Real numbers.
  *
  * @example
- * const x = R(1.5)
+ * const x = new R(1.5)
  * x.add(0.5).mul(2) // (1.5 + 0.5) * 2
  * x.value // 4
  *
  * @example square
- * const x = R(3)
+ * const x = new R(3)
  * x.mul(x) // 3 * 3
  * x.value // 9
  */
-export declare function R(arg: unknown): AlgebraRingElement<number>
+export declare class R implements AlgebraRingElement<number> {
+	constructor(value: number)
+	readonly value: number
+    eq(b: unknown): boolean
+    add(arg: unknown): AlgebraRingElement<number>
+    sub(arg: unknown): AlgebraRingElement<number>
+	neg(): AlgebraRingElement<number>
+	mul(arg: unknown): AlgebraRingElement<number>
+	inv(arg: unknown): AlgebraRingElement<number>
+}

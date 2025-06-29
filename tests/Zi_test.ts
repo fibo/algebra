@@ -29,6 +29,10 @@ class Zi implements ComplexAlgebraGroupElement<bigint> {
 		const [a, b] = this.#coerce(arg)
 		return a === this.#re && b === this.#im
 	}
+	conj (): Zi {
+		this.#im = -this.#im
+		return this
+	}
 	add (arg: unknown): Zi {
 		const [a, b] = this.#coerce(arg)
 		this.#re += a

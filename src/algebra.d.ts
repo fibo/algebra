@@ -1,26 +1,25 @@
 export type AlgebraSetElement<T> = {
-	readonly value: T
-    eq(b: unknown): boolean
+	value: T
+	eq(b: unknown): boolean
 }
 
 export type AlgebraGroupElement<T> = AlgebraSetElement<T> & {
-    add(arg: unknown): AlgebraGroupElement<T>
-    sub(arg: unknown): AlgebraGroupElement<T>
-    neg(): AlgebraGroupElement<T>
+	add(arg: unknown): AlgebraGroupElement<T>
+	sub(arg: unknown): AlgebraGroupElement<T>
+	neg(): AlgebraGroupElement<T>
 }
 
 export type AlgebraRingElement<T> = AlgebraSetElement<T> & {
-    add(arg: unknown): AlgebraRingElement<T>
-    sub(arg: unknown): AlgebraRingElement<T>
-    neg(): AlgebraRingElement<T>
-    mul(arg: unknown): AlgebraRingElement<T>
-    inv(arg: unknown): AlgebraRingElement<T>
+	add(arg: unknown): AlgebraRingElement<T>
+	sub(arg: unknown): AlgebraRingElement<T>
+	neg(): AlgebraRingElement<T>
+	mul(arg: unknown): AlgebraRingElement<T>
+	inv(arg: unknown): AlgebraRingElement<T>
 }
 
 export type ComplexAlgebraSetElement<T> = {
-	readonly re: T
-	readonly im: T
-    eq(b: unknown): boolean
+	value: [T, T]
+	eq(b: unknown): boolean
 }
 
 export type ComplexAlgebraGroupElement<T> = ComplexAlgebraSetElement<T> & {
@@ -30,9 +29,8 @@ export type ComplexAlgebraGroupElement<T> = ComplexAlgebraSetElement<T> & {
 }
 
 export type QuaternionAlgebraSetElement<T> = {
-	readonly re: T
-	readonly im: [T, T, T]
-    eq(b: unknown): boolean
+	value: [T, T, T, T]
+	eq(b: unknown): boolean
 }
 
 /**
@@ -51,10 +49,10 @@ export type QuaternionAlgebraSetElement<T> = {
 export declare class R implements AlgebraRingElement<number> {
 	constructor(value: number)
 	readonly value: number
-    eq(b: unknown): boolean
-    add(arg: unknown): AlgebraRingElement<number>
-    sub(arg: unknown): AlgebraRingElement<number>
-	neg(): AlgebraRingElement<number>
-	mul(arg: unknown): AlgebraRingElement<number>
-	inv(arg: unknown): AlgebraRingElement<number>
+	eq(b: unknown): boolean
+	add(arg: R | number): R
+	sub(arg: R | number): R
+	neg(): R
+	mul(arg: R | number): R
+	inv(arg: R | number): R
 }
